@@ -1,2 +1,100 @@
 
 \section{Produktfunktionen}
+
+\subsection{Funktionale Anforderungen}
+\begin{enumerate}[{/FA}1{/}]
+\item Neuen Song erstellen
+\item Song Attribut ändern (Titel, Interpret, $\dots$)
+\item Song löschen
+\item Neuer Anhang
+\item Anhang löschen
+\item Song Tags editieren
+\item Anhänge:
+\begin{itemize}
+	\item Audioanhang
+	\item PDF Anhang
+	\item Textanhang
+\end{itemize}
+\item Audio- und PDF Anhang werden automatisch erstellt, wenn passende mp3/ogg/pdf/... gefunden wird.
+\item Audioanhang kann Audiodateien wiedergeben
+\item PDF Anhang kann PDF anzeigen, zoomen, Seite wählen
+\item Textanhang speichert Text
+\item Textanhang erkennt Akkorde
+\item Textanhang empfängt Text per Copy\&Paste. Dabei werden Tabulatoren automatisch in (ggf. mehrere) Leerzeichen umgewandelt.
+\item Textanhang kann Transponieren
+\item Neuen Termin erstellen
+\item Termin mit Songs verknüpfen
+\item Termin editieren
+\item PDF exportieren (mit vielen Optionen: Welche Anhänge, In-/Exklusive Tags, Formatierung, $dots$ )
+\end{enumerate}
+
+\begin{enumerate}[{/WA}1{/}]
+\item Audiodateien mit variabler Geschwindigkeit abspielen
+\item Bestimmten Ausschnitt der Audiodatei endlos wiederholen
+\item Anzeige Modus anbieten
+\item Android/iOS-Portierung
+\end{enumerate}
+
+
+\subsection{Groupware}
+
+An einem Projekt sollen beliebig viele Benutzer (gleichzeitig) arbeiten können. Es gibt verschiedene Ansätze. 
+
+\subsubsection{Datenbank}
+\begin{itemize}
+\item Vorteile:
+	\begin{itemize}
+	\item weite Verbreitung
+	\item einfach zu hosten
+	\item viele Bibliotheken und Kompatibilitäten
+	\end{itemize}
+\item Nachteile:
+	\begin{itemize}
+	\item Komplexes caching und conflict management oder Onlinezwang
+	\item Unflexibles Datenformat
+	\end{itemize}
+\end{itemize}
+
+\subsection{Git}
+\begin{itemize}
+\item Vorteile:
+	\begin{itemize}
+	\item frei verfügbar
+	\item einfaches und kostenloses Hosting bei z.B. GitHub
+	\item Arbeiten offline möglich, nur push/pull benötigen Onlinezugang
+	\item conflict managment
+	\end{itemize}
+\item Nachteile:
+	\begin{itemize}
+	\item Windows-Abhängigkeit: MinGW (großer Installer, benötigt viel Platz)
+	\item Kann nicht mit Binärdateien umgehen
+	\item Benutze libgit2. Bibliothek verträgt sich nicht mit Qt
+	\item Manuelle Konfliktbehebung evtl. nötig
+	\end{itemize}
+\end{itemize}
+
+Deshalb: Lagere Datei und Versionsverwaltung in externe Bibliothek aus.
+
+Dazu wird die Bilbliothek GitZip benuzt.
+Ein Projekt besteht dabei für den Benutzer transparent als \emph{einzelne} Datei gespeichert.
+Beim lesen wird die Datei in ein temporäres Arbeitsverzeichnis entpackt (z.B. zip).
+
+Git arbeitet ebenfalls auf dem temporären Arbeitsverzeichnis.
+Beim speichern wird das Verzeichnis gepackt und in die zip Datei in das vom Benutzer festgelegte Verzeichnis geschrieben.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
