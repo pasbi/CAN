@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>779</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QSplitter" name="splitter">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="opaqueResize">
+           <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="layoutWidget">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLineEdit" name="lineEdit"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton">
+                <property name="text">
+                 <string>Filter</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tableWidget">
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <column>
+               <property name="text">
+                <string>Title</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Artist</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Year</string>
+               </property>
+              </column>
+              <item row="0" column="0">
+               <property name="text">
+                <string>Rolling in the Deep</string>
+               </property>
+              </item>
+              <item row="0" column="1">
+               <property name="text">
+                <string>Adele</string>
+               </property>
+              </item>
+              <item row="0" column="2">
+               <property name="text">
+                <string>2010</string>
+               </property>
+              </item>
+              <item row="1" column="0">
+               <property name="text">
+                <string>Beds are Burning</string>
+               </property>
+              </item>
+              <item row="1" column="1">
+               <property name="text">
+                <string>Midnight Oil</string>
+               </property>
+              </item>
+              <item row="2" column="0">
+               <property name="text">
+                <string>Light my Fire</string>
+               </property>
+              </item>
+              <item row="2" column="1">
+               <property name="text">
+                <string>The Doors</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="layoutWidget_2">
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_3">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_6">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>T</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_4">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>D</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_5">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>E</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QListWidget" name="listWidget">
+              <item>
+               <property name="text">
+                <string>Live [Audio]</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Schlagzeugsolo Cover [Audio]</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Akkordschema [Text]</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gitarrensolo [PDF]</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Studio [Audio]</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QTextEdit" name="textEdit"/>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>779</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDatei">
+    <property name="title">
+     <string>Datei</string>
+    </property>
+    <addaction name="action_ffnen"/>
+    <addaction name="actionProjekt_ffnen"/>
+    <addaction name="separator"/>
+    <addaction name="actionProjekt_speichern"/>
+    <addaction name="actionProjekt_speichern_als"/>
+    <addaction name="separator"/>
+    <addaction name="actionStatus"/>
+    <addaction name="actionCommit"/>
+    <addaction name="actionPull"/>
+    <addaction name="actionPush"/>
+    <addaction name="actionResolve_Conflicts"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuSongs">
+    <property name="title">
+     <string>Songs</string>
+    </property>
+    <widget class="QMenu" name="menuNew_Attachment">
+     <property name="title">
+      <string>New Attachment</string>
+     </property>
+     <addaction name="actionText_Attachment"/>
+     <addaction name="actionLink_to_audio_file"/>
+     <addaction name="actionLink_to_pdf_file"/>
+    </widget>
+    <addaction name="actionNew_Song"/>
+    <addaction name="actionDelete_Song"/>
+    <addaction name="menuNew_Attachment"/>
+    <addaction name="actionEdit_Tags"/>
+   </widget>
+   <widget class="QMenu" name="menuCalendar">
+    <property name="title">
+     <string>Calendar</string>
+    </property>
+    <addaction name="actionNew_Event"/>
+    <addaction name="actionDelete_Event"/>
+    <addaction name="actionEdit_Event"/>
+   </widget>
+   <addaction name="menuDatei"/>
+   <addaction name="menuSongs"/>
+   <addaction name="menuCalendar"/>
+  </widget>
+  <action name="action_ffnen">
+   <property name="text">
+    <string>Neues Projekt</string>
+   </property>
+  </action>
+  <action name="actionProjekt_ffnen">
+   <property name="text">
+    <string>Projekt öffnen ...</string>
+   </property>
+  </action>
+  <action name="actionProjekt_speichern">
+   <property name="text">
+    <string>Projekt speichern</string>
+   </property>
+  </action>
+  <action name="actionProjekt_speichern_als">
+   <property name="text">
+    <string>Projekt speichern als ...</string>
+   </property>
+  </action>
+  <action name="actionPush">
+   <property name="text">
+    <string>Push</string>
+   </property>
+  </action>
+  <action name="actionCommit">
+   <property name="text">
+    <string>Commit</string>
+   </property>
+  </action>
+  <action name="actionPull">
+   <property name="text">
+    <string>Pull</string>
+   </property>
+  </action>
+  <action name="actionStatus">
+   <property name="text">
+    <string>Status</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionResolve_Conflicts">
+   <property name="text">
+    <string>Resolve Conflicts</string>
+   </property>
+  </action>
+  <action name="actionNew_Song">
+   <property name="text">
+    <string>New Song</string>
+   </property>
+  </action>
+  <action name="actionDelete_Song">
+   <property name="text">
+    <string>Delete Song</string>
+   </property>
+  </action>
+  <action name="actionText_Attachment">
+   <property name="text">
+    <string>Text Attachment</string>
+   </property>
+  </action>
+  <action name="actionLink_to_audio_file">
+   <property name="text">
+    <string>Link to audio file</string>
+   </property>
+  </action>
+  <action name="actionLink_to_pdf_file">
+   <property name="text">
+    <string>Link to pdf file</string>
+   </property>
+  </action>
+  <action name="actionEdit_Tags">
+   <property name="text">
+    <string>Edit Tags</string>
+   </property>
+  </action>
+  <action name="actionNew_Event">
+   <property name="text">
+    <string>New Event</string>
+   </property>
+  </action>
+  <action name="actionDelete_Event">
+   <property name="text">
+    <string>Delete Event</string>
+   </property>
+  </action>
+  <action name="actionEdit_Event">
+   <property name="text">
+    <string>Edit Event</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
