@@ -3,4 +3,8 @@
 *.toc
 *.pdf
 *.synctex.gz
+*.os
+*.o
+*.pro.user*
+build-*
 
