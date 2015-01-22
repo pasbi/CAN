@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>779</width>
-    <height>500</height>
+    <width>835</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,6 +29,9 @@
     </property>
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>Tab 1</string>
@@ -289,6 +292,219 @@
        <attribute name="title">
         <string>Tab 2</string>
        </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,1">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QCalendarWidget" name="calendarWidget"/>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <property name="leftMargin">
+             <number>30</number>
+            </property>
+            <property name="topMargin">
+             <number>30</number>
+            </property>
+            <property name="rightMargin">
+             <number>30</number>
+            </property>
+            <property name="bottomMargin">
+             <number>30</number>
+            </property>
+            <item>
+             <widget class="QGroupBox" name="groupBox">
+              <property name="title">
+               <string>Type</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <widget class="QRadioButton" name="radioButton">
+                 <property name="text">
+                  <string>Rehearsal</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_2">
+                 <property name="text">
+                  <string>Gig</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_3">
+                 <property name="text">
+                  <string>Custom</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_2"/>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <widget class="QDateEdit" name="dateEdit"/>
+              </item>
+              <item>
+               <widget class="QTimeEdit" name="timeEdit"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="plainTextEdit">
+              <property name="plainText">
+               <string>Notices
+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QPushButton" name="pushButton_7">
+                <property name="text">
+                 <string>Edit Schedule</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_8">
+                <property name="text">
+                 <string>ok</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_9">
+                <property name="text">
+                 <string>cancel</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QSplitter" name="splitter_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <widget class="QTableWidget" name="tableWidget_2">
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <row>
+            <property name="text">
+             <string>New Row</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>New Row</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>New Row</string>
+            </property>
+           </row>
+           <column>
+            <property name="text">
+             <string>Type</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Date</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Label</string>
+            </property>
+           </column>
+           <item row="0" column="0">
+            <property name="text">
+             <string>Rehearsal</string>
+            </property>
+           </item>
+           <item row="0" column="1">
+            <property name="text">
+             <string>1.1.2000</string>
+            </property>
+           </item>
+           <item row="0" column="2">
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item row="1" column="0">
+            <property name="text">
+             <string>Gig</string>
+            </property>
+           </item>
+           <item row="1" column="1">
+            <property name="text">
+             <string>2.1.2000</string>
+            </property>
+           </item>
+           <item row="1" column="2">
+            <property name="text">
+             <string>Woodstock</string>
+            </property>
+           </item>
+           <item row="2" column="0">
+            <property name="text">
+             <string>Meeting</string>
+            </property>
+           </item>
+           <item row="2" column="1">
+            <property name="text">
+             <string>3.1.2000</string>
+            </property>
+           </item>
+           <item row="2" column="2">
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </widget>
+          <widget class="QTableWidget" name="tableWidget_3">
+           <column>
+            <property name="text">
+             <string>Title</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Artist</string>
+            </property>
+           </column>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -299,7 +515,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>779</width>
+     <width>835</width>
      <height>27</height>
     </rect>
    </property>
