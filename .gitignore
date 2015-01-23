@@ -7,4 +7,4 @@
 *.o
 *.pro.user*
 build-*
-
+*.autosave
