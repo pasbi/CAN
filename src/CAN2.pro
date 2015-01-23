@@ -34,7 +34,10 @@ SOURCES += main.cpp\
     fileindex.cpp \
     Database/DateDatabase/date.cpp \
     UnitTest/creatabletest.cpp \
-    UnitTest/unittests.cpp
+    UnitTest/unittests.cpp \
+    Commands/command.cpp \
+    configurable.cpp \
+    global.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -51,6 +54,8 @@ HEADERS  += mainwindow.h \
     fileindex.h \
     Database/DateDatabase/date.h \
     UnitTest/creatabletest.h \
-    UnitTest/unittests.h
+    UnitTest/unittests.h \
+    Commands/command.h \
+    configurable.h
 
 FORMS    += mainwindow.ui
