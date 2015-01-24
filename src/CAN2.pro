@@ -42,7 +42,9 @@ SOURCES += main.cpp\
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
     songtableview.cpp \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp \
-    Commands/SongDatabaseCommands/songdatabasecommand.cpp
+    Commands/SongDatabaseCommands/songdatabasecommand.cpp \
+    Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp \
+    Commands/SongDatabaseCommands/songdatabasenewattributecommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -66,6 +68,8 @@ HEADERS  += mainwindow.h \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.h \
     songtableview.h \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h \
-    Commands/SongDatabaseCommands/songdatabasecommand.h
+    Commands/SongDatabaseCommands/songdatabasecommand.h \
+    Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h \
+    Commands/SongDatabaseCommands/songdatabasenewattributecommand.h
 
 FORMS    += mainwindow.ui

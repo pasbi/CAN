@@ -2,6 +2,7 @@
 #define SONGTABLE_H
 
 #include <QTableView>
+#include "Database/SongDatabase/songdatabase.h"
 
 class SongTableView : public QTableView
 {
@@ -9,7 +10,14 @@ class SongTableView : public QTableView
 public:
     explicit SongTableView(QWidget *parent = 0);
 
-    bool edit(const QModelIndex &index, EditTrigger trigger, QEvent *event);
+    SongDatabase* model() const { return static_cast<SongDatabase*>( QTableView::model() ); }
+
+private slots:
+    void showContextMenu();
+    void setUpContextMenu(QMenu* menu);
+    QModelIndex indexUnderCursor() const;
+
+
 
 };
 

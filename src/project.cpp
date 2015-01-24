@@ -1,6 +1,9 @@
 #include "project.h"
 
-Project::Project() : GitRepository("can")
+Project::Project() :
+    GitRepository("can"),
+    m_songDatabase(this),
+    m_dateDatabase(this)
 {
 }
 

@@ -6,7 +6,7 @@
 class DateDatabase : public Database
 {
 public:
-    DateDatabase();
+    DateDatabase(Project *project);
 };
 
 #endif // DATEDATABASE_H

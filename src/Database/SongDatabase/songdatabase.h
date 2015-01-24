@@ -5,13 +5,13 @@
 #include <QAbstractTableModel>
 #include "song.h"
 
-class SongDatabase : public Database, public QAbstractTableModel
+class SongDatabase : public QAbstractTableModel, public Database
 {
-
+    Q_OBJECT
 public:
-    SongDatabase();
+    SongDatabase(Project* project);
 
-
+    QList<Song*> songs() const { return m_songs; }
 
     /////////////////////////////////////////////////
     ////
@@ -26,8 +26,11 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
+    void datumChanged(const QModelIndex & index);
+    Song* songAtIndex(const QModelIndex & index) const;
 private:
     mutable QList<Song*> m_tmpSongBuffer; // Songs that was just removed or are about to be inserted.
+    mutable QStringList m_tmpColumnNameBuffer;
     friend class SongDatabaseSetDataCommand;
     friend class SongDatabaseNewSongCommand;
     friend class SongDatabaseRemoveSongCommand;
@@ -35,28 +38,31 @@ private:
     friend class SongDatabaseRemoveAttributeCommand;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
 
+
     /**
      * @brief appendSong this takes ownership of song
      * @param song
      */
     void appendSong(Song* song);
+    void insertSong(Song* song, const int index);
     bool insertRows(int row, int count, const QModelIndex &parent);
 
     /**
      * @brief removeSong ownership is transfered to calling object
      * @param song
+     * @return returns the index of the removed song.
      */
-    void removeSong(Song *song);
+    int removeSong(Song *song);
     bool removeRows(int row, int count, const QModelIndex &parent);
 
-
+    void appendColumn(const QString & label);
     bool insertColumns(int column, int count, const QModelIndex &parent);
     bool removeColumns(int column, int count, const QModelIndex &parent);
 
 
-
 private:
     QList<Song*> m_songs;
+    QStringList  m_attributeKeys;
 };
 
 #endif // SONGDATABASE_H

@@ -2,7 +2,7 @@
 #define SONGDATABASECOMMAND_H
 
 #include "Database/SongDatabase/songdatabase.h"
-#include "command.h"
+#include "../command.h"
 
 class SongDatabaseCommand : public Command
 {

@@ -1,14 +1,19 @@
 #include "songdatabase.h"
 #include "global.h"
+#include "project.h"
 
-SongDatabase::SongDatabase()
+#include "Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h"
+
+SongDatabase::SongDatabase(Project *project) :
+    Database(project)
 {
+    m_attributeKeys << "Title";
 }
 
 int SongDatabase::columnCount(const QModelIndex &parent) const
 {
     assert(!parent.isValid());
-    return 1;
+    return m_attributeKeys.size();
 }
 
 int SongDatabase::rowCount(const QModelIndex &parent) const
@@ -21,20 +26,31 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
 {
     assert(!index.parent().isValid());
 
-    Q_UNUSED(role);
-
-    if (role == Qt::DisplayRole)
-        return m_songs[index.row()]->title();
-
-    return QVariant();
+    switch (role)
+    {
+    case Qt::DisplayRole:
+        return m_songs[index.row()]->attribute(index.column());
+    default:
+        return QVariant();
+    }
 }
 
 QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    Q_UNUSED(section);
-    Q_UNUSED(orientation);
-    Q_UNUSED(role);
-    return "title";
+    if (orientation == Qt::Horizontal)
+    {
+        switch (role)
+        {
+        case Qt::DisplayRole:
+            return m_attributeKeys[section];
+        default:
+            return QVariant();
+        }
+    }
+    else
+    {
+        return QVariant();
+    }
 }
 
 Qt::ItemFlags SongDatabase::flags(const QModelIndex &index) const
@@ -49,16 +65,35 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
 
     if (role == Qt::EditRole)
     {
-        m_songs[index.row()]->setTitle(value.toString());
+        project()->pushCommand( new SongDatabaseEditSongCommand(this, index, value, role) );
     }
 
     return false;
 }
 
+void SongDatabase::datumChanged(const QModelIndex & index)
+{
+    emit dataChanged(index, index);
+}
+
 bool SongDatabase::insertColumns(int column, int count, const QModelIndex &parent)
 {
-    assert(!parent.isValid());
-    return false;
+    assert( !parent.isValid() );
+    assert( m_tmpColumnNameBuffer.size() == count );
+
+    // insert new columns at the end only to ensure m_attributeKeys is what songs expect.
+    // you may sort columns with a proxy model.
+    assert( column == columnCount() );
+
+    beginInsertColumns(parent, column, column + count - 1);
+    for (int i = 0; i < count; ++i)
+    {
+        m_attributeKeys.insert( column + i,  m_tmpColumnNameBuffer[i]);
+    }
+    m_tmpColumnNameBuffer.clear();
+    endInsertColumns();
+
+    return true;
 }
 
 bool SongDatabase::insertRows(int row, int count, const QModelIndex &parent)
@@ -80,7 +115,13 @@ bool SongDatabase::insertRows(int row, int count, const QModelIndex &parent)
 bool SongDatabase::removeColumns(int column, int count, const QModelIndex &parent)
 {
     assert(!parent.isValid());
-    return false;
+    beginRemoveColumns(parent, column, column + count - 1);
+    for (int i = 0; i < count; ++i)
+    {
+        m_attributeKeys.removeAt(column + i);
+    }
+    endRemoveColumns();
+    return true;
 }
 
 bool SongDatabase::removeRows(int row, int count, const QModelIndex &parent)
@@ -100,11 +141,16 @@ bool SongDatabase::removeRows(int row, int count, const QModelIndex &parent)
 
 void SongDatabase::appendSong(Song *song)
 {
-    m_tmpSongBuffer.append(song);
-    assert( insertRows(rowCount(), 1, QModelIndex() ));
+    insertSong(song, rowCount());
 }
 
-void SongDatabase::removeSong(Song* song)
+void SongDatabase::insertSong(Song* song, const int index)
+{
+    m_tmpSongBuffer.append(song);
+    assert( insertRows( index, 1, QModelIndex() ));
+}
+
+int SongDatabase::removeSong(Song* song)
 {
     int index;
     if ( (index = m_songs.indexOf(song)) < 0 )
@@ -115,6 +161,25 @@ void SongDatabase::removeSong(Song* song)
     {
         assert( removeRows(index, 1, QModelIndex()) );
     }
+    return index;
+}
+
+Song* SongDatabase::songAtIndex(const QModelIndex &index) const
+{
+    if (index.isValid() && index.row() < rowCount())
+    {
+        return songs().at(index.row());
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
+void SongDatabase::appendColumn(const QString &label)
+{
+    m_tmpColumnNameBuffer.append(label);
+    assert( insertColumns(columnCount(), 1, QModelIndex()) );
 }
 
 

@@ -1,5 +1,7 @@
 #include "database.h"
+#include "project.h"
 
-Database::Database()
+Database::Database(Project *project) :
+    m_project(project)
 {
 }

@@ -1,5 +1,6 @@
 #include "datedatabase.h"
 
-DateDatabase::DateDatabase()
+DateDatabase::DateDatabase(Project *project) :
+    Database(project)
 {
 }
