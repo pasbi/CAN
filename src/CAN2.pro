@@ -40,11 +40,13 @@ SOURCES += main.cpp\
     global.cpp \
     Commands/SongDatabaseCommands/songdatabasesetdatacommand.cpp \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
-    songtableview.cpp \
+    SongTableView/songtableview.cpp \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasecommand.cpp \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp \
-    Commands/SongDatabaseCommands/songdatabasenewattributecommand.cpp
+    Commands/SongDatabaseCommands/songdatabasenewattributecommand.cpp \
+    SongTableView/renamableheaderview.cpp \
+    Commands/SongDatabaseCommands/songdatabaserenameheadercommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -66,10 +68,12 @@ HEADERS  += mainwindow.h \
     configurable.h \
     Commands/SongDatabaseCommands/songdatabasesetdatacommand.h \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.h \
-    songtableview.h \
+    SongTableView/songtableview.h \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h \
     Commands/SongDatabaseCommands/songdatabasecommand.h \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h \
-    Commands/SongDatabaseCommands/songdatabasenewattributecommand.h
+    Commands/SongDatabaseCommands/songdatabasenewattributecommand.h \
+    SongTableView/renamableheaderview.h \
+    Commands/SongDatabaseCommands/songdatabaserenameheadercommand.h
 
 FORMS    += mainwindow.ui

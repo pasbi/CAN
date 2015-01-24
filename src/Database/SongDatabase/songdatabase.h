@@ -36,6 +36,7 @@ private:
     friend class SongDatabaseRemoveSongCommand;
     friend class SongDatabaseNewAttributeCommand;
     friend class SongDatabaseRemoveAttributeCommand;
+    friend class SongDatabaseRenameHeaderCommand;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
 
 
@@ -58,6 +59,8 @@ private:
     void appendColumn(const QString & label);
     bool insertColumns(int column, int count, const QModelIndex &parent);
     bool removeColumns(int column, int count, const QModelIndex &parent);
+
+    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role);
 
 
 private:

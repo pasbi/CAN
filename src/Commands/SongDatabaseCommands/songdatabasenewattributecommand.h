@@ -6,7 +6,7 @@
 class SongDatabaseNewAttributeCommand : public SongDatabaseCommand
 {
 public:
-    SongDatabaseNewAttributeCommand(SongDatabase* songDatabase , const QString &label);
+    SongDatabaseNewAttributeCommand( SongDatabase* songDatabase );
     void undo();
     void redo();
 

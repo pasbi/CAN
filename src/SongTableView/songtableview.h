@@ -3,6 +3,7 @@
 
 #include <QTableView>
 #include "Database/SongDatabase/songdatabase.h"
+#include <QMouseEvent>
 
 class SongTableView : public QTableView
 {
@@ -16,8 +17,6 @@ private slots:
     void showContextMenu();
     void setUpContextMenu(QMenu* menu);
     QModelIndex indexUnderCursor() const;
-
-
 
 };
 

@@ -82,7 +82,7 @@
   <customwidget>
    <class>SongTableView</class>
    <extends>QTableView</extends>
-   <header>songtableview.h</header>
+   <header>SongTableView/songtableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

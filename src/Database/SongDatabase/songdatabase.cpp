@@ -182,4 +182,18 @@ void SongDatabase::appendColumn(const QString &label)
     assert( insertColumns(columnCount(), 1, QModelIndex()) );
 }
 
+bool SongDatabase::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+{
+    if (orientation == Qt::Horizontal && role == Qt::EditRole && section >= 0 && section < columnCount())
+    {
+        m_attributeKeys[section] = value.toString();
+        emit headerDataChanged(orientation, section, section);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 

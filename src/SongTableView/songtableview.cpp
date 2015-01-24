@@ -7,19 +7,24 @@
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
 #include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
+#include "renamableheaderview.h"
 #include <functional>
 
 SongTableView::SongTableView(QWidget *parent) :
     QTableView(parent)
 {
     verticalHeader()->hide();
+    delete horizontalHeader();
+    setHorizontalHeader(new RenamableHeaderView( Qt::Horizontal, this ));
     horizontalHeader()->show();
+
 
     addAction(new QAction("Hello World", this));
 
     setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu()));
+
 
 }
 
@@ -68,7 +73,13 @@ void SongTableView::setUpContextMenu(QMenu *menu)
     menu->addSeparator();
 
     ::addAction(menu, "Add Attribute", [this]() {
-        QString label = "label";
-        model()->project()->pushCommand( new SongDatabaseNewAttributeCommand( model(), label ));
+
+        SongDatabaseNewAttributeCommand* naCommand = new SongDatabaseNewAttributeCommand( model() );
+        model()->project()->beginMacro( naCommand->text() );
+        model()->project()->pushCommand( naCommand );
+        qobject_cast<RenamableHeaderView*>(horizontalHeader())->editHeader( model()->columnCount() - 1, true );
     });
 }
+
+
+
