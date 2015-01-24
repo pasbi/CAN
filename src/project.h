@@ -5,8 +5,12 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/DateDatabase/datedatabase.h"
 
-class Project : public GitRepository
+#include "Commands/command.h"
+#include <QUndoStack>
+
+class Project : public QUndoStack, public GitRepository
 {
+    Q_OBJECT
 public:
     Project();
     ~Project();
@@ -14,9 +18,16 @@ public:
     bool loadFromTempDir();
     bool saveToTempDir();
 
+    SongDatabase* songDatabase() { return &m_songDatabase; }
+    DateDatabase* dateDatabase() { return &m_dateDatabase; }
+
+public slots:
+    void pushCommand(Command* command);
+
+
 private:
-    SongDatabase* m_songDatabase = 0;
-    DateDatabase* m_dateDatabase = 0;
+    SongDatabase m_songDatabase;
+    DateDatabase m_dateDatabase;
 
 };
 

@@ -37,7 +37,12 @@ SOURCES += main.cpp\
     UnitTest/unittests.cpp \
     Commands/command.cpp \
     configurable.cpp \
-    global.cpp
+    global.cpp \
+    Commands/SongDatabaseCommands/songdatabasesetdatacommand.cpp \
+    Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
+    songtableview.cpp \
+    Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp \
+    Commands/SongDatabaseCommands/songdatabasecommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -56,6 +61,11 @@ HEADERS  += mainwindow.h \
     UnitTest/creatabletest.h \
     UnitTest/unittests.h \
     Commands/command.h \
-    configurable.h
+    configurable.h \
+    Commands/SongDatabaseCommands/songdatabasesetdatacommand.h \
+    Commands/SongDatabaseCommands/songdatabasenewsongcommand.h \
+    songtableview.h \
+    Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h \
+    Commands/SongDatabaseCommands/songdatabasecommand.h
 
 FORMS    += mainwindow.ui

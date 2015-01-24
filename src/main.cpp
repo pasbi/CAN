@@ -5,10 +5,10 @@
 
 int main(int argc, char *argv[])
 {
-    int* s = new int();
+    QApplication a(argc, argv);
 
+    MainWindow m;
+    m.show();
 
-    UnitTests::runTests();
-
-
+    return a.exec();
 }

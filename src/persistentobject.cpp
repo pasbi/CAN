@@ -3,3 +3,8 @@
 PersistentObject::PersistentObject()
 {
 }
+
+PersistentObject::~PersistentObject()
+{
+
+}

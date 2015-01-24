@@ -5,6 +5,13 @@
 #include <sstream>
 #include <QString>
 
+#ifdef __linux
+#define assert( assertion ) Q_ASSERT( assertion )
+#else
+// on windows, Q_ASSERT makes problems.
+#define assert( assertion )
+#endif
+
 #define WARNING \
     GENERIC_LOG(Warning, false)
 

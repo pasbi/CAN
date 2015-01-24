@@ -8,6 +8,7 @@ class Command : public QUndoCommand
 public:
     explicit Command(QUndoCommand *parent = 0);
 
+
 };
 
 #endif // COMMAND_H

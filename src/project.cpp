@@ -2,14 +2,10 @@
 
 Project::Project() : GitRepository("can")
 {
-    m_songDatabase = new SongDatabase();
-    m_dateDatabase = new DateDatabase();
 }
 
 Project::~Project()
 {
-    delete m_songDatabase;
-    delete m_dateDatabase;
 }
 
 bool Project::loadFromTempDir()
@@ -20,4 +16,9 @@ bool Project::loadFromTempDir()
 bool Project::saveToTempDir()
 {
     return false;
+}
+
+void Project::pushCommand(Command *command)
+{
+    QUndoStack::push(command);
 }
