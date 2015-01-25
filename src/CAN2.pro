@@ -46,7 +46,14 @@ SOURCES += main.cpp\
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasenewattributecommand.cpp \
     SongTableView/renamableheaderview.cpp \
-    Commands/SongDatabaseCommands/songdatabaserenameheadercommand.cpp
+    Commands/SongDatabaseCommands/songdatabaserenameheadercommand.cpp \
+    Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.cpp \
+    util.cpp \
+    SongTableView/songattributedelegate.cpp \
+    SongTableView/CellEditors/celleditor.cpp \
+    SongTableView/CellEditors/stringeditor.cpp \
+    SongTableView/CellEditors/comboeditor.cpp \
+    SongTableView/CellEditors/dateeditor.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -74,6 +81,13 @@ HEADERS  += mainwindow.h \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h \
     Commands/SongDatabaseCommands/songdatabasenewattributecommand.h \
     SongTableView/renamableheaderview.h \
-    Commands/SongDatabaseCommands/songdatabaserenameheadercommand.h
+    Commands/SongDatabaseCommands/songdatabaserenameheadercommand.h \
+    Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h \
+    util.h \
+    SongTableView/songattributedelegate.h \
+    SongTableView/CellEditors/celleditor.h \
+    SongTableView/CellEditors/stringeditor.h \
+    SongTableView/CellEditors/comboeditor.h \
+    SongTableView/CellEditors/dateeditor.h
 
 FORMS    += mainwindow.ui

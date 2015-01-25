@@ -17,6 +17,15 @@ public slots:
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event);
+
+
+private slots:
+    void showContextMenu(QPoint pos);
+
+private:
+    void setUpContextMenu(QMenu* menu);
+    int sectionUnderCursor() const;
+
 };
 
 #endif // RENAMABLEHEADERVIEW_H

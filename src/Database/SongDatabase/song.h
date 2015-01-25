@@ -6,10 +6,11 @@
 #include "Attachments/attachment.h"
 #include <QVariantMap>
 
+class SongDatabase;
 class Song : public Taggable
 {
 public:
-    Song();
+    Song(SongDatabase *database);
 
     void restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
@@ -39,6 +40,8 @@ public:
     QVariant& attribute(int index);
 
     void setAttribute(int index, const QVariant & data);
+    void insertAttribute(int index, const QVariant & data);
+    void removeAttribute(int index);
     QString title() const;
     void setTitle(const QString & title);
 
@@ -46,6 +49,7 @@ public:
 
 private:
     QList<Attachment*> m_attachments;
+    SongDatabase* m_songDatabase;
 
 };
 

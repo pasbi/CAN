@@ -21,12 +21,12 @@ void SongDatabaseEditSongCommand::redo()
     QVariant& variant = getAttribute();
     m_oldData = variant;
     variant = m_newData;
-    database()->datumChanged(m_index);
+    database()->notifyDataChanged(m_index);
 }
 
 void SongDatabaseEditSongCommand::undo()
 {
     QVariant& variant = getAttribute();
     variant = m_oldData;
-    database()->datumChanged(m_index);
+    database()->notifyDataChanged(m_index);
 }

@@ -1,7 +1,16 @@
 #include "song.h"
+#include "songdatabase.h"
+#include "global.h"
 
-Song::Song()
+Song::Song(SongDatabase* database) :
+    m_songDatabase(database)
 {
+    int n = m_songDatabase->columnCount();
+    m_attributes.reserve(n);
+    for (int i = 0; i < n; ++i)
+    {
+        m_attributes.append(QVariant());
+    }
 }
 
 
@@ -29,19 +38,16 @@ void Song::setTitle(const QString &title)
 
 void Song::setAttribute(int index, const QVariant &data)
 {
-    if ( index >= m_attributes.size() )
-    {
-        m_attributes.reserve(index);
-        while (index > m_attributes.size() )
-        {
-            m_attributes.append(QVariant());
-        }
-        m_attributes.append(data);
-    }
-    else
+    if (index < m_attributes.size())
     {
         m_attributes[index] = data;
     }
+    m_songDatabase->notifyDataChanged( this );
+}
+
+void Song::insertAttribute(int index, const QVariant &data)
+{
+    m_attributes.insert(index, data);
 }
 
 QVariant Song::attribute(int index) const
@@ -63,4 +69,9 @@ QVariant& Song::attribute(int index)
         setAttribute(index, QVariant());
     }
     return m_attributes[index];
+}
+
+void Song::removeAttribute(int index)
+{
+    m_attributes.removeAt(index);
 }

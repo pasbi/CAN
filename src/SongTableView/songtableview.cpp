@@ -9,9 +9,12 @@
 #include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 #include "renamableheaderview.h"
 #include <functional>
+#include "util.h"
+
 
 SongTableView::SongTableView(QWidget *parent) :
-    QTableView(parent)
+    QTableView(parent),
+    m_delegate( new SongAttributeDelegate(this) )
 {
     verticalHeader()->hide();
     delete horizontalHeader();
@@ -19,37 +22,26 @@ SongTableView::SongTableView(QWidget *parent) :
     horizontalHeader()->show();
 
 
-    addAction(new QAction("Hello World", this));
-
     setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 
-    connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu()));
-
+    setItemDelegate( m_delegate );
 
 }
 
-void SongTableView::showContextMenu()
+void SongTableView::showContextMenu(QPoint pos)
 {
     QMenu* menu = new QMenu(this);
 
     setUpContextMenu(menu);
 
-    menu->popup(QCursor::pos());
+    menu->popup(viewport()->mapToGlobal(pos));
     connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
-}
-
-QAction* addAction( QMenu* menu, const QString & caption, std::function<void ()> do_action )
-{
-    QAction* action = new QAction(caption, menu);
-    menu->addAction(action);
-    QObject::connect(action, &QAction::triggered, do_action );
-    return action;
 }
 
 QModelIndex SongTableView::indexUnderCursor() const
 {
     QPoint pos = viewport()->mapFromGlobal( QCursor::pos() );
-    qDebug() << model()->songAtIndex(indexAt(pos)) << indexAt(pos) << pos << QCursor::pos();
     return indexAt(pos);
 
 }
@@ -59,11 +51,11 @@ void SongTableView::setUpContextMenu(QMenu *menu)
     QModelIndex index = indexUnderCursor();
     Song* song = model()->songAtIndex(index);
     // new Song
-    ::addAction(menu, tr("New Song"), [this](){
+    Util::addAction(menu, tr("New Song"), [this](){
        model()->project()->pushCommand( new SongDatabaseNewSongCommand( model() ) );
     });
 
-    ::addAction(menu, tr("Delete Song"), [this, song]() {
+    Util::addAction(menu, tr("Delete Song"), [this, song]() {
         if (song)
         {
             model()->project()->pushCommand( new SongDatabaseRemoveSongCommand( model(), song ) );
@@ -72,13 +64,20 @@ void SongTableView::setUpContextMenu(QMenu *menu)
 
     menu->addSeparator();
 
-    ::addAction(menu, "Add Attribute", [this]() {
+    Util::addAction(menu, "Add Attribute", [this]() {
 
         SongDatabaseNewAttributeCommand* naCommand = new SongDatabaseNewAttributeCommand( model() );
         model()->project()->beginMacro( naCommand->text() );
         model()->project()->pushCommand( naCommand );
         qobject_cast<RenamableHeaderView*>(horizontalHeader())->editHeader( model()->columnCount() - 1, true );
     });
+}
+
+void SongTableView::focusOutEvent(QFocusEvent *event)
+{
+    qDebug() << "focusus out";
+
+   QTableView::focusOutEvent(event);
 }
 
 

@@ -4,6 +4,8 @@
 #include <QTableView>
 #include "Database/SongDatabase/songdatabase.h"
 #include <QMouseEvent>
+#include "songattributedelegate.h"
+
 
 class SongTableView : public QTableView
 {
@@ -13,10 +15,17 @@ public:
 
     SongDatabase* model() const { return static_cast<SongDatabase*>( QTableView::model() ); }
 
+protected:
+    void focusOutEvent(QFocusEvent *event);
+
 private slots:
-    void showContextMenu();
+    void showContextMenu(QPoint pos);
+
+private:
     void setUpContextMenu(QMenu* menu);
     QModelIndex indexUnderCursor() const;
+
+    SongAttributeDelegate* m_delegate;
 
 };
 

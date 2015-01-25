@@ -2,7 +2,7 @@
 
 #include "attachment.h"
 
-DEFN_CREATABLE(ChordPatternAttachment);
+DEFN_CREATABLE(ChordPatternAttachment, Attachment);
 
 ChordPatternAttachment::ChordPatternAttachment()
 {

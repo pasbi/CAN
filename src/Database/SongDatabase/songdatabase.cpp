@@ -4,10 +4,20 @@
 
 #include "Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h"
 
+QStringList SongDatabase::initStandardAttributeKeys()
+{
+    QStringList list;
+    list << tr("String:Title") << tr("Combo:Artist") << tr("Date:Added at");
+    return list;
+}
+
+const QStringList SongDatabase::S_STANDARD_ATTRIBUTE_KEYS = initStandardAttributeKeys();
+
 SongDatabase::SongDatabase(Project *project) :
+    QAbstractTableModel( 0 ),
     Database(project)
 {
-    m_attributeKeys << "Title";
+    m_attributeKeys << S_STANDARD_ATTRIBUTE_KEYS;
 }
 
 int SongDatabase::columnCount(const QModelIndex &parent) const
@@ -22,13 +32,49 @@ int SongDatabase::rowCount(const QModelIndex &parent) const
     return m_songs.length();
 }
 
+void editorTypeAndHeaderLabel( const QString & encoding, QString & editorType, QString & attributeValue )
+{
+    // "a:b" -> "a", "b"
+    // "a" -> "", "a"
+    // "a:b:c" -> "a", "b:c"
+
+    QStringList token = encoding.split(":");
+    if (token.size() == 1)
+    {
+        editorType = "";
+        attributeValue = token.first();
+    }
+    else
+    {
+        editorType = token.takeFirst();
+        attributeValue = token.join(":");
+    }
+}
+
+QString extractEditorType(const QString & encoding)
+{
+    QString ed, lb;
+    editorTypeAndHeaderLabel( encoding, ed, lb );
+    return ed;
+}
+
+QString extractHeaderLabel(const QString & encoding)
+{
+    QString ed, lb;
+    editorTypeAndHeaderLabel( encoding, ed, lb );
+    return lb;
+}
+
 QVariant SongDatabase::data(const QModelIndex &index, int role) const
 {
     assert(!index.parent().isValid());
 
+
     switch (role)
     {
     case Qt::DisplayRole:
+        return m_songs[index.row()]->attribute(index.column());
+    case Qt::EditRole:
         return m_songs[index.row()]->attribute(index.column());
     default:
         return QVariant();
@@ -42,6 +88,8 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
         switch (role)
         {
         case Qt::DisplayRole:
+            return extractHeaderLabel(m_attributeKeys[section]);
+        case Qt::EditRole:
             return m_attributeKeys[section];
         default:
             return QVariant();
@@ -71,9 +119,28 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
     return false;
 }
 
-void SongDatabase::datumChanged(const QModelIndex & index)
+void SongDatabase::notifyDataChanged(const QModelIndex &index)
 {
-    emit dataChanged(index, index);
+    notifyDataChanged(index, index);
+}
+
+void SongDatabase::notifyDataChanged(const QModelIndex & start, const QModelIndex & end)
+{
+    emit dataChanged(start, end);
+}
+
+void SongDatabase::notifyDataChanged( Song* song )
+{
+    int row = m_songs.indexOf(song);
+    if (row < 0)
+    {
+        return;
+    }
+
+    QModelIndex start = index( row, 0, QModelIndex() );
+    QModelIndex end   = index( row, columnCount() - 1, QModelIndex() );
+
+    notifyDataChanged( start, end );
 }
 
 bool SongDatabase::insertColumns(int column, int count, const QModelIndex &parent)
@@ -81,17 +148,24 @@ bool SongDatabase::insertColumns(int column, int count, const QModelIndex &paren
     assert( !parent.isValid() );
     assert( m_tmpColumnNameBuffer.size() == count );
 
-    // insert new columns at the end only to ensure m_attributeKeys is what songs expect.
-    // you may sort columns with a proxy model.
-    assert( column == columnCount() );
-
-    beginInsertColumns(parent, column, column + count - 1);
-    for (int i = 0; i < count; ++i)
+    if (isStandardAttribute(column) || isStandardAttribute(column + count - 1))
     {
-        m_attributeKeys.insert( column + i,  m_tmpColumnNameBuffer[i]);
+        WARNING << "Cannot insert column here.";
+    }
+    else
+    {
+        beginInsertColumns(parent, column, column + count - 1);
+        for (int i = 0; i < count; ++i)
+        {
+            m_attributeKeys.insert( column + i,  m_tmpColumnNameBuffer[i]);
+            for (Song* song : m_songs)
+            {
+                song->insertAttribute(column + i, QVariant());
+            }
+        }
+        endInsertColumns();
     }
     m_tmpColumnNameBuffer.clear();
-    endInsertColumns();
 
     return true;
 }
@@ -115,12 +189,23 @@ bool SongDatabase::insertRows(int row, int count, const QModelIndex &parent)
 bool SongDatabase::removeColumns(int column, int count, const QModelIndex &parent)
 {
     assert(!parent.isValid());
-    beginRemoveColumns(parent, column, column + count - 1);
-    for (int i = 0; i < count; ++i)
+    if (isStandardAttribute(column) || isStandardAttribute(column + count - 1))
     {
-        m_attributeKeys.removeAt(column + i);
+            WARNING << "Cannot remove standard attribute.";
     }
-    endRemoveColumns();
+    else
+    {
+        beginRemoveColumns(parent, column, column + count - 1);
+        for (int i = 0; i < count; ++i)
+        {
+            m_attributeKeys.removeAt(column + i);
+            for (Song* s : songs())
+            {
+                s->removeAttribute(column + i);
+            }
+        }
+        endRemoveColumns();
+    }
     return true;
 }
 
@@ -145,7 +230,7 @@ void SongDatabase::appendSong(Song *song)
 }
 
 void SongDatabase::insertSong(Song* song, const int index)
-{
+{    
     m_tmpSongBuffer.append(song);
     assert( insertRows( index, 1, QModelIndex() ));
 }
@@ -176,10 +261,15 @@ Song* SongDatabase::songAtIndex(const QModelIndex &index) const
     }
 }
 
-void SongDatabase::appendColumn(const QString &label)
+void SongDatabase::insertColumn(const int section, const QString &label)
 {
     m_tmpColumnNameBuffer.append(label);
-    assert( insertColumns(columnCount(), 1, QModelIndex()) );
+    assert( insertColumns(section, 1, QModelIndex()) );
+}
+
+void SongDatabase::appendColumn(const QString &label)
+{
+    insertColumn( columnCount(), label );
 }
 
 bool SongDatabase::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
@@ -194,6 +284,22 @@ bool SongDatabase::setHeaderData(int section, Qt::Orientation orientation, const
     {
         return false;
     }
+}
+
+bool SongDatabase::isStandardAttribute(const int section)
+{
+    return section < S_STANDARD_ATTRIBUTE_KEYS.size();
+}
+
+
+QString SongDatabase::editorType( const QModelIndex & index ) const
+{
+    return extractEditorType( m_attributeKeys[index.column()] );
+}
+
+QVariant SongDatabase::data(const int row, const int column, const int role)
+{
+    return data(index(row, column, QModelIndex()), role);
 }
 
 
