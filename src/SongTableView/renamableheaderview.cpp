@@ -19,11 +19,11 @@ RenamableHeaderView::RenamableHeaderView(Qt::Orientation orientation, SongTableV
 
 void RenamableHeaderView::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    int section = parent()->columnAt(event->pos().x());
+    int sectionLeft  = parent()->columnAt(event->pos().x() - 5);
+    int sectionRight = parent()->columnAt(event->pos().x() + 5);
 
-    editHeader( section );
-
-    //spawnHeaderEdit();
+    if (sectionLeft == sectionRight)
+        editHeader( sectionRight );
 }
 
 void RenamableHeaderView::editHeader(int section, bool endMacroOnFinish)
