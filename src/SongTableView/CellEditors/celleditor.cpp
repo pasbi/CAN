@@ -23,7 +23,7 @@ void CellEditor::setSolitaryWidget(QWidget *widget)
     layout->setSpacing(0);
     setLayout(layout);
     setFocusProxy(widget);  // delegate focus to widget
-    widget->installEventFilter(widget);
+    widget->installEventFilter(this);
 }
 
 void CellEditor::setCurrentData(const QVariant &data)

@@ -15,9 +15,6 @@ public:
 
     SongDatabase* model() const { return static_cast<SongDatabase*>( QTableView::model() ); }
 
-protected:
-    void focusOutEvent(QFocusEvent *event);
-
 private slots:
     void showContextMenu(QPoint pos);
 

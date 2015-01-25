@@ -26,6 +26,7 @@ SongTableView::SongTableView(QWidget *parent) :
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 
     setItemDelegate( m_delegate );
+    installEventFilter(this);
 
 }
 
@@ -43,7 +44,6 @@ QModelIndex SongTableView::indexUnderCursor() const
 {
     QPoint pos = viewport()->mapFromGlobal( QCursor::pos() );
     return indexAt(pos);
-
 }
 
 void SongTableView::setUpContextMenu(QMenu *menu)
@@ -71,13 +71,6 @@ void SongTableView::setUpContextMenu(QMenu *menu)
         model()->project()->pushCommand( naCommand );
         qobject_cast<RenamableHeaderView*>(horizontalHeader())->editHeader( model()->columnCount() - 1, true );
     });
-}
-
-void SongTableView::focusOutEvent(QFocusEvent *event)
-{
-    qDebug() << "focusus out";
-
-   QTableView::focusOutEvent(event);
 }
 
 

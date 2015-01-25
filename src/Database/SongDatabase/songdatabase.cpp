@@ -7,7 +7,7 @@ SongDatabase::SongDatabase(Project *project) :
     QAbstractTableModel( 0 ),
     Database(project)
 {
-
+    m_attributeKeys << "Hello" << "Wrodl";
 }
 
 int SongDatabase::columnCount(const QModelIndex &parent) const
