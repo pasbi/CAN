@@ -3,7 +3,9 @@
 #include "CellEditors/celleditor.h"
 #include "global.h"
 #include "Database/SongDatabase/songdatabase.h"
+#include "Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h"
 #include <QLineEdit>
+#include "project.h"
 
 SongAttributeDelegate::SongAttributeDelegate(SongTableView *parent) :
     QItemDelegate(parent)
@@ -51,13 +53,17 @@ SongTableView* SongAttributeDelegate::parent() const
 
 void SongAttributeDelegate::setModelData(QWidget *editor, QAbstractItemModel *, const QModelIndex &index) const
 {
+    QVariant newData;
     if (!editor->inherits(CellEditor::staticMetaObject.className()))
     {
-        return QItemDelegate::setModelData(editor, model(), index);
+        WARNING << editor << " is not a CellEditor.";
+    }
+    else
+    {
+        newData = qobject_cast<CellEditor*>(editor)->editedData();
     }
 
-    //TODO fire command here.
-    model()->setData(index, qobject_cast<CellEditor*>(editor)->editedData(), Qt::EditRole );
+    model()->project()->pushCommand( new SongDatabaseEditSongCommand( model(), index, newData, Qt::EditRole ) );
 }
 
 void SongAttributeDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
@@ -65,8 +71,6 @@ void SongAttributeDelegate::setEditorData(QWidget *editor, const QModelIndex &in
     // since editor gather informations from model itself, this mehod should do nothing.
     Q_UNUSED(editor);
     Q_UNUSED(index);
-
-
 }
 
 

@@ -2,6 +2,7 @@
 #define DATEEDITOR_H
 
 #include "celleditor.h"
+#include <QDateTimeEdit>
 
 
 class DateEditor : public CellEditor
@@ -13,6 +14,11 @@ public:
 
     void polish();
     QVariant editedData() const;
+
+private:
+    QDateTimeEdit* m_dateTimeEdit;
+
+
 
 };
 

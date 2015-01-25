@@ -10,10 +10,6 @@ ComboEditor::ComboEditor(QWidget *parent) :
     m_combo( new QComboBox(this) )
 {
     setSolitaryWidget(m_combo);
-    installEventFilter(this);
-    installEventFilter(m_combo);
-    m_combo->installEventFilter(this);
-
 }
 
 void ComboEditor::polish()

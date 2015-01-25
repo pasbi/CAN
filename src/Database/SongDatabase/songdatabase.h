@@ -90,10 +90,6 @@ public:
     QString editorType( const QModelIndex & index ) const;
 private:
     QStringList  m_attributeKeys;
-    static QStringList initStandardAttributeKeys();
-
-    static const QStringList S_STANDARD_ATTRIBUTE_KEYS;
-
 
 
 
