@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
+#include "Database/SongDatabase/songdatabasesortproxy.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,8 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&m_project, SIGNAL(canUndoChanged(bool)), ui->pushButton_2, SLOT(setEnabled(bool)));
     connect(&m_project, SIGNAL(canRedoChanged(bool)), ui->pushButton_3, SLOT(setEnabled(bool)));
 
-
-    ui->tableView->setModel(m_project.songDatabase());
+    ui->widget->setModel(m_project.songDatabaseProxy());
 }
 
 MainWindow::~MainWindow()

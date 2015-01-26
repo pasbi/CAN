@@ -5,6 +5,7 @@
 #include <QAbstractTableModel>
 #include "song.h"
 
+class SongDatabaseSortProxy;
 class CellEditor;
 class SongDatabase : public QAbstractTableModel, public Database
 {
@@ -109,7 +110,6 @@ private:
      */
     int m_numSongsToRestore;
     QStringList m_attributeKeysToRestore;
-
 
 
 

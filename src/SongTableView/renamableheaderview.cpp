@@ -83,7 +83,6 @@ void RenamableHeaderView::showContextMenu(QPoint pos)
 void RenamableHeaderView::setUpContextMenu(QMenu *menu)
 {
     int section = sectionUnderCursor();
-    qDebug() << section;
     if (section < 0)
         return;
 

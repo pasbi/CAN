@@ -25,8 +25,12 @@ SongTableView::SongTableView(QWidget *parent) :
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 
-    setItemDelegate( m_delegate );
-    installEventFilter(this);
+    //setItemDelegate( m_delegate );
+
+    setSelectionMode(QAbstractItemView::SingleSelection);
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    setAlternatingRowColors(true);
 
 }
 
@@ -52,7 +56,7 @@ void SongTableView::setUpContextMenu(QMenu *menu)
     Song* song = model()->songAtIndex(index);
     // new Song
     Util::addAction(menu, tr("New Song"), [this](){
-       model()->project()->pushCommand( new SongDatabaseNewSongCommand( model(), new Song(model()) ) );
+        model()->project()->pushCommand( new SongDatabaseNewSongCommand( model(), new Song(model()) ) );
     });
 
     Util::addAction(menu, tr("Delete Song"), [this, song]() {
@@ -73,5 +77,9 @@ void SongTableView::setUpContextMenu(QMenu *menu)
     });
 }
 
+void SongTableView::setModel(SongDatabaseSortProxy* model)
+{
+    QTableView::setModel(model);
+}
 
 

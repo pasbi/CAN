@@ -3,8 +3,8 @@
 
 #include <QTableView>
 #include "Database/SongDatabase/songdatabase.h"
-#include <QMouseEvent>
 #include "songattributedelegate.h"
+#include "Database/SongDatabase/songdatabasesortproxy.h"
 
 
 class SongTableView : public QTableView
@@ -13,7 +13,9 @@ class SongTableView : public QTableView
 public:
     explicit SongTableView(QWidget *parent = 0);
 
-    SongDatabase* model() const { return static_cast<SongDatabase*>( QTableView::model() ); }
+    void setModel(SongDatabaseSortProxy* model);
+    SongDatabase* model() const { return proxyModel()->sourceModel(); }
+    SongDatabaseSortProxy* proxyModel() const { return  static_cast<SongDatabaseSortProxy*>( QTableView::model() ); }
 
 private slots:
     void showContextMenu(QPoint pos);

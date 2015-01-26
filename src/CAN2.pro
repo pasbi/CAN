@@ -53,7 +53,9 @@ SOURCES += main.cpp\
     SongTableView/CellEditors/celleditor.cpp \
     SongTableView/CellEditors/stringeditor.cpp \
     SongTableView/CellEditors/comboeditor.cpp \
-    SongTableView/CellEditors/dateeditor.cpp
+    SongTableView/CellEditors/dateeditor.cpp \
+    Database/SongDatabase/songdatabasesortproxy.cpp \
+    SongTableView/songtableviewcontainer.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -88,6 +90,9 @@ HEADERS  += mainwindow.h \
     SongTableView/CellEditors/celleditor.h \
     SongTableView/CellEditors/stringeditor.h \
     SongTableView/CellEditors/comboeditor.h \
-    SongTableView/CellEditors/dateeditor.h
+    SongTableView/CellEditors/dateeditor.h \
+    Database/SongDatabase/songdatabasesortproxy.h \
+    SongTableView/songtableviewcontainer.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    SongTableView/songtableviewcontainer.ui

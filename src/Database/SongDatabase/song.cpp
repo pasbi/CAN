@@ -34,8 +34,6 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
         m_attributes.append(val.toVariant());
     }
 
-    qDebug() << "attributes rest: " << m_attributes;
-
     return true;
 }
 
@@ -84,7 +82,6 @@ QVariant Song::attribute(int index) const
 
 QVariant& Song::attribute(int index)
 {
-    qDebug() << "atrs: " << index << m_attributes;
     assert(index >= 0 && index < m_attributes.length());
     return m_attributes[index];
 }

@@ -18,7 +18,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="SongTableView" name="tableView"/>
+       <widget class="SongTableViewContainer" name="widget" native="true"/>
       </item>
      </layout>
     </item>
@@ -80,9 +80,10 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>SongTableView</class>
-   <extends>QTableView</extends>
-   <header>SongTableView/songtableview.h</header>
+   <class>SongTableViewContainer</class>
+   <extends>QWidget</extends>
+   <header>SongTableView/songtableviewcontainer.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

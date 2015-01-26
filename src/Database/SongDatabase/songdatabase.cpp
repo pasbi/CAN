@@ -5,13 +5,14 @@
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
 #include "Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
+#include "songdatabasesortproxy.h"
 
 
 SongDatabase::SongDatabase(Project *project) :
     QAbstractTableModel( 0 ),
     Database(project)
 {
-    m_attributeKeys << "Hello" << "Wrodl";
+    m_attributeKeys << tr("Song") << tr("Combo:Artist");
 }
 
 int SongDatabase::columnCount(const QModelIndex &parent) const
@@ -63,8 +64,6 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
 {
     assert(!index.parent().isValid());
 
-    qDebug() << "data: " << index << role << m_songs[index.row()]->attribute(index.column());
-
     switch (role)
     {
     case Qt::DisplayRole:
@@ -99,7 +98,7 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
 Qt::ItemFlags SongDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
-    return Qt::ItemIsEnabled | Qt::ItemIsEditable;
+    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable;
 }
 
 bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -296,6 +295,7 @@ QJsonObject SongDatabase::toJsonObject() const
 
 bool SongDatabase::restoreFromJsonObject(const QJsonObject &object)
 {
+
     if (       !checkJsonObject(object, "numsongs", QJsonValue::Double)
             || !checkJsonObject(object, "attributekeys", QJsonValue::Array)  )
     {

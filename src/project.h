@@ -7,6 +7,7 @@
 
 #include "Commands/command.h"
 #include <QUndoStack>
+#include "Database/SongDatabase/songdatabasesortproxy.h"
 
 class Project : public QUndoStack, public GitRepository
 {
@@ -18,16 +19,22 @@ public:
     bool loadFromTempDir();
     bool saveToTempDir();
 
-    SongDatabase* songDatabase() { return &m_songDatabase; }
-    DateDatabase* dateDatabase() { return &m_dateDatabase; }
+    SongDatabase* songDatabase() const { return m_songDatabase; }
+    SongDatabaseSortProxy* songDatabaseProxy() const { return m_songDatabaseProxy; }
+
+    DateDatabase* dateDatabase() const { return m_dateDatabase; }
+
+
 
 public slots:
     void pushCommand(Command* command);
 
 
 private:
-    SongDatabase m_songDatabase;
-    DateDatabase m_dateDatabase;
+    SongDatabase* m_songDatabase;
+    SongDatabaseSortProxy* m_songDatabaseProxy;
+    DateDatabase* m_dateDatabase;
+
 
 };
 

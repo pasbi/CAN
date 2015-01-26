@@ -16,7 +16,7 @@ public slots:
     void editHeader(int section , bool endMacroOnFinish = false);
 
 protected:
-    void mouseDoubleClickEvent(QMouseEvent *event);
+   void mouseDoubleClickEvent(QMouseEvent *event);
 
 
 private slots:
