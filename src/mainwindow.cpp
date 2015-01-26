@@ -28,7 +28,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::testSlot1()
 {
-    m_project.pushCommand( new SongDatabaseNewSongCommand(m_project.songDatabase()) );
+    m_project.pushCommand( new SongDatabaseNewSongCommand(m_project.songDatabase(), new Song(m_project.songDatabase())) );
 }
 
 void MainWindow::testSlot2()
@@ -44,10 +44,10 @@ void MainWindow::testSlot3()
 
 void MainWindow::testSlot4()
 {
-
+    m_project.save("/home/pascal/test");
 }
 
 void MainWindow::testSlot5()
 {
-
+    m_project.load("/home/pascal/test");
 }

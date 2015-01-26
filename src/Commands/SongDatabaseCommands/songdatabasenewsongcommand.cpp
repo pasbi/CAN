@@ -1,8 +1,9 @@
 #include "songdatabasenewsongcommand.h"
 #include "global.h"
 
-SongDatabaseNewSongCommand::SongDatabaseNewSongCommand(SongDatabase *songDatabase) :
-    SongDatabaseCommand(songDatabase)
+SongDatabaseNewSongCommand::SongDatabaseNewSongCommand(SongDatabase *songDatabase, Song* song) :
+    SongDatabaseCommand(songDatabase),
+    m_song(song)
 {
 }
 

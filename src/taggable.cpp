@@ -11,27 +11,28 @@ Taggable::~Taggable()
 
 }
 
-void Taggable::restoreFromJsonObject(const QJsonObject& json)
+bool Taggable::restoreFromJsonObject(const QJsonObject& json)
 {
-    if (json["Taggable"].isArray())
+    if (!checkJsonObject(json, "tags", QJsonValue::Array))
     {
-        m_tags.clear();
-        for (const QJsonValue & value : json["Taggable"].toArray())
+        return false;
+    }
+
+    m_tags.clear();
+    for (const QJsonValue & value : json["tags"].toArray())
+    {
+        if (value.isString())
         {
-            if (value.isString())
-            {
-                m_tags.insert(value.toString());
-            }
-            else
-            {
-                WARNING << "Expected String";
-            }
+            m_tags.insert(value.toString());
+        }
+        else
+        {
+            WARNING << "Expected String";
+            return false;
         }
     }
-    else
-    {
-        WARNING << "Expected key \"Taggable\"";
-    }
+
+    return true;
 }
 
 QJsonObject Taggable::toJsonObject() const

@@ -20,7 +20,11 @@ QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOption
 
     if (Creatable::category(classname) != "CellEditor")
     {
-        WARNING << "Unknown editor widget \"" << classname << "\".";
+        if (classname != "Editor")
+        {
+            // default to StringEditor without warning
+            WARNING << "Unknown editor widget \"" << classname << "\".";
+        }
         classname = "StringEditor";
     }
     assert( CREATE(classname, editor) );

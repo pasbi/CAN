@@ -46,14 +46,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="pushButton_4">
         <property name="text">
          <string>Action4</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_4">
+       <widget class="QPushButton" name="pushButton_5">
         <property name="text">
          <string>Action5</string>
         </property>

@@ -1,8 +1,10 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include "persistentobject.h"
+
 class Project;
-class Database
+class Database : public PersistentObject
 {
 public:
     Database(Project* project);

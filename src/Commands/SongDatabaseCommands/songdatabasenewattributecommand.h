@@ -6,7 +6,7 @@
 class SongDatabaseNewAttributeCommand : public SongDatabaseCommand
 {
 public:
-    SongDatabaseNewAttributeCommand( SongDatabase* songDatabase );
+    SongDatabaseNewAttributeCommand( SongDatabase* songDatabase, const QString & attributeKey = QObject::tr("Unnamed") );
     void undo();
     void redo();
 

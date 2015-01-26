@@ -14,14 +14,42 @@ Song::Song(SongDatabase* database) :
 }
 
 
-void Song::restoreFromJsonObject(const QJsonObject &json)
+bool Song::restoreFromJsonObject(const QJsonObject &json)
 {
-    Taggable::restoreFromJsonObject(json);
+    if (!Taggable::restoreFromJsonObject(json))
+    {
+        return false;
+    }
+
+    if (!checkJsonObject(json, "attributes", QJsonValue::Array))
+    {
+        return false;
+    }
+
+    QJsonArray attributes = json["attributes"].toArray();
+    m_attributes.clear();
+    m_attributes.reserve(attributes.size());
+    for (const QJsonValue & val : attributes)
+    {
+        m_attributes.append(val.toVariant());
+    }
+
+    qDebug() << "attributes rest: " << m_attributes;
+
+    return true;
 }
 
 QJsonObject Song::toJsonObject() const
 {
     QJsonObject json = Taggable::toJsonObject();
+
+    QJsonArray array;
+    for (const QVariant & v : m_attributes)
+    {
+        array.append(QJsonValue::fromVariant(v));
+    }
+
+    json.insert("attributes", array);
 
     return json;
 }
@@ -38,10 +66,8 @@ void Song::setTitle(const QString &title)
 
 void Song::setAttribute(int index, const QVariant &data)
 {
-    if (index < m_attributes.size())
-    {
-        m_attributes[index] = data;
-    }
+    assert(index >= 0 && index < m_attributes.length());
+    m_attributes[index] = data;
     m_songDatabase->notifyDataChanged( this );
 }
 
@@ -52,22 +78,14 @@ void Song::insertAttribute(int index, const QVariant &data)
 
 QVariant Song::attribute(int index) const
 {
-    if (index < m_attributes.size())
-    {
-        return m_attributes[index];
-    }
-    else
-    {
-        return QVariant();
-    }
+    assert(index >= 0 && index < m_attributes.length());
+    return m_attributes[index];
 }
 
 QVariant& Song::attribute(int index)
 {
-    if (index >= m_attributes.size())
-    {
-        setAttribute(index, QVariant());
-    }
+    qDebug() << "atrs: " << index << m_attributes;
+    assert(index >= 0 && index < m_attributes.length());
     return m_attributes[index];
 }
 

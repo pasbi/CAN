@@ -52,7 +52,7 @@ void SongTableView::setUpContextMenu(QMenu *menu)
     Song* song = model()->songAtIndex(index);
     // new Song
     Util::addAction(menu, tr("New Song"), [this](){
-       model()->project()->pushCommand( new SongDatabaseNewSongCommand( model() ) );
+       model()->project()->pushCommand( new SongDatabaseNewSongCommand( model(), new Song(model()) ) );
     });
 
     Util::addAction(menu, tr("Delete Song"), [this, song]() {

@@ -12,7 +12,7 @@ class Song : public Taggable
 public:
     Song(SongDatabase *database);
 
-    void restoreFromJsonObject(const QJsonObject &json);
+    bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
 
 

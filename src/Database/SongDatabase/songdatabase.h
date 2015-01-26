@@ -93,6 +93,28 @@ private:
 
 
 
+    /////////////////////////////////////////////////
+    ////
+    ///  Converting to and from JsonObject
+    //
+    /////////////////////////////////////////////////
+public:
+    bool restoreFromJsonObject(const QJsonObject & object);
+    QJsonObject toJsonObject() const;
+    bool saveTo(const QString &path) const;
+    bool loadFrom(const QString &path);
+private:
+    /**
+     * @brief m_numSongsToRestore number of songs that will be restored. Use this only for loading issues.
+     */
+    int m_numSongsToRestore;
+    QStringList m_attributeKeysToRestore;
+
+
+
+
+
+
 };
 
 #endif // SONGDATABASE_H

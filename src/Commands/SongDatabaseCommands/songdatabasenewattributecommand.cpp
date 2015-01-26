@@ -1,8 +1,8 @@
 #include "songdatabasenewattributecommand.h"
 
-SongDatabaseNewAttributeCommand::SongDatabaseNewAttributeCommand(SongDatabase *songDatabase) :
+SongDatabaseNewAttributeCommand::SongDatabaseNewAttributeCommand(SongDatabase *songDatabase, const QString &attributeKey) :
     SongDatabaseCommand( songDatabase ),
-    m_label(QObject::tr("Unnamed"))
+    m_label(attributeKey)
 {
 
 }

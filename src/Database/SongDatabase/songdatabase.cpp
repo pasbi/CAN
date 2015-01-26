@@ -1,6 +1,10 @@
 #include "songdatabase.h"
 #include "global.h"
 #include "project.h"
+#include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
+#include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
+#include "Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h"
+#include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 
 
 SongDatabase::SongDatabase(Project *project) :
@@ -59,6 +63,7 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
 {
     assert(!index.parent().isValid());
 
+    qDebug() << "data: " << index << role << m_songs[index.row()]->attribute(index.column());
 
     switch (role)
     {
@@ -272,6 +277,101 @@ QString SongDatabase::editorType( const QModelIndex & index ) const
 QVariant SongDatabase::data(const int row, const int column, const int role)
 {
     return data(index(row, column, QModelIndex()), role);
+}
+
+QJsonObject SongDatabase::toJsonObject() const
+{
+    QJsonObject meta;
+    meta.insert("numsongs", m_songs.size());
+
+    QJsonArray attributeKeys;
+    for (int i = 0; i < m_attributeKeys.size(); ++i)
+    {
+        attributeKeys.append(m_attributeKeys[i]);
+    }
+    meta.insert("attributekeys", attributeKeys);
+
+    return meta;
+}
+
+bool SongDatabase::restoreFromJsonObject(const QJsonObject &object)
+{
+    if (       !checkJsonObject(object, "numsongs", QJsonValue::Double)
+            || !checkJsonObject(object, "attributekeys", QJsonValue::Array)  )
+    {
+        return false;
+    }
+
+    checkJsonObject(object, "numsongs", QJsonValue::Double);
+
+    m_numSongsToRestore = object["numsongs"].toInt();
+    QJsonArray attributekeys = object["attributekeys"].toArray();
+
+    m_attributeKeysToRestore.clear();
+    for (const QJsonValue & val : attributekeys )
+    {
+        m_attributeKeysToRestore.append(val.toString());
+    }
+
+    return m_numSongsToRestore >= 0;
+}
+
+bool SongDatabase::saveTo(const QString &path) const
+{
+    Database::saveTo(path);
+    for (int i = 0; i < m_songs.size(); ++i)
+    {
+        QString path = project()->makeAbsolute( QString("song%1").arg(i) );
+        m_songs[i]->saveTo(path);
+    }
+
+    return true;
+}
+
+bool SongDatabase::loadFrom(const QString &path)
+{
+    bool success = true;
+    beginResetModel();
+
+    project()->beginMacro(QString(tr("Load")));
+    if (Database::loadFrom(path))
+    {
+
+        while (!m_songs.isEmpty())
+        {
+            project()->pushCommand( new SongDatabaseRemoveSongCommand( this, m_songs.last() ) );
+        }
+
+        while (!m_attributeKeys.isEmpty())
+        {
+            project()->pushCommand( new SongDatabaseRemoveColumnCommand( this, m_attributeKeys.length() - 1 ) );
+        }
+
+        for (int i = 0; i < m_attributeKeysToRestore.size(); ++i)
+        {
+            project()->pushCommand( new SongDatabaseNewAttributeCommand( this, m_attributeKeysToRestore[i] ));
+        }
+
+        for (int i = 0; i < m_numSongsToRestore; ++i)
+        {
+            QString path = project()->makeAbsolute( QString("song%1").arg(i) );
+            Song* s = new Song(this);
+            project()->pushCommand( new SongDatabaseNewSongCommand( this, s ) );
+            s->loadFrom(path);
+        }
+
+    }
+    else
+    {
+        WARNING << "Loading failed.";
+        success = false;
+    }
+
+    project()->endMacro();
+
+    endResetModel();
+
+    return success;
 }
 
 
