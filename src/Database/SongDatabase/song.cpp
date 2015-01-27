@@ -13,6 +13,7 @@ Song::Song(SongDatabase* database) :
     }
 }
 
+#include <QJsonDocument>
 
 bool Song::restoreFromJsonObject(const QJsonObject &json)
 {

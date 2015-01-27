@@ -31,7 +31,7 @@ SOURCES += main.cpp\
     persistentobject.cpp \
     creatable.cpp \
     Attachments/chordpatternattachment.cpp \
-    fileindex.cpp \
+    FileIndex/fileindex.cpp \
     Database/DateDatabase/date.cpp \
     UnitTest/creatabletest.cpp \
     UnitTest/unittests.cpp \
@@ -55,7 +55,11 @@ SOURCES += main.cpp\
     SongTableView/CellEditors/comboeditor.cpp \
     SongTableView/CellEditors/dateeditor.cpp \
     Database/SongDatabase/songdatabasesortproxy.cpp \
-    SongTableView/songtableviewcontainer.cpp
+    SongTableView/songtableviewcontainer.cpp \
+    FileIndexView/indexview.cpp \
+    FileIndex/fileindexentry.cpp \
+    FileIndex/file.cpp \
+    FileIndex/dir.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -69,7 +73,7 @@ HEADERS  += mainwindow.h \
     creatable.h \
     Attachments/chordpatternattachment.h \
     global.h \
-    fileindex.h \
+    FileIndex/fileindex.h \
     Database/DateDatabase/date.h \
     UnitTest/creatabletest.h \
     UnitTest/unittests.h \
@@ -92,7 +96,14 @@ HEADERS  += mainwindow.h \
     SongTableView/CellEditors/comboeditor.h \
     SongTableView/CellEditors/dateeditor.h \
     Database/SongDatabase/songdatabasesortproxy.h \
-    SongTableView/songtableviewcontainer.h
+    SongTableView/songtableviewcontainer.h \
+    FileIndexView/indexview.h \
+    FileIndex/fileindexentry.h \
+    FileIndex/file.h \
+    FileIndex/dir.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui
+
+OTHER_FILES += \
+    FileIndexRecycle.txt

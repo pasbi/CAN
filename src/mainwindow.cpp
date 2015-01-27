@@ -3,6 +3,7 @@
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -15,10 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButton_4, SIGNAL(clicked()), this, SLOT(testSlot4()));
     connect(ui->pushButton_5, SIGNAL(clicked()), this, SLOT(testSlot5()));
 
-    connect(&m_project, SIGNAL(canUndoChanged(bool)), ui->pushButton_2, SLOT(setEnabled(bool)));
-    connect(&m_project, SIGNAL(canRedoChanged(bool)), ui->pushButton_3, SLOT(setEnabled(bool)));
+    ui->treeView->setModel(&m_index);
 
-    ui->widget->setModel(m_project.songDatabaseProxy());
 }
 
 MainWindow::~MainWindow()

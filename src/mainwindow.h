@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "project.h"
+#include "FileIndex/fileindex.h"
 
 
 namespace Ui {
@@ -28,6 +29,8 @@ private:
     Ui::MainWindow *ui;
 
     Project m_project;
+    FileIndex m_index;
+
 };
 
 #endif // MAINWINDOW_H
