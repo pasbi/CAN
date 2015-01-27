@@ -16,6 +16,7 @@ SongTableViewContainer::SongTableViewContainer(QWidget *parent) :
         ui->comboBox->setCurrentIndex(-1);
         ui->tableView->proxyModel()->setFilterWildcard("");
     });
+
 }
 
 SongTableViewContainer::~SongTableViewContainer()

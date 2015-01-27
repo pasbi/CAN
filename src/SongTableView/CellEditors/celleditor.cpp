@@ -3,7 +3,6 @@
 #include <QHBoxLayout>
 #include "global.h"
 #include <QApplication>
-#include <QFocusEvent>
 
 CellEditor::CellEditor(QWidget *parent) :
     QWidget(parent),

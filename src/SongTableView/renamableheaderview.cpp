@@ -5,25 +5,15 @@
 #include "project.h"
 #include "Commands/SongDatabaseCommands/songdatabaserenameheadercommand.h"
 #include "Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h"
-#include <QAction>
-#include <QMenu>
 #include "util.h"
 #include "global.h"
-#include <QApplication>
 
 RenamableHeaderView::RenamableHeaderView(Qt::Orientation orientation, SongTableView *parent) :
     QHeaderView(orientation, parent)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-    connect(this, &RenamableHeaderView::sectionResized, [this, parent](){
-        // oddly, the columns in the table are not resized when the header is resized.
-        // though, the colmns are resized when table loses focus.
-        // since table can lose focus safely on resize, fire appropriate event to reach the
-        // desired behaviour on the wrong track.
-        QFocusEvent myFocusOutEvent(QEvent::FocusOut);
-        QApplication::sendEvent( parent, &myFocusOutEvent );
-    });
+    connect(this, SIGNAL(sectionResized(int,int,int)), parent, SLOT(fakeFocusOutEvent()));
 }
 
 void RenamableHeaderView::mouseDoubleClickEvent(QMouseEvent *event)

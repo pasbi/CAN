@@ -10,13 +10,14 @@
 #include "renamableheaderview.h"
 #include <functional>
 #include "util.h"
+#include <QFocusEvent>
+#include <QApplication>
 
 
 SongTableView::SongTableView(QWidget *parent) :
     QTableView(parent),
     m_delegate( new SongAttributeDelegate(this) )
 {
-    verticalHeader()->hide();
     delete horizontalHeader();
     setHorizontalHeader(new RenamableHeaderView( Qt::Horizontal, this ));
     horizontalHeader()->show();
@@ -31,6 +32,17 @@ SongTableView::SongTableView(QWidget *parent) :
     setSelectionBehavior(QAbstractItemView::SelectRows);
 
     setAlternatingRowColors(true);
+
+    // todo fire focusout event on section move
+    horizontalHeader()->setSectionsMovable(true);
+    horizontalHeader()->setDragEnabled(true);
+    horizontalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
+    connect(horizontalHeader(), SIGNAL(sectionMoved(int,int,int)), this, SLOT(fakeFocusOutEvent()));
+
+    verticalHeader()->setSectionsMovable(true);
+    verticalHeader()->setDragEnabled(true);
+    verticalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
+    connect(verticalHeader(), SIGNAL(sectionMoved(int,int,int)), this, SLOT(fakeFocusOutEvent()));
 
 }
 
@@ -80,6 +92,16 @@ void SongTableView::setUpContextMenu(QMenu *menu)
 void SongTableView::setModel(SongDatabaseSortProxy* model)
 {
     QTableView::setModel(model);
+}
+
+void SongTableView::fakeFocusOutEvent()
+{
+    // oddly, the columns in the table are not resized when the header is resized.
+    // though, the colmns are resized when table loses focus.
+    // since table can lose focus safely on resize, fire appropriate event to reach the
+    // desired behaviour on the wrong track.
+    QFocusEvent myFocusOutEvent(QEvent::FocusOut);
+    QApplication::sendEvent( this, &myFocusOutEvent );
 }
 
 

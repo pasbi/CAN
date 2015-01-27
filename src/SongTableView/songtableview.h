@@ -17,6 +17,9 @@ public:
     SongDatabase* model() const { return proxyModel()->sourceModel(); }
     SongDatabaseSortProxy* proxyModel() const { return  static_cast<SongDatabaseSortProxy*>( QTableView::model() ); }
 
+public slots:
+    void fakeFocusOutEvent();
+
 private slots:
     void showContextMenu(QPoint pos);
 
