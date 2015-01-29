@@ -20,6 +20,17 @@ public:
 
     FileIndexEntry* entry(const QModelIndex & index) const;
 
+    FileIndexEntry* find(QString & path) const;
+
+    void addEntry(const QString &absolutePath );
+
+    QModelIndex indexOf(FileIndexEntry *entry ) const;
+
+private:
+    QList<FileIndexEntry*> m_inputBuffer;
+    bool insertRows(int row, int count, const QModelIndex &parent);
+    void fillGap(const QString & nearest, const QString & current);
+
 
 
 private:

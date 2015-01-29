@@ -7,9 +7,11 @@
 class File : public FileIndexEntry
 {
 public:
-    File(Dir* parent, const QString & relativeFilename);
+    File(Dir* parent, const QString & path);
 
-    QString absoluteFilename() const;
+    FileIndexEntry* find(QString &filepath);
+
+    bool isDir() const { return false; }
 };
 
 #endif // FILEENTRY_H

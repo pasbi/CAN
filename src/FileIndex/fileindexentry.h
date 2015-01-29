@@ -20,16 +20,28 @@ public:
      * @return
      */
     QString path() const { return m_path; }
+    QString absolutePath() const;
     QList<FileIndexEntry*> children() const { return m_children; }
 
-    bool isRoot() const { return !!parent(); }
+    bool isRoot() const { return !parent(); }
 
+    virtual FileIndexEntry* find(QString & path) = 0;
+    void insertChild(int i, FileIndexEntry* child);
+    virtual bool isDir() const = 0;
+    bool isFile() const { return !isDir(); }
+
+    /**
+     * @brief create creates an directory or file entry.
+     * @param parent
+     * @param path
+     * @return
+     */
+    static FileIndexEntry* create(Dir* parent, const QString & path, const QString &absolutePath);
 
 
 private:
-    // parent is always a dir, children is always a file.
-    // thus, files may have parent, dirs never have.
-    Dir* const m_parent;
+
+    Dir* m_parent;
     const QString m_path;
     QList<FileIndexEntry*> m_children;
 };

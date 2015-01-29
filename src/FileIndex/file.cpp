@@ -1,17 +1,18 @@
 #include "file.h"
 
-File::File(Dir* parent, const QString &relativeFilename) : FileIndexEntry(parent, relativeFilename)
+File::File(Dir* parent, const QString &path) : FileIndexEntry(parent, path)
 {
 }
 
-QString File::absoluteFilename() const
+FileIndexEntry* File::find(QString &filepath)
 {
-    if (parent())
+    if (filepath == path())
     {
-        return parent()->dir().absoluteFilePath(path());
+        filepath = "";
+        return this;
     }
     else
     {
-        return path();
+        return NULL;
     }
 }

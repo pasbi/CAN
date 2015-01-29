@@ -7,10 +7,10 @@
 class Dir : public FileIndexEntry
 {
 public:
-    // is always root
-    Dir(const QString & absolutePath);
+    Dir(Dir *parent, const QString & path);
+    FileIndexEntry* find(QString &path);
 
-    QDir dir() const { return QDir(path()); }
+    bool isDir() const { return true; }
 
 };
 
