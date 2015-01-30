@@ -1,17 +1,18 @@
 #ifndef INDEXVIEW_H
 #define INDEXVIEW_H
 
-#include <QTreeView>
+#include <QTableView>
 #include "FileIndex/fileindex.h"
 
-class FileIndexView : public QTreeView
+class FileIndexView : public QTableView
 {
     Q_OBJECT
 public:
     explicit FileIndexView(QWidget *parent = 0);
-    FileIndex* model() const { return static_cast<FileIndex*>( QTreeView::model() ); }
+    FileIndex* model() const;
 
     QString currentPath() const;
+
 
 };
 

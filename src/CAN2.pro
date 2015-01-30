@@ -57,10 +57,9 @@ SOURCES += main.cpp\
     Database/SongDatabase/songdatabasesortproxy.cpp \
     SongTableView/songtableviewcontainer.cpp \
     FileIndexView/fileindexview.cpp \
-    FileIndex/fileindexentry.cpp \
-    FileIndex/file.cpp \
-    FileIndex/dir.cpp \
-    FileIndexView/fileindexviewcontainer.cpp
+    FileIndexView/fileindexviewcontainer.cpp \
+    FileIndex/bihashedfileindex.cpp \
+    filterwidget.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -98,15 +97,15 @@ HEADERS  += mainwindow.h \
     SongTableView/CellEditors/dateeditor.h \
     Database/SongDatabase/songdatabasesortproxy.h \
     SongTableView/songtableviewcontainer.h \
-    FileIndex/fileindexentry.h \
-    FileIndex/file.h \
-    FileIndex/dir.h \
     FileIndexView/fileindexviewcontainer.h \
-    FileIndexView/fileindexview.h
+    FileIndexView/fileindexview.h \
+    FileIndex/bihashedfileindex.h \
+    filterwidget.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
-    FileIndexView/fileindexviewcontainer.ui
+    FileIndexView/fileindexviewcontainer.ui \
+    filterwidget.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

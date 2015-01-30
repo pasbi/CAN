@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "FileIndex/fileindex.h"
+#include <QSortFilterProxyModel>
 
 namespace Ui {
 class FileIndexViewContainer;
@@ -19,6 +20,7 @@ public:
 
 private:
     Ui::FileIndexViewContainer *ui;
+    QSortFilterProxyModel m_proxy;
 
 private slots:
     void addFiles();

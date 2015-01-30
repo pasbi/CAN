@@ -2,40 +2,38 @@
 #define FILEINDEX_H
 
 #include <QList>
+#include <QAbstractTableModel>
+#include <QCryptographicHash>
+#include "bihashedfileindex.h"
 
-#include "fileindexentry.h"
-#include <QAbstractItemModel>
 
-
-class FileIndex : public QAbstractItemModel
+class FileIndex : public QAbstractTableModel
 {
+
 public:
     FileIndex();
 
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
-    QModelIndex parent(const QModelIndex &child) const;
     QVariant data(const QModelIndex &index, int role) const;
-    QModelIndex index(int row, int column, const QModelIndex &parent) const;
 
-    FileIndexEntry* entry(const QModelIndex & index) const;
-
-    FileIndexEntry* find(QString & path) const;
+    QString entry(const QModelIndex & index) const;
+    QModelIndex indexOf(const QString & path) const;
 
     void addEntry(const QString &absolutePath );
-
-    QModelIndex indexOf(FileIndexEntry *entry ) const;
     void addRecursive( const QString & path );
 
+public:
+    bool removeRows(int row, int count, const QModelIndex &parent);
 private:
-    QList<FileIndexEntry*> m_inputBuffer;
     bool insertRows(int row, int count, const QModelIndex &parent);
-    void fillGap(const QString & nearest, const QString & current);
-
 
 
 private:
-    QList<FileIndexEntry*> m_entries;
+    BiHashedFileIndex m_biHash;
+    QList<QString> m_inputBuffer;
+
+
 
 
 
