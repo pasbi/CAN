@@ -9,7 +9,9 @@ FileIndex::FileIndex()
 {
     addEntry("/");
     addEntry("/home/");
-    addEntry("/home/pascal/test/abc/123/b/");
+    addEntry("/home/pascal/test/abc/123/b/f");
+    addEntry("/home/pascal/test/abc/123/b/g");
+    addEntry("/home/pascal/test/abc/123/b/c/");
 }
 
 int FileIndex::rowCount(const QModelIndex &parent) const
@@ -198,8 +200,18 @@ void FileIndex::fillGap(const QString &nearest, const QString &current)
     qDebug() << "fill gap: " << nList << cList;
     assert(nList.isEmpty() || (nList.first() == "" && nList.size() == 1));
 
+
     QString newEntry = nearest;
-    for (int i = 0; i < cList.size() - 2; ++i)
+    int n = cList.length();
+    if (!cList.isEmpty() && cList.last().isEmpty())
+    {
+        n -= 2;
+    }
+    else
+    {
+        n -= 1;
+    }
+    for (int i = 0; i < n; ++i)
     {
         newEntry += cList[i];
         newEntry += "/";
