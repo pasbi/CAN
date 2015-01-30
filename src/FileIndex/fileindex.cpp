@@ -7,11 +7,6 @@
 
 FileIndex::FileIndex()
 {
-    addEntry("/");
-    addEntry("/home/");
-    addEntry("/home/pascal/test/abc/123/b/f");
-    addEntry("/home/pascal/test/abc/123/b/g");
-    addEntry("/home/pascal/test/abc/123/b/c/");
 }
 
 int FileIndex::rowCount(const QModelIndex &parent) const
@@ -64,7 +59,18 @@ QVariant FileIndex::data(const QModelIndex &index, int role) const
         case 0:
             return entry(index)->path();
         case 1:
-            return entry(index)->absolutePath();
+        {
+            FileIndexEntry* e = entry(index);
+            if (e->isDir())
+            {
+                return "";
+            }
+            else
+            {
+                File* file = static_cast<File*>( e );
+                return QString(file->hash().toHex());
+            }
+        }
         case 2:
             return entry(index)->isDir() ? "[DIR]" : "[FILE]";
         default:
@@ -116,6 +122,10 @@ bool FileIndex::insertRows(int row, int count, const QModelIndex &parent)
         {
             qDebug() << "insert [1]" << row << i;
             entry(parent)->insertChild(row + i, m_inputBuffer[i]);
+            if (m_inputBuffer[i]->isFile())
+            {
+                static_cast<File*>( m_inputBuffer[i] )->updateHash();
+            }
         }
     }
     else
@@ -124,6 +134,10 @@ bool FileIndex::insertRows(int row, int count, const QModelIndex &parent)
         {
             qDebug() << "insert [2]" << row << i;
             m_entries.insert(row + i, m_inputBuffer[i]);
+            if (m_inputBuffer[i]->isFile())
+            {
+                static_cast<File*>( m_inputBuffer[i] )->updateHash();
+            }
         }
     }
     endInsertRows();
@@ -148,6 +162,11 @@ QModelIndex FileIndex::indexOf(FileIndexEntry *entry) const
 
 void FileIndex::addEntry(const QString & absolutePath)
 {
+    if (m_entries.isEmpty() && absolutePath != "/")
+    {
+        addEntry("/");
+    }
+
     QString path = absolutePath;
     FileIndexEntry* nearest = find(path);
     if (nearest)
@@ -161,7 +180,7 @@ void FileIndex::addEntry(const QString & absolutePath)
     path = absolutePath;
     nearest = find(path);
 
-    if (absolutePath.isEmpty())
+    if (path.isEmpty())
     {
         // nearest is desired entry
         WARNING << "FileIndex already contains " << absolutePath;
@@ -174,14 +193,12 @@ void FileIndex::addEntry(const QString & absolutePath)
 
             Dir* parentDir = static_cast<Dir*>(nearest);
             m_inputBuffer.append( FileIndexEntry::create( NULL, path, absolutePath ) );
-            qDebug() << "insert rows [1] " << path;
             insertRows( parentDir->children().size() , 1, indexOf(parentDir) );
         }
         else
         {
             fillGap( "", absolutePath );
             m_inputBuffer.append( FileIndexEntry::create( NULL, path, absolutePath ) );
-            qDebug() << "insert rows [2] " << path;
             insertRows( m_entries.size(), 1, QModelIndex() );
         }
     }
@@ -218,6 +235,24 @@ void FileIndex::fillGap(const QString &nearest, const QString &current)
         addEntry(newEntry);
     }
 
+}
+
+void FileIndex::addRecursive(const QString &path)
+{
+    qDebug() << "add rec: " << path;
+    if (QFileInfo(path).isFile())
+    {
+        addEntry(path);
+    }
+    else
+    {
+        QDir dir(path);
+        qDebug() << dir.entryList();
+        for (const QString & entry : dir.entryList( QDir::NoDotAndDotDot | QDir::Hidden | QDir::Files | QDir::Dirs ))
+        {
+            addRecursive(dir.absoluteFilePath(entry));
+        }
+    }
 }
 
 

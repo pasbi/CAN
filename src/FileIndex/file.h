@@ -12,6 +12,13 @@ public:
     FileIndexEntry* find(QString &filepath);
 
     bool isDir() const { return false; }
+
+    void updateHash();
+
+    QByteArray hash() const { return m_hash; }
+
+private:
+    QByteArray m_hash;
 };
 
 #endif // FILEENTRY_H

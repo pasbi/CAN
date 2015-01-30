@@ -25,6 +25,7 @@ public:
     void addEntry(const QString &absolutePath );
 
     QModelIndex indexOf(FileIndexEntry *entry ) const;
+    void addRecursive( const QString & path );
 
 private:
     QList<FileIndexEntry*> m_inputBuffer;

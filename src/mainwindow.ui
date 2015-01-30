@@ -18,7 +18,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QTreeView" name="treeView"/>
+       <widget class="FileIndexViewContainer" name="widget" native="true"/>
       </item>
      </layout>
     </item>
@@ -78,6 +78,14 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>FileIndexViewContainer</class>
+   <extends>QWidget</extends>
+   <header>FileIndexView/fileindexviewcontainer.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
