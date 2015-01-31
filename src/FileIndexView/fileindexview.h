@@ -9,7 +9,10 @@ class FileIndexView : public QTableView
     Q_OBJECT
 public:
     explicit FileIndexView(QWidget *parent = 0);
+    ~FileIndexView();
     FileIndex* model() const;
+    void restore();
+    void save() const;
 
     QString currentPath() const;
 

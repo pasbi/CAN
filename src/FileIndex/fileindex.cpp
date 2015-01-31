@@ -1,6 +1,8 @@
 #include "fileindex.h"
 #include "global.h"
 #include <QDir>
+#include "progressdialog.h"
+#include <QSettings>
 
 FileIndex::FileIndex()
 {
@@ -88,16 +90,48 @@ void FileIndex::addRecursive(const QString &path)
 {
     if (QFileInfo(path).isFile())
     {
-        addEntry(path);
-    }
-    else
-    {
-        QDir dir(path);
-        for (const QString & entry : dir.entryList( QDir::NoDotAndDotDot | QDir::Hidden | QDir::Files | QDir::Dirs ))
+        QString filename = QFileInfo(path).fileName();
+        for (const QString & pattern : m_filter.split("|", QString::SkipEmptyParts))
         {
-            addRecursive(dir.absoluteFilePath(entry));
+            if ( QRegExp( pattern, Qt::CaseSensitive, QRegExp::WildcardUnix ).exactMatch( filename ) )
+            {
+                addEntry(path);
+                break;
+            }
         }
     }
+    else if (!ProgressDialog::isCanceled())
+    {
+        QDir dir(path);
+        for (const QString & entry : dir.entryList( QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ))
+        {
+            addRecursive(dir.absoluteFilePath(entry));
+
+            ProgressDialog::processEvents();
+        }
+    }
+}
+
+void FileIndex::save() const
+{
+    QSettings settings;
+    settings.beginGroup("FileIndex");
+
+    m_biHash.save( settings );
+
+    settings.endGroup();
+}
+
+void FileIndex::restore()
+{
+    QSettings settings;
+    settings.beginGroup("FileIndex");
+
+    beginResetModel();
+    m_biHash.restore( settings );
+    endResetModel();
+
+    settings.endGroup();
 }
 
 

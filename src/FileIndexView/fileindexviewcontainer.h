@@ -21,6 +21,7 @@ public:
 private:
     Ui::FileIndexViewContainer *ui;
     QSortFilterProxyModel m_proxy;
+    QString defautDirectory() const;
 
 private slots:
     void addFiles();

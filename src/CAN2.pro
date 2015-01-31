@@ -59,7 +59,8 @@ SOURCES += main.cpp\
     FileIndexView/fileindexview.cpp \
     FileIndexView/fileindexviewcontainer.cpp \
     FileIndex/bihashedfileindex.cpp \
-    filterwidget.cpp
+    filterwidget.cpp \
+    progressdialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -100,12 +101,14 @@ HEADERS  += mainwindow.h \
     FileIndexView/fileindexviewcontainer.h \
     FileIndexView/fileindexview.h \
     FileIndex/bihashedfileindex.h \
-    filterwidget.h
+    filterwidget.h \
+    progressdialog.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
     FileIndexView/fileindexviewcontainer.ui \
-    filterwidget.ui
+    filterwidget.ui \
+    progressdialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

@@ -7,7 +7,20 @@
 FileIndexView::FileIndexView(QWidget *parent) :
     QTableView(parent)
 {
+}
 
+FileIndexView::~FileIndexView()
+{
+}
+
+void FileIndexView::save() const
+{
+    model()->save();
+}
+
+void FileIndexView::restore()
+{
+    model()->restore();
 }
 
 QString FileIndexView::currentPath() const
@@ -28,7 +41,7 @@ FileIndex* FileIndexView::model() const
     QSortFilterProxyModel* proxy = dynamic_cast<QSortFilterProxyModel*>( QTableView::model() );
     assert( proxy );
     FileIndex* fi = dynamic_cast<FileIndex*>( proxy->sourceModel() );
-    assert(fi);
+    assert( fi );
     return fi;
 }
 

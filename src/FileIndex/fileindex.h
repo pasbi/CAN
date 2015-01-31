@@ -23,6 +23,11 @@ public:
     void addEntry(const QString &absolutePath );
     void addRecursive( const QString & path );
 
+    void setFilter(const QString & filter) { m_filter = filter; }
+
+    void save() const;
+    void restore();
+
 public:
     bool removeRows(int row, int count, const QModelIndex &parent);
 private:
@@ -31,6 +36,7 @@ private:
 
 private:
     BiHashedFileIndex m_biHash;
+    QString m_filter;
     QList<QString> m_inputBuffer;
 
 
