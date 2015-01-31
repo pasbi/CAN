@@ -1,148 +1,160 @@
 #include "fileindex.h"
+#include <QFile>
 #include "global.h"
-#include <QDir>
+#include "indexer.h"
 #include "progressdialog.h"
-#include <QSettings>
 
-FileIndex::FileIndex()
+const QCryptographicHash::Algorithm FileIndex::m_hashAlgorithm = QCryptographicHash::Sha1;
+
+void FileIndex::add(const QString& filename)
 {
-}
+    QFile file(filename);
+    QByteArray hash;
 
-int FileIndex::rowCount(const QModelIndex &parent) const
-{
-    assert( !parent.isValid() );
-
-    return m_biHash.size();
-}
-
-int FileIndex::columnCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent);
-    return 3;   // filename, status, recursive stat, file/dir
-}
-
-QString FileIndex::entry(const QModelIndex &index) const
-{
-    return m_biHash.fileNameAt(index.row());
-}
-
-
-QVariant FileIndex::data(const QModelIndex &index, int role) const
-{
-    if (role == Qt::DisplayRole)
+    if (file.open(QIODevice::ReadOnly))
     {
-        switch (index.column())
-        {
-        case 0:
-            return QFileInfo(entry(index)).fileName();
-        case 1:
-            return QFileInfo(entry(index)).exists() ? tr("Exists") : tr("Does not exist");
-        case 2:
-            return entry(index);
-        }
-    }
 
-    return QVariant();
-}
+        const quint64 BUFFER_SIZE = 16000;  // reading the whole file is to slow. guess the first 16k bytes should be distinct.
+        QByteArray buffer;
+        buffer.resize(BUFFER_SIZE);
+        buffer.fill( 0 );
 
-bool FileIndex::insertRows(int row, int count, const QModelIndex &parent)
-{
-    assert(m_inputBuffer.size() == count);
-    beginInsertRows(parent, row, row + count - 1);
-    for (int i = 0; i < count; ++i)
-    {
-        m_biHash.add( m_inputBuffer[i] );
-    }
-    endInsertRows();
-    m_inputBuffer.clear();
-    return true;
-}
+        file.read( buffer.data(), BUFFER_SIZE  );
+        hash = QCryptographicHash::hash( buffer,
+                                         m_hashAlgorithm );
 
-bool FileIndex::removeRows(int row, int count, const QModelIndex &parent)
-{
-    assert( !parent.isValid() );
-    beginRemoveRows(QModelIndex(), row, row + count - 1);
-    m_biHash.remove(row, count);
-    endRemoveRows();
-    return true;
-}
-
-QModelIndex FileIndex::indexOf(const QString &path) const
-{
-    int row = m_biHash.indexOf(path);
-    return index( row, 0, QModelIndex());
-}
-
-void FileIndex::addEntry(const QString & absolutePath)
-{
-    if ( m_biHash.contains(absolutePath) )
-    {
-        WARNING << "FileIndex already contains " << absolutePath;
     }
     else
     {
-        m_inputBuffer.append(absolutePath);
-        insertRows( m_biHash.size(), 1, QModelIndex() );
+        hash.clear();
+    }
+
+    if (m_backward.contains(filename))
+    {
+        remove( filename );
+    }
+
+    qDebug() << "add " << QString(hash.toHex()) << filename;
+    m_forward.insert(hash, filename);
+    m_backward.insert(filename, hash);
+}
+
+void FileIndex::remove(const QString & filename)
+{
+    QByteArray hash = m_backward.value(filename);
+
+    m_backward.remove(filename);
+    m_forward.remove(hash);
+}
+
+void FileIndex::clear()
+{
+    m_backward.clear();
+    m_forward.clear();
+}
+
+QString FileIndex::filename(const QByteArray &hash) const
+{
+    return m_forward.value(hash);
+}
+
+QByteArray FileIndex::serialize() const
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+
+    stream << quint64( m_backward.size() );
+
+    for (const QString & key : m_backward.keys())
+    {
+        stream << key << m_backward[key];
+    }
+
+    return data;
+}
+
+
+void FileIndex::deserialize( QByteArray data )
+{
+    QDataStream stream(&data, QIODevice::ReadOnly);
+    quint64 size;
+    stream >> size;
+
+    m_backward.clear();
+    m_forward.clear();
+    for (quint64 i = 0; i < size; ++i)
+    {
+        QString filename;
+        QByteArray hash;
+        stream >> filename >> hash;
+        m_backward.insert(filename, hash);
+        m_forward.insert(hash, filename);
     }
 }
 
-void FileIndex::addRecursive(const QString &path)
+
+void FileIndex::save( QSettings & settings ) const
 {
-    if (QFileInfo(path).isFile())
+    settings.setValue("data", serialize());
+}
+
+void FileIndex::restore( const QSettings & settings )
+{
+    deserialize( settings.value("data").toByteArray() );
+}
+
+Indexer* FileIndex::requestIndexer( const QString & path, const QStringList filter, Indexer::Mode mode )
+{
+    if ( m_indexer )
     {
-        QString filename = QFileInfo(path).fileName();
-        for (const QString & pattern : m_filter.split("|", QString::SkipEmptyParts))
+        WARNING << "Wait for current operation to finish.";
+        return NULL;
+    }
+    else
+    {
+        m_indexer = new Indexer( path, filter, mode, this, NULL );
+        m_indexer->connect( m_indexer, &QThread::finished, [this]()
         {
-            if ( QRegExp( pattern, Qt::CaseSensitive, QRegExp::WildcardUnix ).exactMatch( filename ) )
-            {
-                addEntry(path);
-                break;
-            }
+            m_indexer->deleteLater();
+            m_indexer = 0;
+        });
+        return m_indexer;
+    }
+}
+
+void FileIndex::abortIndexing()
+{
+    if ( m_indexer )
+    {
+        m_indexer->abort();
+    }
+    else
+    {
+        WARNING << "There is no operation to abort.";
+    }
+}
+
+void FileIndex::addSource( const QString & path, const QString & filter )
+{
+    requestIndexer( path, filter.split("|", QString::SkipEmptyParts), Indexer::Scan )->start();
+}
+
+void FileIndex::removeSource( const QString & path )
+{
+    m_sources.remove( path );
+    for ( const QString filename : m_backward.keys() )
+    {
+        if (filename.startsWith( path ))
+        {
+            m_sources.remove( filename );
         }
     }
-    else if (!ProgressDialog::isCanceled())
-    {
-        QDir dir(path);
-        for (const QString & entry : dir.entryList( QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ))
-        {
-            addRecursive(dir.absoluteFilePath(entry));
-
-            ProgressDialog::processEvents();
-        }
-    }
 }
 
-void FileIndex::save() const
+void FileIndex::updateIndex()
 {
-    QSettings settings;
-    settings.beginGroup("FileIndex");
-
-    m_biHash.save( settings );
-
-    settings.endGroup();
+    requestIndexer( "", QStringList(), Indexer::Update );
 }
-
-void FileIndex::restore()
-{
-    QSettings settings;
-    settings.beginGroup("FileIndex");
-
-    beginResetModel();
-    m_biHash.restore( settings );
-    endResetModel();
-
-    settings.endGroup();
-}
-
-
-
-
-
-
-
-
-
-
 
 
 

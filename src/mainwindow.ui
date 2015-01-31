@@ -16,11 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="FileIndexViewContainer" name="widget" native="true"/>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="verticalLayout_2"/>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -78,14 +74,6 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>FileIndexViewContainer</class>
-   <extends>QWidget</extends>
-   <header>FileIndexView/fileindexviewcontainer.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

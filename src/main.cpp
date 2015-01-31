@@ -3,11 +3,7 @@
 #include "global.h"
 #include "UnitTest/unittests.h"
 #include <QWidget>
-
-void init(void*& ptr)
-{
-    ptr = new QList<int>();
-}
+#include "FileIndex/fileindex.h"
 
 int main(int argc, char *argv[])
 {

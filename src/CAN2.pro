@@ -31,7 +31,6 @@ SOURCES += main.cpp\
     persistentobject.cpp \
     creatable.cpp \
     Attachments/chordpatternattachment.cpp \
-    FileIndex/fileindex.cpp \
     Database/DateDatabase/date.cpp \
     UnitTest/creatabletest.cpp \
     UnitTest/unittests.cpp \
@@ -56,11 +55,10 @@ SOURCES += main.cpp\
     SongTableView/CellEditors/dateeditor.cpp \
     Database/SongDatabase/songdatabasesortproxy.cpp \
     SongTableView/songtableviewcontainer.cpp \
-    FileIndexView/fileindexview.cpp \
-    FileIndexView/fileindexviewcontainer.cpp \
-    FileIndex/bihashedfileindex.cpp \
     filterwidget.cpp \
-    progressdialog.cpp
+    progressdialog.cpp \
+    FileIndex/fileindex.cpp \
+    FileIndex/indexer.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -74,7 +72,6 @@ HEADERS  += mainwindow.h \
     creatable.h \
     Attachments/chordpatternattachment.h \
     global.h \
-    FileIndex/fileindex.h \
     Database/DateDatabase/date.h \
     UnitTest/creatabletest.h \
     UnitTest/unittests.h \
@@ -98,15 +95,13 @@ HEADERS  += mainwindow.h \
     SongTableView/CellEditors/dateeditor.h \
     Database/SongDatabase/songdatabasesortproxy.h \
     SongTableView/songtableviewcontainer.h \
-    FileIndexView/fileindexviewcontainer.h \
-    FileIndexView/fileindexview.h \
-    FileIndex/bihashedfileindex.h \
     filterwidget.h \
-    progressdialog.h
+    progressdialog.h \
+    FileIndex/fileindex.h \
+    FileIndex/indexer.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
-    FileIndexView/fileindexviewcontainer.ui \
     filterwidget.ui \
     progressdialog.ui
 

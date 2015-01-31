@@ -1,52 +1,49 @@
-#ifndef FILEINDEX_H
-#define FILEINDEX_H
+#ifndef BIHASHEDFILEINDEX_H
+#define BIHASHEDFILEINDEX_H
 
-#include <QList>
-#include <QAbstractTableModel>
+#include <QMap>
 #include <QCryptographicHash>
-#include "bihashedfileindex.h"
+#include <QStringList>
+#include <QSettings>
+#include "indexer.h"
 
-
-class FileIndex : public QAbstractTableModel
+class FileIndex
 {
 
 public:
-    FileIndex();
+    void clear();
+    QString filename( const QByteArray & hash ) const;
+    bool contains(const QByteArray & hash) { return m_forward.contains(hash); }
+    bool contains(const QString & filename) { return m_backward.contains(filename); }
 
-    int rowCount(const QModelIndex &parent) const;
-    int columnCount(const QModelIndex &parent) const;
-    QVariant data(const QModelIndex &index, int role) const;
+    int size() const { return m_forward.size(); }
 
-    QString entry(const QModelIndex & index) const;
-    QModelIndex indexOf(const QString & path) const;
+    void save( QSettings & settings ) const;
+    void restore( const QSettings & settings );
 
-    void addEntry(const QString &absolutePath );
-    void addRecursive( const QString & path );
-
-    void setFilter(const QString & filter) { m_filter = filter; }
-
-    void save() const;
-    void restore();
-
-public:
-    bool removeRows(int row, int count, const QModelIndex &parent);
-private:
-    bool insertRows(int row, int count, const QModelIndex &parent);
-
+    void addSource( const QString & path, const QString & filter = "" );
+    void removeSource( const QString & path );
+    void updateIndex();
+    void abortIndexing();
 
 private:
-    BiHashedFileIndex m_biHash;
-    QString m_filter;
-    QList<QString> m_inputBuffer;
+    QMap<QByteArray, QString> m_forward;
+    QMap<QString, QByteArray> m_backward;
+    Indexer* m_indexer = NULL;
+    Indexer* requestIndexer(const QString & path, const QStringList filter , Indexer::Mode mode);
 
+    const static QCryptographicHash::Algorithm m_hashAlgorithm;
 
+    QVariantMap m_sources;
 
+    friend class Indexer;
+    void add(const QString& filename);
+    void remove(const QString & filename);
 
-
+    QByteArray serialize() const;
+    void deserialize(QByteArray data );
 
 };
 
 
-
-
-#endif // FILEINDEX_H
+#endif // BIHASHEDFILEINDEX_H

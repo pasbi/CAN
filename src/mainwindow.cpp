@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"
-#include "FileIndexView/fileindexviewcontainer.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -17,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButton_4, SIGNAL(clicked()), this, SLOT(testSlot4()));
     connect(ui->pushButton_5, SIGNAL(clicked()), this, SLOT(testSlot5()));
 
-    ui->widget->setModel(&m_index);
 
 }
 
