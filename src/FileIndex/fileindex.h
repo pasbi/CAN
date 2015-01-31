@@ -13,13 +13,14 @@ class FileIndex
 public:
     void clear();
     QString filename( const QByteArray & hash ) const;
+    QByteArray hash( const QString & filename ) const;
     bool contains(const QByteArray & hash) { return m_forward.contains(hash); }
     bool contains(const QString & filename) { return m_backward.contains(filename); }
 
     int size() const { return m_forward.size(); }
 
-    void save( QSettings & settings ) const;
-    void restore( const QSettings & settings );
+    void save() const;
+    void restore();
 
     void addSource( const QString & path, const QString & filter = "" );
     void removeSource( const QString & path );

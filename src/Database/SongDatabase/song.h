@@ -5,13 +5,20 @@
 #include <QList>
 #include "Attachments/attachment.h"
 #include <QVariantMap>
+#include "song.h"
 
 class SongDatabase;
 class Song : public Taggable
 {
 public:
     Song(SongDatabase *database);
+    ~Song();
+private:
+    SongDatabase* m_songDatabase;
 
+
+
+public:
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
 
@@ -46,10 +53,20 @@ public:
     void setTitle(const QString & title);
 
 
-
+    /////////////////////////////////////////////////
+    ////
+    ///  Attachments
+    //
+    /////////////////////////////////////////////////
 private:
     QList<Attachment*> m_attachments;
-    SongDatabase* m_songDatabase;
+public:
+    QList<Attachment*> attachments() const { return m_attachments; }
+    Attachment* attachment( int i ) const { return m_attachments[i]; }
+    QStringList attachmentNames() const;
+    int removeAttachment(Attachment *attachment );
+    void addAttachment(Attachment *attachment );
+    void insertAttachment(Attachment* attachment, int index);
 
 };
 

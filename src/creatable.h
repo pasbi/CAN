@@ -11,6 +11,10 @@ Creatable* createT()
     return new T();
 }
 
+/**
+ * @brief The Creatable class is the base class for all Classes, that shall be dynamically
+ *  creatable by classname. note that Creatable does not need to derive from QObject
+ */
 class Creatable
 {
 public:

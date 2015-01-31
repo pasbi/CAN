@@ -1,6 +1,7 @@
 #include "song.h"
 #include "songdatabase.h"
 #include "global.h"
+#include <QJsonDocument>
 
 Song::Song(SongDatabase* database) :
     m_songDatabase(database)
@@ -13,7 +14,11 @@ Song::Song(SongDatabase* database) :
     }
 }
 
-#include <QJsonDocument>
+Song::~Song()
+{
+    qDeleteAll( m_attachments );
+}
+
 
 bool Song::restoreFromJsonObject(const QJsonObject &json)
 {
@@ -91,3 +96,36 @@ void Song::removeAttribute(int index)
 {
     m_attributes.removeAt(index);
 }
+
+QStringList Song::attachmentNames() const
+{
+    QStringList akk;
+    for (const Attachment* a : m_attachments)
+    {
+        akk << a->name();
+    }
+    return akk;
+}
+
+
+int Song::removeAttachment( Attachment* attachment )
+{
+    int index = m_attachments.indexOf( attachment );
+    m_attachments.removeOne( attachment );
+    return index;
+}
+
+void Song::addAttachment( Attachment* attachment )
+{
+    m_attachments.append( attachment );
+}
+
+void Song::insertAttachment(Attachment *attachment, int index)
+{
+    m_attachments.insert( index, attachment );
+}
+
+
+
+
+

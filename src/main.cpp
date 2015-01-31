@@ -4,11 +4,12 @@
 #include "UnitTest/unittests.h"
 #include <QWidget>
 #include "FileIndex/fileindex.h"
+#include "application.h"
 
 int main(int argc, char *argv[])
 {
 
-    QApplication a(argc, argv);
+    Application a(argc, argv);
 
     MainWindow m;
     m.show();

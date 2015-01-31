@@ -58,7 +58,19 @@ SOURCES += main.cpp\
     filterwidget.cpp \
     progressdialog.cpp \
     FileIndex/fileindex.cpp \
-    FileIndex/indexer.cpp
+    FileIndex/indexer.cpp \
+    Attachments/indexedfileattachment.cpp \
+    application.cpp \
+    Commands/SongCommands/songaddattachmentcommand.cpp \
+    Commands/SongCommands/songcommand.cpp \
+    Commands/SongCommands/songremoveattachmentcommand.cpp \
+    Commands/AttachmentCommands/fileattachmentcommandmodifyfilenamecommand.cpp \
+    Commands/AttachmentCommands/attachmentrenamecommand.cpp \
+    AttachmentView/attachmenteditor.cpp \
+    AttachmentView/attachmentview.cpp \
+    AttachmentView/chordpatternattachmentview.cpp \
+    AttachmentView/pdfattachmentview.cpp \
+    Attachments/pdfattachment.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -98,12 +110,26 @@ HEADERS  += mainwindow.h \
     filterwidget.h \
     progressdialog.h \
     FileIndex/fileindex.h \
-    FileIndex/indexer.h
+    FileIndex/indexer.h \
+    Attachments/indexedfileattachment.h \
+    application.h \
+    Commands/SongCommands/songaddattachmentcommand.h \
+    Commands/SongCommands/songcommand.h \
+    Commands/SongCommands/songremoveattachmentcommand.h \
+    Commands/AttachmentCommands/fileattachmentcommandmodifyfilenamecommand.h \
+    Commands/AttachmentCommands/attachmentrenamecommand.h \
+    AttachmentView/attachmenteditor.h \
+    AttachmentView/attachmentview.h \
+    AttachmentView/chordpatternattachmentview.h \
+    AttachmentView/pdfattachmentview.h \
+    Attachments/pdfattachment.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
     filterwidget.ui \
-    progressdialog.ui
+    progressdialog.ui \
+    AttachmentView/chordpatternattachmentview.ui \
+    AttachmentView/pdfattachmentview.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

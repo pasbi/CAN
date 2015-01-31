@@ -5,10 +5,10 @@
 
 class ChordPatternAttachment : public Attachment
 {
+    Q_OBJECT
     DECL_CREATABLE(ChordPatternAttachment);
 public:
     ChordPatternAttachment();
-    QString bark() { return "CPA"; }
 
 };
 

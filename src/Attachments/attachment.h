@@ -4,11 +4,24 @@
 #include "taggable.h"
 #include "creatable.h"
 
-class Attachment : public Taggable, public Creatable
+class Song;
+class Attachment : public QObject, public Taggable, public Creatable
 {
+    Q_OBJECT
 public:
     Attachment();
-    virtual QString bark() { return "Attachment"; }
+
+    void setName( const QString & name );
+    QString name() const { return m_name; }
+
+    void setSong( Song* song );
+    Song* song() const { return m_song; }
+
+    QString classname() const { return metaObject()->className(); }
+
+private:
+    Song* m_song = NULL;
+    QString m_name;
 };
 
 #endif // ATTACHMENT_H

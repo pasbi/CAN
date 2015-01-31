@@ -58,6 +58,11 @@ QString FileIndex::filename(const QByteArray &hash) const
     return m_forward.value(hash);
 }
 
+QByteArray FileIndex::hash(const QString &filename) const
+{
+    return m_backward.value( filename );
+}
+
 QByteArray FileIndex::serialize() const
 {
     QByteArray data;
@@ -93,14 +98,16 @@ void FileIndex::deserialize( QByteArray data )
 }
 
 
-void FileIndex::save( QSettings & settings ) const
+void FileIndex::save( ) const
 {
-    settings.setValue("data", serialize());
+    QSettings settings;
+    settings.setValue("FileIndex", serialize());
 }
 
-void FileIndex::restore( const QSettings & settings )
+void FileIndex::restore( )
 {
-    deserialize( settings.value("data").toByteArray() );
+    QSettings settings;
+    deserialize( settings.value("FileIndex").toByteArray() );
 }
 
 Indexer* FileIndex::requestIndexer( const QString & path, const QStringList filter, Indexer::Mode mode )
