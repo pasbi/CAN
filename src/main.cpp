@@ -1,9 +1,5 @@
 #include "mainwindow.h"
-#include <QApplication>
 #include "global.h"
-#include "UnitTest/unittests.h"
-#include <QWidget>
-#include "FileIndex/fileindex.h"
 #include "application.h"
 
 

@@ -1,13 +1,13 @@
 #ifndef FILEATTACHMENTCOMMANDMODIFYFILENAMECOMMAND_H
 #define FILEATTACHMENTCOMMANDMODIFYFILENAMECOMMAND_H
 
-#include "Commands/command.h"
+#include "attachmentcommand.h"
 #include "Attachments/indexedfileattachment.h"
 
-class FileAttachmentCommandModifyFilenameCommand : public Command
+class FileAttachmentCommandModifyFilenameCommand : public AttachmentCommand
 {
 public:
-    FileAttachmentCommandModifyFilenameCommand( IndexedFileAttachment* attachment, const QString & newFilename );
+    FileAttachmentCommandModifyFilenameCommand( IndexedFileAttachment* attachment, const QString & newFilename ) __attribute__ ((deprecated));
 
     void undo();
     void redo();

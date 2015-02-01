@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"
+#include "AttachmentView/attachmentchooser.h"
 
 
 namespace Ui {
@@ -18,6 +19,13 @@ public:
     explicit SongDatabaseWidget(QWidget *parent = 0);
     ~SongDatabaseWidget();
     void setSongDatabase( SongDatabase * songDatabase );
+    SongDatabase* songDatabase() const { return m_songDatabase; }
+    Song* currentSong() const;
+
+    AttachmentChooser* attachmentChooser() const;
+
+private slots:
+    void updateAttachmentChooser(QModelIndex currentRow, QModelIndex previousRow);
 
 private:
     Ui::SongDatabaseWidget *ui;

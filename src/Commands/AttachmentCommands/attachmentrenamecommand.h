@@ -1,13 +1,13 @@
 #ifndef ATTACHMENTRENAMECOMMAND_H
 #define ATTACHMENTRENAMECOMMAND_H
 
-#include "Commands/command.h"
+#include "attachmentcommand.h"
 #include "Attachments/attachment.h"
 
-class AttachmentRenameCommand : public Command
+class AttachmentRenameCommand : public AttachmentCommand
 {
 public:
-    AttachmentRenameCommand(Attachment* attachment, const QString & newName);
+    AttachmentRenameCommand(Attachment* attachment, const QString & newName) __attribute__ ((deprecated));
 
     void redo();
     void undo();

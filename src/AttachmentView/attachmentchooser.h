@@ -2,6 +2,7 @@
 #define ATTACHMENTCHOOSER_H
 
 #include <QWidget>
+#include "Database/SongDatabase/song.h"
 
 namespace Ui {
 class AttachmentChooser;
@@ -15,8 +16,16 @@ public:
     explicit AttachmentChooser(QWidget *parent = 0);
     ~AttachmentChooser();
 
+public slots:
+    void setSong( Song* song );
+    Song* song() const { return m_song; }
+    void update( Attachment* attachment );
+
 private:
     Ui::AttachmentChooser *ui;
+    Song* m_song;
+    Attachment* m_currentAttachment = NULL;
+
 };
 
 #endif // ATTACHMENTCHOOSER_H

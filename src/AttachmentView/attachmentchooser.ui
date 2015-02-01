@@ -18,7 +18,7 @@
     <widget class="QComboBox" name="comboBox"/>
    </item>
    <item>
-    <widget class="AttachmentEditor" name="widget" native="true"/>
+    <widget class="AttachmentEditor" name="attachmentEditor" native="true"/>
    </item>
   </layout>
  </widget>

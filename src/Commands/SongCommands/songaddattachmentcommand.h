@@ -9,6 +9,8 @@ public:
     SongAddAttachmentCommand(Song* song, const QString & classname);
     ~SongAddAttachmentCommand();
 
+    Attachment* attachment() const { return m_attachment; }
+
     void undo();
     void redo();
 

@@ -37,6 +37,7 @@ void AttachmentEditor::setAttachment(Attachment *attachment)
     }
     else
     {
+        qDebug() << "piep";
         m_scrollArea->setWidget( new QWidget( m_scrollArea ) );
     }
 }

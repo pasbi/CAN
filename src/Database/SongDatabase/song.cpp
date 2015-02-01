@@ -117,6 +117,7 @@ int Song::removeAttachment( Attachment* attachment )
 
 void Song::addAttachment( Attachment* attachment )
 {
+    assert( attachment->song() == this );
     m_attachments.append( attachment );
 }
 

@@ -1,7 +1,8 @@
 #include "fileattachmentcommandmodifyfilenamecommand.h"
 
 FileAttachmentCommandModifyFilenameCommand::FileAttachmentCommandModifyFilenameCommand(IndexedFileAttachment *attachment, const QString &newFilename) :
-    m_attachment(attachment),
+    AttachmentCommand( attachment->song() ),
+    m_attachment( attachment ),
     m_newFilename( newFilename )
 {
     m_oldFilename = m_attachment->filename();

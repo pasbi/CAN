@@ -20,6 +20,8 @@ public:
     SongTableView* songTableView() const;
     void setModel(SongDatabaseSortProxy* model);
 
+    Song* currentSong() const;
+
 private:
     Ui::SongTableViewContainer *ui;
 };

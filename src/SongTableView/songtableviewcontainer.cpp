@@ -2,6 +2,7 @@
 #include "ui_songtableviewcontainer.h"
 #include <QLineEdit>
 #include <QPushButton>
+#include "global.h"
 
 SongTableViewContainer::SongTableViewContainer(QWidget *parent) :
     QWidget(parent),
@@ -35,4 +36,14 @@ void SongTableViewContainer::setModel(SongDatabaseSortProxy *model)
         if (i == -1)
             ui->tableView->proxyModel()->setFilterWildcard("");
     });
+}
+
+Song* SongTableViewContainer::currentSong() const
+{
+    QModelIndexList rows = ui->tableView->selectionModel()->selectedRows();
+    if (rows.isEmpty())
+    {
+        return NULL;
+    }
+    return ui->tableView->model()->songAtIndex( rows.first() );
 }

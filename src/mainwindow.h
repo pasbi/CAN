@@ -24,10 +24,13 @@ private slots:
 
     void on_actionRedo_triggered();
 
+
 private:
     Ui::MainWindow *ui;
 
     Project m_project;
+    void setupAttachmentMenu();
+    Song* currentSong() const;
 
 
 };

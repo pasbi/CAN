@@ -6,4 +6,5 @@ DEFN_CREATABLE(ChordPatternAttachment, Attachment);
 
 ChordPatternAttachment::ChordPatternAttachment()
 {
+    setName( tr("Chord Pattern") );
 }

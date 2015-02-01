@@ -72,7 +72,9 @@ SOURCES += main.cpp\
     AttachmentView/pdfattachmentview.cpp \
     Attachments/pdfattachment.cpp \
     songdatabasewidget.cpp \
-    AttachmentView/attachmentchooser.cpp
+    AttachmentView/attachmentchooser.cpp \
+    Commands/AttachmentCommands/attachmentcreatecommand.cpp \
+    Commands/AttachmentCommands/attachmentcommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -126,7 +128,9 @@ HEADERS  += mainwindow.h \
     AttachmentView/pdfattachmentview.h \
     Attachments/pdfattachment.h \
     songdatabasewidget.h \
-    AttachmentView/attachmentchooser.h
+    AttachmentView/attachmentchooser.h \
+    Commands/AttachmentCommands/attachmentcreatecommand.h \
+    Commands/AttachmentCommands/attachmentcommand.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \

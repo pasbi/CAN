@@ -2,7 +2,8 @@
 #define CREATABLE_H
 
 #include <QString>
-#include <QMap>
+#include <QHash>
+#include <QStringList>
 
 class Creatable;
 template<typename T>
@@ -28,11 +29,13 @@ public:
      */
     static bool create(const QString & classname, Creatable *&object);
     static QString category(const QString & classname);
+    static QStringList classnamesInCategory( const QString & category );
 
 
 private:
-    static QMap<QString, Creatable* (*)()> m_constructorMap;
-    static QMap<QString, QString> m_categoryMap;
+    static QHash<QString, Creatable* (*)()> m_constructorMap;
+    static QHash<QString, QString> m_categoryMap;
+    static QHash<QString, QString> m_inverseCategoryMap;
     template<typename T> friend struct Registerer;
 
 };
@@ -42,8 +45,9 @@ struct Registerer
 {
     Registerer(const QString & className, const QString & category)
     {
-        Creatable::m_constructorMap.insert(className, &createT<T>);
-        Creatable::m_categoryMap.insert(className, category);
+        Creatable::m_constructorMap.insert( className, &createT<T> );
+        Creatable::m_categoryMap.insert( className, category );
+        Creatable::m_inverseCategoryMap.insertMulti( category, className );
     }
 };
 

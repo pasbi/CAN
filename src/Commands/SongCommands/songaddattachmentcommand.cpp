@@ -21,6 +21,8 @@ void SongAddAttachmentCommand::redo()
     if (!m_attachment)
     {
         CREATE( m_classname, m_attachment );
+        m_attachment->setSong( song() );
+        m_attachment->makeNameUnique();
     }
 
     song()->addAttachment( m_attachment );

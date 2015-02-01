@@ -19,6 +19,8 @@ public:
 
     QString classname() const { return metaObject()->className(); }
 
+    void makeNameUnique();
+
 private:
     Song* m_song = NULL;
     QString m_name;
