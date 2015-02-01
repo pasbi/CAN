@@ -70,7 +70,9 @@ SOURCES += main.cpp\
     AttachmentView/attachmentview.cpp \
     AttachmentView/chordpatternattachmentview.cpp \
     AttachmentView/pdfattachmentview.cpp \
-    Attachments/pdfattachment.cpp
+    Attachments/pdfattachment.cpp \
+    songdatabasewidget.cpp \
+    AttachmentView/attachmentchooser.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -122,14 +124,18 @@ HEADERS  += mainwindow.h \
     AttachmentView/attachmentview.h \
     AttachmentView/chordpatternattachmentview.h \
     AttachmentView/pdfattachmentview.h \
-    Attachments/pdfattachment.h
+    Attachments/pdfattachment.h \
+    songdatabasewidget.h \
+    AttachmentView/attachmentchooser.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
     filterwidget.ui \
     progressdialog.ui \
     AttachmentView/chordpatternattachmentview.ui \
-    AttachmentView/pdfattachmentview.ui
+    AttachmentView/pdfattachmentview.ui \
+    songdatabasewidget.ui \
+    AttachmentView/attachmentchooser.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

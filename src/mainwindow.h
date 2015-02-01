@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "project.h"
-#include "FileIndex/fileindex.h"
 
 
 namespace Ui {
@@ -18,9 +17,18 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void resizeSplitter();  // left column should be as small as possible.
+    void on_actionNew_Song_triggered();
+    void on_actionUndo_triggered();
+
+    void on_actionRedo_triggered();
 
 private:
     Ui::MainWindow *ui;
+
+    Project m_project;
+
 
 };
 

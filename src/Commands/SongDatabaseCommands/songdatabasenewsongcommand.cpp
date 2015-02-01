@@ -5,6 +5,10 @@ SongDatabaseNewSongCommand::SongDatabaseNewSongCommand(SongDatabase *songDatabas
     SongDatabaseCommand(songDatabase),
     m_song(song)
 {
+    if (m_song == NULL)
+    {
+        m_song = new Song( songDatabase );
+    }
 }
 
 SongDatabaseNewSongCommand::~SongDatabaseNewSongCommand()

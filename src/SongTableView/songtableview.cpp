@@ -26,7 +26,7 @@ SongTableView::SongTableView(QWidget *parent) :
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 
-    //setItemDelegate( m_delegate );
+    setItemDelegate( m_delegate );
 
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);

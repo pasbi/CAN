@@ -6,7 +6,7 @@
 class SongDatabaseNewSongCommand : public SongDatabaseCommand
 {
 public:
-    SongDatabaseNewSongCommand(SongDatabase* songDatabase, Song *song);
+    SongDatabaseNewSongCommand(SongDatabase* songDatabase, Song *song = 0);
     ~SongDatabaseNewSongCommand();
 
     void undo();
