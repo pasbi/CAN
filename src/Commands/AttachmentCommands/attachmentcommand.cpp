@@ -1,6 +1,7 @@
 #include "attachmentcommand.h"
 
 
-AttachmentCommand::AttachmentCommand(Song *song)
+AttachmentCommand::AttachmentCommand(Attachment *attachment) :
+    m_attachment( attachment )
 {
 }

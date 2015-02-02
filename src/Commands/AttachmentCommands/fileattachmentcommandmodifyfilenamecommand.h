@@ -13,7 +13,6 @@ public:
     void redo();
 
 private:
-    IndexedFileAttachment* m_attachment;
     QString m_oldFilename;
     QString m_newFilename;
 };

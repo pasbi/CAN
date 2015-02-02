@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "util.h"
 #include <QTimer>
+#include <QToolButton>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -35,6 +36,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QTimer::singleShot(0, this, SLOT(resizeSplitter()));
 
     setupAttachmentMenu();
+
+    // load stylesheet
+    QFile styleSheetFile(":/style/style.css");
+    assert( styleSheetFile.open(QIODevice::ReadOnly) );
+    setStyleSheet( styleSheetFile.readAll() );
 }
 
 MainWindow::~MainWindow()
@@ -58,12 +64,20 @@ Song* MainWindow::currentSong() const
 #include "Commands/SongCommands/songaddattachmentcommand.h"
 void MainWindow::setupAttachmentMenu()
 {
-    QAction* action = ui->actionNew_Attachment;
-    action->setMenu( new QMenu( this ) );
+    ui->actionNew_Attachment->setMenu( new QMenu( this ) );
+
+    // toolbuttons cannot be added with desinger and popup menues require toolbuttons.
+    // -> create a placeholder action in desinger and replace it with a toolbutton.
+    QToolButton* toolButton = new QToolButton( this );
+    toolButton->setDefaultAction( ui->actionNew_Attachment );
+    ui->toolBar->insertWidget( ui->actionNew_Attachment, toolButton );
+    ui->toolBar->removeAction( ui->actionNew_Attachment );
+
+    // gather attachment creators
     for (const QString & classname : Creatable::classnamesInCategory("Attachment"))
     {
         Util::addAction( ui->actionNew_Attachment->menu(),
-                         QString("New %1").arg(classname),
+                         QString(tr("New %1")).arg(classname),
                          [this, classname]()
                          {
                              Song* song = currentSong();
@@ -73,7 +87,6 @@ void MainWindow::setupAttachmentMenu()
                                  m_project.pushCommand( command );
                                  ui->songDatabaseWidget->attachmentChooser()->update( command->attachment() );
                              }
-
                          } );
     }
 }

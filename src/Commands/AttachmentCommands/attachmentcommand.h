@@ -8,11 +8,13 @@
 class AttachmentCommand : public Command
 {
 public:
-    AttachmentCommand( Song* song ) __attribute__ ((deprecated));
+    AttachmentCommand(Attachment *attachment );
 
-    Song* song() const { return m_song; }
+    template<typename T>
+    T* attachment() const { return dynamic_cast<T*>( m_attachment ); }
+
 private:
-    Song* m_song;
+    Attachment* m_attachment;
 };
 
 #endif // ATTACHMENTCOMMAND_H

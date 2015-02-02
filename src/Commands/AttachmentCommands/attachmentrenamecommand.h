@@ -7,7 +7,7 @@
 class AttachmentRenameCommand : public AttachmentCommand
 {
 public:
-    AttachmentRenameCommand(Attachment* attachment, const QString & newName) __attribute__ ((deprecated));
+    AttachmentRenameCommand(Attachment* attachment, const QString & newName);
 
     void redo();
     void undo();

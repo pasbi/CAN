@@ -65,7 +65,6 @@ SOURCES += main.cpp\
     Commands/SongCommands/songcommand.cpp \
     Commands/SongCommands/songremoveattachmentcommand.cpp \
     Commands/AttachmentCommands/fileattachmentcommandmodifyfilenamecommand.cpp \
-    Commands/AttachmentCommands/attachmentrenamecommand.cpp \
     AttachmentView/attachmenteditor.cpp \
     AttachmentView/attachmentview.cpp \
     AttachmentView/chordpatternattachmentview.cpp \
@@ -73,8 +72,8 @@ SOURCES += main.cpp\
     Attachments/pdfattachment.cpp \
     songdatabasewidget.cpp \
     AttachmentView/attachmentchooser.cpp \
-    Commands/AttachmentCommands/attachmentcreatecommand.cpp \
-    Commands/AttachmentCommands/attachmentcommand.cpp
+    Commands/AttachmentCommands/attachmentcommand.cpp \
+    Commands/AttachmentCommands/attachmentrenamecommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -129,7 +128,6 @@ HEADERS  += mainwindow.h \
     Attachments/pdfattachment.h \
     songdatabasewidget.h \
     AttachmentView/attachmentchooser.h \
-    Commands/AttachmentCommands/attachmentcreatecommand.h \
     Commands/AttachmentCommands/attachmentcommand.h
 
 FORMS    += mainwindow.ui \
@@ -143,3 +141,6 @@ FORMS    += mainwindow.ui \
 
 OTHER_FILES += \
     FileIndexRecycle.txt
+
+RESOURCES += \
+    ressources.qrc
