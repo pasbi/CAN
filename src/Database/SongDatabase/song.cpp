@@ -112,18 +112,22 @@ int Song::removeAttachment( Attachment* attachment )
 {
     int index = m_attachments.indexOf( attachment );
     m_attachments.removeOne( attachment );
+    emit attachmentRemoved( index, attachment );
     return index;
 }
 
 void Song::addAttachment( Attachment* attachment )
 {
     assert( attachment->song() == this );
-    m_attachments.append( attachment );
+    int index = m_attachments.length();
+    insertAttachment( attachment, index );
+
 }
 
 void Song::insertAttachment(Attachment *attachment, int index)
 {
     m_attachments.insert( index, attachment );
+    emit attachmentAdded(index, attachment);
 }
 
 

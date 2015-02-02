@@ -15,11 +15,12 @@ class AttachmentChooser : public QWidget
 public:
     explicit AttachmentChooser(QWidget *parent = 0);
     ~AttachmentChooser();
+    int currentAttachmentIndex() const;
 
 public slots:
     void setSong( Song* song );
     Song* song() const { return m_song; }
-    void update( Attachment* attachment );
+    void setAttachment(int index );
 
 private:
     Ui::AttachmentChooser *ui;

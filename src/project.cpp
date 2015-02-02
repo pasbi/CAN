@@ -54,3 +54,15 @@ void Project::pushCommand(Command *command)
 {
     QUndoStack::push(command);
 }
+
+void Project::undo()
+{
+    QUndoStack::undo();
+    emit undoPerformed();
+}
+
+void Project::redo()
+{
+    QUndoStack::redo();
+    emit redoPerformed();
+}

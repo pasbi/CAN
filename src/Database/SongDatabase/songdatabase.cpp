@@ -168,6 +168,7 @@ bool SongDatabase::insertRows(int row, int count, const QModelIndex &parent)
     for (int i = 0; i < count; ++i)
     {
         m_songs.insert( row + i, m_tmpSongBuffer[i] );
+        emit songAdded( row + i, m_tmpSongBuffer[i] );
     }
     m_tmpSongBuffer.clear();
     endInsertRows();
@@ -200,6 +201,7 @@ bool SongDatabase::removeRows(int row, int count, const QModelIndex &parent)
     for (int i = 0; i < count; ++i)
     {
         m_songs.removeAt(row + i);
+        emit songRemoved(row + i );
     }
     endRemoveRows();
 
@@ -214,6 +216,8 @@ void SongDatabase::appendSong(Song *song)
 void SongDatabase::insertSong(Song* song, const int index)
 {    
     m_tmpSongBuffer.append(song);
+    connect( song, SIGNAL(attachmentAdded(int,Attachment*)),   this, SIGNAL(attachmentAdded(int,Attachment*)  ));
+    connect( song, SIGNAL(attachmentRemoved(int,Attachment*)), this, SIGNAL(attachmentRemoved(int,Attachment*)));
     assert( insertRows( index, 1, QModelIndex() ));
 }
 

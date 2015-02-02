@@ -8,8 +8,9 @@
 #include "song.h"
 
 class SongDatabase;
-class Song : public Taggable
+class Song : public QObject, public Taggable
 {
+    Q_OBJECT
 public:
     Song(SongDatabase *database);
     ~Song();
@@ -67,6 +68,13 @@ public:
     int removeAttachment(Attachment *attachment );
     void addAttachment(Attachment *attachment );
     void insertAttachment(Attachment* attachment, int index);
+
+
+
+
+signals:
+    void attachmentAdded(int i, Attachment *);
+    void attachmentRemoved(int i, Attachment *);
 
 };
 

@@ -21,15 +21,16 @@ private slots:
     void resizeSplitter();  // left column should be as small as possible.
     void on_actionNew_Song_triggered();
     void on_actionUndo_triggered();
-
     void on_actionRedo_triggered();
-
+    void on_actionDelete_Attachment_triggered();
 
 private:
     Ui::MainWindow *ui;
 
     Project m_project;
     void setupAttachmentMenu();
+
+    void setCurrentAttachment( int index );
     Song* currentSong() const;
 
 

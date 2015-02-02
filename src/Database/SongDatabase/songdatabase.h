@@ -112,6 +112,13 @@ private:
     QStringList m_attributeKeysToRestore;
 
 
+signals:
+    void attachmentAdded(int, Attachment* );
+    void attachmentRemoved(int, Attachment* );
+    void songAdded(int, Song*);
+    void songRemoved(int);
+
+
 
 
 

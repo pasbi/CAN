@@ -41,6 +41,16 @@ MainWindow::MainWindow(QWidget *parent) :
     QFile styleSheetFile(":/style/style.css");
     assert( styleSheetFile.open(QIODevice::ReadOnly) );
     setStyleSheet( styleSheetFile.readAll() );
+
+    connect( m_project.songDatabase(), &SongDatabase::attachmentAdded, [this](int i, Attachment*)
+    {
+        setCurrentAttachment( i );
+    });
+
+    connect( m_project.songDatabase(), &SongDatabase::attachmentRemoved, [this](int i, Attachment*)
+    {
+        setCurrentAttachment( i );
+    });
 }
 
 MainWindow::~MainWindow()
@@ -85,12 +95,15 @@ void MainWindow::setupAttachmentMenu()
                              {
                                  SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, classname );
                                  m_project.pushCommand( command );
-                                 ui->songDatabaseWidget->attachmentChooser()->update( command->attachment() );
                              }
                          } );
     }
 }
 
+void MainWindow::setCurrentAttachment( int index )
+{
+    ui->songDatabaseWidget->attachmentChooser()->setAttachment( index );
+}
 
 
 
@@ -117,3 +130,17 @@ void MainWindow::on_actionRedo_triggered()
 {
     m_project.redo();
 }
+
+#include "Commands/SongCommands/songremoveattachmentcommand.h"
+void MainWindow::on_actionDelete_Attachment_triggered()
+{
+    Song* song = currentSong();
+    int index = ui->songDatabaseWidget->attachmentChooser()->currentAttachmentIndex();
+
+    qDebug() << song << index;
+    if (song && index >= 0)
+    {
+        m_project.pushCommand( new SongRemoveAttachmentCommand( song, index ) );
+    }
+}
+

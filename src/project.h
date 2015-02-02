@@ -24,6 +24,13 @@ public:
 
     DateDatabase* dateDatabase() const { return m_dateDatabase; }
 
+public slots:
+    void undo();
+    void redo();
+
+signals:
+    void undoPerformed();
+    void redoPerformed();
 
 
 public slots:
