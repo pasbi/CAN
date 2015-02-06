@@ -104,17 +104,20 @@ public:
     QJsonObject toJsonObject() const;
     bool saveTo(const QString &path) const;
     bool loadFrom(const QString &path);
+public slots:
+    void reset();
 private:
     /**
      * @brief m_numSongsToRestore number of songs that will be restored. Use this only for loading issues.
      */
     int m_numSongsToRestore;
     QStringList m_attributeKeysToRestore;
+    void initAttributes();
 
 
 signals:
-    void attachmentAdded(int, Attachment* );
-    void attachmentRemoved(int, Attachment* );
+    void attachmentAdded(int);
+    void attachmentRemoved(int);
     void songAdded(int, Song*);
     void songRemoved(int);
 

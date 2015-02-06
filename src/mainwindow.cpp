@@ -3,6 +3,8 @@
 #include "util.h"
 #include <QTimer>
 #include <QToolButton>
+#include <QMessageBox>
+#include <QFileDialog>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -42,15 +44,18 @@ MainWindow::MainWindow(QWidget *parent) :
     assert( styleSheetFile.open(QIODevice::ReadOnly) );
     setStyleSheet( styleSheetFile.readAll() );
 
-    connect( m_project.songDatabase(), &SongDatabase::attachmentAdded, [this](int i, Attachment*)
+    connect( m_project.songDatabase(), &SongDatabase::attachmentAdded, [this](int i)
     {
         setCurrentAttachment( i );
     });
 
-    connect( m_project.songDatabase(), &SongDatabase::attachmentRemoved, [this](int i, Attachment*)
+    connect( m_project.songDatabase(), &SongDatabase::attachmentRemoved, [this](int i)
     {
         setCurrentAttachment( i );
     });
+
+    connect( &m_project, SIGNAL(canCloseChanged(bool)), this, SLOT(updateWindowTitle()) );
+    updateWindowTitle();
 }
 
 MainWindow::~MainWindow()
@@ -108,11 +113,201 @@ void MainWindow::setCurrentAttachment( int index )
 
 
 
+//////////////////////////////////////////////////
+////
+///     Saving and loading stuff
+//
+////////////////////////////////////////////////
+
+
+QString MainWindow::projectName() const
+{
+    QString filename = QFileInfo(m_currentPath).fileName();
+    if (filename.isEmpty())
+    {
+        return tr("Unnamed");
+    }
+    else
+    {
+        return filename;
+    }
+}
+
+bool MainWindow::saveProject()
+{
+    if (m_currentPath.isEmpty())
+    {
+        return saveProjectAs();
+    }
+    else
+    {
+        bool success = m_project.save( m_currentPath );
+        if (success)
+        {
+            updateWindowTitle();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
+void MainWindow::setCurrentPath(const QString &path)
+{
+    m_currentPath = path;
+    // emit filename changed
+}
+
+QString MainWindow::proposedPath() const
+{
+    QString filename = projectName();
+    QString ending = QString(".%1").arg(m_project.ending());
+
+    if (!filename.endsWith(ending))
+    {
+        filename = filename.append(ending);
+    }
+
+    if (m_currentPath.isEmpty())
+    {
+        return QDir::home().absoluteFilePath( filename );
+    }
+    else
+    {
+        return m_currentPath;
+    }
+}
+
+bool MainWindow::saveProjectAs()
+{
+    QString filename =
+    QFileDialog::getSaveFileName( this,
+                                  tr("Save As ..."),
+                                  proposedPath(),
+                                  filter()          );
+    if (filename.isEmpty())
+    {
+        return false;
+    }
+    else
+    {
+        setCurrentPath(filename);
+        return saveProject();
+    }
+}
+
+bool MainWindow::newProject()
+{
+    if (!canProjectClose())
+    {
+        return false;
+    }
+
+    m_project.reset();
+    setCurrentPath( QString() );
+    updateWindowTitle();
+    return true;
+}
+
+bool MainWindow::openProject()
+{
+    if (!canProjectClose())
+    {
+        return false;
+    }
+
+    QString filename =
+    QFileDialog::getOpenFileName( this,
+                                  tr("Open ..."),
+                                  proposedPath(),
+                                  filter()              );
+    if (filename.isEmpty())
+    {
+        return false;
+    }
+    else
+    {
+        updateWindowTitle();
+        return m_project.load( filename );
+    }
+}
+
+bool MainWindow::canProjectClose()
+{
+    if (m_project.canClose())
+    {
+        return true;
+    }
+    else
+    {
+        switch (
+        QMessageBox::question( this,
+                               tr("Really close %1").arg( projectName() ),
+                               tr("There are unsaved changes."),
+                               QMessageBox::Save | QMessageBox::Discard | QMessageBox::Abort,
+                               QMessageBox::Abort ) )
+        {
+        case QMessageBox::Save:
+            return saveProject();
+        case QMessageBox::Discard:
+            return true;
+        case QMessageBox::Abort:
+            return false;
+        default:
+            WARNING << "Illegal case in switch statement";
+            return false;
+        }
+    }
+}
+
+void MainWindow::updateWindowTitle()
+{
+    QString star = m_project.canClose() ? "" : "*";
+    qDebug() << "all changes saved: " << m_project.canClose();
+    QString cloudState = "[ No Cloud ]";
+
+    QString title = QString("%1%2 - %3 - %4")
+            .arg( projectName() )
+            .arg( star )
+            .arg( cloudState )
+            .arg( qApp->applicationName() );
+
+    setWindowTitle( title );
+}
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////
+////
+///     Connections to Actions
+//
+///////////////////////////////////////////////
 
 
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
@@ -144,3 +339,22 @@ void MainWindow::on_actionDelete_Attachment_triggered()
     }
 }
 
+void MainWindow::on_actionNew_Project_triggered()
+{
+    newProject();
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    saveProject();
+}
+
+void MainWindow::on_actionSave_As_triggered()
+{
+    saveProjectAs();
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    openProject();
+}

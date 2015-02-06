@@ -73,8 +73,8 @@ public:
 
 
 signals:
-    void attachmentAdded(int i, Attachment *);
-    void attachmentRemoved(int i, Attachment *);
+    void attachmentAdded(int i);
+    void attachmentRemoved(int i);
 
 };
 

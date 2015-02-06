@@ -166,7 +166,7 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionNew"/>
+    <addaction name="actionNew_Project"/>
     <addaction name="separator"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
@@ -212,9 +212,9 @@
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="actionNew">
+  <action name="actionNew_Project">
    <property name="text">
-    <string>&amp;New</string>
+    <string>&amp;New Project</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+N</string>

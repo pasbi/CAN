@@ -24,17 +24,10 @@ public:
 
     DateDatabase* dateDatabase() const { return m_dateDatabase; }
 
-public slots:
-    void undo();
-    void redo();
-
-signals:
-    void undoPerformed();
-    void redoPerformed();
-
 
 public slots:
     void pushCommand(Command* command);
+    void reset();
 
 
 private:
@@ -42,6 +35,14 @@ private:
     SongDatabaseSortProxy* m_songDatabaseProxy;
     DateDatabase* m_dateDatabase;
 
+public:
+    bool canClose() const;
+private:
+    void setCanClose( bool b );
+    bool m_canClose = true;
+    void resetUndoStack();
+signals:
+    void canCloseChanged( bool );
 
 };
 

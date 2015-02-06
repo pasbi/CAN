@@ -24,16 +24,40 @@ private slots:
     void on_actionRedo_triggered();
     void on_actionDelete_Attachment_triggered();
 
+    void on_actionNew_Project_triggered();
+
 private:
     Ui::MainWindow *ui;
 
     Project m_project;
-    void setupAttachmentMenu();
 
+    // saving and loading related stuff
+    bool canProjectClose();
+    QString projectName() const;
+    void setCurrentPath( const QString & path );
+    QString filter() const { return tr("All files (*);;CAN files (*.can)"); }
+    QString proposedPath() const;
+    QString m_currentPath;
+    bool saveProject();
+    bool saveProjectAs();
+    bool openProject();
+    bool newProject();
+
+private slots:
+    void updateWindowTitle();
+    void on_actionSave_triggered();
+
+    void on_actionSave_As_triggered();
+
+    void on_actionOpen_triggered();
+
+
+
+
+
+    void setupAttachmentMenu();
     void setCurrentAttachment( int index );
     Song* currentSong() const;
-
-
 };
 
 #endif // MAINWINDOW_H

@@ -12,7 +12,6 @@ SongDatabase::SongDatabase(Project *project) :
     QAbstractTableModel( 0 ),
     Database(project)
 {
-    m_attributeKeys << tr("Song") << tr("Combo:Artist");
 }
 
 int SongDatabase::columnCount(const QModelIndex &parent) const
@@ -216,8 +215,8 @@ void SongDatabase::appendSong(Song *song)
 void SongDatabase::insertSong(Song* song, const int index)
 {    
     m_tmpSongBuffer.append(song);
-    connect( song, SIGNAL(attachmentAdded(int,Attachment*)),   this, SIGNAL(attachmentAdded(int,Attachment*)  ));
-    connect( song, SIGNAL(attachmentRemoved(int,Attachment*)), this, SIGNAL(attachmentRemoved(int,Attachment*)));
+    connect( song, SIGNAL(attachmentAdded(int)),   this, SIGNAL(attachmentAdded(int)  ));
+    connect( song, SIGNAL(attachmentRemoved(int)), this, SIGNAL(attachmentRemoved(int)));
     assert( insertRows( index, 1, QModelIndex() ));
 }
 
@@ -337,19 +336,8 @@ bool SongDatabase::loadFrom(const QString &path)
     bool success = true;
     beginResetModel();
 
-    project()->beginMacro(QString(tr("Load")));
     if (Database::loadFrom(path))
     {
-
-        while (!m_songs.isEmpty())
-        {
-            project()->pushCommand( new SongDatabaseRemoveSongCommand( this, m_songs.last() ) );
-        }
-
-        while (!m_attributeKeys.isEmpty())
-        {
-            project()->pushCommand( new SongDatabaseRemoveColumnCommand( this, m_attributeKeys.length() - 1 ) );
-        }
 
         for (int i = 0; i < m_attributeKeysToRestore.size(); ++i)
         {
@@ -371,11 +359,28 @@ bool SongDatabase::loadFrom(const QString &path)
         success = false;
     }
 
-    project()->endMacro();
-
     endResetModel();
 
+    emit attachmentAdded( -1 );
     return success;
+}
+
+void SongDatabase::initAttributes()
+{
+    appendColumn(tr("Song"));
+    appendColumn(tr("Combo:Artist"));
+}
+
+void SongDatabase::reset()
+{
+    project()->QUndoStack::clear();
+    beginResetModel();
+    m_songs.clear();
+    m_attributeKeys.clear();
+    endResetModel();
+
+    initAttributes();
+    emit attachmentAdded( -1 );
 }
 
 

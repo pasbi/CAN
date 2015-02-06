@@ -8,6 +8,7 @@ Project::Project() :
     m_dateDatabase( new DateDatabase(this) )
 {
     m_songDatabaseProxy->setSourceModel(m_songDatabase);
+    reset();
 }
 
 Project::~Project()
@@ -15,6 +16,15 @@ Project::~Project()
     delete m_songDatabase;
     delete m_dateDatabase;
     delete m_songDatabaseProxy;
+}
+
+void Project::setCanClose(bool b)
+{
+    if (m_canClose != b)
+    {
+        m_canClose = b;
+        emit canCloseChanged(b);
+    }
 }
 
 bool Project::loadFromTempDir()
@@ -30,6 +40,9 @@ bool Project::loadFromTempDir()
         WARNING << "Cannot load Song Database";
         success = false;
     }
+
+    QUndoStack::clear();
+    setCanClose(true);
     return success;
 }
 
@@ -46,23 +59,24 @@ bool Project::saveToTempDir()
         WARNING << "Cannot save Song Database";
         success = false;
     }
-
+    setCanClose(true);
     return success;
 }
 
 void Project::pushCommand(Command *command)
 {
+    setCanClose(false);
     QUndoStack::push(command);
 }
 
-void Project::undo()
+void Project::reset()
 {
-    QUndoStack::undo();
-    emit undoPerformed();
+    QUndoStack::clear();
+    m_songDatabase->reset();
+    m_dateDatabase->reset();
 }
 
-void Project::redo()
+bool Project::canClose() const
 {
-    QUndoStack::redo();
-    emit redoPerformed();
+    return m_canClose;
 }

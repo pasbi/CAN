@@ -16,3 +16,8 @@ bool DateDatabase::restoreFromJsonObject(const QJsonObject &object)
     Q_UNUSED(object);
     return true;
 }
+
+void DateDatabase::reset()
+{
+
+}

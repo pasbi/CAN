@@ -17,6 +17,8 @@ public:
 public:
     bool restoreFromJsonObject(const QJsonObject & object);
     QJsonObject toJsonObject() const;
+public slots:
+    void reset();
 };
 
 #endif // DATEDATABASE_H
