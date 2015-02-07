@@ -4,7 +4,7 @@ QWidget
     background-color: #222222;
     selection-background-color: #5555ff;
     selection-color: #000044;
-    border: 0px solid black;
+    border: 100px;
 }
 
 QMenuBar::item

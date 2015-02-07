@@ -73,7 +73,9 @@ SOURCES += main.cpp\
     songdatabasewidget.cpp \
     AttachmentView/attachmentchooser.cpp \
     Commands/AttachmentCommands/attachmentcommand.cpp \
-    Commands/AttachmentCommands/attachmentrenamecommand.cpp
+    Commands/AttachmentCommands/attachmentrenamecommand.cpp \
+    Attachments/ChordPatternAttachment/chord.cpp \
+    Attachments/ChordPatternAttachment/chordpattern.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -128,7 +130,9 @@ HEADERS  += mainwindow.h \
     Attachments/pdfattachment.h \
     songdatabasewidget.h \
     AttachmentView/attachmentchooser.h \
-    Commands/AttachmentCommands/attachmentcommand.h
+    Commands/AttachmentCommands/attachmentcommand.h \
+    Attachments/ChordPatternAttachment/chord.h \
+    Attachments/ChordPatternAttachment/chordpattern.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \

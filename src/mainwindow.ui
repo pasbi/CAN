@@ -58,7 +58,17 @@
            </size>
           </property>
           <property name="text">
-           <string>SONG</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="ressources.qrc">
+            <normaloff>:/icons/icons/song1.png</normaloff>:/icons/icons/song1.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -77,7 +87,17 @@
            </size>
           </property>
           <property name="text">
-           <string>DATE</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="ressources.qrc">
+            <normaloff>:/icons/icons/calendaricons.png</normaloff>:/icons/icons/calendaricons.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -202,6 +222,10 @@
    <addaction name="menuTools"/>
   </widget>
   <action name="actionNew_Song">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/oldIcons/oldIcons/1411698488_document-add-128.png</normaloff>:/oldIcons/oldIcons/1411698488_document-add-128.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;New Song</string>
    </property>
@@ -221,6 +245,10 @@
    </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/icons/icons/floppy16.png</normaloff>:/icons/icons/floppy16.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -229,6 +257,10 @@
    </property>
   </action>
   <action name="actionSave_As">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/icons/icons/floppy16.png</normaloff>:/icons/icons/floppy16.png</iconset>
+   </property>
    <property name="text">
     <string>Save As</string>
    </property>
@@ -237,6 +269,10 @@
    </property>
   </action>
   <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/icons/icons/open127.png</normaloff>:/icons/icons/open127.png</iconset>
+   </property>
    <property name="text">
     <string>Open</string>
    </property>
@@ -260,16 +296,28 @@
    </property>
   </action>
   <action name="actionNew_Attachment">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/oldIcons/oldIcons/1411698394_attachment_add-128.png</normaloff>:/oldIcons/oldIcons/1411698394_attachment_add-128.png</iconset>
+   </property>
    <property name="text">
     <string>New Attachment </string>
    </property>
   </action>
   <action name="actionDelete_Attachment">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/oldIcons/oldIcons/1411698394_attachment_remove-128.png</normaloff>:/oldIcons/oldIcons/1411698394_attachment_remove-128.png</iconset>
+   </property>
    <property name="text">
     <string>Delete Attachment</string>
    </property>
   </action>
   <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/icons/icons/left64.png</normaloff>:/icons/icons/left64.png</iconset>
+   </property>
    <property name="text">
     <string>Undo</string>
    </property>
@@ -278,6 +326,10 @@
    </property>
   </action>
   <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/icons/icons/right53.png</normaloff>:/icons/icons/right53.png</iconset>
+   </property>
    <property name="text">
     <string>Redo</string>
    </property>
@@ -295,6 +347,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( &m_project, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
     connect( &m_project, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
+    ui->actionUndo->setEnabled( m_project.canUndo() );
+    ui->actionRedo->setEnabled( m_project.canRedo() );
 
 
     // splitter
