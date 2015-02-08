@@ -334,6 +334,9 @@ bool SongDatabase::saveTo(const QString &path) const
 bool SongDatabase::loadFrom(const QString &path)
 {
     bool success = true;
+
+    reset(false);
+
     beginResetModel();
 
     if (Database::loadFrom(path))
@@ -341,6 +344,7 @@ bool SongDatabase::loadFrom(const QString &path)
 
         for (int i = 0; i < m_attributeKeysToRestore.size(); ++i)
         {
+            qDebug() << "add attribute key: " << m_attributeKeysToRestore[i];
             project()->pushCommand( new SongDatabaseNewAttributeCommand( this, m_attributeKeysToRestore[i] ));
         }
 
@@ -371,7 +375,7 @@ void SongDatabase::initAttributes()
     appendColumn(tr("Combo:Artist"));
 }
 
-void SongDatabase::reset()
+void SongDatabase::reset(bool initialize)
 {
     project()->QUndoStack::clear();
     beginResetModel();
@@ -379,7 +383,10 @@ void SongDatabase::reset()
     m_attributeKeys.clear();
     endResetModel();
 
-    initAttributes();
+    if (initialize)
+    {
+        initAttributes();
+    }
     emit attachmentAdded( -1 );
 }
 

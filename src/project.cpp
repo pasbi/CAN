@@ -3,6 +3,7 @@
 
 Project::Project() :
     GitRepository("can"),
+    Configurable( "Project", tr("Project") ),
     m_songDatabase( new SongDatabase(this) ),
     m_songDatabaseProxy( new SongDatabaseSortProxy(this) ),
     m_dateDatabase( new DateDatabase(this) )

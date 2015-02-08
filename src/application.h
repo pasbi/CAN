@@ -12,7 +12,6 @@ public:
     explicit Application(int & argc, char** argv);
     ~Application();
 
-    void bark() { qDebug() << "bark"; }
     FileIndex & fileIndex() { return m_fileIndex; }
 
 private:

@@ -1,6 +1,7 @@
 #include "configurable.h"
 #include "global.h"
 #include <QVariant>
+#include <QJsonDocument>
 
 QMap<QString, Configurable*> Configurable::m_configurationObjects;
 
@@ -9,6 +10,7 @@ Configurable::Configurable(const QString &prefix, const QString &caption) :
     m_caption(caption)
 {
     restoreConfiguration();
+    registerConfigurable(this);
 }
 
 Configurable::~Configurable()
@@ -111,7 +113,7 @@ void Configurable::saveConfiguration() const
 
     QSettings settings;
     settings.beginGroup("Configurables");
-    settings.setValue(m_prefix, json);
+    settings.setValue(m_prefix, QJsonDocument(json).toBinaryData());
     settings.endGroup();
 }
 
@@ -122,9 +124,9 @@ void Configurable::restoreConfiguration()
     QVariant variant = settings.value(m_prefix);
     settings.endGroup();
 
-    if (variant.canConvert<QJsonObject>())
+    if (variant.canConvert<QByteArray>())
     {
-        QJsonObject json = variant.toJsonObject();
+        QJsonObject json = QJsonDocument::fromBinaryData( variant.toByteArray() ).object();
         for (const QString & key : json.keys())
         {
             m_items[key] = ConfigurationItem( json[key].toObject() );
@@ -181,21 +183,26 @@ void Configurable::restoreAll()
     }
 }
 
-//Configurable* Configurable::getConfigurable(const QString &key)
-//{
-//    if (m_configurationObjects.keys().contains(key))
-//    {
-//        return m_configurationObjects[key];
-//    }
-//    else
-//    {
-//        WARNING() << "No such key in ConfigurableList: " << key;
-//        return NULL;
-//    }
-//}
+void Configurable::setHiddenItem( const QString & key, const QVariant & data ) const
+{
+    QSettings settings;
+    settings.beginGroup("Configurable");
+    settings.beginGroup(m_prefix);
+    settings.setValue(key, data);
+    settings.endGroup();
+    settings.endGroup();
+}
 
-
-
+QVariant Configurable::hiddenItem( const QString & key ) const
+{
+    QSettings settings;
+    settings.beginGroup("Configurable");
+    settings.beginGroup(m_prefix);
+    QVariant v = settings.value(key);
+    settings.endGroup();
+    settings.endGroup();
+    return v;
+}
 
 
 

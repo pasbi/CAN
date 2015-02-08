@@ -30,7 +30,7 @@ SOURCES += main.cpp\
     Attachments/attachment.cpp \
     persistentobject.cpp \
     creatable.cpp \
-    Attachments/chordpatternattachment.cpp \
+    Attachments/ChordPatternAttachment/chordpatternattachment.cpp \
     Database/DateDatabase/date.cpp \
     UnitTest/creatabletest.cpp \
     UnitTest/unittests.cpp \
@@ -87,7 +87,7 @@ HEADERS  += mainwindow.h \
     Attachments/attachment.h \
     persistentobject.h \
     creatable.h \
-    Attachments/chordpatternattachment.h \
+    Attachments/ChordPatternAttachment/chordpatternattachment.h \
     global.h \
     Database/DateDatabase/date.h \
     UnitTest/creatabletest.h \

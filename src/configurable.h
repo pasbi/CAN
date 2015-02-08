@@ -14,7 +14,6 @@ public:
     Configurable( const QString & prefix, const QString & caption );
     ~Configurable();
 
-
     void addItem(const QString & key, const QString & actualValue, const QString & defaultValue );
     void setItem(const QString & key, const QString & newValue);
     bool contains(const QString & key) const;
@@ -51,6 +50,10 @@ public:
     void restoreConfiguration();
 
     QString caption() const { return m_caption; }
+
+    // Hidden items are not visible to users. Usually, the user will never see this items. So they have no default value.
+    void setHiddenItem( const QString & key, const QVariant & data ) const;
+    QVariant hiddenItem( const QString & key ) const;
 
 
 private:

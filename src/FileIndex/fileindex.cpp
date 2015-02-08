@@ -6,6 +6,11 @@
 
 const QCryptographicHash::Algorithm FileIndex::m_hashAlgorithm = QCryptographicHash::Sha1;
 
+FileIndex::FileIndex() : Configurable( "FileIndex", QObject::tr("File Index") )
+{
+
+}
+
 void FileIndex::add(const QString& filename)
 {
     QFile file(filename);
@@ -34,7 +39,6 @@ void FileIndex::add(const QString& filename)
         remove( filename );
     }
 
-    qDebug() << "add " << QString(hash.toHex()) << filename;
     m_forward.insert(hash, filename);
     m_backward.insert(filename, hash);
 }
@@ -100,14 +104,12 @@ void FileIndex::deserialize( QByteArray data )
 
 void FileIndex::save( ) const
 {
-    QSettings settings;
-    settings.setValue("FileIndex", serialize());
+    setHiddenItem( "FileIndex", serialize() );
 }
 
 void FileIndex::restore( )
 {
-    QSettings settings;
-    deserialize( settings.value("FileIndex").toByteArray() );
+   deserialize( hiddenItem("FileIndex").toByteArray() );
 }
 
 Indexer* FileIndex::requestIndexer( const QString & path, const QStringList filter, Indexer::Mode mode )

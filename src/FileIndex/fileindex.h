@@ -6,11 +6,13 @@
 #include <QStringList>
 #include <QSettings>
 #include "indexer.h"
+#include "configurable.h"
 
-class FileIndex
+class FileIndex : public Configurable
 {
 
 public:
+    FileIndex();
     void clear();
     QString filename( const QByteArray & hash ) const;
     QByteArray hash( const QString & filename ) const;

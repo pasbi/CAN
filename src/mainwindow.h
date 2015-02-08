@@ -3,13 +3,14 @@
 
 #include <QMainWindow>
 #include "project.h"
+#include "configurable.h"
 
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public Configurable
 {
     Q_OBJECT
 
@@ -42,14 +43,18 @@ private:
     bool saveProjectAs();
     bool openProject();
     bool newProject();
+    void loadDefaultProject();
+
+protected:
+    void closeEvent(QCloseEvent *e);
 
 private slots:
     void updateWindowTitle();
     void on_actionSave_triggered();
-
     void on_actionSave_As_triggered();
-
     void on_actionOpen_triggered();
+
+
 
 
 

@@ -8,8 +8,9 @@
 #include "Commands/command.h"
 #include <QUndoStack>
 #include "Database/SongDatabase/songdatabasesortproxy.h"
+#include "configurable.h"
 
-class Project : public QUndoStack, public GitRepository
+class Project : public QUndoStack, public GitRepository, public Configurable
 {
     Q_OBJECT
 public:

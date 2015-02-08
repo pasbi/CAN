@@ -58,6 +58,7 @@ QJsonObject Song::toJsonObject() const
     return json;
 }
 
+
 QString Song::title() const
 {
     return attribute(0).toString();

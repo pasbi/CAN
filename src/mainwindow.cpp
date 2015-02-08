@@ -5,10 +5,12 @@
 #include <QToolButton>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QCloseEvent>
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+    Configurable( "MainWindow", tr("Global") ),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -58,6 +60,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( &m_project, SIGNAL(canCloseChanged(bool)), this, SLOT(updateWindowTitle()) );
     updateWindowTitle();
+
+    loadDefaultProject();
 }
 
 MainWindow::~MainWindow()
@@ -159,7 +163,7 @@ bool MainWindow::saveProject()
 void MainWindow::setCurrentPath(const QString &path)
 {
     m_currentPath = path;
-    // emit filename changed
+    setHiddenItem( "RecentProject", m_currentPath );
 }
 
 QString MainWindow::proposedPath() const
@@ -267,7 +271,6 @@ bool MainWindow::canProjectClose()
 void MainWindow::updateWindowTitle()
 {
     QString star = m_project.canClose() ? "" : "*";
-    qDebug() << "all changes saved: " << m_project.canClose();
     QString cloudState = "[ No Cloud ]";
 
     QString title = QString("%1%2 - %3 - %4")
@@ -277,6 +280,56 @@ void MainWindow::updateWindowTitle()
             .arg( qApp->applicationName() );
 
     setWindowTitle( title );
+}
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    if (canProjectClose())
+    {
+        QMainWindow::closeEvent(e);
+        e->accept();
+    }
+    else
+    {
+        e->ignore();
+    }
+}
+
+void MainWindow::loadDefaultProject()
+{
+    return;
+    m_currentPath = hiddenItem( "RecentProject" ).toString();
+
+    if (!m_currentPath.isEmpty())
+    {
+        if (QFileInfo(m_currentPath).isReadable())
+        {
+            if ( m_project.load( m_currentPath ) )
+            {
+            }
+            else
+            {
+                QMessageBox::warning( this,
+                                      QString(tr("Opening %1")).arg(m_currentPath),
+                                      QString(tr("Cannot open %1. Unknown file format.")).arg(m_currentPath),
+                                      QMessageBox::Ok
+                                      );
+                m_project.reset();
+                setHiddenItem("RecentProject", "");
+            }
+        }
+        else
+        {
+            QMessageBox::warning( this,
+                                  QString(tr("Opening %1")).arg(m_currentPath),
+                                  QString(tr("File %1 not found.")).arg(m_currentPath),
+                                  QMessageBox::Ok
+                                  );
+            m_project.reset();
+            setHiddenItem("RecentProject", "");
+        }
+        updateWindowTitle();
+    }
 }
 
 
@@ -334,7 +387,6 @@ void MainWindow::on_actionDelete_Attachment_triggered()
     Song* song = currentSong();
     int index = ui->songDatabaseWidget->attachmentChooser()->currentAttachmentIndex();
 
-    qDebug() << song << index;
     if (song && index >= 0)
     {
         m_project.pushCommand( new SongRemoveAttachmentCommand( song, index ) );
