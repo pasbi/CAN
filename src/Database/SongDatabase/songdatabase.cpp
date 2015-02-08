@@ -6,6 +6,7 @@
 #include "Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 #include "songdatabasesortproxy.h"
+#include <QSize>
 
 
 SongDatabase::SongDatabase(Project *project) :
@@ -28,9 +29,9 @@ int SongDatabase::rowCount(const QModelIndex &parent) const
 
 void editorTypeAndHeaderLabel( const QString & encoding, QString & editorType, QString & attributeValue )
 {
-    // "a:b" -> "a", "b"
-    // "a" -> "", "a"
-    // "a:b:c" -> "a", "b:c"
+    // "a:b"        -> "a", "b"
+    // "a"          -> "", "a"
+    // "a:b:c"      -> "a", "b:c"
 
     QStringList token = encoding.split(":");
     if (token.size() == 1)
@@ -84,6 +85,18 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
             return extractHeaderLabel(m_attributeKeys[section]);
         case Qt::EditRole:
             return m_attributeKeys[section];
+        default:
+            return QVariant();
+        }
+    }
+    if (orientation == Qt::Vertical)
+    {
+        switch (role)
+        {
+        case Qt::SizeHintRole:
+        {
+            return QSize(10, 10);
+        }
         default:
             return QVariant();
         }
@@ -344,7 +357,6 @@ bool SongDatabase::loadFrom(const QString &path)
 
         for (int i = 0; i < m_attributeKeysToRestore.size(); ++i)
         {
-            qDebug() << "add attribute key: " << m_attributeKeysToRestore[i];
             project()->pushCommand( new SongDatabaseNewAttributeCommand( this, m_attributeKeysToRestore[i] ));
         }
 

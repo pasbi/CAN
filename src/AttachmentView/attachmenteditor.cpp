@@ -7,6 +7,7 @@ AttachmentEditor::AttachmentEditor(QWidget *parent) :
     m_scrollArea = new QScrollArea(this);
     QHBoxLayout* layout = new QHBoxLayout(this);
     layout->setContentsMargins( 0, 0, 0, 0 );
+    layout->setSpacing( 0 );
     layout->addWidget( m_scrollArea );
     setAttachment( NULL );
 }
@@ -28,15 +29,22 @@ AttachmentView* createAttachmentView(Attachment* attachment)
 
 void AttachmentEditor::setAttachment(Attachment *attachment)
 {
+    static AttachmentView* currentView = NULL;
+
+    delete currentView;
+    delete m_scrollArea->layout();
+    QVBoxLayout* layout = new QVBoxLayout(m_scrollArea);
+
     if (attachment)
     {
-        AttachmentView* aview = createAttachmentView( attachment );
-        aview->setParent( m_scrollArea );
-        m_scrollArea->setWidget( aview );
-        aview->show();
+        currentView = createAttachmentView( attachment );
+        currentView->setParent( m_scrollArea );
+        layout->addWidget( currentView );
+        delete m_scrollArea->widget();
     }
     else
     {
-        m_scrollArea->setWidget( new QWidget( m_scrollArea ) );
+        currentView = NULL;
     }
+    m_scrollArea->setLayout( layout );
 }

@@ -40,6 +40,18 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
         m_attributes.append(val.toVariant());
     }
 
+    QJsonArray attachments = json["attachments"].toArray();
+    m_attachments.clear();
+    m_attachments.reserve(attachments.size());
+    for (const QJsonValue & val : attachments)
+    {
+        Attachment* a = NULL;
+        if (Attachment::create( val.toObject(), a ))
+        {
+            m_attachments.append( a );
+        }
+    }
+
     return true;
 }
 
@@ -47,13 +59,22 @@ QJsonObject Song::toJsonObject() const
 {
     QJsonObject json = Taggable::toJsonObject();
 
-    QJsonArray array;
+    QJsonArray attributes;
     for (const QVariant & v : m_attributes)
     {
-        array.append(QJsonValue::fromVariant(v));
+        attributes.append(QJsonValue::fromVariant(v));
     }
+    json.insert("attributes", attributes);
 
-    json.insert("attributes", array);
+    QJsonArray attachments;
+    for (const Attachment* a : m_attachments)
+    {
+        QJsonObject o = a->toJsonObject();
+        attachments.append( o );
+    }
+    json.insert("attachments", attachments);
+
+
 
     return json;
 }

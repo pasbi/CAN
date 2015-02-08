@@ -33,3 +33,50 @@ void Attachment::makeNameUnique()
 
     setName( newName );
 }
+
+bool Attachment::create(const QJsonObject &object, Attachment *&attachment)
+{
+    checkJsonObject( object, "classname", QJsonValue::String );
+
+    QString classname = object.value("classname").toString();
+    if (Creatable::category(classname) != "Attachment")
+    {
+        WARNING << "Cannot create attachment " << classname << ".";
+        return false;
+    }
+
+    CREATE( classname, attachment );
+
+    return attachment->restoreFromJsonObject( object );
+}
+
+
+QJsonObject Attachment::toJsonObject() const
+{
+    QJsonObject object = Taggable::toJsonObject();
+
+    object.insert("classname", classname());
+
+    return object;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

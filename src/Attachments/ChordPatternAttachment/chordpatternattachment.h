@@ -1,7 +1,7 @@
 #ifndef CHORDPATTERNATTACHMENT_H
 #define CHORDPATTERNATTACHMENT_H
 
-#include "attachment.h"
+#include "../attachment.h"
 
 class ChordPatternAttachment : public Attachment
 {

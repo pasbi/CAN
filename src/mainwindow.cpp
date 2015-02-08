@@ -297,7 +297,6 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::loadDefaultProject()
 {
-    return;
     m_currentPath = hiddenItem( "RecentProject" ).toString();
 
     if (!m_currentPath.isEmpty())
@@ -411,4 +410,14 @@ void MainWindow::on_actionSave_As_triggered()
 void MainWindow::on_actionOpen_triggered()
 {
     openProject();
+}
+
+#include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
+void MainWindow::on_actionDelete_Song_triggered()
+{
+    Song* song = currentSong();
+    if (song)
+    {
+        m_project.pushCommand( new SongDatabaseRemoveSongCommand( m_project.songDatabase(), song ) );
+    }
 }

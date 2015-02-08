@@ -63,6 +63,7 @@ private slots:
     void setupAttachmentMenu();
     void setCurrentAttachment( int index );
     Song* currentSong() const;
+    void on_actionDelete_Song_triggered();
 };
 
 #endif // MAINWINDOW_H
