@@ -21,7 +21,7 @@ void ChordPattern::transpose(int t)
 
 bool isLineChordLine( const QString & line )
 {
-    QStringList tokens = line.split( QRegExp(SPLIT_PATTERN) );
+    QStringList tokens = line.split( QRegExp(SPLIT_PATTERN), QString::SkipEmptyParts );
 
     int numChords = 0;
     for (const QString & token : tokens)
@@ -31,7 +31,9 @@ bool isLineChordLine( const QString & line )
             numChords++;
         }
     }
-    return ((float) numChords * numChords * numChords / tokens.size()) >= 0.5;
+
+    bool isChordLine = ((float) numChords * numChords / tokens.size()) >= 0.5;
+    return isChordLine;
 }
 
 QList<QPair<int, QString> > tokenize( QString line )
@@ -44,7 +46,8 @@ QList<QPair<int, QString> > tokenize( QString line )
     int j = -1;
     while (( i = splitPattern.indexIn( line, j+1 ) ) >= 0)
     {
-        QString token = line.mid( j+1, i - j - splitPattern.matchedLength() );
+        int n = splitPattern.matchedLength();
+        QString token = line.mid( j+1, i - j - n );
         if (!token.isEmpty())
         {
             tokens << qMakePair( j+1, token );
@@ -79,6 +82,7 @@ QList<Chord> ChordPattern::parseChordLine(const QString &line)
 
 void ChordPattern::parse(const QString &text)
 {
+    m_lines.clear();
     QStringList lines = text.split("\n");
 
     for ( const QString & line : lines )
@@ -147,7 +151,6 @@ QString ChordPattern::toString(Chord::MinorPolicy mpolicy, Chord::EnharmonicPoli
             lines << convert( line.chords(), mpolicy, epolicy );
         }
     }
-
     return lines.join("\n");
 }
 
@@ -186,8 +189,37 @@ QList<Chord*> Line::chords()
     }
 }
 
+QList<const Line*> ChordPattern::lines() const
+{
+    QList<const Line*> ls;
+    for (int i = 0; i < m_lines.length(); ++i)
+    {
+        ls << &m_lines[i];
+    }
+    return ls;
+}
 
-
+int Line::length( Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharmonicPolicy ) const
+{
+    switch (m_type)
+    {
+    case Chords:
+    {
+        int max = 0;
+        for (const Chord& c : m_chords)
+        {
+            int current = c.toString( minorPolicy, enharmonicPolicy ).length() + c.column();
+            max = qMax( current, max );
+        }
+        return max;
+    }
+    case Text:
+        return m_text.length();
+    default:
+        assert(false);
+        return 0;
+    }
+}
 
 
 

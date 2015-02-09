@@ -36,6 +36,8 @@ public:
 
     Type type() const { return m_type; }
 
+    int length(Chord::MinorPolicy minorPolicy = Chord::LowerCase, Chord::EnharmonicPolicy enharmonicPolicy = Chord::Natural) const;
+
 private:
     const Type m_type;
     QString m_text;
@@ -54,6 +56,7 @@ public:
     void transpose( int t );
     QList<const Chord*> chords() const;
     QList<Chord*> chords();
+    QList<const Line*> lines() const;
 
 private:
     void parse( const QString & text );

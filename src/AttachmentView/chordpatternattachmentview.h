@@ -3,6 +3,7 @@
 
 #include "attachmentview.h"
 #include <QToolBar>
+#include "Attachments/ChordPatternAttachment/chord.h"
 
 namespace Ui {
 class ChordPatternAttachmentView;
@@ -22,6 +23,11 @@ protected:
 private:
     Ui::ChordPatternAttachmentView *ui;
     QToolBar* m_toolBar;
+    Chord::MinorPolicy m_minorPolicy;
+    Chord::EnharmonicPolicy m_enharmonicPolicy;
+
+private slots:
+    void updateText();
 };
 
 #endif // CHORDPATTERNATTACHMENTVIEW_H

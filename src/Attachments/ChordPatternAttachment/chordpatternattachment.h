@@ -2,6 +2,7 @@
 #define CHORDPATTERNATTACHMENT_H
 
 #include "../attachment.h"
+#include "chordpattern.h"
 
 class ChordPatternAttachment : public Attachment
 {
@@ -9,6 +10,12 @@ class ChordPatternAttachment : public Attachment
     DECL_CREATABLE(ChordPatternAttachment);
 public:
     ChordPatternAttachment();
+    QString text( Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharmonicPolicy ) const;
+    ChordPattern& chordPattern() { return m_pattern; }
+    const ChordPattern& chordPattern() const { return m_pattern; }
+
+private:
+    ChordPattern m_pattern;
 
 };
 

@@ -12,7 +12,12 @@ public:
     void setAttachment(Attachment* attachment);
 
     template<typename T>
-    T* attachment() const;
+    T* attachment() const
+    {
+        T* attachment = qobject_cast<T*>( m_attachment );
+        assert( attachment );
+        return attachment;
+    }
 
 protected:
     virtual void connectWithAttachment() = 0;

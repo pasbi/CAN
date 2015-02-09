@@ -29,12 +29,12 @@ void Chord::resetTranspose()
 
 QString Chord::flat(const QString& s)
 {
-    return QString("%1%2").arg(s).arg(QChar(0x266F));
+    return QString("%1%2").arg(s).arg(QChar(0x266D));
 }
 
 QString Chord::sharp(const QString& s)
 {
-    return QString("%1%2").arg(s).arg(QChar(0x266D));
+    return QString("%1%2").arg(s).arg(QChar(0x266F));
 }
 
 QString Chord::baseString( EnharmonicPolicy epolicy ) const
