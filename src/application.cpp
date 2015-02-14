@@ -9,6 +9,7 @@ Application::Application(int &argc, char **argv) :
 Application::~Application()
 {
     m_fileIndex.save();
+    Configurable::saveAll();
 }
 
 Application & app()

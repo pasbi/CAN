@@ -8,6 +8,8 @@
 #include <QCloseEvent>
 #include <QProcess>
 #include <QClipboard>
+#include "application.h"
+#include "Dialogs/addfileindexsourcedialog.h"
 
 
 REGISTER_DEFN_CONFIG( MainWindow, "Global" );
@@ -83,7 +85,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    Configurable::saveAll();
     delete ui;
 }
 
@@ -439,4 +440,30 @@ void MainWindow::on_actionDelete_Song_triggered()
     {
         m_project.pushCommand( new SongDatabaseRemoveSongCommand( m_project.songDatabase(), song ) );
     }
+}
+
+void MainWindow::on_actionUpdate_Index_triggered()
+{
+    app().fileIndex().updateIndex();
+}
+
+void MainWindow::on_actionAdd_Folder_triggered()
+{
+    AddFileIndexSourceDialog dialog;
+    dialog.setDirectory( QDir::homePath() );
+    dialog.setOptions( QFileDialog::ShowDirsOnly );
+    dialog.setFileMode( QFileDialog::Directory );
+    if (dialog.exec() != QDialog::Accepted)
+    {
+        return;
+    }
+
+    QStringList filter = dialog.filter();
+    QString path = dialog.selectedFiles().first();
+    app().fileIndex().addSource( path, filter );
+}
+
+void MainWindow::on_actionClear_Index_triggered()
+{
+    app().fileIndex().clear();
 }

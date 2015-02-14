@@ -118,6 +118,7 @@ private:
 
     // color editor options
     // checkbox options
+#undef MEMBER
 
 
     // ConfigurationItemOptions factory
@@ -224,26 +225,10 @@ public:
 
     QString prefix() const { return m_prefix; }
 
-    void debug() const
-    {
-        for (const QString & key : m_items.keys())
-        {
-            qDebug() << key << m_items[key].actualValue << m_items[key].defaultValue << m_items[key].resetValue;
-        }
-    }
-
-
 private:
-
-
     QMap<QString, ConfigurationItem> m_items;
-
-
     const QString m_prefix;
     const QString m_caption;
-
-
-
 
     // we want to know all classes that have a static Configurable member
     // i.e. we want to know the Configurable member in particular

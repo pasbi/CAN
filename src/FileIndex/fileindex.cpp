@@ -59,6 +59,7 @@ void FileIndex::clear()
 {
     m_backward.clear();
     m_forward.clear();
+    m_sources.clear();
 }
 
 QString FileIndex::filename(const QByteArray &hash) const
@@ -77,6 +78,7 @@ QByteArray FileIndex::serialize() const
     QDataStream stream(&data, QIODevice::WriteOnly);
 
     stream << quint64( m_backward.size() );
+    stream << m_sources;
 
     for (const QString & key : m_backward.keys())
     {
@@ -92,6 +94,7 @@ void FileIndex::deserialize( QByteArray data )
     QDataStream stream(&data, QIODevice::ReadOnly);
     quint64 size;
     stream >> size;
+    stream >> m_sources;
 
     m_backward.clear();
     m_forward.clear();
@@ -131,6 +134,7 @@ Indexer* FileIndex::requestIndexer( const QString & path, const QStringList filt
             m_indexer->deleteLater();
             m_indexer = 0;
         });
+        m_indexer->start();
         return m_indexer;
     }
 }
@@ -147,26 +151,19 @@ void FileIndex::abortIndexing()
     }
 }
 
-void FileIndex::addSource( const QString & path, const QString & filter )
+void FileIndex::addSource( const QString & path, const QStringList & filter )
 {
-    requestIndexer( path, filter.split("|", QString::SkipEmptyParts), Indexer::Scan )->start();
+    m_sources << path;
+    requestIndexer( path, filter, Indexer::Scan )->start();
 }
 
-void FileIndex::removeSource( const QString & path )
-{
-    m_sources.remove( path );
-    for ( const QString filename : m_backward.keys() )
-    {
-        if (filename.startsWith( path ))
-        {
-            m_sources.remove( filename );
-        }
-    }
-}
 
 void FileIndex::updateIndex()
 {
-    requestIndexer( "", QStringList(), Indexer::Update );
+    for (const QString & source : m_sources)
+    {
+        requestIndexer( source, QStringList(), Indexer::Update );
+    }
 }
 
 

@@ -80,7 +80,8 @@ SOURCES += main.cpp\
     Dialogs/pushdialog.cpp \
     Dialogs/pulldialog.cpp \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.cpp \
-    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.cpp
+    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.cpp \
+    Dialogs/addfileindexsourcedialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -142,7 +143,8 @@ HEADERS  += mainwindow.h \
     Dialogs/pushdialog.h \
     Dialogs/pulldialog.h \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.h \
-    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.h
+    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.h \
+    Dialogs/addfileindexsourcedialog.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \

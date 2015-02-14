@@ -25,7 +25,7 @@ public:
     void save() const;
     void restore();
 
-    void addSource( const QString & path, const QString & filter = "" );
+    void addSource(const QString & path, const QStringList &filter = QStringList() << "*");
     void removeSource( const QString & path );
     void updateIndex();
     void abortIndexing();
@@ -38,14 +38,14 @@ private:
 
     const static QCryptographicHash::Algorithm m_hashAlgorithm;
 
-    QVariantMap m_sources;
-
     friend class Indexer;
     void add(const QString& filename);
     void remove(const QString & filename);
 
     QByteArray serialize() const;
     void deserialize(QByteArray data );
+
+    QStringList m_sources;
 
 };
 

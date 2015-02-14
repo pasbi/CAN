@@ -64,6 +64,9 @@ private slots:
     void setCurrentAttachment( int index );
     Song* currentSong() const;
     void on_actionDelete_Song_triggered();
+    void on_actionUpdate_Index_triggered();
+    void on_actionAdd_Folder_triggered();
+    void on_actionClear_Index_triggered();
 };
 
 #endif // MAINWINDOW_H

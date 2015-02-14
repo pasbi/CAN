@@ -203,9 +203,6 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionUpdate_Index"/>
-    <addaction name="actionAdd_Folder"/>
-    <addaction name="actionManage_Index"/>
    </widget>
    <widget class="QMenu" name="menuAttachments">
     <property name="title">
@@ -241,10 +238,19 @@
     </widget>
     <addaction name="menuUnzip_directory"/>
    </widget>
+   <widget class="QMenu" name="menuFile_Index">
+    <property name="title">
+     <string>File Index</string>
+    </property>
+    <addaction name="actionUpdate_Index"/>
+    <addaction name="actionAdd_Folder"/>
+    <addaction name="actionClear_Index"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
    <addaction name="menuAttachments"/>
    <addaction name="menuTools"/>
+   <addaction name="menuFile_Index"/>
    <addaction name="menuDebug"/>
   </widget>
   <action name="actionNew_Song">
@@ -316,9 +322,12 @@
     <string>Add Folder</string>
    </property>
   </action>
-  <action name="actionManage_Index">
+  <action name="actionClear_Index">
    <property name="text">
     <string>Manage Index</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear Index</string>
    </property>
   </action>
   <action name="actionNew_Attachment">
