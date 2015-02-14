@@ -11,11 +11,15 @@ class ChordPatternAttachment : public Attachment
 public:
     ChordPatternAttachment();
     QString text( Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharmonicPolicy ) const;
-    ChordPattern& chordPattern() { return m_pattern; }
-    const ChordPattern& chordPattern() const { return m_pattern; }
+    ChordPattern* chordPattern() { return &m_pattern; }
+    void transpose(int t);
+
 
 private:
     ChordPattern m_pattern;
+
+signals:
+    void changed();
 
 };
 

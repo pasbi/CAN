@@ -44,6 +44,15 @@ QMenuBar::item
     background-color: #111111;
 }
 
+QMenuBar::item:selected {
+    background: #222266;
+}
+
+QMenuBar::item:pressed {
+    background: #111133;
+}
+
+
 QTextEdit
 {
     background-color: #151515;

@@ -8,8 +8,9 @@
 #include "indexer.h"
 #include "configurable.h"
 
-class FileIndex : public Configurable
+class FileIndex
 {
+    REGISTER_DECL_CONFIG( FileIndex );
 
 public:
     FileIndex();

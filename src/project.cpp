@@ -1,9 +1,10 @@
 #include "project.h"
 #include "global.h"
 
+REGISTER_DEFN_CONFIG(Project, "Project");
+
 Project::Project() :
     GitRepository("can"),
-    Configurable( "Project", tr("Project") ),
     m_songDatabase( new SongDatabase(this) ),
     m_songDatabaseProxy( new SongDatabaseSortProxy(this) ),
     m_dateDatabase( new DateDatabase(this) )

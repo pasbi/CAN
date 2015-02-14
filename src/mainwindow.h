@@ -10,10 +10,10 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow, public Configurable
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
+    REGISTER_DECL_CONFIG( MainWindow );
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

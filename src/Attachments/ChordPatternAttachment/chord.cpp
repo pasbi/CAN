@@ -2,29 +2,15 @@
 #include "global.h"
 
 
+// each chord ends implicitly with a tick (`). ticks are never displayed.
+
 const QString CHORD_EXTENSION_PATTERN = "(maj|min|5|7th|maj7|min7|sus4|sus2|°|dim|dim7|aug|6|min6|"\
                                         "9|min9|maj9|11|min11|maj11|13|min13|maj13|add9|maj7th|7)*(\\(\\w+\\))?$" ;
 
-Chord::Chord(const QString token, int m_column) :
-    m_transpose( 0 ),
-    m_isValid( parse(token) ),
+Chord::Chord(const QString token, int transpose, int m_column) :
+    m_isValid( parse(token, transpose) ),
     m_column( m_column )
 {
-}
-
-void Chord::transpose( int t )
-{
-    m_transpose += t;
-    m_transpose = m_transpose % 12;
-    if (m_transpose < 0)
-    {
-        m_transpose += 12;
-    }
-}
-
-void Chord::resetTranspose()
-{
-    m_transpose = 0;
 }
 
 QString Chord::flat(const QString& s)
@@ -37,9 +23,9 @@ QString Chord::sharp(const QString& s)
     return QString("%1%2").arg(s).arg(QChar(0x266F));
 }
 
-QString Chord::baseString( EnharmonicPolicy epolicy ) const
+QString Chord::baseString( EnharmonicPolicy epolicy, int tranpose ) const
 {
-    switch (m_base + m_transpose)
+    switch ((m_base + tranpose) % 12)
     {
     case 0:
         return "C";
@@ -105,9 +91,9 @@ QString Chord::baseString( EnharmonicPolicy epolicy ) const
     }
 }
 
-QString Chord::toString(MinorPolicy mpolicy, EnharmonicPolicy epolicy) const
+QString Chord::toString(int tranpose, MinorPolicy mpolicy, EnharmonicPolicy epolicy) const
 {
-    QString text = baseString(epolicy);
+    QString text = baseString(epolicy, tranpose);
 
     if (isMinor())
     {
@@ -160,7 +146,7 @@ bool ifStartsWithTake( QString & string, const QString & pattern )
     return false;
 }
 
-bool Chord::parse(QString text)
+bool Chord::parse(QString text, int transpose)
 {
     if (text.isEmpty())
     {
@@ -190,6 +176,11 @@ bool Chord::parse(QString text)
     {
         m_base++;
     }
+
+    m_base -= transpose;
+    m_base %= 12;
+    m_base += 12;
+    m_base %= 12;
 
     if ( baseChar.isLower() || ifStartsWithTake( text, "m" ) )
     {

@@ -4,33 +4,52 @@
 
 const QString SPLIT_PATTERN = (QStringList() << QRegExp::escape("|") << QRegExp::escape(",")
                                              << QRegExp::escape("-") << QRegExp::escape("/")
-                                             << "\\s"   ).join("|");
+                                             << QRegExp::escape("`") << "\\s"   ).join("|");
 
-ChordPattern::ChordPattern(const QString &pattern)
+ChordPattern::ChordPattern(const QString &pattern )
 {
     parse( pattern );
 }
 
-void ChordPattern::transpose(int t)
+QList<const Chord*> Line::chords() const
 {
-    for (Chord* chord : chords())
+    QList<const Chord*> cs;
+    for (const Chord& c : m_chords)
     {
-        chord->transpose( t );
+        cs << &c;
     }
+    return cs;
 }
 
-bool isLineChordLine( const QString & line )
+void ChordPattern::transpose(int t)
+{
+    m_transpose += t;
+    m_transpose %= 12;
+    m_transpose += 12;
+    m_transpose %= 12;
+}
+
+int ChordPattern::countChords(const QString &text)
+{
+    int count = 0;
+    for (const QString & line : text.split("\n"))
+    {
+        for (const QString & token : line.split(QRegExp(SPLIT_PATTERN)))
+        {
+            if (Chord(token).isValid())
+            {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+bool ChordPattern::isLineChordLine( const QString & line )
 {
     QStringList tokens = line.split( QRegExp(SPLIT_PATTERN), QString::SkipEmptyParts );
 
-    int numChords = 0;
-    for (const QString & token : tokens)
-    {
-        if (Chord(token).isValid())
-        {
-            numChords++;
-        }
-    }
+    int numChords = countChords( line );
 
     bool isChordLine = ((float) numChords * numChords / tokens.size()) >= 0.5;
     return isChordLine;
@@ -63,14 +82,14 @@ QList<QPair<int, QString> > tokenize( QString line )
     return tokens;
 }
 
-QList<Chord> ChordPattern::parseChordLine(const QString &line)
+QList<Chord> ChordPattern::parseChordLine(const QString &line, int transpose )
 {
     QList<QPair<int, QString>> tokens = tokenize( line );
 
     QList<Chord> chords;
     for ( const QPair<int, QString> & token : tokens )
     {
-        Chord chord(token.second, token.first);
+        Chord chord(token.second, transpose, token.first);
         if (chord.isValid())
         {
             chords.append( chord );
@@ -89,7 +108,7 @@ void ChordPattern::parse(const QString &text)
     {
         if (isLineChordLine(line))
         {
-            m_lines << Line( parseChordLine( line ) );
+            m_lines << Line( parseChordLine( line, m_transpose ) );
         }
         else
         {
@@ -98,33 +117,7 @@ void ChordPattern::parse(const QString &text)
     }
 }
 
-QList<const Chord*> ChordPattern::chords() const
-{
-    QList<const Chord*> cs;
-    for (const Line & line : m_lines )
-    {
-        if (line.type() == Line::Chords)
-        {
-            cs << line.chords();
-        }
-    }
-    return cs;
-}
-
-QList<Chord*> ChordPattern::chords()
-{
-    QList<Chord*> cs;
-    for (Line & line : m_lines )
-    {
-        if (line.type() == Line::Chords)
-        {
-            cs << line.chords();
-        }
-    }
-    return cs;
-}
-
-QString convert( QList<const Chord*> chords, Chord::MinorPolicy mpolicy, Chord::EnharmonicPolicy epolicy )
+QString convert( QList<const Chord*> chords, Chord::MinorPolicy mpolicy, Chord::EnharmonicPolicy epolicy, int transpose )
 {
     QString text;
 
@@ -132,7 +125,7 @@ QString convert( QList<const Chord*> chords, Chord::MinorPolicy mpolicy, Chord::
     for (const Chord * c : chords)
     {
         assert( c->column() > i );
-        text.insert( c->column(), c->toString( mpolicy, epolicy ) );
+        text.insert( c->column(), c->toString( transpose, mpolicy, epolicy ) );
     }
     return text;
 }
@@ -148,45 +141,10 @@ QString ChordPattern::toString(Chord::MinorPolicy mpolicy, Chord::EnharmonicPoli
         }
         else
         {
-            lines << convert( line.chords(), mpolicy, epolicy );
+            lines << convert( line.chords(), mpolicy, epolicy, m_transpose );
         }
     }
     return lines.join("\n");
-}
-
-
-QList<const Chord*> Line::chords() const
-{
-    if (m_type == Chords)
-    {
-        QList<const Chord*> cs;
-        for (const Chord & c : m_chords)
-        {
-            cs << &c;
-        }
-        return cs;
-    }
-    else
-    {
-        return QList<const Chord*>();
-    }
-}
-
-QList<Chord*> Line::chords()
-{
-    if (m_type == Chords)
-    {
-        QList<Chord*> cs;
-        for (Chord & c : m_chords)
-        {
-            cs << &c;
-        }
-        return cs;
-    }
-    else
-    {
-        return QList<Chord*>();
-    }
 }
 
 QList<const Line*> ChordPattern::lines() const
@@ -199,7 +157,7 @@ QList<const Line*> ChordPattern::lines() const
     return ls;
 }
 
-int Line::length( Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharmonicPolicy ) const
+int Line::length( int transpose, Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharmonicPolicy ) const
 {
     switch (m_type)
     {
@@ -208,7 +166,7 @@ int Line::length( Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharm
         int max = 0;
         for (const Chord& c : m_chords)
         {
-            int current = c.toString( minorPolicy, enharmonicPolicy ).length() + c.column();
+            int current = c.toString( transpose, minorPolicy, enharmonicPolicy ).length() + c.column();
             max = qMax( current, max );
         }
         return max;
@@ -220,10 +178,6 @@ int Line::length( Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharm
         return 0;
     }
 }
-
-
-
-
 
 
 

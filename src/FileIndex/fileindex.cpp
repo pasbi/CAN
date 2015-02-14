@@ -4,9 +4,13 @@
 #include "indexer.h"
 #include "progressdialog.h"
 
+REGISTER_DEFN_CONFIG( FileIndex, "File Index" );
+
+CONFIGURABLE_ADD_ITEM( FileIndex, FileIndex, QByteArray(), ConfigurationItemOptions::HiddenInterface() );
+
 const QCryptographicHash::Algorithm FileIndex::m_hashAlgorithm = QCryptographicHash::Sha1;
 
-FileIndex::FileIndex() : Configurable( "FileIndex", QObject::tr("File Index") )
+FileIndex::FileIndex()
 {
 
 }
@@ -104,12 +108,12 @@ void FileIndex::deserialize( QByteArray data )
 
 void FileIndex::save( ) const
 {
-    setHiddenItem( "FileIndex", serialize() );
+    config.setItem( "FileIndex", serialize() );
 }
 
 void FileIndex::restore( )
 {
-   deserialize( hiddenItem("FileIndex").toByteArray() );
+   deserialize( config.item("FileIndex").toByteArray() );
 }
 
 Indexer* FileIndex::requestIndexer( const QString & path, const QStringList filter, Indexer::Mode mode )

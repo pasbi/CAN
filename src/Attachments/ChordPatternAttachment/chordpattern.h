@@ -32,36 +32,37 @@ public:
     }
 
     QList<const Chord*> chords() const;
-    QList<Chord*> chords();
 
     Type type() const { return m_type; }
-
-    int length(Chord::MinorPolicy minorPolicy = Chord::LowerCase, Chord::EnharmonicPolicy enharmonicPolicy = Chord::Natural) const;
+    int length(int transpose, Chord::MinorPolicy minorPolicy = Chord::LowerCase, Chord::EnharmonicPolicy enharmonicPolicy = Chord::Natural) const;
 
 private:
     const Type m_type;
     QString m_text;
     QList<Chord> m_chords;
 
-
 };
 
 class ChordPattern
 {
 public:
-    ChordPattern( const QString & pattern );
+    ChordPattern(const QString & pattern );
 
     QString toString(Chord::MinorPolicy mpolicy, Chord::EnharmonicPolicy epolicy = Chord::Natural ) const;
 
     void transpose( int t );
-    QList<const Chord*> chords() const;
-    QList<Chord*> chords();
+    int transpose() const { return m_transpose; }
     QList<const Line*> lines() const;
 
+    static int countChords(const QString & text );
+    static bool isLineChordLine( const QString & line );
+
+
 private:
-    void parse( const QString & text );
-    QList<Chord> parseChordLine(const QString &line);
+    void parse(const QString & text );
+    QList<Chord> parseChordLine(const QString &line, int transpose);
     QList<Line> m_lines;
+    int m_transpose = 0;
 };
 
 #endif // CHORDPATTERN_H

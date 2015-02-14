@@ -48,6 +48,7 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
         Attachment* a = NULL;
         if (Attachment::create( val.toObject(), a ))
         {
+            a->setSong( this );
             m_attachments.append( a );
         }
     }

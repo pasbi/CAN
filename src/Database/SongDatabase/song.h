@@ -22,6 +22,7 @@ private:
 public:
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
+    SongDatabase* database() const { return m_songDatabase; }
 
 
     /////////////////////////////////////////////////

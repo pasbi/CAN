@@ -14,13 +14,14 @@ TARGET = CAN2
 TEMPLATE = app
 
 LIBS += -L../../build-ZipGit-Desktop-Debug/ -lzipgit
-LIBS += -L../../libgit2/build/ -lgit2
+LIBS += -lgit2
 
 QMAKE_CXXFLAGS += -std=c++0x
 
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+    configurable.cpp \          #Configurable must be build before any other class that is configurable.
     project.cpp \
     Database/SongDatabase/songdatabase.cpp \
     Database/DateDatabase/datedatabase.cpp \
@@ -35,7 +36,6 @@ SOURCES += main.cpp\
     UnitTest/creatabletest.cpp \
     UnitTest/unittests.cpp \
     Commands/command.cpp \
-    configurable.cpp \
     global.cpp \
     Commands/SongDatabaseCommands/songdatabasesetdatacommand.cpp \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
@@ -75,10 +75,16 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/attachmentcommand.cpp \
     Commands/AttachmentCommands/attachmentrenamecommand.cpp \
     Attachments/ChordPatternAttachment/chord.cpp \
-    Attachments/ChordPatternAttachment/chordpattern.cpp
+    Attachments/ChordPatternAttachment/chordpattern.cpp \
+    Dialogs/clonedialog.cpp \
+    Dialogs/pushdialog.cpp \
+    Dialogs/pulldialog.cpp \
+    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.cpp \
+    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
+    configurable.h \                #Configurable must be build before any other class that is configurable.
     Database/SongDatabase/songdatabase.h \
     Database/DateDatabase/datedatabase.h \
     Database/database.h \
@@ -93,7 +99,6 @@ HEADERS  += mainwindow.h \
     UnitTest/creatabletest.h \
     UnitTest/unittests.h \
     Commands/command.h \
-    configurable.h \
     Commands/SongDatabaseCommands/songdatabasesetdatacommand.h \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.h \
     SongTableView/songtableview.h \
@@ -132,7 +137,12 @@ HEADERS  += mainwindow.h \
     AttachmentView/attachmentchooser.h \
     Commands/AttachmentCommands/attachmentcommand.h \
     Attachments/ChordPatternAttachment/chord.h \
-    Attachments/ChordPatternAttachment/chordpattern.h
+    Attachments/ChordPatternAttachment/chordpattern.h \
+    Dialogs/clonedialog.h \
+    Dialogs/pushdialog.h \
+    Dialogs/pulldialog.h \
+    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.h \
+    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
@@ -141,7 +151,10 @@ FORMS    += mainwindow.ui \
     AttachmentView/chordpatternattachmentview.ui \
     AttachmentView/pdfattachmentview.ui \
     songdatabasewidget.ui \
-    AttachmentView/attachmentchooser.ui
+    AttachmentView/attachmentchooser.ui \
+    Dialogs/clonedialog.ui \
+    Dialogs/pushdialog.ui \
+    Dialogs/pulldialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

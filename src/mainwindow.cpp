@@ -6,14 +6,22 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QCloseEvent>
+#include <QProcess>
+#include <QClipboard>
 
+
+REGISTER_DEFN_CONFIG( MainWindow, "Global" );
+
+CONFIGURABLE_ADD_ITEM( MainWindow, RecentProject, "", ConfigurationItemOptions::HiddenInterface() );
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    Configurable( "MainWindow", tr("Global") ),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // load configuration
+    Configurable::restoreAll();
 
     ui->stackedWidget->setCurrentIndex( 0 );
 
@@ -43,10 +51,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setupAttachmentMenu();
 
-    // load stylesheet
-    QFile styleSheetFile(":/style/style.css");
-    assert( styleSheetFile.open(QIODevice::ReadOnly) );
-    setStyleSheet( styleSheetFile.readAll() );
 
     connect( m_project.songDatabase(), &SongDatabase::attachmentAdded, [this](int i)
     {
@@ -62,10 +66,24 @@ MainWindow::MainWindow(QWidget *parent) :
     updateWindowTitle();
 
     loadDefaultProject();
+
+    ui->menu_path->setTitle( m_project.path() );
+    connect(ui->actionOpen_Terminal_here, &QAction::triggered, [this]()
+    {
+        QProcess::startDetached( "gnome-terminal", QStringList(), m_project.path() );
+    });
+    connect(ui->actionCopyToClipboard, &QAction::triggered, [this]()
+    {
+        qApp->clipboard()->setText( m_project.path(), QClipboard::Clipboard );
+        qApp->clipboard()->setText( m_project.path(), QClipboard::Selection );
+    });
+
+
 }
 
 MainWindow::~MainWindow()
 {
+    Configurable::saveAll();
     delete ui;
 }
 
@@ -163,7 +181,7 @@ bool MainWindow::saveProject()
 void MainWindow::setCurrentPath(const QString &path)
 {
     m_currentPath = path;
-    setHiddenItem( "RecentProject", m_currentPath );
+    config.setItem( "RecentProject", m_currentPath );
 }
 
 QString MainWindow::proposedPath() const
@@ -235,6 +253,7 @@ bool MainWindow::openProject()
     }
     else
     {
+        setCurrentPath(filename);
         updateWindowTitle();
         return m_project.load( filename );
     }
@@ -297,7 +316,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::loadDefaultProject()
 {
-    m_currentPath = hiddenItem( "RecentProject" ).toString();
+    m_currentPath = config.item( "RecentProject" ).toString();
 
     if (!m_currentPath.isEmpty())
     {
@@ -314,7 +333,7 @@ void MainWindow::loadDefaultProject()
                                       QMessageBox::Ok
                                       );
                 m_project.reset();
-                setHiddenItem("RecentProject", "");
+                config.setItem("RecentProject", "");
             }
         }
         else
@@ -325,7 +344,7 @@ void MainWindow::loadDefaultProject()
                                   QMessageBox::Ok
                                   );
             m_project.reset();
-            setHiddenItem("RecentProject", "");
+            setCurrentPath("");
         }
         updateWindowTitle();
     }

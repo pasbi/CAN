@@ -194,6 +194,10 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="separator"/>
+    <addaction name="actionPush"/>
+    <addaction name="actionPull"/>
+    <addaction name="actionClone"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -218,10 +222,30 @@
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <widget class="QMenu" name="menuUnzip_directory">
+     <property name="title">
+      <string>Unzip directory:</string>
+     </property>
+     <widget class="QMenu" name="menu_path">
+      <property name="title">
+       <string>&lt; path &gt;</string>
+      </property>
+      <addaction name="actionOpen_Terminal_here"/>
+      <addaction name="actionCopyToClipboard"/>
+     </widget>
+     <addaction name="menu_path"/>
+    </widget>
+    <addaction name="menuUnzip_directory"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
    <addaction name="menuAttachments"/>
    <addaction name="menuTools"/>
+   <addaction name="menuDebug"/>
   </widget>
   <action name="actionNew_Song">
    <property name="icon">
@@ -349,6 +373,43 @@
    </property>
    <property name="shortcut">
     <string>Del</string>
+   </property>
+  </action>
+  <action name="actionPush">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/icons/icons/up51.png</normaloff>:/icons/icons/up51.png</iconset>
+   </property>
+   <property name="text">
+    <string>Push ...</string>
+   </property>
+  </action>
+  <action name="actionPull">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/icons/icons/down27.png</normaloff>:/icons/icons/down27.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pull</string>
+   </property>
+  </action>
+  <action name="actionClone">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/icons/icons/war4.png</normaloff>:/icons/icons/war4.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clone ...</string>
+   </property>
+  </action>
+  <action name="actionOpen_Terminal_here">
+   <property name="text">
+    <string>Open terminal</string>
+   </property>
+  </action>
+  <action name="actionCopyToClipboard">
+   <property name="text">
+    <string>Copy to clipboard</string>
    </property>
   </action>
  </widget>

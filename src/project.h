@@ -10,8 +10,9 @@
 #include "Database/SongDatabase/songdatabasesortproxy.h"
 #include "configurable.h"
 
-class Project : public QUndoStack, public GitRepository, public Configurable
+class Project : public QUndoStack, public GitRepository
 {
+    REGISTER_DECL_CONFIG(Project);
     Q_OBJECT
 public:
     Project();
