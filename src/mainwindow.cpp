@@ -10,6 +10,7 @@
 #include <QClipboard>
 #include "application.h"
 #include "Dialogs/addfileindexsourcedialog.h"
+#include "stringdialog.h"
 
 
 REGISTER_DEFN_CONFIG( MainWindow, "Global" );
@@ -63,6 +64,13 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         setCurrentAttachment( i );
     });
+
+    connect( m_project.songDatabase(), &SongDatabase::attachmentRenamed, [this](int i, const QString & name)
+    {
+        setCurrentAttachment( i );
+    });
+
+    //attachmentAdded
 
     connect( &m_project, SIGNAL(canCloseChanged(bool)), this, SLOT(updateWindowTitle()) );
     updateWindowTitle();
@@ -466,4 +474,30 @@ void MainWindow::on_actionAdd_Folder_triggered()
 void MainWindow::on_actionClear_Index_triggered()
 {
     app().fileIndex().clear();
+}
+
+#include "Commands/AttachmentCommands/attachmentrenamecommand.h"
+void MainWindow::on_actionRename_Attachment_triggered()
+{
+    Song* cs = currentSong();
+    assert( cs );
+
+    int index = ui->songDatabaseWidget->attachmentChooser()->currentAttachmentIndex();
+    assert( index >= 0 );
+
+    Attachment* attachment = cs->attachments()[index];
+    QString name = attachment->name();
+    QString newName = StringDialog::getString( name, QString(tr("New Name for %1")).arg(name), this );
+    if (newName.isEmpty())
+    {
+        return;
+    }
+
+    m_project.pushCommand( new AttachmentRenameCommand( attachment, newName ) );
+
+}
+
+void MainWindow::on_actionDuplicate_Attachment_triggered()
+{
+
 }

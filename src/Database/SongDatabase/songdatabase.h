@@ -118,6 +118,7 @@ private:
 signals:
     void attachmentAdded(int);
     void attachmentRemoved(int);
+    void attachmentRenamed(int, QString);
     void songAdded(int, Song*);
     void songRemoved(int);
 

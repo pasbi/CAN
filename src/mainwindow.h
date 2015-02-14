@@ -67,6 +67,8 @@ private slots:
     void on_actionUpdate_Index_triggered();
     void on_actionAdd_Folder_triggered();
     void on_actionClear_Index_triggered();
+    void on_actionRename_Attachment_triggered();
+    void on_actionDuplicate_Attachment_triggered();
 };
 
 #endif // MAINWINDOW_H

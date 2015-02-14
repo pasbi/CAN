@@ -24,7 +24,8 @@ public:
 
     QJsonObject toJsonObject() const;
     static bool create(const QJsonObject & object, Attachment* &attachment);
-
+signals:
+    void attachmentRenamed(QString);
 private:
     Song* m_song = NULL;
     QString m_name;

@@ -81,7 +81,8 @@ SOURCES += main.cpp\
     Dialogs/pulldialog.cpp \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.cpp \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.cpp \
-    Dialogs/addfileindexsourcedialog.cpp
+    Dialogs/addfileindexsourcedialog.cpp \
+    stringdialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -144,7 +145,8 @@ HEADERS  += mainwindow.h \
     Dialogs/pulldialog.h \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.h \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.h \
-    Dialogs/addfileindexsourcedialog.h
+    Dialogs/addfileindexsourcedialog.h \
+    stringdialog.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
@@ -156,7 +158,8 @@ FORMS    += mainwindow.ui \
     AttachmentView/attachmentchooser.ui \
     Dialogs/clonedialog.ui \
     Dialogs/pushdialog.ui \
-    Dialogs/pulldialog.ui
+    Dialogs/pulldialog.ui \
+    stringdialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

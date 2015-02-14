@@ -210,6 +210,8 @@
     </property>
     <addaction name="actionNew_Attachment"/>
     <addaction name="actionDelete_Attachment"/>
+    <addaction name="actionRename_Attachment"/>
+    <addaction name="actionDuplicate_Attachment"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -419,6 +421,24 @@
   <action name="actionCopyToClipboard">
    <property name="text">
     <string>Copy to clipboard</string>
+   </property>
+  </action>
+  <action name="actionRename_Attachment">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/oldIcons/oldIcons/1411734805_rename.png</normaloff>:/oldIcons/oldIcons/1411734805_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rename Attachment</string>
+   </property>
+  </action>
+  <action name="actionDuplicate_Attachment">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/icons/icons/duplicate2.png</normaloff>:/icons/icons/duplicate2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Duplicate Attachment</string>
    </property>
   </action>
  </widget>

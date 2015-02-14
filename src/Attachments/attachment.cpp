@@ -15,7 +15,11 @@ void Attachment::setSong(Song *song)
 
 void Attachment::setName(const QString &name)
 {
-    m_name = name;
+    if (name != m_name)
+    {
+        m_name = name;
+        emit attachmentRenamed( m_name );
+    }
 }
 
 void Attachment::makeNameUnique()

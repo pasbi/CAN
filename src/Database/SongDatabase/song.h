@@ -62,6 +62,7 @@ public:
     /////////////////////////////////////////////////
 private:
     QList<Attachment*> m_attachments;
+    void connectAttachment(Attachment* attachment);
 public:
     QList<Attachment*> attachments() const { return m_attachments; }
     Attachment* attachment( int i ) const { return m_attachments[i]; }
@@ -76,6 +77,7 @@ public:
 signals:
     void attachmentAdded(int i);
     void attachmentRemoved(int i);
+    void attachmentRenamed(int i, QString);
 
 };
 
