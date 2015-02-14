@@ -21,9 +21,11 @@ public:
 
     void makeNameUnique();
 
-
     QJsonObject toJsonObject() const;
     static bool create(const QJsonObject & object, Attachment* &attachment);
+
+    virtual void copy(Attachment*& attachment) const = 0;
+
 signals:
     void attachmentRenamed(QString);
 private:

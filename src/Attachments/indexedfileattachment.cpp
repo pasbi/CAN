@@ -29,3 +29,10 @@ bool IndexedFileAttachment::setFilename(const QString & filename)
     }
 }
 
+void IndexedFileAttachment::copy(Attachment* attachment) const
+{
+    Q_UNUSED(attachment);
+}
+
+
+

@@ -20,3 +20,9 @@ void ChordPatternAttachment::transpose( int t )
     m_pattern.transpose( t );
     emit changed();
 }
+
+void ChordPatternAttachment::copy(Attachment *&attachment) const
+{
+    attachment = new ChordPatternAttachment();
+    static_cast<ChordPatternAttachment*>(attachment)->m_pattern = m_pattern;
+}

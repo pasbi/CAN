@@ -14,6 +14,8 @@ public:
     ChordPattern* chordPattern() { return &m_pattern; }
     void transpose(int t);
 
+    void copy(Attachment *&attachment) const;
+
 
 private:
     ChordPattern m_pattern;

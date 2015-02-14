@@ -16,6 +16,8 @@ public:
     QString filename() const;
     bool setFilename(const QString & filename);
 
+    virtual void copy(Attachment* attachment) const;
+
 private:
     QByteArray m_hash;
 

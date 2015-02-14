@@ -497,7 +497,17 @@ void MainWindow::on_actionRename_Attachment_triggered()
 
 }
 
+#include "Commands/SongCommands/songduplicateattachmentcommand.h"
 void MainWindow::on_actionDuplicate_Attachment_triggered()
 {
+    Song* cs = currentSong();
+    assert( cs );
 
+    int index = ui->songDatabaseWidget->attachmentChooser()->currentAttachmentIndex();
+    assert( index >= 0 );
+
+    Attachment* attachment = cs->attachments()[index];
+    assert( attachment );
+
+    m_project.pushCommand( new SongDuplicateAttachmentCommand( attachment ) );
 }

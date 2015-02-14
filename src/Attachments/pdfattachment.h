@@ -9,6 +9,8 @@ class PDFAttachment : public IndexedFileAttachment
     DECL_CREATABLE(PDFAttachment);
 public:
     PDFAttachment();
+
+    void copy(Attachment* &attachment) const;
 };
 
 #endif // PDFATTACHMENT_H

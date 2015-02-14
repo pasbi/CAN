@@ -82,7 +82,8 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.cpp \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.cpp \
     Dialogs/addfileindexsourcedialog.cpp \
-    stringdialog.cpp
+    stringdialog.cpp \
+    Commands/SongCommands/songduplicateattachmentcommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -146,7 +147,8 @@ HEADERS  += mainwindow.h \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.h \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.h \
     Dialogs/addfileindexsourcedialog.h \
-    stringdialog.h
+    stringdialog.h \
+    Commands/SongCommands/songduplicateattachmentcommand.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
