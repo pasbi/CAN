@@ -1,14 +1,14 @@
 #ifndef PDFATTACHMENTVIEW_H
 #define PDFATTACHMENTVIEW_H
 
+#include "indexedfileattachmentview.h"
 #include "attachmentview.h"
-#include "creatable.h"
 
 namespace Ui {
 class PDFAttachmentView;
 }
 
-class PDFAttachmentView : public AttachmentView, public Creatable
+class PDFAttachmentView : public IndexedFileAttachmentView
 {
     Q_OBJECT
     DECL_CREATABLE(PDFAttachmentView);
@@ -18,10 +18,11 @@ public:
     ~PDFAttachmentView();
 
 protected:
-    void connectWithAttachment() {}
+    void connectWithAttachment();
 
 private:
     Ui::PDFAttachmentView *ui;
+    QWidget* m_pdfWidget = NULL;
 };
 
 #endif // PDFATTACHMENTVIEW_H

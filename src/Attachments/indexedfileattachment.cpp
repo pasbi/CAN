@@ -29,9 +29,20 @@ bool IndexedFileAttachment::setFilename(const QString & filename)
     }
 }
 
-void IndexedFileAttachment::copy(Attachment* attachment) const
+void IndexedFileAttachment::copy(Attachment *&attachment) const
 {
-    Q_UNUSED(attachment);
+    IndexedFileAttachment* a = dynamic_cast<IndexedFileAttachment*>(attachment);
+    assert( a );
+
+    a->m_hash = m_hash;
+}
+
+void IndexedFileAttachment::openDocument()
+{
+    delete m_document;
+    m_document = Poppler::Document::load( filename() );
+    assert(m_document);
+    m_document->setRenderHint(Poppler::Document::TextAntialiasing);
 }
 
 

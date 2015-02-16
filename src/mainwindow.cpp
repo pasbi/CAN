@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
         setCurrentAttachment( i );
     });
 
-    connect( m_project.songDatabase(), &SongDatabase::attachmentRenamed, [this](int i, const QString & name)
+    connect( m_project.songDatabase(), &SongDatabase::attachmentRenamed, [this](int i, QString)
     {
         setCurrentAttachment( i );
     });

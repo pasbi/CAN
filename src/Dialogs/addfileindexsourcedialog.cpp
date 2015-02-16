@@ -1,5 +1,4 @@
 #include "addfileindexsourcedialog.h"
-#include "ui_addfileindexsourcedialog.h"
 #include <QLayout>
 #include "global.h"
 #include <QCheckBox>

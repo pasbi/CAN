@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "Attachments/attachment.h"
 
-class AttachmentView : public QWidget
+class AttachmentView : public QWidget, public Creatable
 {
     Q_OBJECT
 public:
@@ -18,6 +18,7 @@ public:
         assert( attachment );
         return attachment;
     }
+
 
 protected:
     virtual void connectWithAttachment() = 0;

@@ -15,6 +15,8 @@ TEMPLATE = app
 
 LIBS += -L../../build-ZipGit-Desktop-Debug/ -lzipgit
 LIBS += -lgit2
+LIBS += -L/usr/local/lib -lpoppler-qt5
+
 
 QMAKE_CXXFLAGS += -std=c++0x
 
@@ -83,7 +85,10 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.cpp \
     Dialogs/addfileindexsourcedialog.cpp \
     stringdialog.cpp \
-    Commands/SongCommands/songduplicateattachmentcommand.cpp
+    Commands/SongCommands/songduplicateattachmentcommand.cpp \
+    AttachmentView/indexedfileattachmentview.cpp \
+    AttachmentView/audioattachmentview.cpp \
+    Attachments/audioattachment.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -148,7 +153,10 @@ HEADERS  += mainwindow.h \
     Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.h \
     Dialogs/addfileindexsourcedialog.h \
     stringdialog.h \
-    Commands/SongCommands/songduplicateattachmentcommand.h
+    Commands/SongCommands/songduplicateattachmentcommand.h \
+    AttachmentView/indexedfileattachmentview.h \
+    AttachmentView/audioattachmentview.h \
+    Attachments/audioattachment.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
@@ -161,7 +169,8 @@ FORMS    += mainwindow.ui \
     Dialogs/clonedialog.ui \
     Dialogs/pushdialog.ui \
     Dialogs/pulldialog.ui \
-    stringdialog.ui
+    stringdialog.ui \
+    AttachmentView/indexedfileattachmentview.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

@@ -10,7 +10,7 @@ namespace Ui {
 class ChordPatternAttachmentView;
 }
 
-class ChordPatternAttachmentView : public AttachmentView, public Creatable
+class ChordPatternAttachmentView : public AttachmentView
 {
     Q_OBJECT
     DECL_CREATABLE(ChordPatternAttachmentView);

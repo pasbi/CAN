@@ -7,10 +7,8 @@ PDFAttachment::PDFAttachment()
     setName( tr("PDF Attachment") );
 }
 
-
-void PDFAttachment::copy(Attachment *&attachment) const
+void PDFAttachment::copy(Attachment*& attachment) const
 {
-    attachment = new PDFAttachment();
-    IndexedFileAttachment::copy( attachment );
 
 }
+
