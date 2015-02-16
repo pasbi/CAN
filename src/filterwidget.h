@@ -22,7 +22,7 @@ public slots:
     void setPattern(const QString & pattern);
 
 signals:
-    void patternChanged(QString);
+    void filterChanged(QString);
 
 private:
     Ui::FilterWidget *ui;

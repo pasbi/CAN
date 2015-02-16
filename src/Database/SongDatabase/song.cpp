@@ -123,7 +123,6 @@ void Song::removeAttribute(int index)
 
 QStringList Song::attachmentNames() const
 {
-    qDebug() << this;
     QStringList akk;
     for (const Attachment* a : m_attachments)
     {

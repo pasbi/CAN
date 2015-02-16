@@ -7,7 +7,6 @@ AttachmentView::AttachmentView(QWidget *parent) :
 
 void AttachmentView::setAttachment(Attachment *attachment)
 {
-    qDebug() << this << metaObject()->className();
     m_attachment = attachment;
     connectWithAttachment();
 }

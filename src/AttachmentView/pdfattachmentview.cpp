@@ -21,5 +21,4 @@ PDFAttachmentView::~PDFAttachmentView()
 
 void PDFAttachmentView::connectWithAttachment()
 {
-    qDebug() << "connect;";
 }

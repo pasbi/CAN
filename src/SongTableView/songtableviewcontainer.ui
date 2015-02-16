@@ -18,40 +18,7 @@
     <widget class="SongTableView" name="tableView"/>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QComboBox" name="comboBox">
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>27</width>
-         <height>27</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>27</width>
-         <height>27</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>X</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="FilterWidget" name="filterWidget" native="true"/>
    </item>
   </layout>
  </widget>
@@ -60,6 +27,12 @@
    <class>SongTableView</class>
    <extends>QTableView</extends>
    <header>SongTableView/songtableview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FilterWidget</class>
+   <extends>QWidget</extends>
+   <header>filterwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
