@@ -10,9 +10,9 @@ int main(int argc, char *argv[])
 
 
     // load stylesheet
-    QFile styleSheetFile(":/style/style.css");
-    assert( styleSheetFile.open(QIODevice::ReadOnly) );
-    a.setStyleSheet( styleSheetFile.readAll() );
+//    QFile styleSheetFile(":/style/style.css");
+//    assert( styleSheetFile.open(QIODevice::ReadOnly) );
+//    a.setStyleSheet( styleSheetFile.readAll() );
 
     MainWindow m;
     m.show();

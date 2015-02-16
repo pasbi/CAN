@@ -26,6 +26,7 @@ private:
     Ui::AttachmentChooser *ui;
     Song* m_song;
     Attachment* m_currentAttachment = NULL;
+    QMap<Song*, int> m_lastOpenedIndex;
 
 };
 

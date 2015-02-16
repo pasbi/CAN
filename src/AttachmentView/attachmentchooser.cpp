@@ -26,6 +26,13 @@ AttachmentChooser::~AttachmentChooser()
 
 void AttachmentChooser::setSong(Song *song)
 {
+    // remeber index
+    if (m_song)
+    {
+        m_lastOpenedIndex[m_song] = ui->comboBox->currentIndex();
+    }
+
+
     m_song = song;
     ui->comboBox->clear();
     if (song == NULL)
@@ -35,14 +42,9 @@ void AttachmentChooser::setSong(Song *song)
     else
     {
         ui->comboBox->addItems( song->attachmentNames() );
-        if (song->attachments().isEmpty())
-        {
-            setAttachment( -1 );
-        }
-        else
-        {
-            setAttachment( 0 );
-        }
+
+        // restore last opened index
+        ui->comboBox->setCurrentIndex( m_lastOpenedIndex.value( m_song, 0 ) );
     }
 }
 
