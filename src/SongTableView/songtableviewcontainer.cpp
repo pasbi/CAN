@@ -25,12 +25,6 @@ void SongTableViewContainer::setModel(SongDatabaseSortProxy *model)
 {
     ui->tableView->setModel(model);
     connect(ui->filterWidget, SIGNAL(filterChanged(QString)), model, SLOT(setFilterWildcard(QString)));
-//    connect(ui->comboBox, SIGNAL(editTextChanged(QString)), model, SLOT(setFilterWildcard(QString)));
-//    connect(ui->comboBox, static_cast< void (QComboBox::*)(int) >( &QComboBox::currentIndexChanged), [this](int i)
-//    {
-//        if (i == -1)
-//            ui->tableView->proxyModel()->setFilterWildcard("");
-//    });
 }
 
 Song* SongTableViewContainer::currentSong() const

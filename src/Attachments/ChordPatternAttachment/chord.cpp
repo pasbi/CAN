@@ -1,5 +1,6 @@
 #include "chord.h"
 #include "global.h"
+#include "persistentobject.h"
 
 
 // each chord ends implicitly with a tick (`). ticks are never displayed.
@@ -11,6 +12,29 @@ Chord::Chord(const QString token, int transpose, int m_column) :
     m_isValid( parse(token, transpose) ),
     m_column( m_column )
 {
+    qDebug() << "ctor: " << this;
+}
+
+Chord::Chord(const QJsonObject &object) :
+    m_isValid( true )
+{
+    if (checkJsonObject( object, "base", QJsonValue::Double ))
+    {
+        m_base = object["base"].toDouble();
+    }
+    if (checkJsonObject( object, "attachment", QJsonValue::String ))
+    {
+        m_attachment = object["attachment"].toString();
+    }
+    if (checkJsonObject( object, "column", QJsonValue::Double ))
+    {
+        m_column = object["column"].toDouble();
+        qDebug() << "restore column: " << m_column << this;
+    }
+    if (checkJsonObject( object, "isMinor", QJsonValue::Bool ))
+    {
+        m_column = object["isMinor"].toDouble();
+    }
 }
 
 QString Chord::flat(const QString& s)
@@ -111,6 +135,17 @@ QString Chord::toString(int tranpose, MinorPolicy mpolicy, EnharmonicPolicy epol
     text += attachment();
 
     return text;
+}
+
+QJsonObject Chord::toJsonObject() const
+{
+    assert( m_isValid );
+    QJsonObject object;
+    object.insert("base", m_base);
+    object.insert("attachment", m_attachment);
+    object.insert("column", m_column);
+    object.insert("isMinor", m_isMinor);
+    return object;
 }
 
 int parseBase( const QChar & c )

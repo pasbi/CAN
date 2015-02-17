@@ -11,6 +11,7 @@
 #include "application.h"
 #include "Dialogs/addfileindexsourcedialog.h"
 #include "stringdialog.h"
+#include "SongTableView/songtableview.h"
 
 
 REGISTER_DEFN_CONFIG( MainWindow, "Global" );
@@ -23,70 +24,77 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // load configuration
+    //////////////////////////////////////////
+    /// restore configuration
+    //////////////////////////////////////////
     Configurable::restoreAll();
 
-    ui->stackedWidget->setCurrentIndex( 0 );
 
+    //////////////////////////////////////////
+    ///
+    //////////////////////////////////////////
     connect( ui->buttonSongDatabase, &QPushButton::clicked, [this]()
     {
         ui->stackedWidget->setCurrentIndex( 0 );
     });
-
     connect( ui->buttonDateDatabase, &QPushButton::clicked, [this]()
     {
         ui->stackedWidget->setCurrentIndex( 1 );
     });
+    ui->stackedWidget->setCurrentIndex( 0 );
 
 
     menuBar()->setNativeMenuBar(false);
+    setupAttachmentMenu();
     ui->songDatabaseWidget->setSongDatabase( m_project.songDatabase() );
 
+
+    //////////////////////////////////////////
+    /// Undo/Redo
+    //////////////////////////////////////////
     connect( &m_project, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
     connect( &m_project, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
     ui->actionUndo->setEnabled( m_project.canUndo() );
     ui->actionRedo->setEnabled( m_project.canRedo() );
 
 
-    // splitter
+    //////////////////////////////////////////
+    /// Splitter
+    //////////////////////////////////////////
     connect( ui->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeSplitter()));
     QTimer::singleShot(0, this, SLOT(resizeSplitter()));
 
-    setupAttachmentMenu();
 
-
+    //////////////////////////////////////////
+    ///
+    //////////////////////////////////////////
     connect( m_project.songDatabase(), &SongDatabase::attachmentAdded, [this](int i)
     {
         setCurrentAttachment( i );
     });
-
     connect( m_project.songDatabase(), &SongDatabase::attachmentRemoved, [this](int i)
     {
         setCurrentAttachment( i );
     });
-
     connect( m_project.songDatabase(), &SongDatabase::attachmentRenamed, [this](int i, QString)
     {
         setCurrentAttachment( i );
     });
 
-    //attachmentAdded
-
+    //////////////////////////////////////////
+    ///
+    //////////////////////////////////////////
     connect( &m_project, SIGNAL(canCloseChanged(bool)), this, SLOT(updateWindowTitle()) );
     updateWindowTitle();
+    connect( ui->songDatabaseWidget->tableView()->selectionModel(),
+             &QItemSelectionModel::currentRowChanged,
+             [this](){
+        QTimer::singleShot(0, this, SLOT( updateWhichWidgetsAreEnabled() ));
+    });
+    updateWhichWidgetsAreEnabled();
 
     loadDefaultProject();
-
     ui->menu_path->setTitle( m_project.path() );
-    connect(ui->actionOpen_Terminal_here, &QAction::triggered, [this]()
-    {
-        QProcess::startDetached( "gnome-terminal", QStringList(), m_project.path() );
-    });
-    connect(ui->actionCopyToClipboard, &QAction::triggered, [this]()
-    {
-        qApp->clipboard()->setText( m_project.path(), QClipboard::Clipboard );
-        qApp->clipboard()->setText( m_project.path(), QClipboard::Selection );
-    });
 
 
 }
@@ -359,7 +367,97 @@ void MainWindow::loadDefaultProject()
     }
 }
 
+int MainWindow::currentAttachmentIndex() const
+{
+    return ui->songDatabaseWidget->attachmentChooser()->currentAttachmentIndex();
+}
 
+Attachment* MainWindow::currentAttachment() const
+{
+    if (currentSong() == NULL)
+    {
+        return NULL;
+    }
+    int index = currentAttachmentIndex();
+    if (index < 0)
+    {
+        return NULL;
+    }
+    else
+    {
+        if (currentSong()->attachments().isEmpty())
+        {
+            return NULL;
+        }
+        else
+        {
+            return currentSong()->attachments()[index];
+        }
+    }
+
+}
+
+void setEnabled( QObject* o, bool enable )
+{
+    QAction* a = qobject_cast<QAction*>(o);
+    if (a) a->setEnabled(enable);
+
+    QWidget* w = qobject_cast<QWidget*>(o);
+    if (w) w->setEnabled(enable);
+}
+
+void MainWindow::updateWhichWidgetsAreEnabled()
+{
+    Project* cProject = &m_project;
+    Song* cSong = currentSong();
+    Attachment* cAttachment = currentAttachment();
+    bool cGit = cProject ? cProject->isGitRepository() : false;
+
+    //TODO list dependencies
+    QObjectList attachmentObjects, songObects, projectObjects, gitObjects, alwaysObjects;
+
+    projectObjects      << ui->actionNew_Song;
+    alwaysObjects       << ui->actionNew_Project;
+    projectObjects      << ui->actionSave;
+    projectObjects      << ui->actionSave_As;
+    // ui->actionOpen;
+    // ui->actionUpdate_Index;
+    // ui->actionAdd_Folder;
+    // ui->actionClear_Index;
+    songObects          << ui->actionNew_Attachment;
+    attachmentObjects   << ui->actionDelete_Attachment;
+    // ui->actionUndo;
+    // ui->actionRedo;
+    songObects          << ui->actionDelete_Song;
+    gitObjects          << ui->actionPull;
+    gitObjects          << ui->actionPush;
+    // ui->actionClone;
+    projectObjects      << ui->actionOpen_Terminal_here;
+    projectObjects      << ui->actionCopyToClipboard;
+    attachmentObjects   << ui->actionRename_Attachment;
+    attachmentObjects   << ui->actionDuplicate_Attachment;
+
+
+
+    for (QObject* o : projectObjects )      ::setEnabled( o, !!cProject     && currentPage() == SongDatabasePage );
+    for (QObject* o : songObects )          ::setEnabled( o, !!cSong        && currentPage() == SongDatabasePage );
+    for (QObject* o : attachmentObjects)    ::setEnabled( o, !!cAttachment  && currentPage() == SongDatabasePage );
+    for (QObject* o : gitObjects)           ::setEnabled( o, !!cGit         && currentPage() == SongDatabasePage );
+}
+
+MainWindow::Page MainWindow::currentPage() const
+{
+    switch (ui->stackedWidget->currentIndex())
+    {
+    case 0:
+        return SongDatabasePage;
+    case 1:
+        return DateDatabasePage;
+    default:
+        assert( false );
+        return (Page) -1;
+    }
+}
 
 
 
@@ -396,16 +494,19 @@ void MainWindow::loadDefaultProject()
 void MainWindow::on_actionNew_Song_triggered()
 {
     m_project.pushCommand( new SongDatabaseNewSongCommand( m_project.songDatabase() ) );
+    updateWhichWidgetsAreEnabled();
 }
 
 void MainWindow::on_actionUndo_triggered()
 {
     m_project.undo();
+    updateWhichWidgetsAreEnabled();
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
     m_project.redo();
+    updateWhichWidgetsAreEnabled();
 }
 
 #include "Commands/SongCommands/songremoveattachmentcommand.h"
@@ -417,27 +518,32 @@ void MainWindow::on_actionDelete_Attachment_triggered()
     if (song && index >= 0)
     {
         m_project.pushCommand( new SongRemoveAttachmentCommand( song, index ) );
+        updateWhichWidgetsAreEnabled();
     }
 }
 
 void MainWindow::on_actionNew_Project_triggered()
 {
     newProject();
+    updateWhichWidgetsAreEnabled();
 }
 
 void MainWindow::on_actionSave_triggered()
 {
     saveProject();
+    updateWhichWidgetsAreEnabled();
 }
 
 void MainWindow::on_actionSave_As_triggered()
 {
     saveProjectAs();
+    updateWhichWidgetsAreEnabled();
 }
 
 void MainWindow::on_actionOpen_triggered()
 {
     openProject();
+    updateWhichWidgetsAreEnabled();
 }
 
 #include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
@@ -447,12 +553,14 @@ void MainWindow::on_actionDelete_Song_triggered()
     if (song)
     {
         m_project.pushCommand( new SongDatabaseRemoveSongCommand( m_project.songDatabase(), song ) );
+        updateWhichWidgetsAreEnabled();
     }
 }
 
 void MainWindow::on_actionUpdate_Index_triggered()
 {
     app().fileIndex().updateIndex();
+    updateWhichWidgetsAreEnabled();
 }
 
 void MainWindow::on_actionAdd_Folder_triggered()
@@ -494,7 +602,7 @@ void MainWindow::on_actionRename_Attachment_triggered()
     }
 
     m_project.pushCommand( new AttachmentRenameCommand( attachment, newName ) );
-
+    updateWhichWidgetsAreEnabled();
 }
 
 #include "Commands/SongCommands/songduplicateattachmentcommand.h"
@@ -510,4 +618,21 @@ void MainWindow::on_actionDuplicate_Attachment_triggered()
     assert( attachment );
 
     m_project.pushCommand( new SongDuplicateAttachmentCommand( attachment ) );
+    updateWhichWidgetsAreEnabled();
 }
+
+void MainWindow::on_actionOpen_Terminal_here_triggered()
+{
+    QProcess::startDetached( "gnome-terminal", QStringList(), m_project.path() );
+}
+
+void MainWindow::on_actionCopyToClipboard_triggered()
+{
+    qApp->clipboard()->setText( m_project.path(), QClipboard::Clipboard );
+    qApp->clipboard()->setText( m_project.path(), QClipboard::Selection );
+}
+
+
+
+
+

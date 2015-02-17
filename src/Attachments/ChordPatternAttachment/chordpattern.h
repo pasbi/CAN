@@ -35,6 +35,8 @@ public:
 
     Type type() const { return m_type; }
     int length(int transpose, Chord::MinorPolicy minorPolicy = Chord::LowerCase, Chord::EnharmonicPolicy enharmonicPolicy = Chord::Natural) const;
+    QJsonObject toJsonObject() const;
+    static Line fromJsonObject( const QJsonObject & object );
 
 private:
     const Type m_type;
@@ -56,6 +58,9 @@ public:
 
     static int countChords(const QString & text );
     static bool isLineChordLine( const QString & line );
+
+    void clear();
+    void appendLine( const Line & line );
 
 
 private:

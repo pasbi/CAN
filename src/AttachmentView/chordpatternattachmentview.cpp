@@ -1,7 +1,6 @@
 #include "chordpatternattachmentview.h"
 #include "ui_chordpatternattachmentview.h"
 #include "global.h"
-#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include <QScrollBar>
 #include "util.h"
 #include "Database/SongDatabase/song.h"
@@ -50,10 +49,12 @@ ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     ui->verticalLayout->insertWidget(0, m_toolBar);
 
     ui->textEdit->setFont( QFont("Courier") );
+
 }
 
 ChordPatternAttachmentView::~ChordPatternAttachmentView()
 {
+    readText();
     delete ui;
 }
 
@@ -65,10 +66,10 @@ void setPositionIfValid( QTextCursor& cursor, int pos, QTextCursor::MoveMode  mo
     }
 }
 
-void ChordPatternAttachmentView::savePositions( int& cursorPosition, int& scrollbarPosition )
+void ChordPatternAttachmentView::saveConfiguration( Configuration& config )
 {
-    cursorPosition = ui->textEdit->textCursor().position();
-    scrollbarPosition = ui->textEdit->verticalScrollBar()->value();
+    config.cursorPosition = ui->textEdit->textCursor().position();
+    config.scrollBarPosition = ui->textEdit->verticalScrollBar()->value();
 }
 
 void ChordPatternAttachmentView::readText()
@@ -136,10 +137,10 @@ void ChordPatternAttachmentView::writeText(int cursorPosition, int scrollbarPosi
 
 void ChordPatternAttachmentView::updateText()
 {
-    int cursorPosition, scrollbarPosition;
-    savePositions( cursorPosition, scrollbarPosition );
+    Configuration config;
+    saveConfiguration( config );
     readText( );
-    writeText( cursorPosition, scrollbarPosition );
+    writeText( config.cursorPosition, config.scrollBarPosition );
 
     removeWarningSign();
 }
@@ -147,12 +148,16 @@ void ChordPatternAttachmentView::updateText()
 
 void ChordPatternAttachmentView::connectWithAttachment()
 {
+    Configuration config;
+    saveConfiguration( config );
+    writeText( config.cursorPosition, config.scrollBarPosition );
+
     connect( attachment<ChordPatternAttachment>(), &ChordPatternAttachment::changed, [this](){
 
         int oldNumChords = ChordPattern::countChords( ui->textEdit->toPlainText() );
-        int cursorPosition, scrollbarPosition;
-        savePositions( cursorPosition, scrollbarPosition );
-        writeText( cursorPosition, scrollbarPosition );
+        Configuration config;
+        saveConfiguration( config );
+        writeText( config.cursorPosition, config.scrollBarPosition );
 
         int newNumChords = ChordPattern::countChords( ui->textEdit->toPlainText() );
         if (oldNumChords > newNumChords )

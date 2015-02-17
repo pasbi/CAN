@@ -11,6 +11,7 @@ namespace Ui {
 class SongDatabaseWidget;
 }
 
+class SongTableView;
 class SongDatabaseWidget : public QWidget
 {
     Q_OBJECT
@@ -23,6 +24,7 @@ public:
     Song* currentSong() const;
 
     AttachmentChooser* attachmentChooser() const;
+    SongTableView* tableView() const;
 
 private slots:
     void updateAttachmentChooser(QModelIndex currentRow, QModelIndex previousRow);
@@ -31,6 +33,6 @@ private:
     Ui::SongDatabaseWidget *ui;
     SongDatabase* m_songDatabase;
     SongDatabaseSortProxy m_sortFilterProxy;
-};
 
+};
 #endif // SONGDATABASEWIDGET_H

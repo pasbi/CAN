@@ -2,6 +2,7 @@
 #define CHORD_H
 
 #include <QString>
+#include <QJsonObject>
 
 class Chord
 {
@@ -11,6 +12,7 @@ public:
     enum MinorPolicy { LowerCase, FollowingM };
 
     Chord( const QString token, int transpose = 0, int m_column = -1 );
+    Chord( const QJsonObject & object );
 
     void resetTranspose();
     int base() const { return m_base; }
@@ -21,6 +23,8 @@ public:
     int column() const { return m_column; }
     bool isMinor() const { return m_isMinor; }
 
+    QJsonObject toJsonObject() const;
+
 private:
     int m_base;
     QString m_attachment;
@@ -29,7 +33,7 @@ private:
     static QString sharp(const QString& s = "");
 
     const bool m_isValid;
-    const int m_column = -1;
+    int m_column = -1;
     bool m_isMinor;
 };
 

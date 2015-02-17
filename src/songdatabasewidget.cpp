@@ -42,3 +42,8 @@ AttachmentChooser* SongDatabaseWidget::attachmentChooser() const
 {
     return ui->attachmentChooser;
 }
+
+SongTableView* SongDatabaseWidget::tableView() const
+{
+    return ui->songTableViewContainer->songTableView();
+}

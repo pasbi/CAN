@@ -5,7 +5,7 @@
 #include "creatable.h"
 
 class Song;
-class Attachment : public QObject, public Taggable, public Creatable
+class Attachment : public QObject, public Taggable /* --> PersistentObject */, public Creatable
 {
     Q_OBJECT
 public:

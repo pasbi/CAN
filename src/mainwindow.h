@@ -53,22 +53,30 @@ private slots:
     void on_actionSave_triggered();
     void on_actionSave_As_triggered();
     void on_actionOpen_triggered();
-
-
-
-
-
-
-
-    void setupAttachmentMenu();
-    void setCurrentAttachment( int index );
-    Song* currentSong() const;
     void on_actionDelete_Song_triggered();
     void on_actionUpdate_Index_triggered();
     void on_actionAdd_Folder_triggered();
     void on_actionClear_Index_triggered();
     void on_actionRename_Attachment_triggered();
     void on_actionDuplicate_Attachment_triggered();
+
+
+
+
+
+
+private:
+    void setupAttachmentMenu();
+    void setCurrentAttachment( int index );
+    Song* currentSong() const;
+    int currentAttachmentIndex() const;
+    Attachment* currentAttachment() const;
+    enum Page { SongDatabasePage, DateDatabasePage };
+    Page currentPage() const;
+private slots:
+    void updateWhichWidgetsAreEnabled();
+    void on_actionOpen_Terminal_here_triggered();
+    void on_actionCopyToClipboard_triggered();
 };
 
 #endif // MAINWINDOW_H

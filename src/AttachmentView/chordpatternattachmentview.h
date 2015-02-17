@@ -5,6 +5,8 @@
 #include <QToolBar>
 #include "Attachments/ChordPatternAttachment/chord.h"
 #include "configurable.h"
+#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
+
 
 namespace Ui {
 class ChordPatternAttachmentView;
@@ -33,10 +35,22 @@ private slots:
     void writeText(int cursorPosition, int scrollbarPosition);
     void updateText();
 private:
-    void savePositions(int& cursorPosition, int& scrollbarPosition);
 
     void putWarningSign();
     void removeWarningSign();
+
+    typedef struct Configuration
+    {
+        Configuration( int scrollBarPosition = 0, int cursorPosition = 0 ) :
+            scrollBarPosition( scrollBarPosition ),
+            cursorPosition( cursorPosition )
+        { }
+
+        int scrollBarPosition;
+        int cursorPosition;
+    } Configuration;
+
+    void saveConfiguration( Configuration& config );
 };
 
 #endif // CHORDPATTERNATTACHMENTVIEW_H

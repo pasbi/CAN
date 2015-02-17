@@ -1,6 +1,9 @@
 #include "chordpattern.h"
 #include <QStringList>
 #include "global.h"
+#include <QJsonObject>
+#include <QJsonArray>
+#include "persistentobject.h"
 
 const QString SPLIT_PATTERN = (QStringList() << QRegExp::escape("|") << QRegExp::escape(",")
                                              << QRegExp::escape("-") << QRegExp::escape("/")
@@ -125,7 +128,9 @@ QString convert( QList<const Chord*> chords, Chord::MinorPolicy mpolicy, Chord::
     for (const Chord * c : chords)
     {
         assert( c->column() > i );
+        qDebug() << "insert " << c << " at " << c->column() << "in" << text;
         text.insert( c->column(), c->toString( transpose, mpolicy, epolicy ) );
+        qDebug() << text;
     }
     return text;
 }
@@ -179,6 +184,79 @@ int Line::length( int transpose, Chord::MinorPolicy minorPolicy, Chord::Enharmon
     }
 }
 
+QJsonObject Line::toJsonObject() const
+{
+    QJsonObject object;
+    switch (type())
+    {
+    case Chords:
+    {
+        object.insert("type", QString("chords"));
+        QJsonArray chords;
+        for (const Chord& c : m_chords)
+        {
+            chords.append(c.toJsonObject());
+        }
+        object.insert("chords", chords);
+        break;
+    }
+    case Text:
+        object.insert("type", QString("text"));
+        object.insert("text", m_text);
+        break;
+    }
+
+    return object;
+}
+
+Line Line::fromJsonObject(const QJsonObject &object)
+{
+    if (checkJsonObject( object, "type", QJsonValue::String ))
+    {
+        QString type = object["type"].toString();
+        if (type == "text")
+        {
+            if ( checkJsonObject( object, "text", QJsonValue::String ) )
+            {
+                return Line(object["text"].toString());
+            }
+        }
+        else if (type == "chords")
+        {
+            if ( checkJsonObject( object, "chords", QJsonValue::Array ) )
+            {
+                QList<Chord> chords;
+                for (const QJsonValue & val : object["chords"].toArray() )
+                {
+                    if (val.type() == QJsonValue::Object)
+                    {
+                        chords << Chord(val.toObject());
+                    }
+                    else
+                    {
+                        WARNING << "Expected type Object.";
+                    }
+                }
+                return Line( chords );
+            }
+        }
+        else
+        {
+            WARNING << "Unknown type " << type;
+        }
+    }
+    return Line("");
+}
+
+void ChordPattern::appendLine(const Line &line)
+{
+    m_lines.append( line );
+}
+
+void ChordPattern::clear()
+{
+    m_lines.clear();
+}
 
 
 

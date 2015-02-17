@@ -12,10 +12,13 @@ public:
     ChordPatternAttachment();
     QString text( Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharmonicPolicy ) const;
     ChordPattern* chordPattern() { return &m_pattern; }
+    const ChordPattern* chordPattern() const { return &m_pattern; }
     void transpose(int t);
 
     void copy(Attachment *&attachment) const;
 
+    QJsonObject toJsonObject() const;
+    bool restoreFromJsonObject(const QJsonObject &object);
 
 private:
     ChordPattern m_pattern;

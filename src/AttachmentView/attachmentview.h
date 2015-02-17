@@ -11,7 +11,7 @@ public:
     explicit AttachmentView(QWidget *parent = 0);
     void setAttachment(Attachment* attachment);
 
-    template<typename T>
+    template<typename T = Attachment>
     T* attachment() const
     {
         T* attachment = qobject_cast<T*>( m_attachment );

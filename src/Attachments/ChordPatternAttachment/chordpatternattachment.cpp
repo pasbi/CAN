@@ -26,3 +26,38 @@ void ChordPatternAttachment::copy(Attachment *&attachment) const
     attachment = new ChordPatternAttachment();
     static_cast<ChordPatternAttachment*>(attachment)->m_pattern = m_pattern;
 }
+
+QJsonObject ChordPatternAttachment::toJsonObject() const
+{
+    QJsonObject object = Attachment::toJsonObject();
+
+    QJsonArray array;
+    for (const Line* line : chordPattern()->lines())
+    {
+        array.append( line->toJsonObject() );
+    }
+
+    object.insert("lines", array);
+
+    return object;
+}
+
+bool ChordPatternAttachment::restoreFromJsonObject(const QJsonObject &object)
+{
+    chordPattern()->clear();
+    if (checkJsonObject( object, "lines", QJsonValue::Array ))
+    {
+        for (const QJsonValue & val : object["lines"].toArray())
+        {
+            if (val.type() == QJsonValue::Object)
+            {
+                chordPattern()->appendLine( Line::fromJsonObject( val.toObject() ) );
+            }
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
