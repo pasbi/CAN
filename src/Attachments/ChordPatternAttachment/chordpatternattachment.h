@@ -2,7 +2,8 @@
 #define CHORDPATTERNATTACHMENT_H
 
 #include "../attachment.h"
-#include "chordpattern.h"
+#include "chord.h"
+
 
 class ChordPatternAttachment : public Attachment
 {
@@ -10,18 +11,21 @@ class ChordPatternAttachment : public Attachment
     DECL_CREATABLE(ChordPatternAttachment);
 public:
     ChordPatternAttachment();
-    QString text( Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharmonicPolicy ) const;
-    ChordPattern* chordPattern() { return &m_pattern; }
-    const ChordPattern* chordPattern() const { return &m_pattern; }
-    void transpose(int t);
+    QString chordPattern() const { return m_pattern; }
 
     void copy(Attachment *&attachment) const;
 
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject &object);
 
+    void setPattern( const QString & pattern );
+    void process(int transpose = 0);
+
+
 private:
-    ChordPattern m_pattern;
+    QString m_pattern;
+    Chord::EnharmonicPolicy m_enharmonicPolicy = Chord::Natural;
+    Chord::MinorPolicy      m_minorPolicy      = Chord::LowerCase;
 
 signals:
     void changed();

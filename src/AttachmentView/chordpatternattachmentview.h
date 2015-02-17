@@ -31,26 +31,9 @@ private:
     Chord::EnharmonicPolicy m_enharmonicPolicy;
 
 private slots:
-    void readText();
-    void writeText(int cursorPosition, int scrollbarPosition);
     void updateText();
-private:
+    void textEdited();
 
-    void putWarningSign();
-    void removeWarningSign();
-
-    typedef struct Configuration
-    {
-        Configuration( int scrollBarPosition = 0, int cursorPosition = 0 ) :
-            scrollBarPosition( scrollBarPosition ),
-            cursorPosition( cursorPosition )
-        { }
-
-        int scrollBarPosition;
-        int cursorPosition;
-    } Configuration;
-
-    void saveConfiguration( Configuration& config );
 };
 
 #endif // CHORDPATTERNATTACHMENTVIEW_H

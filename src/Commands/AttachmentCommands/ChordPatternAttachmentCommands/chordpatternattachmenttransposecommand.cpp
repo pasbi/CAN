@@ -10,10 +10,10 @@ ChordPatternAttachmentTransposeCommand::ChordPatternAttachmentTransposeCommand(C
 
 void ChordPatternAttachmentTransposeCommand::undo()
 {
-    attachment()->transpose( -m_transpose );
+    attachment()->process( -m_transpose );
 }
 
 void ChordPatternAttachmentTransposeCommand::redo()
 {
-    attachment()->transpose( m_transpose );
+    attachment()->process( m_transpose );
 }

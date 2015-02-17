@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "persistentobject.h"
+#if 0
 
 const QString SPLIT_PATTERN = (QStringList() << QRegExp::escape("|") << QRegExp::escape(",")
                                              << QRegExp::escape("-") << QRegExp::escape("/")
@@ -85,104 +86,9 @@ QList<QPair<int, QString> > tokenize( QString line )
     return tokens;
 }
 
-QList<Chord> ChordPattern::parseChordLine(const QString &line, int transpose )
-{
-    QList<QPair<int, QString>> tokens = tokenize( line );
 
-    QList<Chord> chords;
-    for ( const QPair<int, QString> & token : tokens )
-    {
-        Chord chord(token.second, transpose, token.first);
-        if (chord.isValid())
-        {
-            chords.append( chord );
-        }
-    }
 
-    return chords;
-}
 
-void ChordPattern::parse(const QString &text)
-{
-    m_lines.clear();
-    QStringList lines = text.split("\n");
-
-    for ( const QString & line : lines )
-    {
-        if (isLineChordLine(line))
-        {
-            m_lines << Line( parseChordLine( line, m_transpose ) );
-        }
-        else
-        {
-            m_lines << Line( line );
-        }
-    }
-}
-
-QString convert( QList<const Chord*> chords, Chord::MinorPolicy mpolicy, Chord::EnharmonicPolicy epolicy, int transpose )
-{
-    QString text;
-
-    int i = -1;
-    for (const Chord * c : chords)
-    {
-        assert( c->column() > i );
-        qDebug() << "insert " << c << " at " << c->column() << "in" << text;
-        text.insert( c->column(), c->toString( transpose, mpolicy, epolicy ) );
-        qDebug() << text;
-    }
-    return text;
-}
-
-QString ChordPattern::toString(Chord::MinorPolicy mpolicy, Chord::EnharmonicPolicy epolicy) const
-{
-    QStringList lines;
-    for (const Line & line : m_lines)
-    {
-        if (line.type() == Line::Text)
-        {
-            lines << line.text();
-        }
-        else
-        {
-            lines << convert( line.chords(), mpolicy, epolicy, m_transpose );
-        }
-    }
-    return lines.join("\n");
-}
-
-QList<const Line*> ChordPattern::lines() const
-{
-    QList<const Line*> ls;
-    for (int i = 0; i < m_lines.length(); ++i)
-    {
-        ls << &m_lines[i];
-    }
-    return ls;
-}
-
-int Line::length( int transpose, Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharmonicPolicy ) const
-{
-    switch (m_type)
-    {
-    case Chords:
-    {
-        int max = 0;
-        for (const Chord& c : m_chords)
-        {
-            int current = c.toString( transpose, minorPolicy, enharmonicPolicy ).length() + c.column();
-            max = qMax( current, max );
-        }
-        return max;
-    }
-    case Text:
-        return m_text.length();
-    default:
-        assert(false);
-        return 0;
-    }
-}
 
 QJsonObject Line::toJsonObject() const
 {
@@ -264,7 +170,7 @@ void ChordPattern::clear()
 
 
 
-
+#endif
 
 
 

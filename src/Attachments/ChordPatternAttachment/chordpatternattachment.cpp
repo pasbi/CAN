@@ -4,21 +4,35 @@
 
 DEFN_CREATABLE(ChordPatternAttachment, Attachment);
 
+const int TAB_WIDTH = 8;
+
 ChordPatternAttachment::ChordPatternAttachment() :
     m_pattern( "" )
 {
     setName( tr("Chord Pattern") );
 }
 
-QString ChordPatternAttachment::text(Chord::MinorPolicy minorPolicy, Chord::EnharmonicPolicy enharmonicPolicy) const
+QString white(int n)
 {
-    return m_pattern.toString( minorPolicy, enharmonicPolicy );
+    QString s;
+    for (int i = 0; i < n; i++) {
+        s += " ";
+    }
+    return s;
 }
 
-void ChordPatternAttachment::transpose( int t )
+QString replaceTabs(QString text)
 {
-    m_pattern.transpose( t );
-    emit changed();
+    QString s;
+    for (QString line : text.split("\n"))
+    {
+        int i = -1;
+        while ((i = line.indexOf("\t", i+1)) >= 0) {
+            line.replace("\t", white(TAB_WIDTH - (i % TAB_WIDTH)));
+        }
+        s += line + "\n";
+    }
+    return s.endsWith("\n") ? s.left(s.length() - 1) : s;
 }
 
 void ChordPatternAttachment::copy(Attachment *&attachment) const
@@ -31,33 +45,54 @@ QJsonObject ChordPatternAttachment::toJsonObject() const
 {
     QJsonObject object = Attachment::toJsonObject();
 
-    QJsonArray array;
-    for (const Line* line : chordPattern()->lines())
-    {
-        array.append( line->toJsonObject() );
-    }
-
-    object.insert("lines", array);
+    object.insert("pattern", chordPattern());
 
     return object;
 }
 
 bool ChordPatternAttachment::restoreFromJsonObject(const QJsonObject &object)
 {
-    chordPattern()->clear();
-    if (checkJsonObject( object, "lines", QJsonValue::Array ))
+    if (checkJsonObject( object, "pattern", QJsonValue::String ))
     {
-        for (const QJsonValue & val : object["lines"].toArray())
-        {
-            if (val.type() == QJsonValue::Object)
-            {
-                chordPattern()->appendLine( Line::fromJsonObject( val.toObject() ) );
-            }
-        }
+        m_pattern = object["pattern"].toString();
         return true;
     }
     else
     {
+        m_pattern = "";
         return false;
     }
 }
+
+void ChordPatternAttachment::setPattern(const QString &pattern)
+{
+    if (m_pattern != pattern)
+    {
+        m_pattern = pattern;
+        emit changed();
+    }
+}
+
+void ChordPatternAttachment::process(int transpose)
+{
+    QString text = m_pattern;
+    int i = 0;
+    for (QString line : m_pattern.split("\n")) {
+        QStringList chords, tokens;
+        bool isChordLine = Chord::parseLine( line, chords, tokens );
+        for (QString token : tokens) {
+            int additional = 0;
+            Chord chord(token);
+            if (chord.isValid() && isChordLine) {
+                chord.transpose(transpose);
+                QString c = chord.toString(m_minorPolicy, m_enharmonicPolicy);
+                text = text.replace(i, token.length(), c);
+                additional = c.length() - token.length();
+            }
+            i += token.length() + 1 + additional;
+        }
+    }
+    m_pattern = replaceTabs(text);
+    emit changed();
+}
+

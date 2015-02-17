@@ -1,3 +1,4 @@
+#if 0
 #ifndef CHORDPATTERN_H
 #define CHORDPATTERN_H
 
@@ -71,3 +72,4 @@ private:
 };
 
 #endif // CHORDPATTERN_H
+#endif

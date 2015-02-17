@@ -11,29 +11,33 @@ public:
     enum EnharmonicPolicy { Sharp, Flat, Natural };
     enum MinorPolicy { LowerCase, FollowingM };
 
-    Chord( const QString token, int transpose = 0, int m_column = -1 );
-    Chord( const QJsonObject & object );
+    Chord( const QString token );
 
-    void resetTranspose();
     int base() const { return m_base; }
-    QString baseString(EnharmonicPolicy epolicy, int tranpose) const;
+    QString baseString(EnharmonicPolicy epolicy) const;
     QString attachment() const { return m_attachment; }
-    QString toString(int tranpose, MinorPolicy mpolicy, EnharmonicPolicy epolicy = Natural) const;
+    QString toString(MinorPolicy mpolicy, EnharmonicPolicy epolicy = Natural) const;
     bool isValid() const { return m_isValid; }
-    int column() const { return m_column; }
     bool isMinor() const { return m_isMinor; }
+    void transpose(int t);
 
-    QJsonObject toJsonObject() const;
+    static const QString SPLIT_PATTERN;
 
+    /**
+     * @brief countChords returns the number of chords in @code line.
+     *  Assumes @code line has no linebreaks. E.g. "C\nD" is treated as it is, a string of length 3 with an unkown char in the middle."
+     * @param line
+     * @return
+     */
+    static bool parseLine(const QString &line, QStringList &chords, QStringList &tokens);
 private:
     int m_base;
     QString m_attachment;
-    bool parse(QString text, int transpose);
+    bool parse(QString text);
     static QString flat(const QString& s = "");
     static QString sharp(const QString& s = "");
 
     const bool m_isValid;
-    int m_column = -1;
     bool m_isMinor;
 };
 

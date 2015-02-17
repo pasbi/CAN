@@ -41,143 +41,65 @@ ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
                     );
     });
 
-    QAction* recognizeChordsAction = new QAction( QIcon(":/icons/icons/three91.png"), tr("Recognize Chords"), this);
-    addAction( recognizeChordsAction );
-    connect( recognizeChordsAction, SIGNAL(triggered()), this, SLOT(updateText()) );
 
     m_toolBar->addActions( actions() );
     ui->verticalLayout->insertWidget(0, m_toolBar);
 
     ui->textEdit->setFont( QFont("Courier") );
+    ui->textEdit->setUndoRedoEnabled(true);
 
 }
 
 ChordPatternAttachmentView::~ChordPatternAttachmentView()
 {
-    readText();
     delete ui;
-}
-
-void setPositionIfValid( QTextCursor& cursor, int pos, QTextCursor::MoveMode  mode)
-{
-    if ( pos >= 0 && pos < cursor.document()->characterCount() )
-    {
-        cursor.setPosition( pos, mode );
-    }
-}
-
-void ChordPatternAttachmentView::saveConfiguration( Configuration& config )
-{
-    config.cursorPosition = ui->textEdit->textCursor().position();
-    config.scrollBarPosition = ui->textEdit->verticalScrollBar()->value();
-}
-
-void ChordPatternAttachmentView::readText()
-{
-    ChordPatternAttachment* patternAttachment = attachment<ChordPatternAttachment>();
-    if (patternAttachment)
-    {
-        patternAttachment->chordPattern()->parse( ui->textEdit->toPlainText() );
-    }
-}
-
-
-void ChordPatternAttachmentView::writeText(int cursorPosition, int scrollbarPosition)
-{
-    ChordPatternAttachment* patternAttachment = attachment<ChordPatternAttachment>();
-
-    if (!patternAttachment)
-    {
-        ui->textEdit->clear();
-    }
-    else
-    {
-        ui->textEdit->setText(patternAttachment->text( m_minorPolicy, m_enharmonicPolicy ));
-
-        QTextCursor cursor(ui->textEdit->document());
-        cursor.setPosition(cursorPosition);
-        ui->textEdit->setTextCursor(cursor);
-        ui->textEdit->verticalScrollBar()->setValue(scrollbarPosition);
-
-
-        QList<QTextEdit::ExtraSelection> highlights;
-        int row = 0;
-        int offset = 0;
-        for (const Line* line : patternAttachment->chordPattern()->lines() )
-        {
-            int transpose = attachment<ChordPatternAttachment>()->chordPattern()->transpose();
-            if (line->type() == Line::Chords)
-            {
-                for (const Chord* c : line->chords())
-                {
-                    int position = c->column() + offset;
-                    QTextCursor cursor(ui->textEdit->document());
-                    setPositionIfValid( cursor, position, QTextCursor::MoveAnchor );
-                    int chordLength = c->toString( transpose, m_minorPolicy, m_enharmonicPolicy ).length();
-                    setPositionIfValid( cursor, position + chordLength, QTextCursor::KeepAnchor);
-                    QTextEdit::ExtraSelection highlight;
-                    highlight.cursor = cursor;
-                    highlight.format.setFontUnderline(true);
-                    highlight.format.setUnderlineColor( QColor(255, 128, 0) );
-                    highlights << highlight;
-                }
-            }
-            else
-            {
-                // no highlights
-            }
-            row++;
-            offset += line->length( transpose, m_minorPolicy, m_enharmonicPolicy ) + 1;    // dont forget the linebreak
-        }
-        ui->textEdit->setExtraSelections(highlights);
-    }
-
-
 }
 
 void ChordPatternAttachmentView::updateText()
 {
-    Configuration config;
-    saveConfiguration( config );
-    readText( );
-    writeText( config.cursorPosition, config.scrollBarPosition );
+    ui->textEdit->blockSignals(true);
+    int cursorPosition = ui->textEdit->textCursor().position();
+    int scrollbarPosition = ui->textEdit->verticalScrollBar()->value();
+    ui->textEdit->setText(attachment<ChordPatternAttachment>()->chordPattern());
+    QTextCursor cursor(ui->textEdit->document());
+    cursor.setPosition(cursorPosition);
+    ui->textEdit->setTextCursor(cursor);
+    ui->textEdit->verticalScrollBar()->setValue(scrollbarPosition);
 
-    removeWarningSign();
+    QList<QTextEdit::ExtraSelection> highlights;
+    int i = 0;
+    for (QString line : ui->textEdit->toPlainText().split("\n")) {
+        QStringList chords, tokens;
+        bool isChordLine = Chord::parseLine( line, chords, tokens );
+        for ( const QString & token : tokens )
+        {
+            if (Chord(token).isValid() && isChordLine) {
+                QTextCursor cursor(ui->textEdit->document());
+                cursor.setPosition(i);
+                cursor.setPosition(i + token.length(), QTextCursor::KeepAnchor);
+                QTextEdit::ExtraSelection highlight;
+                highlight.cursor = cursor;
+                highlight.format.setFontUnderline(true);
+                highlight.format.setUnderlineColor( QColor(255, 128, 0) );
+                highlights << highlight;
+            }
+            i += token.length() + 1;
+        }
+    }
+    ui->textEdit->setExtraSelections(highlights);
+    ui->textEdit->blockSignals(false);
+}
+
+void ChordPatternAttachmentView::textEdited()
+{
+    attachment<ChordPatternAttachment>()->setPattern(ui->textEdit->toPlainText());
+    updateText();
 }
 
 
 void ChordPatternAttachmentView::connectWithAttachment()
 {
-    Configuration config;
-    saveConfiguration( config );
-    writeText( config.cursorPosition, config.scrollBarPosition );
-
-    connect( attachment<ChordPatternAttachment>(), &ChordPatternAttachment::changed, [this](){
-
-        int oldNumChords = ChordPattern::countChords( ui->textEdit->toPlainText() );
-        Configuration config;
-        saveConfiguration( config );
-        writeText( config.cursorPosition, config.scrollBarPosition );
-
-        int newNumChords = ChordPattern::countChords( ui->textEdit->toPlainText() );
-        if (oldNumChords > newNumChords )
-        {
-            putWarningSign();
-        }
-        else if ( newNumChords > oldNumChords )
-        {
-            removeWarningSign();
-        }
-    });
-}
-
-void ChordPatternAttachmentView::putWarningSign()
-{
-    //Configurable::item("WarningColor").value<QColor>()
-    ui->textEdit->setTextBackgroundColor( QColor(Qt::red).darker(300) );
-}
-
-void ChordPatternAttachmentView::removeWarningSign()
-{
-    ui->textEdit->setTextBackgroundColor( QColor( 0, 0, 0, 0 ) );
+    updateText();
+    connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(textEdited()));
+    connect(attachment<ChordPatternAttachment>(), SIGNAL(changed()), this, SLOT(updateText()));
 }
