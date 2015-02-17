@@ -81,14 +81,15 @@ SOURCES += main.cpp\
     Dialogs/clonedialog.cpp \
     Dialogs/pushdialog.cpp \
     Dialogs/pulldialog.cpp \
-    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.cpp \
-    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.cpp \
+    Commands/AttachmentCommands/chordpatternattachmenttransposecommand.cpp \
     Dialogs/addfileindexsourcedialog.cpp \
     stringdialog.cpp \
     Commands/SongCommands/songduplicateattachmentcommand.cpp \
     AttachmentView/indexedfileattachmentview.cpp \
     AttachmentView/audioattachmentview.cpp \
-    Attachments/audioattachment.cpp
+    Attachments/audioattachment.cpp \
+    AttachmentView/chordpatternedit.cpp \
+    Commands/AttachmentCommands/chordpatternattachmenttextchangedcommands.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -149,14 +150,15 @@ HEADERS  += mainwindow.h \
     Dialogs/clonedialog.h \
     Dialogs/pushdialog.h \
     Dialogs/pulldialog.h \
-    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.h \
-    Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmentcommand.h \
+    Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h \
     Dialogs/addfileindexsourcedialog.h \
     stringdialog.h \
     Commands/SongCommands/songduplicateattachmentcommand.h \
     AttachmentView/indexedfileattachmentview.h \
     AttachmentView/audioattachmentview.h \
-    Attachments/audioattachment.h
+    Attachments/audioattachment.h \
+    AttachmentView/chordpatternedit.h \
+    Commands/AttachmentCommands/chordpatternattachmenttextchangedcommands.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \

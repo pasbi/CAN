@@ -6,7 +6,7 @@
 #include "Database/SongDatabase/song.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "project.h"
-#include "Commands/AttachmentCommands/ChordPatternAttachmentCommands/chordpatternattachmenttransposecommand.h"
+#include "Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h"
 
 DEFN_CREATABLE(ChordPatternAttachmentView, AttachmentView);
 REGISTER_DEFN_CONFIG( ChordPatternAttachmentView, "Chord Pattern Attachment" );
@@ -44,10 +44,6 @@ ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
 
     m_toolBar->addActions( actions() );
     ui->verticalLayout->insertWidget(0, m_toolBar);
-
-    ui->textEdit->setFont( QFont("Courier") );
-    ui->textEdit->setUndoRedoEnabled(true);
-
 }
 
 ChordPatternAttachmentView::~ChordPatternAttachmentView()

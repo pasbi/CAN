@@ -30,10 +30,17 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QTextEdit" name="textEdit"/>
+    <widget class="ChordPatternEdit" name="textEdit"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ChordPatternEdit</class>
+   <extends>QTextEdit</extends>
+   <header>AttachmentView/chordpatternedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
