@@ -11,17 +11,29 @@ public:
     explicit AttachmentView(QWidget *parent = 0);
     void setAttachment(Attachment* attachment);
 
-    template<typename T = Attachment>
+    template<typename T>
     T* attachment() const
     {
-        T* attachment = qobject_cast<T*>( m_attachment );
-        assert( attachment );
+        T* attachment = dynamic_cast<T*>( m_attachment );
+        if ( !attachment )
+        {
+            assert( false );
+        }
         return attachment;
     }
 
+    Attachment* attachment() const { return m_attachment; }
+
+    /**
+     * @brief updateAttachmentView is called when something in changes and
+     *   view should react on it. Not to be confused with the event when a
+     *   new attachment shall be displayed.
+     */
+    virtual void updateAttachmentView() {}
+
 
 protected:
-    virtual void connectWithAttachment() = 0;
+    virtual void polish() = 0;
 
 private:
     Attachment* m_attachment = 0;

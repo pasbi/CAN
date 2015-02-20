@@ -93,7 +93,7 @@ void ChordPatternAttachmentView::textEdited()
 }
 
 
-void ChordPatternAttachmentView::connectWithAttachment()
+void ChordPatternAttachmentView::polish()
 {
     updateText();
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(textEdited()));

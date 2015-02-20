@@ -8,5 +8,5 @@ AttachmentView::AttachmentView(QWidget *parent) :
 void AttachmentView::setAttachment(Attachment *attachment)
 {
     m_attachment = attachment;
-    connectWithAttachment();
+    polish();
 }

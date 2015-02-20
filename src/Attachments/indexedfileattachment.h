@@ -2,28 +2,36 @@
 #define INDEXEDFILEATTACHMENT_H
 
 #include "attachment.h"
-#include "poppler/qt5/poppler-qt5.h"
 
 /**
  * @brief The IndexedFileAttachment class is the base class for all attachments that hold blobs like mp3 or pdf files.
  */
 class IndexedFileAttachment : public Attachment
 {
-
+    Q_OBJECT
 public:
     IndexedFileAttachment();
 
     bool fileExists() const;
     QString filename() const;
-    bool setFilename(const QString & filename);
+    QByteArray hash() const { return m_hash; }
+
+
 
     virtual void copy(Attachment* &attachment) const;
+    virtual QStringList acceptedEndings() const = 0;
 
+    QJsonObject toJsonObject() const;
+    bool restoreFromJsonObject(const QJsonObject &object);
+
+public slots:
+    // we must rely on the implcit sharing of QByteArray/QString since slots are hardly realizable with const &
+    bool setHash(QByteArray hash);
+    bool setFilename(QString filename );
 
 private:
     QByteArray m_hash;
-    void openDocument();
-    Poppler::Document* m_document = NULL;
+    virtual void loadContent() = 0;
 
 };
 

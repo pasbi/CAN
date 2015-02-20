@@ -10,7 +10,7 @@ Song::Song(SongDatabase* database) :
     m_attributes.reserve(n);
     for (int i = 0; i < n; ++i)
     {
-        m_attributes.append(QVariant());
+        m_attributes.append(QString());
     }
 }
 
@@ -19,6 +19,20 @@ Song::~Song()
     qDeleteAll( m_attachments );
 }
 
+QMap<QString, QString> Song::stringAttributes() const
+{
+    QMap<QString, QString> map;
+    assert( m_attributes.length() <= database()->attributeKeys().length() );
+    for (int i = 0; i < m_attributes.size(); ++i)
+    {
+        QString s = m_attributes[i].toString();
+        if (!s.isEmpty())
+        {
+            map.insert( database()->attributeKeys()[i], s );
+        }
+    }
+    return map;
+}
 
 bool Song::restoreFromJsonObject(const QJsonObject &json)
 {
@@ -37,7 +51,7 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
     m_attributes.reserve(attributes.size());
     for (const QJsonValue & val : attributes)
     {
-        m_attributes.append(val.toVariant());
+        m_attributes.append(val.toString());
     }
 
     QJsonArray attachments = json["attachments"].toArray();
@@ -95,8 +109,12 @@ void Song::setTitle(const QString &title)
 void Song::setAttribute(int index, const QVariant &data)
 {
     assert(index >= 0 && index < m_attributes.length());
-    m_attributes[index] = data;
-    m_songDatabase->notifyDataChanged( this );
+    if (m_attributes[index] == data)
+    {
+        m_attributes[index] = data;
+        m_songDatabase->notifyDataChanged( this );
+    }
+
 }
 
 void Song::insertAttribute(int index, const QVariant &data)

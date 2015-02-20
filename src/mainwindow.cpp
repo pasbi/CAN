@@ -80,6 +80,10 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         setCurrentAttachment( i );
     });
+    connect( m_project.songDatabase(), &SongDatabase::dataChanged, [this]()
+    {
+        ui->songDatabaseWidget->attachmentChooser()->updateAttachmentView();
+    });
 
     //////////////////////////////////////////
     ///

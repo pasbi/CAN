@@ -47,12 +47,17 @@ public:
      * @return
      */
     QVariant& attribute(int index);
+    QVariantList attributes() const { return m_attributes; }
+    QMap<QString, QString> stringAttributes() const;
 
-    void setAttribute(int index, const QVariant & data);
-    void insertAttribute(int index, const QVariant & data);
+    void setAttribute(int index, const QVariant &data);
+    void insertAttribute(int index, const QVariant &data);
     void removeAttribute(int index);
     QString title() const;
     void setTitle(const QString & title);
+signals:
+    void attributesEdited();
+
 
 
     /////////////////////////////////////////////////

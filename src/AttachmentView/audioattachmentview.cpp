@@ -7,7 +7,7 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
 {
 }
 
-void AudioAttachmentView::connectWithAttachment()
+void AudioAttachmentView::polish()
 {
-
+    IndexedFileAttachmentView::polish();
 }

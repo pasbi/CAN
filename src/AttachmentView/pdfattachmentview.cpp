@@ -19,6 +19,7 @@ PDFAttachmentView::~PDFAttachmentView()
     delete ui;
 }
 
-void PDFAttachmentView::connectWithAttachment()
+void PDFAttachmentView::polish()
 {
+    IndexedFileAttachmentView::polish();
 }

@@ -81,3 +81,8 @@ int AttachmentChooser::currentAttachmentIndex() const
 {
     return ui->comboBox->currentIndex();
 }
+
+void AttachmentChooser::updateAttachmentView()
+{
+    ui->attachmentEditor->updateAttachmentView();
+}

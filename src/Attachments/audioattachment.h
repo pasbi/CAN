@@ -10,6 +10,9 @@ class AudioAttachment : public IndexedFileAttachment
 public:
     AudioAttachment();
     void copy(Attachment *&attachment) const;
+    void loadContent();
+
+    QStringList acceptedEndings() const { return QStringList() << "mp3" << "ogg"; }
 };
 
 #endif // AUDIOATTACHMENT_H

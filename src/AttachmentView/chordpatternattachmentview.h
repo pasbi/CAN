@@ -22,7 +22,7 @@ public:
     ~ChordPatternAttachmentView();
 
 protected:
-    void connectWithAttachment();
+    void polish();
 
 private:
     Ui::ChordPatternAttachmentView *ui;

@@ -10,7 +10,8 @@ class AudioAttachmentView : public IndexedFileAttachmentView
 public:
     AudioAttachmentView(QWidget* parent = 0);
 
-    void connectWithAttachment();
+protected:
+    void polish();
 };
 
 #endif // AUDIOATTACHMENTVIEW_H

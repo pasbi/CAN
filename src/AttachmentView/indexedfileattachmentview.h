@@ -16,6 +16,12 @@ public:
     ~IndexedFileAttachmentView();
 
     void setWidget(QWidget *widget);
+    virtual void polish();
+
+    void updateAttachmentView();
+
+signals:
+    void fileSelected( QByteArray hash );
 
 private:
     Ui::IndexedFileAttachmentView *ui;

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "FileIndex/fileindex.h"
+#include "Database/SongDatabase/song.h"
+
 
 namespace Ui {
 class AdvancedFileChooser;
@@ -16,19 +18,23 @@ public:
     explicit AdvancedFileChooser(QWidget *parent = 0);
     ~AdvancedFileChooser();
 
-    void setFilter(const QStringList & filter);
-    void setIndex( const FileIndex* fileIndex );
+    void setFilterProperties( const Song* song, const QStringList & endings );
+    void updateComboBox();
 
 public slots:
     void setHash( const QByteArray & hash );
 
 private:
     Ui::AdvancedFileChooser *ui;
-    QStringList m_filter;
-    const FileIndex* m_fileIndex;
+    QStringList m_endings;
+    const Song* m_song;
+
     QStringList m_filenames;
-    void updateComboBox();
     QByteArray m_hash;
+
+
+signals:
+    void itemSelected( QByteArray hash);
 
 
 };

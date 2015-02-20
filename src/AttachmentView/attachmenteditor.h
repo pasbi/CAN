@@ -13,8 +13,11 @@ public:
     explicit AttachmentEditor(QWidget *parent = 0);
     void setAttachment(Attachment* attachment);
 
+public slots:
+    void updateAttachmentView();
+
 private:
-    AttachmentView* m_attachmentView = 0;
+    AttachmentView* m_currentView = 0;
     QScrollArea* m_scrollArea = 0;
 
 };

@@ -22,7 +22,7 @@ QString IndexedFileAttachment::filename() const
     }
 }
 
-bool IndexedFileAttachment::setFilename(const QString & filename)
+bool IndexedFileAttachment::setFilename(QString filename)
 {
     if ( app().fileIndex().contains( filename ) )
     {
@@ -36,6 +36,20 @@ bool IndexedFileAttachment::setFilename(const QString & filename)
     }
 }
 
+bool IndexedFileAttachment::setHash(QByteArray hash)
+{
+    if ( app().fileIndex().contains( hash ) )
+    {
+        m_hash = hash;
+        return true;
+    }
+    else
+    {
+        WARNING << "Cannot set file since index does not contain " << QString::fromLatin1( hash.toHex() ) << ".";
+        return false;
+    }
+}
+
 void IndexedFileAttachment::copy(Attachment *&attachment) const
 {
     IndexedFileAttachment* a = dynamic_cast<IndexedFileAttachment*>(attachment);
@@ -44,13 +58,27 @@ void IndexedFileAttachment::copy(Attachment *&attachment) const
     a->m_hash = m_hash;
 }
 
-void IndexedFileAttachment::openDocument()
+QJsonObject IndexedFileAttachment::toJsonObject() const
 {
-    delete m_document;
-    m_document = Poppler::Document::load( filename() );
-    assert(m_document);
-    m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+    QJsonObject object = Attachment::toJsonObject();
+
+    object.insert("hash", QString::fromLatin1( m_hash.toHex() ));
+
+    return object;
 }
+
+bool IndexedFileAttachment::restoreFromJsonObject(const QJsonObject &object)
+{
+    bool success = true;
+    if (success && (success = checkJsonObject( object, "hash", QJsonValue::String )))
+    {
+        m_hash = QByteArray::fromHex( object["hash"].toString().toLatin1() );
+    }
+
+    return Attachment::restoreFromJsonObject( object ) && success;
+}
+
+
 
 
 

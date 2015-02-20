@@ -30,22 +30,28 @@ AttachmentView* createAttachmentView(Attachment* attachment)
 
 void AttachmentEditor::setAttachment(Attachment *attachment)
 {
-    static AttachmentView* currentView = NULL;
-
-    delete currentView;
+    delete m_currentView;
     delete m_scrollArea->layout();
     QVBoxLayout* layout = new QVBoxLayout(m_scrollArea);
 
     if (attachment)
     {
-        currentView = createAttachmentView( attachment );
-        currentView->setParent( m_scrollArea );
-        layout->addWidget( currentView );
+        m_currentView = createAttachmentView( attachment );
+        m_currentView->setParent( m_scrollArea );
+        layout->addWidget( m_currentView );
         delete m_scrollArea->widget();
     }
     else
     {
-        currentView = NULL;
+        m_currentView = NULL;
     }
     m_scrollArea->setLayout( layout );
+}
+
+void AttachmentEditor::updateAttachmentView()
+{
+    if (m_currentView)
+    {
+        m_currentView->updateAttachmentView();
+    }
 }

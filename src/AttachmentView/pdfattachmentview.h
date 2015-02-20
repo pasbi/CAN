@@ -18,7 +18,7 @@ public:
     ~PDFAttachmentView();
 
 protected:
-    void connectWithAttachment();
+    void polish();
 
 private:
     Ui::PDFAttachmentView *ui;

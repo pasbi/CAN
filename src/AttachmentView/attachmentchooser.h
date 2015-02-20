@@ -21,6 +21,7 @@ public slots:
     void setSong( Song* song );
     Song* song() const { return m_song; }
     void setAttachment(int index );
+    void updateAttachmentView();
 
 private:
     Ui::AttachmentChooser *ui;
