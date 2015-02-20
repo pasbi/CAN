@@ -7,12 +7,19 @@ IndexedFileAttachment::IndexedFileAttachment()
 
 bool IndexedFileAttachment::fileExists() const
 {
-    return app().fileIndex().contains( filename() );
+    return !m_hash.isEmpty() && app().fileIndex().contains( filename() );
 }
 
 QString IndexedFileAttachment::filename() const
 {
-    return app().fileIndex().filename( m_hash );
+    if (m_hash.isEmpty())
+    {
+        return "";
+    }
+    else
+    {
+        return app().fileIndex().filename( m_hash );
+    }
 }
 
 bool IndexedFileAttachment::setFilename(const QString & filename)
@@ -24,7 +31,7 @@ bool IndexedFileAttachment::setFilename(const QString & filename)
     }
     else
     {
-        WARNING << "Cannot set file, since " << filename << " is not indexed.";
+        WARNING << "Cannot set file since " << filename << " is not indexed.";
         return false;
     }
 }

@@ -3,6 +3,7 @@
 #include "global.h"
 #include "indexer.h"
 #include "progressdialog.h"
+#include <QFileInfo>
 
 REGISTER_DEFN_CONFIG( FileIndex, "File Index" );
 
@@ -85,6 +86,8 @@ QByteArray FileIndex::serialize() const
         stream << key << m_backward[key];
     }
 
+    qDebug() << data.size();
+
     return data;
 }
 
@@ -116,7 +119,8 @@ void FileIndex::save( ) const
 
 void FileIndex::restore( )
 {
-   deserialize( config.item("FileIndex").toByteArray() );
+    qDebug() << "restore " << config.item("FileIndex").toByteArray();
+    deserialize( config.item("FileIndex").toByteArray() );
 }
 
 Indexer* FileIndex::requestIndexer( const QString & path, const QStringList filter, Indexer::Mode mode )
@@ -153,6 +157,7 @@ void FileIndex::abortIndexing()
 
 void FileIndex::addSource( const QString & path, const QStringList & filter )
 {
+    qDebug() << "add source";
     m_sources << path;
     requestIndexer( path, filter, Indexer::Scan )->start();
 }
@@ -164,6 +169,23 @@ void FileIndex::updateIndex()
     {
         requestIndexer( source, QStringList(), Indexer::Update );
     }
+}
+
+QStringList FileIndex::filenames(const QStringList &filter) const
+{
+    qDebug() << m_backward.keys();
+    QStringList akk;
+//    for (const QString & f : filter)
+//    {
+//    }
+//    for (const QString & filename : m_backward.keys())
+//    {
+//      //  if (true || QFileInfo(filename).fileName().contains(f))
+//        {
+//            akk << filename;
+//        }
+//    }
+    return akk;
 }
 
 

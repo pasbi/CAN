@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //////////////////////////////////////////
     /// restore configuration
     //////////////////////////////////////////
-    Configurable::restoreAll();
+    /// is done implicitly when Configurable is loaded
 
 
     //////////////////////////////////////////

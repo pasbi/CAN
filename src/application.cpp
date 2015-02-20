@@ -3,7 +3,10 @@
 Application::Application(int &argc, char **argv) :
     QApplication( argc, argv)
 {
-
+    setOrganizationDomain(organizationDomain());
+    setObjectName(objectName());
+    setApplicationName(applicationName());
+    Configurable::restoreAll();
 }
 
 Application::~Application()
@@ -16,3 +19,4 @@ Application & app()
 {
     return *static_cast<Application*>(QApplication::instance());
 }
+

@@ -2,12 +2,18 @@
 #include "global.h"
 #include <QVariant>
 #include <QJsonDocument>
+#include "application.h"
 
 Configurable::Configurable(const QString &prefix, const QString &caption) :
     m_prefix(prefix),
     m_caption(caption)
 {
-    restoreConfiguration();
+    // do not restore configuration here.
+    // at the time this code is executed, QApplication does not exist.
+    // Hence, QApplication cannot provide applicationName or
+    // organizationName for QSettings.
+    // Restore Configuration is better done in Application constructor.
+    //restoreConfiguration();
     registerer()->registerConfigurable(this);
 }
 

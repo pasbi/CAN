@@ -20,7 +20,6 @@ public:
     virtual void copy(Attachment* &attachment) const;
 
 
-
 private:
     QByteArray m_hash;
     void openDocument();

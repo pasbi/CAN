@@ -16,6 +16,7 @@ public:
     FileIndex();
     void clear();
     QString filename( const QByteArray & hash ) const;
+    QStringList filenames( const QStringList & filter ) const;
     QByteArray hash( const QString & filename ) const;
     bool contains(const QByteArray & hash) { return m_forward.contains(hash); }
     bool contains(const QString & filename) { return m_backward.contains(filename); }

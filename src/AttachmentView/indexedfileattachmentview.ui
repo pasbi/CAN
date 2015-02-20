@@ -27,6 +27,9 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="AdvancedFileChooser" name="widget" native="true"/>
+   </item>
+   <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <widget class="QWidget" name="page_2">
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -44,7 +47,7 @@
         </spacer>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,0,2,0,0,0,0,10">
+        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,0,2,0,0,0,10">
          <item>
           <spacer name="verticalSpacer_2">
            <property name="orientation">
@@ -93,13 +96,6 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
-           <property name="text">
-            <string>Change File</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="pushButton_4">
            <property name="text">
             <string>Set alternative</string>
@@ -140,6 +136,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AdvancedFileChooser</class>
+   <extends>QWidget</extends>
+   <header>advancedfilechooser.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

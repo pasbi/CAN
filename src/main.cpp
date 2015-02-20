@@ -8,6 +8,8 @@ int main(int argc, char *argv[])
 {
     Application a(argc, argv);
 
+    a.fileIndex().restore();
+
 
     // load stylesheet
 //    QFile styleSheetFile(":/style/style.css");

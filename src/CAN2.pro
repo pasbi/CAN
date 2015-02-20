@@ -23,7 +23,7 @@ QMAKE_CXXFLAGS += -std=c++0x
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    configurable.cpp \          #Configurable must be build before any other class that is configurable.
+    configurable.cpp \
     project.cpp \
     Database/SongDatabase/songdatabase.cpp \
     Database/DateDatabase/datedatabase.cpp \
@@ -89,11 +89,11 @@ SOURCES += main.cpp\
     AttachmentView/audioattachmentview.cpp \
     Attachments/audioattachment.cpp \
     AttachmentView/chordpatternedit.cpp \
-    Commands/AttachmentCommands/chordpatternattachmenttextchangedcommands.cpp
+    advancedfilechooser.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
-    configurable.h \                #Configurable must be build before any other class that is configurable.
+    configurable.h \
     Database/SongDatabase/songdatabase.h \
     Database/DateDatabase/datedatabase.h \
     Database/database.h \
@@ -158,7 +158,7 @@ HEADERS  += mainwindow.h \
     AttachmentView/audioattachmentview.h \
     Attachments/audioattachment.h \
     AttachmentView/chordpatternedit.h \
-    Commands/AttachmentCommands/chordpatternattachmenttextchangedcommands.h
+    advancedfilechooser.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
@@ -172,7 +172,8 @@ FORMS    += mainwindow.ui \
     Dialogs/pushdialog.ui \
     Dialogs/pulldialog.ui \
     stringdialog.ui \
-    AttachmentView/indexedfileattachmentview.ui
+    AttachmentView/indexedfileattachmentview.ui \
+    advancedfilechooser.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt
