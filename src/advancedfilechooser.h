@@ -37,6 +37,8 @@ signals:
     void itemSelected( QByteArray hash);
 
 
+private slots:
+    void on_pushButton_clicked();
 };
 
 #endif // ADVANCEDFILECHOOSER_H

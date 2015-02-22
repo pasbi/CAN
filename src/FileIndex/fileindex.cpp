@@ -21,6 +21,8 @@ void FileIndex::add(const QString& filename)
     QFile file(filename);
     QByteArray hash;
 
+
+
     if (file.open(QIODevice::ReadOnly))
     {
 
