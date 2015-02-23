@@ -11,18 +11,13 @@ public:
     explicit AttachmentView(QWidget *parent = 0);
     void setAttachment(Attachment* attachment);
 
-    template<typename T>
+    template< typename T = Attachment >
     T* attachment() const
     {
         T* attachment = dynamic_cast<T*>( m_attachment );
-        if ( !attachment )
-        {
-            assert( false );
-        }
+        assert( attachment == m_attachment );   // may be NULL if m_attachment is NULL
         return attachment;
     }
-
-    Attachment* attachment() const { return m_attachment; }
 
     /**
      * @brief updateAttachmentView is called when something in changes and

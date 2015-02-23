@@ -13,8 +13,11 @@ public:
     PDFAttachment();
     void copy(Attachment*& attachment) const;
     QStringList acceptedEndings() const { return QStringList() << "pdf"; }
+    Poppler::Document* document() const { return m_document; }
 
-    void loadContent();
+protected slots:
+    void open();
+
 
 private:
     Poppler::Document* m_document = NULL;

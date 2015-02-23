@@ -24,14 +24,17 @@ public:
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject &object);
 
+
 public slots:
     // we must rely on the implcit sharing of QByteArray/QString since slots are hardly realizable with const &
     bool setHash(QByteArray hash);
     bool setFilename(QString filename );
 
+protected slots:
+    virtual void open() = 0;
+
 private:
     QByteArray m_hash;
-    virtual void loadContent() = 0;
 
 };
 

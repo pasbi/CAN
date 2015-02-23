@@ -9,6 +9,7 @@ IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
     ui(new Ui::IndexedFileAttachmentView)
 {
     ui->setupUi(this);
+    connect( ui->advancedFileChooser, SIGNAL(itemSelected(QByteArray)), this, SLOT( updateStackedWidget() ));
 }
 
 IndexedFileAttachmentView::~IndexedFileAttachmentView()
@@ -18,20 +19,38 @@ IndexedFileAttachmentView::~IndexedFileAttachmentView()
 
 void IndexedFileAttachmentView::setWidget(QWidget *widget)
 {
+    assert( ui->stackedWidget->count() == 1 );
     ui->stackedWidget->addWidget(widget);
+
+    updateStackedWidget();
 }
 
 void IndexedFileAttachmentView::polish()
 {
     QStringList endings = attachment<IndexedFileAttachment>()->acceptedEndings();
 
-    ui->widget->setFilterProperties( attachment()->song(), endings );
+    ui->advancedFileChooser->setFilterProperties( attachment()->song(), endings );
 
-    connect( ui->widget, SIGNAL(itemSelected(QByteArray)), attachment<IndexedFileAttachment>(), SLOT(setHash(QByteArray)));
-    ui->widget->setHash( attachment<IndexedFileAttachment>()->hash() );
+    connect( ui->advancedFileChooser, SIGNAL(itemSelected(QByteArray)), attachment<IndexedFileAttachment>(), SLOT(setHash(QByteArray)));
+    ui->advancedFileChooser->setHash( attachment<IndexedFileAttachment>()->hash() );
+    connect( this, SIGNAL(fileSelected(QByteArray)), this, SLOT(open()) );
+    open();
 }
 
 void IndexedFileAttachmentView::updateAttachmentView()
 {
-    ui->widget->updateComboBox();
+    ui->advancedFileChooser->updateComboBox();
+}
+
+void IndexedFileAttachmentView::updateStackedWidget()
+{
+    IndexedFileAttachment* a = attachment<IndexedFileAttachment>();
+    if (a && a->fileExists())
+    {
+        ui->stackedWidget->setCurrentIndex(1);
+    }
+    else
+    {
+        ui->stackedWidget->setCurrentIndex(0);
+    }
 }

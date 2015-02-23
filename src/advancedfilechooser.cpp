@@ -220,10 +220,14 @@ void AdvancedFileChooser::on_pushButton_clicked()
             }
             app().fileIndex().addSource( path, dialog.filter() );
         }
+        else
+        {
+            // user canceled
+            return;
+        }
     }
 
     assert( app().fileIndex().contains(filename) );
-    qDebug() << "set filename = " << filename << " >hash = " << app().fileIndex().hash( filename );
     setHash( app().fileIndex().hash( filename ) );
 }
 

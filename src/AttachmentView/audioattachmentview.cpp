@@ -11,3 +11,8 @@ void AudioAttachmentView::polish()
 {
     IndexedFileAttachmentView::polish();
 }
+
+void AudioAttachmentView::open()
+{
+
+}

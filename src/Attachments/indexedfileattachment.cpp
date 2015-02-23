@@ -27,6 +27,7 @@ bool IndexedFileAttachment::setFilename(QString filename)
     if ( app().fileIndex().contains( filename ) )
     {
         m_hash = app().fileIndex().hash( filename );
+        open();
         return true;
     }
     else
@@ -41,6 +42,7 @@ bool IndexedFileAttachment::setHash(QByteArray hash)
     if ( app().fileIndex().contains( hash ) )
     {
         m_hash = hash;
+        open();
         return true;
     }
     else
@@ -56,6 +58,7 @@ void IndexedFileAttachment::copy(Attachment *&attachment) const
     assert( a );
 
     a->m_hash = m_hash;
+    //TODO a->open(); ?
 }
 
 QJsonObject IndexedFileAttachment::toJsonObject() const

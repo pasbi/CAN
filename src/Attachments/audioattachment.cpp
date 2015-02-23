@@ -12,7 +12,7 @@ void AudioAttachment::copy(Attachment *&attachment) const
 
 }
 
-void AudioAttachment::loadContent()
+void AudioAttachment::open()
 {
 
 }

@@ -12,6 +12,10 @@ public:
 
 protected:
     void polish();
+
+
+protected slots:
+    void open();
 };
 
 #endif // AUDIOATTACHMENTVIEW_H

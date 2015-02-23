@@ -23,8 +23,12 @@ public:
 signals:
     void fileSelected( QByteArray hash );
 
+protected slots:
+    virtual void open() = 0;
 private:
     Ui::IndexedFileAttachmentView *ui;
+private slots:
+    void updateStackedWidget();
 };
 
 #endif // INDEXEDFILEATTACHMENTVIEW_H
