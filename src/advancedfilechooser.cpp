@@ -48,7 +48,8 @@ void AdvancedFileChooser::setHash(const QByteArray &hash)
     }
     else
     {
-        QString filename = QFileInfo( app().fileIndex().filename( m_hash ) ).fileName();
+        QString fullFilename = app().fileIndex().filename( m_hash );
+        QString filename = QFileInfo( fullFilename ).fileName();
         bool comboBoxContainsFilename = false;
         for (int i = 0; i < ui->comboBox->count(); ++i)
         {
@@ -60,6 +61,7 @@ void AdvancedFileChooser::setHash(const QByteArray &hash)
         }
         if (!comboBoxContainsFilename)
         {
+            m_filenames << fullFilename;
             ui->comboBox->addItem(filename);
         }
         ui->comboBox->setCurrentText( filename );

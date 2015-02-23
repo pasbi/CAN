@@ -20,9 +20,6 @@ public:
 
     void updateAttachmentView();
 
-signals:
-    void fileSelected( QByteArray hash );
-
 protected slots:
     virtual void open() = 0;
 private:

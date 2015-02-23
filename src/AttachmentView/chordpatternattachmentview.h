@@ -16,10 +16,13 @@ class ChordPatternAttachmentView : public AttachmentView
 {
     Q_OBJECT
     DECL_CREATABLE(ChordPatternAttachmentView);
-    REGISTER_DECL_CONFIG( ChordPatternAttachmentView );
+    DECL_CONFIG( ChordPatternAttachmentView );
 public:
     explicit ChordPatternAttachmentView(QWidget *parent = 0);
     ~ChordPatternAttachmentView();
+
+    void restoreOptions(const QByteArray &options) { Q_UNUSED(options); }
+    QByteArray options() const { return QByteArray(); }
 
 protected:
     void polish();

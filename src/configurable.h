@@ -9,12 +9,12 @@
 
 #include "global.h"
 
-#define REGISTER_DECL_CONFIG( CLASSNAME )    \
+#define DECL_CONFIG( CLASSNAME )    \
     public:                                  \
         static Configurable config
 
 
-#define REGISTER_DEFN_CONFIG( CLASSNAME, Caption )    \
+#define DEFN_CONFIG( CLASSNAME, Caption )    \
     Configurable CLASSNAME::config(#CLASSNAME, QObject::tr(Caption, "Configurable Caption"))
 
 #define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, DEFAULT_VALUE, OPTIONS )  \
@@ -183,7 +183,7 @@ public:
 class Configurable
 {
 public:
-    Configurable(const QString & prefix, const QString & caption);
+    Configurable(const QString & prefix, const QString & caption );
     ~Configurable();
 
     void addItem(const QString & key, const QVariant & defaultValue, const ConfigurationItemOptions &options );

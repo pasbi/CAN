@@ -10,9 +10,12 @@ class AudioAttachmentView : public IndexedFileAttachmentView
 public:
     AudioAttachmentView(QWidget* parent = 0);
 
+
+    void restoreOptions(const QByteArray &options) { Q_UNUSED(options); }
+    QByteArray options() const { return QByteArray(); }
+
 protected:
     void polish();
-
 
 protected slots:
     void open();

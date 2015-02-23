@@ -14,7 +14,7 @@
 #include "SongTableView/songtableview.h"
 
 
-REGISTER_DEFN_CONFIG( MainWindow, "Global" );
+DEFN_CONFIG( MainWindow, "Global" );
 
 CONFIGURABLE_ADD_ITEM( MainWindow, RecentProject, "", ConfigurationItemOptions::HiddenInterface() );
 

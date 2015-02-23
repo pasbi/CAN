@@ -4,7 +4,7 @@
 #include <QJsonDocument>
 #include "application.h"
 
-Configurable::Configurable(const QString &prefix, const QString &caption) :
+Configurable::Configurable(const QString &prefix, const QString & caption ) :
     m_prefix(prefix),
     m_caption(caption)
 {

@@ -43,6 +43,7 @@ bool IndexedFileAttachment::setHash(QByteArray hash)
     {
         m_hash = hash;
         open();
+        emit hashChanged( m_hash );
         return true;
     }
     else

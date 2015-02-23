@@ -1,7 +1,7 @@
 #include "project.h"
 #include "global.h"
 
-REGISTER_DEFN_CONFIG(Project, "Project");
+DEFN_CONFIG(Project, "Project");
 
 Project::Project() :
     GitRepository("can"),

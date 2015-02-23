@@ -30,21 +30,36 @@ AttachmentView* createAttachmentView(Attachment* attachment)
 
 void AttachmentEditor::setAttachment(Attachment *attachment)
 {
+    if (m_currentView)
+    {
+        qDebug() << "save options " << m_currentView->attachment() << QString::fromLatin1(m_currentView->options().toHex());
+        m_attachmentViewOptions[m_currentView->attachment()] = m_currentView->options();
+    }
+
     delete m_currentView;
     delete m_scrollArea->layout();
     QVBoxLayout* layout = new QVBoxLayout(m_scrollArea);
 
+
     if (attachment)
     {
         m_currentView = createAttachmentView( attachment );
+        if (m_attachmentViewOptions.contains(attachment))
+        {
+            qDebug() << "load options " << m_currentView->attachment() << QString::fromLatin1(m_attachmentViewOptions[attachment].toHex());
+            m_currentView->restoreOptions(m_attachmentViewOptions[attachment]);
+        }
+
         m_currentView->setParent( m_scrollArea );
         layout->addWidget( m_currentView );
+
         delete m_scrollArea->widget();
     }
     else
     {
         m_currentView = NULL;
     }
+
     m_scrollArea->setLayout( layout );
 }
 

@@ -3,12 +3,13 @@
 
 #include <QWidget>
 #include "Attachments/attachment.h"
+#include "configurable.h"
 
 class AttachmentView : public QWidget, public Creatable
 {
     Q_OBJECT
 public:
-    explicit AttachmentView(QWidget *parent = 0);
+    explicit AttachmentView( QWidget *parent = 0);
     void setAttachment(Attachment* attachment);
 
     template< typename T = Attachment >
@@ -25,6 +26,9 @@ public:
      *   new attachment shall be displayed.
      */
     virtual void updateAttachmentView() {}
+
+    virtual QByteArray options() const = 0;
+    virtual void restoreOptions(const QByteArray & options) = 0;
 
 
 protected:

@@ -19,6 +19,7 @@ public slots:
 private:
     AttachmentView* m_currentView = 0;
     QScrollArea* m_scrollArea = 0;
+    QMap<Attachment*, QByteArray> m_attachmentViewOptions;
 
 };
 

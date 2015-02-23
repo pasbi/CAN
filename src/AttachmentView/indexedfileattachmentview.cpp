@@ -33,8 +33,7 @@ void IndexedFileAttachmentView::polish()
 
     connect( ui->advancedFileChooser, SIGNAL(itemSelected(QByteArray)), attachment<IndexedFileAttachment>(), SLOT(setHash(QByteArray)));
     ui->advancedFileChooser->setHash( attachment<IndexedFileAttachment>()->hash() );
-    connect( this, SIGNAL(fileSelected(QByteArray)), this, SLOT(open()) );
-    open();
+    connect( attachment<IndexedFileAttachment>(), SIGNAL(hashChanged(QByteArray)), this, SLOT(open()) );
 }
 
 void IndexedFileAttachmentView::updateAttachmentView()

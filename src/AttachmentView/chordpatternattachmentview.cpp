@@ -9,7 +9,7 @@
 #include "Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h"
 
 DEFN_CREATABLE(ChordPatternAttachmentView, AttachmentView);
-REGISTER_DEFN_CONFIG( ChordPatternAttachmentView, "Chord Pattern Attachment" );
+DEFN_CONFIG( ChordPatternAttachmentView, "Chord Pattern Attachment" );
 
 CONFIGURABLE_ADD_ITEM( ChordPatternAttachmentView, WarningColor, QColor(Qt::red), ConfigurationItemOptions::ColorEditorOptions() );
 

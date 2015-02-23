@@ -5,7 +5,7 @@
 #include "progressdialog.h"
 #include <QFileInfo>
 
-REGISTER_DEFN_CONFIG( FileIndex, "File Index" );
+DEFN_CONFIG( FileIndex, "File Index" );
 
 CONFIGURABLE_ADD_ITEM( FileIndex, FileIndex, QByteArray(), ConfigurationItemOptions::HiddenInterface() );
 

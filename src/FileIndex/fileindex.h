@@ -10,7 +10,7 @@
 
 class FileIndex
 {
-    REGISTER_DECL_CONFIG( FileIndex );
+    DECL_CONFIG( FileIndex );
 
 public:
     FileIndex();
