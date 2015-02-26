@@ -24,6 +24,7 @@ QString IndexedFileAttachment::filename() const
 
 bool IndexedFileAttachment::setFilename(QString filename)
 {
+    qDebug() << "set filename";
     if ( app().fileIndex().contains( filename ) )
     {
         m_hash = app().fileIndex().hash( filename );
@@ -39,6 +40,7 @@ bool IndexedFileAttachment::setFilename(QString filename)
 
 bool IndexedFileAttachment::setHash(QByteArray hash)
 {
+    qDebug() << "set hash";
     if ( app().fileIndex().contains( hash ) )
     {
         m_hash = hash;

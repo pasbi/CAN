@@ -22,15 +22,31 @@ PDFAttachmentView::PDFAttachmentView(QWidget *parent) :
     // propably because of ui is not set up on this but on m_pdfWidget, connect-by-name does not work.
     connect(ui->buttonZoomIn,       SIGNAL(clicked()),              this, SLOT(on_buttonZoomIn_clicked())           );
     connect(ui->buttonZoomOut,      SIGNAL(clicked()),              this, SLOT(on_buttonZoomOut_clicked())          );
-    connect(ui->spinBoxScale,       SIGNAL(valueChanged(double)),   this, SLOT(on_spinBoxScale_valueChanged(double)));
+    connect(ui->spinBoxScale,       SIGNAL(editingFinished()),      this, SLOT(on_spinBoxScale_editingFinished())   );
+    ui->spinBoxScale->installEventFilter( this );
+    connect(ui->spinBoxScale,       SIGNAL(editingFinished()),      this, SLOT(on_spinBoxScale_editingFinished())   );
     connect(ui->buttonNextPage,     SIGNAL(clicked()),              this, SLOT(on_buttonNextPage_clicked())         );
     connect(ui->buttonPreviousPage, SIGNAL(clicked()),              this, SLOT(on_buttonPreviousPage_clicked())     );
     connect(ui->spinBoxPage,        SIGNAL(valueChanged(int)),      this, SLOT(on_spinBoxPage_valueChanged(int))    );
+
+    QTimer::singleShot(1, this, SLOT(open()));  // wait until scroll area has appropriate size
+
 }
 
 PDFAttachmentView::~PDFAttachmentView()
 {
     delete ui;
+}
+
+bool PDFAttachmentView::eventFilter(QObject *o, QEvent *e)
+{
+    bool r = IndexedFileAttachmentView::eventFilter(o, e);
+    if (o == ui->spinBoxScale && e->type() == QEvent::MouseButtonRelease)
+    {
+        on_spinBoxScale_editingFinished();
+    }
+
+    return r;
 }
 
 void PDFAttachmentView::polish()
@@ -55,29 +71,47 @@ QImage PDFAttachmentView::renderPage()
 
 QPixmap PDFAttachmentView::scalePixmap( const QPixmap & p ) const
 {
-    return p.scaledToWidth( ui->scrollArea->width() * m_zoom );
+    return p.scaledToWidth( (ui->scrollArea->width() - 5) * m_zoom );
 }
 
 void PDFAttachmentView::open()
 {
     handlePageControlEnabled();
-    ui->label->setPixmap( scalePixmap(QPixmap::fromImage(renderPage())) );
+    currentPixmap = QPixmap::fromImage(renderPage());
+    ui->label->setPixmap( scalePixmap(currentPixmap) );
 }
 
 void PDFAttachmentView::on_buttonZoomIn_clicked()
 {
     ui->spinBoxScale->setValue( m_zoom * 1.125 * 100 );
+    m_zoom = qRound( ui->spinBoxScale->value() * 100.0 ) / 100.0 / 100.0;
+    open();
 }
 
 void PDFAttachmentView::on_buttonZoomOut_clicked()
 {
     ui->spinBoxScale->setValue( m_zoom / 1.125 * 100 );
+    m_zoom = qRound( ui->spinBoxScale->value() * 100.0 ) / 100.0 / 100.0;
+    open();
 }
 
-void PDFAttachmentView::on_spinBoxScale_valueChanged(double arg1)
+void PDFAttachmentView::on_spinBoxScale_editingFinished()
 {
-    m_zoom = arg1 / 100.0;
+    m_zoom = ui->spinBoxScale->value() / 100.0;
     open();
+}
+
+int PDFAttachmentView::numPages() const
+{
+    Poppler::Document* doc = attachment<PDFAttachment>()->document();
+    if (doc)
+    {
+        return doc->numPages();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void PDFAttachmentView::handlePageControlEnabled()
@@ -94,8 +128,8 @@ void PDFAttachmentView::handlePageControlEnabled()
         ui->buttonPreviousPage->setEnabled( true );
         ui->spinBoxPage->setEnabled( true );
 
-        int n = attachment<PDFAttachment>()->document()->numPages();
 
+        int n = numPages();
 
         if (m_currentPage == n - 1)
         {
@@ -149,5 +183,6 @@ void PDFAttachmentView::restoreOptions(const QByteArray &options)
 
 void PDFAttachmentView::resizeEvent(QResizeEvent *)
 {
-    ui->label->setPixmap( scalePixmap(*ui->label->pixmap()) );
+    ui->label->setPixmap( scalePixmap(currentPixmap) );
 }
+

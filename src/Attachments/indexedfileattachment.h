@@ -26,7 +26,6 @@ public:
 
 
 public slots:
-    // we must rely on the implcit sharing of QByteArray/QString since slots are hardly realizable with const &
     bool setHash(QByteArray hash);
     bool setFilename(QString filename );
 

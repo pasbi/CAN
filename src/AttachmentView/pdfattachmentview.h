@@ -4,6 +4,9 @@
 #include "indexedfileattachmentview.h"
 #include "attachmentview.h"
 #include <poppler/qt5/poppler-qt5.h>
+#include <QSignalSpy>
+
+
 
 
 namespace Ui {
@@ -26,6 +29,7 @@ public:
 protected:
     void polish();
     void resizeEvent(QResizeEvent *);
+    bool eventFilter(QObject *o, QEvent *e);
 
 protected slots:
     void open();
@@ -33,10 +37,11 @@ protected slots:
 private slots:
     void on_buttonZoomIn_clicked();
     void on_buttonZoomOut_clicked();
-    void on_spinBoxScale_valueChanged(double arg1);
+    void on_spinBoxScale_editingFinished();
     void on_buttonPreviousPage_clicked();
     void on_buttonNextPage_clicked();
     void on_spinBoxPage_valueChanged(int arg1);
+
 
 private:
     Ui::PDFAttachmentView *ui;
@@ -50,9 +55,11 @@ private:
 
     // rendering is cached.
     QList<QImage> m_pages;
+    QPixmap currentPixmap;
     QByteArray m_hash;  // hash of the document the rendering was made from.
 
     inline QPixmap scalePixmap( const QPixmap & p ) const;
+    int numPages() const;
 
 };
 
