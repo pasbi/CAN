@@ -29,7 +29,7 @@ void Project::setCanClose(bool b)
     }
 }
 
-bool Project::loadFromTempDir()
+bool Project::loadFromTempDirImpl()
 {
     bool success = true;
     if (!m_dateDatabase->loadFrom(makeAbsolute("dateDatabase")))
@@ -48,7 +48,7 @@ bool Project::loadFromTempDir()
     return success;
 }
 
-bool Project::saveToTempDir()
+bool Project::saveToTempDirImpl()
 {
     bool success = true;
     if (!m_dateDatabase->saveTo(makeAbsolute("dateDatabase")))

@@ -30,8 +30,8 @@ public slots:
     void reset();
 
 protected:
-    bool loadFromTempDir();
-    bool saveToTempDir();
+    bool loadFromTempDirImpl();
+    bool saveToTempDirImpl();
 
 private:
     SongDatabase* m_songDatabase;
