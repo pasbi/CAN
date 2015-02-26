@@ -18,8 +18,6 @@ public:
     Project();
     ~Project();
 
-    bool loadFromTempDir();
-    bool saveToTempDir();
 
     SongDatabase* songDatabase() const { return m_songDatabase; }
     SongDatabaseSortProxy* songDatabaseProxy() const { return m_songDatabaseProxy; }
@@ -31,6 +29,9 @@ public slots:
     void pushCommand(Command* command);
     void reset();
 
+protected:
+    bool loadFromTempDir();
+    bool saveToTempDir();
 
 private:
     SongDatabase* m_songDatabase;

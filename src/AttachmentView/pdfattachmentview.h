@@ -25,6 +25,7 @@ public:
 
 protected:
     void polish();
+    void resizeEvent(QResizeEvent *);
 
 protected slots:
     void open();
@@ -50,6 +51,9 @@ private:
     // rendering is cached.
     QList<QImage> m_pages;
     QByteArray m_hash;  // hash of the document the rendering was made from.
+
+    inline QPixmap scalePixmap( const QPixmap & p ) const;
+
 };
 
 #endif // PDFATTACHMENTVIEW_H

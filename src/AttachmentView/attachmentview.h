@@ -35,7 +35,7 @@ protected:
     virtual void polish() = 0;
 
 private:
-    Attachment* m_attachment = 0;
+    Attachment* m_attachment;
 
 };
 

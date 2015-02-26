@@ -53,10 +53,15 @@ QImage PDFAttachmentView::renderPage()
     return image;
 }
 
+QPixmap PDFAttachmentView::scalePixmap( const QPixmap & p ) const
+{
+    return p.scaledToWidth( ui->scrollArea->width() * m_zoom );
+}
+
 void PDFAttachmentView::open()
 {
     handlePageControlEnabled();
-    ui->label->setPixmap( QPixmap::fromImage(renderPage()) );
+    ui->label->setPixmap( scalePixmap(QPixmap::fromImage(renderPage())) );
 }
 
 void PDFAttachmentView::on_buttonZoomIn_clicked()
@@ -77,22 +82,32 @@ void PDFAttachmentView::on_spinBoxScale_valueChanged(double arg1)
 
 void PDFAttachmentView::handlePageControlEnabled()
 {
-    int n = attachment<PDFAttachment>()->document()->numPages();
-
-    ui->buttonNextPage->setEnabled( true );
-    ui->buttonPreviousPage->setEnabled( true );
-    ui->spinBoxPage->setEnabled( true );
-
-    if (m_currentPage == n - 1)
+    if (!attachment())
     {
         ui->buttonNextPage->setEnabled( false );
-    }
-    if (m_currentPage == 0 )
-    {
         ui->buttonPreviousPage->setEnabled( false );
+        ui->spinBoxPage->setEnabled( false );
     }
-    ui->spinBoxPage->setRange( 1, n );
-    ui->spinBoxPage->setValue( m_currentPage + 1 );
+    else
+    {
+        ui->buttonNextPage->setEnabled( true );
+        ui->buttonPreviousPage->setEnabled( true );
+        ui->spinBoxPage->setEnabled( true );
+
+        int n = attachment<PDFAttachment>()->document()->numPages();
+
+
+        if (m_currentPage == n - 1)
+        {
+            ui->buttonNextPage->setEnabled( false );
+        }
+        if (m_currentPage == 0 )
+        {
+            ui->buttonPreviousPage->setEnabled( false );
+        }
+        ui->spinBoxPage->setRange( 1, n );
+        ui->spinBoxPage->setValue( m_currentPage + 1 );
+    }
 }
 
 void PDFAttachmentView::on_buttonPreviousPage_clicked()
@@ -130,4 +145,9 @@ void PDFAttachmentView::restoreOptions(const QByteArray &options)
     stream >> m_zoom >> m_currentPage;
     handlePageControlEnabled();
     ui->spinBoxScale->setValue( 100 * m_zoom );
+}
+
+void PDFAttachmentView::resizeEvent(QResizeEvent *)
+{
+    ui->label->setPixmap( scalePixmap(*ui->label->pixmap()) );
 }

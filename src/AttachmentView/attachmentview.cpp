@@ -1,7 +1,8 @@
 #include "attachmentview.h"
 
 AttachmentView::AttachmentView(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    m_attachment( NULL )
 {
 }
 

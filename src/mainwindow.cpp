@@ -13,7 +13,6 @@
 #include "stringdialog.h"
 #include "SongTableView/songtableview.h"
 
-
 DEFN_CONFIG( MainWindow, "Global" );
 
 CONFIGURABLE_ADD_ITEM( MainWindow, RecentProject, "", ConfigurationItemOptions::HiddenInterface() );
@@ -186,7 +185,7 @@ bool MainWindow::saveProject()
     }
     else
     {
-        bool success = m_project.save( m_currentPath );
+        bool success = m_project.saveZip( m_currentPath );
         if (success)
         {
             updateWindowTitle();
@@ -276,7 +275,7 @@ bool MainWindow::openProject()
     {
         setCurrentPath(filename);
         updateWindowTitle();
-        return m_project.load( filename );
+        return m_project.loadZip( filename );
     }
 }
 
@@ -343,7 +342,7 @@ void MainWindow::loadDefaultProject()
     {
         if (QFileInfo(m_currentPath).isReadable())
         {
-            if ( m_project.load( m_currentPath ) )
+            if ( m_project.loadZip( m_currentPath ) )
             {
             }
             else
