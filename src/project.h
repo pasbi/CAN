@@ -32,7 +32,7 @@ public slots:
 protected:
     bool loadFromTempDirImpl();
     bool saveToTempDirImpl();
-    void initializeAfterClone();
+    bool initializeAfterClone();
 
 private:
     SongDatabase* m_songDatabase;

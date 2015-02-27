@@ -267,16 +267,19 @@ bool MainWindow::openProject()
                                   tr("Open ..."),
                                   proposedPath(),
                                   filter()              );
+    bool success;
     if (filename.isEmpty())
     {
-        return false;
+        success = false;
     }
     else
     {
         setCurrentPath(filename);
         updateWindowTitle();
-        return m_project.loadZip( filename );
+        success = m_project.loadZip( filename );
     }
+    updateWhichWidgetsAreEnabled();
+    return success;
 }
 
 bool MainWindow::canProjectClose()
@@ -367,6 +370,7 @@ void MainWindow::loadDefaultProject()
             setCurrentPath("");
         }
         updateWindowTitle();
+        updateWhichWidgetsAreEnabled();
     }
 }
 
@@ -660,7 +664,6 @@ void MainWindow::on_actionClone_triggered()
     {
         return;
     }
-    qDebug() << url.isValid() << url;
 
     setCurrentPath("");
     if ( !m_project.clone( url.url() ))

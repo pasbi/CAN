@@ -86,8 +86,9 @@ bool Project::canClose() const
     return m_canClose;
 }
 
-void Project::initializeAfterClone()
+bool Project::initializeAfterClone()
 {
+    GitRepository::initializeAfterClone();
     reset();
     saveToTempDir();
 }
