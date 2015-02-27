@@ -173,7 +173,8 @@ FORMS    += mainwindow.ui \
     Dialogs/pulldialog.ui \
     stringdialog.ui \
     AttachmentView/indexedfileattachmentview.ui \
-    advancedfilechooser.ui
+    advancedfilechooser.ui \
+    AttachmentView/audioattachmentview.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

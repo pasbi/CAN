@@ -680,15 +680,12 @@ void MainWindow::on_actionPush_triggered()
 {
     if ( m_project.isGitRepository() )
     {
-        if (m_project.GitRepository::commit("my first commit", Identity("Detlef", "b")))
+        if (!m_project.GitRepository::commit("my first commit", Identity("Detlef", "b")))
         {
-            qDebug() << "commit succeeded";
-        }
-        else
-        {
-            qDebug() << "commit failed";
+            WARNING << "commit failed";
             return;
         }
+
         if (m_project.GitRepository::push())
         {
             QMessageBox::information( this,

@@ -14,6 +14,7 @@ IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
         attachment<IndexedFileAttachment>()->setHash(hash);
         updateStackedWidget();
     });
+
 }
 
 IndexedFileAttachmentView::~IndexedFileAttachmentView()
