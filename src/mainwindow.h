@@ -77,6 +77,8 @@ private slots:
     void updateWhichWidgetsAreEnabled();
     void on_actionOpen_Terminal_here_triggered();
     void on_actionCopyToClipboard_triggered();
+    void on_actionClone_triggered();
+    void on_actionPush_triggered();
 };
 
 #endif // MAINWINDOW_H

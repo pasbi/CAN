@@ -31,6 +31,7 @@ void Project::setCanClose(bool b)
 
 bool Project::loadFromTempDirImpl()
 {
+    qDebug() << "Project::lftdi";
     bool success = true;
     if (!m_dateDatabase->loadFrom(makeAbsolute("dateDatabase")))
     {
@@ -45,6 +46,8 @@ bool Project::loadFromTempDirImpl()
 
     QUndoStack::clear();
     setCanClose(true);
+
+    qDebug() << "success = " << success;
     return success;
 }
 
@@ -81,4 +84,10 @@ void Project::reset()
 bool Project::canClose() const
 {
     return m_canClose;
+}
+
+void Project::initializeAfterClone()
+{
+    reset();
+    saveToTempDir();
 }

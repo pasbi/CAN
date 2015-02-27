@@ -635,6 +635,96 @@ void MainWindow::on_actionCopyToClipboard_triggered()
     qApp->clipboard()->setText( m_project.path(), QClipboard::Selection );
 }
 
+void MainWindow::on_actionClone_triggered()
+{
+    if (!canProjectClose())
+    {
+        return;
+    }
+
+    QFileDialog fd(this);
+    fd.setWindowTitle( tr("Clone ...") );
+    fd.setDirectoryUrl( QUrl::fromLocalFile( QDir::homePath() ) );
+    fd.setFileMode( QFileDialog::Directory );
+    fd.setOption( QFileDialog::ShowDirsOnly, true );
+
+    if (fd.exec() != QDialog::Accepted || fd.selectedUrls().isEmpty())
+    {
+        return;
+    }
+
+
+    QUrl url = fd.selectedUrls()[0];
+
+    if (!url.isValid())
+    {
+        return;
+    }
+    qDebug() << url.isValid() << url;
+
+    setCurrentPath("");
+    if ( !m_project.clone( url.url() ))
+    {
+        QMessageBox::warning( this,
+                              tr("Cloning failed"),
+                              QString(tr("Failed to clone %1.").arg(url.url())),
+                              QMessageBox::Ok,
+                              QMessageBox::NoButton );
+    }
+}
+
+void MainWindow::on_actionPush_triggered()
+{
+    if ( m_project.isGitRepository() )
+    {
+        if (m_project.GitRepository::commit("my first commit", Identity("Detlef", "b")))
+        {
+            qDebug() << "commit succeeded";
+        }
+        else
+        {
+            qDebug() << "commit failed";
+            return;
+        }
+        if (m_project.GitRepository::push())
+        {
+            QMessageBox::information( this,
+                                      tr("Success"),
+                                      tr("Pushing succeeded."),
+                                      QMessageBox::Ok,
+                                      QMessageBox::NoButton         );
+        }
+        else
+        {
+            QMessageBox::warning( this,
+                                  tr("Fail"),
+                                  tr("Pushing failed."),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton         );
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

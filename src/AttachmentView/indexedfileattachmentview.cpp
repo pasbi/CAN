@@ -47,7 +47,6 @@ void IndexedFileAttachmentView::updateAttachmentView()
 
 void IndexedFileAttachmentView::updateStackedWidget()
 {
-    qDebug() << "update SW";
     IndexedFileAttachment* a = attachment<IndexedFileAttachment>();
 
     if (a && a->fileExists())
