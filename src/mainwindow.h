@@ -79,6 +79,7 @@ private slots:
     void on_actionCopyToClipboard_triggered();
     void on_actionClone_triggered();
     void on_actionPush_triggered();
+    void on_actionPull_triggered();
 };
 
 #endif // MAINWINDOW_H

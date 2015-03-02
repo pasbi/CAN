@@ -682,7 +682,7 @@ void MainWindow::on_actionPush_triggered()
     {
         if (!m_project.GitRepository::commit("my first commit", Identity("Detlef", "b")))
         {
-            WARNING << "commit failed";
+            WARNING << "auto commit [before push] failed";
             return;
         }
 
@@ -704,6 +704,56 @@ void MainWindow::on_actionPush_triggered()
         }
     }
 }
+
+void MainWindow::on_actionPull_triggered()
+{
+    if ( m_project.isGitRepository() )
+    {
+        if (m_project.GitRepository::fetch())
+        {
+            QMessageBox::information( this,
+                                      tr("Success"),
+                                      tr("Fetching succeeded."),
+                                      QMessageBox::Ok,
+                                      QMessageBox::NoButton         );
+        }
+        else
+        {
+            QMessageBox::warning( this,
+                                  tr("Fail"),
+                                  tr("Fetching failed."),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton         );
+            return;
+        }
+
+        if (!m_project.GitRepository::commit("my first commit", Identity("Detlef", "b")))
+        {
+            WARNING << "auto commit [before merge] failed";
+            return;
+        }
+
+        if (m_project.GitRepository::merge())
+        {
+            QMessageBox::information( this,
+                                      tr("Success"),
+                                      tr("Merging succeeded."),
+                                      QMessageBox::Ok,
+                                      QMessageBox::NoButton         );
+        }
+        else
+        {
+            QMessageBox::warning( this,
+                                  tr("Fail"),
+                                  tr("Merging failed."),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton         );
+            return;
+        }
+    }
+}
+
+
 
 
 

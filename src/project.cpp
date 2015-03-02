@@ -37,6 +37,7 @@ bool Project::loadFromTempDirImpl()
         WARNING << "Cannot load Date Database";
         success = false;
     }
+
     if (!m_songDatabase->loadFrom(makeAbsolute("songDatabase")))
     {
         WARNING << "Cannot load Song Database";
