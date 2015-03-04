@@ -89,7 +89,9 @@ SOURCES += main.cpp\
     AttachmentView/audioattachmentview.cpp \
     Attachments/audioattachment.cpp \
     AttachmentView/chordpatternedit.cpp \
-    advancedfilechooser.cpp
+    advancedfilechooser.cpp \
+    conflicteditor.cpp \
+    file.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -158,7 +160,9 @@ HEADERS  += mainwindow.h \
     AttachmentView/audioattachmentview.h \
     Attachments/audioattachment.h \
     AttachmentView/chordpatternedit.h \
-    advancedfilechooser.h
+    advancedfilechooser.h \
+    conflicteditor.h \
+    file.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
@@ -174,7 +178,8 @@ FORMS    += mainwindow.ui \
     stringdialog.ui \
     AttachmentView/indexedfileattachmentview.ui \
     advancedfilechooser.ui \
-    AttachmentView/audioattachmentview.ui
+    AttachmentView/audioattachmentview.ui \
+    conflicteditor.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

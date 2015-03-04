@@ -12,6 +12,7 @@
 #include "Dialogs/addfileindexsourcedialog.h"
 #include "stringdialog.h"
 #include "SongTableView/songtableview.h"
+#include "conflicteditor.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -185,6 +186,7 @@ bool MainWindow::saveProject()
     }
     else
     {
+        resolveConflicts();
         bool success = m_project.saveZip( m_currentPath );
         if (success)
         {
@@ -278,6 +280,9 @@ bool MainWindow::openProject()
         updateWindowTitle();
         success = m_project.loadZip( filename );
     }
+
+    resolveConflicts( false );
+
     updateWhichWidgetsAreEnabled();
     return success;
 }
@@ -464,6 +469,58 @@ MainWindow::Page MainWindow::currentPage() const
         assert( false );
         return (Page) -1;
     }
+}
+
+void MainWindow::resolveConflicts( bool verbose)
+{
+    ConflictEditor* conflictEditor = NULL;
+    bool moreConflicts = true;
+    bool firstIteration = true;
+    while ( moreConflicts )
+    {
+        delete conflictEditor;
+        conflictEditor = new ConflictEditor(m_project.path(), this );
+
+        if (conflictEditor->hasConflicts())
+        {
+            if ( firstIteration && !verbose )   // if verbose, show question for first iteration too.
+            {
+                conflictEditor->exec();
+            }
+            else
+            {
+                switch( QMessageBox::question( this,
+                                               tr("Not all conflitcs resolved"),
+                                               tr("There are unresolved conflicts. You should resolve them.\n"
+                                                  "Unresolved conflicts may cause undefined behaviour and data loss."),
+                                               QMessageBox::Ok,
+                                               QMessageBox::Cancel ) )
+                {
+                case QMessageBox::Ok:
+                    conflictEditor->exec();
+                    break;
+                case QMessageBox::Cancel:
+                    moreConflicts = false;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            moreConflicts = false;
+        }
+    }
+    if( !conflictEditor && verbose )    // when conflictEditor exists, user already assumes that all conflicts are resolved.
+    {
+        QMessageBox::information( this,
+                                  tr("No conflicts"),
+                                  tr("No conflicts"),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton );
+    }
+    delete conflictEditor;
+    conflictEditor = NULL;
+
 }
 
 
@@ -680,6 +737,7 @@ void MainWindow::on_actionPush_triggered()
 {
     if ( m_project.isGitRepository() )
     {
+        resolveConflicts( false );
         if (!m_project.GitRepository::commit("my first commit", Identity("Detlef", "b")))
         {
             WARNING << "auto commit [before push] failed";
@@ -750,7 +808,12 @@ void MainWindow::on_actionPull_triggered()
                                   QMessageBox::NoButton         );
             return;
         }
+
+        resolveConflicts();
     }
+
+
+
 }
 
 
