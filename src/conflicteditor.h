@@ -22,6 +22,10 @@ public:
         return !m_files.isEmpty();
     }
 
+public slots:
+    void accept();
+    void resolveConflicts();
+
 private:
     Ui::ConflictEditor *ui;
     QString m_directory;
@@ -57,9 +61,18 @@ private:
 
     QList<Item> m_items;
 
+    const Conflict& currentConflict() const;
+    QString m_defaultStyle;
+
+
+private slots:
+    void selectConflict();
 
 
 
+
+    void on_buttonKeepRemote_clicked();
+    void on_buttonKeepLocal_clicked();
 };
 
 #endif // CONFLICTEDITOR_H

@@ -20,8 +20,10 @@ bool PersistentObject::loadFrom(const QString &path)
         return false;
     }
 
+    QByteArray fileContent = file.readAll();
+    qDebug() << "Content = " << fileContent;
     QJsonParseError error;
-    QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
+    QJsonDocument doc = QJsonDocument::fromJson(fileContent, &error);
     if (error.error != QJsonParseError::NoError)
     {
         WARNING << "Cannot parse " << path << ": " << error.errorString();

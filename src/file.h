@@ -10,16 +10,25 @@ struct Conflict
 {
     Conflict( const QString & type,     // e.g. "Song", "Song/Attachment", ...
               const QString & local,
-              const QString & remote ) :
+              const QString & remote,
+              const int       lineNumberBegin,
+              const int       lineNumberEnd   ) :
         m_local( local ),
         m_remote( remote ),
-        m_type( type )
+        m_type( type ),
+        m_lineNumberBegin( lineNumberBegin ),
+        m_lineNumberEnd( lineNumberEnd )
     {
     }
 
     const QString m_local;
     const QString m_remote;
     const QString m_type;
+    const int m_lineNumberBegin;
+    const int m_lineNumberEnd;
+    mutable QString m_custom;
+    enum ResolvePolicy { Undefined, KeepLocal, KeepRemote, KeepCustom };
+    mutable ResolvePolicy m_resolvePolicy = Undefined;
 };
 
 class File
@@ -42,11 +51,14 @@ public:
         return m_conflicts;
     }
 
+    void resolveConflicts();
+    bool save() const;
+
 
 private:
     enum State { NoConflict, InLocal, InRemote };
 
-    const QStringList m_content;
+    QStringList m_content;
     const QString m_filename;
     QList<Conflict> m_conflicts;
 

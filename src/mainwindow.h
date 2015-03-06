@@ -50,7 +50,7 @@ protected:
 
 private slots:
     void updateWindowTitle();
-    void resolveConflicts( bool verbose = true );
+    bool resolveConflicts( bool verbose = true );
     void on_actionSave_triggered();
     void on_actionSave_As_triggered();
     void on_actionOpen_triggered();

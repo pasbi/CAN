@@ -32,6 +32,7 @@ QList<Conflict> File::findConflicts()
     QString currentType;
     QStringList localContentLines;
     QStringList remoteContentLines;
+    int lineNumberBegin = 0, lineNumberEnd = 0;
 
     int i = 0;
 
@@ -43,10 +44,9 @@ QList<Conflict> File::findConflicts()
         case NoConflict:
             if ( BEGIN_CONFLICT.exactMatch(line) )
             {
-                qDebug() << "type of " << line << i;
                 currentType = determineType( i );
-                qDebug() << currentType;
                 state = InLocal;
+                lineNumberBegin = i;
             }
             else if ( END_CONFLICT.exactMatch(line) )
             {
@@ -88,8 +88,9 @@ QList<Conflict> File::findConflicts()
             }
             else if ( END_CONFLICT.exactMatch(line) )
             {
+                lineNumberEnd = i;
                 state = NoConflict;
-                conflicts << Conflict( currentType, localContentLines.join("\n"), remoteContentLines.join("\n") );
+                conflicts << Conflict( currentType, localContentLines.join("\n"), remoteContentLines.join("\n"), lineNumberBegin, lineNumberEnd );
                 localContentLines.clear();
                 remoteContentLines.clear();
             }
@@ -107,7 +108,6 @@ QList<Conflict> File::findConflicts()
         i++;
     }
 
-    qDebug() << "conflicts = " << conflicts.size();
     return conflicts;
 }
 
@@ -223,7 +223,6 @@ QString File::determineType(int lineNumber)
         QString line = m_content[i];
         if (searchKey)
         {
-            qDebug() << ">>     key line: " << line;
             QString currentKey = key( line );
             if (!currentKey.isNull())
             {
@@ -247,5 +246,61 @@ QString File::determineType(int lineNumber)
 
 
     return keys.join("/");
+}
+
+bool File::save() const
+{
+    QFile file(m_filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        return false;
+    }
+
+    file.write( m_content.join("\n").toLatin1() );
+    return true;
+}
+
+void File::resolveConflicts()
+{
+    // go down to top to keep line numbers valid
+    for ( int i = m_conflicts.length() - 1; i >= 0; --i )
+    {
+        Conflict c = m_conflicts[i];
+        QStringList newContent;
+        switch (c.m_resolvePolicy)
+        {
+        case Conflict::KeepCustom:
+            newContent = c.m_custom.split("\n");
+            break;
+        case Conflict::KeepLocal:
+            newContent = c.m_local.split("\n");
+            break;
+        case Conflict::KeepRemote:
+            newContent = c.m_remote.split("\n");
+            break;
+        case Conflict::Undefined:
+            goto SkipResolveConflict;
+        }
+
+        // remove conflict
+        for (int lineNumber = c.m_lineNumberEnd; lineNumber >= c.m_lineNumberBegin; --lineNumber)
+        {
+            qDebug() << "remove line " << m_content[lineNumber];
+            m_content.removeAt( lineNumber );
+        }
+
+        // insert resolve
+        for (int lineNumber = newContent.length() - 1; lineNumber >= 0; --lineNumber)
+        {
+            qDebug() << "insert line " << m_content[lineNumber];
+            m_content.insert( c.m_lineNumberBegin, newContent[lineNumber] );
+        }
+    }
+
+    // finally save file
+    assert( save() );
+
+    SkipResolveConflict:
+    ;
 }
 

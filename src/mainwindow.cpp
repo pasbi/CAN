@@ -471,7 +471,7 @@ MainWindow::Page MainWindow::currentPage() const
     }
 }
 
-void MainWindow::resolveConflicts( bool verbose)
+bool MainWindow::resolveConflicts( bool verbose)
 {
     ConflictEditor* conflictEditor = NULL;
     bool moreConflicts = true;
@@ -520,6 +520,8 @@ void MainWindow::resolveConflicts( bool verbose)
     }
     delete conflictEditor;
     conflictEditor = NULL;
+
+    return m_project.loadFromTempDir();
 
 }
 
@@ -809,8 +811,17 @@ void MainWindow::on_actionPull_triggered()
             return;
         }
 
-        resolveConflicts();
+        if ( !resolveConflicts() )
+        {
+            QMessageBox::warning( this,
+                                  tr("Failed to load resolved files"),
+                                  tr("One or more files could not be loaded. \n"
+                                     "Make sure to correct the syntax in the corrputed files."),
+                                     QMessageBox::Ok,
+                                     QMessageBox::NoButton );
+        }
     }
+
 
 
 
