@@ -117,9 +117,10 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
 {
     assert(!index.parent().isValid());
 
-
+    qDebug() << ">>>  set data[ role = " << role << " ]";
     if (role == Qt::EditRole)
     {
+        qDebug() << ">>>  set data " << index.column() << value;
         m_songs[index.row()]->setAttribute(index.column(), value);
         emit dataChanged( index, index );
     }
@@ -339,6 +340,7 @@ bool SongDatabase::saveTo(const QString &path) const
     for (int i = 0; i < m_songs.size(); ++i)
     {
         QString path = project()->makeAbsolute( QString("song%1").arg(i) );
+        qDebug() << "save song " << i << project()->makeAbsolute( QString("song%1").arg(i) );
         m_songs[i]->saveTo(path);
     }
 

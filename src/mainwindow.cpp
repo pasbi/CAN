@@ -187,7 +187,8 @@ bool MainWindow::saveProject()
     else
     {
         resolveConflicts();
-        bool success = m_project.saveZip( m_currentPath );
+        bool success  = m_project.saveZip( m_currentPath );
+             success &= m_project.loadFromTempDir(); // files might have changed
         if (success)
         {
             updateWindowTitle();
@@ -279,9 +280,10 @@ bool MainWindow::openProject()
         setCurrentPath(filename);
         updateWindowTitle();
         success = m_project.loadZip( filename );
+        resolveConflicts( false );
+        m_project.loadFromTempDir();
     }
 
-    resolveConflicts( false );
 
     updateWhichWidgetsAreEnabled();
     return success;
@@ -521,7 +523,7 @@ bool MainWindow::resolveConflicts( bool verbose)
     delete conflictEditor;
     conflictEditor = NULL;
 
-    return m_project.loadFromTempDir();
+    return true;
 
 }
 
@@ -810,8 +812,8 @@ void MainWindow::on_actionPull_triggered()
                                   QMessageBox::NoButton         );
             return;
         }
-
-        if ( !resolveConflicts() )
+        resolveConflicts();
+        if ( !m_project.loadFromTempDir()  )
         {
             QMessageBox::warning( this,
                                   tr("Failed to load resolved files"),
@@ -820,9 +822,8 @@ void MainWindow::on_actionPull_triggered()
                                      QMessageBox::Ok,
                                      QMessageBox::NoButton );
         }
+
     }
-
-
 
 
 }

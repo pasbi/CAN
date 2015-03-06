@@ -54,6 +54,7 @@ bool PersistentObject::saveTo(const QString &path) const
     }
 
     QJsonDocument doc(toJsonObject());
+    qDebug() << "write json object " << doc.toJson();
     file.write(doc.toJson());
 
     return true;

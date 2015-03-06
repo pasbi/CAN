@@ -89,5 +89,5 @@ bool Project::initializeAfterClone()
 {
     GitRepository::initializeAfterClone();
     reset();
-    saveToTempDir();
+    return saveToTempDir();
 }

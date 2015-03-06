@@ -80,6 +80,7 @@ QJsonObject Song::toJsonObject() const
     {
         attributes.append(QJsonValue::fromVariant(v));
     }
+    qDebug() << "json attributes. " << m_attributes;
     json.insert("attributes", attributes);
 
     QJsonArray attachments;
@@ -109,10 +110,11 @@ void Song::setTitle(const QString &title)
 void Song::setAttribute(int index, const QVariant &data)
 {
     assert(index >= 0 && index < m_attributes.length());
-    if (m_attributes[index] == data)
+    if (m_attributes[index] != data)
     {
+        qDebug() << "attributes before = " << m_attributes;
         m_attributes[index] = data;
-        m_songDatabase->notifyDataChanged( this );
+        qDebug() << "attributes after = " << m_attributes;
     }
 
 }

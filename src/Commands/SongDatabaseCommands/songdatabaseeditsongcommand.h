@@ -15,12 +15,12 @@ public:
     void undo();
 
 private:
-    QModelIndex     m_index;
-    QVariant        m_newData;
-    QVariant        m_oldData;
-    int             m_role;
+    const QModelIndex     m_index;
+    const QVariant        m_newData;
+    const QVariant        m_oldData;
+    const int             m_role;
 
-    QVariant& getAttribute() const;
+//    QVariant& getAttribute() const;
 
 
 
