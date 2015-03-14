@@ -10,7 +10,6 @@ SongDatabaseEditSongCommand::SongDatabaseEditSongCommand(SongDatabase *         
     m_oldData( songDatabase->data( index, role ) ),
     m_role(role)
 {
-    qDebug() << "rename attribute " << index << newData;
 }
 
 //QVariant& SongDatabaseEditSongCommand::getAttribute() const

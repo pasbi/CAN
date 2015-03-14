@@ -23,7 +23,7 @@ QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOption
         if (classname != "Editor")
         {
             // default to StringEditor without warning
-            WARNING << "Unknown editor widget \"" << classname << "\".";
+            qWarning() << "Unknown editor widget \"" << classname << "\".";
         }
         classname = "StringEditor";
     }
@@ -60,7 +60,7 @@ void SongAttributeDelegate::setModelData(QWidget *editor, QAbstractItemModel *, 
     QVariant newData;
     if (!editor->inherits(CellEditor::staticMetaObject.className()))
     {
-        WARNING << editor << " is not a CellEditor.";
+        qWarning() << editor << " is not a CellEditor.";
     }
     else
     {

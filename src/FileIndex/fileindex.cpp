@@ -126,7 +126,7 @@ Indexer* FileIndex::requestIndexer( const QString & path, const QStringList filt
 {
     if ( m_indexer )
     {
-        WARNING << "Wait for current operation to finish.";
+        qWarning() << "Wait for current operation to finish.";
         return NULL;
     }
     else
@@ -150,7 +150,7 @@ void FileIndex::abortIndexing()
     }
     else
     {
-        WARNING << "There is no operation to abort.";
+        qWarning() << "There is no operation to abort.";
     }
 }
 

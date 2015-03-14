@@ -117,10 +117,8 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
 {
     assert(!index.parent().isValid());
 
-    qDebug() << ">>>  set data[ role = " << role << " ]";
     if (role == Qt::EditRole)
     {
-        qDebug() << ">>>  set data " << index.column() << value;
         m_songs[index.row()]->setAttribute(index.column(), value);
         emit dataChanged( index, index );
     }
@@ -240,7 +238,7 @@ int SongDatabase::removeSong(Song* song)
     int index;
     if ( (index = m_songs.indexOf(song)) < 0 )
     {
-        WARNING << "SongDatabase does not contain song " << song;
+        qWarning() << "SongDatabase does not contain song " << song;
     }
     else
     {
@@ -340,7 +338,6 @@ bool SongDatabase::saveTo(const QString &path) const
     for (int i = 0; i < m_songs.size(); ++i)
     {
         QString path = project()->makeAbsolute( QString("song%1").arg(i) );
-        qDebug() << "save song " << i << project()->makeAbsolute( QString("song%1").arg(i) );
         m_songs[i]->saveTo(path);
     }
 
@@ -374,7 +371,7 @@ bool SongDatabase::loadFrom(const QString &path)
     }
     else
     {
-        WARNING << "Loading failed.";
+        qWarning() << "Loading failed.";
         success = false;
     }
 

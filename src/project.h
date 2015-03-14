@@ -29,10 +29,9 @@ public slots:
     void pushCommand(Command* command);
     void reset();
 
-protected:
-    bool loadFromTempDirImpl();
-    bool saveToTempDirImpl();
-    bool initializeAfterClone();
+public:
+    bool loadFromTempDir();
+    bool saveToTempDir();
 
 private:
     SongDatabase* m_songDatabase;

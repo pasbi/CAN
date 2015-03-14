@@ -29,20 +29,21 @@ void Project::setCanClose(bool b)
     }
 }
 
-bool Project::loadFromTempDirImpl()
+bool Project::loadFromTempDir()
 {
     bool success = true;
     if (!m_dateDatabase->loadFrom(makeAbsolute("dateDatabase")))
     {
-        WARNING << "Cannot load Date Database";
+        qWarning() << "Cannot load Date Database";
         success = false;
     }
 
     if (!m_songDatabase->loadFrom(makeAbsolute("songDatabase")))
     {
-        WARNING << "Cannot load Song Database";
+        qWarning() << "Cannot load Song Database";
         success = false;
     }
+
 
     QUndoStack::clear();
     setCanClose(true);
@@ -50,17 +51,24 @@ bool Project::loadFromTempDirImpl()
     return success;
 }
 
-bool Project::saveToTempDirImpl()
+bool Project::saveToTempDir()
 {
     bool success = true;
+
+    if ( !resetUserData() )
+    {
+        qWarning() << "Cannot tidy up temporary directory.";
+        success = false;
+    }
+
     if (!m_dateDatabase->saveTo(makeAbsolute("dateDatabase")))
     {
-        WARNING << "Cannot save Date Database.";
+        qWarning() << "Cannot save Date Database.";
         success = false;
     }
     if (!m_songDatabase->saveTo(makeAbsolute("songDatabase")))
     {
-        WARNING << "Cannot save Song Database";
+        qWarning() << "Cannot save Song Database";
         success = false;
     }
     setCanClose(true);
@@ -83,11 +91,4 @@ void Project::reset()
 bool Project::canClose() const
 {
     return m_canClose;
-}
-
-bool Project::initializeAfterClone()
-{
-    GitRepository::initializeAfterClone();
-    reset();
-    return saveToTempDir();
 }

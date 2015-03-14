@@ -32,7 +32,7 @@ bool IndexedFileAttachment::setFilename(QString filename)
     }
     else
     {
-        WARNING << "Cannot set file since " << filename << " is not indexed.";
+        qWarning() << "Cannot set file since " << filename << " is not indexed.";
         return false;
     }
 }
@@ -48,7 +48,7 @@ bool IndexedFileAttachment::setHash(QByteArray hash)
     }
     else
     {
-        WARNING << "Cannot set file since index does not contain " << QString::fromLatin1( hash.toHex() ) << ".";
+        qWarning() << "Cannot set file since index does not contain " << QString::fromLatin1( hash.toHex() ) << ".";
         return false;
     }
 }

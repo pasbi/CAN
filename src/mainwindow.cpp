@@ -98,9 +98,20 @@ MainWindow::MainWindow(QWidget *parent) :
     updateWhichWidgetsAreEnabled();
 
     loadDefaultProject();
-    ui->menu_path->setTitle( m_project.path() );
 
+    auto bla = [this]()
+    {
+        QList<File> files = m_project.conflictingFiles();
+        while (!files.isEmpty())
+        {
+            ConflictEditor editor( files, this );
+            editor.exec();
+            files = m_project.conflictingFiles();
+        }
 
+    };
+
+    m_project.setResolveConflictsCallback( bla );
 }
 
 MainWindow::~MainWindow()
@@ -186,7 +197,6 @@ bool MainWindow::saveProject()
     }
     else
     {
-        resolveConflicts();
         bool success  = m_project.saveZip( m_currentPath );
              success &= m_project.loadFromTempDir(); // files might have changed
         if (success)
@@ -280,7 +290,6 @@ bool MainWindow::openProject()
         setCurrentPath(filename);
         updateWindowTitle();
         success = m_project.loadZip( filename );
-        resolveConflicts( false );
         m_project.loadFromTempDir();
     }
 
@@ -311,7 +320,7 @@ bool MainWindow::canProjectClose()
         case QMessageBox::Abort:
             return false;
         default:
-            WARNING << "Illegal case in switch statement";
+            qWarning() << "Illegal case in switch statement";
             return false;
         }
     }
@@ -443,11 +452,9 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     // ui->actionUndo;
     // ui->actionRedo;
     songObects          << ui->actionDelete_Song;
-    gitObjects          << ui->actionPull;
-    gitObjects          << ui->actionPush;
+    gitObjects          << ui->actionSync;
     // ui->actionClone;
-    projectObjects      << ui->actionOpen_Terminal_here;
-    projectObjects      << ui->actionCopyToClipboard;
+    // ui->actionOpen_Terminal_here;
     attachmentObjects   << ui->actionRename_Attachment;
     attachmentObjects   << ui->actionDuplicate_Attachment;
 
@@ -471,60 +478,6 @@ MainWindow::Page MainWindow::currentPage() const
         assert( false );
         return (Page) -1;
     }
-}
-
-bool MainWindow::resolveConflicts( bool verbose)
-{
-    ConflictEditor* conflictEditor = NULL;
-    bool moreConflicts = true;
-    bool firstIteration = true;
-    while ( moreConflicts )
-    {
-        delete conflictEditor;
-        conflictEditor = new ConflictEditor(m_project.path(), this );
-
-        if (conflictEditor->hasConflicts())
-        {
-            if ( firstIteration && !verbose )   // if verbose, show question for first iteration too.
-            {
-                conflictEditor->exec();
-            }
-            else
-            {
-                switch( QMessageBox::question( this,
-                                               tr("Not all conflitcs resolved"),
-                                               tr("There are unresolved conflicts. You should resolve them.\n"
-                                                  "Unresolved conflicts may cause undefined behaviour and data loss."),
-                                               QMessageBox::Ok,
-                                               QMessageBox::Cancel ) )
-                {
-                case QMessageBox::Ok:
-                    conflictEditor->exec();
-                    break;
-                case QMessageBox::Cancel:
-                    moreConflicts = false;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            moreConflicts = false;
-        }
-    }
-    if( !conflictEditor && verbose )    // when conflictEditor exists, user already assumes that all conflicts are resolved.
-    {
-        QMessageBox::information( this,
-                                  tr("No conflicts"),
-                                  tr("No conflicts"),
-                                  QMessageBox::Ok,
-                                  QMessageBox::NoButton );
-    }
-    delete conflictEditor;
-    conflictEditor = NULL;
-
-    return true;
-
 }
 
 
@@ -694,19 +647,8 @@ void MainWindow::on_actionOpen_Terminal_here_triggered()
     QProcess::startDetached( "gnome-terminal", QStringList(), m_project.path() );
 }
 
-void MainWindow::on_actionCopyToClipboard_triggered()
-{
-    qApp->clipboard()->setText( m_project.path(), QClipboard::Clipboard );
-    qApp->clipboard()->setText( m_project.path(), QClipboard::Selection );
-}
-
 void MainWindow::on_actionClone_triggered()
 {
-    if (!canProjectClose())
-    {
-        return;
-    }
-
     QFileDialog fd(this);
     fd.setWindowTitle( tr("Clone ...") );
     fd.setDirectoryUrl( QUrl::fromLocalFile( QDir::homePath() ) );
@@ -735,98 +677,103 @@ void MainWindow::on_actionClone_triggered()
                               QMessageBox::Ok,
                               QMessageBox::NoButton );
     }
+
+    updateWindowTitle();
+    updateWhichWidgetsAreEnabled();
 }
 
-void MainWindow::on_actionPush_triggered()
-{
-    if ( m_project.isGitRepository() )
-    {
-        resolveConflicts( false );
-        if (!m_project.GitRepository::commit("my first commit", Identity("Detlef", "b")))
-        {
-            WARNING << "auto commit [before push] failed";
-            return;
-        }
+//void MainWindow::on_actionPush_triggered()
+//{
+//    bool succeeded =  m_project.GitRepository::push();
+//         succeeded &= m_project.commit("Commit", Identity("Me", "@"));
 
-        if (m_project.GitRepository::push())
-        {
-            QMessageBox::information( this,
-                                      tr("Success"),
-                                      tr("Pushing succeeded."),
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton         );
-        }
-        else
-        {
-            QMessageBox::warning( this,
-                                  tr("Fail"),
-                                  tr("Pushing failed."),
+//    QMessageBox::information( this,
+//                              "Pushing ...",
+//                              succeeded ? "succeeded" : "failed",
+//                              QMessageBox::Ok,
+//                              QMessageBox::NoButton );
+//}
+
+//void MainWindow::on_actionPull_triggered()
+//{
+//    if (!m_project.pull())
+//    {
+//        QMessageBox::information( this,
+//                                  tr("Pulling"),
+//                                  tr("Pulling failed."),
+//                                  QMessageBox::Ok,
+//                                  QMessageBox::NoButton );
+//        return;
+//    }
+
+//    if ( m_project.hasConflicts() )
+//    {
+//        QStringList conflictingFilenames = m_project.conflictingFilenames();
+//        while (m_project.hasConflicts())
+//        {
+//            resolveConflicts();
+//        }
+
+//        for (const QString & filename : conflictingFilenames )
+//        {
+//            m_project.addFile( filename );
+//        }
+
+//        if (!m_project.mergeOriginMaster())
+//        {
+//            qWarning() << "merge origin master failed.";
+//        }
+//        else
+//        {
+//            qDebug() << "merge origin master succeeded";
+//        }
+
+
+//        m_project.commit( "Commit after merge", Identity("anonymous", "no@email.com") );
+
+//        m_project.GitRepository::push();    // may fail if no internet connection etc.
+
+//    }
+
+
+//    m_project.mergeOriginMaster();
+//    m_project.commit("merge origin master", Identity("auto", "no"));
+
+
+
+//    if (!m_project.loadFromTempDir())
+//    {
+//        QMessageBox::information( this,
+//                                  tr("Loading"),
+//                                  tr("Loading failed."),
+//                                  QMessageBox::Ok,
+//                                  QMessageBox::NoButton );
+//        return;
+//    }
+//}
+
+
+
+void MainWindow::on_actionSync_triggered()
+{
+    if ( m_project.sync() )
+    {
+        QMessageBox::information( this,
+                                  tr("Sync"),
+                                  tr("Sync succeeded"),
                                   QMessageBox::Ok,
-                                  QMessageBox::NoButton         );
-        }
+                                  QMessageBox::NoButton );
+    }
+    else
+    {
+        QMessageBox::information( this,
+                                  tr("Sync"),
+                                  tr("Sync failed."),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton );
     }
 }
 
-void MainWindow::on_actionPull_triggered()
-{
-    if ( m_project.isGitRepository() )
-    {
-        if (m_project.GitRepository::fetch())
-        {
-            QMessageBox::information( this,
-                                      tr("Success"),
-                                      tr("Fetching succeeded."),
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton         );
-        }
-        else
-        {
-            QMessageBox::warning( this,
-                                  tr("Fail"),
-                                  tr("Fetching failed."),
-                                  QMessageBox::Ok,
-                                  QMessageBox::NoButton         );
-            return;
-        }
-
-        if (!m_project.GitRepository::commit("my first commit", Identity("Detlef", "b")))
-        {
-            WARNING << "auto commit [before merge] failed";
-            return;
-        }
-
-        if (m_project.GitRepository::merge())
-        {
-            QMessageBox::information( this,
-                                      tr("Success"),
-                                      tr("Merging succeeded."),
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton         );
-        }
-        else
-        {
-            QMessageBox::warning( this,
-                                  tr("Fail"),
-                                  tr("Merging failed."),
-                                  QMessageBox::Ok,
-                                  QMessageBox::NoButton         );
-            return;
-        }
-        resolveConflicts();
-        if ( !m_project.loadFromTempDir()  )
-        {
-            QMessageBox::warning( this,
-                                  tr("Failed to load resolved files"),
-                                  tr("One or more files could not be loaded. \n"
-                                     "Make sure to correct the syntax in the corrputed files."),
-                                     QMessageBox::Ok,
-                                     QMessageBox::NoButton );
-        }
-
-    }
-
-
-}
 
 
 

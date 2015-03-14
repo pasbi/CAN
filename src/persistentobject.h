@@ -8,8 +8,8 @@
 
 // check if object has a certain key of certain type. return false if not and print warning.
 #define checkJsonObject(OBJECT, KEY, TYPE)                                          \
-      (( OBJECT.contains(KEY)       || !(WARNING << "Expected key " << KEY) )        \
-    && ( OBJECT[KEY].type() == TYPE || !(WARNING << "Expected type: " << TYPE) )  )
+      (( OBJECT.contains(KEY)       || (qWarning() << "Expected key " << KEY, false) )        \
+    && ( OBJECT[KEY].type() == TYPE || (qWarning() << "Expected type: " << TYPE, false)  ))
 
 class PersistentObject
 {

@@ -3,22 +3,13 @@
 #include "util.h"
 #include <QScrollBar>
 
-ConflictEditor::ConflictEditor(const QString & directory, QWidget *parent) :
+ConflictEditor::ConflictEditor(const QList<File> &conflictingFiles, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConflictEditor)
 {
     ui->setupUi(this);
-    m_directory = directory;
 
-    QStringList allFiles = Util::findAllFiles( directory );
-    for ( const QString & filename : allFiles )
-    {
-        File file(filename);
-        if (!file.conflicts().isEmpty())
-        {
-            m_files.append( file );
-        }
-    }
+    m_files = conflictingFiles;
 
     for (const File & file : m_files)
     {
@@ -80,7 +71,6 @@ void ConflictEditor::on_buttonKeepRemote_clicked()
     conflict.m_custom = ui->plainTextEditRemote->toPlainText();
     conflict.m_resolvePolicy = conflict.m_custom == conflict.m_remote ? Conflict::KeepRemote : Conflict::KeepCustom;
 
-    qDebug() << "set icon";
     ui->listWidget->currentItem()->setIcon(QIcon(":/icons/icons/check40.png"));
     selectConflict();
 }
@@ -91,7 +81,6 @@ void ConflictEditor::on_buttonKeepLocal_clicked()
     conflict.m_custom = ui->plainTextEditLocal->toPlainText();
     conflict.m_resolvePolicy = conflict.m_custom == conflict.m_local ? Conflict::KeepLocal : Conflict::KeepCustom;
 
-    qDebug() << "set icon";
     ui->listWidget->currentItem()->setIcon(QIcon(":/icons/icons/check40.png"));
     selectConflict();
 }

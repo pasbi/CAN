@@ -38,7 +38,6 @@ SOURCES += main.cpp\
     UnitTest/creatabletest.cpp \
     UnitTest/unittests.cpp \
     Commands/command.cpp \
-    global.cpp \
     Commands/SongDatabaseCommands/songdatabasesetdatacommand.cpp \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
     SongTableView/songtableview.cpp \
@@ -91,7 +90,7 @@ SOURCES += main.cpp\
     AttachmentView/chordpatternedit.cpp \
     advancedfilechooser.cpp \
     conflicteditor.cpp \
-    file.cpp
+    advancedaudioplayer.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -105,7 +104,6 @@ HEADERS  += mainwindow.h \
     persistentobject.h \
     creatable.h \
     Attachments/ChordPatternAttachment/chordpatternattachment.h \
-    global.h \
     Database/DateDatabase/date.h \
     UnitTest/creatabletest.h \
     UnitTest/unittests.h \
@@ -162,7 +160,8 @@ HEADERS  += mainwindow.h \
     AttachmentView/chordpatternedit.h \
     advancedfilechooser.h \
     conflicteditor.h \
-    file.h
+    advancedaudioplayer.h \
+    global.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \

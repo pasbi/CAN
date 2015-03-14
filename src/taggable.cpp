@@ -27,7 +27,7 @@ bool Taggable::restoreFromJsonObject(const QJsonObject& json)
         }
         else
         {
-            WARNING << "Expected String";
+            qWarning() << "Expected String";
             return false;
         }
     }

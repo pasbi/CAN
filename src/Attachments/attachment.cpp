@@ -45,7 +45,7 @@ bool Attachment::create(const QJsonObject &object, Attachment *&attachment)
     QString classname = object.value("classname").toString();
     if (Creatable::category(classname) != "Attachment")
     {
-        WARNING << "Cannot create attachment " << classname << ".";
+        qWarning() << "Cannot create attachment " << classname << ".";
         return false;
     }
 

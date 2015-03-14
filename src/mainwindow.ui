@@ -194,8 +194,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="separator"/>
-    <addaction name="actionPush"/>
-    <addaction name="actionPull"/>
+    <addaction name="actionSync"/>
     <addaction name="actionClone"/>
     <addaction name="separator"/>
    </widget>
@@ -225,20 +224,7 @@
     <property name="title">
      <string>Debug</string>
     </property>
-    <widget class="QMenu" name="menuUnzip_directory">
-     <property name="title">
-      <string>Unzip directory:</string>
-     </property>
-     <widget class="QMenu" name="menu_path">
-      <property name="title">
-       <string>&lt; path &gt;</string>
-      </property>
-      <addaction name="actionOpen_Terminal_here"/>
-      <addaction name="actionCopyToClipboard"/>
-     </widget>
-     <addaction name="menu_path"/>
-    </widget>
-    <addaction name="menuUnzip_directory"/>
+    <addaction name="actionOpen_Terminal_here"/>
    </widget>
    <widget class="QMenu" name="menuFile_Index">
     <property name="title">
@@ -386,24 +372,6 @@
     <string>Del</string>
    </property>
   </action>
-  <action name="actionPush">
-   <property name="icon">
-    <iconset resource="ressources.qrc">
-     <normaloff>:/icons/icons/up51.png</normaloff>:/icons/icons/up51.png</iconset>
-   </property>
-   <property name="text">
-    <string>Push ...</string>
-   </property>
-  </action>
-  <action name="actionPull">
-   <property name="icon">
-    <iconset resource="ressources.qrc">
-     <normaloff>:/icons/icons/down27.png</normaloff>:/icons/icons/down27.png</iconset>
-   </property>
-   <property name="text">
-    <string>Pull</string>
-   </property>
-  </action>
   <action name="actionClone">
    <property name="icon">
     <iconset resource="ressources.qrc">
@@ -416,11 +384,6 @@
   <action name="actionOpen_Terminal_here">
    <property name="text">
     <string>Open terminal</string>
-   </property>
-  </action>
-  <action name="actionCopyToClipboard">
-   <property name="text">
-    <string>Copy to clipboard</string>
    </property>
   </action>
   <action name="actionRename_Attachment">
@@ -439,6 +402,18 @@
    </property>
    <property name="text">
     <string>Duplicate Attachment</string>
+   </property>
+  </action>
+  <action name="actionSync">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/oldIcons/oldIcons/1411737168_POWER - RESTART.png</normaloff>:/oldIcons/oldIcons/1411737168_POWER - RESTART.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sync</string>
+   </property>
+   <property name="toolTip">
+    <string>Synchronizes local project with remote repository</string>
    </property>
   </action>
  </widget>

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "global.h"
-#include <file.h>
+#include "../../../ZipGit/src/file.h"
 #include <QListWidgetItem>
 
 namespace Ui {
@@ -15,7 +15,7 @@ class ConflictEditor : public QDialog
     Q_OBJECT
 
 public:
-    explicit ConflictEditor(const QString &directory, QWidget *parent = 0);
+    explicit ConflictEditor(const QList<File> & conflictingFiles, QWidget *parent = 0);
     ~ConflictEditor();
     bool hasConflicts() const
     {
@@ -25,10 +25,10 @@ public:
 public slots:
     void accept();
     void resolveConflicts();
+    QList<File> files() const { return m_files; }
 
 private:
     Ui::ConflictEditor *ui;
-    QString m_directory;
     QList<File> m_files;
 
     class Item: public QListWidgetItem
