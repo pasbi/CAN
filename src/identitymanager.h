@@ -73,6 +73,7 @@ public:
 
     void restore();
     void save() const;
+    void removeInvalidIdentities();
 
 private:
     friend class AddIdentity;

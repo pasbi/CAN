@@ -121,7 +121,6 @@ EditIdentity::EditIdentity( IdentityManager* manager, const int index, const QSt
 
 void EditIdentity::redo()
 {
-    qDebug() << "REDO";
     identityManager()->m_identities[m_index].setName( m_newName );
     identityManager()->m_identities[m_index].setEmail( m_newEmail );
 }
@@ -141,4 +140,17 @@ bool EditIdentity::mergeWith(const QUndoCommand *other)
     m_newName = otherEdit->m_newName;
 
     return true;
+}
+
+void IdentityManager::removeInvalidIdentities()
+{
+    QList<Identity> ids;
+    for ( const Identity & i : m_identities )
+    {
+        if (i.isValid())
+        {
+            ids.append( i );
+        }
+    }
+    m_identities = ids;
 }

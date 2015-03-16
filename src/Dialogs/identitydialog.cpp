@@ -66,11 +66,11 @@ void IdentityDialog::on_buttonAdd_clicked()
     m_manager->addIdentity(Identity());
     updateList();
 
-
     block();
     ui->nameEdit->clear();
     ui->emailEdit->clear();
     unblock();
+
     ui->comboBox->setCurrentIndex( m_manager->size() - 1 );
 }
 
@@ -115,5 +115,18 @@ void IdentityDialog::updateIdentity()
         m_manager->edit( i(), ui->nameEdit->text(), ui->emailEdit->text() );
         updateList();
     }
+}
+
+void IdentityDialog::accept()
+{
+    m_manager->removeInvalidIdentities();
+    QDialog::accept();
+}
+
+
+void IdentityDialog::reject()
+{
+    m_manager->removeInvalidIdentities();
+    QDialog::reject();
 }
 

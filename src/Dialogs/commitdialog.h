@@ -2,7 +2,7 @@
 #define COMMITDIALOG_H
 
 #include <QDialog>
-#include "../../../ZipGit/src/zipgit.h"
+#include "identitymanager.h"
 
 namespace Ui {
 class CommitDialog;
@@ -13,15 +13,20 @@ class CommitDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CommitDialog(QWidget *parent = 0);
+    explicit CommitDialog(IdentityManager *identityManager, QWidget *parent = 0);
     ~CommitDialog();
 
 
-    QString message() { return "empty message"; }
-    Identity identity() { return Identity("detlef", "emaiL"); }
+    QString message() const;
+    Identity identity() const;
+
+private slots:
+    void on_buttonEditIdentities_clicked();
+    void updateButtonEnabled();
 
 private:
     Ui::CommitDialog *ui;
+    IdentityManager* m_identityManager;
 };
 
 #endif // COMMITDIALOG_H

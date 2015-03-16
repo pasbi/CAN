@@ -16,6 +16,10 @@ public:
     explicit IdentityDialog(IdentityManager *manager, QWidget *parent = 0);
     ~IdentityDialog();
 
+public slots:
+    void accept();
+    void reject();
+
 private slots:
     void on_comboBox_currentIndexChanged(int index);
     void on_buttonAdd_clicked();

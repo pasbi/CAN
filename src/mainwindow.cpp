@@ -687,7 +687,7 @@ void MainWindow::on_actionClone_triggered()
 
 void MainWindow::on_actionSync_triggered()
 {
-    CommitDialog dialog;
+    CommitDialog dialog(&m_identityManager, this);
     if (dialog.exec() != QDialog::Accepted)
     {
         // process aborted
