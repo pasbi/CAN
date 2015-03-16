@@ -13,6 +13,8 @@
 #include "stringdialog.h"
 #include "SongTableView/songtableview.h"
 #include "conflicteditor.h"
+#include "Dialogs/commitdialog.h"
+#include "Dialogs/identitydialog.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -99,24 +101,25 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadDefaultProject();
 
-    auto bla = [this]()
-    {
-        QList<File> files = m_project.conflictingFiles();
-        while (!files.isEmpty())
+    m_project.setResolveConflictsCallback( [this]()
         {
-            ConflictEditor editor( files, this );
-            editor.exec();
-            files = m_project.conflictingFiles();
-        }
+            QList<File> files = m_project.conflictingFiles();
+            while (!files.isEmpty())
+            {
+                ConflictEditor editor( files, this );
+                editor.exec();
+                files = m_project.conflictingFiles();
+            }
 
-    };
+        } );
 
-    m_project.setResolveConflictsCallback( bla );
+    m_identityManager.restore();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    m_identityManager.save();
 }
 
 void MainWindow::resizeSplitter()
@@ -682,81 +685,19 @@ void MainWindow::on_actionClone_triggered()
     updateWhichWidgetsAreEnabled();
 }
 
-//void MainWindow::on_actionPush_triggered()
-//{
-//    bool succeeded =  m_project.GitRepository::push();
-//         succeeded &= m_project.commit("Commit", Identity("Me", "@"));
-
-//    QMessageBox::information( this,
-//                              "Pushing ...",
-//                              succeeded ? "succeeded" : "failed",
-//                              QMessageBox::Ok,
-//                              QMessageBox::NoButton );
-//}
-
-//void MainWindow::on_actionPull_triggered()
-//{
-//    if (!m_project.pull())
-//    {
-//        QMessageBox::information( this,
-//                                  tr("Pulling"),
-//                                  tr("Pulling failed."),
-//                                  QMessageBox::Ok,
-//                                  QMessageBox::NoButton );
-//        return;
-//    }
-
-//    if ( m_project.hasConflicts() )
-//    {
-//        QStringList conflictingFilenames = m_project.conflictingFilenames();
-//        while (m_project.hasConflicts())
-//        {
-//            resolveConflicts();
-//        }
-
-//        for (const QString & filename : conflictingFilenames )
-//        {
-//            m_project.addFile( filename );
-//        }
-
-//        if (!m_project.mergeOriginMaster())
-//        {
-//            qWarning() << "merge origin master failed.";
-//        }
-//        else
-//        {
-//            qDebug() << "merge origin master succeeded";
-//        }
-
-
-//        m_project.commit( "Commit after merge", Identity("anonymous", "no@email.com") );
-
-//        m_project.GitRepository::push();    // may fail if no internet connection etc.
-
-//    }
-
-
-//    m_project.mergeOriginMaster();
-//    m_project.commit("merge origin master", Identity("auto", "no"));
-
-
-
-//    if (!m_project.loadFromTempDir())
-//    {
-//        QMessageBox::information( this,
-//                                  tr("Loading"),
-//                                  tr("Loading failed."),
-//                                  QMessageBox::Ok,
-//                                  QMessageBox::NoButton );
-//        return;
-//    }
-//}
-
-
-
 void MainWindow::on_actionSync_triggered()
 {
-    if ( m_project.sync() )
+    CommitDialog dialog;
+    if (dialog.exec() != QDialog::Accepted)
+    {
+        // process aborted
+        return;
+    }
+
+    if ( m_project.sync(
+             dialog.message(),
+             dialog.identity() )
+         )
     {
         QMessageBox::information( this,
                                   tr("Sync"),
@@ -772,6 +713,12 @@ void MainWindow::on_actionSync_triggered()
                                   QMessageBox::Ok,
                                   QMessageBox::NoButton );
     }
+}
+
+void MainWindow::on_actionIdentites_triggered()
+{
+    IdentityDialog dialog( &m_identityManager, this );
+    dialog.exec();
 }
 
 

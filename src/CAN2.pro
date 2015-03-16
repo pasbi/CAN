@@ -78,8 +78,6 @@ SOURCES += main.cpp\
     Attachments/ChordPatternAttachment/chord.cpp \
     Attachments/ChordPatternAttachment/chordpattern.cpp \
     Dialogs/clonedialog.cpp \
-    Dialogs/pushdialog.cpp \
-    Dialogs/pulldialog.cpp \
     Commands/AttachmentCommands/chordpatternattachmenttransposecommand.cpp \
     Dialogs/addfileindexsourcedialog.cpp \
     stringdialog.cpp \
@@ -90,7 +88,10 @@ SOURCES += main.cpp\
     AttachmentView/chordpatternedit.cpp \
     advancedfilechooser.cpp \
     conflicteditor.cpp \
-    advancedaudioplayer.cpp
+    advancedaudioplayer.cpp \
+    Dialogs/commitdialog.cpp \
+    identitymanager.cpp \
+    Dialogs/identitydialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -148,8 +149,6 @@ HEADERS  += mainwindow.h \
     Attachments/ChordPatternAttachment/chord.h \
     Attachments/ChordPatternAttachment/chordpattern.h \
     Dialogs/clonedialog.h \
-    Dialogs/pushdialog.h \
-    Dialogs/pulldialog.h \
     Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h \
     Dialogs/addfileindexsourcedialog.h \
     stringdialog.h \
@@ -161,7 +160,10 @@ HEADERS  += mainwindow.h \
     advancedfilechooser.h \
     conflicteditor.h \
     advancedaudioplayer.h \
-    global.h
+    global.h \
+    Dialogs/commitdialog.h \
+    identitymanager.h \
+    Dialogs/identitydialog.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
@@ -172,13 +174,13 @@ FORMS    += mainwindow.ui \
     songdatabasewidget.ui \
     AttachmentView/attachmentchooser.ui \
     Dialogs/clonedialog.ui \
-    Dialogs/pushdialog.ui \
-    Dialogs/pulldialog.ui \
     stringdialog.ui \
     AttachmentView/indexedfileattachmentview.ui \
     advancedfilechooser.ui \
     AttachmentView/audioattachmentview.ui \
-    conflicteditor.ui
+    conflicteditor.ui \
+    Dialogs/commitdialog.ui \
+    Dialogs/identitydialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

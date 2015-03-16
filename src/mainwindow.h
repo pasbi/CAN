@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "project.h"
 #include "configurable.h"
+#include "identitymanager.h"
 
 
 namespace Ui {
@@ -31,6 +32,7 @@ private:
     Ui::MainWindow *ui;
 
     Project m_project;
+    IdentityManager m_identityManager;
 
     // saving and loading related stuff
     bool canProjectClose();
@@ -78,6 +80,7 @@ private slots:
     void on_actionOpen_Terminal_here_triggered();
     void on_actionClone_triggered();
     void on_actionSync_triggered();
+    void on_actionIdentites_triggered();
 };
 
 #endif // MAINWINDOW_H

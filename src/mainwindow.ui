@@ -202,6 +202,7 @@
     <property name="title">
      <string>Tools</string>
     </property>
+    <addaction name="actionIdentites"/>
    </widget>
    <widget class="QMenu" name="menuAttachments">
     <property name="title">
@@ -414,6 +415,19 @@
    </property>
    <property name="toolTip">
     <string>Synchronizes local project with remote repository</string>
+   </property>
+  </action>
+  <action name="actionIdentities">
+   <property name="text">
+    <string>Identities ...</string>
+   </property>
+  </action>
+  <action name="actionIdentites">
+   <property name="text">
+    <string>Identites ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Manage identities</string>
    </property>
   </action>
  </widget>
