@@ -18,7 +18,10 @@
 
 DEFN_CONFIG( MainWindow, "Global" );
 
-CONFIGURABLE_ADD_ITEM( MainWindow, RecentProject, "", ConfigurationItemOptions::HiddenInterface() );
+CONFIGURABLE_ADD_ITEM( MainWindow, RecentProject, "",                   ConfigurationItemOptions::HiddenInterface() );
+CONFIGURABLE_ADD_ITEM( MainWindow, AskForCommitMessage, QVariant(true), ConfigurationItemOptions::CheckboxOptions() );
+CONFIGURABLE_ADD_ITEM( MainWindow, CommitMessage, "Sync",               ConfigurationItemOptions::LineEditOptions( "commit message" ) );
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -687,17 +690,45 @@ void MainWindow::on_actionClone_triggered()
 
 void MainWindow::on_actionSync_triggered()
 {
-    CommitDialog dialog(&m_identityManager, this);
-    if (dialog.exec() != QDialog::Accepted)
+    QString message;
+    Identity identity;
+    if ( true || config.item("AskForCommitMessage").toBool() )
     {
-        // process aborted
+        CommitDialog dialog(&m_identityManager, this);
+        if (dialog.exec() != QDialog::Accepted)
+        {
+            // process aborted
+            return;
+        }
+        else
+        {
+                message = dialog.message();
+                identity = dialog.identity();
+        }
+    }
+    else
+    {
+        identity = m_identityManager.currentIdentity();
+        message = config.item( "CommitMessage" ).toString();
+    }
+
+    if ( !identity.isValid() )
+    {
+        QMessageBox::warning( this,
+                              tr("Sync"),
+                              tr("You must provide a valid identity to sync. Abort.") );
+        return;
+    }
+    else if ( message.isEmpty() )
+    {
+        QMessageBox::warning( this,
+                              tr("Sync"),
+                              tr("Commit message may not be empty. Abort.") );
         return;
     }
 
-    if ( m_project.sync(
-             dialog.message(),
-             dialog.identity() )
-         )
+
+    if ( m_project.sync( message, identity ) )
     {
         QMessageBox::information( this,
                                   tr("Sync"),

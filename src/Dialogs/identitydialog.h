@@ -30,8 +30,9 @@ private slots:
     void on_emailEdit_textChanged(const QString &);
 
     void on_nameEdit_editingFinished();
-
     void on_emailEdit_editingFinished();
+    void on_buttonUndo_clicked();
+    void on_buttonRedo_clicked();
 
 
 private:
@@ -41,6 +42,7 @@ private:
     void block(bool bl);
     void block() { block( true ); }
     void unblock() { block( false); }
+    void updateIcons();
 
 };
 

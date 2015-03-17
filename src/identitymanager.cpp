@@ -3,7 +3,7 @@
 
 DEFN_CONFIG( IdentityManager, "Identities" );
 CONFIGURABLE_ADD_ITEM( IdentityManager, Identities, QStringList(), ConfigurationItemOptions::HiddenInterface() );
-
+CONFIGURABLE_ADD_ITEM( IdentityManager, CurrentIdentity, 0, ConfigurationItemOptions::HiddenInterface() );
 
 IdentityManager::IdentityManager()
 {
@@ -51,6 +51,7 @@ void IdentityManager::save( ) const
         ids << (QStringList() << i.name() << i.email());
     }
     config.setItem( "Identities", QVariant::fromValue( ids ) );
+    config.setItem( "CurrentIdentity", m_currentIndex );
 }
 
 void IdentityManager::restore( )
@@ -64,6 +65,8 @@ void IdentityManager::restore( )
         m_identities << Identity( v.toStringList()[0],
                                   v.toStringList()[1] );
     }
+
+    m_currentIndex = config.item("CurrentIdentity").toInt();
 }
 
 
@@ -131,15 +134,57 @@ void EditIdentity::undo()
     identityManager()->m_identities[m_index].setEmail( m_oldEmail );
 }
 
+bool similar(const QString & a, const QString & b)
+{
+    if (a.isEmpty() || b.isEmpty())
+    {
+        return false;
+    }
+
+    // detect edit direction changes (from deleting to adding chars or vice versa)
+    static bool increasing;
+    if (a.size() > b.size())
+    {
+        if (!increasing)
+        {
+            increasing = true;
+            return false;
+        }
+    }
+    else
+    {
+        if (increasing)
+        {
+            increasing = false;
+            return false;
+        }
+    }
+    return true;
+}
+
 bool EditIdentity::mergeWith(const QUndoCommand *other)
 {
     const EditIdentity* otherEdit = dynamic_cast<const EditIdentity*>(other);
-    assert( otherEdit );
+    if (!otherEdit)
+    {
+        return false;
+    }
 
-    m_newEmail = otherEdit->m_newEmail;
-    m_newName = otherEdit->m_newName;
+    qDebug() << "merge " << m_newEmail << otherEdit->m_newEmail << ":";
+    if ( similar(m_newEmail, otherEdit->m_newEmail)
+         && similar(m_newName, otherEdit->m_newName ))
+    {
+        m_newEmail = otherEdit->m_newEmail;
+        m_newName = otherEdit->m_newName;
+        qDebug() << "true";
+        return true;
+    }
+    else
+    {
+        qDebug() << "false";
+        return false;
+    }
 
-    return true;
 }
 
 void IdentityManager::removeInvalidIdentities()
@@ -153,4 +198,16 @@ void IdentityManager::removeInvalidIdentities()
         }
     }
     m_identities = ids;
+}
+
+Identity IdentityManager::currentIdentity() const
+{
+    if (m_currentIndex >= 0 && m_currentIndex < size())
+    {
+        return m_identities[ m_currentIndex ];
+    }
+    else
+    {
+        return Identity();
+    }
 }

@@ -23,7 +23,6 @@ Configurable::~Configurable()
 
 void Configurable::addItem(const QString & key, const QVariant & defaultValue, const ConfigurationItemOptions & options)
 {
-    assert( !m_items.contains(key) );
     m_items.insert(key, ConfigurationItem(defaultValue, defaultValue, options));
 }
 

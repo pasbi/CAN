@@ -53,7 +53,7 @@ public:
     void redo();
     void undo();
     bool mergeWith(const QUndoCommand *other);
-    int id() const { return -1; }
+    int id() const { return 1; }
 };
 
 class IdentityManager
@@ -70,10 +70,17 @@ public:
     void edit(int i, const QString & name, const QString & email);
     QString identityString(const int index) const;
 
+    Identity currentIdentity() const;
+    int currentIdentityIndex() const { return m_currentIndex; }
+
 
     void restore();
     void save() const;
     void removeInvalidIdentities();
+    QUndoStack* undoStack() { return &m_undoStack; }
+
+public slots:
+    void setCurrentIndex( int i ) {  m_currentIndex = i; }
 
 private:
     friend class AddIdentity;
@@ -82,6 +89,7 @@ private:
 
 private:
     QList<Identity> m_identities;
+    int m_currentIndex = -1;
     QUndoStack m_undoStack;
     static QString idToString( const Identity & i ) { return  QString("%1 [%2]").arg( i.name(), i.email() ); }
 };

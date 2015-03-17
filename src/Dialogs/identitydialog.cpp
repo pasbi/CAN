@@ -1,5 +1,6 @@
 #include "identitydialog.h"
 #include "ui_identitydialog.h"
+#include <QMessageBox>
 
 IdentityDialog::IdentityDialog(IdentityManager* manager, QWidget *parent) :
     QDialog(parent),
@@ -7,12 +8,18 @@ IdentityDialog::IdentityDialog(IdentityManager* manager, QWidget *parent) :
     m_manager( manager )
 {
     ui->setupUi(this);
-    ui->comboBox->setCurrentIndex( 0 );
+    updateList();
+    ui->comboBox->setCurrentIndex( manager->currentIdentityIndex() );
     if (m_manager->size() > 0)
     {
-        on_comboBox_currentIndexChanged(0);
+        on_comboBox_currentIndexChanged( manager->currentIdentityIndex() );
     }
-    updateList();
+
+
+    ui->buttonUndo->setEnabled( manager->undoStack()->canUndo() );
+    ui->buttonRedo->setEnabled( manager->undoStack()->canRedo() );
+    connect( manager->undoStack(), SIGNAL(canRedoChanged(bool)), ui->buttonRedo, SLOT(setEnabled(bool)));
+    connect( manager->undoStack(), SIGNAL(canUndoChanged(bool)), ui->buttonUndo, SLOT(setEnabled(bool)));
 }
 
 IdentityDialog::~IdentityDialog()
@@ -47,6 +54,15 @@ void IdentityDialog::block(bool bl)
     ui->comboBox->blockSignals(bl);
 }
 
+void IdentityDialog::updateIcons()
+{
+    for (int i = 0; i < ui->comboBox->count(); ++i)
+    {
+        ui->comboBox->setItemIcon( i, QIcon() );
+    }
+    ui->comboBox->setItemIcon( ui->comboBox->currentIndex(), QIcon(":/icons/icons/check40.png") );
+}
+
 void IdentityDialog::on_comboBox_currentIndexChanged(int index)
 {
     block();
@@ -57,6 +73,9 @@ void IdentityDialog::on_comboBox_currentIndexChanged(int index)
     ui->emailEdit->setText( index >= 0 ?
                                 m_manager->identity(index).email()
                               : "" );
+
+    m_manager->setCurrentIndex( index );
+    updateIcons();
 
     unblock();
 }
@@ -72,6 +91,7 @@ void IdentityDialog::on_buttonAdd_clicked()
     unblock();
 
     ui->comboBox->setCurrentIndex( m_manager->size() - 1 );
+    updateIcons();
 }
 
 void IdentityDialog::on_buttonRemove_clicked()
@@ -99,13 +119,12 @@ void IdentityDialog::updateList()
     ui->buttonRemove->setEnabled( m_manager->size() > 0 );
     ui->emailEdit->setEnabled( m_manager->size() > 0 );
     ui->nameEdit->setEnabled( m_manager->size() > 0 );
-    if (m_manager->size() == 0)
-    {
-        ui->emailEdit->clear();
-        ui->nameEdit->clear();
-    }
+
+    ui->emailEdit->setText( m_manager->currentIdentity().email() );
+    ui->nameEdit->setText( m_manager->currentIdentity().name() );
 
     unblock();
+    updateIcons();
 }
 
 void IdentityDialog::updateIdentity()
@@ -120,13 +139,41 @@ void IdentityDialog::updateIdentity()
 void IdentityDialog::accept()
 {
     m_manager->removeInvalidIdentities();
+    if (m_manager->size() == 0)
+    {
+        QMessageBox messageBox( this );
+        messageBox.setWindowTitle( tr("No Identities") );
+        messageBox.setText( tr("You should provide at least one identity. "
+                               "Without identities, you cannot sync.\n"
+                               "Identities with empty name or email are not allowed.") );
+        messageBox.addButton( QMessageBox::Ok );
+        messageBox.addButton( QMessageBox::Cancel );
+        messageBox.setButtonText( QMessageBox::Ok, tr("Edit ...") );
+        messageBox.setButtonText( QMessageBox::Cancel, tr("Proceed") );
+        messageBox.setDefaultButton( QMessageBox::Ok );
+        if (messageBox.exec() == QMessageBox::Ok)
+        {
+            return;
+        }
+    }
     QDialog::accept();
 }
 
 
 void IdentityDialog::reject()
 {
-    m_manager->removeInvalidIdentities();
-    QDialog::reject();
+    accept();
+}
+
+void IdentityDialog::on_buttonUndo_clicked()
+{
+    m_manager->undoStack()->undo();
+    updateList();
+}
+
+void IdentityDialog::on_buttonRedo_clicked()
+{
+    m_manager->undoStack()->redo();
+    updateList();
 }
 

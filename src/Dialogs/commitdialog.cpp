@@ -9,6 +9,7 @@ CommitDialog::CommitDialog(IdentityManager* identityManager, QWidget *parent) :
 {
     ui->setupUi(this);
     ui->comboBox->addItems( m_identityManager->identities() );
+    ui->comboBox->setCurrentIndex( m_identityManager->currentIdentityIndex() );
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtonEnabled()));
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateButtonEnabled()));
     updateButtonEnabled();
@@ -37,6 +38,7 @@ void CommitDialog::on_buttonEditIdentities_clicked()
 
     ui->comboBox->clear();
     ui->comboBox->addItems(m_identityManager->identities());
+    ui->comboBox->setCurrentIndex( m_identityManager->currentIdentityIndex() );
 }
 
 void CommitDialog::updateButtonEnabled()
