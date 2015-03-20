@@ -10,8 +10,7 @@ IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect( ui->advancedFileChooser, &AdvancedFileChooser::itemSelected, [this](QByteArray hash) {
-        attachment<IndexedFileAttachment>()->setHash(hash);
+    connect( ui->advancedFileChooser, &AdvancedFileChooser::itemSelected, [this]() {
         updateStackedWidget();
     });
 

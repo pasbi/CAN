@@ -13,6 +13,7 @@ public:
     explicit Indexer(const QString & path, const QStringList & filter, Mode mode, FileIndex* fileIndex, QObject *parent = 0);
 
     void abort();
+    QString currentFilename() const;
 
 protected:
     void run();
@@ -28,6 +29,8 @@ private:
 
     void addRecursively( const QString & path );
     void update( const QString & path );
+
+    mutable QString m_currentFilename;
 
 };
 

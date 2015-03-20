@@ -56,16 +56,23 @@ private slots:
     void on_actionSave_As_triggered();
     void on_actionOpen_triggered();
     void on_actionDelete_Song_triggered();
-    void on_actionUpdate_Index_triggered();
     void on_actionAdd_Folder_triggered();
     void on_actionClear_Index_triggered();
     void on_actionRename_Attachment_triggered();
     void on_actionDuplicate_Attachment_triggered();
+    void updateWhichWidgetsAreEnabled();
+    void on_actionOpen_Terminal_here_triggered();
+    void on_actionClone_triggered();
+    void on_actionSync_triggered();
+    void on_actionIdentites_triggered();
+    void on_actionSettings_triggered();
 
 
 
 
 
+
+    void on_action_Index_Info_triggered();
 
 private:
     void setupAttachmentMenu();
@@ -75,13 +82,6 @@ private:
     Attachment* currentAttachment() const;
     enum Page { SongDatabasePage, DateDatabasePage };
     Page currentPage() const;
-private slots:
-    void updateWhichWidgetsAreEnabled();
-    void on_actionOpen_Terminal_here_triggered();
-    void on_actionClone_triggered();
-    void on_actionSync_triggered();
-    void on_actionIdentites_triggered();
-    void on_actionSettings_triggered();
 };
 
 #endif // MAINWINDOW_H

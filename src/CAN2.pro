@@ -93,7 +93,8 @@ SOURCES += main.cpp\
     identitymanager.cpp \
     Dialogs/identitydialog.cpp \
     Dialogs/configurationdialog.cpp \
-    Dialogs/configurationwidgets.cpp
+    Dialogs/configurationwidgets.cpp \
+    fileindexdialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -167,7 +168,8 @@ HEADERS  += mainwindow.h \
     identitymanager.h \
     Dialogs/identitydialog.h \
     Dialogs/configurationdialog.h \
-    Dialogs/configurationwidgets.h
+    Dialogs/configurationwidgets.h \
+    fileindexdialog.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
@@ -185,7 +187,8 @@ FORMS    += mainwindow.ui \
     conflicteditor.ui \
     Dialogs/commitdialog.ui \
     Dialogs/identitydialog.ui \
-    Dialogs/configurationdialog.ui
+    Dialogs/configurationdialog.ui \
+    fileindexdialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

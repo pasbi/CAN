@@ -8,8 +8,9 @@
 #include "indexer.h"
 #include "configurable.h"
 
-class FileIndex
+class FileIndex : public QObject
 {
+    Q_OBJECT
     DECL_CONFIG( FileIndex );
 
 public:
@@ -27,15 +28,17 @@ public:
     void restore();
 
     void addSource(const QString & path, const QStringList &filter = QStringList() << "*");
-    void removeSource( const QString & path );
-    void updateIndex();
-    void abortIndexing();
+    QString currentFilename() const;
+
+signals:
+    void operationFinished();
+
+public slots:
+    void abortOperations();
 
 private:
     QMap<QByteArray, QString> m_forward;
     QMap<QString, QByteArray> m_backward;
-    Indexer* m_indexer = NULL;
-    Indexer* requestIndexer(const QString & path, const QStringList filter , Indexer::Mode mode);
 
     const static QCryptographicHash::Algorithm m_hashAlgorithm;
 
@@ -47,6 +50,7 @@ private:
     void deserialize(QByteArray data );
 
     QStringList m_sources;
+    Indexer* m_indexer = NULL;
 
 };
 

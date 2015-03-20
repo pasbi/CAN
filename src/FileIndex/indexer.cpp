@@ -49,6 +49,8 @@ void Indexer::update(const QString &path)
 
 void Indexer::addRecursively(const QString &path)
 {
+//    qDebug() << "add rec " << path;
+    m_currentFilename = path;
     if (m_abortFlag)
     {
         return;
@@ -57,7 +59,8 @@ void Indexer::addRecursively(const QString &path)
     if ( QFileInfo( path ).isDir() )
     {
         QDir dir(path);
-        QStringList entries = dir.entryList( QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files );
+        QStringList entries = dir.entryList( QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::NoSymLinks );
+//        qDebug() << "entries: " << entries;
         for ( const QString & entry : entries )
         {
             addRecursively( dir.absoluteFilePath( entry ) );
@@ -82,5 +85,12 @@ void Indexer::addRecursively(const QString &path)
             }
         }
     }
-
 }
+
+QString Indexer::currentFilename() const
+{
+    return m_currentFilename;
+}
+
+
+

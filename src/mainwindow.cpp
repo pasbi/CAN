@@ -16,6 +16,7 @@
 #include "Dialogs/commitdialog.h"
 #include "Dialogs/identitydialog.h"
 #include "Dialogs/configurationdialog.h"
+#include "progressdialog.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -205,7 +206,7 @@ bool MainWindow::saveProject()
     else
     {
         bool success  = m_project.saveZip( m_currentPath );
-             success &= m_project.loadFromTempDir(); // files might have changed
+//             success &= m_project.loadFromTempDir(); // files might have changed
         if (success)
         {
             updateWindowTitle();
@@ -583,12 +584,6 @@ void MainWindow::on_actionDelete_Song_triggered()
     }
 }
 
-void MainWindow::on_actionUpdate_Index_triggered()
-{
-    app().fileIndex().updateIndex();
-    updateWhichWidgetsAreEnabled();
-}
-
 void MainWindow::on_actionAdd_Folder_triggered()
 {
     AddFileIndexSourceDialog dialog;
@@ -602,7 +597,26 @@ void MainWindow::on_actionAdd_Folder_triggered()
 
     QStringList filter = dialog.filter();
     QString path = dialog.selectedFiles().first();
+
+    ProgressDialog pd( this );
+    pd.setUpdateCallback( []()
+    {
+        return QString(tr("%1\n%2"))
+                .arg(app().fileIndex().currentFilename())
+                .arg(app().fileIndex().size());
+    });
+    pd.setWindowTitle( tr("Adding files to the index") );
+    connect( &app().fileIndex(), &FileIndex::operationFinished, [this, &pd]()
+    {
+        pd.accept();
+    });
+
     app().fileIndex().addSource( path, filter );
+    if (QDialog::Accepted != pd.exec())
+    {
+        app().fileIndex().abortOperations();
+    }
+
 }
 
 void MainWindow::on_actionClear_Index_triggered()
@@ -756,6 +770,13 @@ void MainWindow::on_actionSettings_triggered()
 {
     ConfigurationDialog dialog(this);
     dialog.exec();
+}
+
+void MainWindow::on_action_Index_Info_triggered()
+{
+    QMessageBox::information( this,
+                              tr("File index information"),
+                              QString(tr("Files: %1")).arg(app().fileIndex().size()) );
 }
 
 

@@ -122,56 +122,46 @@ void FileIndex::restore( )
     deserialize( config.value("FileIndex").toByteArray() );
 }
 
-Indexer* FileIndex::requestIndexer( const QString & path, const QStringList filter, Indexer::Mode mode )
-{
-    if ( m_indexer )
-    {
-        qWarning() << "Wait for current operation to finish.";
-        return NULL;
-    }
-    else
-    {
-        m_indexer = new Indexer( path, filter, mode, this, NULL );
-        m_indexer->connect( m_indexer, &QThread::finished, [this]()
-        {
-            m_indexer->deleteLater();
-            m_indexer = 0;
-        });
-        m_indexer->start();
-        return m_indexer;
-    }
-}
-
-void FileIndex::abortIndexing()
-{
-    if ( m_indexer )
-    {
-        m_indexer->abort();
-    }
-    else
-    {
-        qWarning() << "There is no operation to abort.";
-    }
-}
 
 void FileIndex::addSource( const QString & path, const QStringList & filter )
 {
+    assert( !m_indexer );
     m_sources << path;
-    requestIndexer( path, filter, Indexer::Scan )->start();
-}
-
-
-void FileIndex::updateIndex()
-{
-    for (const QString & source : m_sources)
+    m_indexer = new Indexer( path, filter, Indexer::Scan, this );
+    connect(m_indexer, &QThread::finished, [this]()
     {
-        requestIndexer( source, QStringList(), Indexer::Update );
-    }
+        m_indexer->deleteLater();
+        m_indexer = NULL;
+        emit operationFinished();       // may crash here when aborted
+    });
+    m_indexer->start();
 }
+
 
 QStringList FileIndex::filenames( ) const
 {
     return m_backward.keys();
+}
+
+void FileIndex::abortOperations()
+{
+    assert( m_indexer );
+    m_indexer->abort();
+    m_indexer->wait();
+    m_indexer->deleteLater();
+    m_indexer = NULL;
+}
+
+QString FileIndex::currentFilename() const
+{
+    if (m_indexer)
+    {
+        return m_indexer->currentFilename();
+    }
+    else
+    {
+        return tr("Inactive");
+    }
 }
 
 

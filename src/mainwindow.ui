@@ -232,8 +232,9 @@
     <property name="title">
      <string>File Index</string>
     </property>
-    <addaction name="actionUpdate_Index"/>
+    <addaction name="action_Index_Info"/>
     <addaction name="actionAdd_Folder"/>
+    <addaction name="separator"/>
     <addaction name="actionClear_Index"/>
    </widget>
    <addaction name="menu_File"/>
@@ -302,9 +303,9 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionUpdate_Index">
+  <action name="action_Index_Info">
    <property name="text">
-    <string>Update Index</string>
+    <string>Index Info</string>
    </property>
   </action>
   <action name="actionAdd_Folder">
@@ -314,7 +315,7 @@
   </action>
   <action name="actionClear_Index">
    <property name="text">
-    <string>Manage Index</string>
+    <string>Clear Index</string>
    </property>
    <property name="toolTip">
     <string>Clear Index</string>
