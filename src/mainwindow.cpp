@@ -336,12 +336,10 @@ bool MainWindow::canProjectClose()
 void MainWindow::updateWindowTitle()
 {
     QString star = m_project.canClose() ? "" : "*";
-    QString cloudState = "[ No Cloud ]";
 
-    QString title = QString("%1%2 - %3 - %4")
+    QString title = QString("%1%2 - %4")
             .arg( projectName() )
             .arg( star )
-            .arg( cloudState )
             .arg( qApp->applicationName() );
 
     setWindowTitle( title );
@@ -693,6 +691,7 @@ void MainWindow::on_actionSync_triggered()
 {
     QString message;
     Identity identity;
+
     if ( config.value("AskForCommitMessage").toBool() )
     {
         CommitDialog dialog(&m_identityManager, this);
@@ -703,8 +702,8 @@ void MainWindow::on_actionSync_triggered()
         }
         else
         {
-                message = dialog.message();
-                identity = dialog.identity();
+            message = dialog.message();
+            identity = dialog.identity();
         }
     }
     else

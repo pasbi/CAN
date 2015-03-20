@@ -170,18 +170,15 @@ bool EditIdentity::mergeWith(const QUndoCommand *other)
         return false;
     }
 
-    qDebug() << "merge " << m_newEmail << otherEdit->m_newEmail << ":";
     if ( similar(m_newEmail, otherEdit->m_newEmail)
          && similar(m_newName, otherEdit->m_newName ))
     {
         m_newEmail = otherEdit->m_newEmail;
         m_newName = otherEdit->m_newName;
-        qDebug() << "true";
         return true;
     }
     else
     {
-        qDebug() << "false";
         return false;
     }
 
