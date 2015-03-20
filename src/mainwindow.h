@@ -81,6 +81,7 @@ private slots:
     void on_actionClone_triggered();
     void on_actionSync_triggered();
     void on_actionIdentites_triggered();
+    void on_actionSettings_triggered();
 };
 
 #endif // MAINWINDOW_H

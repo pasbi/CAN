@@ -91,7 +91,9 @@ SOURCES += main.cpp\
     advancedaudioplayer.cpp \
     Dialogs/commitdialog.cpp \
     identitymanager.cpp \
-    Dialogs/identitydialog.cpp
+    Dialogs/identitydialog.cpp \
+    Dialogs/configurationdialog.cpp \
+    Dialogs/configurationwidgets.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -163,7 +165,9 @@ HEADERS  += mainwindow.h \
     global.h \
     Dialogs/commitdialog.h \
     identitymanager.h \
-    Dialogs/identitydialog.h
+    Dialogs/identitydialog.h \
+    Dialogs/configurationdialog.h \
+    Dialogs/configurationwidgets.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
@@ -180,7 +184,8 @@ FORMS    += mainwindow.ui \
     AttachmentView/audioattachmentview.ui \
     conflicteditor.ui \
     Dialogs/commitdialog.ui \
-    Dialogs/identitydialog.ui
+    Dialogs/identitydialog.ui \
+    Dialogs/configurationdialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

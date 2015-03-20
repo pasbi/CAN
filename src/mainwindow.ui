@@ -203,6 +203,7 @@
      <string>Tools</string>
     </property>
     <addaction name="actionIdentites"/>
+    <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuAttachments">
     <property name="title">
@@ -428,6 +429,11 @@
    </property>
    <property name="toolTip">
     <string>Manage identities</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings ...</string>
    </property>
   </action>
  </widget>

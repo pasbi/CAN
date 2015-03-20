@@ -7,7 +7,7 @@
 
 DEFN_CONFIG( FileIndex, "File Index" );
 
-CONFIGURABLE_ADD_ITEM( FileIndex, FileIndex, QByteArray(), ConfigurationItemOptions::HiddenInterface() );
+CONFIGURABLE_ADD_ITEM_HIDDEN( FileIndex, FileIndex, QByteArray() );
 
 const QCryptographicHash::Algorithm FileIndex::m_hashAlgorithm = QCryptographicHash::Sha1;
 
@@ -114,12 +114,12 @@ void FileIndex::deserialize( QByteArray data )
 
 void FileIndex::save( ) const
 {
-    config.setItem( "FileIndex", serialize() );
+    config.set( "FileIndex", serialize() );
 }
 
 void FileIndex::restore( )
 {
-    deserialize( config.item("FileIndex").toByteArray() );
+    deserialize( config.value("FileIndex").toByteArray() );
 }
 
 Indexer* FileIndex::requestIndexer( const QString & path, const QStringList filter, Indexer::Mode mode )

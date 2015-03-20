@@ -2,8 +2,8 @@
 #include <QStringList>
 
 DEFN_CONFIG( IdentityManager, "Identities" );
-CONFIGURABLE_ADD_ITEM( IdentityManager, Identities, QStringList(), ConfigurationItemOptions::HiddenInterface() );
-CONFIGURABLE_ADD_ITEM( IdentityManager, CurrentIdentity, 0, ConfigurationItemOptions::HiddenInterface() );
+CONFIGURABLE_ADD_ITEM_HIDDEN( IdentityManager, Identities, QStringList() );
+CONFIGURABLE_ADD_ITEM_HIDDEN( IdentityManager, CurrentIdentity, 0 );
 
 IdentityManager::IdentityManager()
 {
@@ -50,14 +50,14 @@ void IdentityManager::save( ) const
     {
         ids << (QStringList() << i.name() << i.email());
     }
-    config.setItem( "Identities", QVariant::fromValue( ids ) );
-    config.setItem( "CurrentIdentity", m_currentIndex );
+    config.set( "Identities", QVariant::fromValue( ids ) );
+    config.set( "CurrentIdentity", m_currentIndex );
 }
 
 void IdentityManager::restore( )
 {
     QList<QVariant> ids;
-    ids = config.item("Identities").toList();
+    ids = config.value("Identities").toList();
 
     m_identities.clear();
     for (const QVariant & v : ids)
@@ -66,7 +66,7 @@ void IdentityManager::restore( )
                                   v.toStringList()[1] );
     }
 
-    m_currentIndex = config.item("CurrentIdentity").toInt();
+    m_currentIndex = config.value("CurrentIdentity").toInt();
 }
 
 

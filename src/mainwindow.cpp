@@ -15,12 +15,13 @@
 #include "conflicteditor.h"
 #include "Dialogs/commitdialog.h"
 #include "Dialogs/identitydialog.h"
+#include "Dialogs/configurationdialog.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
-CONFIGURABLE_ADD_ITEM( MainWindow, RecentProject, "",                   ConfigurationItemOptions::HiddenInterface() );
-CONFIGURABLE_ADD_ITEM( MainWindow, AskForCommitMessage, QVariant(true), ConfigurationItemOptions::CheckboxOptions() );
-CONFIGURABLE_ADD_ITEM( MainWindow, CommitMessage, "Sync",               ConfigurationItemOptions::LineEditOptions( "commit message" ) );
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
+CONFIGURABLE_ADD_ITEM( MainWindow, AskForCommitMessage, "Ask for commit message", QVariant(true), ConfigurationItemOptions::CheckboxOptions() );
+CONFIGURABLE_ADD_ITEM( MainWindow, CommitMessage,       "Commit message",         "Sync",         ConfigurationItemOptions::TextEditOptions( "commit message" ) );
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -220,7 +221,7 @@ bool MainWindow::saveProject()
 void MainWindow::setCurrentPath(const QString &path)
 {
     m_currentPath = path;
-    config.setItem( "RecentProject", m_currentPath );
+    config.set( "RecentProject", m_currentPath );
 }
 
 QString MainWindow::proposedPath() const
@@ -361,7 +362,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::loadDefaultProject()
 {
-    m_currentPath = config.item( "RecentProject" ).toString();
+    m_currentPath = config.value( "RecentProject" ).toString();
 
     if (!m_currentPath.isEmpty())
     {
@@ -378,7 +379,7 @@ void MainWindow::loadDefaultProject()
                                       QMessageBox::Ok
                                       );
                 m_project.reset();
-                config.setItem("RecentProject", "");
+                config.set("RecentProject", "");
             }
         }
         else
@@ -692,7 +693,7 @@ void MainWindow::on_actionSync_triggered()
 {
     QString message;
     Identity identity;
-    if ( true || config.item("AskForCommitMessage").toBool() )
+    if ( config.value("AskForCommitMessage").toBool() )
     {
         CommitDialog dialog(&m_identityManager, this);
         if (dialog.exec() != QDialog::Accepted)
@@ -709,7 +710,7 @@ void MainWindow::on_actionSync_triggered()
     else
     {
         identity = m_identityManager.currentIdentity();
-        message = config.item( "CommitMessage" ).toString();
+        message = config.value( "CommitMessage" ).toString();
     }
 
     if ( !identity.isValid() )
@@ -749,6 +750,12 @@ void MainWindow::on_actionSync_triggered()
 void MainWindow::on_actionIdentites_triggered()
 {
     IdentityDialog dialog( &m_identityManager, this );
+    dialog.exec();
+}
+
+void MainWindow::on_actionSettings_triggered()
+{
+    ConfigurationDialog dialog(this);
     dialog.exec();
 }
 

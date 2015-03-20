@@ -21,15 +21,9 @@ Configurable::~Configurable()
 {
 }
 
-void Configurable::addItem(const QString & key, const QVariant & defaultValue, const ConfigurationItemOptions & options)
+void Configurable::addItem(const QString & key, const QString & caption, const QVariant & defaultValue, const ConfigurationItemOptions & options)
 {
-    m_items.insert(key, ConfigurationItem(defaultValue, defaultValue, options));
-}
-
-void Configurable::setItem(const QString & key, const QVariant & newValue)
-{
-    assert( m_items.contains(key) );
-    m_items[key].actualValue = newValue;
+    m_items.insert(key, new ConfigurationItem(caption, defaultValue, defaultValue, options));
 }
 
 bool Configurable::contains(const QString & key) const
@@ -37,36 +31,28 @@ bool Configurable::contains(const QString & key) const
     return m_items.contains(key);
 }
 
-QVariant Configurable::item(const QString & key) const
+void Configurable::reset()
 {
-    assert( m_items.contains(key) );
-    return m_items[key].actualValue;
+    for (const QString & key : m_items.keys())
+    {
+        m_items[key]->reset();
+    }
 }
 
-void Configurable::reset(const QString & key)
+void Configurable::apply()
 {
-    assert( m_items.contains(key) );
-    m_items[key].actualValue = m_items[key].resetValue;
+    for (const QString & key : m_items.keys())
+    {
+        m_items[key]->apply();
+    }
 }
 
-/**
- * @brief apply sets the reset value to actual value.
- * @param key
- */
-void Configurable::apply(const QString & key)
+void Configurable::restore()
 {
-    assert( m_items.contains(key) );
-    m_items[key].resetValue = m_items[key].actualValue;
-}
-
-/**
- * @brief setDefault sets the actual value to defaultValue.
- * @param key
- */
-void Configurable::setDefault(const QString & key)
-{
-    assert( m_items.contains(key) );
-    m_items[key].actualValue = m_items[key].defaultValue;
+    for (const QString & key : m_items.keys())
+    {
+        m_items[key]->restore();
+    }
 }
 
 void Configurable::saveConfiguration() const
@@ -76,7 +62,7 @@ void Configurable::saveConfiguration() const
     settings.beginGroup(m_prefix);
     for (const QString & key : m_items.keys() )
     {
-        settings.setValue(key, m_items[key].actualValue);
+        settings.setValue(key, m_items[key]->actualValue());
     }
     settings.endGroup();
     settings.endGroup();
@@ -91,9 +77,9 @@ void Configurable::restoreConfiguration()
     for (const QString & key : keys)
     {
         // only overwrite, dont create.
-        setItem(key, settings.value(key));
-        apply(key);
+        set( key, settings.value(key) );
     }
+    apply();
     settings.endGroup();
     settings.endGroup();
 }

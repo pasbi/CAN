@@ -17,24 +17,26 @@
 #define DEFN_CONFIG( CLASSNAME, Caption )    \
     Configurable CLASSNAME::config(#CLASSNAME, QObject::tr(Caption, "Configurable Caption"))
 
-#define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, DEFAULT_VALUE, OPTIONS )  \
+#define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, CAPTION, DEFAULT_VALUE, OPTIONS )  \
     struct ConfigurableStaticInitializer_##CLASSNAME##_##KEY {    \
         ConfigurableStaticInitializer_##CLASSNAME##_##KEY() {     \
-            CLASSNAME::config.addItem( #KEY, DEFAULT_VALUE, OPTIONS );   \
+            CLASSNAME::config.addItem( #KEY, QObject::tr(CAPTION, "Configurable Item Caption"), DEFAULT_VALUE, OPTIONS );   \
         }                                                       \
     } private__ConfigurableStaticInitializer_##CLASSNAME##_##KEY
 
+#define CONFIGURABLE_ADD_ITEM_HIDDEN( CLASSNAME, KEY, DEFAULT_VALUE )  \
+    CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, #KEY, DEFAULT_VALUE, ConfigurationItemOptions::HiddenInterface() )
+
 class ConfigurationItemOptions
 {
-private:
+public:
     enum Interface { Invalid, Hidden,
-                     LineEdit, PathEdit,
+                     LineEdit, TextEdit, PathEdit,
                      Slider, DoubleSlider,
                      SpinBox, DoubleSpinBox,
                      AdvancedSlider, AdvancedDoubleSlider,
                      RadioButtons, ComboBox, EditableComboBox,
                      ColorEditor, Checkbox                   };
-public:
     ConfigurationItemOptions() :
         m_interface( Invalid ),
         m_placeHolderText(),
@@ -124,6 +126,7 @@ private:
     // ConfigurationItemOptions factory
     static ConfigurationItemOptions HiddenInterface             (                                                                       )  { return ConfigurationItemOptions( Hidden,               "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
     static ConfigurationItemOptions LineEditOptions             ( const QString & placeHolderText                                       )  { return ConfigurationItemOptions( LineEdit,             placeHolderText,    "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
+    static ConfigurationItemOptions TextEditOptions             ( const QString & placeHolderText                                       )  { return ConfigurationItemOptions( TextEdit,             placeHolderText,    "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
     static ConfigurationItemOptions PathEditOptions             ( const QString fileFilter, bool isOpenDialog, bool isFileDialog        )  { return ConfigurationItemOptions( PathEdit,             "",                 fileFilter, isOpenDialog,   isFileDialog,   0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
     static ConfigurationItemOptions SliderOptions               ( int min, int max, int step = 1                                        )  { return ConfigurationItemOptions( Slider,               "",                 "",         false,          false,          min,    max,    step,   0,      0,      0,      "",     QStringList()   ); }
     static ConfigurationItemOptions SpinBoxOptions              ( int min, int max, int step = 1, const QString & suffix = ""           )  { return ConfigurationItemOptions( SpinBox,              "",                 "",         false,          false,          min,    max,    step,   0,      0,      0,      suffix, QStringList()   ); }
@@ -139,40 +142,53 @@ private:
 
 };
 
-struct ConfigurationItem
+class ConfigurationItem : public QObject
 {
+    Q_OBJECT
 public:
     ConfigurationItem() :
-        actualValue(),
-        defaultValue(),
-        resetValue(),
-        options()
+        m_actualValue(),
+        m_defaultValue(),
+        m_resetValue(),
+        m_options(),
+        m_caption()
     {
 
     }
 
-    ConfigurationItem( const ConfigurationItem& other ) :
-        actualValue( other.actualValue ),
-        defaultValue ( other.defaultValue ),
-        resetValue( other.resetValue ),
-        options( other.options )
+    ConfigurationItem( const QString &                  caption,
+                       const QVariant &                 actualValue,
+                       const QVariant &                 defaultValue,
+                       const ConfigurationItemOptions & options) :
+        m_actualValue(actualValue),
+        m_defaultValue(defaultValue),
+        m_resetValue(actualValue),
+        m_options(options),
+        m_caption( caption )
     {
 
     }
 
-    ConfigurationItem(const QVariant & actualValue, const QVariant & defaultValue, const ConfigurationItemOptions & options) :
-        actualValue(actualValue),
-        defaultValue(defaultValue),
-        resetValue(actualValue),
-        options(options)
-    {
+    QString caption() const { return m_caption; }
+    ConfigurationItemOptions options() const { return m_options; }
+    QVariant actualValue() const { return m_actualValue; }
+    QVariant defaultValue() const { return m_defaultValue; }
 
-    }
+public slots:
+    void apply() { m_resetValue = m_actualValue; }
+    void reset() { m_actualValue = m_resetValue; }
+    void restore() { m_actualValue = m_defaultValue; }
+    void set( const QVariant & value ) { m_actualValue = value; }
 
-    QVariant actualValue;
-    QVariant defaultValue;
-    QVariant resetValue;
-    ConfigurationItemOptions options;
+
+private:
+    QVariant m_actualValue;
+    const QVariant m_defaultValue;
+    QVariant m_resetValue;
+    ConfigurationItemOptions m_options;
+
+private:
+    const QString m_caption;
 
 };
 
@@ -186,28 +202,20 @@ public:
     Configurable(const QString & prefix, const QString & caption );
     ~Configurable();
 
-    void addItem(const QString & key, const QVariant & defaultValue, const ConfigurationItemOptions &options );
-    void setItem(const QString & key, const QVariant & newValue);
+    void addItem(const QString &                    key,
+                 const QString &                    caption,
+                 const QVariant &                   defaultValue,
+                 const ConfigurationItemOptions &   options );
+
     bool contains(const QString & key) const;
-    QVariant item(const QString & key) const;
+    ConfigurationItem* item(const QString & key) { return m_items[key]; }
+    const ConfigurationItem* item(const QString & key) const { return m_items[key]; }
+    QVariant value( const QString & key ) const { return item(key)->actualValue(); }
+    void set( const QString & key, const QVariant & value ) { item(key)->set(value); }
 
-    /**
-     * @brief reset resets the value at key to reset value.
-     * @param key
-     */
-    void reset(const QString & key);
-
-    /**
-     * @brief apply sets the reset value to actual value.
-     * @param key
-     */
-    void apply(const QString & key);
-
-    /**
-     * @brief setDefault sets the actual value to defaultValue.
-     * @param key
-     */
-    void setDefault(const QString & key);
+    void reset();
+    void apply();
+    void restore();
 
     /**
      * @brief saveConfiguration saves the configuration with QSettings system.
@@ -224,9 +232,10 @@ public:
     QString caption() const { return m_caption; }
 
     QString prefix() const { return m_prefix; }
+    QStringList itemKeys() const { return m_items.keys(); }
 
 private:
-    QMap<QString, ConfigurationItem> m_items;
+    QMap<QString, ConfigurationItem*> m_items;
     const QString m_prefix;
     const QString m_caption;
 
@@ -244,7 +253,7 @@ private:
         QMap<QString, Configurable*> m_configurables;
     };
 
-protected:
+public:
     static ConfigurableRegisterer* registerer()
     {
         static ConfigurableRegisterer* singleton;
@@ -254,6 +263,7 @@ protected:
         }
         return singleton;
     }
+    static QMap<QString, Configurable*> configurables() { return registerer()->configs(); }
 
 public:
     static void saveAll();

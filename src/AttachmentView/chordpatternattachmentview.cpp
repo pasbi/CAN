@@ -11,8 +11,6 @@
 DEFN_CREATABLE(ChordPatternAttachmentView, AttachmentView);
 DEFN_CONFIG( ChordPatternAttachmentView, "Chord Pattern Attachment" );
 
-CONFIGURABLE_ADD_ITEM( ChordPatternAttachmentView, WarningColor, QColor(Qt::red), ConfigurationItemOptions::ColorEditorOptions() );
-
 ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     AttachmentView(parent),
     ui(new Ui::ChordPatternAttachmentView),
