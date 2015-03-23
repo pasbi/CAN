@@ -13,6 +13,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = CAN2
 TEMPLATE = app
 
+CONFIG += debug
+QMAKE_CXXFLAGS_DEBUG -= -O2
+QMAKE_CXXFLAGS_DEBUG += -Og
+
 LIBS += -L../../build-ZipGit-Desktop-Debug/ -lzipgit
 LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
@@ -94,7 +98,8 @@ SOURCES += main.cpp\
     Dialogs/identitydialog.cpp \
     Dialogs/configurationdialog.cpp \
     Dialogs/configurationwidgets.cpp \
-    fileindexdialog.cpp
+    fileindexdialog.cpp \
+    Dialogs/alternativefilemanager.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -169,7 +174,8 @@ HEADERS  += mainwindow.h \
     Dialogs/identitydialog.h \
     Dialogs/configurationdialog.h \
     Dialogs/configurationwidgets.h \
-    fileindexdialog.h
+    fileindexdialog.h \
+    Dialogs/alternativefilemanager.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \
@@ -188,7 +194,8 @@ FORMS    += mainwindow.ui \
     Dialogs/commitdialog.ui \
     Dialogs/identitydialog.ui \
     Dialogs/configurationdialog.ui \
-    fileindexdialog.ui
+    fileindexdialog.ui \
+    Dialogs/alternativefilemanager.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

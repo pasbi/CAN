@@ -62,6 +62,7 @@ QImage PDFAttachmentView::renderPage()
     if (!doc) {
         image = QImage();
     } else {
+        m_currentPage = qMin( m_currentPage, doc->numPages() - 1 );
         image = doc->page(m_currentPage)->renderToImage( m_zoom * physicalDpiX(),
                                                          m_zoom * physicalDpiY());
     }

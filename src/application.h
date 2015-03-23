@@ -15,6 +15,7 @@ public:
 
     FileIndex & fileIndex() { return m_fileIndex; }
 
+    //TODO guess most methodes are obsolete. tidy up!
     static QString applicationName() { return "CAN2"; }
     static QString organizationDomain() { return "none@none.none"; }
     static QString organizationName() { return "CAN2 Developer"; }
@@ -25,6 +26,8 @@ public:
      */
     QSettings &settings();
     const QSettings &settings() const;
+
+    const QString username() const { return "Detlef"; } //TODO
 
 private:
     FileIndex m_fileIndex;

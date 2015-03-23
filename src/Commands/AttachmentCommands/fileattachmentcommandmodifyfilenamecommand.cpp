@@ -4,15 +4,15 @@ FileAttachmentCommandModifyFilenameCommand::FileAttachmentCommandModifyFilenameC
     AttachmentCommand( attachment ),
     m_newFilename( newFilename )
 {
-    m_oldFilename = attachment->filename();
+    m_oldFilename = "";//attachment->/*filename*/();
 }
 
 void FileAttachmentCommandModifyFilenameCommand::undo()
 {
-    attachment<IndexedFileAttachment>()->setFilename( m_oldFilename );
+//    attachment<IndexedFileAttachment>()->addAlternative( m_oldFilename );
 }
 
 void FileAttachmentCommandModifyFilenameCommand::redo()
 {
-    attachment<IndexedFileAttachment>()->setFilename( m_newFilename );
+//    attachment<IndexedFileAttachment>()->removeA( m_newFilename );
 }

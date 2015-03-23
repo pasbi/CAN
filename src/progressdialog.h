@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QTime>
-#include <functional>
 
 namespace Ui {
 class ProgressDialog;
@@ -12,18 +11,17 @@ class ProgressDialog;
 class ProgressDialog : public QDialog
 {
     Q_OBJECT
+
 public:
     explicit ProgressDialog(QWidget *parent = 0);
     ~ProgressDialog();
-    void setUpdateCallback(std::function< QString(void) > function, int msec = 200 );
-    void setText( const QString & text );
+
+    void processEvents();
+
 
 private:
     Ui::ProgressDialog *ui;
-    bool m_functionSet = false;
-    std::function< QString(void) > m_function;
-    QTimer* m_timer;
-
+    QTime m_timeOfLastEventLoopProcessing;
 };
 
 #endif // PROGRESSDIALOG_H

@@ -16,7 +16,9 @@
 #include "Dialogs/commitdialog.h"
 #include "Dialogs/identitydialog.h"
 #include "Dialogs/configurationdialog.h"
-#include "progressdialog.h"
+#include <QProgressDialog>
+#include <QScrollArea>
+#include <QLabel>
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -328,7 +330,7 @@ bool MainWindow::canProjectClose()
         case QMessageBox::Abort:
             return false;
         default:
-            qWarning() << "Illegal case in switch statement";
+            WARNING << "Illegal case in switch statement";
             return false;
         }
     }
@@ -598,23 +600,27 @@ void MainWindow::on_actionAdd_Folder_triggered()
     QStringList filter = dialog.filter();
     QString path = dialog.selectedFiles().first();
 
-    ProgressDialog pd( this );
-    pd.setUpdateCallback( []()
-    {
-        return QString(tr("%1\n%2"))
-                .arg(app().fileIndex().currentFilename())
-                .arg(app().fileIndex().size());
-    });
-    pd.setWindowTitle( tr("Adding files to the index") );
-    connect( &app().fileIndex(), &FileIndex::operationFinished, [this, &pd]()
-    {
-        pd.accept();
-    });
+    QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
+    pd.setWindowModality( Qt::WindowModal );
 
     app().fileIndex().addSource( path, filter );
-    if (QDialog::Accepted != pd.exec())
+
+    QLabel* label = new QLabel(&pd);
+    label->setWordWrap(true);
+    pd.setLabel(label);
+    pd.show();
+
+    while (!app().fileIndex().operationIsFinished())
     {
-        app().fileIndex().abortOperations();
+        pd.setValue( (pd.value() + 1) % 100 );
+        label->setText( QString(tr("%1\n%2")).arg(app().fileIndex().currentFilename())
+                                              .arg(app().fileIndex().size())            );
+        qApp->processEvents();
+        QThread::msleep( 10 );
+        if (pd.wasCanceled())
+        {
+            app().fileIndex().abortOperations();
+        }
     }
 
 }

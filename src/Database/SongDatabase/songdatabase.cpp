@@ -238,7 +238,7 @@ int SongDatabase::removeSong(Song* song)
     int index;
     if ( (index = m_songs.indexOf(song)) < 0 )
     {
-        qWarning() << "SongDatabase does not contain song " << song;
+        WARNING << "SongDatabase does not contain song " << song;
     }
     else
     {
@@ -371,7 +371,7 @@ bool SongDatabase::loadFrom(const QString &path)
     }
     else
     {
-        qWarning() << "Loading failed.";
+        WARNING << "Loading failed.";
         success = false;
     }
 

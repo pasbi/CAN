@@ -10,7 +10,7 @@ class AttachmentView : public QWidget, public Creatable
     Q_OBJECT
 public:
     explicit AttachmentView( QWidget *parent = 0);
-    void setAttachment(Attachment* attachment);
+    virtual void setAttachment(Attachment* attachment);
 
     template< typename T = Attachment >
     T* attachment() const

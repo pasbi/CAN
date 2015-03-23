@@ -29,6 +29,7 @@ public:
 
     void addSource(const QString & path, const QStringList &filter = QStringList() << "*");
     QString currentFilename() const;
+    bool operationIsFinished() const;
 
 signals:
     void operationFinished();

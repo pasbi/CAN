@@ -34,13 +34,13 @@ bool Project::loadFromTempDir()
     bool success = true;
     if (!m_dateDatabase->loadFrom(makeAbsolute("dateDatabase")))
     {
-        qWarning() << "Cannot load Date Database";
+        WARNING << "Cannot load Date Database";
         success = false;
     }
 
     if (!m_songDatabase->loadFrom(makeAbsolute("songDatabase")))
     {
-        qWarning() << "Cannot load Song Database";
+        WARNING << "Cannot load Song Database";
         success = false;
     }
 
@@ -57,18 +57,18 @@ bool Project::saveToTempDir()
 
     if ( !resetUserData() )
     {
-        qWarning() << "Cannot tidy up temporary directory.";
+        WARNING << "Cannot tidy up temporary directory.";
         success = false;
     }
 
     if (!m_dateDatabase->saveTo(makeAbsolute("dateDatabase")))
     {
-        qWarning() << "Cannot save Date Database.";
+        WARNING << "Cannot save Date Database.";
         success = false;
     }
     if (!m_songDatabase->saveTo(makeAbsolute("songDatabase")))
     {
-        qWarning() << "Cannot save Song Database";
+        WARNING << "Cannot save Song Database";
         success = false;
     }
     setCanClose(true);

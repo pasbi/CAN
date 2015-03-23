@@ -7,6 +7,7 @@ Application::Application(int &argc, char **argv) :
     setObjectName(objectName());
     setApplicationName(applicationName());
     Configurable::restoreAll();
+
 }
 
 Application::~Application()

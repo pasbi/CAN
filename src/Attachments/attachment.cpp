@@ -45,12 +45,12 @@ bool Attachment::create(const QJsonObject &object, Attachment *&attachment)
     QString classname = object.value("classname").toString();
     if (Creatable::category(classname) != "Attachment")
     {
-        qWarning() << "Cannot create attachment " << classname << ".";
+        WARNING << "Cannot create attachment " << classname << ".";
         return false;
     }
 
     CREATE( classname, attachment );
-
+    attachment->setName( object["name"].toString() );
     return attachment->restoreFromJsonObject( object );
 }
 
@@ -60,6 +60,7 @@ QJsonObject Attachment::toJsonObject() const
     QJsonObject object = Taggable::toJsonObject();
 
     object.insert("classname", classname());
+    object.insert("name", name());
 
     return object;
 }

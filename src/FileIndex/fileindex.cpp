@@ -130,11 +130,25 @@ void FileIndex::addSource( const QString & path, const QStringList & filter )
     m_indexer = new Indexer( path, filter, Indexer::Scan, this );
     connect(m_indexer, &QThread::finished, [this]()
     {
+        qDebug() << ">>>>>!!!!!!!!!!";
         m_indexer->deleteLater();
         m_indexer = NULL;
-        emit operationFinished();       // may crash here when aborted
+        emit operationFinished();
     });
     m_indexer->start();
+
+}
+
+bool FileIndex::operationIsFinished() const
+{
+    if (m_indexer)
+    {
+        return m_indexer->isFinished();
+    }
+    else
+    {
+        return true;
+    }
 }
 
 
@@ -145,11 +159,13 @@ QStringList FileIndex::filenames( ) const
 
 void FileIndex::abortOperations()
 {
-    assert( m_indexer );
-    m_indexer->abort();
-    m_indexer->wait();
-    m_indexer->deleteLater();
-    m_indexer = NULL;
+    if ( m_indexer )
+    {
+        m_indexer->abort();
+        m_indexer->wait();
+        m_indexer->deleteLater();
+        m_indexer = NULL;
+    }
 }
 
 QString FileIndex::currentFilename() const
