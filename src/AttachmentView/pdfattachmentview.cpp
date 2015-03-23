@@ -70,16 +70,19 @@ QImage PDFAttachmentView::renderPage()
     return image;
 }
 
-QPixmap PDFAttachmentView::scalePixmap( const QPixmap & p ) const
-{
-    return p.scaledToWidth( (ui->scrollArea->width() - 5) * m_zoom );
-}
-
 void PDFAttachmentView::open()
 {
     handlePageControlEnabled();
-    currentPixmap = QPixmap::fromImage(renderPage());
-    ui->label->setPixmap( scalePixmap(currentPixmap) );
+
+    Poppler::Document* doc = attachment<PDFAttachment>()->document();
+    if (!doc) {
+        ui->label->setPixmap(QPixmap());
+    } else {
+        m_currentPage = qMin( m_currentPage, doc->numPages() - 1);
+        QImage image = doc->page(m_currentPage)->renderToImage( m_zoom * physicalDpiX(),
+                                                                m_zoom * physicalDpiY());
+        ui->label->setPixmap(QPixmap::fromImage(image));
+    }
 }
 
 void PDFAttachmentView::on_buttonZoomIn_clicked()
@@ -180,10 +183,5 @@ void PDFAttachmentView::restoreOptions(const QByteArray &options)
     stream >> m_zoom >> m_currentPage;
     handlePageControlEnabled();
     ui->spinBoxScale->setValue( 100 * m_zoom );
-}
-
-void PDFAttachmentView::resizeEvent(QResizeEvent *)
-{
-    ui->label->setPixmap( scalePixmap(currentPixmap) );
 }
 

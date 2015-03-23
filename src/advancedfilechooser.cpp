@@ -195,41 +195,7 @@ void AdvancedFileChooser::on_pushButton_clicked()
                                   QString(tr("File %1 is not indexed.\n"
                                                          "Only indexed files can be used.\n")).arg(filename)
                                   );
-
-
-//        QAbstractButton* addFolder =    box.addButton( tr("Add folder"), QMessageBox::AcceptRole  );
-//                                        box.addButton( tr("Cancel"),     QMessageBox::RejectRole  );
-
-//        box.exec();
-
-//        if ( box.clickedButton() == addFolder )
-//        {
-//            QString path = QFileInfo( filename ).dir().path();
-
-//            AddFileIndexSourceDialog dialog(  this );
-//            dialog.setDirectory( path );
-//            dialog.setOptions( QFileDialog::ShowDirsOnly );
-//            dialog.setFileMode( QFileDialog::Directory );
-
-//            path = dialog.selectedFiles().first();
-//            if (dialog.exec() != QDialog::Accepted)
-//            {
-//                // user canceled
-//                return;
-//            }
-
-//            if (path.isEmpty())
-//            {
-//                // user canceled
-//                return;
-//            }
-//            app().fileIndex().addSource( path, dialog.filter() );
-//        }
-//        else
-//        {
-//            // user canceled
-//            return;
-//        }
+        return;
     }
 
     assert( app().fileIndex().contains(filename) );

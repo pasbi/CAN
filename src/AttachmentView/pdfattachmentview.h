@@ -28,7 +28,6 @@ public:
 
 protected:
     void polish();
-    void resizeEvent(QResizeEvent *);
     bool eventFilter(QObject *o, QEvent *e);
 
 protected slots:
@@ -48,7 +47,7 @@ private:
     QWidget* m_pdfWidget = NULL;
     double m_zoom = 1;
 
-    int m_currentPage = 1;
+    int m_currentPage = 0;
     void handlePageControlEnabled();
     QImage renderPageCached(int page);
     QImage renderPage();
@@ -58,7 +57,6 @@ private:
     QPixmap currentPixmap;
     QByteArray m_hash;  // hash of the document the rendering was made from.
 
-    inline QPixmap scalePixmap( const QPixmap & p ) const;
     int numPages() const;
 
 };
