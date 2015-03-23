@@ -49,7 +49,6 @@ void Indexer::update(const QString &path)
 
 void Indexer::addRecursively(const QString &path)
 {
-//    qDebug() << "add rec " << path;
     m_currentFilename = path;
     if (m_abortFlag)
     {
@@ -60,7 +59,6 @@ void Indexer::addRecursively(const QString &path)
     {
         QDir dir(path);
         QStringList entries = dir.entryList( QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::NoSymLinks );
-//        qDebug() << "entries: " << entries;
         for ( const QString & entry : entries )
         {
             addRecursively( dir.absoluteFilePath( entry ) );

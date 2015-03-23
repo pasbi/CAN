@@ -3,7 +3,7 @@
 #include "global.h"
 #include <QCheckBox>
 
-AddFileIndexSourceDialog::AddFileIndexSourceDialog(QWidget *parent) :
+AddFileIndexSourceDialog::AddFileIndexSourceDialog(const QString &filter, QWidget *parent) :
     QFileDialog(parent)
 {
 
@@ -11,6 +11,7 @@ AddFileIndexSourceDialog::AddFileIndexSourceDialog(QWidget *parent) :
     assert( gridLayout );
 
     initFilterWidget();
+    m_filterLineEdit->setText( filter );
     gridLayout->addWidget( m_filterWidget, gridLayout->rowCount(), 0, 1, gridLayout->columnCount() );
 }
 
@@ -126,7 +127,7 @@ void AddFileIndexSourceDialog::initFilterWidget()
         connect( cb, &QCheckBox::toggled, updateLineEdit);
     }
     connect( allCheckBox, &QCheckBox::toggled, updateLineEdit);
-    connect( m_filterLineEdit, &QLineEdit::editingFinished, updateCheckBoxes);
+    connect( m_filterLineEdit, &QLineEdit::textChanged, updateCheckBoxes);
 
     allCheckBox->setChecked(true);
 

@@ -28,12 +28,10 @@ public:
 public slots:
     bool setHash(QByteArray hash);
     bool setFilename(QString filename );
+    virtual void open() = 0;
 
 signals:
     void hashChanged( QByteArray hash );
-
-protected slots:
-    virtual void open() = 0;
 
 private:
     QByteArray m_hash;

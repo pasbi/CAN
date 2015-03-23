@@ -23,8 +23,10 @@
 DEFN_CONFIG( MainWindow, "Global" );
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexFilter, "");
 CONFIGURABLE_ADD_ITEM( MainWindow, AskForCommitMessage, "Ask for commit message", QVariant(true), ConfigurationItemOptions::CheckboxOptions() );
 CONFIGURABLE_ADD_ITEM( MainWindow, CommitMessage,       "Commit message",         "Sync",         ConfigurationItemOptions::TextEditOptions( "commit message" ) );
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -588,7 +590,7 @@ void MainWindow::on_actionDelete_Song_triggered()
 
 void MainWindow::on_actionAdd_Folder_triggered()
 {
-    AddFileIndexSourceDialog dialog;
+    AddFileIndexSourceDialog dialog( config.value("FileIndexFilter").toString(), this );
     dialog.setDirectory( QDir::homePath() );
     dialog.setOptions( QFileDialog::ShowDirsOnly );
     dialog.setFileMode( QFileDialog::Directory );
@@ -596,8 +598,9 @@ void MainWindow::on_actionAdd_Folder_triggered()
     {
         return;
     }
+    config.set("FileIndexFilter", dialog.filter() );
 
-    QStringList filter = dialog.filter();
+    QStringList filter = dialog.filterList();
     QString path = dialog.selectedFiles().first();
 
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );

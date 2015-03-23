@@ -69,7 +69,6 @@ SOURCES += main.cpp\
     Commands/SongCommands/songaddattachmentcommand.cpp \
     Commands/SongCommands/songcommand.cpp \
     Commands/SongCommands/songremoveattachmentcommand.cpp \
-    Commands/AttachmentCommands/fileattachmentcommandmodifyfilenamecommand.cpp \
     AttachmentView/attachmenteditor.cpp \
     AttachmentView/attachmentview.cpp \
     AttachmentView/chordpatternattachmentview.cpp \
@@ -99,7 +98,8 @@ SOURCES += main.cpp\
     Dialogs/configurationdialog.cpp \
     Dialogs/configurationwidgets.cpp \
     fileindexdialog.cpp \
-    Dialogs/alternativefilemanager.cpp
+    Dialogs/alternativefilemanager.cpp \
+    Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -144,7 +144,6 @@ HEADERS  += mainwindow.h \
     Commands/SongCommands/songaddattachmentcommand.h \
     Commands/SongCommands/songcommand.h \
     Commands/SongCommands/songremoveattachmentcommand.h \
-    Commands/AttachmentCommands/fileattachmentcommandmodifyfilenamecommand.h \
     Commands/AttachmentCommands/attachmentrenamecommand.h \
     AttachmentView/attachmenteditor.h \
     AttachmentView/attachmentview.h \
@@ -175,7 +174,8 @@ HEADERS  += mainwindow.h \
     Dialogs/configurationdialog.h \
     Dialogs/configurationwidgets.h \
     fileindexdialog.h \
-    Dialogs/alternativefilemanager.h
+    Dialogs/alternativefilemanager.h \
+    Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \

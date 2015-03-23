@@ -4,7 +4,6 @@ SongDatabaseNewAttributeCommand::SongDatabaseNewAttributeCommand(SongDatabase *s
     SongDatabaseCommand( songDatabase ),
     m_label(attributeKey)
 {
-
 }
 
 void SongDatabaseNewAttributeCommand::redo()

@@ -67,7 +67,6 @@ QJsonObject IndexedFileAttachment::toJsonObject() const
     QJsonObject object = Attachment::toJsonObject();
 
     object.insert("hash", QString::fromLatin1( m_hash.toHex() ));
-    qDebug() << "save as " << QString::fromLatin1( m_hash.toHex() ) << "(" << app().fileIndex().filename(m_hash) << ")";
 
     return object;
 }
@@ -78,7 +77,6 @@ bool IndexedFileAttachment::restoreFromJsonObject(const QJsonObject &object)
     if (success && (success = checkJsonObject( object, "hash", QJsonValue::String )))
     {
         m_hash = QByteArray::fromHex( object["hash"].toString().toLatin1() );
-        qDebug() << "restore as " << QString::fromLatin1( m_hash.toHex() ) << "(" << app().fileIndex().filename(m_hash) << ")";
     }
 
     return Attachment::restoreFromJsonObject( object ) && success;

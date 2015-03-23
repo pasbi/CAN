@@ -3,6 +3,9 @@
 #include "application.h"
 #include "Database/SongDatabase/song.h"
 #include "Attachments/indexedfileattachment.h"
+#include "Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h"
+#include "Database/SongDatabase/songdatabase.h"
+#include "project.h"
 
 IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
     AttachmentView(parent),
@@ -35,9 +38,26 @@ void IndexedFileAttachmentView::polish()
 
     ui->advancedFileChooser->setFilterProperties( attachment()->song(), endings );
 
-    connect( ui->advancedFileChooser, SIGNAL(itemSelected(QByteArray)), attachment<IndexedFileAttachment>(), SLOT(setHash(QByteArray)));
+    connect( ui->advancedFileChooser, &AdvancedFileChooser::itemSelected, [this](QByteArray hash)
+    {
+        Command* c = new FileAttachmentCommandSetHashCommand( attachment<IndexedFileAttachment>(), hash );
+        attachment<Attachment>()->song()->database()->project()->pushCommand( c );
+    });
+
+    ui->advancedFileChooser->blockSignals(true);    // do not create a command (see connect above)
     ui->advancedFileChooser->setHash( attachment<IndexedFileAttachment>()->hash() );
+    open();
+    attachment<IndexedFileAttachment>()->open();
+    updateStackedWidget();
+    ui->advancedFileChooser->blockSignals(false);
+
     connect( attachment<IndexedFileAttachment>(), SIGNAL(hashChanged(QByteArray)), this, SLOT(open()) );
+    connect( attachment<IndexedFileAttachment>(), &IndexedFileAttachment::hashChanged, [this](QByteArray hash)
+    {
+        ui->advancedFileChooser->blockSignals(true);
+        ui->advancedFileChooser->setHash( hash );
+        ui->advancedFileChooser->blockSignals(false);
+    });
 }
 
 void IndexedFileAttachmentView::updateAttachmentView()

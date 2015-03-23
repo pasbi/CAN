@@ -68,6 +68,7 @@ void AdvancedFileChooser::setHash(const QByteArray &hash)
         emit itemSelected( m_hash );
     }
     ui->comboBox->blockSignals(false);
+
 }
 
 void AdvancedFileChooser::setFilterProperties(const Song *song, const QStringList & endings )
@@ -189,44 +190,46 @@ void AdvancedFileChooser::on_pushButton_clicked()
     if (!app().fileIndex().contains(filename))
     {
 
-        QMessageBox box( this );
-        box.setWindowTitle(tr("File is not indexed."));
-        box.setText(QString(tr("File %1 is not indexed.\n"
-                               "Only indexed files can be used.\n")).arg(filename));
+        QMessageBox::information( this,
+                                  tr("File is not indexed."),
+                                  QString(tr("File %1 is not indexed.\n"
+                                                         "Only indexed files can be used.\n")).arg(filename)
+                                  );
 
-        QAbstractButton* addFolder =    box.addButton( tr("Add folder"), QMessageBox::AcceptRole  );
-                                        box.addButton( tr("Cancel"),     QMessageBox::RejectRole  );
 
-        box.exec();
+//        QAbstractButton* addFolder =    box.addButton( tr("Add folder"), QMessageBox::AcceptRole  );
+//                                        box.addButton( tr("Cancel"),     QMessageBox::RejectRole  );
 
-        if ( box.clickedButton() == addFolder )
-        {
-            QString path = QFileInfo( filename ).dir().path();
+//        box.exec();
 
-            AddFileIndexSourceDialog dialog( this );
-            dialog.setDirectory( path );
-            dialog.setOptions( QFileDialog::ShowDirsOnly );
-            dialog.setFileMode( QFileDialog::Directory );
+//        if ( box.clickedButton() == addFolder )
+//        {
+//            QString path = QFileInfo( filename ).dir().path();
 
-            path = dialog.selectedFiles().first();
-            if (dialog.exec() != QDialog::Accepted)
-            {
-                // user canceled
-                return;
-            }
+//            AddFileIndexSourceDialog dialog(  this );
+//            dialog.setDirectory( path );
+//            dialog.setOptions( QFileDialog::ShowDirsOnly );
+//            dialog.setFileMode( QFileDialog::Directory );
 
-            if (path.isEmpty())
-            {
-                // user canceled
-                return;
-            }
-            app().fileIndex().addSource( path, dialog.filter() );
-        }
-        else
-        {
-            // user canceled
-            return;
-        }
+//            path = dialog.selectedFiles().first();
+//            if (dialog.exec() != QDialog::Accepted)
+//            {
+//                // user canceled
+//                return;
+//            }
+
+//            if (path.isEmpty())
+//            {
+//                // user canceled
+//                return;
+//            }
+//            app().fileIndex().addSource( path, dialog.filter() );
+//        }
+//        else
+//        {
+//            // user canceled
+//            return;
+//        }
     }
 
     assert( app().fileIndex().contains(filename) );

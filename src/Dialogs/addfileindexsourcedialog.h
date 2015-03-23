@@ -10,10 +10,11 @@ class AddFileIndexSourceDialog : public QFileDialog
     Q_OBJECT
 
 public:
-    explicit AddFileIndexSourceDialog(QWidget *parent = 0);
+    explicit AddFileIndexSourceDialog( const QString & filter, QWidget *parent = 0);
     ~AddFileIndexSourceDialog();
 
-    QStringList filter() const { return m_filterLineEdit->text().split("|"); }
+    QStringList filterList() const { return m_filterLineEdit->text().split("|"); }
+    QString filter() const { return m_filterLineEdit->text(); }
 
 private:
     void initFilterWidget();

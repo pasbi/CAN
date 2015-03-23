@@ -130,7 +130,6 @@ void FileIndex::addSource( const QString & path, const QStringList & filter )
     m_indexer = new Indexer( path, filter, Indexer::Scan, this );
     connect(m_indexer, &QThread::finished, [this]()
     {
-        qDebug() << ">>>>>!!!!!!!!!!";
         m_indexer->deleteLater();
         m_indexer = NULL;
         emit operationFinished();
