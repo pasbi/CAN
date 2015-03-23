@@ -55,20 +55,6 @@ void PDFAttachmentView::polish()
     open();
 }
 
-QImage PDFAttachmentView::renderPage()
-{
-    QImage image;
-    Poppler::Document* doc = attachment<PDFAttachment>()->document();
-    if (!doc) {
-        image = QImage();
-    } else {
-        m_currentPage = qMin( m_currentPage, doc->numPages() - 1 );
-        image = doc->page(m_currentPage)->renderToImage( m_zoom * physicalDpiX(),
-                                                         m_zoom * physicalDpiY());
-    }
-    updatesEnabled();
-    return image;
-}
 
 void PDFAttachmentView::open()
 {
@@ -79,8 +65,13 @@ void PDFAttachmentView::open()
         ui->label->setPixmap(QPixmap());
     } else {
         m_currentPage = qMin( m_currentPage, doc->numPages() - 1);
-        QImage image = doc->page(m_currentPage)->renderToImage( m_zoom * physicalDpiX(),
-                                                                m_zoom * physicalDpiY());
+
+        int size = ui->scrollArea->width();
+
+        QImage image = doc->page(m_currentPage)->renderToImage();
+
+        image = image.scaledToWidth( size * m_zoom - 10 );
+
         ui->label->setPixmap(QPixmap::fromImage(image));
     }
 }
@@ -185,3 +176,18 @@ void PDFAttachmentView::restoreOptions(const QByteArray &options)
     ui->spinBoxScale->setValue( 100 * m_zoom );
 }
 
+void PDFAttachmentView::resizeEvent(QResizeEvent *e)
+{
+    static QTimer* timer = NULL;
+
+    IndexedFileAttachmentView::resizeEvent(e);
+
+    if (timer)
+    {
+        delete timer;
+    }
+    timer = new QTimer();
+    timer->setSingleShot(true);
+    connect( timer, SIGNAL(timeout()), this, SLOT(open()) );
+    timer->start( 200 );
+}

@@ -29,6 +29,7 @@ public:
 protected:
     void polish();
     bool eventFilter(QObject *o, QEvent *e);
+    void resizeEvent(QResizeEvent *e);
 
 protected slots:
     void open();
@@ -49,11 +50,7 @@ private:
 
     int m_currentPage = 0;
     void handlePageControlEnabled();
-    QImage renderPageCached(int page);
-    QImage renderPage();
 
-    // rendering is cached.
-    QList<QImage> m_pages;
     QPixmap currentPixmap;
     QByteArray m_hash;  // hash of the document the rendering was made from.
 
