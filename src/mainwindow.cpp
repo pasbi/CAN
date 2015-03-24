@@ -22,10 +22,19 @@
 
 DEFN_CONFIG( MainWindow, "Global" );
 
+QString defaultStyleSheet()
+{
+    QFile file(":/style/styles/stylesheet.qss");
+
+    assert( file.open(QIODevice::ReadOnly ));
+    return file.readAll();
+}
+
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexFilter, "");
-CONFIGURABLE_ADD_ITEM( MainWindow, AskForCommitMessage, "Ask for commit message", QVariant(true), ConfigurationItemOptions::CheckboxOptions() );
-CONFIGURABLE_ADD_ITEM( MainWindow, CommitMessage,       "Commit message",         "Sync",         ConfigurationItemOptions::TextEditOptions( "commit message" ) );
+CONFIGURABLE_ADD_ITEM( MainWindow, Style,               "Style",                  QVariant(),           ConfigurationItemOptions::TextEditOptions( "Stylesheet" ) );
+CONFIGURABLE_ADD_ITEM( MainWindow, AskForCommitMessage, "Ask for commit message", QVariant(true),       ConfigurationItemOptions::CheckboxOptions() );
+CONFIGURABLE_ADD_ITEM( MainWindow, CommitMessage,       "Commit message",         "Sync",               ConfigurationItemOptions::TextEditOptions( "commit message" ) );
 
 
 
@@ -34,6 +43,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //     load stylesheet
+    config.item("Style")->setDefaultValue( defaultStyleSheet() );
+    connect( config.item("Style"), &ConfigurationItem::valueChanged, [this](QVariant value)
+    {
+        app().setStyleSheet( value.toString() );
+    });
+    app().setStyleSheet( config.value( "Style" ).toString() );
 
     //////////////////////////////////////////
     /// restore configuration

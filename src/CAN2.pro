@@ -175,7 +175,8 @@ HEADERS  += mainwindow.h \
     Dialogs/configurationwidgets.h \
     fileindexdialog.h \
     Dialogs/alternativefilemanager.h \
-    Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h
+    Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h \
+    defaultstylesheet.h
 
 FORMS    += mainwindow.ui \
     SongTableView/songtableviewcontainer.ui \

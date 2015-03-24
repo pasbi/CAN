@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/style">
-        <file>style.css</file>
+        <file>styles/style.qss</file>
+        <file>styles/stylesheet.qss</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/tag59.png</file>

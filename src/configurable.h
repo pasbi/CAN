@@ -174,18 +174,30 @@ public:
     QVariant actualValue() const { return m_actualValue; }
     QVariant defaultValue() const { return m_defaultValue; }
 
+    /**
+     * @brief setDefaultValue normally, default value is set in constructor and should not be set
+     *  manually. Sometimes, default value is not accessible at this time, then default value
+     *  can be set this way. Note that default value can be set only once (including possible
+     *  assignment in ctor). Pass QVariant() when you do not want to set default value in ctor.
+     * @param value
+     */
+    void setDefaultValue( const QVariant & value );
+
 public slots:
     void apply() { m_resetValue = m_actualValue; }
     void reset() { m_actualValue = m_resetValue; }
-    void restore() { m_actualValue = m_defaultValue; }
-    void set( const QVariant & value ) { m_actualValue = value; }
+    void restore() { set( m_defaultValue ); }
+    void set( const QVariant & value );
 
 
 private:
     QVariant m_actualValue;
-    const QVariant m_defaultValue;
+    QVariant m_defaultValue;
     QVariant m_resetValue;
     ConfigurationItemOptions m_options;
+
+signals:
+    void valueChanged( QVariant );
 
 private:
     const QString m_caption;

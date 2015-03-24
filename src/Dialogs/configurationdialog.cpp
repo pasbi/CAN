@@ -49,7 +49,6 @@ QWidget* createWidget( QWidget* parent, ConfigurationItem* item )
 
     layout->addWidget( configWidget );
     layout->addWidget( defaultButton );
-    layout->setStretch(0, 1);
     layout->setStretch(1, 0);
 
     widget->setLayout( layout );
@@ -67,7 +66,7 @@ void ConfigurationDialog::buildPage(const QString &key)
         ConfigurationItem* item = config->item( key );
         if (item->options().interface() != ConfigurationItemOptions::Hidden)
         {
-            layout->addRow( item->caption().append(":"), createWidget( page, item ) );
+            layout->addRow( item->caption().append(":"), new QWidget( page ) ); //createWidget( page, item ) );
             skip = false;
         }
     }
@@ -76,6 +75,11 @@ void ConfigurationDialog::buildPage(const QString &key)
     {
         ui->tabWidget->addTab( page, config->caption() );
         m_configurables << config;
+    }
+    else
+    {
+        delete page;
+        page = NULL;
     }
 }
 

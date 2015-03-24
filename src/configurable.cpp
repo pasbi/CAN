@@ -107,6 +107,22 @@ void Configurable::restoreAll()
     }
 }
 
+void ConfigurationItem::setDefaultValue(const QVariant &value)
+{
+    assert( !m_defaultValue.isValid() );
+    m_defaultValue = value;
+}
+
+void ConfigurationItem::set(const QVariant &value)
+{
+    if ( m_actualValue != value )
+    {
+        m_actualValue = value;
+        emit valueChanged( value );
+    }
+}
+
+
 
 
 
