@@ -66,7 +66,7 @@ void ConfigurationDialog::buildPage(const QString &key)
         ConfigurationItem* item = config->item( key );
         if (item->options().interface() != ConfigurationItemOptions::Hidden)
         {
-            layout->addRow( item->caption().append(":"), new QWidget( page ) ); //createWidget( page, item ) );
+            layout->addRow( item->caption().append(":"), createWidget( page, item ) );
             skip = false;
         }
     }
