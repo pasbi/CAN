@@ -11,9 +11,10 @@ class PDFAttachment : public IndexedFileAttachment
     DECL_CREATABLE(PDFAttachment);
 public:
     PDFAttachment();
-    void copy(Attachment*& attachment) const;
     QStringList acceptedEndings() const { return QStringList() << "pdf"; }
     Poppler::Document* document() const { return m_document; }
+
+    void copy(Attachment *&copied) const;
 
 protected slots:
     void open();

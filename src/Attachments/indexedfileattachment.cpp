@@ -5,6 +5,13 @@ IndexedFileAttachment::IndexedFileAttachment()
 {
 }
 
+void IndexedFileAttachment::copy(Attachment* &copied) const
+{
+    IndexedFileAttachment* ifa = dynamic_cast<IndexedFileAttachment*>(copied);
+    assert( ifa );
+    ifa->m_hash = m_hash;
+}
+
 bool IndexedFileAttachment::fileExists() const
 {
     return !m_hash.isEmpty() && app().fileIndex().contains( filename() );
@@ -51,15 +58,6 @@ bool IndexedFileAttachment::setHash(QByteArray hash)
         qWarning() << "Cannot set file since index does not contain " << QString::fromLatin1( hash.toHex() ) << ".";
         return false;
     }
-}
-
-void IndexedFileAttachment::copy(Attachment *&attachment) const
-{
-    IndexedFileAttachment* a = dynamic_cast<IndexedFileAttachment*>(attachment);
-    assert( a );
-
-    a->m_hash = m_hash;
-    //TODO a->open(); ?
 }
 
 QJsonObject IndexedFileAttachment::toJsonObject() const

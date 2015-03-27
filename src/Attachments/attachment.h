@@ -5,11 +5,12 @@
 #include "creatable.h"
 
 class Song;
-class Attachment : public QObject, public Taggable /* --> PersistentObject */, public Creatable
+class Attachment : public QObject, public Taggable, public Creatable
 {
     Q_OBJECT
 public:
     Attachment();
+    Attachment(const Attachment &) : QObject() {}
 
     void setName( const QString & name );
     QString name() const { return m_name; }
@@ -19,12 +20,12 @@ public:
 
     QString classname() const { return metaObject()->className(); }
 
+    virtual void copy(Attachment* &copied) const = 0;
+
     void makeNameUnique();
 
     QJsonObject toJsonObject() const;
     static bool create(const QJsonObject & object, Attachment* &attachment);
-
-    virtual void copy(Attachment*& attachment) const = 0;
 
 signals:
     void attachmentRenamed(QString);

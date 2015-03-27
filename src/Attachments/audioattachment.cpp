@@ -7,12 +7,13 @@ AudioAttachment::AudioAttachment()
     setName( tr("Audio Attachment") );
 }
 
-void AudioAttachment::copy(Attachment *&attachment) const
+void AudioAttachment::open()
 {
 
 }
 
-void AudioAttachment::open()
+void AudioAttachment::copy(Attachment *&copied) const
 {
-
+    copied = new AudioAttachment();
+    IndexedFileAttachment::copy( copied );
 }

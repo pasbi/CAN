@@ -9,7 +9,9 @@ class AudioAttachment : public IndexedFileAttachment
     DECL_CREATABLE( AudioAttachment );
 public:
     AudioAttachment();
-    void copy(Attachment *&attachment) const;
+
+    void copy(Attachment *&copied) const;
+
 
 protected slots:
     void open();

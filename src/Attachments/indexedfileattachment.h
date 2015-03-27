@@ -9,8 +9,7 @@
  *  This class depends on FileIndex whith which the filename can be retrieved.
  *  Note that this never saves the actual file nor the filename but an hash value.
  *
- * //
- * TODO
+ * //TODO
  *  Since the Project and thus this attachment is meant to be used on multiple computers at same time. Thus it may
  * happen that user A sets PDF p1 but user B has a very similar PDF p2.
  * If this constellation happens to annoy significantly, I will implement some kind of history:
@@ -29,14 +28,14 @@ class IndexedFileAttachment : public Attachment
     Q_OBJECT
 public:
     IndexedFileAttachment();
+    IndexedFileAttachment(const Attachment& attachment);
 
     bool fileExists() const;
     QString filename() const;
     QByteArray hash() const { return m_hash; }
 
+    virtual void copy(Attachment *&copied) const;
 
-
-    virtual void copy(Attachment* &attachment) const;
     virtual QStringList acceptedEndings() const = 0;
 
     QJsonObject toJsonObject() const;

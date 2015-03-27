@@ -2,10 +2,10 @@
 
 
 
-QHash<QString, Creatable* (*)()>  Creatable::m_constructorMap;
-QHash<QString, QString>           Creatable::m_categoryMap;
-QHash<QString, QString>           Creatable::m_inverseCategoryMap;
-QHash<QString, QString>           Creatable::m_nameMap;
+QHash<QString, Creatable* (*)()>                    Creatable::m_constructorMap;
+QHash<QString, QString>                             Creatable::m_categoryMap;
+QHash<QString, QString>                             Creatable::m_inverseCategoryMap;
+QHash<QString, QString>                             Creatable::m_nameMap;
 
 
 

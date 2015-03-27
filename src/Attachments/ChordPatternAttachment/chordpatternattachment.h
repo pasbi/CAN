@@ -11,15 +11,17 @@ class ChordPatternAttachment : public Attachment
     DECL_CREATABLE(ChordPatternAttachment);
 public:
     ChordPatternAttachment();
-    QString chordPattern() const { return m_pattern; }
+    ChordPatternAttachment(const Attachment & attachment);
 
-    void copy(Attachment *&attachment) const;
+    QString chordPattern() const { return m_pattern; }
 
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject &object);
 
     void setPattern( const QString & pattern );
     void process(int transpose = 0);
+
+    void copy(Attachment *&copied) const;
 
 
 private:

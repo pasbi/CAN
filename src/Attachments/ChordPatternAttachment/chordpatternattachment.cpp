@@ -12,6 +12,13 @@ ChordPatternAttachment::ChordPatternAttachment() :
     setName( tr("Chord Pattern") );
 }
 
+void ChordPatternAttachment::copy(Attachment *&copied) const
+{
+    ChordPatternAttachment* cpa = dynamic_cast<ChordPatternAttachment*>(copied);
+    cpa = new ChordPatternAttachment();
+    cpa->m_pattern = m_pattern;
+}
+
 QString white(int n)
 {
     QString s;
@@ -33,12 +40,6 @@ QString replaceTabs(QString text)
         s += line + "\n";
     }
     return s.endsWith("\n") ? s.left(s.length() - 1) : s;
-}
-
-void ChordPatternAttachment::copy(Attachment *&attachment) const
-{
-    attachment = new ChordPatternAttachment();
-    static_cast<ChordPatternAttachment*>(attachment)->m_pattern = m_pattern;
 }
 
 QJsonObject ChordPatternAttachment::toJsonObject() const

@@ -12,6 +12,7 @@ Creatable* createT()
     return new T();
 }
 
+
 /**
  * @brief The Creatable class is the base class for all Classes, that shall be dynamically
  *  creatable by classname. note that Creatable does not need to derive from QObject
@@ -50,7 +51,7 @@ struct Registerer
         Creatable::m_constructorMap.insert( className, &createT<T> );
         Creatable::m_categoryMap.insert( className, category );
         Creatable::m_inverseCategoryMap.insertMulti( category, className );
-        Creatable::m_inverseCategoryMap.insertMulti( className, name );
+        Creatable::m_nameMap.insertMulti( className, name );
     }
 };
 
