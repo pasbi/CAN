@@ -2,7 +2,7 @@
 
 #include "../attachment.h"
 
-DEFN_CREATABLE(ChordPatternAttachment, Attachment);
+DEFN_CREATABLE_NAME(ChordPatternAttachment, Attachment, "Chord Attachment");
 
 const int TAB_WIDTH = 8;
 

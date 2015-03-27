@@ -1,6 +1,6 @@
 #include "audioattachment.h"
 
-DEFN_CREATABLE( AudioAttachment, Attachment );
+DEFN_CREATABLE_NAME(AudioAttachment, Attachment, "Audio Attachment");
 
 AudioAttachment::AudioAttachment()
 {

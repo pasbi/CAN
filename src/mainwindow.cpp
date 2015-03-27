@@ -177,7 +177,7 @@ void MainWindow::setupAttachmentMenu()
     for (const QString & classname : Creatable::classnamesInCategory("Attachment"))
     {
         Util::addAction( ui->actionNew_Attachment->menu(),
-                         QString(tr("New %1")).arg(classname),
+                         QString(tr("New %1")).arg( Creatable::name(classname) ),
                          [this, classname]()
                          {
                              Song* song = currentSong();

@@ -83,7 +83,7 @@ SOURCES += main.cpp\
     Dialogs/clonedialog.cpp \
     Commands/AttachmentCommands/chordpatternattachmenttransposecommand.cpp \
     Dialogs/addfileindexsourcedialog.cpp \
-    stringdialog.cpp \
+    Dialogs/stringdialog.cpp \
     Commands/SongCommands/songduplicateattachmentcommand.cpp \
     AttachmentView/indexedfileattachmentview.cpp \
     AttachmentView/audioattachmentview.cpp \
@@ -158,7 +158,7 @@ HEADERS  += mainwindow.h \
     Dialogs/clonedialog.h \
     Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h \
     Dialogs/addfileindexsourcedialog.h \
-    stringdialog.h \
+    Dialogs/stringdialog.h \
     Commands/SongCommands/songduplicateattachmentcommand.h \
     AttachmentView/indexedfileattachmentview.h \
     AttachmentView/audioattachmentview.h \
@@ -187,7 +187,7 @@ FORMS    += mainwindow.ui \
     songdatabasewidget.ui \
     AttachmentView/attachmentchooser.ui \
     Dialogs/clonedialog.ui \
-    stringdialog.ui \
+    Dialogs/stringdialog.ui \
     AttachmentView/indexedfileattachmentview.ui \
     advancedfilechooser.ui \
     AttachmentView/audioattachmentview.ui \

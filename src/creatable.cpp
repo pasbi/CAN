@@ -1,13 +1,10 @@
 #include "creatable.h"
-
-
+#include "global.h"
 
 QHash<QString, Creatable* (*)()>                    Creatable::m_constructorMap;
 QHash<QString, QString>                             Creatable::m_categoryMap;
 QHash<QString, QString>                             Creatable::m_inverseCategoryMap;
 QHash<QString, QString>                             Creatable::m_nameMap;
-
-
 
 Creatable::Creatable()
 {
@@ -46,5 +43,6 @@ QStringList Creatable::classnamesInCategory(const QString &category)
 
 QString Creatable::name(const QString &classname)
 {
+    qDebug() << m_nameMap;
     return m_nameMap[classname];
 }
