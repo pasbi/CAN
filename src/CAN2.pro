@@ -103,7 +103,8 @@ SOURCES += main.cpp\
     PDFCreator/pdfcreator.cpp \
     songlist.cpp \
     DatabaseView/DateDatabaseView/datetableview.cpp \
-    DatabaseView/DateDatabaseView/datedatabasewidget.cpp
+    DatabaseView/DateDatabaseView/datedatabasewidget.cpp \
+    Dialogs/datetimedialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -183,7 +184,8 @@ HEADERS  += mainwindow.h \
     PDFCreator/pdfcreator.h \
     songlist.h \
     DatabaseView/DateDatabaseView/datetableview.h \
-    DatabaseView/DateDatabaseView/datedatabasewidget.h
+    DatabaseView/DateDatabaseView/datedatabasewidget.h \
+    Dialogs/datetimedialog.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -204,7 +206,8 @@ FORMS    += mainwindow.ui \
     Dialogs/configurationdialog.ui \
     fileindexdialog.ui \
     Dialogs/alternativefilemanager.ui \
-    DatabaseView/DateDatabaseView/datedatabasewidget.ui
+    DatabaseView/DateDatabaseView/datedatabasewidget.ui \
+    Dialogs/datetimedialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

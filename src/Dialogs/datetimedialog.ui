@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DateTimeDialog</class>
+ <widget class="QDialog" name="DateTimeDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>617</width>
+    <height>368</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QCalendarWidget" name="calendarWidget"/>
+   </item>
+   <item>
+    <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>DateTimeDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>227</x>
+     <y>346</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>DateTimeDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>352</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dateTimeEdit</sender>
+   <signal>dateChanged(QDate)</signal>
+   <receiver>calendarWidget</receiver>
+   <slot>setSelectedDate(QDate)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>344</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>259</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>calendarWidget</sender>
+   <signal>clicked(QDate)</signal>
+   <receiver>dateTimeEdit</receiver>
+   <slot>setDate(QDate)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>192</x>
+     <y>147</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>182</x>
+     <y>319</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

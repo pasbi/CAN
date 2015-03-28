@@ -43,6 +43,5 @@ QStringList Creatable::classnamesInCategory(const QString &category)
 
 QString Creatable::name(const QString &classname)
 {
-    qDebug() << m_nameMap;
     return m_nameMap[classname];
 }

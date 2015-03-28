@@ -4,6 +4,8 @@
 #include <QComboBox>
 #include "global.h"
 #include "Database/DateDatabase/datedatabase.h"
+#include "Dialogs/datetimedialog.h"
+#include <QMouseEvent>
 
 class TypeComboBoxDelegate : public QItemDelegate
 {
@@ -11,7 +13,7 @@ public:
     TypeComboBoxDelegate( QObject* parent = NULL ) :
         QItemDelegate( parent )
     {
-
+        qDebug() << "i am a tcbd!" << this;
     }
 
     QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -61,15 +63,122 @@ public:
     }
 };
 
+class DateTimeDelegate : public QItemDelegate
+{
+public:
+    DateTimeDelegate( QObject* parent = NULL ) :
+        QItemDelegate( parent )
+    {
+
+    }
+
+    QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+    {
+        Q_UNUSED( option );
+        Q_UNUSED( index  );
+        Q_UNUSED( parent );
+        return new DateTimeDialog( NULL );
+    }
+
+    void setEditorData(QWidget *editor, const QModelIndex &index) const
+    {
+        const DateDatabase* database = qobject_cast<const DateDatabase*>(index.model());
+        DateTimeDialog* dialog = qobject_cast<DateTimeDialog*>(editor);
+        assert( dialog );
+
+        dialog->setDateTime( database->data( index, Qt::EditRole ).toDateTime() );
+    }
+
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+    {
+        DateTimeDialog* dialog = qobject_cast<DateTimeDialog*>(editor);
+        DateDatabase* database = qobject_cast<DateDatabase*>(model);    // index->model() is const
+
+        assert( database );
+        assert( dialog );
+
+        if (index.column() == 0)
+        {
+            database->setData( index, dialog->dateTime(), Qt::EditRole );
+        }
+    }
+
+    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+    {
+        Q_UNUSED( index );
+        editor->setGeometry( option.rect );
+    }
+};
+
 DateTableView::DateTableView(QWidget *parent) :
     QTableView(parent)
 {
     horizontalHeader()->hide();
+    horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeContentsPrecision( -1 ); // look at all rows.
     verticalHeader()->hide();
 
-    setItemDelegateForColumn( 0, new TypeComboBoxDelegate() );
+
+    setItemDelegateForColumn( 0, new TypeComboBoxDelegate( this ) );
+
+    // this does not work properly. Do it with events.
+    // connect( this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(showDialog(QModelIndex)) );
 }
 
 DateTableView::~DateTableView()
 {
+}
+
+int DateTableView::sizeHintForColumn(int column) const
+{
+    int additional = 0;
+    if (model())
+    {
+        int numCols = model()->columnCount();
+        int currentWidth = 0;
+        for (int i = 0; i < numCols; ++i)
+        {
+            currentWidth += QTableView::sizeHintForColumn( i );
+        }
+
+        additional = (viewport()->width() - currentWidth) / numCols;
+    }
+    return QTableView::sizeHintForColumn( column ) + qMax( additional, 10 );
+}
+
+// returns whether a dialog was spawned
+bool DateTableView::showDialog(QModelIndex index)
+{
+    if (index.column() == 1)
+    {
+        DateTimeDialog dialog;
+        dialog.setDateTime( model()->data( index, Qt::EditRole ).toDateTime() );
+
+        if (dialog.exec() == QDialog::Accepted)
+        {
+            model()->setData( index, dialog.dateTime(), Qt::EditRole );
+        }
+        return true;
+    }
+    return false;
+}
+
+void DateTableView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if (!showDialog( indexAt( event->pos() ) ))
+    {
+        QTableView::mouseDoubleClickEvent( event );
+    }
+}
+
+void DateTableView::setModel(DateDatabase *model)
+{
+    QTableView::setModel( model );
+}
+
+DateDatabase* DateTableView::model() const
+{
+    DateDatabase* db = qobject_cast<DateDatabase*>( QTableView::model() );
+    assert( db == QTableView::model() );    // may be NULL if model() itself is NULL
+    return db;
 }

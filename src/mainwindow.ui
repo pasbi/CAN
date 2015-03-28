@@ -247,9 +247,25 @@
     <addaction name="separator"/>
     <addaction name="actionClear_Index"/>
    </widget>
+   <widget class="QMenu" name="menuSongs">
+    <property name="title">
+     <string>Songs</string>
+    </property>
+    <addaction name="actionNew_Song"/>
+    <addaction name="actionDelete_Song"/>
+   </widget>
+   <widget class="QMenu" name="menuEvents">
+    <property name="title">
+     <string>Events</string>
+    </property>
+    <addaction name="actionNew_Event"/>
+    <addaction name="actionDelete_Event"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuSongs"/>
    <addaction name="menuAttachments"/>
+   <addaction name="menuEvents"/>
    <addaction name="menuTools"/>
    <addaction name="menuFile_Index"/>
    <addaction name="menuDebug"/>
@@ -429,11 +445,6 @@
     <string>Synchronizes local project with remote repository</string>
    </property>
   </action>
-  <action name="actionIdentities">
-   <property name="text">
-    <string>Identities ...</string>
-   </property>
-  </action>
   <action name="actionIdentites">
    <property name="text">
     <string>Identites ...</string>
@@ -445,6 +456,16 @@
   <action name="actionSettings">
    <property name="text">
     <string>Settings ...</string>
+   </property>
+  </action>
+  <action name="actionNew_Event">
+   <property name="text">
+    <string>New Event</string>
+   </property>
+  </action>
+  <action name="actionDelete_Event">
+   <property name="text">
+    <string>Delete Event</string>
    </property>
   </action>
  </widget>

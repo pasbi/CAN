@@ -51,6 +51,8 @@ protected:
     void closeEvent(QCloseEvent *e);
 
 private slots:
+    void gotoSongView();
+    void gotoEventView();
     void updateWindowTitle();
     void on_actionSave_triggered();
     void on_actionSave_As_triggered();
@@ -82,6 +84,7 @@ private:
     Attachment* currentAttachment() const;
     enum Page { SongDatabasePage, DateDatabasePage };
     Page currentPage() const;
+
 };
 
 #endif // MAINWINDOW_H

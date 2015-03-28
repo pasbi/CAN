@@ -76,6 +76,44 @@ void Project::pushCommand(Command *command)
 {
     setCanClose(false);
     QUndoStack::push(command);
+
+    emitCommandPushedSignal( command->type() );
+
+}
+
+void Project::emitCommandPushedSignal(Command::Type type)
+{
+    switch (type)
+    {
+    case Command::SongDatabaseRelated:
+        emit songDatabaseCommandPushed();
+        break;
+    case Command::EventDatabaseRelated:
+        emit eventDatabaseCommandPushed();
+        break;
+    default:
+        ;
+    }
+}
+
+void Project::undo()
+{
+    const QUndoCommand* uc = QUndoStack::command(QUndoStack::index() - 1);
+    const Command* c = dynamic_cast<const Command*>( uc );
+    assert( c );
+    emitCommandPushedSignal( c->type() );
+
+    QUndoStack::undo();
+}
+
+void Project::redo()
+{
+    const QUndoCommand* uc = QUndoStack::command(QUndoStack::index());
+    const Command* c = dynamic_cast<const Command*>( uc );
+    assert( c );
+    emitCommandPushedSignal( c->type() );
+
+    QUndoStack::redo();
 }
 
 void Project::reset()

@@ -141,6 +141,10 @@ MainWindow::MainWindow(QWidget *parent) :
         } );
 
     m_identityManager.restore();
+
+
+    connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
+    connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
 }
 
 MainWindow::~MainWindow()
@@ -508,7 +512,15 @@ MainWindow::Page MainWindow::currentPage() const
     }
 }
 
+void MainWindow::gotoSongView()
+{
+    ui->stackedWidget->setCurrentIndex( 0 );
+}
 
+void MainWindow::gotoEventView()
+{
+    ui->stackedWidget->setCurrentIndex( 1 );
+}
 
 
 

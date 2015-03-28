@@ -52,7 +52,7 @@ QVariant DateDatabase::data(const QModelIndex &index, int role) const
         default:
             return QVariant();
         }
-
+        break;
     case 1:
         switch (role)
         {
@@ -62,6 +62,7 @@ QVariant DateDatabase::data(const QModelIndex &index, int role) const
         default:
             return QVariant();
         }
+        break;
     case 2:
         switch (role)
         {
@@ -71,7 +72,7 @@ QVariant DateDatabase::data(const QModelIndex &index, int role) const
         default:
             return QVariant();
         }
-
+        break;
     default:
         return QVariant();
     }
@@ -152,6 +153,7 @@ bool DateDatabase::setData(const QModelIndex &index, const QVariant &value, int 
             default:
                 qWarning() << "Did not expect type " << value.toInt();
             }
+            break;
         case 1:
             date->setBeginning( value.toDateTime() );
             break;

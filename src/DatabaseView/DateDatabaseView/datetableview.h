@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTableView>
+#include "Database/DateDatabase/datedatabase.h"
 
 class DateTableView : public QTableView
 {
@@ -11,6 +12,16 @@ class DateTableView : public QTableView
 public:
     explicit DateTableView(QWidget *parent = 0);
     ~DateTableView();
+    int sizeHintForColumn(int column) const;
+
+    void setModel(DateDatabase *model);
+    DateDatabase* model() const;
+
+protected:
+    void mouseDoubleClickEvent(QMouseEvent *event);
+
+private:
+    bool showDialog(QModelIndex index);
 
 };
 

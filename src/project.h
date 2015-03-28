@@ -26,6 +26,12 @@ public:
 public slots:
     void pushCommand(Command* command);
     void reset();
+    void undo();
+    void redo();
+
+signals:
+    void songDatabaseCommandPushed();
+    void eventDatabaseCommandPushed();
 
 public:
     bool loadFromTempDir();
@@ -41,6 +47,7 @@ private:
     void setCanClose( bool b );
     bool m_canClose = true;
     void resetUndoStack();
+    void emitCommandPushedSignal(Command::Type type);
 signals:
     void canCloseChanged( bool );
 
