@@ -6,7 +6,7 @@ DEFN_CONFIG(Project, "Project");
 Project::Project() :
     GitRepository("can"),
     m_songDatabase( new SongDatabase(this) ),
-    m_dateDatabase( new DateDatabase(this) )
+    m_dateDatabase( new EventDatabase(this) )
 {
     reset();
 }

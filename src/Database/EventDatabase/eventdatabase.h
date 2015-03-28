@@ -2,14 +2,14 @@
 #define DATEDATABASE_H
 
 #include "Database/database.h"
-#include "date.h"
+#include "event.h"
 #include <QAbstractTableModel>
 
-class DateDatabase : public QAbstractTableModel, public Database
+class EventDatabase : public QAbstractTableModel, public Database
 {
     Q_OBJECT
 public:
-    DateDatabase(Project *project);
+    EventDatabase(Project *project);
 
     /////////////////////////////////////////////////
     ////

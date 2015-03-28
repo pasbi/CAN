@@ -1,42 +1,42 @@
-#include "datedatabase.h"
+#include "eventdatabase.h"
 
-DateDatabase::DateDatabase(Project *project) :
+EventDatabase::EventDatabase(Project *project) :
     Database(project)
 {
     m_dates << new Date( this, QDateTime::currentDateTime(), QDateTime::currentDateTime(), Date::Rehearsal, "Generalprobe" );
 }
 
 
-QJsonObject DateDatabase::toJsonObject() const
+QJsonObject EventDatabase::toJsonObject() const
 {
     return QJsonObject();
 }
 
-bool DateDatabase::restoreFromJsonObject(const QJsonObject &object)
+bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
 {
     Q_UNUSED(object);
     return true;
 }
 
-void DateDatabase::reset()
+void EventDatabase::reset()
 {
 
 }
 
-int DateDatabase::rowCount(const QModelIndex &parent) const
+int EventDatabase::rowCount(const QModelIndex &parent) const
 {
     assert( !parent.isValid() );
     return m_dates.length();
 }
 
-int DateDatabase::columnCount(const QModelIndex &parent) const
+int EventDatabase::columnCount(const QModelIndex &parent) const
 {
     //    Type | Beginning | Label
     assert( !parent.isValid() );
     return 3;
 }
 
-QVariant DateDatabase::data(const QModelIndex &index, int role) const
+QVariant EventDatabase::data(const QModelIndex &index, int role) const
 {
     assert(!index.parent().isValid());
     int row = index.row();
@@ -78,7 +78,7 @@ QVariant DateDatabase::data(const QModelIndex &index, int role) const
     }
 }
 
-QVariant DateDatabase::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant EventDatabase::headerData(int section, Qt::Orientation orientation, int role) const
 {
     Q_UNUSED(section);
     Q_UNUSED(orientation);
@@ -86,23 +86,23 @@ QVariant DateDatabase::headerData(int section, Qt::Orientation orientation, int 
     return QVariant();  // no header
 }
 
-Qt::ItemFlags DateDatabase::flags(const QModelIndex &index) const
+Qt::ItemFlags EventDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
     return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable;
 }
 
-void DateDatabase::notifyDataChanged(const QModelIndex &index)
+void EventDatabase::notifyDataChanged(const QModelIndex &index)
 {
     notifyDataChanged(index, index);
 }
 
-void DateDatabase::notifyDataChanged(const QModelIndex & start, const QModelIndex & end)
+void EventDatabase::notifyDataChanged(const QModelIndex & start, const QModelIndex & end)
 {
     emit dataChanged(start, end);
 }
 
-void DateDatabase::notifyDataChanged( const Date *date )
+void EventDatabase::notifyDataChanged( const Date *date )
 {
     int row = m_dates.indexOf((Date*) date);
     if (row < 0)
@@ -116,7 +116,7 @@ void DateDatabase::notifyDataChanged( const Date *date )
     notifyDataChanged( start, end );
 }
 
-Date* DateDatabase::dateAtIndex(const QModelIndex & index) const
+Date* EventDatabase::dateAtIndex(const QModelIndex & index) const
 {
     if (index.isValid() && index.row() < rowCount())
     {
@@ -128,7 +128,7 @@ Date* DateDatabase::dateAtIndex(const QModelIndex & index) const
     }
 }
 
-bool DateDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
+bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     assert(!index.parent().isValid());
 
@@ -169,7 +169,7 @@ bool DateDatabase::setData(const QModelIndex &index, const QVariant &value, int 
     return false;
 }
 
-QVariant DateDatabase::data( const int row, const int column, const int role)
+QVariant EventDatabase::data( const int row, const int column, const int role)
 {
     return data( index(row, column, QModelIndex()), role );
 }

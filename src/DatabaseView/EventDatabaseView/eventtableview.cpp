@@ -1,9 +1,9 @@
-#include "datetableview.h"
+#include "eventtableview.h"
 #include <QHeaderView>
 #include <QItemDelegate>
 #include <QComboBox>
 #include "global.h"
-#include "Database/DateDatabase/datedatabase.h"
+#include "Database/EventDatabase/eventdatabase.h"
 #include "Dialogs/datetimedialog.h"
 #include <QMouseEvent>
 
@@ -25,7 +25,7 @@ public:
 
     void setEditorData(QWidget *editor, const QModelIndex &index) const
     {
-        const DateDatabase* database = qobject_cast<const DateDatabase*>(index.model());
+        const EventDatabase* database = qobject_cast<const EventDatabase*>(index.model());
         QComboBox* comboBox = qobject_cast<QComboBox*>(editor);
         assert( comboBox );
 
@@ -45,7 +45,7 @@ public:
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
         QComboBox* comboBox = qobject_cast<QComboBox*>(editor);
-        DateDatabase* database = qobject_cast<DateDatabase*>(model);    // index->model() is const
+        EventDatabase* database = qobject_cast<EventDatabase*>(model);    // index->model() is const
 
         assert( database );
         assert( comboBox );
@@ -82,7 +82,7 @@ public:
 
     void setEditorData(QWidget *editor, const QModelIndex &index) const
     {
-        const DateDatabase* database = qobject_cast<const DateDatabase*>(index.model());
+        const EventDatabase* database = qobject_cast<const EventDatabase*>(index.model());
         DateTimeDialog* dialog = qobject_cast<DateTimeDialog*>(editor);
         assert( dialog );
 
@@ -92,7 +92,7 @@ public:
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
         DateTimeDialog* dialog = qobject_cast<DateTimeDialog*>(editor);
-        DateDatabase* database = qobject_cast<DateDatabase*>(model);    // index->model() is const
+        EventDatabase* database = qobject_cast<EventDatabase*>(model);    // index->model() is const
 
         assert( database );
         assert( dialog );
@@ -110,7 +110,7 @@ public:
     }
 };
 
-DateTableView::DateTableView(QWidget *parent) :
+EventTableView::EventTableView(QWidget *parent) :
     QTableView(parent)
 {
     horizontalHeader()->hide();
@@ -125,11 +125,11 @@ DateTableView::DateTableView(QWidget *parent) :
     // connect( this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(showDialog(QModelIndex)) );
 }
 
-DateTableView::~DateTableView()
+EventTableView::~EventTableView()
 {
 }
 
-int DateTableView::sizeHintForColumn(int column) const
+int EventTableView::sizeHintForColumn(int column) const
 {
     int additional = 0;
     if (model())
@@ -147,7 +147,7 @@ int DateTableView::sizeHintForColumn(int column) const
 }
 
 // returns whether a dialog was spawned
-bool DateTableView::showDialog(QModelIndex index)
+bool EventTableView::showDialog(QModelIndex index)
 {
     if (index.column() == 1)
     {
@@ -163,7 +163,7 @@ bool DateTableView::showDialog(QModelIndex index)
     return false;
 }
 
-void DateTableView::mouseDoubleClickEvent(QMouseEvent *event)
+void EventTableView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (!showDialog( indexAt( event->pos() ) ))
     {
@@ -171,14 +171,14 @@ void DateTableView::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 
-void DateTableView::setModel(DateDatabase *model)
+void EventTableView::setModel(EventDatabase *model)
 {
     QTableView::setModel( model );
 }
 
-DateDatabase* DateTableView::model() const
+EventDatabase* EventTableView::model() const
 {
-    DateDatabase* db = qobject_cast<DateDatabase*>( QTableView::model() );
+    EventDatabase* db = qobject_cast<EventDatabase*>( QTableView::model() );
     assert( db == QTableView::model() );    // may be NULL if model() itself is NULL
     return db;
 }

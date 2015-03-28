@@ -73,7 +73,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="buttonDateDatabase">
+         <widget class="QPushButton" name="buttonEventDatabase">
           <property name="minimumSize">
            <size>
             <width>85</width>
@@ -160,7 +160,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="DateDatabaseWidget" name="dateDatabaseWidget" native="true"/>
+          <widget class="EventDatabaseWidget" name="eventDatabaseWidget" native="true"/>
          </item>
         </layout>
        </widget>
@@ -478,9 +478,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>DateDatabaseWidget</class>
+   <class>EventDatabaseWidget</class>
    <extends>QWidget</extends>
-   <header>DatabaseView/DateDatabaseView/datedatabasewidget.h</header>
+   <header>DatabaseView/EventDatabaseView/eventdatabasewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

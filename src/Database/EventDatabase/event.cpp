@@ -1,8 +1,8 @@
-#include "date.h"
+#include "event.h"
 
 const Qt::DateFormat Date::DATE_TIME_FORMAT = Qt::ISODate;
 
-Date::Date( DateDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
+Date::Date( EventDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
     m_database( database ),
     m_beginning(beginning),
     m_ending(ending),

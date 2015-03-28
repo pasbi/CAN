@@ -30,7 +30,7 @@ SOURCES += main.cpp\
     configurable.cpp \
     project.cpp \
     Database/SongDatabase/songdatabase.cpp \
-    Database/DateDatabase/datedatabase.cpp \
+    Database/EventDatabase/eventdatabase.cpp \
     Database/database.cpp \
     taggable.cpp \
     Database/SongDatabase/song.cpp \
@@ -38,7 +38,7 @@ SOURCES += main.cpp\
     persistentobject.cpp \
     creatable.cpp \
     Attachments/ChordPatternAttachment/chordpatternattachment.cpp \
-    Database/DateDatabase/date.cpp \
+    Database/EventDatabase/event.cpp \
     UnitTest/creatabletest.cpp \
     UnitTest/unittests.cpp \
     Commands/command.cpp \
@@ -102,15 +102,15 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp \
     PDFCreator/pdfcreator.cpp \
     songlist.cpp \
-    DatabaseView/DateDatabaseView/datetableview.cpp \
-    DatabaseView/DateDatabaseView/datedatabasewidget.cpp \
+    DatabaseView/EventDatabaseView/eventtableview.cpp \
+    DatabaseView/EventDatabaseView/eventdatabasewidget.cpp \
     Dialogs/datetimedialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
     configurable.h \
     Database/SongDatabase/songdatabase.h \
-    Database/DateDatabase/datedatabase.h \
+    Database/EventDatabase/eventdatabase.h \
     Database/database.h \
     taggable.h \
     Database/SongDatabase/song.h \
@@ -118,7 +118,7 @@ HEADERS  += mainwindow.h \
     persistentobject.h \
     creatable.h \
     Attachments/ChordPatternAttachment/chordpatternattachment.h \
-    Database/DateDatabase/date.h \
+    Database/EventDatabase/event.h \
     UnitTest/creatabletest.h \
     UnitTest/unittests.h \
     Commands/command.h \
@@ -183,8 +183,8 @@ HEADERS  += mainwindow.h \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h \
     PDFCreator/pdfcreator.h \
     songlist.h \
-    DatabaseView/DateDatabaseView/datetableview.h \
-    DatabaseView/DateDatabaseView/datedatabasewidget.h \
+    DatabaseView/EventDatabaseView/eventtableview.h \
+    DatabaseView/EventDatabaseView/eventdatabasewidget.h \
     Dialogs/datetimedialog.h
 
 FORMS    += mainwindow.ui \
@@ -206,7 +206,7 @@ FORMS    += mainwindow.ui \
     Dialogs/configurationdialog.ui \
     fileindexdialog.ui \
     Dialogs/alternativefilemanager.ui \
-    DatabaseView/DateDatabaseView/datedatabasewidget.ui \
+    DatabaseView/EventDatabaseView/eventdatabasewidget.ui \
     Dialogs/datetimedialog.ui
 
 OTHER_FILES += \

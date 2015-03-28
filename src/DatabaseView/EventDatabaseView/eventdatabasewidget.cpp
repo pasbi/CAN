@@ -1,20 +1,20 @@
-#include "datedatabasewidget.h"
-#include "ui_datedatabasewidget.h"
+#include "eventdatabasewidget.h"
+#include "ui_eventdatabasewidget.h"
 
-DateDatabaseWidget::DateDatabaseWidget(QWidget *parent) :
+EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DateDatabaseWidget)
+    ui(new Ui::EventDatabaseWidget)
 {
     ui->setupUi(this);
 }
 
-DateDatabaseWidget::~DateDatabaseWidget()
+EventDatabaseWidget::~EventDatabaseWidget()
 {
     delete ui;
     // delete m_sortFilterProxy;
 }
 
-void DateDatabaseWidget::setDateDatabase( DateDatabase * dateDatabase )
+void EventDatabaseWidget::setEventDatabase( EventDatabase * dateDatabase )
 {
     m_dateDatabase = dateDatabase;
 //    m_sortFilterProxy.setSourceModel( dateDatabase );

@@ -6,18 +6,18 @@
 #include <QDateTime>
 #include <QObject>
 
-class DateDatabase;
+class EventDatabase;
 class Date : public QObject, public Taggable
 {
 public:
     ENUM( Type,  Rehearsal, Gig, Other )
-    Date( DateDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label = "");
+    Date( EventDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label = "");
 
     Type type() const { return m_type; }
     QString label() const { return m_label; }
     QDateTime beginning() const { return m_beginning; }
     QDateTime ending() const { return m_ending; }
-    DateDatabase* database() const { return m_database; }
+    EventDatabase* database() const { return m_database; }
 
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
@@ -30,7 +30,7 @@ public:
 
 
 private:
-    DateDatabase* m_database;
+    EventDatabase* m_database;
     QDateTime m_beginning, m_ending;
     Type m_type;
     QString m_label;

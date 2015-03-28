@@ -82,7 +82,7 @@ private:
     Song* currentSong() const;
     int currentAttachmentIndex() const;
     Attachment* currentAttachment() const;
-    enum Page { SongDatabasePage, DateDatabasePage };
+    enum Page { SongDatabasePage, EventDatabasePage };
     Page currentPage() const;
 
 };

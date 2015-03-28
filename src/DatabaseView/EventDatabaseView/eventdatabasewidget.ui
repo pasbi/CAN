@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DateDatabaseWidget</class>
- <widget class="QWidget" name="DateDatabaseWidget">
+ <class>EventDatabaseWidget</class>
+ <widget class="QWidget" name="EventDatabaseWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -37,7 +37,7 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="DateTableView" name="tableView"/>
+        <widget class="EventTableView" name="tableView"/>
        </item>
        <item>
         <widget class="FilterWidget" name="widget" native="true"/>
@@ -57,9 +57,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>DateTableView</class>
+   <class>EventTableView</class>
    <extends>QTableView</extends>
-   <header>DatabaseView/DateDatabaseView/datetableview.h</header>
+   <header>DatabaseView/EventDatabaseView/eventtableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

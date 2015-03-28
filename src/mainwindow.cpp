@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         ui->stackedWidget->setCurrentIndex( 0 );
     });
-    connect( ui->buttonDateDatabase, &QPushButton::clicked, [this]()
+    connect( ui->buttonEventDatabase, &QPushButton::clicked, [this]()
     {
         ui->stackedWidget->setCurrentIndex( 1 );
     });
@@ -74,8 +74,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     menuBar()->setNativeMenuBar(false);
     setupAttachmentMenu();
-    ui->songDatabaseWidget->setSongDatabase( m_project.songDatabase() );
-    ui->dateDatabaseWidget->setDateDatabase( m_project.dateDatabase() );
+    ui->songDatabaseWidget ->setSongDatabase( m_project.songDatabase() );
+    ui->eventDatabaseWidget->setEventDatabase( m_project.dateDatabase() );
 
 
     //////////////////////////////////////////
@@ -505,7 +505,7 @@ MainWindow::Page MainWindow::currentPage() const
     case 0:
         return SongDatabasePage;
     case 1:
-        return DateDatabasePage;
+        return EventDatabasePage;
     default:
         assert( false );
         return (Page) -1;

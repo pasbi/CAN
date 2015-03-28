@@ -3,19 +3,19 @@
 
 #include <QWidget>
 #include <QTableView>
-#include "Database/DateDatabase/datedatabase.h"
+#include "Database/EventDatabase/eventdatabase.h"
 
-class DateTableView : public QTableView
+class EventTableView : public QTableView
 {
     Q_OBJECT
 
 public:
-    explicit DateTableView(QWidget *parent = 0);
-    ~DateTableView();
+    explicit EventTableView(QWidget *parent = 0);
+    ~EventTableView();
     int sizeHintForColumn(int column) const;
 
-    void setModel(DateDatabase *model);
-    DateDatabase* model() const;
+    void setModel(EventDatabase *model);
+    EventDatabase* model() const;
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event);

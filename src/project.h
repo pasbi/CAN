@@ -3,7 +3,7 @@
 
 #include "../../../ZipGit/src/zipgit.h"
 #include "Database/SongDatabase/songdatabase.h"
-#include "Database/DateDatabase/datedatabase.h"
+#include "Database/EventDatabase/eventdatabase.h"
 
 #include "Commands/command.h"
 #include <QUndoStack>
@@ -20,7 +20,7 @@ public:
 
 
     SongDatabase* songDatabase() const { return m_songDatabase; }
-    DateDatabase* dateDatabase() const { return m_dateDatabase; }
+    EventDatabase* dateDatabase() const { return m_dateDatabase; }
 
 
 public slots:
@@ -39,7 +39,7 @@ public:
 
 private:
     SongDatabase* m_songDatabase;
-    DateDatabase* m_dateDatabase;
+    EventDatabase* m_dateDatabase;
 
 public:
     bool canClose() const;
