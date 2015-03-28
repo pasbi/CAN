@@ -10,8 +10,8 @@
 #include <QClipboard>
 #include "application.h"
 #include "Dialogs/addfileindexsourcedialog.h"
-#include "stringdialog.h"
-#include "SongTableView/songtableview.h"
+#include "Dialogs/stringdialog.h"
+#include "DatabaseView/SongDatabaseView/songtableview.h"
 #include "conflicteditor.h"
 #include "Dialogs/commitdialog.h"
 #include "Dialogs/identitydialog.h"
@@ -75,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
     menuBar()->setNativeMenuBar(false);
     setupAttachmentMenu();
     ui->songDatabaseWidget->setSongDatabase( m_project.songDatabase() );
+    ui->dateDatabaseWidget->setDateDatabase( m_project.dateDatabase() );
 
 
     //////////////////////////////////////////

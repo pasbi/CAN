@@ -26,7 +26,7 @@
   <customwidget>
    <class>SongTableView</class>
    <extends>QTableView</extends>
-   <header>SongTableView/songtableview.h</header>
+   <header>DatabaseView/SongDatabaseView/songtableview.h</header>
   </customwidget>
   <customwidget>
    <class>FilterWidget</class>

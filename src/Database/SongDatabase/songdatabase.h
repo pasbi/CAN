@@ -31,7 +31,7 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
     void notifyDataChanged(const QModelIndex &index);
     void notifyDataChanged(const QModelIndex & start, const QModelIndex & end);
-    void notifyDataChanged(Song *song);
+    void notifyDataChanged(const Song *song);
     Song* songAtIndex(const QModelIndex & index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant data( const int row, const int column, const int role);

@@ -118,7 +118,7 @@
       </widget>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -143,16 +143,26 @@
         </layout>
        </widget>
        <widget class="QWidget" name="page_2">
-        <widget class="QTreeView" name="treeView">
-         <property name="geometry">
-          <rect>
-           <x>150</x>
-           <y>120</y>
-           <width>256</width>
-           <height>192</height>
-          </rect>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>0</number>
          </property>
-        </widget>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="DateDatabaseWidget" name="dateDatabaseWidget" native="true"/>
+         </item>
+        </layout>
        </widget>
       </widget>
      </widget>
@@ -443,7 +453,13 @@
   <customwidget>
    <class>SongDatabaseWidget</class>
    <extends>QWidget</extends>
-   <header>songdatabasewidget.h</header>
+   <header>DatabaseView/SongDatabaseView/songdatabasewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DateDatabaseWidget</class>
+   <extends>QWidget</extends>
+   <header>DatabaseView/DateDatabaseView/datedatabasewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -44,7 +44,7 @@
   <customwidget>
    <class>SongTableViewContainer</class>
    <extends>QWidget</extends>
-   <header>SongTableView/songtableviewcontainer.h</header>
+   <header>DatabaseView/SongDatabaseView/songtableviewcontainer.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

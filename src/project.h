@@ -20,8 +20,6 @@ public:
 
 
     SongDatabase* songDatabase() const { return m_songDatabase; }
-    SongDatabaseSortProxy* songDatabaseProxy() const { return m_songDatabaseProxy; }
-
     DateDatabase* dateDatabase() const { return m_dateDatabase; }
 
 
@@ -35,7 +33,6 @@ public:
 
 private:
     SongDatabase* m_songDatabase;
-    SongDatabaseSortProxy* m_songDatabaseProxy;
     DateDatabase* m_dateDatabase;
 
 public:

@@ -44,22 +44,22 @@ SOURCES += main.cpp\
     Commands/command.cpp \
     Commands/SongDatabaseCommands/songdatabasesetdatacommand.cpp \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
-    SongTableView/songtableview.cpp \
+    DatabaseView/SongDatabaseView/songtableview.cpp \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasecommand.cpp \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasenewattributecommand.cpp \
-    SongTableView/renamableheaderview.cpp \
+    DatabaseView/SongDatabaseView/renamableheaderview.cpp \
     Commands/SongDatabaseCommands/songdatabaserenameheadercommand.cpp \
     Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.cpp \
     util.cpp \
-    SongTableView/songattributedelegate.cpp \
-    SongTableView/CellEditors/celleditor.cpp \
-    SongTableView/CellEditors/stringeditor.cpp \
-    SongTableView/CellEditors/comboeditor.cpp \
-    SongTableView/CellEditors/dateeditor.cpp \
+    DatabaseView/SongDatabaseView/songattributedelegate.cpp \
+    DatabaseView/SongDatabaseView/CellEditors/celleditor.cpp \
+    DatabaseView/SongDatabaseView/CellEditors/stringeditor.cpp \
+    DatabaseView/SongDatabaseView/CellEditors/comboeditor.cpp \
+    DatabaseView/SongDatabaseView/CellEditors/dateeditor.cpp \
     Database/SongDatabase/songdatabasesortproxy.cpp \
-    SongTableView/songtableviewcontainer.cpp \
+    DatabaseView/SongDatabaseView/songtableviewcontainer.cpp \
     filterwidget.cpp \
     progressdialog.cpp \
     FileIndex/fileindex.cpp \
@@ -74,7 +74,7 @@ SOURCES += main.cpp\
     AttachmentView/chordpatternattachmentview.cpp \
     AttachmentView/pdfattachmentview.cpp \
     Attachments/pdfattachment.cpp \
-    songdatabasewidget.cpp \
+    DatabaseView/SongDatabaseView/songdatabasewidget.cpp \
     AttachmentView/attachmentchooser.cpp \
     Commands/AttachmentCommands/attachmentcommand.cpp \
     Commands/AttachmentCommands/attachmentrenamecommand.cpp \
@@ -99,7 +99,11 @@ SOURCES += main.cpp\
     Dialogs/configurationwidgets.cpp \
     fileindexdialog.cpp \
     Dialogs/alternativefilemanager.cpp \
-    Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp
+    Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp \
+    PDFCreator/pdfcreator.cpp \
+    songlist.cpp \
+    DatabaseView/DateDatabaseView/datetableview.cpp \
+    DatabaseView/DateDatabaseView/datedatabasewidget.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -119,22 +123,22 @@ HEADERS  += mainwindow.h \
     Commands/command.h \
     Commands/SongDatabaseCommands/songdatabasesetdatacommand.h \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.h \
-    SongTableView/songtableview.h \
+    DatabaseView/SongDatabaseView/songtableview.h \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h \
     Commands/SongDatabaseCommands/songdatabasecommand.h \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h \
     Commands/SongDatabaseCommands/songdatabasenewattributecommand.h \
-    SongTableView/renamableheaderview.h \
+    DatabaseView/SongDatabaseView/renamableheaderview.h \
     Commands/SongDatabaseCommands/songdatabaserenameheadercommand.h \
     Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h \
     util.h \
-    SongTableView/songattributedelegate.h \
-    SongTableView/CellEditors/celleditor.h \
-    SongTableView/CellEditors/stringeditor.h \
-    SongTableView/CellEditors/comboeditor.h \
-    SongTableView/CellEditors/dateeditor.h \
+    DatabaseView/SongDatabaseView/songattributedelegate.h \
+    DatabaseView/SongDatabaseView/CellEditors/celleditor.h \
+    DatabaseView/SongDatabaseView/CellEditors/stringeditor.h \
+    DatabaseView/SongDatabaseView/CellEditors/comboeditor.h \
+    DatabaseView/SongDatabaseView/CellEditors/dateeditor.h \
     Database/SongDatabase/songdatabasesortproxy.h \
-    SongTableView/songtableviewcontainer.h \
+    DatabaseView/SongDatabaseView/songtableviewcontainer.h \
     filterwidget.h \
     progressdialog.h \
     FileIndex/fileindex.h \
@@ -150,7 +154,7 @@ HEADERS  += mainwindow.h \
     AttachmentView/chordpatternattachmentview.h \
     AttachmentView/pdfattachmentview.h \
     Attachments/pdfattachment.h \
-    songdatabasewidget.h \
+    DatabaseView/SongDatabaseView/songdatabasewidget.h \
     AttachmentView/attachmentchooser.h \
     Commands/AttachmentCommands/attachmentcommand.h \
     Attachments/ChordPatternAttachment/chord.h \
@@ -176,15 +180,18 @@ HEADERS  += mainwindow.h \
     fileindexdialog.h \
     Dialogs/alternativefilemanager.h \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h \
-    defaultstylesheet.h
+    PDFCreator/pdfcreator.h \
+    songlist.h \
+    DatabaseView/DateDatabaseView/datetableview.h \
+    DatabaseView/DateDatabaseView/datedatabasewidget.h
 
 FORMS    += mainwindow.ui \
-    SongTableView/songtableviewcontainer.ui \
+    DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
     filterwidget.ui \
     progressdialog.ui \
     AttachmentView/chordpatternattachmentview.ui \
     AttachmentView/pdfattachmentview.ui \
-    songdatabasewidget.ui \
+    DatabaseView/SongDatabaseView/songdatabasewidget.ui \
     AttachmentView/attachmentchooser.ui \
     Dialogs/clonedialog.ui \
     Dialogs/stringdialog.ui \
@@ -196,7 +203,8 @@ FORMS    += mainwindow.ui \
     Dialogs/identitydialog.ui \
     Dialogs/configurationdialog.ui \
     fileindexdialog.ui \
-    Dialogs/alternativefilemanager.ui
+    Dialogs/alternativefilemanager.ui \
+    DatabaseView/DateDatabaseView/datedatabasewidget.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

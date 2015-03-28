@@ -6,10 +6,8 @@ DEFN_CONFIG(Project, "Project");
 Project::Project() :
     GitRepository("can"),
     m_songDatabase( new SongDatabase(this) ),
-    m_songDatabaseProxy( new SongDatabaseSortProxy(this) ),
     m_dateDatabase( new DateDatabase(this) )
 {
-    m_songDatabaseProxy->setSourceModel(m_songDatabase);
     reset();
 }
 
@@ -17,7 +15,6 @@ Project::~Project()
 {
     delete m_songDatabase;
     delete m_dateDatabase;
-    delete m_songDatabaseProxy;
 }
 
 void Project::setCanClose(bool b)

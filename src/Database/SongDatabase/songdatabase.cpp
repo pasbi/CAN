@@ -121,6 +121,7 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
     {
         m_songs[index.row()]->setAttribute(index.column(), value);
         emit dataChanged( index, index );
+        return true;
     }
 
     return false;
@@ -136,9 +137,9 @@ void SongDatabase::notifyDataChanged(const QModelIndex & start, const QModelInde
     emit dataChanged(start, end);
 }
 
-void SongDatabase::notifyDataChanged( Song* song )
+void SongDatabase::notifyDataChanged( const Song* song )
 {
-    int row = m_songs.indexOf(song);
+    int row = m_songs.indexOf((Song*) song);
     if (row < 0)
     {
         return;

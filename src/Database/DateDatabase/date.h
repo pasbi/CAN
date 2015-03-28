@@ -2,11 +2,41 @@
 #define DATE_H
 
 #include "taggable.h"
+#include <QJsonObject>
+#include <QDateTime>
+#include <QObject>
 
-class Date : public Taggable
+class DateDatabase;
+class Date : public QObject, public Taggable
 {
 public:
-    Date();
+    ENUM( Type,  Rehearsal, Gig, Other )
+    Date( DateDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label = "");
+
+    Type type() const { return m_type; }
+    QString label() const { return m_label; }
+    QDateTime beginning() const { return m_beginning; }
+    QDateTime ending() const { return m_ending; }
+    DateDatabase* database() const { return m_database; }
+
+    bool restoreFromJsonObject(const QJsonObject &json);
+    QJsonObject toJsonObject() const;
+
+    static QString typeString(Type type, bool translated = false);
+
+    void setLabel( const QString & label ) { m_label = label; }
+    void setBeginning( const QDateTime & beginning ) { m_beginning = beginning; }
+    void setType( Type type ) { m_type = type; }
+
+
+private:
+    DateDatabase* m_database;
+    QDateTime m_beginning, m_ending;
+    Type m_type;
+    QString m_label;
+
+    static const Qt::DateFormat DATE_TIME_FORMAT;
+
 };
 
 #endif // DATE_H
