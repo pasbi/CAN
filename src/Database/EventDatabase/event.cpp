@@ -36,11 +36,13 @@ bool Event::restoreFromJsonObject(const QJsonObject &json)
     if (    checkJsonObject( json, "beginning", QJsonValue::String )
          && checkJsonObject( json, "ending",    QJsonValue::String )
          && checkJsonObject( json, "type",      QJsonValue::String )
-         && checkJsonObject( json, "label",     QJsonValue::String ) )
+         && checkJsonObject( json, "label",     QJsonValue::String )
+         && checkJsonObject( json, "notices",   QJsonValue::String ) )
     {
         m_beginning = QDateTime::fromString( json["beginning"].toString(), DATE_TIME_FORMAT );
         m_ending    = QDateTime::fromString( json["ending"].toString(),    DATE_TIME_FORMAT );
         m_label     = json["label"].toString();
+        m_notices   = json["notices"].toString();
 
         QString type = json["type"].toString();
         if (type == "Rehearsal")
@@ -76,8 +78,14 @@ QJsonObject Event::toJsonObject() const
     json["beginning"] = m_beginning.toString( DATE_TIME_FORMAT );
     json["type"]      = typeString(m_type);
     json["label"]     = m_label;
+    json["notices"]   = m_notices;
 
     return json;
+}
+
+void Event::setNotice(const QString &notice)
+{
+    m_notices = notice;
 }
 
 

@@ -6,36 +6,33 @@ EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     ui(new Ui::EventDatabaseWidget)
 {
     ui->setupUi(this);
+    connect(ui->eventTableViewContainer->eventTableView(), &QTableView::pressed, [this]()
+    {
+        ui->eventDetailView->setEvent( ui->eventTableViewContainer->currentEvent() );
+    });
 }
 
 EventDatabaseWidget::~EventDatabaseWidget()
 {
     delete ui;
-    // delete m_sortFilterProxy;
 }
 
 void EventDatabaseWidget::setEventDatabase( EventDatabase * eventDatabase )
 {
     m_eventDatabase = eventDatabase;
     m_sortFilterProxy.setSourceModel( eventDatabase );
-    ui->tableView->setModel( &m_sortFilterProxy );
-
-//    connect( ui->tableView->selectionModel(),
-//             SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-//             this,
-//             SLOT( updateAttachmentChooser(QModelIndex, QModelIndex) ));
-
+    ui->eventTableViewContainer->setModel( &m_sortFilterProxy );
 }
 
 Event* EventDatabaseWidget::currentEvent() const
 {
-    QModelIndexList rows = ui->tableView->selectionModel()->selectedRows();
+    QModelIndexList rows = ui->eventTableViewContainer->eventTableView()->selectionModel()->selectedRows();
     if (rows.isEmpty())
     {
         return NULL;
     }
     else
     {
-        return ui->tableView->model()->eventAtIndex( rows.first() );
+        return ui->eventTableViewContainer->eventTableView()->model()->eventAtIndex( rows.first() );
     }
 }

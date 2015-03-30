@@ -24,7 +24,7 @@ void EventTableViewContainer::setModel(EventDatabaseSortProxy *model )
     connect(ui->filterWidget, SIGNAL(filterChanged(QString)), model, SLOT(setFilterWildcard(QString)));
 }
 
-Event* EventTableViewContainer::currentSong() const
+Event* EventTableViewContainer::currentEvent() const
 {
     QModelIndexList rows = ui->tableView->selectionModel()->selectedRows();
     if (rows.isEmpty())

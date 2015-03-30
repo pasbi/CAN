@@ -19,7 +19,8 @@ public:
 
     EventTableView* eventTableView() const;
     void setModel( EventDatabaseSortProxy* model );
-    Event* currentSong() const;
+    Event* currentEvent() const;
+
 
 private:
     Ui::EventTableViewContainer *ui;

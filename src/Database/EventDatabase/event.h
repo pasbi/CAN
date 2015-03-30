@@ -21,6 +21,7 @@ public:
     QString label() const { return m_label; }
     QDateTime beginning() const { return m_beginning; }
     QDateTime ending() const { return m_ending; }
+    QString notices() const { return m_notices; }
     EventDatabase* database() const { return m_database; }
 
     bool restoreFromJsonObject(const QJsonObject &json);
@@ -30,7 +31,9 @@ public:
 
     void setLabel( const QString & label ) { m_label = label; }
     void setBeginning( const QDateTime & beginning ) { m_beginning = beginning; }
+    void setEnding( const QDateTime & ending ) { m_ending = ending; }
     void setType( Type type ) { m_type = type; }
+    void setNotice( const QString & notice );
 
 
 private:
@@ -38,6 +41,7 @@ private:
     QDateTime m_beginning, m_ending;
     Type m_type;
     QString m_label;
+    QString m_notices;
 
     static const Qt::DateFormat DATE_TIME_FORMAT;
 

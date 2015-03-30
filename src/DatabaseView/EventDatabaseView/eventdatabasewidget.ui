@@ -13,53 +13,42 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="spacing">
-    <number>9</number>
-   </property>
-   <property name="leftMargin">
-    <number>9</number>
-   </property>
-   <property name="topMargin">
-    <number>9</number>
-   </property>
-   <property name="rightMargin">
-    <number>9</number>
-   </property>
-   <property name="bottomMargin">
-    <number>9</number>
-   </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QSplitter" name="splitter">
+    <widget class="QSplitter" name="splitter_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="layoutWidget">
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="EventTableView" name="tableView"/>
-       </item>
-       <item>
-        <widget class="FilterWidget" name="widget" native="true"/>
-       </item>
-      </layout>
+     <widget class="EventTableViewContainer" name="eventTableViewContainer" native="true"/>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="EventDetailView" name="eventDetailView" native="true"/>
+      <widget class="SetListWidget" name="setlistWidget" native="true"/>
      </widget>
-     <widget class="QWidget" name="widget_2" native="true"/>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FilterWidget</class>
+   <class>SetListWidget</class>
    <extends>QWidget</extends>
-   <header>filterwidget.h</header>
+   <header>DatabaseView/EventDatabaseView/setlistwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>EventTableView</class>
-   <extends>QTableView</extends>
-   <header>DatabaseView/EventDatabaseView/eventtableview.h</header>
+   <class>EventTableViewContainer</class>
+   <extends>QWidget</extends>
+   <header>DatabaseView/EventDatabaseView/eventtableviewcontainer.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EventDetailView</class>
+   <extends>QWidget</extends>
+   <header>DatabaseView/EventDatabaseView/eventdetailview.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

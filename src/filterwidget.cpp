@@ -13,7 +13,6 @@ FilterWidget::FilterWidget(QWidget *parent) :
     connect(ui->pushButton, SIGNAL(clicked()), ui->comboBox, SLOT(clearEditText()));
     ui->comboBox->lineEdit()->setPlaceholderText(tr("Filter"));
 
-
     connect(ui->pushButton, &QPushButton::clicked, [this]()
     {
         ui->comboBox->setCurrentIndex(-1);
@@ -29,18 +28,4 @@ FilterWidget::~FilterWidget()
 void FilterWidget::setPattern(const QString &pattern)
 {
     ui->comboBox->setCurrentText(pattern);
-}
-
-
-void FilterWidget::setFilterProxy(QSortFilterProxyModel *proxy)
-{
-    if (!m_proxy)
-    {
-        disconnect(this, SIGNAL(patternChanged(QString)), m_proxy, SLOT(setFilterFixedString(QString)));
-    }
-    m_proxy = proxy;
-    if (m_proxy)
-    {
-        connect(this, SIGNAL(patternChanged(QString)), m_proxy, SLOT(setFilterFixedString(QString)));
-    }
 }

@@ -12,24 +12,14 @@ SongDatabaseEditSongCommand::SongDatabaseEditSongCommand(SongDatabase *         
 {
 }
 
-//QVariant& SongDatabaseEditSongCommand::getAttribute() const
-//{
-//    return database()->songs()[m_index.row()]->attribute(m_index.column());
-//}
+
 
 void SongDatabaseEditSongCommand::redo()
 {
-//    QVariant& variant = getAttribute();
-//    m_oldData = variant;
-//    variant = m_newData;
-//    database()->notifyDataChanged(m_index);
     database()->setData( m_index, m_newData, m_role );
 }
 
 void SongDatabaseEditSongCommand::undo()
 {
-//    QVariant& variant = getAttribute();
-//    variant = m_oldData;
-//    database()->notifyDataChanged(m_index);
     database()->setData( m_index, m_oldData, m_role );
 }

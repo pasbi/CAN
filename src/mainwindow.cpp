@@ -518,11 +518,11 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     attachmentObjects   << ui->actionDuplicate_Attachment;
 
 
-
-    for (QObject* o : projectObjects )      ::setEnabled( o, !!cProject     && currentPage() == SongDatabasePage );
-    for (QObject* o : songObects )          ::setEnabled( o, !!cSong        && currentPage() == SongDatabasePage );
-    for (QObject* o : attachmentObjects)    ::setEnabled( o, !!cAttachment  && currentPage() == SongDatabasePage );
-    for (QObject* o : gitObjects)           ::setEnabled( o, !!cGit         && currentPage() == SongDatabasePage );
+    qDebug() << "project: " << cProject;
+    for (QObject* o : projectObjects )      ::setEnabled( o, !!cProject     );
+    for (QObject* o : songObects )          ::setEnabled( o, !!cSong        );
+    for (QObject* o : attachmentObjects)    ::setEnabled( o, !!cAttachment  );
+    for (QObject* o : gitObjects)           ::setEnabled( o, !!cGit         );
 }
 
 MainWindow::Page MainWindow::currentPage() const

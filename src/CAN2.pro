@@ -42,7 +42,6 @@ SOURCES += main.cpp\
     UnitTest/creatabletest.cpp \
     UnitTest/unittests.cpp \
     Commands/command.cpp \
-    Commands/SongDatabaseCommands/songdatabasesetdatacommand.cpp \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
     DatabaseView/SongDatabaseView/songtableview.cpp \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp \
@@ -109,7 +108,10 @@ SOURCES += main.cpp\
     Commands/EventDatabaseCommands/eventdatabasecommand.cpp \
     Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.cpp \
     Database/EventDatabase/eventdatabasesortproxy.cpp \
-    DatabaseView/EventDatabaseView/eventtableviewcontainer.cpp
+    DatabaseView/EventDatabaseView/eventtableviewcontainer.cpp \
+    DatabaseView/EventDatabaseView/setlistwidget.cpp \
+    Commands/EventDatabaseCommands/eventdatabaseediteventcommand.cpp \
+    DatabaseView/EventDatabaseView/eventdetailview.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -127,7 +129,6 @@ HEADERS  += mainwindow.h \
     UnitTest/creatabletest.h \
     UnitTest/unittests.h \
     Commands/command.h \
-    Commands/SongDatabaseCommands/songdatabasesetdatacommand.h \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.h \
     DatabaseView/SongDatabaseView/songtableview.h \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h \
@@ -195,7 +196,10 @@ HEADERS  += mainwindow.h \
     Commands/EventDatabaseCommands/eventdatabasecommand.h \
     Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h \
     Database/EventDatabase/eventdatabasesortproxy.h \
-    DatabaseView/EventDatabaseView/eventtableviewcontainer.h
+    DatabaseView/EventDatabaseView/eventtableviewcontainer.h \
+    DatabaseView/EventDatabaseView/setlistwidget.h \
+    Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h \
+    DatabaseView/EventDatabaseView/eventdetailview.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -218,7 +222,9 @@ FORMS    += mainwindow.ui \
     Dialogs/alternativefilemanager.ui \
     DatabaseView/EventDatabaseView/eventdatabasewidget.ui \
     Dialogs/datetimedialog.ui \
-    DatabaseView/EventDatabaseView/eventtableviewcontainer.ui
+    DatabaseView/EventDatabaseView/eventtableviewcontainer.ui \
+    DatabaseView/EventDatabaseView/setlistwidget.ui \
+    DatabaseView/EventDatabaseView/eventdetailview.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

@@ -1,11 +1,10 @@
 #include "eventdatabase.h"
 #include "project.h"
-#include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
+#include "Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h"
 
 EventDatabase::EventDatabase(Project *project) :
     Database(project)
 {
-    m_events << new Event( this, QDateTime::currentDateTime(), QDateTime::currentDateTime(), Event::Rehearsal, "Generalprobe" );
 }
 
 
@@ -34,7 +33,6 @@ bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
     {
         Event* e = new Event( this );
         success &= e->loadFrom( project()->makeAbsolute( QString("event%1").arg(i) ) );
-//        project()->pushCommand( new EventDatabaseNewEventCommand( this, e ));
         m_events << e;
     }
 
@@ -153,6 +151,12 @@ Event* EventDatabase::eventAtIndex(const QModelIndex & index) const
 }
 
 bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    project()->pushCommand( new EventDatabaseEditEventCommand( this, index, value, role ) );
+    return true;
+}
+
+bool EventDatabase::setData_(const QModelIndex &index, const QVariant &value, int role)
 {
     assert(!index.parent().isValid());
 

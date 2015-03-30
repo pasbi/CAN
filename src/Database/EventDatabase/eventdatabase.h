@@ -60,6 +60,10 @@ private:
 signals:
     void eventAdded(int, Event*);
     void eventRemoved(int);
+
+private:
+    friend class EventDatabaseEditEventCommand;
+    bool setData_( const QModelIndex & index, const QVariant& value, int role );
 };
 
 #endif // DATEDATABASE_H

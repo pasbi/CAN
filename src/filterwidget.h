@@ -26,7 +26,6 @@ signals:
 
 private:
     Ui::FilterWidget *ui;
-    QSortFilterProxyModel* m_proxy = NULL;
 };
 
 #endif // FILTERWIDGET_H
