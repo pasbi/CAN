@@ -16,7 +16,7 @@ EventDatabaseWidget::~EventDatabaseWidget()
 
 void EventDatabaseWidget::setEventDatabase( EventDatabase * eventDatabase )
 {
-    m_dateDatabase = eventDatabase;
+    m_eventDatabase = eventDatabase;
     m_sortFilterProxy.setSourceModel( eventDatabase );
     ui->tableView->setModel( &m_sortFilterProxy );
 

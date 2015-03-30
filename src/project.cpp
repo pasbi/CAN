@@ -29,7 +29,7 @@ void Project::setCanClose(bool b)
 bool Project::loadFromTempDir()
 {
     bool success = true;
-    if (!m_eventDatabase->loadFrom(makeAbsolute("dateDatabase")))
+    if (!m_eventDatabase->loadFrom(makeAbsolute("eventDatabase")))
     {
         WARNING << "Cannot load Date Database";
         success = false;
@@ -58,9 +58,9 @@ bool Project::saveToTempDir()
         success = false;
     }
 
-    if (!m_eventDatabase->saveTo(makeAbsolute("dateDatabase")))
+    if (!m_eventDatabase->saveTo(makeAbsolute("eventDatabase")))
     {
-        WARNING << "Cannot save Date Database.";
+        WARNING << "Cannot save Event Database.";
         success = false;
     }
     if (!m_songDatabase->saveTo(makeAbsolute("songDatabase")))

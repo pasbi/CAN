@@ -1,4 +1,6 @@
 #include "eventdatabase.h"
+#include "project.h"
+#include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
 
 EventDatabase::EventDatabase(Project *project) :
     Database(project)
@@ -9,13 +11,35 @@ EventDatabase::EventDatabase(Project *project) :
 
 QJsonObject EventDatabase::toJsonObject() const
 {
-    return QJsonObject();
+    QJsonObject json;
+
+    json["numEvents"] = m_events.length();
+    for (int i = 0; i < m_events.length(); ++i)
+    {
+        m_events[i]->saveTo( project()->makeAbsolute( QString("event%1").arg(i) ) );
+    }
+
+    return json;
 }
 
 bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
 {
-    Q_UNUSED(object);
-    return true;
+    beginResetModel();
+    bool success = true;
+    success &= checkJsonObject( object, "numEvents", QJsonValue::Double );
+    int numEvents = object["numEvents"].toInt();
+
+    m_events.clear();
+    for (int i = 0; i < numEvents; ++i)
+    {
+        Event* e = new Event( this );
+        success &= e->loadFrom( project()->makeAbsolute( QString("event%1").arg(i) ) );
+//        project()->pushCommand( new EventDatabaseNewEventCommand( this, e ));
+        m_events << e;
+    }
+
+    endResetModel();
+    return success;
 }
 
 void EventDatabase::reset()

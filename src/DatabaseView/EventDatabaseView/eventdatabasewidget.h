@@ -24,7 +24,7 @@ public:
 
 private:
     Ui::EventDatabaseWidget *ui;
-    EventDatabase* m_dateDatabase;
+    EventDatabase* m_eventDatabase;
     EventDatabaseSortProxy m_sortFilterProxy;
 };
 

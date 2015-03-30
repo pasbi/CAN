@@ -75,6 +75,7 @@ QJsonObject Event::toJsonObject() const
     json["ending"]    =    m_ending.toString( DATE_TIME_FORMAT );
     json["beginning"] = m_beginning.toString( DATE_TIME_FORMAT );
     json["type"]      = typeString(m_type);
+    json["label"]     = m_label;
 
     return json;
 }
