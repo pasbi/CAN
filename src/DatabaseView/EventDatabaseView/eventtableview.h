@@ -1,9 +1,9 @@
 #ifndef DATETABLEVIEW_H
 #define DATETABLEVIEW_H
 
-#include <QWidget>
 #include <QTableView>
 #include "Database/EventDatabase/eventdatabase.h"
+#include "Database/EventDatabase/eventdatabasesortproxy.h"
 
 class EventTableView : public QTableView
 {
@@ -14,8 +14,9 @@ public:
     ~EventTableView();
     int sizeHintForColumn(int column) const;
 
-    void setModel(EventDatabase *model);
+    void setModel(EventDatabaseSortProxy *model);
     EventDatabase* model() const;
+    EventDatabaseSortProxy* proxyModel() const;
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event);

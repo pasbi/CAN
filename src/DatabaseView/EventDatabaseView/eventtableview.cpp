@@ -24,8 +24,8 @@ public:
 
     void setEditorData(QWidget *editor, const QModelIndex &index) const
     {
-        const EventDatabase* database = qobject_cast<const EventDatabase*>(index.model());
-        QComboBox* comboBox = qobject_cast<QComboBox*>(editor);
+        const EventDatabaseSortProxy* database = qobject_assert_cast<const EventDatabaseSortProxy*>(index.model());
+        QComboBox* comboBox = qobject_assert_cast<QComboBox*>(editor);
         assert( comboBox );
 
         // first column:
@@ -43,8 +43,8 @@ public:
 
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
-        QComboBox* comboBox = qobject_cast<QComboBox*>(editor);
-        EventDatabase* database = qobject_cast<EventDatabase*>(model);    // index->model() is const
+        QComboBox* comboBox = qobject_assert_cast<QComboBox*>(editor);
+        EventDatabaseSortProxy* database = qobject_assert_cast<EventDatabaseSortProxy*>(model);    // index->model() is const
 
         assert( database );
         assert( comboBox );
@@ -81,8 +81,8 @@ public:
 
     void setEditorData(QWidget *editor, const QModelIndex &index) const
     {
-        const EventDatabase* database = qobject_cast<const EventDatabase*>(index.model());
-        DateTimeDialog* dialog = qobject_cast<DateTimeDialog*>(editor);
+        const EventDatabase* database = qobject_assert_cast<const EventDatabase*>(index.model());
+        DateTimeDialog* dialog = qobject_assert_cast<DateTimeDialog*>(editor);
         assert( dialog );
 
         dialog->setDateTime( database->data( index, Qt::EditRole ).toDateTime() );
@@ -90,8 +90,8 @@ public:
 
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
-        DateTimeDialog* dialog = qobject_cast<DateTimeDialog*>(editor);
-        EventDatabase* database = qobject_cast<EventDatabase*>(model);    // index->model() is const
+        DateTimeDialog* dialog = qobject_assert_cast<DateTimeDialog*>(editor);
+        EventDatabase* database = qobject_assert_cast<EventDatabase*>(model);    // index->model() is const
 
         assert( database );
         assert( dialog );
@@ -112,16 +112,29 @@ public:
 EventTableView::EventTableView(QWidget *parent) :
     QTableView(parent)
 {
-    horizontalHeader()->hide();
     horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
     horizontalHeader()->setResizeContentsPrecision( -1 ); // look at all rows.
-    verticalHeader()->hide();
 
 
     setItemDelegateForColumn( 0, new TypeComboBoxDelegate( this ) );
+
     setSelectionBehavior( QAbstractItemView::SelectRows );
-    // this does not work properly. Do it with events.
-    // connect( this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(showDialog(QModelIndex)) );
+    setSelectionMode( QAbstractItemView::SingleSelection );
+    setAlternatingRowColors( true );
+
+    verticalHeader()->setSectionsMovable( true );
+    verticalHeader()->setDragEnabled( true );
+    verticalHeader()->setDragDropMode( QAbstractItemView::InternalMove );
+
+    horizontalHeader()->setSectionsMovable( true );
+    horizontalHeader()->setDragEnabled( true );
+    horizontalHeader()->setDragDropMode( QAbstractItemView::InternalMove );
+
+    horizontalHeader()->setSortIndicatorShown( true );
+
+    setSortingEnabled( true );
+
+
 }
 
 EventTableView::~EventTableView()
@@ -170,14 +183,18 @@ void EventTableView::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 
-void EventTableView::setModel(EventDatabase *model)
+void EventTableView::setModel(EventDatabaseSortProxy *model)
 {
     QTableView::setModel( model );
 }
 
 EventDatabase* EventTableView::model() const
 {
-    EventDatabase* db = qobject_cast<EventDatabase*>( QTableView::model() );
-    assert( db == QTableView::model() );    // may be NULL if model() itself is NULL
-    return db;
+    return proxyModel() ? proxyModel()->sourceModel() : NULL;
+}
+
+EventDatabaseSortProxy* EventTableView::proxyModel() const
+{
+    EventDatabaseSortProxy* pm = qobject_assert_cast<EventDatabaseSortProxy*>( QTableView::model() );
+    return pm;
 }

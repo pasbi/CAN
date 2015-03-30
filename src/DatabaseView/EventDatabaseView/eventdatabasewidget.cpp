@@ -14,11 +14,11 @@ EventDatabaseWidget::~EventDatabaseWidget()
     // delete m_sortFilterProxy;
 }
 
-void EventDatabaseWidget::setEventDatabase( EventDatabase * dateDatabase )
+void EventDatabaseWidget::setEventDatabase( EventDatabase * eventDatabase )
 {
-    m_dateDatabase = dateDatabase;
-//    m_sortFilterProxy.setSourceModel( dateDatabase );
-    ui->tableView->setModel( dateDatabase );
+    m_dateDatabase = eventDatabase;
+    m_sortFilterProxy.setSourceModel( eventDatabase );
+    ui->tableView->setModel( &m_sortFilterProxy );
 
 //    connect( ui->tableView->selectionModel(),
 //             SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),

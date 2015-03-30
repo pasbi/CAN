@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "Database/EventDatabase/eventdatabase.h"
+#include "Database/EventDatabase/eventdatabasesortproxy.h"
+
 
 namespace Ui {
 class EventDatabaseWidget;
@@ -16,13 +18,14 @@ public:
     explicit EventDatabaseWidget(QWidget *parent = 0);
     ~EventDatabaseWidget();
 
-    void setEventDatabase( EventDatabase * dateDatabase );
+    void setEventDatabase( EventDatabase * eventDatabase );
     Event* currentEvent() const;
 
 
 private:
     Ui::EventDatabaseWidget *ui;
     EventDatabase* m_dateDatabase;
+    EventDatabaseSortProxy m_sortFilterProxy;
 };
 
 #endif // DATEDATABASEWIDGET_H

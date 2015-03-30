@@ -7,11 +7,17 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "project.h"
 
+
+QList<Ui::IndexedFileAttachmentView*> IndexedFileAttachmentView::initializedUis;
+QList<Ui::IndexedFileAttachmentView*> IndexedFileAttachmentView::deletedUis;
+
 IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
     AttachmentView(parent),
     ui(new Ui::IndexedFileAttachmentView)
 {
+
     ui->setupUi(this);
+    initializedUis << ui;
 
     connect( ui->advancedFileChooser, &AdvancedFileChooser::itemSelected, [this]() {
         updateStackedWidget();
@@ -21,6 +27,7 @@ IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
 
 IndexedFileAttachmentView::~IndexedFileAttachmentView()
 {
+    deletedUis << ui;
     delete ui;
 }
 

@@ -14,8 +14,8 @@ public:
     explicit SongTableView(QWidget *parent = 0);
 
     void setModel(SongDatabaseSortProxy* model);
-    SongDatabase* model() const { return proxyModel()->sourceModel(); }
-    SongDatabaseSortProxy* proxyModel() const { return  static_cast<SongDatabaseSortProxy*>( QTableView::model() ); }
+    SongDatabase* model() const;
+    SongDatabaseSortProxy* proxyModel() const;
 
 public slots:
     void fakeFocusOutEvent();

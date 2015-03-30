@@ -75,6 +75,7 @@ private:
 
 
 
+
 private:
     QList<Song*> m_songs;
 
@@ -121,10 +122,6 @@ signals:
     void attachmentRenamed(int, QString);
     void songAdded(int, Song*);
     void songRemoved(int);
-
-
-
-
 
 };
 

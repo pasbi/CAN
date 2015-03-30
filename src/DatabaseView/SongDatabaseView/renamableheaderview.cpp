@@ -24,6 +24,8 @@ void RenamableHeaderView::mouseDoubleClickEvent(QMouseEvent *event)
 
     if (sectionLeft == sectionRight)
         editHeader( sectionRight );
+
+    QHeaderView::mouseDoubleClickEvent( event );
 }
 
 void RenamableHeaderView::editHeader(int section, bool endMacroOnFinish)

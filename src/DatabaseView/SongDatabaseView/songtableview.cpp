@@ -33,16 +33,19 @@ SongTableView::SongTableView(QWidget *parent) :
 
     setAlternatingRowColors(true);
 
-    // todo fire focusout event on section move
     horizontalHeader()->setSectionsMovable(true);
     horizontalHeader()->setDragEnabled(true);
     horizontalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
+    horizontalHeader()->setSortIndicatorShown( true );
+    horizontalHeader()->setSectionsClickable( true );
     connect(horizontalHeader(), SIGNAL(sectionMoved(int,int,int)), this, SLOT(fakeFocusOutEvent()));
 
     verticalHeader()->setSectionsMovable(true);
     verticalHeader()->setDragEnabled(true);
     verticalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
     connect(verticalHeader(), SIGNAL(sectionMoved(int,int,int)), this, SLOT(fakeFocusOutEvent()));
+
+    setSortingEnabled( true );
 
 }
 
@@ -80,16 +83,16 @@ void SongTableView::setUpContextMenu(QMenu *menu)
 
     menu->addSeparator();
 
-    Util::addAction(menu, "Add Attribute", [this]() {
+    Util::addAction(menu, tr("Add Attribute"), [this]() {
 
         SongDatabaseNewAttributeCommand* naCommand = new SongDatabaseNewAttributeCommand( model() );
         model()->project()->beginMacro( naCommand->text() );
         model()->project()->pushCommand( naCommand );
-        qobject_cast<RenamableHeaderView*>(horizontalHeader())->editHeader( model()->columnCount() - 1, true );
+        qobject_assert_cast<RenamableHeaderView*>(horizontalHeader())->editHeader( model()->columnCount() - 1, true );
     });
 }
 
-void SongTableView::setModel(SongDatabaseSortProxy* model)
+void SongTableView::setModel(SongDatabaseSortProxy *model)
 {
     QTableView::setModel(model);
 }
@@ -102,6 +105,18 @@ void SongTableView::fakeFocusOutEvent()
     // desired behaviour on the wrong track.
     QFocusEvent myFocusOutEvent(QEvent::FocusOut);
     QApplication::sendEvent( this, &myFocusOutEvent );
+}
+
+SongDatabase* SongTableView::model() const
+{
+    return proxyModel() ? proxyModel()->sourceModel() : NULL;
+}
+
+SongDatabaseSortProxy* SongTableView::proxyModel() const
+{
+    SongDatabaseSortProxy* pm = qobject_assert_cast<SongDatabaseSortProxy*>( QTableView::model() );
+    assert( pm == QTableView::model() );
+    return pm;
 }
 
 

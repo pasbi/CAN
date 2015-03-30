@@ -7,7 +7,7 @@ AddFileIndexSourceDialog::AddFileIndexSourceDialog(const QString &filter, QWidge
     QFileDialog(parent)
 {
 
-    QGridLayout* gridLayout = qobject_cast<QGridLayout*>(layout());
+    QGridLayout* gridLayout = qobject_assert_cast<QGridLayout*>(layout());
     assert( gridLayout );
 
     initFilterWidget();

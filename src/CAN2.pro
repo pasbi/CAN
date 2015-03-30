@@ -107,7 +107,9 @@ SOURCES += main.cpp\
     Dialogs/datetimedialog.cpp \
     Commands/EventDatabaseCommands/eventdatabaseneweventcommand.cpp \
     Commands/EventDatabaseCommands/eventdatabasecommand.cpp \
-    Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.cpp
+    Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.cpp \
+    Database/EventDatabase/eventdatabasesortproxy.cpp \
+    DatabaseView/EventDatabaseView/eventtableviewcontainer.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -191,7 +193,9 @@ HEADERS  += mainwindow.h \
     Dialogs/datetimedialog.h \
     Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h \
     Commands/EventDatabaseCommands/eventdatabasecommand.h \
-    Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h
+    Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h \
+    Database/EventDatabase/eventdatabasesortproxy.h \
+    DatabaseView/EventDatabaseView/eventtableviewcontainer.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -213,7 +217,8 @@ FORMS    += mainwindow.ui \
     fileindexdialog.ui \
     Dialogs/alternativefilemanager.ui \
     DatabaseView/EventDatabaseView/eventdatabasewidget.ui \
-    Dialogs/datetimedialog.ui
+    Dialogs/datetimedialog.ui \
+    DatabaseView/EventDatabaseView/eventtableviewcontainer.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

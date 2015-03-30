@@ -32,8 +32,8 @@ QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOption
     editor->setParent(parent);
     editor->setStyleOption(option);
     editor->setIndex(index);
-    editor->setModel(SongAttributeDelegate::parent()->model());
-    editor->setCurrentData( model()->data( index, Qt::EditRole ) );
+    editor->setModel(SongAttributeDelegate::parent()->proxyModel());
+    editor->setCurrentData( proxyModel()->data( index, Qt::EditRole ) );
     editor->polish();
     editor->setFocus();
 
@@ -45,14 +45,19 @@ SongDatabase* SongAttributeDelegate::model() const
     return parent()->model();
 }
 
+SongDatabaseSortProxy* SongAttributeDelegate::proxyModel() const
+{
+    return parent()->proxyModel();
+}
+
 QString SongAttributeDelegate::editorType(const QModelIndex & index) const
 {
-    return parent()->model()->editorType(index);
+    return parent()->model()->editorType(parent()->proxyModel()->mapToSource( index ));
 }
 
 SongTableView* SongAttributeDelegate::parent() const
 {
-    return qobject_cast<SongTableView*>( QItemDelegate::parent() );
+    return qobject_assert_cast<SongTableView*>( QItemDelegate::parent() );
 }
 
 void SongAttributeDelegate::setModelData(QWidget *editor, QAbstractItemModel *, const QModelIndex &index) const
@@ -64,10 +69,10 @@ void SongAttributeDelegate::setModelData(QWidget *editor, QAbstractItemModel *, 
     }
     else
     {
-        newData = qobject_cast<CellEditor*>(editor)->editedData();
+        newData = qobject_assert_cast<CellEditor*>(editor)->editedData();
     }
 
-    model()->project()->pushCommand( new SongDatabaseEditSongCommand( model(), index, newData, Qt::EditRole ) );
+    model()->project()->pushCommand( new SongDatabaseEditSongCommand( model(), proxyModel()->mapToSource(index), newData, Qt::EditRole ) );
 }
 
 void SongAttributeDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const

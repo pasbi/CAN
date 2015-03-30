@@ -3,6 +3,7 @@
 
 #include <QItemDelegate>
 
+class SongDatabaseSortProxy;
 class SongDatabase;
 class SongTableView;
 class SongAttributeDelegate : public QItemDelegate
@@ -12,6 +13,7 @@ public:
     explicit SongAttributeDelegate(SongTableView *parent = 0);
 
     SongTableView* parent() const;
+    SongDatabaseSortProxy *proxyModel() const;
     SongDatabase* model() const;
 
 protected:

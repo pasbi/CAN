@@ -1,6 +1,7 @@
 #include "comboeditor.h"
 #include <QHBoxLayout>
 #include "global.h"
+#include <QLineEdit>
 
 
 DEFN_CREATABLE(ComboEditor, CellEditor);
@@ -16,10 +17,12 @@ void ComboEditor::polish()
 {
     m_combo->setEditable(true);
 
+
     QStringList items;
     for (int i = 0; i < model()->rowCount(); ++i)
     {
-        QString item = model()->data( i, index().column(), Qt::DisplayRole ).toString();
+        QModelIndex curIndex = model()->index( i, index().column() );
+        QString item = model()->data( curIndex, Qt::DisplayRole ).toString();
         if (!item.isEmpty() && !items.contains(item))
         {
             items.append(item);
@@ -29,6 +32,7 @@ void ComboEditor::polish()
 
     m_combo->setInsertPolicy(QComboBox::InsertAtTop);
     m_combo->setCurrentText(currentData().toString());
+    m_combo->lineEdit()->selectAll();
 }
 
 QVariant ComboEditor::editedData() const

@@ -234,3 +234,5 @@ bool EventDatabase::removeRows(int row, int count, const QModelIndex &parent)
 
     return true;
 }
+
+

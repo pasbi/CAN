@@ -40,7 +40,7 @@ void CellEditor::setIndex(const QModelIndex & index)
     m_index = index;
 }
 
-void CellEditor::setModel( SongDatabase* songDatabase )
+void CellEditor::setModel( SongDatabaseSortProxy* songDatabase )
 {
     m_model = songDatabase;
 }

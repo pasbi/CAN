@@ -48,9 +48,12 @@ bool IndexedFileAttachment::setHash(QByteArray hash)
 {
     if ( app().fileIndex().contains( hash ) )
     {
-        m_hash = hash;
-        open();
-        emit hashChanged( m_hash );
+        if (hash != m_hash)
+        {
+            m_hash = hash;
+            open();
+            emit hashChanged( m_hash );
+        }
         return true;
     }
     else

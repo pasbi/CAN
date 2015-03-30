@@ -1,13 +1,13 @@
-#include "songdatabasesortproxy.h"
+#include "eventdatabasesortproxy.h"
 
-SongDatabaseSortProxy::SongDatabaseSortProxy(QObject *parent) :
-    QSortFilterProxyModel( parent)
+EventDatabaseSortProxy::EventDatabaseSortProxy(QObject *parent) :
+    QSortFilterProxyModel( parent )
 {
     // filter all columns
     setFilterKeyColumn(-1);
 }
 
-bool SongDatabaseSortProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const
+bool EventDatabaseSortProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     if (sourceModel())
     {

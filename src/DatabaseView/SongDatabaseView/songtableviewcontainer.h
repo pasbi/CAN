@@ -18,7 +18,7 @@ public:
     ~SongTableViewContainer();
 
     SongTableView* songTableView() const;
-    void setModel(SongDatabaseSortProxy* model);
+    void setModel(SongDatabaseSortProxy *model);
 
     Song* currentSong() const;
 
