@@ -27,12 +27,14 @@ public:
     SongTableView* tableView() const;
 
 private slots:
-    void updateAttachmentChooser(QModelIndex currentRow, QModelIndex previousRow);
+    void updateAttachmentChooser();
 
 private:
     Ui::SongDatabaseWidget *ui;
     SongDatabase* m_songDatabase;
     SongDatabaseSortProxy m_sortFilterProxy;
+    QModelIndex m_currentIndex;
+
 
 };
 #endif // SONGDATABASEWIDGET_H

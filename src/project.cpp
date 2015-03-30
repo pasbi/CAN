@@ -6,7 +6,7 @@ DEFN_CONFIG(Project, "Project");
 Project::Project() :
     GitRepository("can"),
     m_songDatabase( new SongDatabase(this) ),
-    m_dateDatabase( new EventDatabase(this) )
+    m_eventDatabase( new EventDatabase(this) )
 {
     reset();
 }
@@ -14,7 +14,7 @@ Project::Project() :
 Project::~Project()
 {
     delete m_songDatabase;
-    delete m_dateDatabase;
+    delete m_eventDatabase;
 }
 
 void Project::setCanClose(bool b)
@@ -29,7 +29,7 @@ void Project::setCanClose(bool b)
 bool Project::loadFromTempDir()
 {
     bool success = true;
-    if (!m_dateDatabase->loadFrom(makeAbsolute("dateDatabase")))
+    if (!m_eventDatabase->loadFrom(makeAbsolute("dateDatabase")))
     {
         WARNING << "Cannot load Date Database";
         success = false;
@@ -58,7 +58,7 @@ bool Project::saveToTempDir()
         success = false;
     }
 
-    if (!m_dateDatabase->saveTo(makeAbsolute("dateDatabase")))
+    if (!m_eventDatabase->saveTo(makeAbsolute("dateDatabase")))
     {
         WARNING << "Cannot save Date Database.";
         success = false;
@@ -120,7 +120,7 @@ void Project::reset()
 {
     QUndoStack::clear();
     m_songDatabase->reset();
-    m_dateDatabase->reset();
+    m_eventDatabase->reset();
 }
 
 bool Project::canClose() const

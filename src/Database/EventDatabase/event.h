@@ -7,11 +7,11 @@
 #include <QObject>
 
 class EventDatabase;
-class Date : public QObject, public Taggable
+class Event : public QObject, public Taggable
 {
 public:
     ENUM( Type,  Rehearsal, Gig, Other )
-    Date( EventDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label = "");
+    Event( EventDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label = "");
 
     Type type() const { return m_type; }
     QString label() const { return m_label; }

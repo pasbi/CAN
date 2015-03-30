@@ -26,10 +26,16 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
     void notifyDataChanged(const QModelIndex &index);
     void notifyDataChanged(const QModelIndex & start, const QModelIndex & end);
-    void notifyDataChanged( const Date *date );
-    Date* dateAtIndex(const QModelIndex & index) const;
+    void notifyDataChanged( const Event *event );
+    Event* eventAtIndex(const QModelIndex & index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant data( const int row, const int column, const int role);
+
+    void insertEvent( Event* event, const int index);
+    void appendEvent( Event* event );
+    bool insertRows(int row, int count, const QModelIndex &parent);
+    int  removeEvent( Event* event );
+    bool removeRows(int row, int count, const QModelIndex &parent);
 
 
     /////////////////////////////////////////////////
@@ -42,13 +48,18 @@ public:
     QJsonObject toJsonObject() const;
 
 
-    QList<Date*> dates() const { return m_dates; }
+    QList<Event*> events() const { return m_events; }
 
 public slots:
     void reset();
 
 private:
-    QList<Date*> m_dates;
+    QList<Event*> m_events;
+    QList<Event*> m_tmpEventBuffer;
+
+signals:
+    void eventAdded(int, Event*);
+    void eventRemoved(int);
 };
 
 #endif // DATEDATABASE_H

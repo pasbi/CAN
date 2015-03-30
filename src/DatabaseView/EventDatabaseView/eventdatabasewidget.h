@@ -17,6 +17,8 @@ public:
     ~EventDatabaseWidget();
 
     void setEventDatabase( EventDatabase * dateDatabase );
+    Event* currentEvent() const;
+
 
 private:
     Ui::EventDatabaseWidget *ui;

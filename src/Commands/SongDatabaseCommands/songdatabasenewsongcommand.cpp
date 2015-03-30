@@ -20,8 +20,8 @@ SongDatabaseNewSongCommand::~SongDatabaseNewSongCommand()
 void SongDatabaseNewSongCommand::redo()
 {
     // m_song ownership is transfered to m_songDatabase
-    if (!m_song)
-        m_song = new Song(database());
+//    if (!m_song)
+//        m_song = new Song(database());
 
     database()->appendSong( m_song );
     m_ownsSong = false;

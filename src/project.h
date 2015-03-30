@@ -20,7 +20,7 @@ public:
 
 
     SongDatabase* songDatabase() const { return m_songDatabase; }
-    EventDatabase* dateDatabase() const { return m_dateDatabase; }
+    EventDatabase* eventDatabase() const { return m_eventDatabase; }
 
 
 public slots:
@@ -39,7 +39,7 @@ public:
 
 private:
     SongDatabase* m_songDatabase;
-    EventDatabase* m_dateDatabase;
+    EventDatabase* m_eventDatabase;
 
 public:
     bool canClose() const;

@@ -1,8 +1,8 @@
 #include "event.h"
 
-const Qt::DateFormat Date::DATE_TIME_FORMAT = Qt::ISODate;
+const Qt::DateFormat Event::DATE_TIME_FORMAT = Qt::ISODate;
 
-Date::Date( EventDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
+Event::Event( EventDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
     m_database( database ),
     m_beginning(beginning),
     m_ending(ending),
@@ -14,7 +14,7 @@ Date::Date( EventDatabase* database, const QDateTime& beginning, const QDateTime
 
 #define TRANSLATE_OPTIONAL( T, STRING ) ( T ? tr(STRING) : STRING )
 
-QString Date::typeString(Type type, bool translated)
+QString Event::typeString(Type type, bool translated)
 {
     switch (type)
     {
@@ -30,7 +30,7 @@ QString Date::typeString(Type type, bool translated)
     }
 }
 
-bool Date::restoreFromJsonObject(const QJsonObject &json)
+bool Event::restoreFromJsonObject(const QJsonObject &json)
 {
     bool success = true;
     if (    checkJsonObject( json, "beginning", QJsonValue::String )
@@ -68,7 +68,7 @@ bool Date::restoreFromJsonObject(const QJsonObject &json)
     return success;
 }
 
-QJsonObject Date::toJsonObject() const
+QJsonObject Event::toJsonObject() const
 {
     QJsonObject json;
 

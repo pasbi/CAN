@@ -104,7 +104,10 @@ SOURCES += main.cpp\
     songlist.cpp \
     DatabaseView/EventDatabaseView/eventtableview.cpp \
     DatabaseView/EventDatabaseView/eventdatabasewidget.cpp \
-    Dialogs/datetimedialog.cpp
+    Dialogs/datetimedialog.cpp \
+    Commands/EventDatabaseCommands/eventdatabaseneweventcommand.cpp \
+    Commands/EventDatabaseCommands/eventdatabasecommand.cpp \
+    Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -185,7 +188,10 @@ HEADERS  += mainwindow.h \
     songlist.h \
     DatabaseView/EventDatabaseView/eventtableview.h \
     DatabaseView/EventDatabaseView/eventdatabasewidget.h \
-    Dialogs/datetimedialog.h
+    Dialogs/datetimedialog.h \
+    Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h \
+    Commands/EventDatabaseCommands/eventdatabasecommand.h \
+    Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

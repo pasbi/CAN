@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
     menuBar()->setNativeMenuBar(false);
     setupAttachmentMenu();
     ui->songDatabaseWidget ->setSongDatabase( m_project.songDatabase() );
-    ui->eventDatabaseWidget->setEventDatabase( m_project.dateDatabase() );
+    ui->eventDatabaseWidget->setEventDatabase( m_project.eventDatabase() );
 
 
     //////////////////////////////////////////
@@ -145,6 +145,27 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
+
+#define newAction( name, associated_widget, text, shortcut, menu, icon )                                    \
+    {                                                                                                       \
+    QAction* name = new QAction( associated_widget );                                                       \
+    associated_widget->addAction( name );                                                                   \
+    name->setIcon(QIcon(icon));                                                                             \
+    name->setText(text);                                                                                    \
+    name->setShortcut( QKeySequence(shortcut) );                                                            \
+    name->setShortcutContext( Qt::WidgetWithChildrenShortcut );                                             \
+    connect( name, SIGNAL(triggered()), this, SLOT(my_on_##name##_triggered()) );                              \
+    menu->addAction( name );                                                                                \
+    connect (name, &QAction::triggered, []() { qDebug() << "triggered " #name; }); \
+    }
+
+    newAction( actionNew_Song,      ui->songDatabaseWidget,  tr("New Song"),        "Ctrl+N",   ui->menuSongs,  "" )
+    newAction( actionDelete_Song,   ui->songDatabaseWidget,  tr("Remove Song"),     "Del",      ui->menuSongs,  "" )
+    newAction( actionNew_Event,     ui->eventDatabaseWidget, tr("New Event"),       "Ctrl+N",   ui->menuEvents, "" )
+    newAction( actionDelete_Event,  ui->eventDatabaseWidget, tr("Remove Event"),    "Del",      ui->menuEvents, "" )
+
+#undef newAction
+
 }
 
 MainWindow::~MainWindow()
@@ -164,6 +185,11 @@ void MainWindow::resizeSplitter()
 Song* MainWindow::currentSong() const
 {
     return ui->songDatabaseWidget->currentSong();
+}
+
+Event* MainWindow::currentEvent() const
+{
+    return ui->eventDatabaseWidget->currentEvent();
 }
 
 #include "Commands/SongCommands/songaddattachmentcommand.h"
@@ -471,7 +497,7 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     //TODO list dependencies
     QObjectList attachmentObjects, songObects, projectObjects, gitObjects, alwaysObjects;
 
-    projectObjects      << ui->actionNew_Song;
+//    projectObjects      << ui->actionNew_Song;
     alwaysObjects       << ui->actionNew_Project;
     projectObjects      << ui->actionSave;
     projectObjects      << ui->actionSave_As;
@@ -483,7 +509,7 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     attachmentObjects   << ui->actionDelete_Attachment;
     // ui->actionUndo;
     // ui->actionRedo;
-    songObects          << ui->actionDelete_Song;
+//    songObects          << ui->actionDelete_Song;
     gitObjects          << ui->actionSync;
     // ui->actionClone;
     // ui->actionOpen_Terminal_here;
@@ -552,7 +578,7 @@ void MainWindow::gotoEventView()
 
 
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
-void MainWindow::on_actionNew_Song_triggered()
+void MainWindow::my_on_actionNew_Song_triggered()
 {
     m_project.pushCommand( new SongDatabaseNewSongCommand( m_project.songDatabase() ) );
     updateWhichWidgetsAreEnabled();
@@ -608,7 +634,7 @@ void MainWindow::on_actionOpen_triggered()
 }
 
 #include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
-void MainWindow::on_actionDelete_Song_triggered()
+void MainWindow::my_on_actionDelete_Song_triggered()
 {
     Song* song = currentSong();
     if (song)
@@ -818,8 +844,22 @@ void MainWindow::on_action_Index_Info_triggered()
                               QString(tr("Files: %1")).arg(app().fileIndex().size()) );
 }
 
+#include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
+void MainWindow::my_on_actionNew_Event_triggered()
+{
+    m_project.pushCommand( new EventDatabaseNewEventCommand( m_project.eventDatabase()) );
+}
 
-
+#include "Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h"
+void MainWindow::my_on_actionDelete_Event_triggered()
+{
+    Event* event = currentEvent();
+    if (event)
+    {
+        m_project.pushCommand( new EventDatabaseRemoveEventCommand( m_project.eventDatabase(), event ));
+        updateWhichWidgetsAreEnabled();
+    }
+}
 
 
 

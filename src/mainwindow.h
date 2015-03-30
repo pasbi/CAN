@@ -21,7 +21,7 @@ public:
 
 private slots:
     void resizeSplitter();  // left column should be as small as possible.
-    void on_actionNew_Song_triggered();
+    void my_on_actionNew_Song_triggered();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
     void on_actionDelete_Attachment_triggered();
@@ -57,7 +57,7 @@ private slots:
     void on_actionSave_triggered();
     void on_actionSave_As_triggered();
     void on_actionOpen_triggered();
-    void on_actionDelete_Song_triggered();
+    void my_on_actionDelete_Song_triggered();
     void on_actionAdd_Folder_triggered();
     void on_actionClear_Index_triggered();
     void on_actionRename_Attachment_triggered();
@@ -76,10 +76,16 @@ private slots:
 
     void on_action_Index_Info_triggered();
 
+    void my_on_actionNew_Event_triggered();
+
+    void my_on_actionDelete_Event_triggered();
+
 private:
     void setupAttachmentMenu();
     void setCurrentAttachment( int index );
     Song* currentSong() const;
+    Event* currentEvent() const;
+
     int currentAttachmentIndex() const;
     Attachment* currentAttachment() const;
     enum Page { SongDatabasePage, EventDatabasePage };

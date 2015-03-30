@@ -27,6 +27,7 @@ AttachmentChooser::~AttachmentChooser()
 void AttachmentChooser::setSong(Song *song)
 {
     // remeber index
+
     if (m_song)
     {
         m_lastOpenedIndex[m_song] = ui->comboBox->currentIndex();

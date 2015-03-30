@@ -13,7 +13,6 @@ public:
     TypeComboBoxDelegate( QObject* parent = NULL ) :
         QItemDelegate( parent )
     {
-        qDebug() << "i am a tcbd!" << this;
     }
 
     QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -32,9 +31,9 @@ public:
         // first column:
         if (index.column() == 0)
         {
-            for ( Date::Type type : Date::getInstancesOf_Type() )
+            for ( Event::Type type : Event::getInstancesOf_Type() )
             {
-                comboBox->addItem( Date::getTranslatedNameOf_Type( type ) );
+                comboBox->addItem( Event::getTranslatedNameOf_Type( type ) );
             }
         }
         comboBox->setCurrentIndex( database->data( index, Qt::EditRole ).toInt() );
@@ -120,7 +119,7 @@ EventTableView::EventTableView(QWidget *parent) :
 
 
     setItemDelegateForColumn( 0, new TypeComboBoxDelegate( this ) );
-
+    setSelectionBehavior( QAbstractItemView::SelectRows );
     // this does not work properly. Do it with events.
     // connect( this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(showDialog(QModelIndex)) );
 }

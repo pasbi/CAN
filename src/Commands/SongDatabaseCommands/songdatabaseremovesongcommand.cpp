@@ -5,6 +5,7 @@ SongDatabaseRemoveSongCommand::SongDatabaseRemoveSongCommand(SongDatabase *songD
     m_ownsSong(false),
     m_song(song)
 {
+    assert( song );
 }
 
 SongDatabaseRemoveSongCommand::~SongDatabaseRemoveSongCommand()

@@ -3,7 +3,7 @@
 EventDatabase::EventDatabase(Project *project) :
     Database(project)
 {
-    m_dates << new Date( this, QDateTime::currentDateTime(), QDateTime::currentDateTime(), Date::Rehearsal, "Generalprobe" );
+    m_events << new Event( this, QDateTime::currentDateTime(), QDateTime::currentDateTime(), Event::Rehearsal, "Generalprobe" );
 }
 
 
@@ -26,7 +26,7 @@ void EventDatabase::reset()
 int EventDatabase::rowCount(const QModelIndex &parent) const
 {
     assert( !parent.isValid() );
-    return m_dates.length();
+    return m_events.length();
 }
 
 int EventDatabase::columnCount(const QModelIndex &parent) const
@@ -46,9 +46,9 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case Qt::DisplayRole:
-            return Date::typeString( m_dates[row]->type(), true );
+            return Event::typeString( m_events[row]->type(), true );
         case Qt::EditRole:
-            return (int) m_dates[row]->type();
+            return (int) m_events[row]->type();
         default:
             return QVariant();
         }
@@ -58,7 +58,7 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         {
         case Qt::DisplayRole:
         case Qt::EditRole:
-            return m_dates[row]->beginning();
+            return m_events[row]->beginning();
         default:
             return QVariant();
         }
@@ -68,7 +68,7 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         {
         case Qt::DisplayRole:
         case Qt::EditRole:
-            return m_dates[row]->label();
+            return m_events[row]->label();
         default:
             return QVariant();
         }
@@ -102,9 +102,9 @@ void EventDatabase::notifyDataChanged(const QModelIndex & start, const QModelInd
     emit dataChanged(start, end);
 }
 
-void EventDatabase::notifyDataChanged( const Date *date )
+void EventDatabase::notifyDataChanged( const Event *event )
 {
-    int row = m_dates.indexOf((Date*) date);
+    int row = m_events.indexOf((Event*) event);
     if (row < 0)
     {
         return;
@@ -116,11 +116,11 @@ void EventDatabase::notifyDataChanged( const Date *date )
     notifyDataChanged( start, end );
 }
 
-Date* EventDatabase::dateAtIndex(const QModelIndex & index) const
+Event* EventDatabase::eventAtIndex(const QModelIndex & index) const
 {
     if (index.isValid() && index.row() < rowCount())
     {
-        return m_dates.at(index.row());
+        return m_events.at(index.row());
     }
     else
     {
@@ -132,8 +132,8 @@ bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int
 {
     assert(!index.parent().isValid());
 
-    Date* date = dateAtIndex(index);
-    assert( date );
+    Event* event = eventAtIndex(index);
+    assert( event );
     if (role == Qt::EditRole)
     {
         switch (index.column())
@@ -142,23 +142,23 @@ bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int
             switch (value.toInt())
             {
             case 0:
-                date->setType( Date::Rehearsal );
+                event->setType( Event::Rehearsal );
                 break;
             case 1:
-                date->setType( Date::Gig );
+                event->setType( Event::Gig );
                 break;
             case 2:
-                date->setType( Date::Other );
+                event->setType( Event::Other );
                 break;
             default:
                 qWarning() << "Did not expect type " << value.toInt();
             }
             break;
         case 1:
-            date->setBeginning( value.toDateTime() );
+            event->setBeginning( value.toDateTime() );
             break;
         case 2:
-            date->setLabel( value.toString() );
+            event->setLabel( value.toString() );
             break;
         }
 
@@ -174,3 +174,63 @@ QVariant EventDatabase::data( const int row, const int column, const int role)
     return data( index(row, column, QModelIndex()), role );
 }
 
+void EventDatabase::appendEvent(Event *event)
+{
+    insertEvent(event, rowCount());
+}
+
+void EventDatabase::insertEvent(Event *event, const int index)
+{
+    m_tmpEventBuffer.append(event);
+//    connect( song, SIGNAL(attachmentAdded(int)),   this, SIGNAL(attachmentAdded(int)  ));
+//    connect( song, SIGNAL(attachmentRemoved(int)), this, SIGNAL(attachmentRemoved(int)));
+//    connect( song, SIGNAL(attachmentRenamed(int, QString)), this, SIGNAL(attachmentRenamed(int,QString)));
+    assert( insertRows( index, 1, QModelIndex() ));
+}
+
+bool EventDatabase::insertRows(int row, int count, const QModelIndex &parent)
+{
+    assert(!parent.isValid());
+    assert( m_tmpEventBuffer.size() == count );
+
+    beginInsertRows(parent, row, row + count - 1);
+    for (int i = 0; i < count; ++i)
+    {
+        m_events.insert( row + i, m_tmpEventBuffer[i] );
+        emit eventAdded( row + i, m_tmpEventBuffer[i] );
+    }
+    m_tmpEventBuffer.clear();
+    endInsertRows();
+
+    return true;
+}
+
+int EventDatabase::removeEvent(Event* event)
+{
+    int index;
+    if ( (index = m_events.indexOf(event)) < 0 )
+    {
+        WARNING << "EventDatabase does not contain event " << event;
+    }
+    else
+    {
+        assert( removeRows(index, 1, QModelIndex()) );
+    }
+    return index;
+}
+
+bool EventDatabase::removeRows(int row, int count, const QModelIndex &parent)
+{
+    assert(!parent.isValid());
+    assert(m_tmpEventBuffer.isEmpty());
+
+    beginRemoveRows(parent, row, row + count - 1);
+    for (int i = 0; i < count; ++i)
+    {
+        m_events.removeAt(row + i);
+        emit eventRemoved(row + i );
+    }
+    endRemoveRows();
+
+    return true;
+}

@@ -26,3 +26,16 @@ void EventDatabaseWidget::setEventDatabase( EventDatabase * dateDatabase )
 //             SLOT( updateAttachmentChooser(QModelIndex, QModelIndex) ));
 
 }
+
+Event* EventDatabaseWidget::currentEvent() const
+{
+    QModelIndexList rows = ui->tableView->selectionModel()->selectedRows();
+    if (rows.isEmpty())
+    {
+        return NULL;
+    }
+    else
+    {
+        return ui->tableView->model()->eventAtIndex( rows.first() );
+    }
+}
