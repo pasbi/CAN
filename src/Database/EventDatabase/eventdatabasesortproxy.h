@@ -8,7 +8,7 @@ class EventDatabaseSortProxy : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    EventDatabaseSortProxy(QObject* parent = 0);
+    explicit EventDatabaseSortProxy(QObject* parent = 0);
 
     void setSourceModel(EventDatabase *sourceModel) { QSortFilterProxyModel::setSourceModel(sourceModel); }
     EventDatabase* sourceModel() const { return qobject_assert_cast<EventDatabase*>( QSortFilterProxyModel::sourceModel() ); }

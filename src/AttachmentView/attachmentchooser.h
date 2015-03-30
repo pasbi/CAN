@@ -16,6 +16,7 @@ public:
     explicit AttachmentChooser(QWidget *parent = 0);
     ~AttachmentChooser();
     int currentAttachmentIndex() const;
+    Attachment* currentAttachment() const;
 
 public slots:
     void setSong( Song* song );

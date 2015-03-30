@@ -54,6 +54,7 @@ void AttachmentChooser::setAttachment( int index )
     ui->comboBox->clear();
     if (!m_song || index < 0)
     {
+        m_currentAttachment = NULL;
         ui->attachmentEditor->setAttachment( NULL );
     }
     else
@@ -67,12 +68,14 @@ void AttachmentChooser::setAttachment( int index )
         if (index < 0 || index >= song()->attachments().length())
         {
             ui->comboBox->setCurrentIndex( -1 );
+            m_currentAttachment = NULL;
             ui->attachmentEditor->setAttachment( NULL );
         }
         else
         {
             ui->comboBox->setCurrentIndex( index );
-            ui->attachmentEditor->setAttachment( m_song->attachment(index) );
+            m_currentAttachment = m_song->attachment(index);
+            ui->attachmentEditor->setAttachment( m_currentAttachment );
         }
         ui->comboBox->blockSignals(false);
     }
@@ -81,6 +84,11 @@ void AttachmentChooser::setAttachment( int index )
 int AttachmentChooser::currentAttachmentIndex() const
 {
     return ui->comboBox->currentIndex();
+}
+
+Attachment* AttachmentChooser::currentAttachment() const
+{
+    return m_currentAttachment;
 }
 
 void AttachmentChooser::updateAttachmentView()

@@ -25,15 +25,7 @@ void SongDatabaseWidget::setSongDatabase( SongDatabase * songDatabase )
     m_sortFilterProxy.setSourceModel( songDatabase );
     ui->songTableViewContainer->setModel( &m_sortFilterProxy );
 
-    connect( ui->songTableViewContainer->songTableView(),
-             &QTableView::clicked,
-             [this]()
-    {
-        // it seems to take awhile until ui->songTableViewContainer->songTableView()->selectionModel()->selectedRows()
-        // returns the correct result. The arguments given with the signal are not reliable.
-        QTimer::singleShot( 1, this, SLOT(updateAttachmentChooser()) );
-    });
-
+    connect( ui->songTableViewContainer->songTableView(), SIGNAL(pressed(QModelIndex)), this, SLOT(updateAttachmentChooser()) );
 }
 
 void SongDatabaseWidget::updateAttachmentChooser()

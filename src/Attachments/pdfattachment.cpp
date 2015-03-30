@@ -12,8 +12,11 @@ void PDFAttachment::open()
 {
     delete m_document;
     m_document = Poppler::Document::load( filename() );
-    assert(m_document);
-    m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+    if (m_document)
+    {
+        m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+    }
+
 }
 
 void PDFAttachment::copy(Attachment *&copied) const

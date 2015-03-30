@@ -147,6 +147,7 @@ QStringList filter( const QStringList &             candidates,
 
 void AdvancedFileChooser::updateComboBox()
 {
+    blockSignals(true);
     QByteArray hash = m_hash;   // keep hash under all circumstances!
 
     m_filenames.clear();
@@ -159,6 +160,7 @@ void AdvancedFileChooser::updateComboBox()
     }
 
     setHash( hash );
+    blockSignals(false);
 }
 
 void AdvancedFileChooser::on_pushButton_clicked()

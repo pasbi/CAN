@@ -199,10 +199,10 @@ void MainWindow::setupAttachmentMenu()
 
     // toolbuttons cannot be added with desinger and popup menues require toolbuttons.
     // -> create a placeholder action in desinger and replace it with a toolbutton.
-    QToolButton* toolButton = new QToolButton( this );
-    toolButton->setDefaultAction( ui->actionNew_Attachment );
-    ui->toolBar->insertWidget( ui->actionNew_Attachment, toolButton );
-    ui->toolBar->removeAction( ui->actionNew_Attachment );
+//    QToolButton* toolButton = new QToolButton( this );
+//    toolButton->setDefaultAction( ui->actionNew_Attachment );
+//    ui->toolBar->insertWidget( ui->actionNew_Attachment, toolButton );
+//    ui->toolBar->removeAction( ui->actionNew_Attachment );
 
     // gather attachment creators
     for (const QString & classname : Creatable::classnamesInCategory("Attachment"))
@@ -455,26 +455,27 @@ int MainWindow::currentAttachmentIndex() const
 
 Attachment* MainWindow::currentAttachment() const
 {
-    if (currentSong() == NULL)
-    {
-        return NULL;
-    }
-    int index = currentAttachmentIndex();
-    if (index < 0)
-    {
-        return NULL;
-    }
-    else
-    {
-        if (currentSong()->attachments().isEmpty())
-        {
-            return NULL;
-        }
-        else
-        {
-            return currentSong()->attachments()[index];
-        }
-    }
+    return ui->songDatabaseWidget->attachmentChooser()->currentAttachment();
+//    if (currentSong() == NULL)
+//    {
+//        return NULL;
+//    }
+//    int index = currentAttachmentIndex();
+//    if (index < 0)
+//    {
+//        return NULL;
+//    }
+//    else
+//    {
+//        if (currentSong()->attachments().isEmpty())
+//        {
+//            return NULL;
+//        }
+//        else
+//        {
+//            return currentSong()->attachments()[index];
+//        }
+//    }
 
 }
 
