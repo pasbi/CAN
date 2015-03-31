@@ -4,8 +4,7 @@ const Qt::DateFormat Event::DATE_TIME_FORMAT = Qt::ISODate;
 
 Event::Event( EventDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
     m_database( database ),
-    m_beginning(beginning),
-    m_ending(ending),
+    m_timeSpan( TimeSpan(beginning, ending)),
     m_type(type),
     m_label(label)
 {
@@ -39,8 +38,8 @@ bool Event::restoreFromJsonObject(const QJsonObject &json)
          && checkJsonObject( json, "label",     QJsonValue::String )
          && checkJsonObject( json, "notices",   QJsonValue::String ) )
     {
-        m_beginning = QDateTime::fromString( json["beginning"].toString(), DATE_TIME_FORMAT );
-        m_ending    = QDateTime::fromString( json["ending"].toString(),    DATE_TIME_FORMAT );
+        m_timeSpan  = TimeSpan( QDateTime::fromString( json["beginning"].toString(), DATE_TIME_FORMAT ),
+                                QDateTime::fromString( json["ending"].toString(),    DATE_TIME_FORMAT ) );
         m_label     = json["label"].toString();
         m_notices   = json["notices"].toString();
 
@@ -74,8 +73,8 @@ QJsonObject Event::toJsonObject() const
 {
     QJsonObject json;
 
-    json["ending"]    =    m_ending.toString( DATE_TIME_FORMAT );
-    json["beginning"] = m_beginning.toString( DATE_TIME_FORMAT );
+    json["ending"]    = m_timeSpan.ending.toString( DATE_TIME_FORMAT );
+    json["beginning"] = m_timeSpan.beginning.toString( DATE_TIME_FORMAT );
     json["type"]      = typeString(m_type);
     json["label"]     = m_label;
     json["notices"]   = m_notices;

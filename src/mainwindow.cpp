@@ -156,7 +156,6 @@ MainWindow::MainWindow(QWidget *parent) :
     name->setShortcutContext( Qt::WidgetWithChildrenShortcut );                                             \
     connect( name, SIGNAL(triggered()), this, SLOT(my_on_##name##_triggered()) );                              \
     menu->addAction( name );                                                                                \
-    connect (name, &QAction::triggered, []() { qDebug() << "triggered " #name; }); \
     }
 
     newAction( actionNew_Song,      ui->songDatabaseWidget,  tr("New Song"),        "Ctrl+N",   ui->menuSongs,  "" )
@@ -517,8 +516,6 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     attachmentObjects   << ui->actionRename_Attachment;
     attachmentObjects   << ui->actionDuplicate_Attachment;
 
-
-    qDebug() << "project: " << cProject;
     for (QObject* o : projectObjects )      ::setEnabled( o, !!cProject     );
     for (QObject* o : songObects )          ::setEnabled( o, !!cSong        );
     for (QObject* o : attachmentObjects)    ::setEnabled( o, !!cAttachment  );

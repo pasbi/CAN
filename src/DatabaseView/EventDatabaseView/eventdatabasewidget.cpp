@@ -6,10 +6,6 @@ EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     ui(new Ui::EventDatabaseWidget)
 {
     ui->setupUi(this);
-    connect(ui->eventTableViewContainer->eventTableView(), &QTableView::pressed, [this]()
-    {
-        ui->eventDetailView->setEvent( ui->eventTableViewContainer->currentEvent() );
-    });
 }
 
 EventDatabaseWidget::~EventDatabaseWidget()

@@ -7,6 +7,8 @@
 #include <QJsonObject>
 #include <QObject>
 
+#define private public
+
 #include "global.h"
 
 #define DECL_CONFIG( CLASSNAME )    \
@@ -185,7 +187,7 @@ public:
 
 public slots:
     void apply() { m_resetValue = m_actualValue; }
-    void reset() { m_actualValue = m_resetValue; }
+    void reset();
     void restore() { set( m_defaultValue ); }
     void set( const QVariant & value );
 

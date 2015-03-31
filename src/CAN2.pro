@@ -100,7 +100,6 @@ SOURCES += main.cpp\
     Dialogs/alternativefilemanager.cpp \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp \
     PDFCreator/pdfcreator.cpp \
-    songlist.cpp \
     DatabaseView/EventDatabaseView/eventtableview.cpp \
     DatabaseView/EventDatabaseView/eventdatabasewidget.cpp \
     Dialogs/datetimedialog.cpp \
@@ -111,7 +110,7 @@ SOURCES += main.cpp\
     DatabaseView/EventDatabaseView/eventtableviewcontainer.cpp \
     DatabaseView/EventDatabaseView/setlistwidget.cpp \
     Commands/EventDatabaseCommands/eventdatabaseediteventcommand.cpp \
-    DatabaseView/EventDatabaseView/eventdetailview.cpp
+    commontypes.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -188,7 +187,6 @@ HEADERS  += mainwindow.h \
     Dialogs/alternativefilemanager.h \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h \
     PDFCreator/pdfcreator.h \
-    songlist.h \
     DatabaseView/EventDatabaseView/eventtableview.h \
     DatabaseView/EventDatabaseView/eventdatabasewidget.h \
     Dialogs/datetimedialog.h \
@@ -199,7 +197,7 @@ HEADERS  += mainwindow.h \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.h \
     DatabaseView/EventDatabaseView/setlistwidget.h \
     Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h \
-    DatabaseView/EventDatabaseView/eventdetailview.h
+    commontypes.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -223,8 +221,7 @@ FORMS    += mainwindow.ui \
     DatabaseView/EventDatabaseView/eventdatabasewidget.ui \
     Dialogs/datetimedialog.ui \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.ui \
-    DatabaseView/EventDatabaseView/setlistwidget.ui \
-    DatabaseView/EventDatabaseView/eventdetailview.ui
+    DatabaseView/EventDatabaseView/setlistwidget.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

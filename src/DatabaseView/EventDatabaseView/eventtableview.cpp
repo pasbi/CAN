@@ -85,7 +85,7 @@ public:
         DateTimeDialog* dialog = qobject_assert_cast<DateTimeDialog*>(editor);
         assert( dialog );
 
-        dialog->setDateTime( database->data( index, Qt::EditRole ).toDateTime() );
+        dialog->setTimeSpan( database->data( index, Qt::EditRole ).value<TimeSpan>() );
     }
 
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
@@ -98,7 +98,7 @@ public:
 
         if (index.column() == 0)
         {
-            database->setData( index, dialog->dateTime(), Qt::EditRole );
+            database->setData( index, QVariant::fromValue(dialog->timeSpan()), Qt::EditRole );
         }
     }
 
@@ -164,11 +164,11 @@ bool EventTableView::showDialog(QModelIndex index)
     if (index.column() == 1)
     {
         DateTimeDialog dialog;
-        dialog.setDateTime( model()->data( index, Qt::EditRole ).toDateTime() );
+        dialog.setTimeSpan( model()->data( index, Qt::EditRole ).value<TimeSpan>() );
 
         if (dialog.exec() == QDialog::Accepted)
         {
-            model()->setData( index, dialog.dateTime(), Qt::EditRole );
+            model()->setData( index, QVariant::fromValue(dialog.timeSpan()), Qt::EditRole );
         }
         return true;
     }

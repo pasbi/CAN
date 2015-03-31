@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QDateTime>
 #include <QObject>
+#include "commontypes.h"
 
 class EventDatabase;
 class Event : public QObject, public Taggable
@@ -19,8 +20,9 @@ public:
 
     Type type() const { return m_type; }
     QString label() const { return m_label; }
-    QDateTime beginning() const { return m_beginning; }
-    QDateTime ending() const { return m_ending; }
+    QDateTime beginning() const { return m_timeSpan.beginning; }
+    QDateTime ending() const { return m_timeSpan.ending; }
+    TimeSpan timeSpan() const { return m_timeSpan; }
     QString notices() const { return m_notices; }
     EventDatabase* database() const { return m_database; }
 
@@ -30,15 +32,16 @@ public:
     static QString typeString(Type type, bool translated = false);
 
     void setLabel( const QString & label ) { m_label = label; }
-    void setBeginning( const QDateTime & beginning ) { m_beginning = beginning; }
-    void setEnding( const QDateTime & ending ) { m_ending = ending; }
+    void setBeginning( const QDateTime & beginning ) { m_timeSpan.beginning = beginning; }
+    void setEnding( const QDateTime & ending ) { m_timeSpan.ending = ending; }
+    void setTimeSpan( const TimeSpan& timeSpan) { m_timeSpan = timeSpan; }
     void setType( Type type ) { m_type = type; }
     void setNotice( const QString & notice );
 
 
 private:
     EventDatabase* m_database;
-    QDateTime m_beginning, m_ending;
+    TimeSpan m_timeSpan;
     Type m_type;
     QString m_label;
     QString m_notices;

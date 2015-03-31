@@ -79,8 +79,9 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case Qt::DisplayRole:
-        case Qt::EditRole:
             return m_events[row]->beginning();
+        case Qt::EditRole:
+            return QVariant::fromValue( TimeSpan( m_events[row]->timeSpan() ));
         default:
             return QVariant();
         }
@@ -183,7 +184,7 @@ bool EventDatabase::setData_(const QModelIndex &index, const QVariant &value, in
             }
             break;
         case 1:
-            event->setBeginning( value.toDateTime() );
+            event->setTimeSpan( value.value<TimeSpan>() );
             break;
         case 2:
             event->setLabel( value.toString() );

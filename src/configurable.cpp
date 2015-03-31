@@ -122,6 +122,12 @@ void ConfigurationItem::set(const QVariant &value)
     }
 }
 
+void ConfigurationItem::reset()
+{
+    set( m_resetValue );
+}
+
+
 
 
 

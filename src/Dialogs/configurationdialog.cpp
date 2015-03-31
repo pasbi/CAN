@@ -94,9 +94,9 @@ void ConfigurationDialog::accept()
 
 void ConfigurationDialog::reject()
 {
+    QDialog::reject();
     for ( Configurable* c : m_configurables )
     {
         c->reset();
     }
-    QDialog::reject();
 }
