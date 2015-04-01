@@ -42,6 +42,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
+    app().setProject( &m_project );
+
     ui->setupUi(this);
 
     //     load stylesheet
