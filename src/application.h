@@ -6,6 +6,8 @@
 #include "FileIndex/fileindex.h"
 #include <QSettings>
 
+class Project;
+class Command;
 class Application : public QApplication
 {
     Q_OBJECT
@@ -28,6 +30,8 @@ public:
     const QSettings &settings() const;
 
     const QString username() const { return "Detlef"; } //TODO
+    void setProject(Project* project);
+    void pushCommand( Command* command );
 
 private:
     FileIndex m_fileIndex;
@@ -35,6 +39,8 @@ private:
 
     static Application* m_singleton;
     friend Application & app();
+
+    Project* m_project = NULL;
 
 };
 

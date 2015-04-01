@@ -7,6 +7,7 @@
 #include "Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h"
 #include "util.h"
 #include "global.h"
+#include "application.h"
 
 RenamableHeaderView::RenamableHeaderView(Qt::Orientation orientation, SongTableView *parent) :
     QHeaderView(orientation, parent)
@@ -46,7 +47,7 @@ void RenamableHeaderView::editHeader(int section, bool endMacroOnFinish)
 
     connect(lineEdit, &QLineEdit::editingFinished, [this, endMacroOnFinish, lineEdit, section](){
         SongDatabase* database = parent()->model();
-        database->project()->pushCommand( new SongDatabaseRenameHeaderCommand( database, lineEdit->text(), section, orientation() ) );
+        app().pushCommand( new SongDatabaseRenameHeaderCommand( database, lineEdit->text(), section, orientation() ) );
 
         if (endMacroOnFinish)
         {
@@ -83,6 +84,6 @@ void RenamableHeaderView::setUpContextMenu(QMenu *menu)
     QString key = database->attributeKeys()[section];
 
     Util::addAction(menu, QString(tr("Delete Attribute %1")).arg(key), [this, database, section](){
-        database->project()->pushCommand( new SongDatabaseRemoveColumnCommand( database, section ) );
+        app().pushCommand( new SongDatabaseRemoveColumnCommand( database, section ) );
     });
 }

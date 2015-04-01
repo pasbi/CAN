@@ -214,7 +214,7 @@ void MainWindow::setupAttachmentMenu()
                              if (song)
                              {
                                  SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, classname );
-                                 m_project.pushCommand( command );
+                                 app().pushCommand( command );
                              }
                          } );
     }
@@ -578,7 +578,7 @@ void MainWindow::gotoEventView()
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
 void MainWindow::my_on_actionNew_Song_triggered()
 {
-    m_project.pushCommand( new SongDatabaseNewSongCommand( m_project.songDatabase() ) );
+    app().pushCommand( new SongDatabaseNewSongCommand( m_project.songDatabase() ) );
     updateWhichWidgetsAreEnabled();
 }
 
@@ -602,7 +602,7 @@ void MainWindow::on_actionDelete_Attachment_triggered()
 
     if (song && index >= 0)
     {
-        m_project.pushCommand( new SongRemoveAttachmentCommand( song, index ) );
+        app().pushCommand( new SongRemoveAttachmentCommand( song, index ) );
         updateWhichWidgetsAreEnabled();
     }
 }
@@ -637,7 +637,7 @@ void MainWindow::my_on_actionDelete_Song_triggered()
     Song* song = currentSong();
     if (song)
     {
-        m_project.pushCommand( new SongDatabaseRemoveSongCommand( m_project.songDatabase(), song ) );
+        app().pushCommand( new SongDatabaseRemoveSongCommand( m_project.songDatabase(), song ) );
         updateWhichWidgetsAreEnabled();
     }
 }
@@ -704,7 +704,7 @@ void MainWindow::on_actionRename_Attachment_triggered()
         return;
     }
 
-    m_project.pushCommand( new AttachmentRenameCommand( attachment, newName ) );
+    app().pushCommand( new AttachmentRenameCommand( attachment, newName ) );
     updateWhichWidgetsAreEnabled();
 }
 
@@ -720,7 +720,7 @@ void MainWindow::on_actionDuplicate_Attachment_triggered()
     Attachment* attachment = cs->attachments()[index];
     assert( attachment );
 
-    m_project.pushCommand( new SongDuplicateAttachmentCommand( attachment ) );
+    app().pushCommand( new SongDuplicateAttachmentCommand( attachment ) );
     updateWhichWidgetsAreEnabled();
 }
 
@@ -845,7 +845,7 @@ void MainWindow::on_action_Index_Info_triggered()
 #include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
 void MainWindow::my_on_actionNew_Event_triggered()
 {
-    m_project.pushCommand( new EventDatabaseNewEventCommand( m_project.eventDatabase()) );
+    app().pushCommand( new EventDatabaseNewEventCommand( m_project.eventDatabase()) );
 }
 
 #include "Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h"
@@ -854,7 +854,7 @@ void MainWindow::my_on_actionDelete_Event_triggered()
     Event* event = currentEvent();
     if (event)
     {
-        m_project.pushCommand( new EventDatabaseRemoveEventCommand( m_project.eventDatabase(), event ));
+        app().pushCommand( new EventDatabaseRemoveEventCommand( m_project.eventDatabase(), event ));
         updateWhichWidgetsAreEnabled();
     }
 }

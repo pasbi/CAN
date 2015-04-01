@@ -11,7 +11,7 @@
 #include <functional>
 #include "util.h"
 #include <QFocusEvent>
-#include <QApplication>
+#include "application.h"
 
 
 SongTableView::SongTableView(QWidget *parent) :
@@ -71,20 +71,20 @@ void SongTableView::setUpContextMenu(QMenu *menu)
     Song* song = model()->songAtIndex(index);
     // new Song
     Util::addAction(menu, tr("New Song"), [this](){
-        model()->project()->pushCommand( new SongDatabaseNewSongCommand( model(), new Song(model()) ) );
+        app().pushCommand( new SongDatabaseNewSongCommand( model(), new Song(model()) ) );
     });
 
     Util::addAction(menu, tr("Delete Song"), [this, song]() {
         if (song)
         {
-            model()->project()->pushCommand( new SongDatabaseRemoveSongCommand( model(), song ) );
+            app().pushCommand( new SongDatabaseRemoveSongCommand( model(), song ) );
         }
     })->setEnabled(!!song);
 
     menu->addSeparator();
 
     Util::addAction(menu, tr("Add Attribute"), [this]() {
-
+        //TODO wth?
         SongDatabaseNewAttributeCommand* naCommand = new SongDatabaseNewAttributeCommand( model() );
         model()->project()->beginMacro( naCommand->text() );
         model()->project()->pushCommand( naCommand );

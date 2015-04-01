@@ -6,6 +6,7 @@
 #include "Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "project.h"
+#include "application.h"
 
 
 QList<Ui::IndexedFileAttachmentView*> IndexedFileAttachmentView::initializedUis;
@@ -48,7 +49,7 @@ void IndexedFileAttachmentView::polish()
     connect( ui->advancedFileChooser, &AdvancedFileChooser::itemSelected, [this](QByteArray hash)
     {
         Command* c = new FileAttachmentCommandSetHashCommand( attachment<IndexedFileAttachment>(), hash );
-        attachment<Attachment>()->song()->database()->project()->pushCommand( c );
+        app().pushCommand( c );
     });
 
     ui->advancedFileChooser->blockSignals(true);    // do not create a command (see connect above)

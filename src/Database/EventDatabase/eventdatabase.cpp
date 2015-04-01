@@ -1,6 +1,7 @@
 #include "eventdatabase.h"
 #include "project.h"
 #include "Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h"
+#include "application.h"
 
 EventDatabase::EventDatabase(Project *project) :
     Database(project)
@@ -153,7 +154,7 @@ Event* EventDatabase::eventAtIndex(const QModelIndex & index) const
 
 bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    project()->pushCommand( new EventDatabaseEditEventCommand( this, index, value, role ) );
+    app().pushCommand( new EventDatabaseEditEventCommand( this, index, value, role ) );
     return true;
 }
 

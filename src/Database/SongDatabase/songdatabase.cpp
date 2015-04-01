@@ -7,6 +7,7 @@
 #include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 #include "songdatabasesortproxy.h"
 #include <QSize>
+#include "application.h"
 
 
 SongDatabase::SongDatabase(Project *project) :
@@ -358,7 +359,7 @@ bool SongDatabase::loadFrom(const QString &path)
 
         for (int i = 0; i < m_attributeKeysToRestore.size(); ++i)
         {
-            project()->pushCommand( new SongDatabaseNewAttributeCommand( this, m_attributeKeysToRestore[i] ));
+            app().pushCommand( new SongDatabaseNewAttributeCommand( this, m_attributeKeysToRestore[i] ));
         }
 
         for (int i = 0; i < m_numSongsToRestore; ++i)

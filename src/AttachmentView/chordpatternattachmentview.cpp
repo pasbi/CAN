@@ -7,6 +7,7 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "project.h"
 #include "Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h"
+#include "application.h"
 
 DEFN_CREATABLE(ChordPatternAttachmentView, AttachmentView);
 DEFN_CONFIG( ChordPatternAttachmentView, "Chord Pattern Attachment" );
@@ -25,18 +26,14 @@ ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     addAction( transposeUpAction );
     connect( transposeUpAction, &QAction::triggered, [this]()
     {
-        attachment<Attachment>()->song()->database()->project()->pushCommand(
-                    new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), 1 )
-                    );
+        app().pushCommand( new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), 1 ) );
     });
 
     QAction* transposeDownAction = new QAction( QIcon(":/icons/icons/down27.png"), tr("Transpose down"), this );
     addAction( transposeDownAction );
     connect( transposeDownAction, &QAction::triggered, [this]()
     {
-        attachment<Attachment>()->song()->database()->project()->pushCommand(
-                    new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), -1 )
-                    );
+        app().pushCommand( new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), -1 ) );
     });
 
 

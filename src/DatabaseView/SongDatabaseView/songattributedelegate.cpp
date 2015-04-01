@@ -6,6 +6,7 @@
 #include "Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h"
 #include <QLineEdit>
 #include "project.h"
+#include "application.h"
 
 SongAttributeDelegate::SongAttributeDelegate(SongTableView *parent) :
     QItemDelegate(parent)
@@ -72,7 +73,7 @@ void SongAttributeDelegate::setModelData(QWidget *editor, QAbstractItemModel *, 
         newData = qobject_assert_cast<CellEditor*>(editor)->editedData();
     }
 
-    model()->project()->pushCommand( new SongDatabaseEditSongCommand( model(), proxyModel()->mapToSource(index), newData, Qt::EditRole ) );
+    app().pushCommand( new SongDatabaseEditSongCommand( model(), proxyModel()->mapToSource(index), newData, Qt::EditRole ) );
 }
 
 void SongAttributeDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
