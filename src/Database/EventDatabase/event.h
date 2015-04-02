@@ -6,6 +6,7 @@
 #include <QDateTime>
 #include <QObject>
 #include "commontypes.h"
+#include "setlist.h"
 
 class EventDatabase;
 class Event : public QObject, public Taggable
@@ -38,6 +39,9 @@ public:
     void setType( Type type ) { m_type = type; }
     void setNotice( const QString & notice );
 
+    const Setlist* setlist() const { return &m_setlist; }
+    Setlist* setlist() { return &m_setlist; }
+
 
 private:
     EventDatabase* m_database;
@@ -46,7 +50,11 @@ private:
     QString m_label;
     QString m_notices;
 
+    Setlist m_setlist;
+
     static const Qt::DateFormat DATE_TIME_FORMAT;
+
+
 
 };
 

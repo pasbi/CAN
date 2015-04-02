@@ -7,6 +7,7 @@ SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
     ui(new Ui::SongDatabaseWidget)
 {
     ui->setupUi(this);
+    connect( ui->songTableViewContainer->songTableView(), SIGNAL(pressed(QModelIndex)), this, SLOT(updateAttachmentChooser()) );
 }
 
 SongDatabaseWidget::~SongDatabaseWidget()
@@ -25,7 +26,6 @@ void SongDatabaseWidget::setSongDatabase( SongDatabase * songDatabase )
     m_sortFilterProxy.setSourceModel( songDatabase );
     ui->songTableViewContainer->setModel( &m_sortFilterProxy );
 
-    connect( ui->songTableViewContainer->songTableView(), SIGNAL(pressed(QModelIndex)), this, SLOT(updateAttachmentChooser()) );
 }
 
 void SongDatabaseWidget::updateAttachmentChooser()

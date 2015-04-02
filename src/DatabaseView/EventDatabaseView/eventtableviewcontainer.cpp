@@ -6,6 +6,7 @@ EventTableViewContainer::EventTableViewContainer(QWidget *parent) :
     ui(new Ui::EventTableViewContainer)
 {
     ui->setupUi(this);
+
 }
 
 EventTableViewContainer::~EventTableViewContainer()

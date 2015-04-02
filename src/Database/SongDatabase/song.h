@@ -54,7 +54,7 @@ public:
     void insertAttribute(int index, const QVariant &data);
     void removeAttribute(int index);
     QString title() const;
-    void setTitle(const QString & title);
+    QString artist() const;
 signals:
     void attributesEdited();
 

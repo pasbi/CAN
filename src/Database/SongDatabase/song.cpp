@@ -98,12 +98,26 @@ QJsonObject Song::toJsonObject() const
 
 QString Song::title() const
 {
-    return attribute(0).toString();
+    if (m_attributes.size() > 0)
+    {
+        return attribute(0).toString();
+    }
+    else
+    {
+        return "";
+    }
 }
 
-void Song::setTitle(const QString &title)
+QString Song::artist() const
 {
-    setAttribute(0, title);
+    if (m_attributes.size() > 1)
+    {
+        return attribute(1).toString();
+    }
+    else
+    {
+        return "";
+    }
 }
 
 void Song::setAttribute(int index, const QVariant &data)

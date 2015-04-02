@@ -6,6 +6,8 @@ EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     ui(new Ui::EventDatabaseWidget)
 {
     ui->setupUi(this);
+    connect( ui->eventTableViewContainer->eventTableView(), SIGNAL(pressed(QModelIndex)), this, SLOT(updateSetlistView()) );
+
 }
 
 EventDatabaseWidget::~EventDatabaseWidget()
@@ -30,5 +32,18 @@ Event* EventDatabaseWidget::currentEvent() const
     else
     {
         return ui->eventTableViewContainer->eventTableView()->model()->eventAtIndex( rows.first() );
+    }
+}
+
+void EventDatabaseWidget::updateSetlistView()
+{
+    Event* e = currentEvent();
+    if (e)
+    {
+        ui->setlistWidget->setSetlist( e->setlist() );
+    }
+    else
+    {
+        ui->setlistWidget->setSetlist( NULL );
     }
 }

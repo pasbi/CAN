@@ -21,6 +21,8 @@ public:
     void setEventDatabase( EventDatabase * eventDatabase );
     Event* currentEvent() const;
 
+private slots:
+    void updateSetlistView();
 
 private:
     Ui::EventDatabaseWidget *ui;

@@ -21,7 +21,6 @@ public:
     void setModel( EventDatabaseSortProxy* model );
     Event* currentEvent() const;
 
-
 private:
     Ui::EventTableViewContainer *ui;
 };

@@ -20,14 +20,14 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <widget class="EventTableViewContainer" name="eventTableViewContainer" native="true"/>
-     <widget class="SetListWidget" name="setlistWidget" native="true"/>
+     <widget class="SetlistWidget" name="setlistWidget" native="true"/>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SetListWidget</class>
+   <class>SetlistWidget</class>
    <extends>QWidget</extends>
    <header>DatabaseView/EventDatabaseView/setlistwidget.h</header>
    <container>1</container>

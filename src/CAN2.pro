@@ -111,7 +111,9 @@ SOURCES += main.cpp\
     DatabaseView/EventDatabaseView/setlistwidget.cpp \
     Commands/EventDatabaseCommands/eventdatabaseediteventcommand.cpp \
     commontypes.cpp \
-    Database/EventDatabase/setlist.cpp
+    Database/EventDatabase/setlist.cpp \
+    Commands/SetlistCommands/setlistadditemcommand.cpp \
+    Commands/SetlistCommands/setlistcommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -199,7 +201,9 @@ HEADERS  += mainwindow.h \
     DatabaseView/EventDatabaseView/setlistwidget.h \
     Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h \
     commontypes.h \
-    Database/EventDatabase/setlist.h
+    Database/EventDatabase/setlist.h \
+    Commands/SetlistCommands/setlistadditemcommand.h \
+    Commands/SetlistCommands/setlistcommand.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
