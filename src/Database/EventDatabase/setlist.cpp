@@ -1,4 +1,6 @@
 #include "setlist.h"
+#include "application.h"
+#include "project.h"
 
 QString SetlistItem::label() const
 {
@@ -17,10 +19,23 @@ QString SetlistItem::label() const
         }
     }
     case LabelType:
-        qDebug() << "return label " << m_label;
         return m_label;
     default:
         return QString();
+    }
+}
+
+bool SetlistItem::setLabel(const QString label)
+{
+    if (type() == LabelType)
+    {
+        m_label = label;
+        return true;
+    }
+    else
+    {
+        qWarning() << "Cannot set label of non-label type SetlistItem.";
+        return false;
     }
 }
 
@@ -54,7 +69,16 @@ int Setlist::rowCount(const QModelIndex &parent) const
 Qt::ItemFlags Setlist::flags(const QModelIndex &index) const
 {
     Q_UNUSED( index );
-    return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+    switch (itemAt(index)->type())
+    {
+    case SetlistItem::LabelType:
+        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+    case SetlistItem::SongType:
+        return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+    default:
+        return Qt::ItemFlags();
+    }
+
 }
 
 QVariant Setlist::data(const QModelIndex &index, int role) const
@@ -63,11 +87,33 @@ QVariant Setlist::data(const QModelIndex &index, int role) const
     switch (role)
     {
     case Qt::DisplayRole:
-        qDebug() << "data: " << m_items[index.row()]->label();
+    case Qt::EditRole:
         return m_items[index.row()]->label();
     default:
         return QVariant();
     }
+}
+
+bool Setlist::setData_(const QModelIndex &index, const QVariant &value, int role)
+{
+    bool success = true;
+    if (role == Qt::EditRole)
+    {
+        success &= itemAt( index )->setLabel( value.toString() );
+        emit dataChanged( index, index );
+    }
+    else
+    {
+        success = false;
+    }
+    return success;
+}
+
+#include "Commands/SetlistCommands/setlisteditdatacommand.h"
+bool Setlist::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    app().project()->pushCommand( new SetlistEditDataCommand( this, index, value, role ) );
+    return true;
 }
 
 bool Setlist::insertRows(int row, int count, const QModelIndex &parent)
@@ -99,3 +145,39 @@ void Setlist::appendItem(SetlistItem *item)
     insertItem( m_items.length(), item );
 }
 
+int Setlist::indexOf(const SetlistItem *item) const
+{
+    // QList::indexOf forbids item to be const
+
+    int index = 0;
+    for (const SetlistItem* i : m_items)
+    {
+        if (i == item)
+        {
+            return index;
+        }
+        index++;
+    }
+    return -1;
+}
+
+SetlistItem* Setlist::itemAt(const QModelIndex &index) const
+{
+    return m_items[index.row()];
+}
+
+void Setlist::notifyDataChanged(const QModelIndex &index)
+{
+    notifyDataChanged( index, index );
+}
+
+void Setlist::notifyDataChanged(const QModelIndex & start, const QModelIndex & end)
+{
+    emit dataChanged( start, end );
+}
+
+void Setlist::notifyDataChanged(const SetlistItem *item)
+{
+    int i = indexOf(item);
+    notifyDataChanged( index(i, 0) );
+}

@@ -77,9 +77,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     menuBar()->setNativeMenuBar(false);
     setupAttachmentMenu();
-    ui->songDatabaseWidget ->setSongDatabase( m_project.songDatabase() );
-    ui->eventDatabaseWidget->setEventDatabase( m_project.eventDatabase() );
-
 
     //////////////////////////////////////////
     /// Undo/Redo

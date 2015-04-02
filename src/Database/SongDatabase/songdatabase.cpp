@@ -8,6 +8,7 @@
 #include "songdatabasesortproxy.h"
 #include <QSize>
 #include "application.h"
+#include "commontypes.h"
 
 
 SongDatabase::SongDatabase(Project *project) :
@@ -111,7 +112,7 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
 Qt::ItemFlags SongDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
-    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable;
+    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
 }
 
 bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -404,4 +405,32 @@ void SongDatabase::reset(bool initialize)
     emit attachmentAdded( -1 );
 }
 
+Qt::DropActions SongDatabase::supportedDragActions() const
+{
+    return Qt::CopyAction;
+}
+
+QMimeData* SongDatabase::mimeData(const QModelIndexList &indexes) const
+{
+    QMimeData* mime = new QMimeData();
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+
+    QList<qintptr> ptrs;
+    for (const QModelIndex& index : indexes)
+    {
+        if (index.column() != 0)
+        {
+            // we want only one index per row.
+            continue;
+        }
+        Song* song = songAtIndex(index);
+        ptrs << qintptr(song);
+    }
+    stream << ptrs;
+
+    mime->setData("CAN/songs", data);
+    return mime;
+}
 

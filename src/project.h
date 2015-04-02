@@ -8,6 +8,7 @@
 #include "Commands/command.h"
 #include <QUndoStack>
 #include "Database/SongDatabase/songdatabasesortproxy.h"
+#include "Database/EventDatabase/eventdatabasesortproxy.h"
 #include "configurable.h"
 
 class Project : public QUndoStack, public GitRepository
@@ -20,7 +21,9 @@ public:
 
 
     SongDatabase* songDatabase() const { return m_songDatabase; }
+    SongDatabaseSortProxy* songDatabaseProxy() const { return m_songDatabaseProxy; }
     EventDatabase* eventDatabase() const { return m_eventDatabase; }
+    EventDatabaseSortProxy* eventDatabaseProxy() const { return m_eventDatabaseProxy; }
 
 
 public slots:
@@ -40,6 +43,8 @@ public:
 private:
     SongDatabase* m_songDatabase;
     EventDatabase* m_eventDatabase;
+    SongDatabaseSortProxy* m_songDatabaseProxy;
+    EventDatabaseSortProxy* m_eventDatabaseProxy;
 
 public:
     bool canClose() const;

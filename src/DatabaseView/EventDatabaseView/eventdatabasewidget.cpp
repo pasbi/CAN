@@ -1,5 +1,7 @@
 #include "eventdatabasewidget.h"
 #include "ui_eventdatabasewidget.h"
+#include "application.h"
+#include "project.h"
 
 EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     QWidget(parent),
@@ -8,18 +10,12 @@ EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     ui->setupUi(this);
     connect( ui->eventTableViewContainer->eventTableView(), SIGNAL(pressed(QModelIndex)), this, SLOT(updateSetlistView()) );
 
+    ui->eventTableViewContainer->setModel( app().project()->eventDatabaseProxy() );
 }
 
 EventDatabaseWidget::~EventDatabaseWidget()
 {
     delete ui;
-}
-
-void EventDatabaseWidget::setEventDatabase( EventDatabase * eventDatabase )
-{
-    m_eventDatabase = eventDatabase;
-    m_sortFilterProxy.setSourceModel( eventDatabase );
-    ui->eventTableViewContainer->setModel( &m_sortFilterProxy );
 }
 
 Event* EventDatabaseWidget::currentEvent() const

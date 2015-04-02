@@ -2,6 +2,7 @@
 #define COMMONTYPES_H
 
 #include <QDateTime>
+#include <QMimeData>
 
 typedef struct TimeSpan
 {
@@ -21,6 +22,9 @@ typedef struct TimeSpan
 } Timespan;
 
 Q_DECLARE_METATYPE(TimeSpan)
+
+
+
 
 
 #endif // COMMONTYPES_H

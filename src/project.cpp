@@ -6,9 +6,13 @@ DEFN_CONFIG(Project, "Project");
 Project::Project() :
     GitRepository("can"),
     m_songDatabase( new SongDatabase(this) ),
-    m_eventDatabase( new EventDatabase(this) )
+    m_eventDatabase( new EventDatabase(this) ),
+    m_songDatabaseProxy( new SongDatabaseSortProxy(this) ),
+    m_eventDatabaseProxy( new EventDatabaseSortProxy(this) )
 {
     reset();
+    m_songDatabaseProxy->setSourceModel( m_songDatabase );
+    m_eventDatabaseProxy->setSourceModel( m_eventDatabase );
 }
 
 Project::~Project()
@@ -100,8 +104,11 @@ void Project::undo()
 {
     const QUndoCommand* uc = QUndoStack::command(QUndoStack::index() - 1);
     const Command* c = dynamic_cast<const Command*>( uc );
-    assert( c );
-    emitCommandPushedSignal( c->type() );
+
+    if (c)  // cast may fail (e.g. command-macro)
+    {
+        emitCommandPushedSignal( c->type() );
+    }
 
     QUndoStack::undo();
 }
@@ -110,7 +117,10 @@ void Project::redo()
 {
     const QUndoCommand* uc = QUndoStack::command(QUndoStack::index());
     const Command* c = dynamic_cast<const Command*>( uc );
-    assert( c );
+    if (c)  // cast may fail (e.g. command-macro)
+    {
+        emitCommandPushedSignal( c->type() );
+    }
     emitCommandPushedSignal( c->type() );
 
     QUndoStack::redo();

@@ -35,6 +35,8 @@ public:
     Song* songAtIndex(const QModelIndex & index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant data( const int row, const int column, const int role);
+    Qt::DropActions supportedDragActions() const;
+    QMimeData* mimeData(const QModelIndexList &indexes) const;
 
 private:
     mutable QList<Song*> m_tmpSongBuffer; // Songs that was just removed or are about to be inserted.

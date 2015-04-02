@@ -47,6 +47,11 @@ SongTableView::SongTableView(QWidget *parent) :
 
     setSortingEnabled( true );
 
+    setDragDropMode( QAbstractItemView::DragOnly );
+    setDragEnabled( true );
+    setDropIndicatorShown( true );
+
+
 }
 
 void SongTableView::showContextMenu(QPoint pos)

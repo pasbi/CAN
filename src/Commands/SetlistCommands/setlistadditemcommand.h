@@ -15,7 +15,7 @@ public:
 private:
     int m_index;
     bool m_ownsItem = false;
-    SetlistItem* m_newItem;
+    SetlistItem* const m_newItem;
 };
 
 #endif // SETLISTADDITEMCOMMAND_H

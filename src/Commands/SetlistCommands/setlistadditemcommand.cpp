@@ -11,7 +11,6 @@ SetlistAddItemCommand::~SetlistAddItemCommand()
     if (m_ownsItem)
     {
         delete m_newItem;
-        m_newItem = NULL;
     }
 }
 

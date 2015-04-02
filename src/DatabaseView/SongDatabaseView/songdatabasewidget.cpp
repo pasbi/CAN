@@ -1,6 +1,8 @@
 #include "songdatabasewidget.h"
 #include "ui_songdatabasewidget.h"
 #include <QTimer>
+#include "application.h"
+#include "project.h"
 
 SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
     QWidget(parent),
@@ -8,6 +10,7 @@ SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     connect( ui->songTableViewContainer->songTableView(), SIGNAL(pressed(QModelIndex)), this, SLOT(updateAttachmentChooser()) );
+    ui->songTableViewContainer->setModel( app().project()->songDatabaseProxy() );
 }
 
 SongDatabaseWidget::~SongDatabaseWidget()
@@ -18,14 +21,6 @@ SongDatabaseWidget::~SongDatabaseWidget()
 Song* SongDatabaseWidget::currentSong() const
 {
     return ui->songTableViewContainer->currentSong();
-}
-
-void SongDatabaseWidget::setSongDatabase( SongDatabase * songDatabase )
-{
-    m_songDatabase = songDatabase;
-    m_sortFilterProxy.setSourceModel( songDatabase );
-    ui->songTableViewContainer->setModel( &m_sortFilterProxy );
-
 }
 
 void SongDatabaseWidget::updateAttachmentChooser()

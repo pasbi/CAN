@@ -16,6 +16,7 @@ public:
     ~Application();
 
     FileIndex & fileIndex() { return m_fileIndex; }
+    Project* project() const { return m_project; }
 
     //TODO guess most methodes are obsolete. tidy up!
     static QString applicationName() { return "CAN2"; }

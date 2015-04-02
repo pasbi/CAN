@@ -19,8 +19,6 @@ class SongDatabaseWidget : public QWidget
 public:
     explicit SongDatabaseWidget(QWidget *parent = 0);
     ~SongDatabaseWidget();
-    void setSongDatabase( SongDatabase * songDatabase );
-    SongDatabase* songDatabase() const { return m_songDatabase; }
     Song* currentSong() const;
 
     AttachmentChooser* attachmentChooser() const;
@@ -31,8 +29,6 @@ private slots:
 
 private:
     Ui::SongDatabaseWidget *ui;
-    SongDatabase* m_songDatabase;
-    SongDatabaseSortProxy m_sortFilterProxy;
     QModelIndex m_currentIndex;
 
 

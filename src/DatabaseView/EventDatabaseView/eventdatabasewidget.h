@@ -18,7 +18,6 @@ public:
     explicit EventDatabaseWidget(QWidget *parent = 0);
     ~EventDatabaseWidget();
 
-    void setEventDatabase( EventDatabase * eventDatabase );
     Event* currentEvent() const;
 
 private slots:
@@ -26,8 +25,6 @@ private slots:
 
 private:
     Ui::EventDatabaseWidget *ui;
-    EventDatabase* m_eventDatabase;
-    EventDatabaseSortProxy m_sortFilterProxy;
 };
 
 #endif // DATEDATABASEWIDGET_H

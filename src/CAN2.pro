@@ -113,7 +113,12 @@ SOURCES += main.cpp\
     commontypes.cpp \
     Database/EventDatabase/setlist.cpp \
     Commands/SetlistCommands/setlistadditemcommand.cpp \
-    Commands/SetlistCommands/setlistcommand.cpp
+    Commands/SetlistCommands/setlistcommand.cpp \
+    Commands/SetlistCommands/setlistremoveitemcommand.cpp \
+    DatabaseView/EventDatabaseView/setlistitemselector.cpp \
+    Commands/SetlistCommands/setlisteditdatacommand.cpp \
+    DatabaseView/EventDatabaseView/setlistview.cpp \
+    Commands/SetlistCommands/setlistinsertitemcommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -203,7 +208,12 @@ HEADERS  += mainwindow.h \
     commontypes.h \
     Database/EventDatabase/setlist.h \
     Commands/SetlistCommands/setlistadditemcommand.h \
-    Commands/SetlistCommands/setlistcommand.h
+    Commands/SetlistCommands/setlistcommand.h \
+    Commands/SetlistCommands/setlistremoveitemcommand.h \
+    DatabaseView/EventDatabaseView/setlistitemselector.h \
+    Commands/SetlistCommands/setlisteditdatacommand.h \
+    DatabaseView/EventDatabaseView/setlistview.h \
+    Commands/SetlistCommands/setlistinsertitemcommand.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -227,7 +237,8 @@ FORMS    += mainwindow.ui \
     DatabaseView/EventDatabaseView/eventdatabasewidget.ui \
     Dialogs/datetimedialog.ui \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.ui \
-    DatabaseView/EventDatabaseView/setlistwidget.ui
+    DatabaseView/EventDatabaseView/setlistwidget.ui \
+    DatabaseView/EventDatabaseView/setlistitemselector.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt
