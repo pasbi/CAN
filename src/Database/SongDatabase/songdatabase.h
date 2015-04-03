@@ -5,6 +5,9 @@
 #include <QAbstractTableModel>
 #include "song.h"
 
+// SongID is the position of a song in a song database.
+// it may change during runtime. Use SongID for saving and restoring and Song* otherwise.
+typedef qint64 SongID;
 class SongDatabaseSortProxy;
 class CellEditor;
 class SongDatabase : public QAbstractTableModel, public Database
@@ -37,6 +40,9 @@ public:
     QVariant data( const int row, const int column, const int role);
     Qt::DropActions supportedDragActions() const;
     QMimeData* mimeData(const QModelIndexList &indexes) const;
+
+    SongID songID( const Song* song ) const;
+    Song* song( SongID id ) const;
 
 private:
     mutable QList<Song*> m_tmpSongBuffer; // Songs that was just removed or are about to be inserted.

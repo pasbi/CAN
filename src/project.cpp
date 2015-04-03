@@ -33,17 +33,21 @@ void Project::setCanClose(bool b)
 bool Project::loadFromTempDir()
 {
     bool success = true;
-    if (!m_eventDatabase->loadFrom(makeAbsolute("eventDatabase")))
-    {
-        WARNING << "Cannot load Date Database";
-        success = false;
-    }
+
 
     if (!m_songDatabase->loadFrom(makeAbsolute("songDatabase")))
     {
         WARNING << "Cannot load Song Database";
         success = false;
     }
+
+    // event database must be restored after song database.
+    if (!m_eventDatabase->loadFrom(makeAbsolute("eventDatabase")))
+    {
+        WARNING << "Cannot load Date Database";
+        success = false;
+    }
+
 
 
     QUndoStack::clear();

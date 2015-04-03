@@ -260,6 +260,7 @@ bool MainWindow::saveProject()
 //             success &= m_project.loadFromTempDir(); // files might have changed
         if (success)
         {
+            setCurrentPath( m_currentPath );   // ensure that the current filename is stored as to-default-open project
             updateWindowTitle();
             return true;
         }

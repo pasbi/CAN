@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include "Database/SongDatabase/song.h"
+#include <QDataStream>
 
 class SetlistItem
 {
@@ -22,14 +23,20 @@ public:
     bool setLabel( const QString label );
     const Song* song() const { return m_song; }
     Type type() const { return m_type; }
+    QJsonObject toJson() const;
+    static SetlistItem* fromJson( const QJsonObject & object );
 
 private:
     Type m_type;
     const Song* m_song = NULL;
     QString m_label;
 
-
+    friend QDataStream& operator << (QDataStream& out, const SetlistItem* item );
+    friend QDataStream& operator >> (QDataStream& in,  SetlistItem* &item );
 };
+
+QDataStream& operator << (QDataStream& out, const SetlistItem* item );
+QDataStream& operator >> (QDataStream& in,  SetlistItem* &item );
 
 class Setlist : public QAbstractListModel
 {
@@ -51,6 +58,12 @@ public:
     void notifyDataChanged(const QModelIndex &index);
     void notifyDataChanged(const QModelIndex & start, const QModelIndex & end);
     void notifyDataChanged(const SetlistItem *item);
+
+    Qt::DropActions supportedDragActions() const;
+    QMimeData* mimeData(const QModelIndexList &indexes) const;
+
+    QJsonArray toJson() const;
+    bool fromJson(const QJsonArray & array );
 
 private:
     bool insertRows(int row, int count, const QModelIndex &parent);

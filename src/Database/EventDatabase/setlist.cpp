@@ -39,6 +39,96 @@ bool SetlistItem::setLabel(const QString label)
     }
 }
 
+QJsonObject SetlistItem::toJson() const
+{
+    QJsonObject object;
+
+    object["type"] = (int) m_type;
+    object["SongID"] = app().project()->songDatabase()->songID( m_song );
+    object["Label"] = m_label;
+
+    return object;
+}
+
+SetlistItem* SetlistItem::fromJson( const QJsonObject & object )
+{
+    if (!checkJsonObject( object, "type", QJsonValue::Double ))
+    {
+        return NULL;
+    }
+    switch ((Type) object["type"].toInt())
+    {
+    case SongType:
+        if (!checkJsonObject(object, "SongID", QJsonValue::Double))
+        {
+            return NULL;
+        }
+        else
+        {
+            Song* song = app().project()->songDatabase()->song( object["SongID"].toInt() );
+            if (song)
+            {
+                return new SetlistItem( song );
+            }
+            else
+            {
+                return NULL;
+            }
+        }
+    case LabelType:
+        if (!checkJsonObject(object, "Label", QJsonValue::String))
+        {
+            return NULL;
+        }
+        else
+        {
+            return new SetlistItem( object["Label"].toString() );
+        }
+    }
+    return NULL;
+}
+
+QDataStream& operator << (QDataStream& out, const SetlistItem* item )
+{
+    out << (quint16) item->m_type;
+    switch (item->m_type)
+    {
+    case SetlistItem::SongType:
+        out << (qintptr) item->m_song;
+        break;
+    case SetlistItem::LabelType:
+        out << item->m_label;
+        break;
+    }
+    return out;
+}
+
+QDataStream& operator >> (QDataStream& in,  SetlistItem* &item )
+{
+    quint16 type;
+    in >> type;
+    switch ((SetlistItem::Type) type)
+    {
+    case SetlistItem::SongType:
+    {
+        qintptr ptr;
+        in >> ptr;
+        item = new SetlistItem( (Song*) ptr );
+        break;
+    }
+    case SetlistItem::LabelType:
+    {
+        QString string;
+        in >> string;
+        item = new SetlistItem( string );
+        break;
+    }
+    default:
+        item = NULL;
+    }
+    return in;
+}
+
 Setlist::Setlist(QObject *parent) :
     QAbstractListModel(parent)
 {
@@ -72,9 +162,9 @@ Qt::ItemFlags Setlist::flags(const QModelIndex &index) const
     switch (itemAt(index)->type())
     {
     case SetlistItem::LabelType:
-        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable;
     case SetlistItem::SongType:
-        return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled;
     default:
         return Qt::ItemFlags();
     }
@@ -180,4 +270,65 @@ void Setlist::notifyDataChanged(const SetlistItem *item)
 {
     int i = indexOf(item);
     notifyDataChanged( index(i, 0) );
+}
+
+Qt::DropActions Setlist::supportedDragActions() const
+{
+    return Qt::MoveAction | Qt::CopyAction;
+}
+
+QMimeData* Setlist::mimeData(const QModelIndexList &indexes) const
+{
+    QMimeData* mime = new QMimeData();
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+
+    QList<SetlistItem*> items;
+    for (const QModelIndex& index : indexes)
+    {
+        if (index.column() != 0)
+        {
+            // we want only one index per row.
+            continue;
+        }
+        SetlistItem* item = m_items[index.row()];
+        items << item;
+    }
+    stream << items;
+
+    mime->setData("CAN/Setlist/Item", data);
+    return mime;
+}
+
+
+QJsonArray Setlist::toJson() const
+{
+    QJsonArray array;
+    for (const SetlistItem* item : m_items)
+    {
+        array.append( item->toJson() );
+    }
+    return array;
+}
+
+bool Setlist::fromJson(const QJsonArray & array )
+{
+    beginResetModel();
+    bool success = true;
+    m_items.clear();
+    for (const QJsonValue & val : array)
+    {
+        SetlistItem* item = SetlistItem::fromJson(val.toObject());
+        if (item)
+        {
+            m_items << item;
+        }
+        else
+        {
+            success = false;
+        }
+    }
+    endResetModel();
+    return success;
 }

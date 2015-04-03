@@ -405,6 +405,30 @@ void SongDatabase::reset(bool initialize)
     emit attachmentAdded( -1 );
 }
 
+SongID SongDatabase::songID( const Song* song ) const
+{
+    for (int i = 0; i < m_songs.length(); ++i)
+    {
+        if (song == m_songs[i])
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+Song* SongDatabase::song( SongID id ) const
+{
+    if (id < 0 || id >= m_songs.length())
+    {
+        qWarning() << "song with id " << id << " does not exist";
+    }
+    else
+    {
+        return m_songs[id];
+    }
+}
+
 Qt::DropActions SongDatabase::supportedDragActions() const
 {
     return Qt::CopyAction;
