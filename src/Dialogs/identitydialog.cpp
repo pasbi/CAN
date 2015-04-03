@@ -73,6 +73,12 @@ void IdentityDialog::on_comboBox_currentIndexChanged(int index)
     ui->emailEdit->setText( index >= 0 ?
                                 m_manager->identity(index).email()
                               : "" );
+    ui->loginEdit->setText( index >= 0 ?
+                                m_manager->identity(index).loginName()
+                              : "" );
+    ui->passwordEdit->setText( index >= 0 ?
+                                m_manager->identity(index).password()
+                              : "" );
 
     m_manager->setCurrentIndex( index );
     updateIcons();
@@ -119,9 +125,13 @@ void IdentityDialog::updateList()
     ui->buttonRemove->setEnabled( m_manager->size() > 0 );
     ui->emailEdit->setEnabled( m_manager->size() > 0 );
     ui->nameEdit->setEnabled( m_manager->size() > 0 );
+    ui->passwordEdit->setEnabled( m_manager->size() > 0 );
+    ui->loginEdit->setEnabled( m_manager->size() > 0 );
 
     ui->emailEdit->setText( m_manager->currentIdentity().email() );
     ui->nameEdit->setText( m_manager->currentIdentity().name() );
+    ui->passwordEdit->setText( m_manager->currentIdentity().password() );
+    ui->loginEdit->setText( m_manager->currentIdentity().loginName() );
 
     unblock();
     updateIcons();
@@ -131,7 +141,7 @@ void IdentityDialog::updateIdentity()
 {
     if (i() >= 0 && i() < m_manager->size())
     {
-        m_manager->edit( i(), ui->nameEdit->text(), ui->emailEdit->text() );
+        m_manager->edit( i(), ui->nameEdit->text(), ui->emailEdit->text(), ui->loginEdit->text(), ui->passwordEdit->text() );
         updateList();
     }
 }

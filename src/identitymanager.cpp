@@ -11,19 +11,19 @@ IdentityManager::IdentityManager()
 
 void IdentityManager::addIdentity( Identity identity )
 {
-    AddIdentity* addIdentity = new AddIdentity( this, identity );
+    AddIdentityCommand* addIdentity = new AddIdentityCommand( this, identity );
     m_undoStack.push( addIdentity );
 }
 
 void IdentityManager::removeIdentity( const int i )
 {
-    RemoveIdentity* removeIdentity = new RemoveIdentity( this, i );
+    RemoveIdentityCommand* removeIdentity = new RemoveIdentityCommand( this, i );
     m_undoStack.push( removeIdentity );
 }
 
-void IdentityManager::edit(int i, const QString & name, const QString & email)
+void IdentityManager::edit(int i, const QString & name, const QString & email, const QString& loginName, const QString & password )
 {
-    EditIdentity* editIdentity = new EditIdentity( this, i, name, email );
+    EditIdentityCommand* editIdentity = new EditIdentityCommand( this, i, name, email, loginName, password );
     m_undoStack.push( editIdentity );
 }
 
@@ -48,7 +48,7 @@ void IdentityManager::save( ) const
     QList<QVariant> ids;
     for (const Identity & i : m_identities )
     {
-        ids << (QStringList() << i.name() << i.email());
+        ids << (QStringList() << i.name() << i.email() << i.loginName() << i.password());
     }
     config.set( "Identities", QVariant::fromValue( ids ) );
     config.set( "CurrentIdentity", m_currentIndex );
@@ -63,7 +63,9 @@ void IdentityManager::restore( )
     for (const QVariant & v : ids)
     {
         m_identities << Identity( v.toStringList()[0],
-                                  v.toStringList()[1] );
+                                  v.toStringList()[1],
+                                  v.toStringList()[2],
+                                  v.toStringList()[3] );
     }
 
     m_currentIndex = config.value("CurrentIdentity").toInt();
@@ -78,60 +80,73 @@ IdentityCommand::IdentityCommand( IdentityManager* manager )
     m_manager = manager;
 }
 
-AddIdentity::AddIdentity(IdentityManager* manager, Identity newIdentity ) :
+AddIdentityCommand::AddIdentityCommand(IdentityManager* manager, Identity newIdentity ) :
     IdentityCommand( manager ),
     m_identity( newIdentity ),
     m_index( manager->size() )
 {
 }
 
-void AddIdentity::undo()
+void AddIdentityCommand::undo()
 {
     identityManager()->m_identities.removeAt( m_index );
 }
 
-void AddIdentity::redo()
+void AddIdentityCommand::redo()
 {
     identityManager()->m_identities.append( m_identity );
 }
 
-RemoveIdentity::RemoveIdentity( IdentityManager* manager, const int index ) :
+RemoveIdentityCommand::RemoveIdentityCommand( IdentityManager* manager, const int index ) :
     IdentityCommand( manager ),
     m_index( index ),
     m_removedIdentity( identityManager()->m_identities[index] )
 {
 }
 
-void RemoveIdentity::undo()
+void RemoveIdentityCommand::undo()
 {
     identityManager()->m_identities.insert( m_index, m_removedIdentity );
 }
 
-void RemoveIdentity::redo()
+void RemoveIdentityCommand::redo()
 {
     identityManager()->m_identities.removeAt( m_index );
 }
 
-EditIdentity::EditIdentity( IdentityManager* manager, const int index, const QString & newName, const QString & newEmail ) :
+EditIdentityCommand::EditIdentityCommand( IdentityManager *manager,
+                                          const int index,
+                                          const QString &newName,
+                                          const QString &newEmail,
+                                          const QString &newLoginName,
+                                          const QString &newPassword) :
     IdentityCommand( manager ),
     m_index( index ),
     m_newName( newName ),
     m_newEmail( newEmail ),
+    m_newLoginName( newLoginName ),
+    m_newPassword( newPassword ),
     m_oldName( manager->m_identities[index].name() ),
-    m_oldEmail( manager->m_identities[index].email() )
+    m_oldEmail( manager->m_identities[index].email() ),
+    m_oldLoginName( manager->m_identities[index].loginName() ),
+    m_oldPassword( manager->m_identities[index].password() )
 {
 }
 
-void EditIdentity::redo()
+void EditIdentityCommand::redo()
 {
     identityManager()->m_identities[m_index].setName( m_newName );
     identityManager()->m_identities[m_index].setEmail( m_newEmail );
+    identityManager()->m_identities[m_index].setLoginName( m_newLoginName );
+    identityManager()->m_identities[m_index].setPassword( m_newPassword );
 }
 
-void EditIdentity::undo()
+void EditIdentityCommand::undo()
 {
     identityManager()->m_identities[m_index].setName( m_oldName );
     identityManager()->m_identities[m_index].setEmail( m_oldEmail );
+    identityManager()->m_identities[m_index].setLoginName( m_oldLoginName );
+    identityManager()->m_identities[m_index].setPassword( m_oldPassword );
 }
 
 bool similar(const QString & a, const QString & b)
@@ -162,9 +177,9 @@ bool similar(const QString & a, const QString & b)
     return true;
 }
 
-bool EditIdentity::mergeWith(const QUndoCommand *other)
+bool EditIdentityCommand::mergeWith(const QUndoCommand *other)
 {
-    const EditIdentity* otherEdit = dynamic_cast<const EditIdentity*>(other);
+    const EditIdentityCommand* otherEdit = dynamic_cast<const EditIdentityCommand*>(other);
     if (!otherEdit)
     {
         return false;

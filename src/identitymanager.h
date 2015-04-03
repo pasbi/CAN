@@ -18,38 +18,48 @@ public:
 
 };
 
-class AddIdentity : public IdentityCommand
+class AddIdentityCommand : public IdentityCommand
 {
 private:
     const Identity m_identity;
     const int m_index;
 public:
-    AddIdentity( IdentityManager* manager, Identity newIdentity );
+    AddIdentityCommand( IdentityManager* manager, Identity newIdentity );
     void undo();
     void redo();
 };
 
-class RemoveIdentity : public IdentityCommand
+class RemoveIdentityCommand : public IdentityCommand
 {
 private:
     const int m_index;
     Identity m_removedIdentity;
 public:
-    RemoveIdentity( IdentityManager* manager, const int index );
+    RemoveIdentityCommand( IdentityManager* manager, const int index );
     void undo();
     void redo();
 
 };
 
-class EditIdentity : public IdentityCommand
+class EditIdentityCommand : public IdentityCommand
 {
     const int m_index;
     QString m_newName;
     QString m_newEmail;
+    QString m_newLoginName;
+    QString m_newPassword;
     const QString m_oldName;
     const QString m_oldEmail;
+    const QString m_oldLoginName;
+    const QString m_oldPassword;
 public:
-    EditIdentity( IdentityManager* manager, const int index, const QString & newName, const QString & newEmail );
+    EditIdentityCommand(IdentityManager*   manager,
+                         const int          index,
+                         const QString &    newName,
+                         const QString &    newEmail,
+                         const QString &    newLoginName,
+                         const QString &    newPassword    );
+
     void redo();
     void undo();
     bool mergeWith(const QUndoCommand *other);
@@ -67,7 +77,7 @@ public:
     QStringList identities( ) const;
     Identity identity( const int i ) const { return m_identities[i]; }
     int size() const { return m_identities.size(); }
-    void edit(int i, const QString & name, const QString & email);
+    void edit(int i, const QString & name, const QString & email, const QString &loginName, const QString &password);
     QString identityString(const int index) const;
 
     Identity currentIdentity() const;

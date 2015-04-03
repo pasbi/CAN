@@ -699,7 +699,7 @@ void MainWindow::on_actionRename_Attachment_triggered()
 
     Attachment* attachment = cs->attachments()[index];
     QString name = attachment->name();
-    QString newName = StringDialog::getString( name, QString(tr("New Name for %1")).arg(name), this );
+    QString newName = StringDialog::getString( name, QString(tr("New Name for %1")).arg(name) );
     if (newName.isEmpty())
     {
         return;
@@ -732,19 +732,19 @@ void MainWindow::on_actionOpen_Terminal_here_triggered()
 
 void MainWindow::on_actionClone_triggered()
 {
-    QFileDialog fd(this);
-    fd.setWindowTitle( tr("Clone ...") );
-    fd.setDirectoryUrl( QUrl::fromLocalFile( QDir::homePath() ) );
-    fd.setFileMode( QFileDialog::Directory );
-    fd.setOption( QFileDialog::ShowDirsOnly, true );
 
-    if (fd.exec() != QDialog::Accepted || fd.selectedUrls().isEmpty())
-    {
-        return;
-    }
+//    fd.setWindowTitle( tr("Clone ...") );
+//    fd.setDirectoryUrl( QUrl::fromLocalFile( QDir::homePath() ) );
+//    fd.setFileMode( QFileDialog::ExistingFile );
+//    fd.setOption(   QFileDialog::ShowDirsOnly, true );
+
+//    if (fd.exec() != QDialog::Accepted || fd.selectedUrls().isEmpty())
+//    {
+//        return;
+//    }
 
 
-    QUrl url = fd.selectedUrls()[0];
+    QUrl url = QUrl( StringDialog::getURL( QDir::homePath(), "Local file, SSH or https" ) );
 
     if (!url.isValid())
     {
@@ -763,6 +763,7 @@ void MainWindow::on_actionClone_triggered()
 
     updateWindowTitle();
     updateWhichWidgetsAreEnabled();
+
 }
 
 void MainWindow::on_actionSync_triggered()
@@ -803,6 +804,17 @@ void MainWindow::on_actionSync_triggered()
                               tr("Sync"),
                               tr("Commit message may not be empty. Abort.") );
         return;
+    }
+
+    QString password = m_identityManager.currentIdentity().password();
+    QString name = m_identityManager.currentIdentity().loginName();
+    if (!name.isEmpty())
+    {
+        if (password.isEmpty())
+        {
+            password = StringDialog::getString(QString(tr("Password for %1")).arg(name), tr("Password") );
+        }
+        m_project.setCredentials( name, password );
     }
 
 
