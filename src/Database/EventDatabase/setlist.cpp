@@ -284,7 +284,7 @@ QMimeData* Setlist::mimeData(const QModelIndexList &indexes) const
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
 
-    QList<SetlistItem*> items;
+    m_draggedItems.clear();
     for (const QModelIndex& index : indexes)
     {
         if (index.column() != 0)
@@ -292,10 +292,9 @@ QMimeData* Setlist::mimeData(const QModelIndexList &indexes) const
             // we want only one index per row.
             continue;
         }
-        SetlistItem* item = m_items[index.row()];
-        items << item;
+        m_draggedItems << m_items[index.row()];
     }
-    stream << items;
+    stream << m_draggedItems;
 
     mime->setData("CAN/Setlist/Item", data);
     return mime;
@@ -331,4 +330,16 @@ bool Setlist::fromJson(const QJsonArray & array )
     }
     endResetModel();
     return success;
+}
+
+#include "Commands/SetlistCommands/setlistremoveitemcommand.h"
+void Setlist::removeDraggedItems()
+{
+    app().project()->beginMacro(tr("Remove dragged items"));
+    for ( SetlistItem* item : m_draggedItems)
+    {
+        app().project()->pushCommand( new SetlistRemoveItemCommand( this, item ) );
+    }
+    m_draggedItems.clear();
+    app().project()->endMacro();
 }

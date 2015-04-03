@@ -65,6 +65,8 @@ public:
     QJsonArray toJson() const;
     bool fromJson(const QJsonArray & array );
 
+    void removeDraggedItems();
+
 private:
     bool insertRows(int row, int count, const QModelIndex &parent);
     bool removeRows(int row, int count, const QModelIndex &parent);
@@ -73,7 +75,8 @@ private:
     bool setData_(const QModelIndex &index, const QVariant &value, int role);
 
     QList<SetlistItem*> m_items;
-    QList<SetlistItem*> m_tmpItemBuffer;
+    mutable QList<SetlistItem*> m_tmpItemBuffer;    // temp buffer for inserting items
+    mutable QList<SetlistItem*> m_draggedItems;     // temp buffer for remove dragged items
 };
 
 #endif // SETLIST_H

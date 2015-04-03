@@ -125,7 +125,6 @@ void Project::redo()
     {
         emitCommandPushedSignal( c->type() );
     }
-    emitCommandPushedSignal( c->type() );
 
     QUndoStack::redo();
 }

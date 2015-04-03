@@ -422,6 +422,7 @@ Song* SongDatabase::song( SongID id ) const
     if (id < 0 || id >= m_songs.length())
     {
         qWarning() << "song with id " << id << " does not exist";
+        return NULL;
     }
     else
     {

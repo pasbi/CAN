@@ -21,6 +21,7 @@ protected:
     void dragMoveEvent(QDragMoveEvent *e);
     void dropEvent(QDropEvent *e);
 
+
 };
 
 #endif // SETLISTVIEW_H

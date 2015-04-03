@@ -9,9 +9,10 @@ SetlistView::SetlistView(QWidget *parent) :
     QListView(parent)
 {
     setAcceptDrops(true);
-    setDropIndicatorShown(true);
+    setDropIndicatorShown( false );
     setDragDropMode( DragDrop );
     setSelectionMode( QAbstractItemView::ExtendedSelection );
+    setDefaultDropAction( Qt::MoveAction );
 }
 
 bool acceptMimeData( const QMimeData* data )
@@ -57,9 +58,14 @@ void SetlistView::dropEvent(QDropEvent *e)
         position = n;
     }
 
+    Qt::DropAction dropaction =
+            (e->keyboardModifiers() & Qt::ControlModifier)
+            ? Qt::CopyAction
+            : Qt::MoveAction;
 
     if (e->mimeData()->hasFormat("CAN/songs"))
     {
+        // always copy this mimetype
         QList<qintptr> ptrs;
         QDataStream stream( e->mimeData()->data("CAN/songs") );
         stream >> ptrs;
@@ -82,6 +88,15 @@ void SetlistView::dropEvent(QDropEvent *e)
     }
     else if (e->mimeData()->hasFormat("CAN/Setlist/Item"))
     {
+        if ( dropaction == Qt::MoveAction )
+        {
+            app().project()->beginMacro(tr("Move setlist items"));
+        }
+        else
+        {
+            app().project()->beginMacro(tr("Copy setlist items"));
+        }
+
         QDataStream stream( e->mimeData()->data("CAN/Setlist/Item"));
 
         QList<SetlistItem*> items;
@@ -92,7 +107,21 @@ void SetlistView::dropEvent(QDropEvent *e)
         }
         model()->notifyDataChanged( model()->index(model()->indexOf(items.first()), 0),
                                     model()->index(model()->indexOf(items.last()),  0) );
+        if ( dropaction == Qt::CopyAction )
+        {
+            // copy
+        }
+        else
+        {
+            // move, remove source items
+            model()->removeDraggedItems();
+        }
+
+        e->accept();
+        app().project()->endMacro();
+
     }
+
 
 
 
