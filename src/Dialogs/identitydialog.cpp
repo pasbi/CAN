@@ -8,18 +8,17 @@ IdentityDialog::IdentityDialog(IdentityManager* manager, QWidget *parent) :
     m_manager( manager )
 {
     ui->setupUi(this);
-    updateList();
-    ui->comboBox->setCurrentIndex( manager->currentIdentityIndex() );
-    if (m_manager->size() > 0)
+    for (int i = 0; i < manager->size(); ++i)
     {
-        on_comboBox_currentIndexChanged( manager->currentIdentityIndex() );
+        m_identities << manager->identity(i);
     }
 
+    setComboBox();
 
-    ui->buttonUndo->setEnabled( manager->undoStack()->canUndo() );
-    ui->buttonRedo->setEnabled( manager->undoStack()->canRedo() );
-    connect( manager->undoStack(), SIGNAL(canRedoChanged(bool)), ui->buttonRedo, SLOT(setEnabled(bool)));
-    connect( manager->undoStack(), SIGNAL(canUndoChanged(bool)), ui->buttonUndo, SLOT(setEnabled(bool)));
+    ui->comboBox->setCurrentIndex( manager->currentIdentityIndex() );
+    setEditsAndIcons();
+
+    connect( ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setEditsAndIcons()) );
 }
 
 IdentityDialog::~IdentityDialog()
@@ -29,32 +28,85 @@ IdentityDialog::~IdentityDialog()
 
 void IdentityDialog::on_nameEdit_textChanged(const QString &)
 {
-    updateIdentity();
+    setIdentity();
+    setComboBox();
 }
 
 void IdentityDialog::on_emailEdit_textChanged(const QString &)
 {
-    updateIdentity();
+    setIdentity();
+    setComboBox();
 }
 
-void IdentityDialog::on_nameEdit_editingFinished()
+void IdentityDialog::on_loginEdit_textChanged(const QString &)
 {
-    updateIdentity();
+    setIdentity();
+    setComboBox();
 }
 
-void IdentityDialog::on_emailEdit_editingFinished()
+void IdentityDialog::on_passwordEdit_textChanged(const QString &)
 {
-    updateIdentity();
+    setIdentity();
+    setComboBox();
 }
 
-void IdentityDialog::block(bool bl)
+int IdentityDialog::i() const
 {
-    ui->emailEdit->blockSignals(bl);
-    ui->nameEdit->blockSignals(bl);
-    ui->comboBox->blockSignals(bl);
+    return ui->comboBox->currentIndex();
 }
 
-void IdentityDialog::updateIcons()
+Identity* IdentityDialog::currentIdentity()
+{
+    int index = i();
+    if (index < 0)
+    {
+        return NULL;
+    }
+    else
+    {
+        return &m_identities[index];
+    }
+}
+
+
+
+QString identityLabel( const Identity& identity )
+{
+    if (identity.email().isEmpty())
+    {
+        return identity.name();
+    }
+    else
+    {
+        return QString("%1 [%2]").arg(identity.name()).arg(identity.email());
+    }
+}
+
+void IdentityDialog::setComboBox()
+{
+    int index = i();
+    ui->comboBox->blockSignals(true);
+    ui->comboBox->clear();
+    for (const Identity & identity : m_identities)
+    {
+        ui->comboBox->addItem( identityLabel(identity) );
+    }
+
+    if (index == -1)
+    {
+        index = 0;
+    }
+
+
+    index = qMin( index, ui->comboBox->count() - 1 );
+    ui->comboBox->setCurrentIndex( index );
+
+    setIcon();
+    ui->comboBox->blockSignals(false);
+
+}
+
+void IdentityDialog::setIcon()
 {
     for (int i = 0; i < ui->comboBox->count(); ++i)
     {
@@ -63,109 +115,76 @@ void IdentityDialog::updateIcons()
     ui->comboBox->setItemIcon( ui->comboBox->currentIndex(), QIcon(":/icons/icons/check40.png") );
 }
 
-void IdentityDialog::on_comboBox_currentIndexChanged(int index)
+void IdentityDialog::setEditsAndIcons()
 {
-    block();
+    ui->nameEdit->blockSignals( true );
+    ui->emailEdit->blockSignals( true );
+    ui->loginEdit->blockSignals( true );
+    ui->passwordEdit->blockSignals( true );
 
-    ui->nameEdit->setText(  index >= 0 ?
-                                m_manager->identity(index).name()
-                              : "" );
-    ui->emailEdit->setText( index >= 0 ?
-                                m_manager->identity(index).email()
-                              : "" );
-    ui->loginEdit->setText( index >= 0 ?
-                                m_manager->identity(index).loginName()
-                              : "" );
-    ui->passwordEdit->setText( index >= 0 ?
-                                m_manager->identity(index).password()
-                              : "" );
+    setEdits();
+    setIcon();
 
-    m_manager->setCurrentIndex( index );
-    updateIcons();
-
-    unblock();
+    ui->nameEdit->blockSignals( false );
+    ui->emailEdit->blockSignals( false );
+    ui->loginEdit->blockSignals( false );
+    ui->passwordEdit->blockSignals( false );
 }
 
 void IdentityDialog::on_buttonAdd_clicked()
 {
-    m_manager->addIdentity(Identity());
-    updateList();
+    m_identities.append( Identity() );
+    setComboBox();
+    ui->comboBox->setCurrentIndex( ui->comboBox->count() - 1 );
+    setEditsAndIcons();  // index-change-signal will be blocked in setComboBox();
 
-    block();
-    ui->nameEdit->clear();
-    ui->emailEdit->clear();
-    unblock();
-
-    ui->comboBox->setCurrentIndex( m_manager->size() - 1 );
-    updateIcons();
 }
 
 void IdentityDialog::on_buttonRemove_clicked()
 {
-    m_manager->removeIdentity( i() );
-    updateList();
+    m_identities.removeAt( i() );
+    setComboBox();
+    setEditsAndIcons();  // index-change-signal will be blocked in setComboBox();
 }
 
-int IdentityDialog::i() const
+void IdentityDialog::setIdentity()
 {
-    return ui->comboBox->currentIndex();
-}
-
-void IdentityDialog::updateList()
-{
-    block();
-
-    int index = i();
-    ui->comboBox->clear();
-    ui->comboBox->addItems( m_manager->identities() );
-    index = qMax( index, 0 );
-    index = qMin( index, ui->comboBox->count() - 1 );
-    ui->comboBox->setCurrentIndex( index );
-
-    ui->buttonRemove->setEnabled( m_manager->size() > 0 );
-    ui->emailEdit->setEnabled( m_manager->size() > 0 );
-    ui->nameEdit->setEnabled( m_manager->size() > 0 );
-    ui->passwordEdit->setEnabled( m_manager->size() > 0 );
-    ui->loginEdit->setEnabled( m_manager->size() > 0 );
-
-    ui->emailEdit->setText( m_manager->currentIdentity().email() );
-    ui->nameEdit->setText( m_manager->currentIdentity().name() );
-    ui->passwordEdit->setText( m_manager->currentIdentity().password() );
-    ui->loginEdit->setText( m_manager->currentIdentity().loginName() );
-
-    unblock();
-    updateIcons();
-}
-
-void IdentityDialog::updateIdentity()
-{
-    if (i() >= 0 && i() < m_manager->size())
+    if (currentIdentity())
     {
-        m_manager->edit( i(), ui->nameEdit->text(), ui->emailEdit->text(), ui->loginEdit->text(), ui->passwordEdit->text() );
-        updateList();
+        currentIdentity()->setName( ui->nameEdit->text() );
+        currentIdentity()->setEmail( ui->emailEdit->text() );
+        currentIdentity()->setLoginName( ui->loginEdit->text() );
+        currentIdentity()->setPassword( ui->passwordEdit->text() );
     }
+}
+
+void IdentityDialog::setEdits()
+{
+    if (currentIdentity())
+    {
+        ui->nameEdit->setText( currentIdentity()->name() );
+        ui->emailEdit->setText( currentIdentity()->email() );
+        ui->loginEdit->setText( currentIdentity()->loginName() );
+        ui->passwordEdit->setText( currentIdentity()->password() );
+    }
+    else
+    {
+        ui->nameEdit->setText( "" );
+        ui->emailEdit->setText( "" );
+        ui->loginEdit->setText( "" );
+        ui->passwordEdit->setText( "" );
+    }
+
+    ui->nameEdit->setEnabled( !!currentIdentity() );
+    ui->emailEdit->setEnabled( !!currentIdentity() );
+    ui->loginEdit->setEnabled( !!currentIdentity() );
+    ui->passwordEdit->setEnabled( !!currentIdentity() );
 }
 
 void IdentityDialog::accept()
 {
-    m_manager->removeInvalidIdentities();
-    if (m_manager->size() == 0)
-    {
-        QMessageBox messageBox( this );
-        messageBox.setWindowTitle( tr("No Identities") );
-        messageBox.setText( tr("You should provide at least one identity. "
-                               "Without identities, you cannot sync.\n"
-                               "Identities with empty name or email are not allowed.") );
-        messageBox.addButton( QMessageBox::Ok );
-        messageBox.addButton( QMessageBox::Cancel );
-        messageBox.setButtonText( QMessageBox::Ok, tr("Edit ...") );
-        messageBox.setButtonText( QMessageBox::Cancel, tr("Proceed") );
-        messageBox.setDefaultButton( QMessageBox::Ok );
-        if (messageBox.exec() == QMessageBox::Ok)
-        {
-            return;
-        }
-    }
+    m_manager->setIdentities( m_identities );
+    m_manager->setCurrentIndex( i() );
     QDialog::accept();
 }
 
@@ -175,15 +194,4 @@ void IdentityDialog::reject()
     accept();
 }
 
-void IdentityDialog::on_buttonUndo_clicked()
-{
-    m_manager->undoStack()->undo();
-    updateList();
-}
-
-void IdentityDialog::on_buttonRedo_clicked()
-{
-    m_manager->undoStack()->redo();
-    updateList();
-}
 

@@ -4,9 +4,9 @@
 Application::Application(int &argc, char **argv) :
     QApplication( argc, argv)
 {
-    setOrganizationDomain(organizationDomain());
-    setObjectName(objectName());
-    setApplicationName(applicationName());
+    setApplicationName("CAN");
+    setOrganizationDomain("CAN Developers");
+
     Configurable::restoreAll();
 
 }

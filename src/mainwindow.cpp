@@ -699,7 +699,7 @@ void MainWindow::on_actionRename_Attachment_triggered()
 
     Attachment* attachment = cs->attachments()[index];
     QString name = attachment->name();
-    QString newName = StringDialog::getString( name, QString(tr("New Name for %1")).arg(name) );
+    QString newName = StringDialog::getString( tr("Rename Attachment"), name, QString(tr("New Name for %1")).arg(name) );
     if (newName.isEmpty())
     {
         return;
@@ -744,7 +744,7 @@ void MainWindow::on_actionClone_triggered()
 //    }
 
 
-    QUrl url = QUrl( StringDialog::getURL( QDir::homePath(), "Local file, SSH or https" ) );
+    QUrl url = QUrl( StringDialog::getURL( tr("URL"), QDir::homePath(), "Local file, SSH or https" ) );
 
     if (!url.isValid())
     {
@@ -812,9 +812,19 @@ void MainWindow::on_actionSync_triggered()
     {
         if (password.isEmpty())
         {
-            password = StringDialog::getString(QString(tr("Password for %1")).arg(name), tr("Password") );
+            password = StringDialog::getPassword( QString(tr("Password for %1")).arg(name), "", tr("Password") );
+            if (password.isEmpty())
+            {
+                return;
+            }
+        }
+        else
+        {
         }
         m_project.setCredentials( name, password );
+    }
+    else
+    {
     }
 
 

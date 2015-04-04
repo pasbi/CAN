@@ -18,19 +18,6 @@ public:
     FileIndex & fileIndex() { return m_fileIndex; }
     Project* project() const { return m_project; }
 
-    //TODO guess most methodes are obsolete. tidy up!
-    static QString applicationName() { return "CAN2"; }
-    static QString organizationDomain() { return "none@none.none"; }
-    static QString organizationName() { return "CAN2 Developer"; }
-
-    /**
-     * @brief settings application name etc. is set after static initialization. Therefore, set it manually
-     * @return settings object with appropriate applicationName, organizationName and organizationDomain.
-     */
-    QSettings &settings();
-    const QSettings &settings() const;
-
-    const QString username() const { return "Detlef"; } //TODO
     void setProject(Project* project);
     void pushCommand( Command* command );
 

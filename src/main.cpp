@@ -6,6 +6,7 @@
 
 int main(int argc, char *argv[])
 {
+
     Application a(argc, argv);
 
     a.fileIndex().restore();

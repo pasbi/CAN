@@ -21,28 +21,28 @@ public slots:
     void reject();
 
 private slots:
-    void on_comboBox_currentIndexChanged(int index);
+    void setEditsAndIcons();
     void on_buttonAdd_clicked();
     void on_buttonRemove_clicked();
-    int i() const;
-    void updateList();
+
     void on_nameEdit_textChanged(const QString &);
     void on_emailEdit_textChanged(const QString &);
-
-    void on_nameEdit_editingFinished();
-    void on_emailEdit_editingFinished();
-    void on_buttonUndo_clicked();
-    void on_buttonRedo_clicked();
-
+    void on_loginEdit_textChanged(const QString &);
+    void on_passwordEdit_textChanged(const QString &);
 
 private:
     Ui::IdentityDialog *ui;
     IdentityManager* m_manager;
-    void updateIdentity();
-    void block(bool bl);
-    void block() { block( true ); }
-    void unblock() { block( false); }
-    void updateIcons();
+
+    QList<Identity> m_identities;   // hold a copy to be able to do cancel
+
+    void setIdentity();
+    void setEdits();
+    void setComboBox();
+    void setIcon();
+
+    int i() const;
+    Identity* currentIdentity();
 
 };
 
