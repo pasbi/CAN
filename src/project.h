@@ -25,7 +25,6 @@ public:
     EventDatabase* eventDatabase() const { return m_eventDatabase; }
     EventDatabaseSortProxy* eventDatabaseProxy() const { return m_eventDatabaseProxy; }
 
-
 public slots:
     void pushCommand(Command* command);
     void reset();
@@ -55,6 +54,24 @@ private:
     void emitCommandPushedSignal(Command::Type type);
 signals:
     void canCloseChanged( bool );
+    void detachedSyncFinished( bool );
+
+
+public:
+    void syncDetached( const QString & message, const Identity& identity );
+    bool syncFinished() const { return m_syncFinished; }
+    bool syncResult() const { return m_syncResult; }
+private:
+    bool m_syncFinished = true;
+    bool m_syncResult = false;
+
+public:
+    void cloneDetached( const QString & url );
+    bool cloneFinished() const { return m_cloneFinished; }
+    bool cloneResult() const { return m_cloneResult; }
+private:
+    bool m_cloneFinished = true;
+    bool m_cloneResult = false;
 
 };
 

@@ -752,7 +752,32 @@ void MainWindow::on_actionClone_triggered()
     }
 
     setCurrentPath("");
-    if ( !m_project.clone( url.url() ))
+
+
+    QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
+    pd.setWindowModality( Qt::WindowModal );
+
+    m_project.cloneDetached( url.url() );
+
+    QLabel* label = new QLabel(&pd);
+    label->setWordWrap(true);
+    pd.setLabel(label);
+    pd.show();
+
+    while ( !m_project.cloneFinished() )
+    {
+        pd.setValue( (pd.value() + 1) % 100 );
+        label->setText( tr("Cloning.") );
+        qApp->processEvents();
+        QThread::msleep( 10 );
+        if (pd.wasCanceled())
+        {
+            return;
+        }
+    }
+
+
+    if ( !m_project.cloneResult() )
     {
         QMessageBox::warning( this,
                               tr("Cloning failed"),
@@ -828,7 +853,31 @@ void MainWindow::on_actionSync_triggered()
     }
 
 
-    if ( m_project.sync( message, identity ) )
+
+    QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
+    pd.setWindowModality( Qt::WindowModal );
+
+    m_project.syncDetached( message, identity );
+
+    QLabel* label = new QLabel(&pd);
+    label->setWordWrap(true);
+    pd.setLabel(label);
+    pd.show();
+
+    while ( !m_project.syncFinished() )
+    {
+        pd.setValue( (pd.value() + 1) % 100 );
+        label->setText( tr("Syncing.") );
+        qApp->processEvents();
+        QThread::msleep( 10 );
+        if (pd.wasCanceled())
+        {
+            return;
+        }
+    }
+
+
+    if ( m_project.syncResult() )
     {
         QMessageBox::information( this,
                                   tr("Sync"),
