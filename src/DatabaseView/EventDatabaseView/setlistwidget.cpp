@@ -13,6 +13,10 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
     m_selector( new SetlistItemSelector( this ))
 {
     ui->setupUi(this);
+
+    setSetlist( NULL );
+
+    connect(ui->listView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateButtonsEnabled()) );
 }
 
 SetlistWidget::~SetlistWidget()
@@ -20,38 +24,80 @@ SetlistWidget::~SetlistWidget()
     delete ui;
 }
 
+void SetlistWidget::updateButtonsEnabled()
+{
+    bool buttonsEnabled = !!ui->listView->model();
+    bool itemButtonsEnabled = !!currentItem();
+    ui->buttonAdd->setEnabled( buttonsEnabled );
+    ui->buttonShowSongs->setEnabled( buttonsEnabled );
+    ui->buttonDelete->setEnabled( itemButtonsEnabled );
+    ui->buttonSortDown->setEnabled( itemButtonsEnabled );
+    ui->buttonSortUp->setEnabled( itemButtonsEnabled );
+}
+
 void SetlistWidget::setSetlist(Setlist *setlist)
 {
     m_currentSetlist = setlist;
     ui->listView->setModel( setlist );
+
+    updateButtonsEnabled();
+
 }
 
 SetlistItem* SetlistWidget::currentItem() const
 {
-    if (!ui->listView->selectionModel() || !ui->listView->model())
+    if (ui->listView->model())
     {
-        // no model (i.e. no setlist) is set.
+        if (!ui->listView->selectionModel() || !ui->listView->model())
+        {
+            // no model (i.e. no setlist) is set.
+            return NULL;
+        }
+        QModelIndexList selection = ui->listView->selectionModel()->selectedRows();
+
+        if (selection.isEmpty())
+        {
+            return NULL;
+        }
+
+        return qobject_assert_cast<Setlist*>( ui->listView->model() )->itemAt( selection.first() );
+    }
+    else
+    {
         return NULL;
     }
-    QModelIndexList selection = ui->listView->selectionModel()->selectedRows();
-
-    if (selection.isEmpty())
-    {
-        return NULL;
-    }
-
-    return qobject_assert_cast<Setlist*>( ui->listView->model() )->itemAt( selection.first() );
-
 }
 
+void SetlistWidget::moveRows( int direction )
+{
+    Setlist* setlist = ui->listView->model();
+    if (setlist)
+    {
+        QModelIndex index = ui->listView->currentIndex();
+        if (index.isValid())
+        {
+            setlist->moveRows( QModelIndex(), index.row(), 1, QModelIndex(), index.row() + direction );
+        }
+    }
+}
+
+#include "Commands/SetlistCommands/setlistmoverowscommand.h"
 void SetlistWidget::on_buttonSortUp_clicked()
 {
-
+    QModelIndex index = ui->listView->currentIndex();
+    if (m_currentSetlist && index.isValid())
+    {
+        app().pushCommand( new SetlistMoveRowsCommand( m_currentSetlist, index, 1 ) );
+    }
 }
 
 void SetlistWidget::on_buttonSortDown_clicked()
 {
-
+    QModelIndex index = ui->listView->currentIndex();
+    if (m_currentSetlist && index.isValid())
+    {
+        app().pushCommand( new SetlistMoveRowsCommand( m_currentSetlist, index, -1 ) );
+    }
 }
 
 #include "Commands/SetlistCommands/setlistremoveitemcommand.h"
@@ -73,7 +119,7 @@ void SetlistWidget::on_buttonAdd_clicked()
 {
     if (m_currentSetlist)
     {
-        app().pushCommand( new SetlistAddItemCommand( m_currentSetlist, new SetlistItem( QString("Hello") ) ) );
+        app().pushCommand( new SetlistAddItemCommand( m_currentSetlist, new SetlistItem() ) );
     }
     else
     {

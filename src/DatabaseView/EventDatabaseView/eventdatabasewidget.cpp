@@ -43,3 +43,24 @@ void EventDatabaseWidget::updateSetlistView()
         ui->setlistWidget->setSetlist( NULL );
     }
 }
+
+QListView* EventDatabaseWidget::setlistView() const
+{
+    return ui->setlistWidget->listView();
+}
+
+EventTableView* EventDatabaseWidget::eventTableView() const
+{
+    return ui->eventTableViewContainer->eventTableView();
+}
+
+SetlistItem* EventDatabaseWidget::currentSetlistItem() const
+{
+    return ui->setlistWidget->currentItem();
+}
+
+Setlist* EventDatabaseWidget::currentSetlist() const
+{
+    return qobject_assert_cast<Setlist*>( ui->setlistWidget->listView()->model() );
+}
+

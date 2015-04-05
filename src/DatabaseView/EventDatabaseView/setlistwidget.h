@@ -22,6 +22,7 @@ public:
     QListView* listView() const;
     SetlistItem* currentItem() const;
 
+
 private slots:
     void on_buttonSortUp_clicked();
     void on_buttonSortDown_clicked();
@@ -29,6 +30,7 @@ private slots:
     void on_buttonAdd_clicked();
 
     void on_buttonShowSongs_clicked();
+    void updateButtonsEnabled();
 
 protected:
     void hideEvent(QHideEvent *e);
@@ -42,6 +44,8 @@ private:
     QRect m_selectorGeometry;
     QPoint m_selectorPosition;
     SetlistItemSelector* const m_selector;
+
+    void moveRows( int direction );
 
 };
 

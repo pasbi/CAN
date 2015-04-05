@@ -119,7 +119,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //////////////////////////////////////////
     connect( &m_project, SIGNAL(canCloseChanged(bool)), this, SLOT(updateWindowTitle()) );
     updateWindowTitle();
-    connect( ui->songDatabaseWidget->tableView()->selectionModel(),
+    connect( ui->songDatabaseWidget->songTableView()->selectionModel(),
              &QItemSelectionModel::currentRowChanged,
              [this](){
         QTimer::singleShot(0, this, SLOT( updateWhichWidgetsAreEnabled() ));
@@ -153,15 +153,20 @@ MainWindow::MainWindow(QWidget *parent) :
     name->setIcon(QIcon(icon));                                                                             \
     name->setText(text);                                                                                    \
     name->setShortcut( QKeySequence(shortcut) );                                                            \
-    name->setShortcutContext( Qt::WidgetWithChildrenShortcut );                                             \
-    connect( name, SIGNAL(triggered()), this, SLOT(my_on_##name##_triggered()) );                              \
-    menu->addAction( name );                                                                                \
+    name->setShortcutContext( Qt::WidgetShortcut );                                                         \
+    connect( name, SIGNAL(triggered()), this, SLOT(my_on_##name##_triggered()) );                           \
+    if (menu)                                                                                               \
+    {                                                                                                       \
+        ((QMenu*) menu)->addAction( name );                                                                 \
+    }                                                                                                       \
     }
 
-    newAction( actionNew_Song,      ui->songDatabaseWidget,  tr("New Song"),        "Ctrl+N",   ui->menuSongs,  "" )
-    newAction( actionDelete_Song,   ui->songDatabaseWidget,  tr("Remove Song"),     "Del",      ui->menuSongs,  "" )
-    newAction( actionNew_Event,     ui->eventDatabaseWidget, tr("New Event"),       "Ctrl+N",   ui->menuEvents, "" )
-    newAction( actionDelete_Event,  ui->eventDatabaseWidget, tr("Remove Event"),    "Del",      ui->menuEvents, "" )
+    newAction( actionNew_Song,          ui->songDatabaseWidget->songTableView(),    tr("New Song"),        "Ctrl+N",   ui->menuSongs,  "" )
+    newAction( actionDelete_Song,       ui->songDatabaseWidget->songTableView(),    tr("Remove Song"),     "Del",      ui->menuSongs,  "" )
+    newAction( actionNew_Event,         ui->eventDatabaseWidget->eventTableView(),  tr("New Event"),       "Ctrl+N",   ui->menuEvents, "" )
+    newAction( actionDelete_Event,      ui->eventDatabaseWidget->eventTableView(),  tr("Remove Event"),    "Del",      ui->menuEvents, "" )
+    newAction( actionNewSetlistItem,    ui->eventDatabaseWidget->setlistView(),     tr("New Item"),        "Ctrl+N",   NULL,           "" )
+    newAction( actionDeleteSetlistItem, ui->eventDatabaseWidget->setlistView(),     tr("Remove Item"),     "Del",      NULL,           "" )
 
 #undef newAction
 
@@ -931,7 +936,26 @@ void MainWindow::my_on_actionDelete_Event_triggered()
     }
 }
 
+#include "Commands/SetlistCommands/setlistadditemcommand.h"
+void MainWindow::my_on_actionNewSetlistItem_triggered()
+{
+    Setlist* model = ui->eventDatabaseWidget->currentSetlist();
+    if (model)
+    {
+        app().pushCommand( new SetlistAddItemCommand( model, new SetlistItem() ) );
+    }
+}
 
+#include "Commands/SetlistCommands/setlistremoveitemcommand.h"
+void MainWindow::my_on_actionDeleteSetlistItem_triggered()
+{
+    Setlist* model = ui->eventDatabaseWidget->currentSetlist();
+    SetlistItem* item = ui->eventDatabaseWidget->currentSetlistItem();
+    if (model && item)
+    {
+        app().pushCommand( new SetlistRemoveItemCommand( model, item ) );
+    }
+}
 
 
 

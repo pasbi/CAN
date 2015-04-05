@@ -68,17 +68,12 @@ private slots:
     void on_actionSync_triggered();
     void on_actionIdentites_triggered();
     void on_actionSettings_triggered();
-
-
-
-
-
-
     void on_action_Index_Info_triggered();
-
     void my_on_actionNew_Event_triggered();
-
     void my_on_actionDelete_Event_triggered();
+    void my_on_actionNewSetlistItem_triggered();
+    void my_on_actionDeleteSetlistItem_triggered();
+
 
 private:
     void setupAttachmentMenu();

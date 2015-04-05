@@ -22,7 +22,7 @@ public:
     Song* currentSong() const;
 
     AttachmentChooser* attachmentChooser() const;
-    SongTableView* tableView() const;
+    SongTableView* songTableView() const;
 
 private slots:
     void updateAttachmentChooser();

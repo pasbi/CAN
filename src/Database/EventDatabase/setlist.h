@@ -14,6 +14,11 @@ public:
         m_label( label )
     {    }
 
+    SetlistItem( ) :
+        m_type( LabelType ),
+        m_label( QObject::tr("Unnamed") )
+    {    }
+
     SetlistItem( const Song* song ) :
         m_type( SongType ),
         m_song( song )

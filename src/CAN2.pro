@@ -117,8 +117,9 @@ SOURCES += main.cpp\
     Commands/SetlistCommands/setlistremoveitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistitemselector.cpp \
     Commands/SetlistCommands/setlisteditdatacommand.cpp \
+    Commands/SetlistCommands/setlistinsertitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistview.cpp \
-    Commands/SetlistCommands/setlistinsertitemcommand.cpp
+    Commands/SetlistCommands/setlistmoverowscommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -212,8 +213,9 @@ HEADERS  += mainwindow.h \
     Commands/SetlistCommands/setlistremoveitemcommand.h \
     DatabaseView/EventDatabaseView/setlistitemselector.h \
     Commands/SetlistCommands/setlisteditdatacommand.h \
+    Commands/SetlistCommands/setlistinsertitemcommand.h \
     DatabaseView/EventDatabaseView/setlistview.h \
-    Commands/SetlistCommands/setlistinsertitemcommand.h
+    Commands/SetlistCommands/setlistmoverowscommand.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
