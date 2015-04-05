@@ -16,10 +16,14 @@ public:
     Setlist* model() const { return qobject_assert_cast<Setlist*>( QListView::model() ); }
     void setModel(Setlist* setlist) { QListView::setModel( setlist ); }
 
+signals:
+    void clicked();
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *e);
     void dropEvent(QDropEvent *e);
+    void mousePressEvent(QMouseEvent *event);
 
 
 };

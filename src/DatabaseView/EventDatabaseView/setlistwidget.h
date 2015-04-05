@@ -44,9 +44,6 @@ private:
     QRect m_selectorGeometry;
     QPoint m_selectorPosition;
     SetlistItemSelector* const m_selector;
-
-    void moveRows( int direction );
-
 };
 
 #endif // SETLISTWIDGET_H

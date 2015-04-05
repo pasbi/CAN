@@ -12,8 +12,10 @@ public:
     void redo();
 
 private:
-    QModelIndex m_index;
-    int m_direction;
+    int m_from;
+    int m_to;
+
+    void moveRow(int from, int to);
 };
 
 #endif // SETLISTMOVEROWSCOMMAND_H

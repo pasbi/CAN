@@ -121,8 +121,10 @@ void SetlistView::dropEvent(QDropEvent *e)
         app().project()->endMacro();
 
     }
+}
 
-
-
-
+void SetlistView::mousePressEvent(QMouseEvent *event)
+{
+    QListView::mousePressEvent( event );
+    emit clicked();
 }

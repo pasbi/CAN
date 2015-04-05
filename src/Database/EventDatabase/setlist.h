@@ -53,7 +53,9 @@ public:
     void insertItem( int position, SetlistItem* item );
     void appendItem( SetlistItem* item );
     void removeItem( SetlistItem* item );
+    void moveItem( int from, int to );
     int rowCount(const QModelIndex &parent) const;
+    int rowCount() const { return rowCount( QModelIndex() ); }
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
@@ -71,6 +73,7 @@ public:
     bool fromJson(const QJsonArray & array );
 
     void removeDraggedItems();
+
 
 private:
     bool insertRows(int row, int count, const QModelIndex &parent);

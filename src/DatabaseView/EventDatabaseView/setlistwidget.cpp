@@ -16,7 +16,7 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
 
     setSetlist( NULL );
 
-    connect(ui->listView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateButtonsEnabled()) );
+    connect(ui->listView, SIGNAL(clicked()), this, SLOT(updateButtonsEnabled()) );
 }
 
 SetlistWidget::~SetlistWidget()
@@ -31,8 +31,8 @@ void SetlistWidget::updateButtonsEnabled()
     ui->buttonAdd->setEnabled( buttonsEnabled );
     ui->buttonShowSongs->setEnabled( buttonsEnabled );
     ui->buttonDelete->setEnabled( itemButtonsEnabled );
-    ui->buttonSortDown->setEnabled( itemButtonsEnabled );
-    ui->buttonSortUp->setEnabled( itemButtonsEnabled );
+    ui->buttonSortDown->setEnabled( itemButtonsEnabled && ui->listView->currentIndex().row() < m_currentSetlist->rowCount() - 1 );
+    ui->buttonSortUp->setEnabled( itemButtonsEnabled && ui->listView->currentIndex().row() > 0 );
 }
 
 void SetlistWidget::setSetlist(Setlist *setlist)
@@ -68,27 +68,15 @@ SetlistItem* SetlistWidget::currentItem() const
     }
 }
 
-void SetlistWidget::moveRows( int direction )
-{
-    Setlist* setlist = ui->listView->model();
-    if (setlist)
-    {
-        QModelIndex index = ui->listView->currentIndex();
-        if (index.isValid())
-        {
-            setlist->moveRows( QModelIndex(), index.row(), 1, QModelIndex(), index.row() + direction );
-        }
-    }
-}
-
 #include "Commands/SetlistCommands/setlistmoverowscommand.h"
 void SetlistWidget::on_buttonSortUp_clicked()
 {
     QModelIndex index = ui->listView->currentIndex();
     if (m_currentSetlist && index.isValid())
     {
-        app().pushCommand( new SetlistMoveRowsCommand( m_currentSetlist, index, 1 ) );
+        app().pushCommand( new SetlistMoveRowsCommand( m_currentSetlist, index, -1 ) );
     }
+    updateButtonsEnabled();
 }
 
 void SetlistWidget::on_buttonSortDown_clicked()
@@ -96,8 +84,9 @@ void SetlistWidget::on_buttonSortDown_clicked()
     QModelIndex index = ui->listView->currentIndex();
     if (m_currentSetlist && index.isValid())
     {
-        app().pushCommand( new SetlistMoveRowsCommand( m_currentSetlist, index, -1 ) );
+        app().pushCommand( new SetlistMoveRowsCommand( m_currentSetlist, index, 1 ) );
     }
+    updateButtonsEnabled();
 }
 
 #include "Commands/SetlistCommands/setlistremoveitemcommand.h"

@@ -150,7 +150,7 @@ void Setlist::removeItem( SetlistItem* item )
     }
 }
 
-int Setlist::rowCount(const QModelIndex &parent) const
+int Setlist::rowCount(const QModelIndex& parent) const
 {
     assert( !parent.isValid() );
     return m_items.length();
@@ -343,3 +343,20 @@ void Setlist::removeDraggedItems()
     m_draggedItems.clear();
     app().project()->endMacro();
 }
+
+void Setlist::moveItem(int from, int to)
+{
+    if (from > to)
+    {
+        beginMoveRows( QModelIndex(), from, from, QModelIndex(), to );
+        m_items.insert( to, m_items.takeAt( from ) );
+        endMoveRows();
+    }
+    else
+    {
+        beginMoveRows( QModelIndex(), from, from, QModelIndex(), to + 1 );
+        m_items.insert( to, m_items.takeAt( from ) );
+        endMoveRows();
+    }
+}
+
