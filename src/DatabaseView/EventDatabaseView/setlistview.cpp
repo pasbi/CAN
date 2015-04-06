@@ -11,8 +11,9 @@ SetlistView::SetlistView(QWidget *parent) :
     setAcceptDrops(true);
     setDropIndicatorShown( false );
     setDragDropMode( DragDrop );
-    setSelectionMode( QAbstractItemView::ExtendedSelection );
+    setSelectionMode( QAbstractItemView::SingleSelection );
     setDefaultDropAction( Qt::MoveAction );
+
 }
 
 bool acceptMimeData( const QMimeData* data )
@@ -58,10 +59,7 @@ void SetlistView::dropEvent(QDropEvent *e)
         position = n;
     }
 
-    Qt::DropAction dropaction =
-            (e->keyboardModifiers() & Qt::ControlModifier)
-            ? Qt::CopyAction
-            : Qt::MoveAction;
+    Qt::DropAction dropaction = e->proposedAction();
 
     if (e->mimeData()->hasFormat("CAN/songs"))
     {
@@ -110,14 +108,16 @@ void SetlistView::dropEvent(QDropEvent *e)
         if ( dropaction == Qt::CopyAction )
         {
             // copy
+            e->accept();
         }
         else
         {
             // move, remove source items
             model()->removeDraggedItems();
+            // e->accept() must not be called here since this makes the view to delete the dragged item
+            // (which is exactly what we want. But the view deletes it without involving the remove-item-command)
         }
 
-        e->accept();
         app().project()->endMacro();
 
     }
