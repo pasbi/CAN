@@ -34,8 +34,11 @@ public:
     QString filename() const;
     QByteArray hash() const { return m_hash; }
 
+protected:
+    // copy function of virtual class should not be used outside final-class-implementation.
     virtual void copy(Attachment *&copied) const;
 
+public:
     virtual QStringList acceptedEndings() const = 0;
 
     QJsonObject toJsonObject() const;

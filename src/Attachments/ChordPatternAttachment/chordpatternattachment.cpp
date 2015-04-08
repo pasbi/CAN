@@ -14,8 +14,8 @@ ChordPatternAttachment::ChordPatternAttachment() :
 
 void ChordPatternAttachment::copy(Attachment *&copied) const
 {
+    copied = new ChordPatternAttachment();
     ChordPatternAttachment* cpa = dynamic_cast<ChordPatternAttachment*>(copied);
-    cpa = new ChordPatternAttachment();
     cpa->m_pattern = m_pattern;
 }
 
