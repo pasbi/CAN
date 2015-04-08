@@ -173,7 +173,6 @@ int Song::removeAttachment( Attachment* attachment )
 
 void Song::addAttachment( Attachment* attachment )
 {
-    assert( attachment->song() == this );
     int index = m_attachments.length();
     insertAttachment( attachment, index );
 
@@ -181,6 +180,7 @@ void Song::addAttachment( Attachment* attachment )
 
 void Song::insertAttachment(Attachment *attachment, int index)
 {
+    assert( attachment->song() == this );
     m_attachments.insert( index, attachment );
     connectAttachment( attachment );
     emit attachmentAdded(index);

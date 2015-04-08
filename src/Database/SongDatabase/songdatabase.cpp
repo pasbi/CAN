@@ -368,7 +368,7 @@ bool SongDatabase::loadFrom(const QString &path)
             QString path = project()->makeAbsolute( QString("song%1").arg(i) );
             Song* s = new Song(this);
             s->loadFrom(path);
-            m_songs << s;
+            appendSong( s );
         }
 
     }
