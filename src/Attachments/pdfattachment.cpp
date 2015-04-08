@@ -11,10 +11,20 @@ PDFAttachment::PDFAttachment()
 void PDFAttachment::open()
 {
     delete m_document;
-    m_document = Poppler::Document::load( filename() );
-    if (m_document)
+    m_document = NULL;
+
+    if (filename().isEmpty())
     {
-        m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+        // if filename is empty, dont try open it.
+    }
+    else
+    {
+        m_document = Poppler::Document::load( filename() );
+        if (m_document)
+        {
+            m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+        }
+
     }
 
 }

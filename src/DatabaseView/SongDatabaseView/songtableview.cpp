@@ -51,7 +51,6 @@ SongTableView::SongTableView(QWidget *parent) :
     setDragEnabled( true );
     setDropIndicatorShown( true );
 
-
 }
 
 void SongTableView::showContextMenu(QPoint pos)

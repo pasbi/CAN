@@ -173,7 +173,6 @@ Qt::ItemFlags Setlist::flags(const QModelIndex &index) const
 
 QVariant Setlist::data(const QModelIndex &index, int role) const
 {
-    if (role == Qt::DisplayRole) qDebug() << "data = " << m_items;
     assert(index.column() == 0);
     switch (role)
     {
