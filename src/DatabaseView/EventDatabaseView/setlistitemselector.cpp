@@ -13,12 +13,12 @@ SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
     stc->songTableView()->setSelectionMode( QAbstractItemView::ExtendedSelection );
     stc->setModel( app().project()->songDatabaseProxy() );
     QDialogButtonBox* buttonBox = new QDialogButtonBox( this );
-    buttonBox->setStandardButtons( QDialogButtonBox::Ok );
+    buttonBox->setStandardButtons( QDialogButtonBox::Close );
     QVBoxLayout* layout = new QVBoxLayout( this );
     layout->addWidget( stc );
     layout->addWidget( buttonBox );
     this->setLayout( layout );
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(hide()));
+    connect(buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(hide()));
 }
 
 SetlistItemSelector::~SetlistItemSelector()
