@@ -34,5 +34,9 @@ Song* SongTableViewContainer::currentSong() const
     {
         return NULL;
     }
-    return ui->tableView->model()->songAtIndex( rows.first() );
+    else
+    {
+        QModelIndex index = ui->tableView->proxyModel()->mapToSource( rows.first() );
+        return ui->tableView->model()->songAtIndex( index );
+    }
 }

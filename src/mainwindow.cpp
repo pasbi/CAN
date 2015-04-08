@@ -641,6 +641,7 @@ void MainWindow::on_actionOpen_triggered()
 void MainWindow::my_on_actionDelete_Song_triggered()
 {
     Song* song = currentSong();
+    qDebug() << "current song: " << song->title() << song->artist();
     if (song)
     {
         app().pushCommand( new SongDatabaseRemoveSongCommand( m_project.songDatabase(), song ) );

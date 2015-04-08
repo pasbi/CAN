@@ -15,7 +15,7 @@ void PDFAttachment::open()
 
     if (filename().isEmpty())
     {
-        // if filename is empty, dont try open it.
+        // if filename is empty, dont try to open it.
     }
     else
     {

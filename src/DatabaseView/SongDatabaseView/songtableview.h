@@ -18,6 +18,8 @@ public:
     SongDatabaseSortProxy* proxyModel() const;
 
 
+
+
 public slots:
     void fakeFocusOutEvent();
 

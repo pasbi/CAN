@@ -5,6 +5,7 @@ SongDatabaseSortProxy::SongDatabaseSortProxy(QObject *parent) :
 {
     // filter all columns
     setFilterKeyColumn(-1);
+    setDynamicSortFilter( false );
 }
 
 bool SongDatabaseSortProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const
