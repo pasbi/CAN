@@ -5,15 +5,19 @@
 #include "project.h"
 #include "Commands/SetlistCommands/setlistinsertitemcommand.h"
 #include <QAction>
+#include <QHeaderView>
 
 SetlistView::SetlistView(QWidget *parent) :
-    QListView(parent)
+    QTableView(parent)
 {
     setAcceptDrops(true);
     setDropIndicatorShown( false );
     setDragDropMode( DragDrop );
     setSelectionMode( QAbstractItemView::ExtendedSelection );
     setDefaultDropAction( Qt::MoveAction );
+    horizontalHeader()->hide();
+    horizontalHeader()->setStretchLastSection( true );
+    setHorizontalScrollMode( QTableView::ScrollPerPixel );
 }
 
 bool acceptMimeData( const QMimeData* data )
@@ -143,6 +147,22 @@ void SetlistView::dropEvent(QDropEvent *e)
 
 void SetlistView::mousePressEvent(QMouseEvent *event)
 {
-    QListView::mousePressEvent( event );
+    QTableView::mousePressEvent( event );
     emit clicked();
+}
+
+void SetlistView::setModel(Setlist *setlist)
+{
+     QTableView::setModel( setlist );
+     connect(setlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateMinimumHorizontalHeaderSize()));
+     updateMinimumHorizontalHeaderSize();
+}
+
+void SetlistView::updateMinimumHorizontalHeaderSize()
+{
+    horizontalHeader()->setMinimumWidth( sizeHintForColumn( 0 ) );
+
+    // shake the size to show or hide scrollbars that might have become visible or hidden
+    resize( QSize( size().width() + 1, size().height() + 1) );
+    resize( QSize( size().width() - 1, size().height() - 1) );
 }
