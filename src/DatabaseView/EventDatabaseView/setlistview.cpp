@@ -154,13 +154,16 @@ void SetlistView::mousePressEvent(QMouseEvent *event)
 void SetlistView::setModel(Setlist *setlist)
 {
      QTableView::setModel( setlist );
-     connect(setlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateMinimumHorizontalHeaderSize()));
-     updateMinimumHorizontalHeaderSize();
+     if (setlist)
+     {
+         connect(setlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateMinimumHorizontalHeaderSize()));
+         updateMinimumHorizontalHeaderSize();
+     }
 }
 
 void SetlistView::updateMinimumHorizontalHeaderSize()
 {
-    horizontalHeader()->setMinimumWidth( sizeHintForColumn( 0 ) );
+    horizontalHeader()->setMinimumWidth( qMin(0, sizeHintForColumn( 0 )) );
 
     // shake the size to show or hide scrollbars that might have become visible or hidden
     resize( QSize( size().width() + 1, size().height() + 1) );
