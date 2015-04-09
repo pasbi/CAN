@@ -55,11 +55,15 @@ struct Registerer
     }
 };
 
-#define DECL_CREATABLE( CLASSNAME ) \
-    static Registerer<CLASSNAME> reg
+#define DECL_CREATABLE( CLASSNAME )         \
+    static Registerer<CLASSNAME> reg;       \
+public:                                     \
+    static const QString TYPE;              \
+    QString type() const { return TYPE; }   /* this will override `virtual QString type() const = 0` from base classes */
 
-#define DEFN_CREATABLE_NAME( CLASSNAME, CATEGORY, NAME ) \
-    Registerer<CLASSNAME> CLASSNAME::reg(#CLASSNAME, #CATEGORY, QObject::tr(NAME))
+#define DEFN_CREATABLE_NAME( CLASSNAME, CATEGORY, NAME )                            \
+    Registerer<CLASSNAME> CLASSNAME::reg(#CLASSNAME, #CATEGORY, QObject::tr(NAME)); \
+    const QString CLASSNAME::TYPE = #CLASSNAME;
 
 #define DEFN_CREATABLE( CLASSNAME, CATEGORY ) \
     Registerer<CLASSNAME> CLASSNAME::reg(#CLASSNAME, #CATEGORY, #CLASSNAME)

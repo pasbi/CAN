@@ -360,3 +360,16 @@ void Setlist::moveItem(int from, int to)
     }
 }
 
+QList<const Song*> Setlist::songs() const
+{
+    QList<const Song*> s;
+    for (const SetlistItem* item : m_items)
+    {
+        if (item->type() == SetlistItem::SongType)
+        {
+            s << item->song();
+        }
+    }
+    return s;
+}
+

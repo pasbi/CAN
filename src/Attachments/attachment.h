@@ -9,6 +9,7 @@ class Attachment : public QObject, public Taggable, public Creatable
 {
     Q_OBJECT
 public:
+
     Attachment();
     Attachment(const Attachment &) : QObject() {}
 
@@ -27,6 +28,8 @@ public:
 
     QJsonObject toJsonObject() const;
     static bool create(const QJsonObject & object, Attachment* &attachment);
+
+    virtual QString type() const = 0;
 
 signals:
     void attachmentRenamed(QString);

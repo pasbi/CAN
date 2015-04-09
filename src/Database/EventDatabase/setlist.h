@@ -74,6 +74,8 @@ public:
 
     void removeDraggedItems();
 
+    QList<const Song *> songs() const;
+
 
 private:
     bool insertRows(int row, int count, const QModelIndex &parent);
