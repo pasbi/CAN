@@ -44,7 +44,7 @@ void EventDatabaseWidget::updateSetlistView()
     }
 }
 
-QListView* EventDatabaseWidget::setlistView() const
+SetlistView* EventDatabaseWidget::setlistView() const
 {
     return ui->setlistWidget->listView();
 }
@@ -54,9 +54,9 @@ EventTableView* EventDatabaseWidget::eventTableView() const
     return ui->eventTableViewContainer->eventTableView();
 }
 
-SetlistItem* EventDatabaseWidget::currentSetlistItem() const
+QList<SetlistItem*> EventDatabaseWidget::currentSetlistItems() const
 {
-    return ui->setlistWidget->currentItem();
+    return ui->setlistWidget->currentItems();
 }
 
 Setlist* EventDatabaseWidget::currentSetlist() const

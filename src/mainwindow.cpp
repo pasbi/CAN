@@ -167,6 +167,8 @@ MainWindow::MainWindow(QWidget *parent) :
     newAction( actionDelete_Event,      ui->eventDatabaseWidget->eventTableView(),  tr("Remove Event"),    "Del",      ui->menuEvents, "" )
     newAction( actionNewSetlistItem,    ui->eventDatabaseWidget->setlistView(),     tr("New Item"),        "Ctrl+N",   NULL,           "" )
     newAction( actionDeleteSetlistItem, ui->eventDatabaseWidget->setlistView(),     tr("Remove Item"),     "Del",      NULL,           "" )
+    newAction( actionCopySetlistItem,   ui->eventDatabaseWidget->setlistView(),     tr("&Copy Items"),     "Ctrl+C",   NULL,           "" )
+    newAction( actionPasteSetlistItem,  ui->eventDatabaseWidget->setlistView(),     tr("&Paste Items"),    "Ctrl+V",   NULL,           "" )
 
 #undef newAction
 
@@ -950,12 +952,33 @@ void MainWindow::my_on_actionNewSetlistItem_triggered()
 void MainWindow::my_on_actionDeleteSetlistItem_triggered()
 {
     Setlist* model = ui->eventDatabaseWidget->currentSetlist();
-    SetlistItem* item = ui->eventDatabaseWidget->currentSetlistItem();
-    if (model && item)
+    QList<SetlistItem*> si = ui->eventDatabaseWidget->currentSetlistItems();
+    if (model && !si.isEmpty())
     {
-        app().pushCommand( new SetlistRemoveItemCommand( model, item ) );
+        app().project()->beginMacro( tr("Remove Setlist Items"));
+        for (SetlistItem* i : si)
+        {
+            app().pushCommand( new SetlistRemoveItemCommand( model, i ) );
+        }
+        app().project()->endMacro();
     }
 }
+
+void MainWindow::my_on_actionCopySetlistItem_triggered()
+{
+    QModelIndexList selection;
+    if (ui->eventDatabaseWidget->setlistView()->selectionModel())
+    {
+        selection = ui->eventDatabaseWidget->setlistView()->selectionModel()->selectedRows();
+    }
+    app().clipboard()->setMimeData( ui->eventDatabaseWidget->setlistView()->model()->mimeData( selection ) );
+}
+
+void MainWindow::my_on_actionPasteSetlistItem_triggered()
+{
+    ui->eventDatabaseWidget->setlistView()->paste( app().clipboard()->mimeData() );
+}
+
 
 
 

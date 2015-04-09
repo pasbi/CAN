@@ -4,6 +4,7 @@
 #include "application.h"
 #include "project.h"
 #include "Commands/SetlistCommands/setlistinsertitemcommand.h"
+#include <QAction>
 
 SetlistView::SetlistView(QWidget *parent) :
     QListView(parent)
@@ -11,9 +12,8 @@ SetlistView::SetlistView(QWidget *parent) :
     setAcceptDrops(true);
     setDropIndicatorShown( false );
     setDragDropMode( DragDrop );
-    setSelectionMode( QAbstractItemView::SingleSelection );
+    setSelectionMode( QAbstractItemView::ExtendedSelection );
     setDefaultDropAction( Qt::MoveAction );
-
 }
 
 bool acceptMimeData( const QMimeData* data )
@@ -38,7 +38,26 @@ void SetlistView::dragMoveEvent(QDragMoveEvent *e)
     }
 }
 
+void SetlistView::paste( const QMimeData* mime )
+{
+    if (mime->hasFormat("CAN/Setlist/Item"))
+    {
+        app().project()->beginMacro(tr("Paste setlist items"));
 
+        QDataStream stream( mime->data("CAN/Setlist/Item"));
+
+        QList<SetlistItem*> items;
+        stream >> items;
+        for (SetlistItem* item : items)
+        {
+            app().project()->pushCommand( new SetlistInsertItemCommand( model(), model()->rowCount(), item ));
+        }
+        model()->notifyDataChanged( model()->index(model()->indexOf(items.first()), 0),
+                                    model()->index(model()->indexOf(items.last()),  0) );
+
+        app().project()->endMacro();
+    }
+}
 
 void SetlistView::dropEvent(QDropEvent *e)
 {
@@ -119,7 +138,6 @@ void SetlistView::dropEvent(QDropEvent *e)
         }
 
         app().project()->endMacro();
-
     }
 }
 

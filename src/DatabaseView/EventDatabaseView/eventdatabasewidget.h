@@ -6,6 +6,7 @@
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
 #include <QListView>
 #include "eventtableview.h"
+#include "setlistview.h"
 
 
 namespace Ui {
@@ -21,9 +22,9 @@ public:
     ~EventDatabaseWidget();
 
     Event* currentEvent() const;
-    QListView* setlistView() const;
+    SetlistView *setlistView() const;
     EventTableView* eventTableView() const;
-    SetlistItem* currentSetlistItem() const;
+    QList<SetlistItem *> currentSetlistItems() const;
     Setlist* currentSetlist() const;
 
 

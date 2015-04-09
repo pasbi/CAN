@@ -15,6 +15,7 @@ public:
 
     Setlist* model() const { return qobject_assert_cast<Setlist*>( QListView::model() ); }
     void setModel(Setlist* setlist) { QListView::setModel( setlist ); }
+    void paste(const QMimeData* mime);
 
 signals:
     void clicked();

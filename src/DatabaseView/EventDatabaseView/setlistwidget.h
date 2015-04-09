@@ -5,6 +5,7 @@
 #include "Database/EventDatabase/setlist.h"
 #include <QListView>
 #include "setlistitemselector.h"
+#include "setlistview.h"
 
 namespace Ui {
 class SetlistWidget;
@@ -19,8 +20,9 @@ public:
     ~SetlistWidget();
 
     void setSetlist( Setlist* Setlist );
-    QListView* listView() const;
-    SetlistItem* currentItem() const;
+    SetlistView *listView() const;
+    QList<SetlistItem*> currentItems() const;
+    Setlist* setlist() const;
 
 
 private slots:
@@ -38,7 +40,6 @@ protected:
 
 private:
     Ui::SetlistWidget *ui;
-    Setlist* m_currentSetlist = NULL;
 
     bool m_selectorIsVisible = false;
     QRect m_selectorGeometry;
