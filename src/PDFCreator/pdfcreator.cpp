@@ -4,9 +4,9 @@
 //#include "poppler/qt5/poppler-qt5.h"
 //#include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/event.h"
+#include "pdfpagesizewrapper.h"
 
 #define pt / m_pdfPainter.scale()
-
 
 DEFN_CONFIG( PDFCreator, "PDF Export" );
 
@@ -33,8 +33,39 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFSize,
                        "Page size",
-                       0,
-                       ConfigurationItemOptions::ComboBoxOptions( QStringList() << "manyNiceFormats" ));
+                       pageSizeToInt( QPdfWriter::A4 ),
+                       ConfigurationItemOptions::ComboBoxOptions( QStringList() <<  "A0"
+                                                                                <<  "A1"
+                                                                                <<  "A2"
+                                                                                <<  "A3"
+                                                                                <<  "A4"
+                                                                                <<  "A5"
+                                                                                <<  "A6"
+                                                                                <<  "A7"
+                                                                                <<  "A8"
+                                                                                <<  "A9"
+                                                                                <<  "B0"
+                                                                                <<  "B1"
+                                                                                <<  "B2"
+                                                                                <<  "B3"
+                                                                                <<  "B4"
+                                                                                <<  "B5"
+                                                                                <<  "B6"
+                                                                                <<  "B7"
+                                                                                <<  "B8"
+                                                                                <<  "B9"
+                                                                                <<  "B10"
+                                                                                <<  "C5E"
+                                                                                <<  "Comm10E"
+                                                                                <<  "DLE"
+                                                                                <<  "Executive"
+                                                                                <<  "Folio"
+                                                                                <<  "Ledger"
+                                                                                <<  "Legal"
+                                                                                <<  "Letter"
+                                                                                <<  "Tabloid"
+                                                                                <<  "Custom" ) );
+
 
 QMap<QString, QString> init_dictionary()
 {
@@ -63,7 +94,7 @@ PDFCreator::PDFCreator( const Setlist *setlist ) :
     m_setlist( setlist )
 {
     QString title = labelSetlist( m_setlist );
-    QPdfWriter::PageSize pageSize = (QPdfWriter::PageSize) config["PDFSize"].toInt();
+    QPdfWriter::PageSize pageSize = intToPageSize( config["PDFSize"].toInt() );
     m_pdfPainter = new PDFPaintDevice( title, pageSize );
 
     paintSetlist();

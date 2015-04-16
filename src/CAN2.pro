@@ -120,7 +120,8 @@ SOURCES += main.cpp\
     Commands/SetlistCommands/setlistinsertitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistview.cpp \
     Commands/SetlistCommands/setlistmoverowscommand.cpp \
-    PDFCreator/pdfpaintdevice.cpp
+    PDFCreator/pdfpaintdevice.cpp \
+    PDFCreator/pdfpagesizewrapper.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -217,7 +218,8 @@ HEADERS  += mainwindow.h \
     Commands/SetlistCommands/setlistinsertitemcommand.h \
     DatabaseView/EventDatabaseView/setlistview.h \
     Commands/SetlistCommands/setlistmoverowscommand.h \
-    PDFCreator/pdfpaintdevice.h
+    PDFCreator/pdfpaintdevice.h \
+    PDFCreator/pdfpagesizewrapper.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

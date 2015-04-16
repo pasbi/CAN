@@ -5,7 +5,7 @@
 
 #define FILENAME "/media/Volume/Musik/Coldplay/X&Y/Fix You.mp3"
 
-#define TEST
+//#define TEST
 
 
 int main(int argc, char *argv[])

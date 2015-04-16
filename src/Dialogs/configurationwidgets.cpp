@@ -5,6 +5,7 @@
 #include <QCheckBox>
 #include <QSlider>
 #include <QDoubleSpinBox>
+#include <QComboBox>
 
 #define DEFN_CONFIG_CLASS( TYPE, SIGNAL_NAME, ACTION_ON_VALUE_CHANGED, UPDATE_ACTION, INITIALIZE )          \
 class Config##TYPE : public ConfigurationWidget                                                             \
@@ -18,7 +19,7 @@ public:                                                                         
         layout->setContentsMargins( 0, 0, 0, 0 );                                                           \
         layout->addWidget( m_edit );                                                                        \
         INITIALIZE;                                                                                         \
-        connect( m_edit, &TYPE::SIGNAL_NAME, [this]()                                                       \
+        connect( m_edit, SIGNAL_NAME, [this]()                                                              \
         {                                                                                                   \
             ACTION_ON_VALUE_CHANGED;                                                                        \
         });                                                                                                 \
@@ -34,15 +35,21 @@ public slots:                                                                   
 
 
 DEFN_CONFIG_CLASS( QCheckBox,
-                   toggled,
+                   &QCheckBox::toggled,
                    emit valueChanged( m_edit->isChecked() ),
                    m_edit->setChecked(   m_item->actualValue().toBool()   ),
                    )
 DEFN_CONFIG_CLASS( QTextEdit,
-                   textChanged,
+                   &QTextEdit::textChanged,
                    emit valueChanged( m_edit->toPlainText() ),
                    m_edit->setPlainText( m_item->actualValue().toString() ),
                    m_edit->setPlaceholderText( item->options().placeHolderText()) )
+
+DEFN_CONFIG_CLASS( QComboBox,
+                   static_cast< void(QComboBox::*)(int) >(&QComboBox::currentIndexChanged),
+                   emit valueChanged( m_edit->currentIndex() ),
+                   m_edit->setCurrentIndex( m_item->actualValue().toInt() ),
+                   m_edit->addItems( m_item->options().alternatives() ) )
 
 // some classes cannot be created with the fancy template above...
 class ConfigAdvancedDoubleSlider : public ConfigurationWidget
@@ -118,6 +125,8 @@ ConfigurationWidget* ConfigurationWidget::create( ConfigurationItem *item, QWidg
         return new ConfigQCheckBox( item, parent );
     case ConfigurationItemOptions::AdvancedDoubleSlider:
         return new ConfigAdvancedDoubleSlider( item, parent );
+    case ConfigurationItemOptions::ComboBox:
+        return new ConfigQComboBox( item, parent );
     }
     return NULL;
 }
