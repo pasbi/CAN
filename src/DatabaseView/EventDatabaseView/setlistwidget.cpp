@@ -6,6 +6,9 @@
 #include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QFileDialog>
+#include "PDFCreator/pdfcreator.h"
+#include <QMessageBox>
 
 SetlistWidget::SetlistWidget(QWidget *parent) :
     QWidget(parent),
@@ -55,6 +58,7 @@ void SetlistWidget::updateButtonsEnabled()
     ui->buttonDelete->setEnabled( itemButtonsEnabled );
     ui->buttonSortDown->setEnabled( !upperLimit );
     ui->buttonSortUp->setEnabled( !lowerLimit );
+    ui->buttonExportPDF->setEnabled( buttonsEnabled );
 }
 
 void SetlistWidget::setSetlist(Setlist *setlist)
@@ -193,4 +197,32 @@ void SetlistWidget::showEvent(QShowEvent *e)
 Setlist* SetlistWidget::setlist() const
 {
     return ui->listView->model();
+}
+
+void SetlistWidget::on_buttonExportPDF_clicked()
+{
+    Setlist* currentSetlist = setlist();
+    if (currentSetlist)
+    {
+        QString filename = QFileDialog::getSaveFileName(    this,
+                                                            tr("Export PDF ..."),
+                                                            QDir::homePath(),
+                                                            tr("*.pdf")             );
+        if (!filename.isEmpty())
+        {
+            QFileInfo fi(filename);
+            if (!fi.isWritable())
+            {
+                QMessageBox::warning( this,
+                                      tr("Cannot write"),
+                                      QString(tr("File %1 is not writable.").arg(filename)),
+                                      QMessageBox::Ok,
+                                      QMessageBox::NoButton );
+            }
+            else
+            {
+//                assert( PDFCreator::paintSetlist( currentSetlist, filename ) );
+            }
+        }
+    }
 }

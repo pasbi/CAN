@@ -7,7 +7,14 @@
 #include <QJsonObject>
 #include <QObject>
 
-#define private public
+
+/**
+ * @brief The ConfigurableTranslator class is used to be able to write ConfigurableTranslator::tr("foobar").
+ *  This is better than writing QObject::tr("foobar") since there is a distinct namespace for Configurable-related
+ *  translations.
+ */
+class ConfigurableTranslator : public QObject { };
+#define TR(arg) ConfigurableTranslator::tr(arg)
 
 #include "global.h"
 
@@ -18,6 +25,7 @@
 
 #define DEFN_CONFIG( CLASSNAME, Caption )    \
     Configurable CLASSNAME::config(#CLASSNAME, QObject::tr(Caption, "Configurable Caption"))
+
 
 #define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, CAPTION, DEFAULT_VALUE, OPTIONS )  \
     struct ConfigurableStaticInitializer_##CLASSNAME##_##KEY {    \
@@ -225,6 +233,9 @@ public:
     ConfigurationItem* item(const QString & key) { return m_items[key]; }
     const ConfigurationItem* item(const QString & key) const { return m_items[key]; }
     QVariant value( const QString & key ) const { return item(key)->actualValue(); }
+    QVariant operator[] ( const QString & key ) const { return item(key)->actualValue(); }
+
+    // do never return QVariant& (note the lacking const). always call ConfigurationItem::set.
     void set( const QString & key, const QVariant & value ) { item(key)->set(value); }
 
     void reset();

@@ -6,7 +6,8 @@ Event::Event( EventDatabase* database, const QDateTime& beginning, const QDateTi
     m_database( database ),
     m_timeSpan( TimeSpan(beginning, ending)),
     m_type(type),
-    m_label(label)
+    m_label(label),
+    m_setlist( this )
 {
 
 }

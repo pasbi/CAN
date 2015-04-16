@@ -129,8 +129,9 @@ QDataStream& operator >> (QDataStream& in,  SetlistItem* &item )
     return in;
 }
 
-Setlist::Setlist(QObject *parent) :
-    QAbstractListModel(parent)
+Setlist::Setlist(Event *event, QObject *parent) :
+    QAbstractListModel(parent),
+    m_event( event )
 {
 }
 
@@ -371,5 +372,10 @@ QList<const Song*> Setlist::songs() const
         }
     }
     return s;
+}
+
+const Event *Setlist::event() const
+{
+    return m_event;
 }
 

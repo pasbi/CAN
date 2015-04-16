@@ -34,6 +34,8 @@ private slots:
     void on_buttonShowSongs_clicked();
     void updateButtonsEnabled();
 
+    void on_buttonExportPDF_clicked();
+
 protected:
     void hideEvent(QHideEvent *e);
     void showEvent(QShowEvent *e);

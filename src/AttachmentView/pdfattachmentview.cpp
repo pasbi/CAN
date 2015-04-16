@@ -15,7 +15,7 @@ CONFIGURABLE_ADD_ITEM( PDFAttachmentView,
                        Quality,
                        "Quality",
                        72.0,
-                       ConfigurationItemOptions::AdvancedDoubleSliderOptions(0, 100, 1, QObject::tr("dpi")) );
+                       ConfigurationItemOptions::AdvancedDoubleSliderOptions(0, 100, 1, TR("dpi")) );
 
 
 PDFAttachmentView::PDFAttachmentView(QWidget *parent) :

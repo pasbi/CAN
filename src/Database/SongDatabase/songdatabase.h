@@ -41,6 +41,9 @@ public:
     Qt::DropActions supportedDragActions() const;
     QMimeData* mimeData(const QModelIndexList &indexes) const;
 
+    static QString extractEditorType(const QString & key);
+    static QString extractHeaderLabel(const QString & key);
+
     SongID songID( const Song* song ) const;
     Song* song( SongID id ) const;
 

@@ -43,11 +43,12 @@ private:
 QDataStream& operator << (QDataStream& out, const SetlistItem* item );
 QDataStream& operator >> (QDataStream& in,  SetlistItem* &item );
 
+class Event;
 class Setlist : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    Setlist(QObject* parent = NULL);
+    Setlist( Event* event, QObject* parent = NULL );
     ~Setlist() {}
 
     void insertItem( int position, SetlistItem* item );
@@ -75,6 +76,7 @@ public:
     void removeDraggedItems();
 
     QList<const Song *> songs() const;
+    Event const* event() const;
 
 
 private:
@@ -87,6 +89,8 @@ private:
     QList<SetlistItem*> m_items;
     mutable QList<SetlistItem*> m_tmpItemBuffer;    // temp buffer for inserting items
     mutable QList<SetlistItem*> m_draggedItems;     // temp buffer for remove dragged items
+
+    Event* m_event = NULL;
 };
 
 #endif // SETLIST_H

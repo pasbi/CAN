@@ -48,17 +48,17 @@ void editorTypeAndHeaderLabel( const QString & encoding, QString & editorType, Q
     }
 }
 
-QString extractEditorType(const QString & encoding)
+QString SongDatabase::extractEditorType(const QString & key)
 {
     QString ed, lb;
-    editorTypeAndHeaderLabel( encoding, ed, lb );
+    editorTypeAndHeaderLabel( key, ed, lb );
     return ed;
 }
 
-QString extractHeaderLabel(const QString & encoding)
+QString SongDatabase::extractHeaderLabel(const QString & key)
 {
     QString ed, lb;
-    editorTypeAndHeaderLabel( encoding, ed, lb );
+    editorTypeAndHeaderLabel( key, ed, lb );
     return lb;
 }
 

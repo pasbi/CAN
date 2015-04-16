@@ -41,7 +41,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../ressources.qrc">
+        <iconset>
          <normaloff>:/icons/icons/up51.png</normaloff>:/icons/icons/up51.png</iconset>
        </property>
       </widget>
@@ -64,8 +64,15 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../ressources.qrc">
+        <iconset>
          <normaloff>:/icons/icons/down27.png</normaloff>:/icons/icons/down27.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
@@ -87,7 +94,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../ressources.qrc">
+        <iconset>
          <normaloff>:/icons/icons/minus38.png</normaloff>:/icons/icons/minus38.png</iconset>
        </property>
       </widget>
@@ -110,7 +117,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../ressources.qrc">
+        <iconset>
          <normaloff>:/icons/icons/plus44.png</normaloff>:/icons/icons/plus44.png</iconset>
        </property>
       </widget>
@@ -133,8 +140,38 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../ressources.qrc">
+        <iconset>
          <normaloff>:/oldIcons/oldIcons/1411735338_519586-083_Music-128.png</normaloff>:/oldIcons/oldIcons/1411735338_519586-083_Music-128.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonExportPDF">
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/icons/pdf24.png</normaloff>:/icons/icons/pdf24.png</iconset>
        </property>
       </widget>
      </item>
@@ -162,8 +199,6 @@
    <header>DatabaseView/EventDatabaseView/setlistview.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../ressources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
