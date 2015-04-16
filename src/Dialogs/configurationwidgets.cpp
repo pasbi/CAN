@@ -6,7 +6,12 @@
 #include <QSlider>
 #include <QDoubleSpinBox>
 #include <QComboBox>
+#include <QLineEdit>
 
+
+// magic configuration-class-template:
+// most configuration widgets are set up the same.
+// this defines a template to define a class based on a specific QWidget (as QLineEdit or QCheckBox, ...).
 #define DEFN_CONFIG_CLASS( TYPE, SIGNAL_NAME, ACTION_ON_VALUE_CHANGED, UPDATE_ACTION, INITIALIZE )          \
 class Config##TYPE : public ConfigurationWidget                                                             \
 {                                                                                                           \
@@ -50,6 +55,12 @@ DEFN_CONFIG_CLASS( QComboBox,
                    emit valueChanged( m_edit->currentIndex() ),
                    m_edit->setCurrentIndex( m_item->actualValue().toInt() ),
                    m_edit->addItems( m_item->options().alternatives() ) )
+
+DEFN_CONFIG_CLASS( QLineEdit,
+                   &QLineEdit::textChanged,
+                   emit valueChanged( m_edit->text() ),
+                   m_edit->setText( m_item->actualValue().toString() ),
+                   m_edit->setPlaceholderText( item->options().placeHolderText()) )
 
 // some classes cannot be created with the fancy template above...
 class ConfigAdvancedDoubleSlider : public ConfigurationWidget
@@ -119,6 +130,10 @@ ConfigurationWidget* ConfigurationWidget::create( ConfigurationItem *item, QWidg
 {
     switch (item->options().interface())
     {
+    case ConfigurationItemOptions::Hidden:
+    case ConfigurationItemOptions::Invalid:
+        assert( false );
+        break;
     case ConfigurationItemOptions::TextEdit:
         return new ConfigQTextEdit( item, parent );
     case ConfigurationItemOptions::Checkbox:
@@ -127,6 +142,20 @@ ConfigurationWidget* ConfigurationWidget::create( ConfigurationItem *item, QWidg
         return new ConfigAdvancedDoubleSlider( item, parent );
     case ConfigurationItemOptions::ComboBox:
         return new ConfigQComboBox( item, parent );
+    case ConfigurationItemOptions::LineEdit:
+        return new ConfigQLineEdit( item, parent );
+
+    //TODO implementation missing:
+    case ConfigurationItemOptions::PathEdit:
+    case ConfigurationItemOptions::Slider:
+    case ConfigurationItemOptions::DoubleSlider:
+    case ConfigurationItemOptions::SpinBox:
+    case ConfigurationItemOptions::DoubleSpinBox:
+    case ConfigurationItemOptions::AdvancedSlider:
+    case ConfigurationItemOptions::RadioButtons:
+    case ConfigurationItemOptions::EditableComboBox:
+    case ConfigurationItemOptions::ColorEditor:
+    default:
+        return NULL;
     }
-    return NULL;
 }
