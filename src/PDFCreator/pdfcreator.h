@@ -57,7 +57,16 @@ public:
 
 private: // METHODES
     void paintSetlist( );
+    void paintSong( const Song* song );
+    void paintSongTitle( const Song* song );
+    void paintAttachment( const Attachment* attachment );
+    void paintPDFAttachment(const PDFAttachment* attachment );
+    void paintAudioAttachment(const AudioAttachment* attachment);
+    void paintChordPatternAttachment(const ChordPatternAttachment* attachment);
+    void paintTitle();
     QPainter& painter();
+    void nextPage();
+    QRectF pageRect() const { return QRectF(QPointF(), m_pdfPainter->size()); }
 
 private: // MEMBERS
     PDFPaintDevice* m_pdfPainter = NULL;
@@ -65,7 +74,6 @@ private: // MEMBERS
 
 private: // STATIC MEMBERS and METHODES
     friend QString labelSetlist( const Setlist* setlist );
-    static const QMap<QString, QString> DICTIONARY;
 };
 
 #endif // PDFCREATOR_H

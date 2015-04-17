@@ -10,6 +10,9 @@
 #include "PDFCreator/pdfcreator.h"
 #include <QMessageBox>
 
+DEFN_CONFIG( SetlistWidget, "SetlistWidget" );
+CONFIGURABLE_ADD_ITEM_HIDDEN( SetlistWidget, DefaultPDFSavePath, QDir::homePath() );
+
 SetlistWidget::SetlistWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SetlistWidget),
@@ -206,7 +209,7 @@ void SetlistWidget::on_buttonExportPDF_clicked()
     {
         QString filename = QFileDialog::getSaveFileName(    this,
                                                             tr("Export PDF ..."),
-                                                            QDir::homePath(),
+                                                            config["DefaultPDFSavePath"].toString(),
                                                             tr("*.pdf")             );
         if (!filename.isEmpty())
         {
@@ -221,7 +224,10 @@ void SetlistWidget::on_buttonExportPDF_clicked()
             }
             else
             {
-//                assert( PDFCreator::paintSetlist( currentSetlist, filename ) );
+                PDFCreator pc(currentSetlist);
+                pc.save( filename );
+                config.set( "DefaultPDFSavePath", filename );
+
             }
         }
     }

@@ -6,6 +6,7 @@
 #include <QListView>
 #include "setlistitemselector.h"
 #include "setlistview.h"
+#include "configurable.h"
 
 namespace Ui {
 class SetlistWidget;
@@ -14,7 +15,7 @@ class SetlistWidget;
 class SetlistWidget : public QWidget
 {
     Q_OBJECT
-
+    DECL_CONFIG( SetlistWidget );
 public:
     explicit SetlistWidget(QWidget *parent = 0);
     ~SetlistWidget();
