@@ -25,6 +25,7 @@ public:
      */
     void nextPage() { activatePage( numPages() ); }
     int numPages( ) const { return m_pages.size(); }
+    int currentPageNumber() const;
 
     /**
      * @brief painter returns a painter that paints on the currently active page.

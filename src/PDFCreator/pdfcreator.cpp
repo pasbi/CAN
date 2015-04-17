@@ -132,6 +132,11 @@ void PDFCreator::paintTitle()
     painter().drawText( pageRect(), Qt::AlignCenter, title );
 }
 
+void PDFCreator::insertTableOfContentsStub()
+{
+    m_tableOfContentsPage = m_pdfPainter->currentPageNumber() + 1;
+}
+
 void PDFCreator::paintSetlist()
 {
 
@@ -141,17 +146,56 @@ void PDFCreator::paintSetlist()
 //    painter.scale( scale(), scale() );
 //    painter.setFont( font );
 
-//    if ( true )
-//    {
-//        paintTableOfContents( setlist );
-//    }
 
     paintTitle();
+    insertTableOfContentsStub();
 
     for ( const Song* song : m_setlist->songs() )
     {
         paintSong( song );
     }
+
+    if ( true )
+    {
+        paintTableOfContents( );
+    }
+}
+
+void PDFCreator::paintTableOfContents()
+{
+    int currentPage = m_pdfPainter->currentPageNumber();
+    int i = m_tableOfContentsPage; // current page of toc
+    int n = 1;                     // length of toc;
+
+    m_pdfPainter->insertEmptyPage( i );
+    m_pdfPainter->activatePage( i );
+    while (true)
+    {
+        if ( m_tableOfContents.isEmpty() ) // no more content to draw
+        {
+            break;
+        }
+        else                              // draw more content
+        {
+            if ( true ) // content fits on page
+            {
+                TocEntry currentEntry = m_tableOfContents.take();
+                qDebug() << currentEntry.number.toString("1.");
+            }
+            else        // content does not fit on page
+            {
+                i++;
+                n++;
+                m_pdfPainter->insertEmptyPage( i );
+                m_pdfPainter->activatePage( i );
+                // content will fit on page next iteration
+            }
+        }
+    }
+
+
+
+    m_pdfPainter->activatePage( currentPage + n );
 }
 
 void PDFCreator::paintSong(const Song *song)

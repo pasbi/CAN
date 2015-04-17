@@ -11,40 +11,8 @@
 #include "configurable.h"
 
 #include "pdfpaintdevice.h"
+#include "tableofcontents.h"
 
-
-
-//class QPdfWriter;
-//class PDFCreator
-//{
-
-
-//public:
-//    PDFCreator();
-//    static bool paintSetlist( const Setlist* setlist, const QString & filename );
-//    static const double UNIT;
-
-//private:
-//    static void paintAttachment( const Attachment* attachment, QPainter& painter );
-//    static void paintSong(const Song* song ,QPainter& painter);
-
-//    static void paintTitle(const Setlist *setlist, QPainter &painter );
-//    static void paintSongTitle(const Song* song, QPainter& painter );
-
-//    static void paintPDFAttachment( const PDFAttachment* attachment, QPainter& painter );
-//    static void paintAudioAttachment( const AudioAttachment* attachment, QPainter& painter );
-//    static void paintChordPatternAttachment( const ChordPatternAttachment* attachment, QPainter& painter );
-
-//    static double scale();
-//    static double aspectRatio();
-//    static QRectF line( double top, double bottom );
-
-//    static QPdfWriter* m_pdfWriter;
-//    static QPdfWriter* pdf();
-//    static void nextPage();
-
-//    static void paintTableOfContents( const Setlist* setlist );
-//};
 
 class PDFCreator
 {
@@ -64,6 +32,13 @@ private: // METHODES
     void paintAudioAttachment(const AudioAttachment* attachment);
     void paintChordPatternAttachment(const ChordPatternAttachment* attachment);
     void paintTitle();
+    void paintTableOfContents();
+
+    /**
+     * @brief insertTableOfContentsStub insert a stub at current page.
+     *  table of contents will be inserted there.
+     */
+    void insertTableOfContentsStub();
     QPainter& painter();
     void nextPage();
     QRectF pageRect() const { return QRectF(QPointF(), m_pdfPainter->size()); }
@@ -71,6 +46,8 @@ private: // METHODES
 private: // MEMBERS
     PDFPaintDevice* m_pdfPainter = NULL;
     const Setlist* const m_setlist;
+    int m_tableOfContentsPage = -1;
+    TableOfContents m_tableOfContents;
 
 private: // STATIC MEMBERS and METHODES
     friend QString labelSetlist( const Setlist* setlist );

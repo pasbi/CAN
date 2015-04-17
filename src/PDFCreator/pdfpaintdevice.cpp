@@ -99,3 +99,27 @@ void PDFPaintDevice::configurePainter() const
     }
 }
 
+int PDFPaintDevice::currentPageNumber() const
+{
+    QPaintDevice* device = m_painter.device();
+    if (device)
+    {
+        int i = 0;
+        for (const QPicture & picture : m_pages)
+        {
+            if (&picture == device)
+            {
+                return i;
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
+    else
+    {
+        return -1;
+    }
+}
+
