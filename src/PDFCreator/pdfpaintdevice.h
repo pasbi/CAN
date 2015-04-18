@@ -1,14 +1,14 @@
 #ifndef PDFPAINTDEVICE_H
 #define PDFPAINTDEVICE_H
 
-#include <QPicture>
 #include <QPdfWriter>
-#include <QPainter>
+#include "picturepainter.h"
 
 class PDFPaintDevice
 {
 public:
     explicit PDFPaintDevice(const QString& title, const QPdfWriter::PageSize pageSize);
+    ~PDFPaintDevice();
     void save(const QString & filename) const;
 
     /**
@@ -31,7 +31,7 @@ public:
      * @brief painter returns a painter that paints on the currently active page.
      * @return
      */
-    QPainter& painter() const;
+    QPainter* painter() const;
 
     /**
      * @brief insertEmptyPage inserts an empty page at index i. Maybe more empty pages
@@ -45,14 +45,14 @@ public:
     void setDefaultFont( const QFont & font );
 
 private:
-    QList<QPicture> m_pages;
+    QList<PicturePainter*> m_pages;
     const QString m_title;
-    mutable QPainter m_painter;
     const QPdfWriter::PageSize m_pageSize;
     QSizeF m_size;
     QFont m_defaultFont;
 
-    void configurePainter() const;
+    PicturePainter* newPicturePainter() const;
+    QPainter* m_currentPainter = NULL;
 
     static const double UNIT;
 };

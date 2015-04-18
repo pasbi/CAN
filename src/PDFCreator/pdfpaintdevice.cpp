@@ -1,6 +1,6 @@
 #include "pdfpaintdevice.h"
 #include "global.h"
-#include <QPainter>
+#include "picturepainter.h"
 
 const double PDFPaintDevice::UNIT = 100;
 
@@ -12,13 +12,22 @@ PDFPaintDevice::PDFPaintDevice(const QString& title, const QPdfWriter::PageSize 
     QPdfWriter writer("");
     writer.setPageSize( m_pageSize );
     m_size = writer.pageSizeMM();
-    configurePainter();
 }
 
-QPicture picture()
+PDFPaintDevice::~PDFPaintDevice()
 {
-    return QPicture();
+    qDeleteAll( m_pages );
+    m_pages.clear();
 }
+
+PicturePainter* PDFPaintDevice::newPicturePainter() const
+{
+    PicturePainter* pp = new PicturePainter();
+    pp->QPainter::scale( scale(), scale() );
+    pp->QPainter::setFont( m_defaultFont );
+    return pp;
+}
+
 
 void PDFPaintDevice::activatePage(int n)
 {
@@ -27,55 +36,42 @@ void PDFPaintDevice::activatePage(int n)
     {
         for (int i = m_pages.size(); i <= n; ++i)
         {
-            m_pages.append( picture() );
+            m_pages.append( newPicturePainter() );
         }
     }
 
-    if (m_painter.isActive())
-    {
-        m_painter.end();
-    }
-    m_painter.begin( &m_pages[n] );
-    configurePainter();
+    m_currentPainter = m_pages[n];
 }
 
 void PDFPaintDevice::insertEmptyPage(int i)
 {
-    m_pages.insert( i, picture() );
+    m_pages.insert( i, newPicturePainter() );
+    activatePage( i );
 }
 
-QPainter& PDFPaintDevice::painter() const
+QPainter *PDFPaintDevice::painter() const
 {
-    return m_painter;
+    return m_currentPainter;
 }
 
+#include <QLabel>
+#include <QThread>
+#include <QApplication>
 void PDFPaintDevice::save(const QString &filename) const
 {
-    // painter must be ended to store commands in qpicture.
-    // save device to be able to restore it later.
-    QPaintDevice* activePaintDevice = NULL;
-    if (m_painter.isActive())
-    {
-        activePaintDevice = m_painter.device();
-        m_painter.end();
-    }
+
 
     QPdfWriter writer(filename);
     writer.setPageSize( m_pageSize );
     writer.setTitle( m_title );
-    QPainter painter( &writer );
+    QPainter pdfwriterPainter( &writer );
 
     INIT_LOOP;
-    for ( const QPicture& picture : m_pages)
+    for ( PicturePainter* pp : m_pages)
     {
+        pp->stop();
         IFN_FIRST_ITERATION assert( writer.newPage() );
-        painter.drawPicture( QPoint(), picture );
-    }
-
-    if (activePaintDevice)
-    {
-        m_painter.begin( activePaintDevice );
-        configurePainter();
+        pdfwriterPainter.drawPicture( QPoint(), *pp );
     }
 }
 
@@ -87,24 +83,14 @@ double PDFPaintDevice::scale() const
     return s;
 }
 
-void PDFPaintDevice::configurePainter() const
-{
-    if (m_painter.isActive() && !!m_painter.device())
-    {
-        painter().scale( scale(), scale() );
-        painter().setFont( m_defaultFont );
-    }
-}
-
 int PDFPaintDevice::currentPageNumber() const
 {
-    QPaintDevice* device = m_painter.device();
-    if (device)
+    if (painter())
     {
         int i = 0;
-        for (const QPicture & picture : m_pages)
+        for (const QPicture* picture : m_pages)
         {
-            if (&picture == device)
+            if (picture == painter()->device())
             {
                 return i;
             }
@@ -120,6 +106,9 @@ int PDFPaintDevice::currentPageNumber() const
 void PDFPaintDevice::setDefaultFont(const QFont &font)
 {
     m_defaultFont = font;
-    m_painter.setFont( font );
+    if (painter())
+    {
+        painter()->setFont( font );
+    }
 }
 

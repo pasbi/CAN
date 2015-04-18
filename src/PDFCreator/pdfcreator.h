@@ -35,12 +35,14 @@ private: // METHODES
     void paintTableOfContents();
     void paintHeadline(const QString& label , const EnumerationNumber &number = EnumerationNumber::invalid() );
 
+    void decoratePageNumbers();
+
     /**
      * @brief insertTableOfContentsStub insert a stub at current page.
      *  table of contents will be inserted there.
      */
     void insertTableOfContentsStub();
-    QPainter& painter();
+    QPainter *painter();
     void nextPage();
     QRectF pageRect() const { return QRectF(QPointF(), m_pdfPainter->size()); }
     QRectF line( double y ) const { return QRectF(QPointF(0, y), QSizeF(m_pdfPainter->size().width(), 10)); }
@@ -49,6 +51,7 @@ private: // MEMBERS
     PDFPaintDevice* m_pdfPainter = NULL;
     const Setlist* const m_setlist;
     int m_tableOfContentsPage = -1;
+    int m_tableOfContentsNumPages = 0;
     TableOfContents m_tableOfContents;
 
 private: // STATIC MEMBERS and METHODES

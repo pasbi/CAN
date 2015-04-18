@@ -4,11 +4,13 @@
 
 #define FILENAME "/media/Volume/Musik/Coldplay/X&Y/Fix You.mp3"
 
-#define TEST
+//#define TEST
 
 
 #include "PDFCreator/pdfcreator.h"
 #include "PDFCreator/tableofcontents.h"
+#include "PDFCreator/picturepainter.h"
+#include <QLabel>
 
 int main(int argc, char *argv[])
 {
