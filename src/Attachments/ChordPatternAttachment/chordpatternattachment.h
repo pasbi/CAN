@@ -8,7 +8,7 @@
 class ChordPatternAttachment : public Attachment
 {
     Q_OBJECT
-    DECL_CREATABLE(ChordPatternAttachment);
+    DECL_CREATABLE(ChordPatternAttachment)
 public:
     ChordPatternAttachment();
     ChordPatternAttachment(const Attachment & attachment);

@@ -23,8 +23,8 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        SongTitlePattern,
                        "Song Title",
-                       "{Title}\n{Artist}",
-                       ConfigurationItemOptions::TextEditOptions( TR("Pattern") ) );
+                       "{Title} -- {Artist}",
+                       ConfigurationItemOptions::LineEditOptions( TR("Pattern") ) );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        DateTimeFormat,
                        "Date time format",
@@ -64,6 +64,11 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                                                                                 <<  "Legal"
                                                                                 <<  "Letter"
                                                                                 <<  "Tabloid" ) );
+CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       TableOfContents,
+                       "Table of Contents",
+                       true,
+                       ConfigurationItemOptions::CheckboxOptions() );
 
 
 QMap<QString, QString> init_dictionary()
@@ -115,6 +120,7 @@ PDFCreator::~PDFCreator()
 
 void PDFCreator::nextPage()
 {
+    m_additionalTopMargin = 0;
     assert( m_pdfPainter );
     m_pdfPainter->nextPage();
 }
@@ -145,7 +151,7 @@ void PDFCreator::insertTableOfContentsStub()
 void PDFCreator::paintSetlist()
 {
 
-    m_pdfPainter->nextPage();
+    nextPage();
 //    QFont font = painter.font();
 //    font.setPointSizeF( font.pointSize() pt );
 //    painter.scale( scale(), scale() );
@@ -182,8 +188,8 @@ void PDFCreator::paintHeadline( const QString &label, const EnumerationNumber& n
         text.prepend( " " );
         text.prepend( number.toString( config["EnumerationPattern"].toString() ) );
     }
-
-    painter()->drawText( QPointF(5, 10), text);
+    painter()->drawText( QPointF(leftMargin(), topMargin()), text);
+    m_additionalTopMargin += 2 * painter()->fontMetrics().height();
     painter()->restore();
 }
 
@@ -192,10 +198,6 @@ void PDFCreator::paintTableOfContents()
     int currentPage = m_pdfPainter->currentPageNumber();
     m_tableOfContentsNumPages = 1;                     // length of toc;
 
-    const double leftMargin = 10;
-    const double rightMargin = 10;
-    const double bottomMargin = 5;
-    const double topMargin = 20;
     const double dotsSpace = 1;
     const double lineHeight = painter()->fontMetrics().height();
 
@@ -204,7 +206,7 @@ void PDFCreator::paintTableOfContents()
 
     paintHeadline( "Table of Content" );
 
-    double y = 20;
+    double y = topMargin();
     while (true)
     {
         painter()->save();
@@ -215,7 +217,7 @@ void PDFCreator::paintTableOfContents()
         }
         else                              // draw more content
         {
-            if ( y < pageRect().height() - bottomMargin - lineHeight ) // content fits on page
+            if ( y < pageRect().height() - bottomMargin() - lineHeight ) // content fits on page
             {
                 TocEntry currentEntry = m_tableOfContents.take();
                 QString prologue = currentEntry.label;
@@ -234,16 +236,16 @@ void PDFCreator::paintTableOfContents()
                 else
                 {
                     indentation = 3;
-                    int dotsLength = pageRect().width() - prologueWidth - epilogueWidth - leftMargin - rightMargin - 2 * dotsSpace - indentation;
+                    int dotsLength = pageRect().width() - prologueWidth - epilogueWidth - leftMargin() - rightMargin() - 2 * dotsSpace - indentation;
                     QString dots = "";
                     while (dotsLength - painter()->fontMetrics().width(dots) > painter()->fontMetrics().width("."))
                     {
                         dots.append(".");
                     }
-                    painter()->drawText( QPointF( indentation + leftMargin + prologueWidth + dotsSpace, y), dots );
+                    painter()->drawText( QPointF( indentation + leftMargin() + prologueWidth + dotsSpace, y), dots );
                 }
-                painter()->drawText( QPointF( indentation + leftMargin, y), prologue  );
-                painter()->drawText( QPointF( pageRect().width() - epilogueWidth - rightMargin, y ), epilogue );
+                painter()->drawText( QPointF( indentation + leftMargin(), y), prologue  );
+                painter()->drawText( QPointF( pageRect().width() - epilogueWidth - rightMargin(), y ), epilogue );
 
                 y += lineHeight;
             }
@@ -253,9 +255,9 @@ void PDFCreator::paintTableOfContents()
                 m_tableOfContentsNumPages++;
                 painter()->restore();
                 m_pdfPainter->insertEmptyPage( m_tableOfContentsPage );
-                m_pdfPainter->activatePage( m_tableOfContentsPage );
                 painter()->save();
-                y = topMargin;
+                m_additionalTopMargin = 0; // must be set explicitly since next() is not called but insertPage.
+                y = topMargin();
                 // content will fit on page next iteration
             }
         }
@@ -282,57 +284,41 @@ QString labelSong( const Song* song )
     return pattern;
 }
 
+
+
 void PDFCreator::paintSong(const Song *song)
 {
-    m_tableOfContents.append( labelSong(song), 1, m_pdfPainter->currentPageNumber() + 1 );
-    paintSongTitle( song );
+    nextPage();
+    QString headline = labelSong( song );
+    m_tableOfContents.append( headline, 1, m_pdfPainter->currentPageNumber() + 1 );
+    paintHeadline( headline );
+
+
+    INIT_LOOP;
     for (const Attachment* attachment : song->attachments())
     {
         paintAttachment( attachment );
-    }
-}
-
-void PDFCreator::paintSongTitle(const Song *song)
-{
-    if (config["SongTitle"].toBool())
-    {
-        nextPage();
-        painter()->save();
-        QFont font = painter()->font();
-        font.setPointSizeF( 30 pt );
-        painter()->setFont( font );
-        painter()->drawText( QRect(0, 0, 100, 100),
-                            Qt::AlignCenter,
-                            labelSong( song ) );
-        painter()->restore();
+        IFN_FIRST_ITERATION nextPage();
     }
 }
 
 bool printAttachment( const Attachment* attachment )
 {
-    Q_UNUSED(attachment);
-    return true;    //TODO
-}
+    Q_UNUSED( attachment );
+    //TODO filter tags, etc
 
-QString labelAttachment( const Attachment* attachment )
-{
-    return "attachment...";
+    return true;
 }
 
 void PDFCreator::paintAttachment(const Attachment *attachment )
 {
     if (printAttachment( attachment ))
     {
-        m_tableOfContents.append( labelAttachment(attachment), 2, m_pdfPainter->currentPageNumber() + 1 );
+//        m_tableOfContents.append( labelAttachment(attachment), 2, m_pdfPainter->currentPageNumber() + 1 );
 
-        nextPage();
         if (attachment->type() == PDFAttachment::TYPE)
         {
             paintPDFAttachment( qobject_assert_cast<const PDFAttachment*>(attachment) );
-        }
-        else if (attachment->type() == AudioAttachment::TYPE)
-        {
-            paintAudioAttachment( qobject_assert_cast<const AudioAttachment*>(attachment) );
         }
         else if (attachment->type() == ChordPatternAttachment::TYPE)
         {
@@ -358,13 +344,6 @@ void PDFCreator::decoratePageNumbers()
     }
 }
 
-
-
-
-
-
-
-
 void PDFCreator::paintPDFAttachment(const PDFAttachment* attachment )
 {
     Poppler::Document* doc = attachment->document();
@@ -375,17 +354,57 @@ void PDFCreator::paintPDFAttachment(const PDFAttachment* attachment )
             attachment->document()->page(i)->renderToPainter( painter() );
         }
     }
-    painter()->drawText( pageRect(), "PDF" );
 }
 
-void PDFCreator::paintAudioAttachment( const AudioAttachment* attachment )
-{
-    painter()->drawText( pageRect(), "Audio" );
-}
 
 void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* attachment )
 {
-    painter()->drawText( pageRect(), "CPA" );
+    QStringList lines = attachment->chordPattern().split("\n", QString::KeepEmptyParts);
+
+    typedef struct Paragraph
+    {
+        QStringList lines;
+        double height;
+    } Paragraph;
+
+    QList<Paragraph> paragraphs;
+
+    Paragraph currentParagraph;
+    for (const QString& line : lines)
+    {
+        currentParagraph.lines << line;
+        if (line.isEmpty())
+        {
+            currentParagraph.height = painter()->fontMetrics().height() * currentParagraph.lines.length();
+            paragraphs << currentParagraph;
+            currentParagraph.lines.clear();
+        }
+    }
+    paragraphs << currentParagraph;
+
+
+    double y = topMargin();
+    double width = pageRect().width() - leftMargin() - rightMargin();
+    double height = painter()->fontMetrics().height();
+    for (const Paragraph& par : paragraphs)
+    {
+        double leftSpace = pageRect().height() - bottomMargin() - y;
+        if (leftSpace > par.height)
+        {
+            for (const QString & line : par.lines )
+            {
+                painter()->drawText( QRectF( leftMargin(), y, width, height ), line );
+                y += height;
+            }
+        }
+        else
+        {
+            painter()->fillRect( QRectF( leftMargin(), y, width, par.height ), Qt::red);
+            nextPage();
+            y = topMargin();
+        }
+    }
+
 }
 
 

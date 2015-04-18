@@ -8,7 +8,7 @@
 class PDFAttachment : public IndexedFileAttachment
 {
     Q_OBJECT
-    DECL_CREATABLE(PDFAttachment);
+    DECL_CREATABLE(PDFAttachment)
 public:
     PDFAttachment();
     QStringList acceptedEndings() const { return QStringList() << "pdf"; }

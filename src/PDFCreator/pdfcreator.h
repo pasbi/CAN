@@ -26,14 +26,16 @@ public:
 private: // METHODES
     void paintSetlist( );
     void paintSong( const Song* song );
-    void paintSongTitle( const Song* song );
     void paintAttachment( const Attachment* attachment );
     void paintPDFAttachment(const PDFAttachment* attachment );
-    void paintAudioAttachment(const AudioAttachment* attachment);
     void paintChordPatternAttachment(const ChordPatternAttachment* attachment);
     void paintTitle();
     void paintTableOfContents();
     void paintHeadline(const QString& label , const EnumerationNumber &number = EnumerationNumber::invalid() );
+    double leftMargin() const { return 5; }
+    double rightMargin() const { return 10; }
+    double topMargin() { return 10 + m_additionalTopMargin; }
+    double bottomMargin() const { return 20; }
 
     void decoratePageNumbers();
 
@@ -52,6 +54,7 @@ private: // MEMBERS
     const Setlist* const m_setlist;
     int m_tableOfContentsPage = -1;
     int m_tableOfContentsNumPages = 0;
+    double m_additionalTopMargin = 0; // is set if e.g. a headline need additional space.
     TableOfContents m_tableOfContents;
 
 private: // STATIC MEMBERS and METHODES
