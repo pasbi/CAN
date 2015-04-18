@@ -42,6 +42,7 @@ public:
     QSizeF size() const { return QSizeF( UNIT, UNIT * aspectRatio() ); }
     double aspectRatio() const { return m_size.height() / m_size.width(); }
     double scale() const;
+    void setDefaultFont( const QFont & font );
 
 private:
     QList<QPicture> m_pages;
@@ -49,6 +50,7 @@ private:
     mutable QPainter m_painter;
     const QPdfWriter::PageSize m_pageSize;
     QSizeF m_size;
+    QFont m_defaultFont;
 
     void configurePainter() const;
 

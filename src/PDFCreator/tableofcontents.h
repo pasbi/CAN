@@ -8,15 +8,18 @@
 class EnumerationNumber
 {
 public:
-    EnumerationNumber() { m_numbers = QList< int >() << 1; }
+    EnumerationNumber() { m_numbers << 1; }
     EnumerationNumber( const EnumerationNumber& num ) { m_numbers = num.m_numbers; }
 
     int level() const { return m_numbers.length(); }
     int operator[] (int i) { assert(i >= 0 && i < level()); return m_numbers[i]; }
 
-    EnumerationNumber increase() const;
-    EnumerationNumber down() const;
-    EnumerationNumber up( int targetLevel ) const;
+    static EnumerationNumber invalid();
+    bool isValid() const { return !m_numbers.isEmpty(); }
+
+    void increase();
+    void down();
+    void up( int targetLevel );
 
     QString toString(QString pattern) const;
 
@@ -68,7 +71,7 @@ public:
             // insert at same level
             m_lastNumber.increase();
         }
-        else if (m_entries.last().level== level + 1)
+        else if (m_entries.last().level + 1 == level)
         {
             // level down
             m_lastNumber.down();

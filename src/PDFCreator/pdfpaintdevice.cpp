@@ -92,10 +92,7 @@ void PDFPaintDevice::configurePainter() const
     if (m_painter.isActive() && !!m_painter.device())
     {
         painter().scale( scale(), scale() );
-
-        QFont font = painter().font();
-        font.setPointSizeF( font.pointSizeF() / scale() );
-        painter().setFont( font );
+        painter().setFont( m_defaultFont );
     }
 }
 
@@ -117,9 +114,12 @@ int PDFPaintDevice::currentPageNumber() const
             }
         }
     }
-    else
-    {
-        return -1;
-    }
+    return -1;
+}
+
+void PDFPaintDevice::setDefaultFont(const QFont &font)
+{
+    m_defaultFont = font;
+    m_painter.setFont( font );
 }
 

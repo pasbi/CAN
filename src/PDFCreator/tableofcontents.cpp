@@ -115,30 +115,31 @@ QString EnumerationNumber::toString(QString pattern) const
     return pattern;
 }
 
-EnumerationNumber EnumerationNumber::increase() const
+void EnumerationNumber::increase()
 {
     assert(!m_numbers.isEmpty());
-    EnumerationNumber copy = *this;
-    copy.m_numbers.last()++;
-    return copy;
+    m_numbers.last()++;
 }
 
-EnumerationNumber EnumerationNumber::down() const
+void EnumerationNumber::down()
 {
-    EnumerationNumber copy = *this;
-    copy.m_numbers.append(1);
-    return copy;
+    m_numbers.append(1);
 }
 
-EnumerationNumber EnumerationNumber::up( int targetLevel ) const
+void EnumerationNumber::up( int targetLevel )
 {
+    targetLevel += 1;   // level 1 is lowest
     assert( targetLevel <= level() && targetLevel > 0 );
-    EnumerationNumber copy = *this;
-    while (copy.level() >= targetLevel)
+    while (level() >= targetLevel)
     {
-        copy.m_numbers.removeLast();
+        m_numbers.removeLast();
     }
-    return copy;
 }
 
+EnumerationNumber EnumerationNumber::invalid()
+{
+    EnumerationNumber n;
+    n.m_numbers.clear();
+    return n;
+}
 

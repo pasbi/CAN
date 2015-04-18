@@ -4,7 +4,7 @@
 
 #define FILENAME "/media/Volume/Musik/Coldplay/X&Y/Fix You.mp3"
 
-//#define TEST
+#define TEST
 
 
 #include "PDFCreator/pdfcreator.h"
@@ -21,9 +21,9 @@ int main(int argc, char *argv[])
     m.show();
     return app.exec();
 #else
-//    Q_UNUSED(m);
-//    PDFCreator p( a.project()->eventDatabase()->events()[1]->setlist() );
-//    p.save( "/home/pascal/test.pdf" );
-//    return 0;
+    Q_UNUSED(m);
+    PDFCreator p( app.project()->eventDatabase()->events()[1]->setlist() );
+    p.save( "/home/pascal/test.pdf" );
+    return 0;
 #endif
 }

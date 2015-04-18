@@ -64,7 +64,11 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                                                                                 <<  "Legal"
                                                                                 <<  "Letter"
                                                                                 <<  "Tabloid" ) );
-//                                                                                <<  "Custom" ) ); // we do not support custom paper by now.
+CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       EnumerationPattern,
+                       "Enumeration Pattern",
+                       TR("1.1.1.1.1"),
+                       ConfigurationItemOptions::LineEditOptions( TR("Enumeration Pattern") ) );
 
 
 QMap<QString, QString> init_dictionary()
@@ -97,6 +101,10 @@ PDFCreator::PDFCreator( const Setlist *setlist ) :
     QString title = labelSetlist( m_setlist );
     QPdfWriter::PageSize pageSize = intToPageSize( config["PDFSize"].toInt() );
     m_pdfPainter = new PDFPaintDevice( title, pageSize );
+
+    QFont font( "times" );
+    font.setPointSizeF( 12 pt );
+    m_pdfPainter->setDefaultFont( font );
 
     paintSetlist();
 }
@@ -161,18 +169,50 @@ void PDFCreator::paintSetlist()
     }
 }
 
+void PDFCreator::paintHeadline( const QString &label, const EnumerationNumber& number )
+{
+    painter().save();
+
+    QFont font = painter().font();
+    font.setBold( true );
+    font.setPointSizeF( 15 pt );
+    font.setFamily( "lucida" );
+    painter().setFont( font );
+
+    QString text = label;
+    if (number.isValid())
+    {
+        text.prepend( " " );
+        text.prepend( number.toString( config["EnumerationPattern"].toString() ) );
+    }
+
+    painter().drawText( QPointF(5, 10), text);
+    painter().restore();
+}
+
 void PDFCreator::paintTableOfContents()
 {
     int currentPage = m_pdfPainter->currentPageNumber();
     int i = m_tableOfContentsPage; // current page of toc
     int n = 1;                     // length of toc;
 
+    int leftMargin = 10;
+    int rightMargin = 10;
+    double y = 20;
+
     m_pdfPainter->insertEmptyPage( i );
     m_pdfPainter->activatePage( i );
+
+    paintHeadline( "Table of Content" );
+
+    double dotsSpace = 1;
+    const double lineSpace = painter().fontMetrics().height();
     while (true)
     {
+        painter().save();
         if ( m_tableOfContents.isEmpty() ) // no more content to draw
         {
+            painter().restore();
             break;
         }
         else                              // draw more content
@@ -180,7 +220,35 @@ void PDFCreator::paintTableOfContents()
             if ( true ) // content fits on page
             {
                 TocEntry currentEntry = m_tableOfContents.take();
-                qDebug() << currentEntry.number.toString("1.");
+                QString pattern = config["EnumerationPattern"].toString();
+                QString prologue = QString("%1 %2").arg( currentEntry.number.toString(pattern), currentEntry.label );
+                QString epilogue = QString("%1").arg( currentEntry.pageNumber );
+                int prologueWidth = painter().fontMetrics().width( prologue );
+                int epilogueWidth = painter().fontMetrics().width( epilogue );
+                double indentation = 0;
+                if (currentEntry.level == 1)
+                {
+                    y += 1;
+                    QFont font = painter().font();
+                    font.setBold( true );
+                    font.setFamily( "lucida ");
+                    painter().setFont( font );
+                }
+                else
+                {
+                    indentation = 3;
+                    int dotsLength = pageRect().width() - prologueWidth - epilogueWidth - leftMargin - rightMargin - 2 * dotsSpace - indentation;
+                    QString dots = "";
+                    while (dotsLength - painter().fontMetrics().width(dots) > painter().fontMetrics().width("."))
+                    {
+                        dots.append(".");
+                    }
+                    painter().drawText( QPointF( indentation + leftMargin + prologueWidth + dotsSpace, y), dots );
+                }
+                painter().drawText( QPointF( indentation + leftMargin, y), prologue  );
+                painter().drawText( QPointF( pageRect().width() - epilogueWidth - rightMargin, y ), epilogue );
+
+                y += lineSpace;
             }
             else        // content does not fit on page
             {
@@ -191,20 +259,12 @@ void PDFCreator::paintTableOfContents()
                 // content will fit on page next iteration
             }
         }
+        painter().restore();
     }
 
 
 
     m_pdfPainter->activatePage( currentPage + n );
-}
-
-void PDFCreator::paintSong(const Song *song)
-{
-    paintSongTitle( song );
-    for (const Attachment* attachment : song->attachments())
-    {
-        paintAttachment( attachment );
-    }
 }
 
 QString labelSong( const Song* song )
@@ -222,6 +282,16 @@ QString labelSong( const Song* song )
         pattern.replace(key, DICTIONARY[key]);
     }
     return pattern;
+}
+
+void PDFCreator::paintSong(const Song *song)
+{
+    m_tableOfContents.append( labelSong(song), 1, m_pdfPainter->currentPageNumber() + 1 );
+    paintSongTitle( song );
+    for (const Attachment* attachment : song->attachments())
+    {
+        paintAttachment( attachment );
+    }
 }
 
 void PDFCreator::paintSongTitle(const Song *song)
@@ -246,10 +316,17 @@ bool printAttachment( const Attachment* attachment )
     return true;    //TODO
 }
 
+QString labelAttachment( const Attachment* attachment )
+{
+    return "attachment...";
+}
+
 void PDFCreator::paintAttachment(const Attachment *attachment )
 {
     if (printAttachment( attachment ))
     {
+        m_tableOfContents.append( labelAttachment(attachment), 2, m_pdfPainter->currentPageNumber() + 1 );
+
         nextPage();
         if (attachment->type() == PDFAttachment::TYPE)
         {
@@ -269,71 +346,6 @@ void PDFCreator::paintAttachment(const Attachment *attachment )
 
 
 
-
-
-//QPdfWriter* PDFCreator::m_pdfWriter = NULL;
-//const double PDFCreator::UNIT = 100;    // do not change this. never.
-
-//QPdfWriter* PDFCreator::pdf()
-//{
-//    assert( m_pdfWriter );
-//    return m_pdfWriter;
-//}
-
-//double PDFCreator::scale()
-//{
-//    return pdf()->width() / UNIT;
-//}
-
-//double PDFCreator::aspectRatio()
-//{
-//    return (double) pdf()->height() / pdf()->width();
-//}
-
-//QRectF PDFCreator::line(double top, double bottom)
-//{
-//    return QRectF( 0, top, UNIT, bottom );
-//}
-
-//PDFCreator::PDFCreator()
-//{
-//}
-
-//void PDFCreator::nextPage()
-//{
-//    assert( m_pdfWriter );
-//    assert( m_pdfWriter->newPage() );
-//}
-
-
-
-//bool PDFCreator::paintSetlist(const Setlist *setlist, const QString &filename)
-
-
-//}
-
-
-
-//void PDFCreator::paintTableOfContents(const Setlist *setlist)
-//{
-//    typedef struct TOCItem {
-//        TOCItem( const QString& label, const int level, const int page ) :
-//            label( label ), level( level ), page( page )
-//        { }
-//        const QString label;
-//        const int level;
-//        const int page;
-//    } TOCItem;
-
-//    QList<TOCItem> items;
-
-//    // gather items
-//    for (const Song* song : setlist->songs())
-//    {
-////        items.append( TOCItem( labelSong( song ), 0,  ) );
-//    }
-
-//}
 
 
 

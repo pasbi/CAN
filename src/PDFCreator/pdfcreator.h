@@ -33,6 +33,7 @@ private: // METHODES
     void paintChordPatternAttachment(const ChordPatternAttachment* attachment);
     void paintTitle();
     void paintTableOfContents();
+    void paintHeadline(const QString& label , const EnumerationNumber &number = EnumerationNumber::invalid() );
 
     /**
      * @brief insertTableOfContentsStub insert a stub at current page.
@@ -42,6 +43,7 @@ private: // METHODES
     QPainter& painter();
     void nextPage();
     QRectF pageRect() const { return QRectF(QPointF(), m_pdfPainter->size()); }
+    QRectF line( double y ) const { return QRectF(QPointF(0, y), QSizeF(m_pdfPainter->size().width(), 10)); }
 
 private: // MEMBERS
     PDFPaintDevice* m_pdfPainter = NULL;
