@@ -34,8 +34,8 @@ private: // METHODES
     void paintHeadline(const QString& label , const EnumerationNumber &number = EnumerationNumber::invalid() );
     double leftMargin() const { return 5; }
     double rightMargin() const { return 10; }
-    double topMargin() { return 10 + m_additionalTopMargin; }
-    double bottomMargin() const { return 20; }
+    double topMargin() { return 5 + m_additionalTopMargin; }
+    double bottomMargin() const { return 5; }
 
     void decoratePageNumbers();
 

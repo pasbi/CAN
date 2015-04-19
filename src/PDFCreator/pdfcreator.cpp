@@ -389,19 +389,15 @@ void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* atta
     for (const Paragraph& par : paragraphs)
     {
         double leftSpace = pageRect().height() - bottomMargin() - y;
-        if (leftSpace > par.height)
+        if (leftSpace <= par.height)
         {
-            for (const QString & line : par.lines )
-            {
-                painter()->drawText( QRectF( leftMargin(), y, width, height ), line );
-                y += height;
-            }
-        }
-        else
-        {
-            painter()->fillRect( QRectF( leftMargin(), y, width, par.height ), Qt::red);
             nextPage();
             y = topMargin();
+        }
+        for (const QString & line : par.lines )
+        {
+            painter()->drawText( QRectF( leftMargin(), y, width, height ), line );
+            y += height;
         }
     }
 
