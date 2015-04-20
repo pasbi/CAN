@@ -330,7 +330,7 @@ void PDFCreator::paintAttachment(const Attachment *attachment )
 void PDFCreator::decoratePageNumbers()
 {
     double height = painter()->fontMetrics().height();
-    double y = pageRect().height() - 10;
+    double y = pageRect().height() - bottomMargin() + painter()->fontMetrics().height();
     for (int i = 0; i < m_pdfPainter->numPages(); ++i)
     {
         int pageNumber = i - m_tableOfContentsNumPages;
@@ -356,52 +356,80 @@ void PDFCreator::paintPDFAttachment(const PDFAttachment* attachment )
     }
 }
 
+bool pageBreak( const QStringList & lines, const int currentLine, const double heightLeft, const QPainter& painter )
+{
+    if (lines[currentLine].isEmpty())
+    {
+        // we are currently at a paragraph break
+        // if next paragraph fits, return false, true otherwise.
+        double paragraphHeight = 0;
+        // sum line heights until the next empty line.
+        for (int i = currentLine + 1; i < lines.length() && !lines[i].isEmpty(); i++ )
+        {
+            paragraphHeight += painter.fontMetrics().height();
+        }
+
+        return paragraphHeight > heightLeft;
+    }
+    else
+    {
+        // we are not at a paragraph break. break if the current line will not fit anymore.
+        return painter.fontMetrics().height() > heightLeft;
+    }
+}
 
 void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* attachment )
 {
     QStringList lines = attachment->chordPattern().split("\n", QString::KeepEmptyParts);
 
-    typedef struct Paragraph
-    {
-        QStringList lines;
-        double height;
-    } Paragraph;
 
-    QList<Paragraph> paragraphs;
-
-    Paragraph currentParagraph;
-    for (const QString& line : lines)
-    {
-        currentParagraph.lines << line;
-        if (line.isEmpty())
-        {
-            currentParagraph.height = painter()->fontMetrics().height() * currentParagraph.lines.length();
-            paragraphs << currentParagraph;
-            currentParagraph.lines.clear();
-        }
-    }
-    paragraphs << currentParagraph;
-
-    //TODO if a paragraph is longer than one site, there will be an empty page with subsequent overflowing page.
-    // Workaround: insert enough empty lines.
     double y = topMargin();
     double width = pageRect().width() - leftMargin() - rightMargin();
     double height = painter()->fontMetrics().height();
-    for (const Paragraph& par : paragraphs)
+    for (int i = 0; i < lines.length(); ++i)
     {
-        double leftSpace = pageRect().height() - bottomMargin() - y;
-        if (leftSpace <= par.height)
+        if ( pageBreak( lines,
+                        i,
+                        pageRect().height() - bottomMargin() - y,
+                        *painter()                                   ))
         {
             nextPage();
             y = topMargin();
         }
-        for (const QString & line : par.lines )
-        {
-            painter()->drawText( QRectF( leftMargin(), y, width, height ), line );
-            y += height;
-        }
+        painter()->drawText( QRectF( leftMargin(), y, width, height ), lines[i] );
+        y += height;
     }
 
 }
+
+
+//    typedef struct Paragraph
+//    {
+//        QStringList lines;
+//        double height;
+//    } Paragraph;
+
+
+////    // if line is the first line in a paragraph, store the height of the paragraph.
+////    // if the line is not the first line in a paragraph, height will be zero.
+////    QMap<QString, int> paragraphHeights;
+
+////    QList<Paragraph> paragraphs;
+
+////    Paragraph currentParagraph;
+////    for (const QString& line : lines)
+////    {
+////        currentParagraph.lines << line;
+////        if (line.isEmpty())
+////        {
+////            currentParagraph.height = painter()->fontMetrics().height() * currentParagraph.lines.length();
+////            paragraphs << currentParagraph;
+////            currentParagraph.lines.clear();
+////        }
+////    }
+////    paragraphs << currentParagraph;
+
+//    //TODO if a paragraph is longer than one site, there will be an empty page with subsequent overflowing page.
+//    // Workaround: insert enough empty lines.
 
 
