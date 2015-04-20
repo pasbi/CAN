@@ -25,8 +25,8 @@ public:
 private: // METHODES
     void paintSetlist( );
     void paintSong( const Song* song );
-    void paintAttachment( const Attachment* attachment );
-    void paintPDFAttachment(const PDFAttachment* attachment );
+    void paintAttachment(Attachment *attachment );
+    void paintPDFAttachment(PDFAttachment *attachment );
     void paintChordPatternAttachment(const ChordPatternAttachment* attachment);
     void paintTitle();
     void paintTableOfContents();

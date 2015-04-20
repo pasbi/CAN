@@ -1,7 +1,5 @@
 #include "pdfcreator.h"
 #include <QPainter>
-//#include <QPdfWriter>
-//#include "poppler/qt5/poppler-qt5.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/event.h"
 #include "pdfpagesizewrapper.h"
@@ -69,6 +67,12 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        "Table of Contents",
                        true,
                        ConfigurationItemOptions::CheckboxOptions() );
+
+CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       PDFResolution,
+                       "Resolution",
+                       72,
+                       ConfigurationItemOptions::AdvancedDoubleSliderOptions(0, 400, 1, "dpi") );
 
 
 QMap<QString, QString> init_dictionary()
@@ -295,10 +299,10 @@ void PDFCreator::paintSong(const Song *song)
 
 
     INIT_LOOP;
-    for (const Attachment* attachment : song->attachments())
+    for ( Attachment* attachment : song->attachments() )
     {
-        paintAttachment( attachment );
         IFN_FIRST_ITERATION nextPage();
+        paintAttachment( attachment );
     }
 }
 
@@ -310,19 +314,17 @@ bool printAttachment( const Attachment* attachment )
     return true;
 }
 
-void PDFCreator::paintAttachment(const Attachment *attachment )
+void PDFCreator::paintAttachment( Attachment *attachment )
 {
     if (printAttachment( attachment ))
     {
-//        m_tableOfContents.append( labelAttachment(attachment), 2, m_pdfPainter->currentPageNumber() + 1 );
-
         if (attachment->type() == PDFAttachment::TYPE)
         {
-            paintPDFAttachment( qobject_assert_cast<const PDFAttachment*>(attachment) );
+            paintPDFAttachment( qobject_assert_cast<PDFAttachment*>(attachment) );
         }
         else if (attachment->type() == ChordPatternAttachment::TYPE)
         {
-            paintChordPatternAttachment( qobject_assert_cast<const ChordPatternAttachment*>(attachment) );
+            paintChordPatternAttachment( qobject_assert_cast<ChordPatternAttachment*>(attachment) );
         }
     }
 }
@@ -344,15 +346,39 @@ void PDFCreator::decoratePageNumbers()
     }
 }
 
-void PDFCreator::paintPDFAttachment(const PDFAttachment* attachment )
+#include <QLabel>
+#include <QDialog>
+#include <QVBoxLayout>
+void PDFCreator::paintPDFAttachment( PDFAttachment* attachment )
 {
+    // ensure that there is the right loaded
+    attachment->open();
     Poppler::Document* doc = attachment->document();
     if (doc)
     {
+        Poppler::Document::RenderBackend backendBefore = doc->renderBackend();
+        doc->setRenderBackend( Poppler::Document::ArthurBackend );  // the other backend will not work.
         for (int i = 0; i < doc->numPages(); ++i)
         {
-            attachment->document()->page(i)->renderToPainter( painter() );
+            if (i != 0)
+            {
+                nextPage();
+            }
+            painter()->save();
+            QSizeF pageSize = doc->page(i)->pageSizeF();
+            QSizeF targetSize = pageRect().size();
+            double fx = targetSize.width() / pageSize.width();
+            double fy = targetSize.height() / pageSize.height();
+
+            double resolution = config["PDFResolution"].toDouble();
+            double f = qMin(fx, fy) * 72.0 / resolution;
+
+            painter()->scale( f, f );
+
+            doc->page(i)->renderToPainter( painter(), resolution, resolution );
+            painter()->restore();
         }
+        doc->setRenderBackend( backendBefore );
     }
 }
 
@@ -399,37 +425,6 @@ void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* atta
         painter()->drawText( QRectF( leftMargin(), y, width, height ), lines[i] );
         y += height;
     }
-
 }
-
-
-//    typedef struct Paragraph
-//    {
-//        QStringList lines;
-//        double height;
-//    } Paragraph;
-
-
-////    // if line is the first line in a paragraph, store the height of the paragraph.
-////    // if the line is not the first line in a paragraph, height will be zero.
-////    QMap<QString, int> paragraphHeights;
-
-////    QList<Paragraph> paragraphs;
-
-////    Paragraph currentParagraph;
-////    for (const QString& line : lines)
-////    {
-////        currentParagraph.lines << line;
-////        if (line.isEmpty())
-////        {
-////            currentParagraph.height = painter()->fontMetrics().height() * currentParagraph.lines.length();
-////            paragraphs << currentParagraph;
-////            currentParagraph.lines.clear();
-////        }
-////    }
-////    paragraphs << currentParagraph;
-
-//    //TODO if a paragraph is longer than one site, there will be an empty page with subsequent overflowing page.
-//    // Workaround: insert enough empty lines.
 
 

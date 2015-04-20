@@ -16,7 +16,7 @@ public:
 
     void copy(Attachment *&copied) const;
 
-protected slots:
+public slots:
     void open();
 
 
