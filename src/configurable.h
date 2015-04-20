@@ -24,13 +24,13 @@ class ConfigurableTranslator : public QObject { };
 
 
 #define DEFN_CONFIG( CLASSNAME, Caption )    \
-    Configurable CLASSNAME::config(#CLASSNAME, QObject::tr(Caption, "Configurable Caption"))
+    Configurable CLASSNAME::config(#CLASSNAME, ConfigurableTranslator::tr(Caption, "Configurable Caption"))
 
 
 #define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, CAPTION, DEFAULT_VALUE, OPTIONS )  \
     struct ConfigurableStaticInitializer_##CLASSNAME##_##KEY {    \
         ConfigurableStaticInitializer_##CLASSNAME##_##KEY() {     \
-            CLASSNAME::config.addItem( #KEY, QObject::tr(CAPTION, "Configurable Item Caption"), DEFAULT_VALUE, OPTIONS );   \
+            CLASSNAME::config.addItem( #KEY, ConfigurableTranslator::tr(CAPTION, "Configurable Item Caption"), DEFAULT_VALUE, OPTIONS );   \
         }                                                       \
     } private__ConfigurableStaticInitializer_##CLASSNAME##_##KEY
 

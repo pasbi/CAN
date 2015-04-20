@@ -7,6 +7,10 @@
 #include <QMessageBox>
 #include "Dialogs/addfileindexsourcedialog.h"
 
+DEFN_CONFIG( AdvancedFileChooser, "File Attachment" );
+
+CONFIGURABLE_ADD_ITEM( AdvancedFileChooser, NumProposedFiles, "Proposed Files", 10, ConfigurationItemOptions::SpinBoxOptions( 1, 100, 1 ) );
+
 AdvancedFileChooser::AdvancedFileChooser(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AdvancedFileChooser)
@@ -151,7 +155,7 @@ void AdvancedFileChooser::updateComboBox()
     QByteArray hash = m_hash;   // keep hash under all circumstances!
 
     m_filenames.clear();
-    m_filenames = filter( app().fileIndex().filenames(), m_song->stringAttributes(), m_endings, 10 ); //TODO 10 must be configurable
+    m_filenames = filter( app().fileIndex().filenames(), m_song->stringAttributes(), m_endings, config["NumProposedFiles"].toInt() );
 
     ui->comboBox->clear();
     for (const QString & f : m_filenames)

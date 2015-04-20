@@ -60,12 +60,6 @@ void IndexedFileAttachmentView::polish()
     ui->advancedFileChooser->blockSignals(false);
 
     connect( attachment<IndexedFileAttachment>(), SIGNAL(hashChanged(QByteArray)), this, SLOT(open()) );
-    connect( attachment<IndexedFileAttachment>(), &IndexedFileAttachment::hashChanged, [this](QByteArray hash)
-    {
-        ui->advancedFileChooser->blockSignals(true);
-        ui->advancedFileChooser->setHash( hash );
-        ui->advancedFileChooser->blockSignals(false);
-    });
 }
 
 void IndexedFileAttachmentView::updateAttachmentView()

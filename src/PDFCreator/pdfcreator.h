@@ -13,9 +13,6 @@
 #include "pdfpaintdevice.h"
 #include "tableofcontents.h"
 
-//TODO ChordPatternAttachment undo-redo
-//undo-redo must unset saved-state of the project.
-
 class PDFCreator
 {
     DECL_CONFIG( PDFCreator );

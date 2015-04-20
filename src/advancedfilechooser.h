@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "FileIndex/fileindex.h"
 #include "Database/SongDatabase/song.h"
+#include "configurable.h"
 
 
 namespace Ui {
@@ -13,6 +14,7 @@ class AdvancedFileChooser;
 class AdvancedFileChooser : public QWidget
 {
     Q_OBJECT
+    DECL_CONFIG( AdvancedFileChooser );
 
 public:
     explicit AdvancedFileChooser(QWidget *parent = 0);
