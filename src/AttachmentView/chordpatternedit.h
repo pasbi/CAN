@@ -9,6 +9,14 @@ class ChordPatternEdit : public QTextEdit
 public:
     explicit ChordPatternEdit(QWidget *parent = 0);
 
+protected:
+    void contextMenuEvent(QContextMenuEvent *e);
+    bool eventFilter(QObject *o, QEvent *e);
+
+private:
+    QMenu* m_contextMenu = NULL;
+
+
 };
 
 #endif // CHORDPATTERNEDIT_H

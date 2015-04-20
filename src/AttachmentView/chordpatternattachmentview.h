@@ -15,7 +15,7 @@ class ChordPatternAttachmentView;
 class ChordPatternAttachmentView : public AttachmentView
 {
     Q_OBJECT
-    DECL_CREATABLE(ChordPatternAttachmentView);
+    DECL_CREATABLE(ChordPatternAttachmentView)
     DECL_CONFIG( ChordPatternAttachmentView );
 public:
     explicit ChordPatternAttachmentView(QWidget *parent = 0);

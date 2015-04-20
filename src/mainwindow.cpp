@@ -979,8 +979,15 @@ void MainWindow::my_on_actionPasteSetlistItem_triggered()
     ui->eventDatabaseWidget->setlistView()->paste( app().clipboard()->mimeData() );
 }
 
+QAction* MainWindow::undoAction() const
+{
+    return ui->actionUndo;
+}
 
-
+QAction* MainWindow::redoAction() const
+{
+    return ui->actionRedo;
+}
 
 
 

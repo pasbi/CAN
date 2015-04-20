@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     app.fileIndex().restore();
 
     MainWindow m;
+    app.setMainWindow( &m );
 #ifndef TEST
     m.show();
     return app.exec();

@@ -11,7 +11,7 @@ public:
     AttachmentCommand(Attachment *attachment );
 
     template<typename T>
-    T* attachment() const { return dynamic_cast<T*>( m_attachment ); }
+    T* attachment() const { return qobject_assert_cast<T*>( m_attachment ); }
 
 private:
     Attachment* m_attachment;

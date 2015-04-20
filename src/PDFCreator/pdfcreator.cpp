@@ -382,7 +382,8 @@ void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* atta
     }
     paragraphs << currentParagraph;
 
-
+    //TODO if a paragraph is longer than one site, there will be an empty page with subsequent overflowing page.
+    // Workaround: insert enough empty lines.
     double y = topMargin();
     double width = pageRect().width() - leftMargin() - rightMargin();
     double height = painter()->fontMetrics().height();

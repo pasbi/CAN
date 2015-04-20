@@ -5,7 +5,9 @@
 #include "global.h"
 #include "FileIndex/fileindex.h"
 #include <QSettings>
+#include <QAction>
 
+class MainWindow;
 class Project;
 class Command;
 class Application : public QApplication
@@ -19,7 +21,11 @@ public:
     Project* project() const { return m_project; }
 
     void setProject(Project* project);
+    void setMainWindow(MainWindow *mainWindow);
     void pushCommand( Command* command );
+
+    void undo() const;
+    void redo() const;
 
 private:
     FileIndex m_fileIndex;
@@ -29,6 +35,7 @@ private:
     friend Application & app();
 
     Project* m_project = NULL;
+    MainWindow* m_mainWindow = NULL;
 
 };
 

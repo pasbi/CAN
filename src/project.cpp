@@ -115,6 +115,8 @@ void Project::undo()
         emitCommandPushedSignal( c->type() );
     }
 
+    setCanClose( false );
+
     QUndoStack::undo();
 }
 
@@ -126,6 +128,8 @@ void Project::redo()
     {
         emitCommandPushedSignal( c->type() );
     }
+
+    setCanClose( false );
 
     QUndoStack::redo();
 }

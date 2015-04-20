@@ -1,7 +1,7 @@
 #include "pdfattachment.h"
 #include "application.h"
 
-DEFN_CREATABLE_NAME(PDFAttachment, Attachment, "PDF Attachment");
+DEFN_CREATABLE_NAME(PDFAttachment, Attachment, "PDF Attachment")
 
 PDFAttachment::PDFAttachment()
 {

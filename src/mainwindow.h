@@ -19,6 +19,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    QAction* undoAction() const;
+    QAction* redoAction() const;
+
 private slots:
     void resizeSplitter();  // left column should be as small as possible.
     void my_on_actionNew_Song_triggered();

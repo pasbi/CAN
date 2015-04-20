@@ -1,5 +1,7 @@
 #include "application.h"
 #include "project.h"
+#include "global.h"
+#include "mainwindow.h"
 
 Application::Application(int &argc, char **argv) :
     QApplication( argc, argv)
@@ -8,7 +10,6 @@ Application::Application(int &argc, char **argv) :
     setOrganizationDomain("CAN Developers");
 
     Configurable::restoreAll();
-
 }
 
 Application::~Application()
@@ -37,5 +38,20 @@ void Application::pushCommand(Command *command)
 void Application::setProject(Project *project)
 {
     m_project = project;
+}
+
+void Application::setMainWindow( MainWindow* mainWindow )
+{
+    m_mainWindow = mainWindow;
+}
+
+void Application::undo() const
+{
+    return project()->undo();
+}
+
+void Application::redo() const
+{
+    return project()->redo();
 }
 

@@ -123,7 +123,8 @@ SOURCES += main.cpp\
     PDFCreator/pdfpaintdevice.cpp \
     PDFCreator/pdfpagesizewrapper.cpp \
     PDFCreator/tableofcontents.cpp \
-    PDFCreator/picturepainter.cpp
+    PDFCreator/picturepainter.cpp \
+    Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -223,7 +224,8 @@ HEADERS  += mainwindow.h \
     PDFCreator/pdfpaintdevice.h \
     PDFCreator/pdfpagesizewrapper.h \
     PDFCreator/tableofcontents.h \
-    PDFCreator/picturepainter.h
+    PDFCreator/picturepainter.h \
+    Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
