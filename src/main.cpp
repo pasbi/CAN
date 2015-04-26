@@ -2,8 +2,6 @@
 #include "global.h"
 #include "application.h"
 
-#define FILENAME "/media/Volume/Musik/Coldplay/X&Y/Fix You.mp3"
-
 //#define TEST
 
 

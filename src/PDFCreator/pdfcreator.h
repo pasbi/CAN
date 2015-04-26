@@ -4,7 +4,7 @@
 #include "Attachments/attachment.h"
 #include "Attachments/pdfattachment.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
-#include "Attachments/audioattachment.h"
+#include "Attachments/AudioAttachment/audioattachment.h"
 
 #include "Database/SongDatabase/song.h"
 #include "Database/EventDatabase/setlist.h"

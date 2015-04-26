@@ -15,9 +15,7 @@ public:
     template< typename T = Attachment >
     T* attachment() const
     {
-        T* attachment = dynamic_cast<T*>( m_attachment );
-        assert( attachment == m_attachment );   // may be NULL if m_attachment is NULL
-        return attachment;
+        return qobject_assert_cast<T*>( m_attachment );
     }
 
     /**

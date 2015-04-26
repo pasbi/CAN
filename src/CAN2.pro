@@ -20,6 +20,8 @@ QMAKE_CXXFLAGS_DEBUG += -Og
 LIBS += -L../../build-ZipGit-Desktop-Debug/ -lzipgit
 LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
+LIBS += -lavdevice -lavfilter -lavformat -lavcodec -lavutil -lpthread
+LIBS += -lSoundTouch
 
 
 QMAKE_CXXFLAGS += -std=c++0x
@@ -86,7 +88,7 @@ SOURCES += main.cpp\
     Commands/SongCommands/songduplicateattachmentcommand.cpp \
     AttachmentView/indexedfileattachmentview.cpp \
     AttachmentView/audioattachmentview.cpp \
-    Attachments/audioattachment.cpp \
+    Attachments/AudioAttachment/audioattachment.cpp \
     AttachmentView/chordpatternedit.cpp \
     advancedfilechooser.cpp \
     conflicteditor.cpp \
@@ -124,7 +126,10 @@ SOURCES += main.cpp\
     PDFCreator/pdfpagesizewrapper.cpp \
     PDFCreator/tableofcontents.cpp \
     PDFCreator/picturepainter.cpp \
-    Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp
+    Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp \
+    Attachments/AudioAttachment/sectionsmodel.cpp \
+    Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.cpp \
+    Attachments/AudioAttachment/audioplayer.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -186,7 +191,7 @@ HEADERS  += mainwindow.h \
     Commands/SongCommands/songduplicateattachmentcommand.h \
     AttachmentView/indexedfileattachmentview.h \
     AttachmentView/audioattachmentview.h \
-    Attachments/audioattachment.h \
+    Attachments/AudioAttachment/audioattachment.h \
     AttachmentView/chordpatternedit.h \
     advancedfilechooser.h \
     conflicteditor.h \
@@ -225,7 +230,10 @@ HEADERS  += mainwindow.h \
     PDFCreator/pdfpagesizewrapper.h \
     PDFCreator/tableofcontents.h \
     PDFCreator/picturepainter.h \
-    Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h
+    Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h \
+    Attachments/AudioAttachment/sectionsmodel.h \
+    Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.h \
+    Attachments/AudioAttachment/audioplayer.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
