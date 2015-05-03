@@ -16,13 +16,10 @@ Player::~Player()
 
 void Player::stop()
 {
-    if ( m_audioOutput )
+    if (m_audioOutput)
     {
         m_audioOutput->stop();
-        delete m_audioOutput;
     }
-    m_audioOutput = NULL;
-
     m_buffer.stop();
 }
 
@@ -30,8 +27,6 @@ void Player::open( const QString &filename )
 {
     stop();
     m_buffer.open( filename );
-//    m_buffer.decode( pitch, tempo, 0 );
-//    m_tempo = tempo;
 
     m_audioOutput = new QAudioOutput( QAudioDeviceInfo::defaultOutputDevice(), m_buffer.audioFormat() );
     connect( m_audioOutput, SIGNAL(notify()), this, SIGNAL(positionChanged()) );

@@ -11,7 +11,11 @@ AudioAttachment::AudioAttachment() :
 
 void AudioAttachment::open()
 {
-    m_player.open( filename() );
+    if (m_filename != filename())
+    {
+        m_filename = filename();
+        m_player.open( m_filename );
+    }
 }
 
 void AudioAttachment::copy(Attachment *&copied) const

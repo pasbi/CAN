@@ -19,11 +19,6 @@ IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
 
     ui->setupUi(this);
     initializedUis << ui;
-
-    connect( ui->advancedFileChooser, &AdvancedFileChooser::itemSelected, [this]() {
-        updateStackedWidget();
-    });
-
 }
 
 IndexedFileAttachmentView::~IndexedFileAttachmentView()
@@ -59,7 +54,11 @@ void IndexedFileAttachmentView::polish()
     updateStackedWidget();
     ui->advancedFileChooser->blockSignals(false);
 
-    connect( attachment<IndexedFileAttachment>(), SIGNAL(hashChanged(QByteArray)), this, SLOT(open()) );
+    connect( attachment<IndexedFileAttachment>(), &IndexedFileAttachment::hashChanged, [this]()
+    {
+        open();
+        updateStackedWidget();
+    });
 }
 
 void IndexedFileAttachmentView::updateAttachmentView()

@@ -25,6 +25,7 @@ public slots:
 private:
     SectionsModel * const m_sectionsModel;
     Player m_player;
+    QString m_filename;
 
 };
 
