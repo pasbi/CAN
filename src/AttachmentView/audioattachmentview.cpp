@@ -24,6 +24,7 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
 
 AudioAttachmentView::~AudioAttachmentView()
 {
+    on_pushButtonStop_clicked();
     delete ui;
 }
 
@@ -36,11 +37,12 @@ void AudioAttachmentView::polish()
     connect( &a->player(), SIGNAL(durationChanged()), this, SLOT(updateSliderRange()) );
     connect( a, SIGNAL(hashChanged(QByteArray)), this, SLOT(updateSliderRange()));
     updateSliderRange();
+    ui->doubleSpinBoxPitch->setValue( player().pitch() );
+    ui->doubleSpinBoxTempo->setValue( player().tempo() );
 }
 
 void AudioAttachmentView::open()
 {
-    player().seek( 0 );
 }
 
 void AudioAttachmentView::on_pushButtonStop_clicked()

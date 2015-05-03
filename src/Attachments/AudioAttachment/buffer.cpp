@@ -90,16 +90,19 @@ void Buffer::stop()
 void Buffer::decode(double pitch, double tempo, double offset)
 {
     stop();
-    m_decoder = new Decoder( m_formatContext,
-                             m_audioStream,
-                             m_codecContext,
-                             m_streamIndex,
-                             pitch,
-                             tempo,
-                             offset,
-                             &m_buffer.buffer() );
-    m_decoder->start();
-    m_offset = offset;
+    if (m_formatContext && m_audioStream && m_codecContext && m_streamIndex >= 0)
+    {
+        m_decoder = new Decoder( m_formatContext,
+                                 m_audioStream,
+                                 m_codecContext,
+                                 m_streamIndex,
+                                 pitch,
+                                 tempo,
+                                 offset,
+                                 &m_buffer.buffer() );
+        m_decoder->start();
+        m_offset = offset;
+    }
 }
 
 Buffer::Decoder::Decoder( AVFormatContext * formatContext,

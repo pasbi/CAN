@@ -21,6 +21,8 @@ public:
     // position and duration are independend from tempo.
     double position() const;
     double duration() const;
+    double pitch() const { return m_pitch; }
+    double tempo() const { return m_tempo; }
 
 public slots:
     void play();
