@@ -3,6 +3,7 @@
 
 #include <QAction>
 #include <QMenu>
+#include <functional>
 
 
 namespace Util

@@ -75,14 +75,21 @@ bool SectionsModel::setData(const QModelIndex &index, const QVariant &value, int
     }
 
     app().pushCommand( new EditSectionCommand( this, value, index, role) );
+    return true;
 }
 
 bool SectionsModel::setData_(const QModelIndex &index, const QVariant &value, int role) const
 {
-
+    Q_UNUSED( index );
+    Q_UNUSED( value );
+    Q_UNUSED( role );
+    return false;
 }
 
 bool SectionsModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-
+    Q_UNUSED( row );
+    Q_UNUSED( count );
+    Q_UNUSED( parent );
+    return false;
 }

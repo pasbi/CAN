@@ -5,10 +5,8 @@
 //#define TEST
 
 
-#include "PDFCreator/pdfcreator.h"
-#include "PDFCreator/tableofcontents.h"
-#include "PDFCreator/picturepainter.h"
-#include <QLabel>
+#include "Attachments/AudioAttachment/buffer.h"
+#include <QAudioOutput>
 
 int main(int argc, char *argv[])
 {
@@ -27,4 +25,26 @@ int main(int argc, char *argv[])
     p.save( "/home/pascal/test.pdf" );
     return 0;
 #endif
+
+//    Buffer buffer;
+//    buffer.open( "/home/pascal/test.mp3" );
+
+//    qDebug() << buffer.duration();
+//    qDebug() << buffer.position();
+
+
+//    buffer.seek( 22 );
+//    qDebug() << buffer.position();
+
+//    buffer.buffer().open( QIODevice::ReadOnly );
+//    QAudioOutput out( QAudioDeviceInfo::defaultOutputDevice(), buffer.format() );
+
+
+//    out.start( &buffer.buffer() );
+////    out.setVolume( 50 );
+
+//    return app.exec();
+
+
+
 }

@@ -57,20 +57,22 @@ QPainter *PDFPaintDevice::painter() const
 #include <QLabel>
 #include <QThread>
 #include <QApplication>
+
 void PDFPaintDevice::save(const QString &filename) const
 {
-
-
     QPdfWriter writer(filename);
     writer.setPageSize( m_pageSize );
     writer.setTitle( m_title );
     QPainter pdfwriterPainter( &writer );
 
-    INIT_LOOP;
+    int i = 0;
     for ( PicturePainter* pp : m_pages)
     {
         pp->stop();
-        IFN_FIRST_ITERATION assert( writer.newPage() );
+        if (i++ != 0)
+        {
+            assert( writer.newPage() );
+        }
         pdfwriterPainter.drawPicture( QPoint(), *pp );
     }
 }

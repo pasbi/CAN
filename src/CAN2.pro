@@ -17,12 +17,11 @@ CONFIG += debug
 QMAKE_CXXFLAGS_DEBUG -= -O2
 QMAKE_CXXFLAGS_DEBUG += -Og
 
-LIBS += -L../../build-ZipGit-Desktop-Debug/ -lzipgit
+LIBS += -L../../ZipGit/build-ZipGit-Desktop-Debug/ -lzipgit
 LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
-LIBS += -lavdevice -lavfilter -lavformat -lavcodec -lavutil -lpthread
+LIBS += -lavformat -lavcodec -lavutil -lpthread
 LIBS += -lSoundTouch
-
 
 QMAKE_CXXFLAGS += -std=c++0x
 
@@ -41,8 +40,6 @@ SOURCES += main.cpp\
     creatable.cpp \
     Attachments/ChordPatternAttachment/chordpatternattachment.cpp \
     Database/EventDatabase/event.cpp \
-    UnitTest/creatabletest.cpp \
-    UnitTest/unittests.cpp \
     Commands/command.cpp \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
     DatabaseView/SongDatabaseView/songtableview.cpp \
@@ -92,7 +89,6 @@ SOURCES += main.cpp\
     AttachmentView/chordpatternedit.cpp \
     advancedfilechooser.cpp \
     conflicteditor.cpp \
-    advancedaudioplayer.cpp \
     Dialogs/commitdialog.cpp \
     identitymanager.cpp \
     Dialogs/identitydialog.cpp \
@@ -129,7 +125,8 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp \
     Attachments/AudioAttachment/sectionsmodel.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.cpp \
-    Attachments/AudioAttachment/audioplayer.cpp
+    Attachments/AudioAttachment/buffer.cpp \
+    Attachments/AudioAttachment/player.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -144,8 +141,6 @@ HEADERS  += mainwindow.h \
     creatable.h \
     Attachments/ChordPatternAttachment/chordpatternattachment.h \
     Database/EventDatabase/event.h \
-    UnitTest/creatabletest.h \
-    UnitTest/unittests.h \
     Commands/command.h \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.h \
     DatabaseView/SongDatabaseView/songtableview.h \
@@ -195,7 +190,6 @@ HEADERS  += mainwindow.h \
     AttachmentView/chordpatternedit.h \
     advancedfilechooser.h \
     conflicteditor.h \
-    advancedaudioplayer.h \
     global.h \
     Dialogs/commitdialog.h \
     identitymanager.h \
@@ -233,7 +227,8 @@ HEADERS  += mainwindow.h \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h \
     Attachments/AudioAttachment/sectionsmodel.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.h \
-    Attachments/AudioAttachment/audioplayer.h
+    Attachments/AudioAttachment/buffer.h \
+    Attachments/AudioAttachment/player.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

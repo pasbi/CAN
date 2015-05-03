@@ -298,10 +298,13 @@ void PDFCreator::paintSong(const Song *song)
     paintHeadline( headline );
 
 
-    INIT_LOOP;
+    int i = 0;
     for ( Attachment* attachment : song->attachments() )
     {
-        IFN_FIRST_ITERATION nextPage();
+        if (i++ != 0)
+        {
+            nextPage();
+        }
         paintAttachment( attachment );
     }
 }

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "global.h"
-#include "../../../ZipGit/src/file.h"
+#include "../../ZipGit/src/file.h"
 #include <QListWidgetItem>
 
 namespace Ui {

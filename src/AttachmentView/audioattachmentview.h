@@ -30,8 +30,7 @@ protected slots:
     void open();
 
 private slots:
-    void on_doubleSpinBoxTempo_editingFinished();
-    void on_doubleSpinBoxPitch_editingFinished();
+    void setPitchTempo();
     void on_pushButtonStop_clicked();
     void on_pushButtonPlayPause_toggled(bool checked);
     void on_doubleSpinBoxElapsed_editingFinished();
@@ -40,7 +39,7 @@ private slots:
     void updateSliders();
     void updateSliderRange();
 
-    AudioPlayer& player() { return attachment<AudioAttachment>()->player(); }
+    Player& player() { return attachment<AudioAttachment>()->player(); }
 
 
 private:
