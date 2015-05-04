@@ -41,8 +41,8 @@ protected:
 public:
     virtual QStringList acceptedEndings() const = 0;
 
-    QJsonObject toJsonObject() const;
-    bool restoreFromJsonObject(const QJsonObject &object);
+    virtual QJsonObject toJsonObject() const;
+    virtual bool restoreFromJsonObject(const QJsonObject &object);
 
 
 public slots:

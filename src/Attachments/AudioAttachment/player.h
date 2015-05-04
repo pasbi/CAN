@@ -5,6 +5,7 @@
 #include "buffer.h"
 #include <QAudioOutput>
 #include <QObject>
+#include "sectionsmodel.h"
 
 class Player : public QObject
 {
@@ -24,6 +25,9 @@ public:
     double pitch() const { return m_pitch; }
     double tempo() const { return m_tempo; }
 
+    void setSection( const Section* section = NULL ) { m_section = section; }
+    const Section* currentSection() const { return m_section; }
+
 public slots:
     void play();
     void pause();
@@ -31,8 +35,8 @@ public slots:
 
 
 signals:
-    void positionChanged();
-    void durationChanged();
+    void positionChanged(double);
+    void durationChanged(double);
 
 private:
     Buffer m_buffer;
@@ -41,6 +45,11 @@ private:
     double m_offset = 0;
     QAudioOutput* m_audioOutput = NULL;
     void seek();
+
+    const Section* m_section = NULL;
+
+private slots:
+    void checkSection();
 };
 
 #endif // PLAYER_H

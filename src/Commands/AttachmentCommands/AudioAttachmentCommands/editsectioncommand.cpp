@@ -1,20 +1,20 @@
 #include "editsectioncommand.h"
 
-EditSectionCommand::EditSectionCommand(SectionsModel *sectionsModel, const QVariant &newValue, const QModelIndex & index, const int role) :
+EditSectionCommand::EditSectionCommand(SectionsModel *model, const QVariant &newValue, const QModelIndex & index, const int role) :
+    SectionsModelCommand( model ),
     m_newValue( newValue ),
-    m_oldValue( sectionsModel->data(index, role) ),
+    m_oldValue( model->data(index, role) ),
     m_index( index ),
-    m_role( role ),
-    m_sectionsModel( sectionsModel )
+    m_role( role )
 {
 }
 
 void EditSectionCommand::undo()
 {
-    m_sectionsModel->setData_( m_index, m_oldValue, m_role );
+    model()->setData_( m_index, m_oldValue, m_role );
 }
 
 void EditSectionCommand::redo()
 {
-    m_sectionsModel->setData_( m_index, m_newValue, m_role );
+    model()->setData_( m_index, m_newValue, m_role );
 }

@@ -78,18 +78,101 @@ bool SectionsModel::setData(const QModelIndex &index, const QVariant &value, int
     return true;
 }
 
-bool SectionsModel::setData_(const QModelIndex &index, const QVariant &value, int role) const
+bool SectionsModel::setData_(const QModelIndex &index, const QVariant &value, int role)
 {
-    Q_UNUSED( index );
-    Q_UNUSED( value );
-    Q_UNUSED( role );
-    return false;
+    if (role == Qt::EditRole)
+    {
+        assert( index.column() == 0 );
+        m_sections[index.row()].setCaption( value.toString() );
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool SectionsModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    Q_UNUSED( row );
-    Q_UNUSED( count );
-    Q_UNUSED( parent );
-    return false;
+    assert( count == m_sectionsToBeInserted.length() );
+    assert( !parent.isValid() );
+
+    beginInsertRows(parent, row, row + count - 1);
+    for (int i = row; i < row + count; ++i)
+    {
+        m_sections.insert(i, m_sectionsToBeInserted.takeFirst());
+    }
+    endInsertRows();
+    assert( m_sectionsToBeInserted.isEmpty() );
+    return true;
 }
+
+#include "Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.h"
+void SectionsModel::insertSection(const Section &section, int index)
+{
+    app().pushCommand( new InsertSectionCommand( this, section, index ) );
+}
+
+const Section* SectionsModel::section(int index) const
+{
+    return &m_sections[index];
+}
+
+void SectionsModel::restore( const QJsonArray& array )
+{
+    for ( const QJsonValue& val : array )
+    {
+        m_sections.append( Section(val.toObject()) );
+    }
+}
+
+QJsonArray SectionsModel::toJson() const
+{
+    QJsonArray array;
+    for (const Section& section : m_sections)
+    {
+        array.append(section.toJson());
+    }
+    return array;
+}
+
+QJsonObject Section::toJson() const
+{
+    QJsonObject object;
+    object["caption"] = m_caption;
+    object["begin"] = m_begin;
+    object["end"] = m_end;
+    return object;
+}
+
+Section::Section(const QJsonObject &object)
+{
+    checkJsonObject( object, "caption", QJsonValue::String );
+    checkJsonObject( object, "begin", QJsonValue::Double );
+    checkJsonObject( object, "end", QJsonValue::Double );
+
+    m_caption = object["caption"].toString();
+    m_begin = object["begin"].toDouble();
+    m_end = object["end"].toDouble();
+}
+
+int SectionsModel::indexOf(const Section *section) const
+{
+    for (int i = 0; i < m_sections.length(); ++i)
+    {
+        if (&m_sections[i] == section)
+        {
+                return i;
+        }
+    }
+    return -1;
+}
+
+
+
+
+
+
+
+
+

@@ -18,6 +18,12 @@ public:
     Player& player() { return m_player; }
     const Player& player() const { return m_player; }
 
+    void appendSection( const Section& section );
+
+
+    virtual QJsonObject toJsonObject() const;
+    virtual bool restoreFromJsonObject(const QJsonObject &object);
+
 
 public slots:
     void open();
@@ -26,6 +32,12 @@ private:
     SectionsModel * const m_sectionsModel;
     Player m_player;
     QString m_filename;
+
+    const Section* m_currentSection = NULL;
+    void setSection( const Section* section );
+
+signals:
+    void currentSectionChanged( const Section* );
 
 };
 

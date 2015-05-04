@@ -2,13 +2,12 @@
 #define SECTIONSMODEL_H
 
 #include <QAbstractTableModel>
-#include <QDebug>
 #include "global.h"
 
 class Section
 {
 public:
-    Section( const QString & caption, const int begin, const int end ) :
+    Section( const QString & caption, const double begin, const double end ) :
         m_caption( caption ),
         m_begin( begin ),
         m_end( end )
@@ -20,15 +19,22 @@ public:
         }
     }
 
+    Section( const QJsonObject& object );
+
     QString caption() const { return m_caption; }
-    int begin() const { return m_begin; }
-    int end() const { return m_end; }
+    double begin() const { return m_begin; }
+    double end() const { return m_end; }
+
+    void setCaption( const QString & caption ) { m_caption = caption; }
+
+    QJsonObject toJson() const;
+
 
 
 private:
     QString m_caption;
-    int m_begin;
-    int m_end;
+    double m_begin;
+    double m_end;
 };
 
 class SectionsModel : public QAbstractTableModel
@@ -39,6 +45,7 @@ public:
 
     int columnCount(const QModelIndex &parent) const;
     int rowCount(const QModelIndex &parent) const;
+    int rowCount() const { return rowCount( QModelIndex() ); }
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
@@ -47,17 +54,26 @@ public:
     // creates a undo/redo command which will call setData_
     bool setData(const QModelIndex &index, const QVariant &value, int role);
 
-    void insertSection( const Section & section );
+    void insertSection( const Section& section , int index);
+    void appendSection( const Section& section ) { insertSection( section, m_sections.length() ); }
 
+    const Section* section( int index ) const;
+
+    void restore( const QJsonArray& array );
+    QJsonArray toJson() const;
+
+    int indexOf( const Section* section ) const;
 private:
     bool insertRows(int row, int count, const QModelIndex &parent);
+    QList<Section> m_sectionsToBeInserted;
 
     // this will actually set the data.
-    bool setData_(const QModelIndex &index, const QVariant &value, int role) const;
+    bool setData_(const QModelIndex &index, const QVariant &value, int role);
 
     QList<Section> m_sections;
 
     friend class EditSectionCommand;
+    friend class InsertSectionCommand;
 
 
 };

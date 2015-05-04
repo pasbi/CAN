@@ -20,9 +20,12 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QPushButton" name="buttonRecordSection">
+      <widget class="QToolButton" name="toolButtonRecordSection">
        <property name="text">
         <string/>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::DelayedPopup</enum>
        </property>
       </widget>
      </item>
@@ -156,50 +159,18 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QDoubleSpinBox" name="doubleSpinBoxElapsed">
-       <property name="prefix">
-        <string>+ </string>
-       </property>
-       <property name="suffix">
-        <string> s</string>
-       </property>
-       <property name="decimals">
-        <number>2</number>
-       </property>
-       <property name="maximum">
-        <double>999.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="slider">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="doubleSpinBoxRemaining">
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="prefix">
-        <string>- </string>
-       </property>
-       <property name="suffix">
-        <string> s</string>
-       </property>
-       <property name="maximum">
-        <double>999.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="AudioSlider" name="slider" native="true"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AudioSlider</class>
+   <extends>QWidget</extends>
+   <header>AttachmentView/audioslider.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../ressources.qrc"/>
  </resources>

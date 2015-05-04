@@ -126,7 +126,11 @@ SOURCES += main.cpp\
     Attachments/AudioAttachment/sectionsmodel.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.cpp \
     Attachments/AudioAttachment/buffer.cpp \
-    Attachments/AudioAttachment/player.cpp
+    Attachments/AudioAttachment/player.cpp \
+    Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.cpp \
+    Commands/AttachmentCommands/AudioAttachmentCommands/sectionsmodelcommand.cpp \
+    AttachmentView/audioslider.cpp \
+    AttachmentView/slider.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -228,7 +232,11 @@ HEADERS  += mainwindow.h \
     Attachments/AudioAttachment/sectionsmodel.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.h \
     Attachments/AudioAttachment/buffer.h \
-    Attachments/AudioAttachment/player.h
+    Attachments/AudioAttachment/player.h \
+    Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.h \
+    Commands/AttachmentCommands/AudioAttachmentCommands/sectionsmodelcommand.h \
+    AttachmentView/audioslider.h \
+    AttachmentView/slider.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -253,7 +261,8 @@ FORMS    += mainwindow.ui \
     Dialogs/datetimedialog.ui \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
-    DatabaseView/EventDatabaseView/setlistitemselector.ui
+    DatabaseView/EventDatabaseView/setlistitemselector.ui \
+    AttachmentView/audioslider.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

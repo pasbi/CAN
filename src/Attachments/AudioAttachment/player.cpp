@@ -1,5 +1,4 @@
 #include "player.h"
-#include <QDebug>
 
 Player::Player()
 {
@@ -29,9 +28,15 @@ void Player::open( const QString &filename )
     m_buffer.open( filename );
 
     m_audioOutput = new QAudioOutput( QAudioDeviceInfo::defaultOutputDevice(), m_buffer.audioFormat() );
-    connect( m_audioOutput, SIGNAL(notify()), this, SIGNAL(positionChanged()) );
-    emit positionChanged();
-    emit durationChanged();
+
+    connect( m_audioOutput, &QAudioOutput::notify, [this]()
+    {
+        checkSection();
+        emit positionChanged( position() );
+    });
+    double pos = position();
+    emit positionChanged( pos );
+    emit durationChanged( pos );
     m_audioOutput->setNotifyInterval( 10 );
 }
 
@@ -91,6 +96,19 @@ double Player::duration() const
 double Player::position() const
 {
     return m_buffer.position();
+}
+
+void Player::checkSection()
+{
+    if (m_section)
+    {
+        double pos = position();
+        double apos = qBound( m_section->begin(), pos, m_section->end() );
+        if (pos != apos)
+        {
+            seek( m_section->begin() );
+        }
+    }
 }
 
 

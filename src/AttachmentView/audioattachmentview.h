@@ -3,6 +3,7 @@
 
 #include "indexedfileattachmentview.h"
 #include "Attachments/AudioAttachment/audioattachment.h"
+#include <QMenu>
 
 
 namespace Ui {
@@ -33,11 +34,9 @@ private slots:
     void setPitchTempo();
     void on_pushButtonStop_clicked();
     void on_pushButtonPlayPause_toggled(bool checked);
-    void on_doubleSpinBoxElapsed_editingFinished();
-    void on_doubleSpinBoxRemaining_editingFinished();
-    void on_slider_sliderMoved(int position);
-    void updateSliders();
-    void updateSliderRange();
+    void seek( double pos );
+
+    void recordSection( QAction* action );
 
     Player& player() { return attachment<AudioAttachment>()->player(); }
 
@@ -46,7 +45,13 @@ private:
     Ui::AudioAttachmentView *ui;
     QWidget* m_audioWidget = NULL;
 
-    static const double SLIDER_MULTIPLIER;
+    QAction* m_setPositionAction = NULL;
+    QAction* m_abortRecordingAction = NULL;
+
+    static const QString RECORD_LEFT_POSITION_ICON_PATH;
+    static const QString RECORD_RIGHT_POSITION_ICON_PATH;
+    static const QString RECORD_LEFT_POSITION_CAPTION;
+    static const QString RECORD_RIGHT_POSITION_CAPTION;
 
 
 

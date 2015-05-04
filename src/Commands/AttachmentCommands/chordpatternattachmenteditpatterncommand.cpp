@@ -9,12 +9,10 @@ ChordPatternAttachmentEditPatternCommand::ChordPatternAttachmentEditPatternComma
 }
 void ChordPatternAttachmentEditPatternCommand::undo()
 {
-    qDebug() << "undo " << m_oldPattern;
     attachment<ChordPatternAttachment>()->setPattern( m_oldPattern );
 }
 
 void ChordPatternAttachmentEditPatternCommand::redo()
 {
-    qDebug() << "redo " << m_newPattern;
     attachment<ChordPatternAttachment>()->setPattern( m_newPattern );
 }

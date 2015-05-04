@@ -1,6 +1,6 @@
 #include "buffer.h"
 #include <QFile>
-#include <QDebug>
+#include "global.h"
 
 QAudioFormat audioFormat( const int channels, const int sampleRate, AVSampleFormat sampleFormat );
 
