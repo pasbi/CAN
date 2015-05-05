@@ -349,7 +349,7 @@ bool Buffer::Decoder::decode()
                     }
                     else
                     {
-                        Q_ASSERT( false );
+                        assert( false );
                     }
                 }
                 else
@@ -406,7 +406,7 @@ bool Buffer::Decoder::decode()
             }
             else
             {
-                Q_ASSERT( false );
+                assert( false );
             }
 
         }

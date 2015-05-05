@@ -2,32 +2,13 @@
 #define SECTIONSMODEL_H
 
 #include <QAbstractTableModel>
-#include "global.h"
 
 class Section
 {
 public:
-    Section( const QString & caption, const double begin, const double end ) :
-        m_caption( caption ),
-        m_begin( begin ),
-        m_end( end )
-    {
-        if (m_begin > m_end)
-        {
-            qSwap( m_begin, m_end );
-            qWarning() << "Beginning is after ending. Swapped them.";
-        }
-    }
-
-    Section() :
-        m_caption( QString() ),
-        m_begin( -1 ),
-        m_end( -1 )
-    {
-
-    }
-
+    Section( const QString & caption, const double begin, const double end );
     Section( const QJsonObject& object );
+    Section();
 
     QString caption() const { return m_caption; }
     double begin() const { return m_begin; }

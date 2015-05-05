@@ -1,5 +1,4 @@
 #include "songdatabase.h"
-#include "global.h"
 #include "project.h"
 #include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"

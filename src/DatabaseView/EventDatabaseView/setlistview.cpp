@@ -1,6 +1,5 @@
 #include "setlistview.h"
 #include <QMimeData>
-#include "global.h"
 #include "application.h"
 #include "project.h"
 #include "Commands/SetlistCommands/setlistinsertitemcommand.h"
