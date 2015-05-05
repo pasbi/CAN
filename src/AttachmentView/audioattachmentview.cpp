@@ -59,13 +59,16 @@ AudioAttachmentView::~AudioAttachmentView()
     delete ui;
 }
 
+#include <QTimer>
 void AudioAttachmentView::polish()
 {
     IndexedFileAttachmentView::polish();
 
     AudioAttachment* a = attachment<AudioAttachment>();
+
     connect( &a->player(), SIGNAL(positionChanged(double)), ui->slider, SLOT(setValue(double)) );
     connect( &a->player(), SIGNAL(durationChanged(double)), ui->slider, SLOT(setMaximum(double)) );
+
     connect( a, &AudioAttachment::hashChanged, [this, a]()
     {
         ui->slider->setMaximum( a->player().duration() );

@@ -28,6 +28,8 @@ double AudioSlider::value() const
     return ui->doubleSpinBoxLeft->value();
 }
 
+#include <QDateTime>
+#include <QSignalSpy>
 void AudioSlider::setValue(double value)
 {
     double remaining = ui->doubleSpinBoxRight->maximum() - value;

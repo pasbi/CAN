@@ -6,6 +6,7 @@
 #include <QAudioOutput>
 #include <QObject>
 #include "sectionsmodel.h"
+#include <QTimer>
 
 class Player : public QObject
 {
@@ -48,8 +49,14 @@ private:
 
     const Section* m_section = NULL;
 
+    // QAudioOutput position and buffer position is not realiable for small changes.
+    // so use a timer for small changes and sync it regulary with real buffer position.
+    QTimer* m_timer;
+    double m_currentPosition = 0;
+
 private slots:
-    void checkSection();
+    double checkSectionAndGetPosition();
+    void sync();
 };
 
 #endif // PLAYER_H
