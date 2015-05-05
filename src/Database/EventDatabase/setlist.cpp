@@ -7,17 +7,7 @@ QString SetlistItem::label() const
     switch (m_type)
     {
     case SongType:
-    {
-        QString title = m_song->title();
-        if (title.isEmpty())
-        {
-            return QString("%1").arg(m_song->title());
-        }
-        else
-        {
-            return QString("%1 - %2").arg(m_song->title(), m_song->artist());
-        }
-    }
+        return QString("%1 - %2").arg(m_song->title(), m_song->artist());
     case LabelType:
         return m_label;
     default:
