@@ -17,6 +17,7 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
             setAttachment( -1 );
         }
     });
+    ui->comboBox->setInvalidText( tr("No Attachment") );
 }
 
 AttachmentChooser::~AttachmentChooser()

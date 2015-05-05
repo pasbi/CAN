@@ -18,19 +18,19 @@
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <item>
-    <widget class="QComboBox" name="comboBox"/>
+    <widget class="ComboBox" name="comboBox"/>
    </item>
    <item>
     <widget class="AttachmentEditor" name="attachmentEditor" native="true"/>
@@ -43,6 +43,11 @@
    <extends>QWidget</extends>
    <header>AttachmentView/attachmenteditor.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

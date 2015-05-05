@@ -132,7 +132,8 @@ SOURCES += main.cpp\
     AttachmentView/audioslider.cpp \
     AttachmentView/slider.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
-    DatabaseView/databaseview.cpp
+    DatabaseView/databaseview.cpp \
+    combobox.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -240,7 +241,8 @@ HEADERS  += mainwindow.h \
     AttachmentView/audioslider.h \
     AttachmentView/slider.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h \
-    DatabaseView/databaseview.h
+    DatabaseView/databaseview.h \
+    combobox.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
