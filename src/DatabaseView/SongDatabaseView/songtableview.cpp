@@ -1,6 +1,5 @@
 #include "songtableview.h"
 #include "QHeaderView"
-#include <QMenu>
 #include <QAction>
 #include "global.h"
 #include "project.h"
@@ -8,23 +7,18 @@
 #include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 #include "renamableheaderview.h"
-#include <functional>
 #include "util.h"
 #include <QFocusEvent>
 #include "application.h"
 
 
 SongTableView::SongTableView(QWidget *parent) :
-    QTableView(parent),
+    DatabaseView(parent),
     m_delegate( new SongAttributeDelegate(this) )
 {
     delete horizontalHeader();
     setHorizontalHeader(new RenamableHeaderView( Qt::Horizontal, this ));
     horizontalHeader()->show();
-
-
-    setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 
     setItemDelegate( m_delegate );
 
@@ -51,22 +45,6 @@ SongTableView::SongTableView(QWidget *parent) :
     setDragEnabled( true );
     setDropIndicatorShown( true );
 
-}
-
-void SongTableView::showContextMenu(QPoint pos)
-{
-    QMenu* menu = new QMenu(this);
-
-    setUpContextMenu(menu);
-
-    menu->popup(viewport()->mapToGlobal(pos));
-    connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
-}
-
-QModelIndex SongTableView::indexUnderCursor() const
-{
-    QPoint pos = viewport()->mapFromGlobal( QCursor::pos() );
-    return indexAt(pos);
 }
 
 void SongTableView::setUpContextMenu(QMenu *menu)

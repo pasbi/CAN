@@ -6,6 +6,8 @@
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Dialogs/datetimedialog.h"
 #include <QMouseEvent>
+#include "util.h"
+#include "application.h"
 
 class TypeComboBoxDelegate : public QItemDelegate
 {
@@ -110,11 +112,10 @@ public:
 };
 
 EventTableView::EventTableView(QWidget *parent) :
-    QTableView(parent)
+    DatabaseView(parent)
 {
     horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
     horizontalHeader()->setResizeContentsPrecision( -1 ); // look at all rows.
-
 
     setItemDelegateForColumn( 0, new TypeComboBoxDelegate( this ) );
 
@@ -197,4 +198,26 @@ EventDatabaseSortProxy* EventTableView::proxyModel() const
 {
     EventDatabaseSortProxy* pm = qobject_assert_cast<EventDatabaseSortProxy*>( QTableView::model() );
     return pm;
+}
+
+#include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
+#include "Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h"
+void EventTableView::setUpContextMenu(QMenu* menu)
+{
+    QModelIndex index = indexUnderCursor();
+    Event* event = model()->eventAtIndex(index);
+
+    Util::addAction(menu, tr("New Event"), [this](){
+        app().pushCommand( new EventDatabaseNewEventCommand( model(), new Event(model()) ) );
+    });
+
+    Util::addAction(menu, tr("Delete Event"), [this, event]() {
+        if (event)
+        {
+            app().pushCommand( new EventDatabaseRemoveEventCommand( model(), event ) );
+        }
+    })->setEnabled(!!event);
+
+    menu->addSeparator();
+
 }

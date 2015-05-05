@@ -1,11 +1,11 @@
 #ifndef DATETABLEVIEW_H
 #define DATETABLEVIEW_H
 
-#include <QTableView>
+#include "DatabaseView/databaseview.h"
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
 
-class EventTableView : public QTableView
+class EventTableView : public DatabaseView
 {
     Q_OBJECT
 
@@ -23,6 +23,7 @@ protected:
 
 private:
     bool showDialog(QModelIndex index);
+    void setUpContextMenu(QMenu* menu);
 
 };
 
