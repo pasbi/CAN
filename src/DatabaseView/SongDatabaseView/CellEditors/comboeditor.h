@@ -7,7 +7,7 @@
 class ComboEditor : public CellEditor
 {
     Q_OBJECT
-    DECL_CREATABLE(ComboEditor);
+    DECL_CREATABLE(ComboEditor)
 public:
     explicit ComboEditor(QWidget *parent = 0);
 

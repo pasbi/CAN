@@ -113,6 +113,17 @@ void SectionsModel::insertSection(const Section &section, int index)
     app().pushCommand( new InsertSectionCommand( this, section, index ) );
 }
 
+bool SectionsModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    beginRemoveRows( parent, row, row + count -1 );
+    for (int i = row + count - 1; i >= row; --i)
+    {
+        m_sections.removeAt(i);
+    }
+    endRemoveRows();
+    return true;
+}
+
 const Section* SectionsModel::section(int index) const
 {
     return &m_sections[index];
@@ -166,6 +177,30 @@ int SectionsModel::indexOf(const Section *section) const
         }
     }
     return -1;
+}
+
+void SectionsModel::removeSection(const Section *section)
+{
+    int index = -1;
+    for (int i = 0; i < m_sections.length(); ++i)
+    {
+        if (&m_sections[i] == section)
+        {
+            index = i;
+        }
+    }
+
+    if (index >= 0)
+    {
+        removeSection( index );
+    }
+}
+
+
+#include "Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h"
+void SectionsModel::removeSection(int i)
+{
+    app().pushCommand( new DeleteSectionCommand( this, i ) );
 }
 
 

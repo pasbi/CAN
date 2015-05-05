@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>386</height>
+    <width>531</width>
+    <height>403</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,12 +20,16 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QToolButton" name="toolButtonRecordSection">
+      <widget class="QPushButton" name="pushButtonRecordSection">
        <property name="text">
         <string/>
        </property>
-       <property name="popupMode">
-        <enum>QToolButton::DelayedPopup</enum>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonClearSection">
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>

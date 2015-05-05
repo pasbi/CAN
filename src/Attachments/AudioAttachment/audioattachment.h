@@ -24,6 +24,7 @@ public:
     virtual QJsonObject toJsonObject() const;
     virtual bool restoreFromJsonObject(const QJsonObject &object);
 
+    void setSection( const Section* section );
 
 public slots:
     void open();
@@ -34,7 +35,6 @@ private:
     QString m_filename;
 
     const Section* m_currentSection = NULL;
-    void setSection( const Section* section );
 
 signals:
     void currentSectionChanged( const Section* );

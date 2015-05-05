@@ -8,7 +8,7 @@
 class DateEditor : public CellEditor
 {
     Q_OBJECT
-    DECL_CREATABLE(DateEditor);
+    DECL_CREATABLE(DateEditor)
 public:
     explicit DateEditor(QWidget *parent = 0);
 

@@ -7,7 +7,7 @@
 class StringEditor : public CellEditor
 {
     Q_OBJECT
-    DECL_CREATABLE(StringEditor);
+    DECL_CREATABLE(StringEditor)
 public:
     explicit StringEditor(QWidget *parent = 0);
 

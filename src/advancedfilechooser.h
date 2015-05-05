@@ -14,7 +14,7 @@ class AdvancedFileChooser;
 class AdvancedFileChooser : public QWidget
 {
     Q_OBJECT
-    DECL_CONFIG( AdvancedFileChooser );
+    DECL_CONFIG( AdvancedFileChooser )
 
 public:
     explicit AdvancedFileChooser(QWidget *parent = 0);

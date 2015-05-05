@@ -15,7 +15,7 @@
 
 class PDFCreator
 {
-    DECL_CONFIG( PDFCreator );
+    DECL_CONFIG( PDFCreator )
 public:
     PDFCreator( const Setlist* setlist );
     ~PDFCreator();

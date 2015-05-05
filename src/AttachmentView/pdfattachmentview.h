@@ -16,8 +16,8 @@ class PDFAttachmentView;
 class PDFAttachmentView : public IndexedFileAttachmentView
 {
     Q_OBJECT
-    DECL_CREATABLE(PDFAttachmentView);
-    DECL_CONFIG( PDFAttachmentView );
+    DECL_CREATABLE( PDFAttachmentView )
+    DECL_CONFIG( PDFAttachmentView )
 
 
 public:

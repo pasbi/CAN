@@ -130,7 +130,8 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/sectionsmodelcommand.cpp \
     AttachmentView/audioslider.cpp \
-    AttachmentView/slider.cpp
+    AttachmentView/slider.cpp \
+    Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -236,7 +237,8 @@ HEADERS  += mainwindow.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/sectionsmodelcommand.h \
     AttachmentView/audioslider.h \
-    AttachmentView/slider.h
+    AttachmentView/slider.h \
+    Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

@@ -9,7 +9,7 @@
 
 class IdentityManager
 {
-    DECL_CONFIG( FileIndex );
+    DECL_CONFIG( FileIndex )
 public:
     IdentityManager();
 

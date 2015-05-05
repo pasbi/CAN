@@ -15,7 +15,7 @@ class SetlistWidget;
 class SetlistWidget : public QWidget
 {
     Q_OBJECT
-    DECL_CONFIG( SetlistWidget );
+    DECL_CONFIG( SetlistWidget )
 public:
     explicit SetlistWidget(QWidget *parent = 0);
     ~SetlistWidget();

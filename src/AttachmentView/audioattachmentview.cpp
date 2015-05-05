@@ -16,22 +16,41 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     ui->setupUi( m_audioWidget );
     setWidget( m_audioWidget );
 
-    connect( ui->doubleSpinBoxTempo,        SIGNAL(valueChanged(double)),  this, SLOT(setPitchTempo()));
-    connect( ui->doubleSpinBoxPitch,        SIGNAL(valueChanged(double)),  this, SLOT(setPitchTempo()));
-    connect( ui->pushButtonPlayPause,       SIGNAL(clicked(bool)),         this, SLOT(on_pushButtonPlayPause_toggled(bool))        );
-    connect( ui->pushButtonStop,            SIGNAL(clicked()),             this, SLOT(on_pushButtonStop_clicked())                 );
-    connect( ui->slider,                    SIGNAL(valueChanged(double)),  this, SLOT(seek(double)) );
+    connect( ui->doubleSpinBoxTempo,        SIGNAL(valueChanged(double)),   this, SLOT(setPitchTempo()));
+    connect( ui->doubleSpinBoxPitch,        SIGNAL(valueChanged(double)),   this, SLOT(setPitchTempo()));
+    connect( ui->pushButtonPlayPause,       SIGNAL(clicked(bool)),          this, SLOT(on_pushButtonPlayPause_toggled(bool))        );
+    connect( ui->pushButtonStop,            SIGNAL(clicked()),              this, SLOT(on_pushButtonStop_clicked())                 );
+    connect( ui->slider,                    SIGNAL(valueChanged(double)),   this, SLOT(seek(double)) );
+    connect( ui->pushButtonClearSection,    SIGNAL(clicked()),              this, SLOT(abortSection()) );
+    connect( ui->pushButtonRecordSection,   SIGNAL(clicked()),              this, SLOT(recordSection()) );
 
 
-    QMenu* recordMenu = new QMenu( ui->toolButtonRecordSection );
-    m_setPositionAction    = new QAction( QIcon(RECORD_LEFT_POSITION_ICON_PATH) , RECORD_LEFT_POSITION_CAPTION, recordMenu );
-    m_abortRecordingAction = new QAction( QIcon(":/icons/icons/cross56.png"), tr("Abort recording"), recordMenu );
-    recordMenu->addAction( m_setPositionAction );
-    recordMenu->addAction( m_abortRecordingAction );
-    ui->toolButtonRecordSection->setMenu( recordMenu );
-    ui->toolButtonRecordSection->setPopupMode( QToolButton::MenuButtonPopup );
-    ui->toolButtonRecordSection->setDefaultAction( m_setPositionAction );
-    connect( recordMenu, SIGNAL(triggered(QAction*)), this, SLOT(recordSection(QAction*)) );
+    ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
+    ui->pushButtonClearSection->setIcon( QIcon(":/icons/icons/cross56.png") );
+
+    ui->sectionView->setSelectionMode( QAbstractItemView::SingleSelection );
+    ui->sectionView->setSelectionBehavior( QAbstractItemView::SelectRows );
+    ui->sectionView->setContextMenuPolicy( Qt::ActionsContextMenu );
+    ui->sectionView->horizontalHeader()->hide();
+    ui->sectionView->verticalHeader()->hide();
+
+    QAction* deleteSectionAction = new QAction( ui->sectionView );
+    deleteSectionAction->setText(tr("Delete Section"));
+    deleteSectionAction->setIcon(QIcon(":/icons/icons/rubbish7.png"));
+    deleteSectionAction->setShortcut( QKeySequence("Del") );
+    ui->sectionView->addAction( deleteSectionAction );
+    connect( deleteSectionAction, SIGNAL(triggered()), this, SLOT(deleteCurrentSection()) );
+
+    QAction* restoreSectionAction = new QAction( ui->sectionView );
+    restoreSectionAction->setText(tr("Restore Section"));
+    restoreSectionAction->setIcon(QIcon(":/icons/icons/download73.png"));
+    ui->sectionView->addAction( restoreSectionAction );
+    connect( restoreSectionAction, SIGNAL(triggered()), this, SLOT(restoreCurrentSection()) );
+
+    connect( ui->sectionView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(restoreCurrentSection()) );
+    connect( ui->pushButtonRestoreSection, SIGNAL(clicked()), this, SLOT(restoreCurrentSection()) );
+    connect( ui->pushButtonDeleteSection, SIGNAL(clicked()), this, SLOT(deleteCurrentSection()) );
+
 }
 
 AudioAttachmentView::~AudioAttachmentView()
@@ -54,7 +73,6 @@ void AudioAttachmentView::polish()
     connect( a, SIGNAL(currentSectionChanged(const Section*)), ui->slider, SLOT(setSection(const Section*)));
     ui->slider->setSection( a->player().currentSection() );
 
-    qDebug() << "set duration: " << a->player().duration();
     ui->slider->setMaximum( a->player().duration() );
     ui->doubleSpinBoxPitch->setValue( player().pitch() );
     ui->doubleSpinBoxTempo->setValue( player().tempo() );
@@ -98,20 +116,20 @@ void AudioAttachmentView::setPitchTempo()
 }
 
 
-void AudioAttachmentView::recordSection(QAction* action)
+void AudioAttachmentView::recordSection(bool abort)
 {
     enum State { Idle, LeftRecorded };
     static State state;
     static double leftPos = -1;
 
-    if (action == m_abortRecordingAction)
+    if (abort)
     {
         state = Idle;
-        m_setPositionAction->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
-        m_setPositionAction->setText( RECORD_LEFT_POSITION_CAPTION );
+        ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
         ui->slider->clearIndicators();
+        attachment<AudioAttachment>()->setSection( NULL );
     }
-    else if (action == m_setPositionAction)
+    else
     {
         double pos = player().position();
         if (state == Idle)
@@ -119,10 +137,10 @@ void AudioAttachmentView::recordSection(QAction* action)
             ui->slider->clearIndicators();
             leftPos = pos;
             ui->slider->setLeftIndicator( leftPos );
+            attachment<AudioAttachment>()->setSection( NULL );
 
             state = LeftRecorded;
-            m_setPositionAction->setIcon( QIcon(RECORD_RIGHT_POSITION_ICON_PATH) );
-            m_setPositionAction->setText( RECORD_RIGHT_POSITION_CAPTION );
+            ui->pushButtonRecordSection->setIcon( QIcon(RECORD_RIGHT_POSITION_ICON_PATH) );
         }
         else
         {
@@ -132,10 +150,29 @@ void AudioAttachmentView::recordSection(QAction* action)
             attachment<AudioAttachment>()->appendSection( section );
 
             state = Idle;
-            m_setPositionAction->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
-            m_setPositionAction->setText( RECORD_LEFT_POSITION_CAPTION );
+            ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
 
             leftPos = -1;
         }
+    }
+}
+
+void AudioAttachmentView::restoreCurrentSection()
+{
+    const Section* section = NULL;
+    QModelIndexList indexes = ui->sectionView->selectionModel()->selectedRows();
+    if (!indexes.isEmpty() && indexes.first().isValid())
+    {
+        section = attachment<AudioAttachment>()->sectionsModel()->section( indexes.first().row() );
+    }
+    attachment<AudioAttachment>()->setSection( section );
+}
+
+void AudioAttachmentView::deleteCurrentSection()
+{
+    QModelIndexList indexes = ui->sectionView->selectionModel()->selectedRows();
+    if (!indexes.isEmpty() && indexes.first().isValid())
+    {
+        attachment<AudioAttachment>()->sectionsModel()->removeSection( indexes.first().row() );
     }
 }

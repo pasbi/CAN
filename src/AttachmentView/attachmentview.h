@@ -25,8 +25,8 @@ public:
      */
     virtual void updateAttachmentView() {}
 
-    virtual QByteArray options() const = 0;
-    virtual void restoreOptions(const QByteArray & options) = 0;
+    virtual void restoreOptions(const QByteArray &options) { Q_UNUSED(options); }
+    virtual QByteArray options() const { return QByteArray(); }
 
 
 protected:

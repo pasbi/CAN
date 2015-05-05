@@ -19,6 +19,14 @@ public:
         }
     }
 
+    Section() :
+        m_caption( QString() ),
+        m_begin( -1 ),
+        m_end( -1 )
+    {
+
+    }
+
     Section( const QJsonObject& object );
 
     QString caption() const { return m_caption; }
@@ -26,6 +34,8 @@ public:
     double end() const { return m_end; }
 
     void setCaption( const QString & caption ) { m_caption = caption; }
+
+    bool valid() const { return m_begin < m_end && m_begin >= 0 && m_end >= 0 && !m_caption.isNull(); }
 
     QJsonObject toJson() const;
 
@@ -56,6 +66,8 @@ public:
 
     void insertSection( const Section& section , int index);
     void appendSection( const Section& section ) { insertSection( section, m_sections.length() ); }
+    void removeSection( int i );
+    void removeSection( const Section* section );
 
     const Section* section( int index ) const;
 
@@ -67,6 +79,8 @@ private:
     bool insertRows(int row, int count, const QModelIndex &parent);
     QList<Section> m_sectionsToBeInserted;
 
+    bool removeRows(int row, int count, const QModelIndex &parent);
+
     // this will actually set the data.
     bool setData_(const QModelIndex &index, const QVariant &value, int role);
 
@@ -74,6 +88,7 @@ private:
 
     friend class EditSectionCommand;
     friend class InsertSectionCommand;
+    friend class DeleteSectionCommand;
 
 
 };

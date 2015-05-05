@@ -13,7 +13,7 @@
 
 class Project : public QUndoStack, public GitRepository
 {
-    DECL_CONFIG(Project);
+    DECL_CONFIG(Project)
     Q_OBJECT
 public:
     Project();

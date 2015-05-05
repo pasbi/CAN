@@ -20,7 +20,7 @@ class ConfigurableTranslator : public QObject { };
 
 #define DECL_CONFIG( CLASSNAME )    \
     public:                                  \
-        static Configurable config
+        static Configurable config;
 
 
 #define DEFN_CONFIG( CLASSNAME, Caption )    \

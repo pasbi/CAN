@@ -11,7 +11,7 @@
 class FileIndex : public QObject
 {
     Q_OBJECT
-    DECL_CONFIG( FileIndex );
+    DECL_CONFIG( FileIndex )
 
 public:
     FileIndex();
