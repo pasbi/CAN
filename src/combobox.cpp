@@ -1,6 +1,5 @@
 #include "combobox.h"
 #include <QLineEdit>
-#include <QDebug>
 #include <QPainter>
 
 ComboBox::ComboBox(QWidget *parent) :

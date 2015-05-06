@@ -82,72 +82,72 @@ void AdvancedFileChooser::setFilterProperties(const Song *song, const QStringLis
     updateComboBox();
 }
 
-bool rankingGreaterThan( const QPair<QString, double>& a, const QPair<QString, double>& b )
-{
-    return a.second > b.second;
-}
+//bool rankingGreaterThan( const QPair<QString, double>& a, const QPair<QString, double>& b )
+//{
+//    return a.second > b.second;
+//}
 
-double rank( const QString & candidate, const QMap<QString, QString> & attributes, const QStringList & endings )
-{
-    QFileInfo fileInfo( candidate );
-    if ( !endings.contains(fileInfo.suffix()))
-    {
-        // dont propose e.g. pdf files for audio attachment
-        return 0;
-    }
+//double rank( const QString & candidate, const QMap<QString, QString> & attributes, const QStringList & endings )
+//{
+//    QFileInfo fileInfo( candidate );
+//    if ( !endings.contains(fileInfo.suffix()))
+//    {
+//        // dont propose e.g. pdf files for audio attachment
+//        return 0;
+//    }
 
-    double rank = 0;
+//    double rank = 0;
 
-    // level:          4    3   2    1
-    // filename:    /home/user/dir/song.mp3
-    // when filename contains  an attribute of length n in level i, add
-    // >> sqrt(n) / i <<   to rank,
+//    // level:          4    3   2    1
+//    // filename:    /home/user/dir/song.mp3
+//    // when filename contains  an attribute of length n in level i, add
+//    // >> sqrt(n) / i <<   to rank,
 
-    QStringList levels = fileInfo.absoluteFilePath().split("/", QString::SkipEmptyParts);
-    for (int i = levels.length(); i > 0; --i)
-    {
-        for (const QString & attribute : attributes)
-        {
-            if ( levels[i-1].contains(attribute) )
-            {
-                rank += qLn( attribute.length() ) / i;
-            }
-        }
-    }
+//    QStringList levels = fileInfo.absoluteFilePath().split("/", QString::SkipEmptyParts);
+//    for (int i = levels.length(); i > 0; --i)
+//    {
+//        for (const QString & attribute : attributes)
+//        {
+//            if ( levels[i-1].contains(attribute) )
+//            {
+//                rank += qLn( attribute.length() ) / i;
+//            }
+//        }
+//    }
 
-    return rank;
-}
+//    return rank;
+//}
 
-QStringList filter( const QStringList &             candidates,
-                    const QMap<QString, QString> &  attributes,
-                    const QStringList &             endings,
-                    const int                       maxItems = -1  )
-{
-    QList<QPair<QString, double>> ranking;
-    for ( const QString & candidate : candidates )
-    {
-        double score = rank(candidate, attributes, endings);
-        if (score > 0)
-        {
-            ranking.append( qMakePair(candidate, score) );
-        }
-    }
+//QStringList filter( const QStringList &             candidates,
+//                    const QMap<QString, QString> &  attributes,
+//                    const QStringList &             endings,
+//                    const int                       maxItems = -1  )
+//{
+////    QList<QPair<QString, double>> ranking;
+////    for ( const QString & candidate : candidates )
+////    {
+////        double score = rank(candidate, attributes, endings);
+////        if (score > 0)
+////        {
+////            ranking.append( qMakePair(candidate, score) );
+////        }
+////    }
 
-    qSort( ranking.begin(), ranking.end(), rankingGreaterThan );
+////    qSort( ranking.begin(), ranking.end(), rankingGreaterThan );
 
-    QStringList result;
-    int i = 0;
-    for (const QPair<QString, double> & p : ranking)
-    {
-        if (i++ == maxItems)
-            break;
+////    QStringList result;
+////    int i = 0;
+////    for (const QPair<QString, double> & p : ranking)
+////    {
+////        if (i++ == maxItems)
+////            break;
 
-        result << p.first;
-    }
+////        result << p.first;
+////    }
 
-    return result;
-
-}
+////    return result;
+//    return QStringList();
+//}
 
 void AdvancedFileChooser::updateComboBox()
 {
@@ -155,7 +155,7 @@ void AdvancedFileChooser::updateComboBox()
     QByteArray hash = m_hash;   // keep hash under all circumstances!
 
     m_filenames.clear();
-    m_filenames = filter( app().fileIndex().filenames(), m_song->stringAttributes(), m_endings, config["NumProposedFiles"].toInt() );
+//    m_filenames = filter( app().fileIndex().filenames(), m_song->stringAttributes(), m_endings, config["NumProposedFiles"].toInt() );
 
     ui->comboBox->clear();
     for (const QString & f : m_filenames)

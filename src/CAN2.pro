@@ -133,7 +133,8 @@ SOURCES += main.cpp\
     AttachmentView/slider.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
     DatabaseView/databaseview.cpp \
-    combobox.cpp
+    combobox.cpp \
+    AttachmentView/indexedfilechoosedialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -242,7 +243,8 @@ HEADERS  += mainwindow.h \
     AttachmentView/slider.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h \
     DatabaseView/databaseview.h \
-    combobox.h
+    combobox.h \
+    AttachmentView/indexedfilechoosedialog.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -268,7 +270,8 @@ FORMS    += mainwindow.ui \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
     DatabaseView/EventDatabaseView/setlistitemselector.ui \
-    AttachmentView/audioslider.ui
+    AttachmentView/audioslider.ui \
+    AttachmentView/indexedfilechoosedialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

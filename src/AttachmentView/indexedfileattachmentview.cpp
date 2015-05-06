@@ -6,6 +6,7 @@
 #include "Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "project.h"
+#include "indexedfilechoosedialog.h"
 
 QList<Ui::IndexedFileAttachmentView*> IndexedFileAttachmentView::initializedUis;
 QList<Ui::IndexedFileAttachmentView*> IndexedFileAttachmentView::deletedUis;
@@ -17,6 +18,8 @@ IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
 
     ui->setupUi(this);
     initializedUis << ui;
+    connect(ui->buttonChooseFile, SIGNAL(clicked()), this, SLOT(chooseFile()) );
+    connect(ui->buttonChooseFileBig, SIGNAL(clicked()), this, SLOT(chooseFile()) );
 }
 
 IndexedFileAttachmentView::~IndexedFileAttachmentView()
@@ -35,33 +38,33 @@ void IndexedFileAttachmentView::setWidget(QWidget *widget)
 
 void IndexedFileAttachmentView::polish()
 {
-    QStringList endings = attachment<IndexedFileAttachment>()->acceptedEndings();
+//    QStringList endings = attachment<IndexedFileAttachment>()->acceptedEndings();
 
-    ui->advancedFileChooser->setFilterProperties( attachment()->song(), endings );
+//    ui->advancedFileChooser->setFilterProperties( attachment()->song(), endings );
 
-    connect( ui->advancedFileChooser, &AdvancedFileChooser::itemSelected, [this](QByteArray hash)
-    {
-        Command* c = new FileAttachmentCommandSetHashCommand( attachment<IndexedFileAttachment>(), hash );
-        app().pushCommand( c );
-    });
+//    connect( ui->advancedFileChooser, &AdvancedFileChooser::itemSelected, [this](QByteArray hash)
+//    {
+//        Command* c = new FileAttachmentCommandSetHashCommand( attachment<IndexedFileAttachment>(), hash );
+//        app().pushCommand( c );
+//    });
 
-    ui->advancedFileChooser->blockSignals(true);    // do not create a command (see connect above)
-    ui->advancedFileChooser->setHash( attachment<IndexedFileAttachment>()->hash() );
-    open();
-    attachment<IndexedFileAttachment>()->open();
-    updateStackedWidget();
-    ui->advancedFileChooser->blockSignals(false);
+//    ui->advancedFileChooser->blockSignals(true);    // do not create a command (see connect above)
+//    ui->advancedFileChooser->setHash( attachment<IndexedFileAttachment>()->hash() );
+//    open();
+//    attachment<IndexedFileAttachment>()->open();
+//    ui->advancedFileChooser->blockSignals(false);
 
     connect( attachment<IndexedFileAttachment>(), &IndexedFileAttachment::hashChanged, [this]()
     {
         open();
         updateStackedWidget();
     });
+    updateStackedWidget();
 }
 
 void IndexedFileAttachmentView::updateAttachmentView()
 {
-    ui->advancedFileChooser->updateComboBox();
+//    ui->advancedFileChooser->updateComboBox();
 }
 
 void IndexedFileAttachmentView::updateStackedWidget()
@@ -75,5 +78,17 @@ void IndexedFileAttachmentView::updateStackedWidget()
     else
     {
         ui->stackedWidget->setCurrentIndex(0);
+    }
+}
+
+void IndexedFileAttachmentView::chooseFile()
+{
+    QStringList endings = attachment<IndexedFileAttachment>()->acceptedEndings();
+    const IndexedFileAttachment* ifa = attachment<IndexedFileAttachment>();
+    IndexedFileChooseDialog dialog( ifa->song(), ifa->hash(), endings );
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        app().pushCommand( new FileAttachmentCommandSetHashCommand( attachment<IndexedFileAttachment>(), dialog.hash() ) );
     }
 }

@@ -27,6 +27,8 @@ private:
 private slots:
     void updateStackedWidget();
 
+    void chooseFile();
+
 private://tmp
     static QList<Ui::IndexedFileAttachmentView*> initializedUis;
     static QList<Ui::IndexedFileAttachmentView*> deletedUis;

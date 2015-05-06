@@ -46,7 +46,7 @@ bool IndexedFileAttachment::setFilename(QString filename)
 
 bool IndexedFileAttachment::setHash(QByteArray hash)
 {
-    if ( app().fileIndex().contains( hash ) )
+    if ( app().fileIndex().contains( hash ) || hash.isEmpty() )
     {
         if (hash != m_hash)
         {
