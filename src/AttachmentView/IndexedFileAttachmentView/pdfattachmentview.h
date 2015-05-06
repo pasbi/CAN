@@ -2,7 +2,7 @@
 #define PDFATTACHMENTVIEW_H
 
 #include "indexedfileattachmentview.h"
-#include "attachmentview.h"
+#include "AttachmentView/attachmentview.h"
 #include <poppler/qt5/poppler-qt5.h>
 #include <QSignalSpy>
 

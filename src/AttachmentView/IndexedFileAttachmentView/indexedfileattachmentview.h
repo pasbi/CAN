@@ -1,7 +1,7 @@
 #ifndef INDEXEDFILEATTACHMENTVIEW_H
 #define INDEXEDFILEATTACHMENTVIEW_H
 
-#include "attachmentview.h"
+#include "AttachmentView/attachmentview.h"
 
 namespace Ui {
 class IndexedFileAttachmentView;

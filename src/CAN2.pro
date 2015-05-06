@@ -70,7 +70,7 @@ SOURCES += main.cpp\
     AttachmentView/attachmenteditor.cpp \
     AttachmentView/attachmentview.cpp \
     AttachmentView/chordpatternattachmentview.cpp \
-    AttachmentView/pdfattachmentview.cpp \
+    AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp \
     Attachments/pdfattachment.cpp \
     DatabaseView/SongDatabaseView/songdatabasewidget.cpp \
     AttachmentView/attachmentchooser.cpp \
@@ -83,11 +83,10 @@ SOURCES += main.cpp\
     Dialogs/addfileindexsourcedialog.cpp \
     Dialogs/stringdialog.cpp \
     Commands/SongCommands/songduplicateattachmentcommand.cpp \
-    AttachmentView/indexedfileattachmentview.cpp \
-    AttachmentView/audioattachmentview.cpp \
+    AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp \
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp \
     Attachments/AudioAttachment/audioattachment.cpp \
     AttachmentView/chordpatternedit.cpp \
-    advancedfilechooser.cpp \
     conflicteditor.cpp \
     Dialogs/commitdialog.cpp \
     identitymanager.cpp \
@@ -129,12 +128,12 @@ SOURCES += main.cpp\
     Attachments/AudioAttachment/player.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/sectionsmodelcommand.cpp \
-    AttachmentView/audioslider.cpp \
-    AttachmentView/slider.cpp \
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.cpp \
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
     DatabaseView/databaseview.cpp \
     combobox.cpp \
-    AttachmentView/indexedfilechoosedialog.cpp
+    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -180,7 +179,7 @@ HEADERS  += mainwindow.h \
     AttachmentView/attachmenteditor.h \
     AttachmentView/attachmentview.h \
     AttachmentView/chordpatternattachmentview.h \
-    AttachmentView/pdfattachmentview.h \
+    AttachmentView/IndexedFileAttachmentView/pdfattachmentview.h \
     Attachments/pdfattachment.h \
     DatabaseView/SongDatabaseView/songdatabasewidget.h \
     AttachmentView/attachmentchooser.h \
@@ -192,11 +191,10 @@ HEADERS  += mainwindow.h \
     Dialogs/addfileindexsourcedialog.h \
     Dialogs/stringdialog.h \
     Commands/SongCommands/songduplicateattachmentcommand.h \
-    AttachmentView/indexedfileattachmentview.h \
-    AttachmentView/audioattachmentview.h \
+    AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h \
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.h \
     Attachments/AudioAttachment/audioattachment.h \
     AttachmentView/chordpatternedit.h \
-    advancedfilechooser.h \
     conflicteditor.h \
     global.h \
     Dialogs/commitdialog.h \
@@ -239,26 +237,25 @@ HEADERS  += mainwindow.h \
     Attachments/AudioAttachment/player.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/sectionsmodelcommand.h \
-    AttachmentView/audioslider.h \
-    AttachmentView/slider.h \
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.h \
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h \
     DatabaseView/databaseview.h \
     combobox.h \
-    AttachmentView/indexedfilechoosedialog.h
+    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
     filterwidget.ui \
     progressdialog.ui \
     AttachmentView/chordpatternattachmentview.ui \
-    AttachmentView/pdfattachmentview.ui \
+    AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui \
     DatabaseView/SongDatabaseView/songdatabasewidget.ui \
     AttachmentView/attachmentchooser.ui \
     Dialogs/clonedialog.ui \
     Dialogs/stringdialog.ui \
-    AttachmentView/indexedfileattachmentview.ui \
-    advancedfilechooser.ui \
-    AttachmentView/audioattachmentview.ui \
+    AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.ui \
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui \
     conflicteditor.ui \
     Dialogs/commitdialog.ui \
     Dialogs/identitydialog.ui \
@@ -270,8 +267,8 @@ FORMS    += mainwindow.ui \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
     DatabaseView/EventDatabaseView/setlistitemselector.ui \
-    AttachmentView/audioslider.ui \
-    AttachmentView/indexedfilechoosedialog.ui
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
+    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt
