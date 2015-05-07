@@ -89,43 +89,59 @@ double rank( const QString & candidate, const QMap<QString, QString> & attribute
         return 0;
     }
 
-    QStringList levels = candidate.split("/", QString::SkipEmptyParts);
+    QString candidateWithoutEnding = QString("%1/%2").arg(fileInfo.path(), fileInfo.baseName());
+
+    QStringList levels = candidateWithoutEnding.split("/", QString::SkipEmptyParts);
     QList<QStringList> levelss;
+    int i = 0;
     for (const QString& level : levels)
     {
         levelss << normalizeString(level).split(" ", QString::SkipEmptyParts);
+        i++;
     }
 
 
-    QString attributeString;
+    QStringList attributeString;
     for (const QString & attribute : attributes.values())
     {
-        attributeString.append(normalizeString(attribute));
+        attributeString << normalizeString(attribute).split(" ", QString::SkipEmptyParts);
     }
 
     double rank = 0;
-    int n = levelss.length();
     for (int i = 0; i < levelss.length(); ++i)
     {
-        double factor = 1.0 / (n - i);
-        int count = 0;
+        double factor = qPow(0.7, i);
+        double count = 0;
         for (const QString& token : levelss[i])
         {
             if (attributeString.contains( token ))
             {
-                count++;
+                if (token.length() == 1)
+                {
+                    count += 0.1;
+                }
+                else if (token.length() == 2)
+                {
+                    count += 0.2;
+                }
+                else if (token.length() == 3)
+                {
+                    count += 0.8;
+                }
+                else
+                {
+                    count += 1;
+                }
             }
         }
         rank += factor * count;
     }
-
     return rank;
 }
 
 QStringList filter( const QStringList &             candidates,
                     const QMap<QString, QString> &  attributes,
-                    const QStringList &             endings,
-                    const int                       maxItems = -1  )
+                    const QStringList &             endings )
 {
     QList<QPair<QString, double>> ranking;
     for ( const QString & candidate : candidates )
@@ -140,12 +156,8 @@ QStringList filter( const QStringList &             candidates,
     qSort( ranking.begin(), ranking.end(), rankingGreaterThan );
 
     QStringList result;
-    int i = 0;
     for (const QPair<QString, double> & p : ranking)
     {
-        if (i++ == maxItems)
-            break;
-
         result << p.first;
     }
 
@@ -156,8 +168,7 @@ QStringList IndexedFileChooseDialog::gatherFiles()
 {
     return filter( app().fileIndex().filenames(),
                    m_song->stringAttributes(),
-                   m_acceptedEndings,
-                   100 );    //TODO no fix value, display all files that may match.
+                   m_acceptedEndings );
 }
 
 void IndexedFileChooseDialog::setFilename(const QString &filename)
@@ -284,12 +295,10 @@ void IndexedFileChooseDialog::onSelectionChanged(QItemSelection selected, QItemS
 
     if (row >= 0)
     {
-        qDebug() << "set filename " << m_filenames[row];
         setFilename( m_filenames[row] );
     }
     else
     {
-        qDebug() << "set filename" << "";
         setFilename( "" );
     }
 }
