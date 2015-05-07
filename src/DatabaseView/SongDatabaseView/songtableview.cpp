@@ -66,8 +66,9 @@ void SongTableView::setUpContextMenu(QMenu *menu)
     menu->addSeparator();
 
     Util::addAction(menu, tr("Add Attribute"), [this]() {
-        //TODO wth?
         SongDatabaseNewAttributeCommand* naCommand = new SongDatabaseNewAttributeCommand( model() );
+
+        // end macro is in renamableheaderview.cpp
         model()->project()->beginMacro( naCommand->text() );
         model()->project()->pushCommand( naCommand );
         qobject_assert_cast<RenamableHeaderView*>(horizontalHeader())->editHeader( model()->columnCount() - 1, true );

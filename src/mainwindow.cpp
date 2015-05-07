@@ -502,7 +502,6 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     Attachment* cAttachment = currentAttachment();
     bool cGit = cProject ? cProject->isGitRepository() : false;
 
-    //TODO list dependencies
     QObjectList attachmentObjects, songObects, projectObjects, gitObjects, alwaysObjects;
 
 //    projectObjects      << ui->actionNew_Song;
