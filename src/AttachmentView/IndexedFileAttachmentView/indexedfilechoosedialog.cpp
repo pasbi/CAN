@@ -23,17 +23,14 @@ IndexedFileChooseDialog::IndexedFileChooseDialog(const Song *song, const QByteAr
 
         QTableWidgetItem* filepathItem = new QTableWidgetItem( filename );
         filepathItem->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-        QTableWidgetItem* filenameItem = new QTableWidgetItem( QFileInfo(filename).fileName() );
+        QTableWidgetItem* filenameItem = new QTableWidgetItem( QFileInfo(filename).baseName() );
         filenameItem->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->tableWidget->setItem( i, 0, filenameItem );
         ui->tableWidget->setItem( i, 1, filepathItem );
         i++;
     }
-    ui->tableWidget->verticalHeader()->hide();
     ui->tableWidget->horizontalHeader()->resizeSections( QHeaderView::ResizeToContents );
-    ui->tableWidget->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
-    ui->tableWidget->setSelectionMode( QAbstractItemView::SingleSelection );
     connect( ui->tableWidget->selectionModel(),
              SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
              this,

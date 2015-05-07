@@ -28,8 +28,6 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
     ui->pushButtonClearSection->setIcon( QIcon(":/icons/icons/cross56.png") );
 
-    ui->sectionView->setSelectionMode( QAbstractItemView::SingleSelection );
-    ui->sectionView->setSelectionBehavior( QAbstractItemView::SelectRows );
     ui->sectionView->setContextMenuPolicy( Qt::ActionsContextMenu );
     ui->sectionView->horizontalHeader()->hide();
     ui->sectionView->verticalHeader()->hide();
@@ -50,7 +48,6 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     connect( ui->sectionView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(restoreCurrentSection()) );
     connect( ui->pushButtonRestoreSection, SIGNAL(clicked()), this, SLOT(restoreCurrentSection()) );
     connect( ui->pushButtonDeleteSection, SIGNAL(clicked()), this, SLOT(deleteCurrentSection()) );
-
 }
 
 AudioAttachmentView::~AudioAttachmentView()
