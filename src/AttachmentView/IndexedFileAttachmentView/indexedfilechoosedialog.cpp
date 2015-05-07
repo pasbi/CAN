@@ -51,34 +51,34 @@ bool rankingGreaterThan( const QPair<QString, double>& a, const QPair<QString, d
     return a.second > b.second;
 }
 
-#define utf( S ) QString::fromUtf8( S )
 QString normalizeString( QString s )
 {
+    //http://stackoverflow.com/questions/14009522/how-to-remove-accents-diacritic-marks-from-a-string-in-qt
+    QString diacriticLetters = QString::fromUtf8("ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ");
+    QStringList noDiacriticLetters = QStringList({ "S", "OE", "Z", "s", "oe", "z", "Y", "Y", "u", "A", "A", "A",
+                                                   "A", "A", "A", "AE", "C", "E", "E", "E", "E", "I", "I", "I",
+                                                   "I", "D", "N", "O", "O", "O", "O", "O", "O", "U", "U", "U",
+                                                   "U", "Y", "s", "a", "a", "a", "a", "a", "a", "ae", "c", "e", "e",
+                                                   "e", "e", "i", "i", "i", "i", "o", "n", "o", "o", "o", "o", "o",
+                                                   "o", "u", "u", "u", "u", "y", "y" });
+
     const QStringList replaceBySpace = QStringList( {".", ":", ";", "-", "#",
                                                      "~", "*", "+", "_", ",",
                                                      "`", "´", "=", "/", "\\",
                                                      "!", "\"", "§", "$", "%", "@" });
-    const QMap<QString, QString> replaceMap = QMap<QString, QString>( { { utf("ä"), "ae" },
-                                                                        { utf("ö"), "oe" },
-                                                                        { utf("ü"), "ue" },
-                                                                        { utf("ß"), "ss" },
-                                                                        { utf("é"), "e" },
-                                                                        { utf("è"), "e" },
-                                                                        { utf("ô"), "o" }       //TODO cover more chars
-                                                                      });
     for (const QString & token : replaceBySpace)
     {
         s.replace(token, " ");
     }
-    for (const QString & token : replaceMap.keys())
+    for (int i = 0; i < diacriticLetters.length(); ++i)
     {
-        s.replace( token, replaceMap[token] );
+        QChar c = diacriticLetters[i];
+        s.replace( c, noDiacriticLetters[i] );
     }
     return s.simplified();
 
 
 }
-#undef utf8
 
 
 double rank( const QString & candidate, const QMap<QString, QString> & attributes, const QStringList& endings )
