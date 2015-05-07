@@ -40,6 +40,8 @@ IndexedFileChooseDialog::IndexedFileChooseDialog(const Song *song, const QByteAr
              SLOT(onSelectionChanged(QItemSelection, QItemSelection))  );
 
     setFilename( currentFilename() );
+
+    connect( ui->pushButtonClearEdit, SIGNAL(clicked()), this, SLOT(clearFilename()) );
 }
 
 IndexedFileChooseDialog::~IndexedFileChooseDialog()
@@ -293,4 +295,11 @@ void IndexedFileChooseDialog::onSelectionChanged(QItemSelection selected, QItemS
         qDebug() << "set filename" << "";
         setFilename( "" );
     }
+}
+
+void IndexedFileChooseDialog::clearFilename()
+{
+    setFilename( "" );
+    ui->lineEdit->clear();
+    ui->tableWidget->selectionModel()->clearSelection();
 }

@@ -22,8 +22,8 @@ public:
 private slots:
     void on_lineEdit_editingFinished();
     void onSelectionChanged(QItemSelection before, QItemSelection deselected);
-
     void on_pushButtonOpenFileDialog_clicked();
+    void clearFilename();
 
 public slots:
     void accept();
