@@ -50,6 +50,7 @@ SongTableView::SongTableView(QWidget *parent) :
 void SongTableView::setUpContextMenu(QMenu *menu)
 {
     QModelIndex index = indexUnderCursor();
+
     Song* song = model()->songAtIndex(index);
     // new Song
     Util::addAction(menu, tr("New Song"), [this](){

@@ -74,10 +74,6 @@ private slots:
     void on_action_Index_Info_triggered();
     void my_on_actionNew_Event_triggered();
     void my_on_actionDelete_Event_triggered();
-    void my_on_actionNewSetlistItem_triggered();
-    void my_on_actionDeleteSetlistItem_triggered();
-    void my_on_actionCopySetlistItem_triggered();
-    void my_on_actionPasteSetlistItem_triggered();
 
 
 private:

@@ -6,6 +6,7 @@
 #include <QAction>
 #include <QHeaderView>
 #include <QClipboard>
+#include "util.h"
 
 const QString SetlistView::ITEMS_MIMEDATA_FORMAT = "CAN/Setlist/Item";
 
@@ -23,6 +24,11 @@ SetlistView::SetlistView(QWidget *parent) :
 
     setContextMenuPolicy( Qt::CustomContextMenu );
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+
+    initAction( m_actionNewSetlistItem,    this, tr("&New Item"),       tr("Insert new item"),        "Ctrl+N",   NULL, "" )
+    initAction( m_actionDeleteSetlistItem, this, tr("&Remove Item"),    tr("Delete selected items"),  "Del",      NULL, "" )
+    initAction( m_actionCopySetlistItem,   this, tr("&Copy Items"),     tr("Copy selected items"),    "Ctrl+C",   NULL, "" )
+    initAction( m_actionPasteSetlistItem,  this, tr("&Paste Items"),    tr("Paste items"),            "Ctrl+V",   NULL, "" )
 }
 
 bool acceptMimeData( const QMimeData* data )
@@ -192,4 +198,60 @@ void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
     actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
     actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
     actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( SetlistView::ITEMS_MIMEDATA_FORMAT ) );     // paste items
+}
+
+#include "Commands/SetlistCommands/setlistadditemcommand.h"
+void SetlistView::my_on_actionNewSetlistItem_triggered()
+{
+    if (model())
+    {
+        app().pushCommand( new SetlistAddItemCommand( model(), new SetlistItem() ) );
+    }
+}
+
+#include "Commands/SetlistCommands/setlistremoveitemcommand.h"
+void SetlistView::my_on_actionDeleteSetlistItem_triggered()
+{
+    QList<SetlistItem*> si = selectedItems();
+    if (model() && !si.isEmpty())
+    {
+        app().project()->beginMacro( tr("Remove Setlist Items"));
+        for (SetlistItem* i : si)
+        {
+            app().pushCommand( new SetlistRemoveItemCommand( model(), i ) );
+        }
+        app().project()->endMacro();
+    }
+}
+
+void SetlistView::my_on_actionCopySetlistItem_triggered()
+{
+    QModelIndexList selection;
+    if (selectionModel())
+    {
+        selection = selectionModel()->selectedRows();
+    }
+    app().clipboard()->setMimeData( model()->mimeData( selection ) );
+}
+
+void SetlistView::my_on_actionPasteSetlistItem_triggered()
+{
+    paste( app().clipboard()->mimeData() );
+}
+
+QList<SetlistItem*> SetlistView::selectedItems() const
+{
+    QList<SetlistItem*> items;
+    if (model() && selectionModel())
+    {
+        for (const QModelIndex& index : selectionModel()->selectedRows())
+        {
+            items << model()->itemAt( index );
+        }
+        return items;
+    }
+    else
+    {
+        return QList<SetlistItem*>();
+    }
 }

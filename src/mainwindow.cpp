@@ -146,34 +146,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
 
-#define newAction( name, associated_widget, text, tooltip, shortcut, menu, icon )                           \
-    {                                                                                                       \
-    QAction* name = new QAction( associated_widget );                                                       \
-    associated_widget->addAction( name );                                                                   \
-    name->setIcon(QIcon(icon));                                                                             \
-    name->setText(text);                                                                                    \
-    name->setShortcut( QKeySequence(shortcut) );                                                            \
-    name->setShortcutContext( Qt::WidgetShortcut );                                                         \
-    name->setToolTip(tooltip);                                                                              \
-    connect( name, SIGNAL(triggered()), this, SLOT(my_on_##name##_triggered()) );                           \
-    if (menu)                                                                                               \
-    {                                                                                                       \
-        ((QMenu*) menu)->addAction( name );                                                                 \
-    }                                                                                                       \
-    }
-
     newAction( actionNew_Song,          ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
     newAction( actionDelete_Song,       ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
     newAction( actionNew_Event,         ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
     newAction( actionDelete_Event,      ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
-//TODO move them to SetlistView
-    newAction( actionNewSetlistItem,    ui->eventDatabaseWidget->setlistView(),     tr("&New Item"),       tr("Insert new item"),        "Ctrl+N",   NULL,           "" )
-    newAction( actionDeleteSetlistItem, ui->eventDatabaseWidget->setlistView(),     tr("&Remove Item"),    tr("Delete selected items"),  "Del",      NULL,           "" )
-    newAction( actionCopySetlistItem,   ui->eventDatabaseWidget->setlistView(),     tr("&Copy Items"),     tr("Copy selected items"),    "Ctrl+C",   NULL,           "" )
-    newAction( actionPasteSetlistItem,  ui->eventDatabaseWidget->setlistView(),     tr("&Paste Items"),    tr("Paste items"),            "Ctrl+V",   NULL,           "" )
-
-#undef newAction
-
 }
 
 MainWindow::~MainWindow()
@@ -204,13 +180,6 @@ Event* MainWindow::currentEvent() const
 void MainWindow::setupAttachmentMenu()
 {
     ui->actionNew_Attachment->setMenu( new QMenu( this ) );
-
-    // toolbuttons cannot be added with desinger and popup menues require toolbuttons.
-    // -> create a placeholder action in desinger and replace it with a toolbutton.
-//    QToolButton* toolButton = new QToolButton( this );
-//    toolButton->setDefaultAction( ui->actionNew_Attachment );
-//    ui->toolBar->insertWidget( ui->actionNew_Attachment, toolButton );
-//    ui->toolBar->removeAction( ui->actionNew_Attachment );
 
     // gather attachment creators
     for (const QString & classname : Creatable::classnamesInCategory("Attachment"))
@@ -465,27 +434,6 @@ int MainWindow::currentAttachmentIndex() const
 Attachment* MainWindow::currentAttachment() const
 {
     return ui->songDatabaseWidget->attachmentChooser()->currentAttachment();
-//    if (currentSong() == NULL)
-//    {
-//        return NULL;
-//    }
-//    int index = currentAttachmentIndex();
-//    if (index < 0)
-//    {
-//        return NULL;
-//    }
-//    else
-//    {
-//        if (currentSong()->attachments().isEmpty())
-//        {
-//            return NULL;
-//        }
-//        else
-//        {
-//            return currentSong()->attachments()[index];
-//        }
-//    }
-
 }
 
 void setEnabled( QObject* o, bool enable )
@@ -554,17 +502,6 @@ void MainWindow::gotoEventView()
 {
     ui->stackedWidget->setCurrentIndex( 1 );
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -740,18 +677,6 @@ void MainWindow::on_actionOpen_Terminal_here_triggered()
 
 void MainWindow::on_actionClone_triggered()
 {
-
-//    fd.setWindowTitle( tr("Clone ...") );
-//    fd.setDirectoryUrl( QUrl::fromLocalFile( QDir::homePath() ) );
-//    fd.setFileMode( QFileDialog::ExistingFile );
-//    fd.setOption(   QFileDialog::ShowDirsOnly, true );
-
-//    if (fd.exec() != QDialog::Accepted || fd.selectedUrls().isEmpty())
-//    {
-//        return;
-//    }
-
-
     QUrl url = QUrl( StringDialog::getURL( tr("URL"), QDir::homePath(), "Local file, SSH or https" ) );
 
     if (!url.isValid())
@@ -760,7 +685,6 @@ void MainWindow::on_actionClone_triggered()
     }
 
     setCurrentPath("");
-
 
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
@@ -939,46 +863,6 @@ void MainWindow::my_on_actionDelete_Event_triggered()
     }
 }
 
-#include "Commands/SetlistCommands/setlistadditemcommand.h"
-void MainWindow::my_on_actionNewSetlistItem_triggered()
-{
-    Setlist* model = ui->eventDatabaseWidget->currentSetlist();
-    if (model)
-    {
-        app().pushCommand( new SetlistAddItemCommand( model, new SetlistItem() ) );
-    }
-}
-
-#include "Commands/SetlistCommands/setlistremoveitemcommand.h"
-void MainWindow::my_on_actionDeleteSetlistItem_triggered()
-{
-    Setlist* model = ui->eventDatabaseWidget->currentSetlist();
-    QList<SetlistItem*> si = ui->eventDatabaseWidget->currentSetlistItems();
-    if (model && !si.isEmpty())
-    {
-        app().project()->beginMacro( tr("Remove Setlist Items"));
-        for (SetlistItem* i : si)
-        {
-            app().pushCommand( new SetlistRemoveItemCommand( model, i ) );
-        }
-        app().project()->endMacro();
-    }
-}
-
-void MainWindow::my_on_actionCopySetlistItem_triggered()
-{
-    QModelIndexList selection;
-    if (ui->eventDatabaseWidget->setlistView()->selectionModel())
-    {
-        selection = ui->eventDatabaseWidget->setlistView()->selectionModel()->selectedRows();
-    }
-    app().clipboard()->setMimeData( ui->eventDatabaseWidget->setlistView()->model()->mimeData( selection ) );
-}
-
-void MainWindow::my_on_actionPasteSetlistItem_triggered()
-{
-    ui->eventDatabaseWidget->setlistView()->paste( app().clipboard()->mimeData() );
-}
 
 QAction* MainWindow::undoAction() const
 {

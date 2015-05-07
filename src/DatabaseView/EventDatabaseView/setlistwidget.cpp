@@ -33,7 +33,7 @@ SetlistWidget::~SetlistWidget()
 void SetlistWidget::updateButtonsEnabled()
 {
     bool buttonsEnabled = !!ui->listView->model();
-    bool itemButtonsEnabled = !currentItems().isEmpty();
+    bool itemButtonsEnabled = !ui->listView->selectedItems().isEmpty();
     bool upperLimit = false;
     bool lowerLimit = false;
 
@@ -70,23 +70,6 @@ void SetlistWidget::setSetlist(Setlist *setlist)
 
     updateButtonsEnabled();
 
-}
-
-QList<SetlistItem*> SetlistWidget::currentItems() const
-{
-    QList<SetlistItem*> items;
-    if (ui->listView->model() && ui->listView->selectionModel())
-    {
-        for (const QModelIndex& index : ui->listView->selectionModel()->selectedRows())
-        {
-            items << ui->listView->model()->itemAt( index );
-        }
-        return items;
-    }
-    else
-    {
-        return QList<SetlistItem*>();
-    }
 }
 
 
@@ -138,10 +121,11 @@ void SetlistWidget::on_buttonSortDown_clicked()
 #include "Commands/SetlistCommands/setlistremoveitemcommand.h"
 void SetlistWidget::on_buttonDelete_clicked()
 {
-    if (setlist() && !currentItems().isEmpty())
+    QList<SetlistItem*> selectedSetlistItems = ui->listView->selectedItems();
+    if (setlist() && !selectedSetlistItems.isEmpty())
     {
         app().project()->beginMacro( tr("Remove Setlist Items") );
-        for (SetlistItem* si : currentItems())
+        for (SetlistItem* si : selectedSetlistItems)
         {
             app().pushCommand( new SetlistRemoveItemCommand( setlist(), si ) );
         }

@@ -25,6 +25,9 @@ private:
     bool showDialog(QModelIndex index);
     void setUpContextMenu(QMenu* menu);
 
+    QAction* m_actionNew_Event;
+    QAction* m_actionDelete_Event;
+
 };
 
 #endif // DATETABLEVIEW_H

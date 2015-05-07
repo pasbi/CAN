@@ -18,6 +18,9 @@ public:
     void setModel(Setlist* setlist);
     void paste(const QMimeData* mime);
 
+    QList<SetlistItem*> selectedItems() const;
+
+
 signals:
     void clicked();
 
@@ -31,8 +34,17 @@ private slots:
     void updateMinimumHorizontalHeaderSize();
     void showContextMenu(QPoint pos);
 
+    void my_on_actionNewSetlistItem_triggered();
+    void my_on_actionDeleteSetlistItem_triggered();
+    void my_on_actionCopySetlistItem_triggered();
+    void my_on_actionPasteSetlistItem_triggered();
+
 private:
     void setUpContextMenu(QMenu* menu, QPoint pos);
+    QAction* m_actionNewSetlistItem;
+    QAction* m_actionDeleteSetlistItem;
+    QAction* m_actionCopySetlistItem;
+    QAction* m_actionPasteSetlistItem;
 
 
 public:

@@ -24,7 +24,6 @@ public:
     Event* currentEvent() const;
     SetlistView *setlistView() const;
     EventTableView* eventTableView() const;
-    QList<SetlistItem *> currentSetlistItems() const;
     Setlist* currentSetlist() const;
 
 

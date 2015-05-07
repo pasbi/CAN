@@ -54,11 +54,6 @@ EventTableView* EventDatabaseWidget::eventTableView() const
     return ui->eventTableViewContainer->eventTableView();
 }
 
-QList<SetlistItem*> EventDatabaseWidget::currentSetlistItems() const
-{
-    return ui->setlistWidget->currentItems();
-}
-
 Setlist* EventDatabaseWidget::currentSetlist() const
 {
     return qobject_assert_cast<Setlist*>( ui->setlistWidget->listView()->model() );

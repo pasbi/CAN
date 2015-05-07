@@ -134,8 +134,6 @@ EventTableView::EventTableView(QWidget *parent) :
     horizontalHeader()->setSortIndicatorShown( true );
 
     setSortingEnabled( true );
-
-
 }
 
 EventTableView::~EventTableView()
