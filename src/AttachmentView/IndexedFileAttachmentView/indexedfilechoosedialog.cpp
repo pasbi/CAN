@@ -52,34 +52,72 @@ bool rankingGreaterThan( const QPair<QString, double>& a, const QPair<QString, d
     return a.second > b.second;
 }
 
-double rank( const QString & candidate, const QMap<QString, QString> & attributes, const QStringList & endings )
+#define utf( S ) QString::fromUtf8( S )
+QString normalizeString( QString s )
 {
-
-    //TODO improve ranking algorithm
-    QFileInfo fileInfo( candidate );
-    if ( !endings.contains(fileInfo.suffix()))
+    const QStringList replaceBySpace = QStringList( {".", ":", ";", "-", "#",
+                                                     "~", "*", "+", "_", ",",
+                                                     "`", "´", "=", "/", "\\",
+                                                     "!", "\"", "§", "$", "%", "@" });
+    const QMap<QString, QString> replaceMap = QMap<QString, QString>( { { utf("ä"), "ae" },
+                                                                        { utf("ö"), "oe" },
+                                                                        { utf("ü"), "ue" },
+                                                                        { utf("ß"), "ss" },
+                                                                        { utf("é"), "e" },
+                                                                        { utf("è"), "e" },
+                                                                        { utf("ô"), "o" }       //TODO cover more chars
+                                                                      });
+    for (const QString & token : replaceBySpace)
     {
-        // dont propose e.g. pdf files for audio attachment
+        s.replace(token, " ");
+    }
+    for (const QString & token : replaceMap.keys())
+    {
+        s.replace( token, replaceMap[token] );
+    }
+    return s.simplified();
+
+
+}
+#undef utf8
+
+
+double rank( const QString & candidate, const QMap<QString, QString> & attributes, const QStringList& endings )
+{
+    QFileInfo fileInfo( candidate );
+    if (!endings.contains(fileInfo.suffix()))
+    {
         return 0;
     }
 
-    double rank = 0;
-
-    // level:          4    3   2    1
-    // filename:    /home/user/dir/song.mp3
-    // when filename contains  an attribute of length n in level i, add
-    // >> sqrt(n) / i <<   to rank,
-
-    QStringList levels = fileInfo.absoluteFilePath().split("/", QString::SkipEmptyParts);
-    for (int i = levels.length(); i > 0; --i)
+    QStringList levels = candidate.split("/", QString::SkipEmptyParts);
+    QList<QStringList> levelss;
+    for (const QString& level : levels)
     {
-        for (const QString & attribute : attributes)
+        levelss << normalizeString(level).split(" ", QString::SkipEmptyParts);
+    }
+
+
+    QString attributeString;
+    for (const QString & attribute : attributes.values())
+    {
+        attributeString.append(normalizeString(attribute));
+    }
+
+    double rank = 0;
+    int n = levelss.length();
+    for (int i = 0; i < levelss.length(); ++i)
+    {
+        double factor = 1.0 / (n - i);
+        int count = 0;
+        for (const QString& token : levelss[i])
         {
-            if ( levels[i-1].contains(attribute) )
+            if (attributeString.contains( token ))
             {
-                rank += qLn( attribute.length() ) / i;
+                count++;
             }
         }
+        rank += factor * count;
     }
 
     return rank;
