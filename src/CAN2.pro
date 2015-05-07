@@ -93,8 +93,6 @@ SOURCES += main.cpp\
     Dialogs/identitydialog.cpp \
     Dialogs/configurationdialog.cpp \
     Dialogs/configurationwidgets.cpp \
-    fileindexdialog.cpp \
-    Dialogs/alternativefilemanager.cpp \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp \
     PDFCreator/pdfcreator.cpp \
     DatabaseView/EventDatabaseView/eventtableview.cpp \
@@ -107,7 +105,6 @@ SOURCES += main.cpp\
     DatabaseView/EventDatabaseView/eventtableviewcontainer.cpp \
     DatabaseView/EventDatabaseView/setlistwidget.cpp \
     Commands/EventDatabaseCommands/eventdatabaseediteventcommand.cpp \
-    commontypes.cpp \
     Database/EventDatabase/setlist.cpp \
     Commands/SetlistCommands/setlistadditemcommand.cpp \
     Commands/SetlistCommands/setlistcommand.cpp \
@@ -202,8 +199,6 @@ HEADERS  += mainwindow.h \
     Dialogs/identitydialog.h \
     Dialogs/configurationdialog.h \
     Dialogs/configurationwidgets.h \
-    fileindexdialog.h \
-    Dialogs/alternativefilemanager.h \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h \
     PDFCreator/pdfcreator.h \
     DatabaseView/EventDatabaseView/eventtableview.h \
@@ -260,13 +255,10 @@ FORMS    += mainwindow.ui \
     Dialogs/commitdialog.ui \
     Dialogs/identitydialog.ui \
     Dialogs/configurationdialog.ui \
-    fileindexdialog.ui \
-    Dialogs/alternativefilemanager.ui \
     DatabaseView/EventDatabaseView/eventdatabasewidget.ui \
     Dialogs/datetimedialog.ui \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
-    DatabaseView/EventDatabaseView/setlistitemselector.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui
 

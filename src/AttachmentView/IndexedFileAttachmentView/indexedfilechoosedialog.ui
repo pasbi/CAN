@@ -17,7 +17,11 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="toolTip">
+        <string>Filename of the file</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonClearEdit">
@@ -26,6 +30,9 @@
          <width>40</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Clear file association.</string>
        </property>
        <property name="text">
         <string/>
@@ -43,6 +50,9 @@
          <width>40</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Open file dialog.</string>
        </property>
        <property name="text">
         <string/>
@@ -63,6 +73,9 @@
    </item>
    <item>
     <widget class="QTableWidget" name="tableWidget">
+     <property name="toolTip">
+      <string>Proposed files.</string>
+     </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>

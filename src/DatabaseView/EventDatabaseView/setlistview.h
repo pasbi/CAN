@@ -6,6 +6,7 @@
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
 #include "Database/EventDatabase/setlist.h"
+#include <QMenu>
 
 class SetlistView : public QTableView
 {
@@ -28,6 +29,14 @@ protected:
 
 private slots:
     void updateMinimumHorizontalHeaderSize();
+    void showContextMenu(QPoint pos);
+
+private:
+    void setUpContextMenu(QMenu* menu, QPoint pos);
+
+
+public:
+    static const QString ITEMS_MIMEDATA_FORMAT;
 
 
 };

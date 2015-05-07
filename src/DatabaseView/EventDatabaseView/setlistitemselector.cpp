@@ -1,5 +1,4 @@
 #include "setlistitemselector.h"
-#include "ui_setlistitemselector.h"
 #include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
 #include "application.h"
 #include "project.h"

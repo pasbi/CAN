@@ -27,17 +27,28 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QDoubleSpinBox" name="doubleSpinBoxLeft"/>
+    <widget class="QDoubleSpinBox" name="doubleSpinBoxLeft">
+     <property name="toolTip">
+      <string>Elapsed time in seconds.</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="Slider" name="slider">
+     <property name="toolTip">
+      <string>Seek to the desired position.</string>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QDoubleSpinBox" name="doubleSpinBoxRight"/>
+    <widget class="QDoubleSpinBox" name="doubleSpinBoxRight">
+     <property name="toolTip">
+      <string>Remaining time in seconds.</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

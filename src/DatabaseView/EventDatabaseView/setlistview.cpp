@@ -5,6 +5,9 @@
 #include "Commands/SetlistCommands/setlistinsertitemcommand.h"
 #include <QAction>
 #include <QHeaderView>
+#include <QClipboard>
+
+const QString SetlistView::ITEMS_MIMEDATA_FORMAT = "CAN/Setlist/Item";
 
 SetlistView::SetlistView(QWidget *parent) :
     QTableView(parent)
@@ -17,6 +20,9 @@ SetlistView::SetlistView(QWidget *parent) :
     horizontalHeader()->hide();
     horizontalHeader()->setStretchLastSection( true );
     setHorizontalScrollMode( QTableView::ScrollPerPixel );
+
+    setContextMenuPolicy( Qt::CustomContextMenu );
+    connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
 bool acceptMimeData( const QMimeData* data )
@@ -43,11 +49,11 @@ void SetlistView::dragMoveEvent(QDragMoveEvent *e)
 
 void SetlistView::paste( const QMimeData* mime )
 {
-    if (mime->hasFormat("CAN/Setlist/Item"))
+    if (mime->hasFormat( ITEMS_MIMEDATA_FORMAT ))
     {
         app().project()->beginMacro(tr("Paste setlist items"));
 
-        QDataStream stream( mime->data("CAN/Setlist/Item"));
+        QDataStream stream( mime->data( ITEMS_MIMEDATA_FORMAT ));
 
         QList<SetlistItem*> items;
         stream >> items;
@@ -167,4 +173,23 @@ void SetlistView::updateMinimumHorizontalHeaderSize()
     // shake the size to show or hide scrollbars that might have become visible or hidden
     resize( QSize( size().width() + 1, size().height() + 1) );
     resize( QSize( size().width() - 1, size().height() - 1) );
+}
+
+void SetlistView::showContextMenu(QPoint pos)
+{
+    QMenu* menu = new QMenu( this );
+    setUpContextMenu(menu, pos);
+    menu->popup(viewport()->mapToGlobal(pos));
+    connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
+}
+
+void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
+{
+    bool selectionIsEmpty = selectionModel()->selectedRows().isEmpty();
+
+    menu->addActions( actions() );
+    actions()[0]->setEnabled( !!model() );                          // new item
+    actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
+    actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
+    actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( SetlistView::ITEMS_MIMEDATA_FORMAT ) );     // paste items
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>763</width>
-    <height>425</height>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,6 +57,9 @@
             <height>70</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Switch to song manager.</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -85,6 +88,9 @@
             <width>85</width>
             <height>70</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Switch to event manager.</string>
           </property>
           <property name="text">
            <string/>
@@ -179,6 +185,9 @@
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
+    <property name="toolTip">
+     <string>File related stuff.</string>
+    </property>
     <property name="title">
      <string>&amp;File</string>
     </property>
@@ -193,6 +202,9 @@
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuTools">
+    <property name="toolTip">
+     <string>Tools.</string>
+    </property>
     <property name="title">
      <string>Tools</string>
     </property>
@@ -200,6 +212,9 @@
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuAttachments">
+    <property name="toolTip">
+     <string>Attachment related stuff.</string>
+    </property>
     <property name="title">
      <string>Attachments</string>
     </property>
@@ -209,6 +224,9 @@
     <addaction name="actionDuplicate_Attachment"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
+    <property name="toolTip">
+     <string>Edit.</string>
+    </property>
     <property name="title">
      <string>Edit</string>
     </property>
@@ -223,6 +241,9 @@
     <addaction name="actionOpen_Terminal_here"/>
    </widget>
    <widget class="QMenu" name="menuFile_Index">
+    <property name="toolTip">
+     <string>File index related stuff.</string>
+    </property>
     <property name="title">
      <string>File Index</string>
     </property>
@@ -231,14 +252,20 @@
     <addaction name="separator"/>
     <addaction name="actionClear_Index"/>
    </widget>
-   <widget class="QMenu" name="menuSongs">
-    <property name="title">
-     <string>Songs</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuEvents">
+    <property name="toolTip">
+     <string>Event related stuff.</string>
+    </property>
     <property name="title">
      <string>Events</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuSongs">
+    <property name="toolTip">
+     <string>Song related stuff.</string>
+    </property>
+    <property name="title">
+     <string>Songs</string>
     </property>
    </widget>
    <addaction name="menu_File"/>
@@ -254,6 +281,9 @@
    <property name="text">
     <string>&amp;New Project</string>
    </property>
+   <property name="toolTip">
+    <string>Create a new empty project.</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Shift+N</string>
    </property>
@@ -265,6 +295,9 @@
    </property>
    <property name="text">
     <string>&amp;Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current project.</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -278,6 +311,9 @@
    <property name="text">
     <string>Save As</string>
    </property>
+   <property name="toolTip">
+    <string>Save the current project as.</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
    </property>
@@ -290,6 +326,9 @@
    <property name="text">
     <string>Open</string>
    </property>
+   <property name="toolTip">
+    <string>Open an existing project.</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
@@ -298,10 +337,16 @@
    <property name="text">
     <string>Index Info</string>
    </property>
+   <property name="toolTip">
+    <string>Information about the file index.</string>
+   </property>
   </action>
   <action name="actionAdd_Folder">
    <property name="text">
     <string>Add Folder</string>
+   </property>
+   <property name="toolTip">
+    <string>Add Folder to the file index.</string>
    </property>
   </action>
   <action name="actionClear_Index">
@@ -309,7 +354,7 @@
     <string>Clear Index</string>
    </property>
    <property name="toolTip">
-    <string>Clear Index</string>
+    <string>Remove all files from file index.</string>
    </property>
   </action>
   <action name="actionNew_Attachment">
@@ -320,6 +365,9 @@
    <property name="text">
     <string>New Attachment </string>
    </property>
+   <property name="toolTip">
+    <string>Add new attachment to a song.</string>
+   </property>
   </action>
   <action name="actionDelete_Attachment">
    <property name="icon">
@@ -329,6 +377,9 @@
    <property name="text">
     <string>Delete Attachment</string>
    </property>
+   <property name="toolTip">
+    <string>Delete Attachment selected attachment.</string>
+   </property>
   </action>
   <action name="actionUndo">
    <property name="icon">
@@ -337,6 +388,9 @@
    </property>
    <property name="text">
     <string>Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undo the last action.</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
@@ -350,6 +404,9 @@
    <property name="text">
     <string>Redo</string>
    </property>
+   <property name="toolTip">
+    <string>Redo the last undone action.</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Y</string>
    </property>
@@ -361,6 +418,9 @@
    </property>
    <property name="text">
     <string>Clone ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Clone a repository.</string>
    </property>
   </action>
   <action name="actionOpen_Terminal_here">
@@ -376,6 +436,9 @@
    <property name="text">
     <string>Rename Attachment</string>
    </property>
+   <property name="toolTip">
+    <string>Rename selected attachment.</string>
+   </property>
   </action>
   <action name="actionDuplicate_Attachment">
    <property name="icon">
@@ -384,6 +447,9 @@
    </property>
    <property name="text">
     <string>Duplicate Attachment</string>
+   </property>
+   <property name="toolTip">
+    <string>Duplicate selected attachment.</string>
    </property>
   </action>
   <action name="actionSync">
@@ -395,7 +461,7 @@
     <string>Sync</string>
    </property>
    <property name="toolTip">
-    <string>Synchronizes local project with remote repository</string>
+    <string>Synchronizes local project with remote repository.</string>
    </property>
   </action>
   <action name="actionIdentites">
@@ -403,12 +469,15 @@
     <string>Identites ...</string>
    </property>
    <property name="toolTip">
-    <string>Manage identities</string>
+    <string>Manage identities.</string>
    </property>
   </action>
   <action name="actionSettings">
    <property name="text">
     <string>Settings ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Settings.</string>
    </property>
   </action>
  </widget>

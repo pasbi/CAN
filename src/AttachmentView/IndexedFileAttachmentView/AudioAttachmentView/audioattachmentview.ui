@@ -16,6 +16,9 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTableView" name="sectionView">
+     <property name="toolTip">
+      <string>List of all stored sections.</string>
+     </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
@@ -40,6 +43,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QPushButton" name="pushButtonRecordSection">
+       <property name="toolTip">
+        <string>Record left and right end of a section.</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -47,6 +53,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonClearSection">
+       <property name="toolTip">
+        <string>Abort section recording and drop loaded section.</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -67,6 +76,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonRestoreSection">
+       <property name="toolTip">
+        <string>Restore selected Section.</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -78,6 +90,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonDeleteSection">
+       <property name="toolTip">
+        <string>Delete selected section.</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -100,6 +115,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QDoubleSpinBox" name="doubleSpinBoxPitch">
+       <property name="toolTip">
+        <string>Adjust pitch in semi tones.</string>
+       </property>
        <property name="suffix">
         <string/>
        </property>
@@ -116,6 +134,9 @@
      </item>
      <item>
       <widget class="QDoubleSpinBox" name="doubleSpinBoxTempo">
+       <property name="toolTip">
+        <string>Adjust tempo</string>
+       </property>
        <property name="suffix">
         <string> ×</string>
        </property>
@@ -155,6 +176,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonPlayPause">
+       <property name="toolTip">
+        <string>Play or pause current song.</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -170,6 +194,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonStop">
+       <property name="toolTip">
+        <string>Stop current song.</string>
+       </property>
        <property name="text">
         <string/>
        </property>

@@ -56,13 +56,13 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Zoom in</string>
+        <string>Zoom in PDF.</string>
        </property>
        <property name="text">
         <string notr="true"/>
        </property>
        <property name="icon">
-        <iconset resource="../ressources.qrc">
+        <iconset resource="../../ressources.qrc">
          <normaloff>:/icons/icons/plus47.png</normaloff>:/icons/icons/plus47.png</iconset>
        </property>
        <property name="iconSize">
@@ -88,7 +88,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Adjust zoom</string>
+        <string>Adjust zoom.</string>
        </property>
        <property name="suffix">
         <string> %</string>
@@ -119,13 +119,13 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Zoom out</string>
+        <string>Zoom out PDF.</string>
        </property>
        <property name="text">
         <string notr="true"/>
        </property>
        <property name="icon">
-        <iconset resource="../ressources.qrc">
+        <iconset resource="../../ressources.qrc">
          <normaloff>:/icons/icons/less2.png</normaloff>:/icons/icons/less2.png</iconset>
        </property>
        <property name="iconSize">
@@ -161,13 +161,13 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Goto previous page</string>
+        <string>Goto previous page.</string>
        </property>
        <property name="text">
         <string notr="true"/>
        </property>
        <property name="icon">
-        <iconset resource="../ressources.qrc">
+        <iconset resource="../../ressources.qrc">
          <normaloff>:/icons/icons/left64.png</normaloff>:/icons/icons/left64.png</iconset>
        </property>
        <property name="iconSize">
@@ -196,7 +196,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Select page</string>
+        <string>Select page.</string>
        </property>
        <property name="minimum">
         <number>1</number>
@@ -224,13 +224,13 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Goto next page</string>
+        <string>Goto next page.</string>
        </property>
        <property name="text">
         <string notr="true"/>
        </property>
        <property name="icon">
-        <iconset resource="../ressources.qrc">
+        <iconset resource="../../ressources.qrc">
          <normaloff>:/icons/icons/right53.png</normaloff>:/icons/icons/right53.png</iconset>
        </property>
        <property name="iconSize">
@@ -287,7 +287,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../ressources.qrc"/>
+  <include location="../../ressources.qrc"/>
  </resources>
  <connections/>
 </ui>

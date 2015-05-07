@@ -36,6 +36,9 @@
      </property>
      <item>
       <widget class="QLabel" name="labelFilename">
+       <property name="toolTip">
+        <string>Filename of the currently set file.</string>
+       </property>
        <property name="text">
         <string notr="true">***No File***</string>
        </property>
@@ -57,6 +60,9 @@
          <width>30</width>
          <height>30</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Choose a file.</string>
        </property>
        <property name="text">
         <string/>
@@ -152,6 +158,9 @@ or does not exist.</string>
              <width>60</width>
              <height>60</height>
             </size>
+           </property>
+           <property name="toolTip">
+            <string>Choose a file.</string>
            </property>
            <property name="text">
             <string/>

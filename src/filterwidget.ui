@@ -28,6 +28,9 @@
    </property>
    <item>
     <widget class="QComboBox" name="comboBox">
+     <property name="toolTip">
+      <string>Filter pattern.</string>
+     </property>
      <property name="editable">
       <bool>true</bool>
      </property>
@@ -46,6 +49,9 @@
        <width>27</width>
        <height>27</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Clear filter</string>
      </property>
      <property name="text">
       <string>x</string>

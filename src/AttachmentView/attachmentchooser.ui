@@ -30,7 +30,11 @@
     <number>9</number>
    </property>
    <item>
-    <widget class="ComboBox" name="comboBox"/>
+    <widget class="ComboBox" name="comboBox">
+     <property name="toolTip">
+      <string>Choose an attachment.</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="AttachmentEditor" name="attachmentEditor" native="true"/>
