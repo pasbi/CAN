@@ -26,7 +26,6 @@ private:
     Ui::IndexedFileAttachmentView *ui;
 private slots:
     void updateStackedWidget();
-
     void chooseFile();
 
 private://tmp

@@ -45,7 +45,7 @@
   <customwidget>
    <class>Slider</class>
    <extends>QSlider</extends>
-   <header>AttachmentView/slider.h</header>
+   <header>AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

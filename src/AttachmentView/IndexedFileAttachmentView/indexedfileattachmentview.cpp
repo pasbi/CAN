@@ -74,10 +74,12 @@ void IndexedFileAttachmentView::updateStackedWidget()
     if (a && a->fileExists())
     {
         ui->stackedWidget->setCurrentIndex(1);
+        ui->labelFilename->setText( QFileInfo(a->filename()).fileName() );
     }
     else
     {
         ui->stackedWidget->setCurrentIndex(0);
+        ui->labelFilename->setText( tr("< No File >") );
     }
 }
 
