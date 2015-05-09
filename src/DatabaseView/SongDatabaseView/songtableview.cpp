@@ -27,16 +27,10 @@ SongTableView::SongTableView(QWidget *parent) :
     horizontalHeader()->setSectionsMovable(true);
     horizontalHeader()->setDragEnabled(true);
     horizontalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
-    horizontalHeader()->setSortIndicatorShown( true );
-    horizontalHeader()->setSectionsClickable( true );
+
     connect(horizontalHeader(), SIGNAL(sectionMoved(int,int,int)), this, SLOT(fakeFocusOutEvent()));
 
-    verticalHeader()->setSectionsMovable(true);
-    verticalHeader()->setDragEnabled(true);
-    verticalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
-    connect(verticalHeader(), SIGNAL(sectionMoved(int,int,int)), this, SLOT(fakeFocusOutEvent()));
-
-    setSortingEnabled( true );
+    verticalHeader()->hide();
 
     setDragDropMode( QAbstractItemView::DragDrop );
     setDragEnabled( true );
@@ -116,14 +110,50 @@ void SongTableView::dropEvent(QDropEvent *event)
     QModelIndex index = indexAt( event->pos() );
     if (index.isValid())
     {
-        row = index.row();
+        row = proxyModel()->mapToSource( index ).row();
     }
     else
     {
         row = model()->rowCount();
     }
 
-    model()->pasteSongs( event->mimeData(), row, dropAction( event ) );
+    pasteSongs( event->mimeData(), row, dropAction( event ) );
+}
+
+#include "Commands/SongDatabaseCommands/songdatabasemovesongcommand.h"
+#include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
+void SongTableView::pasteSongs(const QMimeData *mimeData, int row, Qt::DropAction action)
+{
+    QByteArray data = mimeData->data( SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT );
+    if (data.isEmpty())
+    {
+        return;
+    }
+
+    QList<qintptr> originalSongs;
+    QDataStream stream( data );
+    stream >> originalSongs;
+
+    app().beginMacro( tr("Paste songs") );
+    if (action == Qt::MoveAction)
+    {
+        for (qintptr song : originalSongs)
+        {
+            QModelIndex index = model()->indexOfSong((Song*) song);
+            index = proxyModel()->mapFromSource( index );
+            int sourceRow = proxyModel()->mapToSource( index ).row();
+
+            app().pushCommand( new SongDatabaseMoveSongCommand( model(), sourceRow, row ) );
+        }
+    }
+    else if (action == Qt::CopyAction)
+    {
+        for (qintptr song : originalSongs)
+        {
+            app().pushCommand( new SongDatabaseNewSongCommand( model(), ((Song*) song)->copy() ) );
+        }
+    }
+    app().endMacro();
 }
 
 

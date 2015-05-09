@@ -6,7 +6,7 @@
 class SongDatabaseMoveSongCommand : public SongDatabaseCommand
 {
 public:
-    SongDatabaseMoveSongCommand( SongDatabase* database, Song* song, int row );
+    SongDatabaseMoveSongCommand(SongDatabase* database, int sourceRow, int destRow );
     void undo();
     void redo();
 
@@ -14,8 +14,6 @@ private:
 
     const int m_sourceRow;
     const int m_targetRow;
-
-    static int getRow( SongDatabase* database, Song* song );
 
 };
 

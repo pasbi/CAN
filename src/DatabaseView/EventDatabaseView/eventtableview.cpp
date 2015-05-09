@@ -116,6 +116,7 @@ EventTableView::EventTableView(QWidget *parent) :
 {
     horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
     horizontalHeader()->setResizeContentsPrecision( -1 ); // look at all rows.
+    horizontalHeader()->hide();
 
     setItemDelegateForColumn( 0, new TypeComboBoxDelegate( this ) );
 
@@ -130,10 +131,6 @@ EventTableView::EventTableView(QWidget *parent) :
     horizontalHeader()->setSectionsMovable( true );
     horizontalHeader()->setDragEnabled( true );
     horizontalHeader()->setDragDropMode( QAbstractItemView::InternalMove );
-
-    horizontalHeader()->setSortIndicatorShown( true );
-
-    setSortingEnabled( true );
 }
 
 EventTableView::~EventTableView()

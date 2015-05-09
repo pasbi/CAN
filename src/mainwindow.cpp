@@ -916,7 +916,7 @@ void MainWindow::my_on_actionCopy_Song_triggered()
 
 void MainWindow::my_on_actionPaste_Song_triggered()
 {
-    m_project.songDatabase()->pasteSongs( app().clipboard()->mimeData(), m_project.songDatabase()->rowCount(), Qt::CopyAction );
+    ui->songDatabaseWidget->songTableView()->pasteSongs( app().clipboard()->mimeData(), m_project.songDatabase()->rowCount(), Qt::CopyAction );
 }
 
 void MainWindow::my_on_actionCopy_Event_triggered()

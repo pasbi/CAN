@@ -1,10 +1,8 @@
 #include "songdatabase.h"
 #include "project.h"
 #include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
-#include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
 #include "Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
-#include "Commands/SongDatabaseCommands/songdatabasemovesongcommand.h"
 #include "songdatabasesortproxy.h"
 #include <QSize>
 #include "application.h"
@@ -316,17 +314,17 @@ QVariant SongDatabase::data(const int row, const int column, const int role)
 
 QJsonObject SongDatabase::toJsonObject() const
 {
-    QJsonObject meta;
-    meta.insert("numsongs", m_songs.size());
+    QJsonObject json;
+    json.insert("numsongs", m_songs.size());
 
     QJsonArray attributeKeys;
     for (int i = 0; i < m_attributeKeys.size(); ++i)
     {
         attributeKeys.append(m_attributeKeys[i]);
     }
-    meta.insert("attributekeys", attributeKeys);
+    json.insert("attributekeys", attributeKeys);
 
-    return meta;
+    return json;
 }
 
 bool SongDatabase::restoreFromJsonObject(const QJsonObject &object)
@@ -476,36 +474,6 @@ QMimeData* SongDatabase::mimeData(const QModelIndexList &indexes) const
     return mime;
 }
 
-void SongDatabase::pasteSongs(const QMimeData *mimeData, int row, Qt::DropAction action)
-{
-    QByteArray data = mimeData->data( SONG_POINTERS_MIME_DATA_FORMAT );
-    if (data.isEmpty())
-    {
-        return;
-    }
-
-    QList<qintptr> originalSongs;
-    QDataStream stream( data );
-    stream >> originalSongs;
-
-    app().beginMacro( tr("Paste songs") );
-    if (action == Qt::MoveAction)
-    {
-        for (qintptr song : originalSongs)
-        {
-            app().pushCommand( new SongDatabaseMoveSongCommand( this, ((Song*) song), row ) );
-        }
-    }
-    else if (action == Qt::CopyAction)
-    {
-        for (qintptr song : originalSongs)
-        {
-            app().pushCommand( new SongDatabaseNewSongCommand( this, ((Song*) song)->copy() ) );
-        }
-    }
-    app().endMacro();
-}
-
 void SongDatabase::moveRow(int sourceRow, int targetRow)
 {
     assert( moveRows( QModelIndex(), sourceRow, 1, QModelIndex(), targetRow ));
@@ -539,5 +507,20 @@ bool SongDatabase::moveRows(const QModelIndex &sourceParent, int sourceRow, int 
     }
 
     return true;
+}
+
+QModelIndex SongDatabase::indexOfSong(const Song *song) const
+{
+    int row = -1;
+    for (int i = 0; i < m_songs.length() && row < 0; ++i)
+    {
+        if (song == m_songs[i])
+        {
+            row = i;
+        }
+    }
+    assert( row >= 0 );
+
+    return createIndex( row, 0 );
 }
 

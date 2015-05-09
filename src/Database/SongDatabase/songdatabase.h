@@ -48,6 +48,8 @@ public:
     SongID songID( const Song* song ) const;
     Song* song( SongID id ) const;
 
+    QModelIndex indexOfSong( const Song* song ) const;
+
 private:
     mutable QList<Song*> m_tmpSongBuffer; // Songs that was just removed or are about to be inserted.
     mutable QStringList m_tmpColumnNameBuffer;
@@ -135,7 +137,6 @@ private:
 
 
 public:
-    void pasteSongs(const QMimeData* mimeData, int row , Qt::DropAction action);
     static const QString SONG_POINTERS_MIME_DATA_FORMAT;
 
 

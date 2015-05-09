@@ -23,6 +23,8 @@ public:
 
     void setReadOnly( );
 
+    void pasteSongs(const QMimeData* mimeData, int row , Qt::DropAction action);
+
 public slots:
     void fakeFocusOutEvent();
 
