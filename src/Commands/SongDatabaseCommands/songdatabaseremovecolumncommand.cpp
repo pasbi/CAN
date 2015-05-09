@@ -8,11 +8,8 @@ SongDatabaseRemoveColumnCommand::SongDatabaseRemoveColumnCommand(SongDatabase *s
 
 void SongDatabaseRemoveColumnCommand::undo()
 {
-    database()->insertColumn( m_section, m_label );
-    for ( Song* s : database()->songs() )
-    {
-        s->setAttribute( m_section, m_attributes.takeFirst() );
-    }
+    database()->restoreColumn( m_section, m_label, m_attributes );
+    m_attributes.clear();
 }
 
 void SongDatabaseRemoveColumnCommand::redo()

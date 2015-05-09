@@ -50,6 +50,7 @@ public:
 private:
     mutable QList<Song*> m_tmpSongBuffer; // Songs that was just removed or are about to be inserted.
     mutable QStringList m_tmpColumnNameBuffer;
+    mutable QList<QVariantList> m_tmpColumnContentBuffer;
     friend class SongDatabaseSetDataCommand;
     friend class SongDatabaseNewSongCommand;
     friend class SongDatabaseRemoveSongCommand;
@@ -77,6 +78,7 @@ private:
 
     void appendColumn(const QString & label);
     void insertColumn(const int section, const QString & label);
+    void restoreColumn(const int section, const QString& label, const QVariantList &attributes);
     bool insertColumns(int column, int count, const QModelIndex &parent);
     bool removeColumns(int column, int count, const QModelIndex &parent);
 

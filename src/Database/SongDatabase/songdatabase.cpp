@@ -156,18 +156,25 @@ bool SongDatabase::insertColumns(int column, int count, const QModelIndex &paren
 {
     assert( !parent.isValid() );
     assert( m_tmpColumnNameBuffer.size() == count );
+    assert( m_tmpColumnContentBuffer.size() == count || m_tmpColumnContentBuffer.isEmpty() );
 
     beginInsertColumns(parent, column, column + count - 1);
     for (int i = 0; i < count; ++i)
     {
         m_attributeKeys.insert( column + i,  m_tmpColumnNameBuffer[i]);
-        for (Song* song : m_songs)
+        for (int j = 0; j < m_songs.length(); ++j)
         {
-            song->insertAttribute(column + i, QVariant());
+            QVariant attribute;
+            if (!m_tmpColumnContentBuffer.isEmpty())
+            {
+                attribute = m_tmpColumnContentBuffer[i][j];
+            }
+            m_songs[j]->insertAttribute(column + i, attribute);
         }
     }
     endInsertColumns();
     m_tmpColumnNameBuffer.clear();
+    m_tmpColumnContentBuffer.clear();
 
     return true;
 }
@@ -271,6 +278,16 @@ void SongDatabase::appendColumn(const QString &label)
 {
     insertColumn( columnCount(), label );
 }
+
+void SongDatabase::restoreColumn(const int section, const QString &label, const QVariantList &attributes)
+{
+    beginResetModel();  // required for neat displaying
+    assert( m_tmpColumnContentBuffer.isEmpty() );
+    m_tmpColumnContentBuffer.append( attributes );
+    insertColumn( section, label );
+    endResetModel();
+}
+reset();
 
 bool SongDatabase::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
 {

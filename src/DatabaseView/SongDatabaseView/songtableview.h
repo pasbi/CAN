@@ -19,9 +19,6 @@ public:
 
     void setReadOnly( );
 
-
-
-
 public slots:
     void fakeFocusOutEvent();
 
