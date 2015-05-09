@@ -9,7 +9,7 @@ Player::Player()
     connect( m_timer, &QTimer::timeout, [this]()
     {
         m_currentPosition += interval / 1000.0;
-        emit positionChanged( m_currentPosition );
+        emit positionChanged( position() );
     });
 }
 
@@ -91,17 +91,17 @@ void Player::seek()
     }
 }
 
+//TODO bmp detection?
 void Player::seek(double pitch, double tempo, double second)
 {
     m_pitch = pitch;
     m_tempo = tempo;
-    m_offset = second;
-    seek();
+    seek( second );
 }
 
 void Player::seek(double second)
 {
-    m_offset = second;
+    m_offset = second / m_tempo;
     seek();
 }
 
@@ -112,7 +112,7 @@ double Player::duration() const
 
 double Player::position() const
 {
-    return m_currentPosition;
+    return m_tempo * m_currentPosition;
 }
 
 double Player::checkSectionAndGetPosition()
