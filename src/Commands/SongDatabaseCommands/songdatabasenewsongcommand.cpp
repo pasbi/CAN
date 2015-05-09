@@ -1,9 +1,10 @@
 #include "songdatabasenewsongcommand.h"
 #include "global.h"
 
-SongDatabaseNewSongCommand::SongDatabaseNewSongCommand(SongDatabase *songDatabase, Song* song) :
+SongDatabaseNewSongCommand::SongDatabaseNewSongCommand(SongDatabase *songDatabase, Song* song, int row) :
     SongDatabaseCommand(songDatabase),
-    m_song(song)
+    m_song(song),
+    m_row( row )
 {
     if (m_song == NULL)
     {
@@ -23,7 +24,14 @@ void SongDatabaseNewSongCommand::redo()
 //    if (!m_song)
 //        m_song = new Song(database());
 
-    database()->appendSong( m_song );
+    if (m_row < 0)
+    {
+        database()->appendSong( m_song );
+    }
+    else
+    {
+        database()->insertSong( m_song, m_row );
+    }
     m_ownsSong = false;
 }
 

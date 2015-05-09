@@ -191,10 +191,11 @@ void SetlistView::showContextMenu(QPoint pos)
 
 void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
 {
+    Q_UNUSED( pos );
     bool selectionIsEmpty = selectionModel()->selectedRows().isEmpty();
 
     menu->addActions( actions() );
-    actions()[0]->setEnabled( !!model() );                          // new item
+    actions()[0]->setEnabled( !!model() );                           // new item
     actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
     actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
     actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( SetlistView::ITEMS_MIMEDATA_FORMAT ) );     // paste items

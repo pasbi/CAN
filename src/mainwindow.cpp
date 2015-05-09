@@ -149,8 +149,13 @@ MainWindow::MainWindow(QWidget *parent) :
     // very important to set associated widget. Else, shortcuts would be ambigous.
     newAction( actionNew_Song,      ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
     newAction( actionDelete_Song,   ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
+    newAction( actionCopy_Song,     ui->songDatabaseWidget->songTableView(),    tr("&Copy Song"),      tr("Copy selected song."),    "Ctrl+C",   ui->menuSongs,  "" )
+    newAction( actionPaste_Song,    ui->songDatabaseWidget->songTableView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
+
     newAction( actionNew_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
     newAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
+    newAction( actionCopy_Event,    ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected song."),    "Ctrl+C",   ui->menuEvents, "" )
+    newAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste song."),            "Ctrl+V",   ui->menuEvents, "" )
 }
 
 MainWindow::~MainWindow()
@@ -578,13 +583,41 @@ void MainWindow::on_actionOpen_triggered()
     updateWhichWidgetsAreEnabled();
 }
 
+bool MainWindow::canRemoveSong(Song *song)
+{
+    // check if song is used in setlist
+    for (Event* event: m_project.eventDatabase()->events())
+    {
+        for (SetlistItem* item : event->setlist()->items())
+        {
+            if (item->song() == song)
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 #include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
 void MainWindow::my_on_actionDelete_Song_triggered()
 {
     Song* song = currentSong();
     if (song)
     {
-        app().pushCommand( new SongDatabaseRemoveSongCommand( m_project.songDatabase(), song ) );
+        if (canRemoveSong( song ))
+        {
+            app().pushCommand( new SongDatabaseRemoveSongCommand( m_project.songDatabase(), song ) );
+        }
+        else
+        {
+            QMessageBox::warning( this,
+                                  tr("Song cannot be removed"),
+                                  tr("This song is currently in use and can thus not be removed."),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton );
+        }
         updateWhichWidgetsAreEnabled();
     }
 }
@@ -873,6 +906,27 @@ QAction* MainWindow::undoAction() const
 QAction* MainWindow::redoAction() const
 {
     return ui->actionRedo;
+}
+
+void MainWindow::my_on_actionCopy_Song_triggered()
+{
+    QModelIndexList selectedSongs = ui->songDatabaseWidget->songTableView()->selectionModel()->selectedIndexes();
+    app().clipboard()->setMimeData( m_project.songDatabase()->mimeData( selectedSongs ) );
+}
+
+void MainWindow::my_on_actionPaste_Song_triggered()
+{
+    m_project.songDatabase()->pasteSongs( app().clipboard()->mimeData(), m_project.songDatabase()->rowCount(), Qt::CopyAction );
+}
+
+void MainWindow::my_on_actionCopy_Event_triggered()
+{
+
+}
+
+void MainWindow::my_on_actionPaste_Event_triggered()
+{
+
 }
 
 

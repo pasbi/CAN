@@ -17,6 +17,10 @@ public:
     SongDatabase* model() const;
     SongDatabaseSortProxy* proxyModel() const;
 
+    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event);
+
     void setReadOnly( );
 
 public slots:

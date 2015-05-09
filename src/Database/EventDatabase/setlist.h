@@ -62,6 +62,7 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     SetlistItem* itemAt(const QModelIndex &index ) const;
     int indexOf(const SetlistItem *item ) const;
+    QList<SetlistItem*> items() const { return m_items; }
 
     void notifyDataChanged(const QModelIndex &index);
     void notifyDataChanged(const QModelIndex & start, const QModelIndex & end);

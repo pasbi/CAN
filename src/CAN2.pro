@@ -130,7 +130,8 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
     DatabaseView/databaseview.cpp \
     combobox.cpp \
-    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp
+    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp \
+    Commands/SongDatabaseCommands/songdatabasemovesongcommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -237,7 +238,8 @@ HEADERS  += mainwindow.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h \
     DatabaseView/databaseview.h \
     combobox.h \
-    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.h
+    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.h \
+    Commands/SongDatabaseCommands/songdatabasemovesongcommand.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

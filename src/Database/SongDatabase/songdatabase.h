@@ -40,6 +40,7 @@ public:
     QVariant data( const int row, const int column, const int role);
     Qt::DropActions supportedDragActions() const;
     QMimeData* mimeData(const QModelIndexList &indexes) const;
+    void moveRow( int sourceRow, int targetRow );
 
     static QString extractEditorType(const QString & key);
     static QString extractHeaderLabel(const QString & key);
@@ -58,7 +59,7 @@ private:
     friend class SongDatabaseRemoveAttributeCommand;
     friend class SongDatabaseRenameHeaderCommand;
     friend class SongDatabaseRemoveColumnCommand;
-
+    friend class SongDatabaseMoveSongCommand;
 
     /**
      * @brief appendSong this takes ownership of song
@@ -75,6 +76,7 @@ private:
      */
     int removeSong(Song *song);
     bool removeRows(int row, int count, const QModelIndex &parent);
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild);
 
     void appendColumn(const QString & label);
     void insertColumn(const int section, const QString & label);
@@ -127,6 +129,14 @@ private:
     int m_numSongsToRestore;
     QStringList m_attributeKeysToRestore;
     void initAttributes();
+
+
+
+
+
+public:
+    void pasteSongs(const QMimeData* mimeData, int row , Qt::DropAction action);
+    static const QString SONG_POINTERS_MIME_DATA_FORMAT;
 
 
 signals:

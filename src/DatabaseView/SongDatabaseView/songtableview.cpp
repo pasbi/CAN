@@ -38,7 +38,7 @@ SongTableView::SongTableView(QWidget *parent) :
 
     setSortingEnabled( true );
 
-    setDragDropMode( QAbstractItemView::DragOnly );
+    setDragDropMode( QAbstractItemView::DragDrop );
     setDragEnabled( true );
     setDropIndicatorShown( true );
 
@@ -78,6 +78,52 @@ void SongTableView::setReadOnly()
 {
     qobject_assert_cast<RenamableHeaderView*>( horizontalHeader() )->setReadOnly();
     setEditTriggers( QAbstractItemView::NoEditTriggers );
+}
+
+Qt::DropAction dropAction( QDropEvent* event )
+{
+    switch (event->keyboardModifiers())
+    {
+    case Qt::ControlModifier:
+        return Qt::CopyAction;
+    default:
+        return Qt::MoveAction;
+    }
+}
+
+void SongTableView::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT) )
+    {
+        event->setDropAction( dropAction( event ) );
+        event->accept();
+    }
+}
+
+void SongTableView::dragMoveEvent(QDragMoveEvent *event)
+{
+    if (event->mimeData()->hasFormat(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT) )
+    {
+        event->setDropAction( dropAction( event ) );
+        event->accept();
+    }
+}
+
+#include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
+void SongTableView::dropEvent(QDropEvent *event)
+{
+    int row;
+    QModelIndex index = indexAt( event->pos() );
+    if (index.isValid())
+    {
+        row = index.row();
+    }
+    else
+    {
+        row = model()->rowCount();
+    }
+
+    model()->pasteSongs( event->mimeData(), row, dropAction( event ) );
 }
 
 

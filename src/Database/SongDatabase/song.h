@@ -77,6 +77,9 @@ public:
     void insertAttachment(Attachment* attachment, int index);
 
 
+    Song* copy() const;
+
+
 
 
 signals:

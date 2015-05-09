@@ -194,6 +194,14 @@ void Song::connectAttachment(Attachment *attachment)
     });
 }
 
+Song* Song::copy() const
+{
+    QJsonObject json = toJsonObject();
+    Song* song = new Song( database() );
+    song->restoreFromJsonObject( json );
+    return song;
+}
+
 
 
 
