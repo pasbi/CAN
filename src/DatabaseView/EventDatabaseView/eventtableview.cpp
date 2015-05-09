@@ -124,13 +124,15 @@ EventTableView::EventTableView(QWidget *parent) :
     setSelectionMode( QAbstractItemView::SingleSelection );
     setAlternatingRowColors( true );
 
-    verticalHeader()->setSectionsMovable( true );
-    verticalHeader()->setDragEnabled( true );
-    verticalHeader()->setDragDropMode( QAbstractItemView::InternalMove );
+    verticalHeader()->hide();
 
     horizontalHeader()->setSectionsMovable( true );
     horizontalHeader()->setDragEnabled( true );
     horizontalHeader()->setDragDropMode( QAbstractItemView::InternalMove );
+
+    setDragDropMode( QAbstractItemView::DragDrop );
+    setDragEnabled( true );
+    setDropIndicatorShown( true );
 }
 
 EventTableView::~EventTableView()
@@ -195,24 +197,88 @@ EventDatabaseSortProxy* EventTableView::proxyModel() const
     return pm;
 }
 
-#include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
-#include "Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h"
-void EventTableView::setUpContextMenu(QMenu* menu)
+Qt::DropAction EventTableView::dropAction( QDropEvent* event )
 {
-    QModelIndex index = indexUnderCursor();
-    Event* event = model()->eventAtIndex(index);
-
-    Util::addAction(menu, tr("New Event"), [this](){
-        app().pushCommand( new EventDatabaseNewEventCommand( model(), new Event(model()) ) );
-    });
-
-    Util::addAction(menu, tr("Delete Event"), [this, event]() {
-        if (event)
-        {
-            app().pushCommand( new EventDatabaseRemoveEventCommand( model(), event ) );
-        }
-    })->setEnabled(!!event);
-
-    menu->addSeparator();
-
+    switch (event->keyboardModifiers())
+    {
+    case Qt::ControlModifier:
+        return Qt::CopyAction;
+    default:
+        return Qt::MoveAction;
+    }
 }
+
+void EventTableView::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat(EventDatabase::EVENT_POINTERS_MIME_DATA_FORMAT) )
+    {
+        event->setDropAction( dropAction( event ) );
+        event->accept();
+    }
+}
+
+void EventTableView::dragMoveEvent(QDragMoveEvent *event)
+{
+    if (event->mimeData()->hasFormat(EventDatabase::EVENT_POINTERS_MIME_DATA_FORMAT) )
+    {
+        event->setDropAction( dropAction( event ) );
+        event->accept();
+    }
+}
+
+#include "Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h"
+void EventTableView::dropEvent(QDropEvent *event)
+{
+    int row;
+    QModelIndex index = indexAt( event->pos() );
+    if (index.isValid())
+    {
+        row = proxyModel()->mapToSource( index ).row();
+    }
+    else
+    {
+        row = model()->rowCount();
+    }
+
+    pasteEvents( event->mimeData(), row, dropAction( event ) );
+}
+
+#include "Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.h"
+#include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
+void EventTableView::pasteEvents(const QMimeData *mimeData, int row, Qt::DropAction action)
+{
+    QByteArray data = mimeData->data( EventDatabase::EVENT_POINTERS_MIME_DATA_FORMAT );
+    if (data.isEmpty())
+    {
+        return;
+    }
+
+    QList<qintptr> originalSongs;
+    QDataStream stream( data );
+    stream >> originalSongs;
+
+    app().beginMacro( tr("Paste events") );
+    if (action == Qt::MoveAction)
+    {
+        for (qintptr song : originalSongs)
+        {
+            QModelIndex index = model()->indexOfEvent((Event*) song);
+            index = proxyModel()->mapFromSource( index );
+            int sourceRow = proxyModel()->mapToSource( index ).row();
+
+            app().pushCommand( new EventDatabaseMoveEventCommand( model(), sourceRow, row ) );
+        }
+    }
+    else if (action == Qt::CopyAction)
+    {
+        for (qintptr song : originalSongs)
+        {
+            app().pushCommand( new EventDatabaseNewEventCommand( model(), ((Event*) song)->copy() ) );
+        }
+    }
+    app().endMacro();
+}
+
+
+
+

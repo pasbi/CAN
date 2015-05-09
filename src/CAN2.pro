@@ -131,7 +131,8 @@ SOURCES += main.cpp\
     DatabaseView/databaseview.cpp \
     combobox.cpp \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp \
-    Commands/SongDatabaseCommands/songdatabasemovesongcommand.cpp
+    Commands/SongDatabaseCommands/songdatabasemovesongcommand.cpp \
+    Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -239,7 +240,8 @@ HEADERS  += mainwindow.h \
     DatabaseView/databaseview.h \
     combobox.h \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.h \
-    Commands/SongDatabaseCommands/songdatabasemovesongcommand.h
+    Commands/SongDatabaseCommands/songdatabasemovesongcommand.h \
+    Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

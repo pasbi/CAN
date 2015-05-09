@@ -42,6 +42,8 @@ public:
     const Setlist* setlist() const { return &m_setlist; }
     Setlist* setlist() { return &m_setlist; }
 
+    Event* copy() const;
+
 
 private:
     EventDatabase* m_database;

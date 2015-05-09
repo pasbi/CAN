@@ -74,7 +74,7 @@ void SongTableView::setReadOnly()
     setEditTriggers( QAbstractItemView::NoEditTriggers );
 }
 
-Qt::DropAction dropAction( QDropEvent* event )
+Qt::DropAction SongTableView::dropAction( QDropEvent* event )
 {
     switch (event->keyboardModifiers())
     {

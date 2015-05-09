@@ -30,12 +30,21 @@ public:
     Event* eventAtIndex(const QModelIndex & index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant data( const int row, const int column, const int role);
+    QMimeData* mimeData(const QModelIndexList &indexes) const;
 
     void insertEvent( Event* event, const int index);
     void appendEvent( Event* event );
     bool insertRows(int row, int count, const QModelIndex &parent);
     int  removeEvent( Event* event );
     bool removeRows(int row, int count, const QModelIndex &parent);
+
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild);
+    void moveRow(int sourceRow, int targetRow);
+
+    QModelIndex indexOfEvent( const Event* event ) const;
+    Qt::DropActions supportedDragActions() const;
+
+
 
 
     /////////////////////////////////////////////////
@@ -49,6 +58,11 @@ public:
 
 
     QList<Event*> events() const { return m_events; }
+
+
+
+
+    static const QString EVENT_POINTERS_MIME_DATA_FORMAT;
 
 public slots:
     void reset();

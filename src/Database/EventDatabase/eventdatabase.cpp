@@ -3,6 +3,8 @@
 #include "Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h"
 #include "application.h"
 
+const QString EventDatabase::EVENT_POINTERS_MIME_DATA_FORMAT = "can/events";
+
 EventDatabase::EventDatabase(Project *project) :
     Database(project)
 {
@@ -20,6 +22,11 @@ QJsonObject EventDatabase::toJsonObject() const
     }
 
     return json;
+}
+
+Qt::DropActions EventDatabase::supportedDragActions() const
+{
+    return Qt::CopyAction | Qt::MoveAction;
 }
 
 bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
@@ -113,7 +120,7 @@ QVariant EventDatabase::headerData(int section, Qt::Orientation orientation, int
 Qt::ItemFlags EventDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
-    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable;
+    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
 }
 
 void EventDatabase::notifyDataChanged(const QModelIndex &index)
@@ -263,6 +270,80 @@ bool EventDatabase::removeRows(int row, int count, const QModelIndex &parent)
     endRemoveRows();
 
     return true;
+}
+
+bool EventDatabase::moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild)
+{
+    assert( !sourceParent.isValid() );
+    assert( !destinationParent.isValid() );
+
+    destinationChild = qBound( 0, destinationChild, m_events.length() - count );
+
+    int diff = destinationChild - sourceRow;
+    if (diff > 0)
+    {
+        assert( beginMoveRows( sourceParent, sourceRow, sourceRow + count - 1, destinationParent, destinationChild + 1 ) );
+        for (int i = sourceRow + count - 1; i >= sourceRow; --i)
+        {
+            m_events.insert(i + diff, m_events.takeAt(i));
+        }
+        endMoveRows();
+    }
+    else if (diff < 0)
+    {
+        assert( beginMoveRows( sourceParent, sourceRow, sourceRow + count - 1, destinationParent, destinationChild ) );
+        for (int i = sourceRow; i <= sourceRow + count - 1; ++i)
+        {
+            m_events.insert(i + diff, m_events.takeAt(i));
+        }
+        endMoveRows();
+    }
+
+    return true;
+}
+
+void EventDatabase::moveRow(int sourceRow, int targetRow)
+{
+    assert( moveRows( QModelIndex(), sourceRow, 1, QModelIndex(), targetRow ) );
+}
+
+QModelIndex EventDatabase::indexOfEvent(const Event *event) const
+{
+    int row = -1;
+    for (int i = 0; i < m_events.length() && row < 0; ++i)
+    {
+        if (event == m_events[i])
+        {
+            row = i;
+        }
+    }
+    assert( row >= 0 );
+
+    return createIndex( row, 0 );
+}
+
+QMimeData* EventDatabase::mimeData(const QModelIndexList &indexes) const
+{
+    QMimeData* mime = new QMimeData();
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+
+    QList<qintptr> ptrs;
+    for (const QModelIndex& index : indexes)
+    {
+        if (index.column() != 0)
+        {
+            // we want only one index per row.
+            continue;
+        }
+        Event* event = eventAtIndex(index);
+        ptrs << qintptr(event);
+    }
+    stream << ptrs;
+
+    mime->setData( EVENT_POINTERS_MIME_DATA_FORMAT, data);
+    return mime;
 }
 
 

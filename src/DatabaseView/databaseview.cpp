@@ -13,13 +13,3 @@ QModelIndex DatabaseView::indexUnderCursor() const
     QPoint pos = viewport()->mapFromGlobal( QCursor::pos() );
     return indexAt(pos);
 }
-
-void DatabaseView::showContextMenu(QPoint pos)
-{
-    QMenu* menu = new QMenu(this);
-
-    setUpContextMenu(menu);
-
-    menu->popup(viewport()->mapToGlobal(pos));
-    connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
-}

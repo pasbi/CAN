@@ -17,19 +17,22 @@ public:
     SongDatabase* model() const;
     SongDatabaseSortProxy* proxyModel() const;
 
-    void dropEvent(QDropEvent *event);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dragMoveEvent(QDragMoveEvent *event);
 
     void setReadOnly( );
 
     void pasteSongs(const QMimeData* mimeData, int row , Qt::DropAction action);
+
+protected:
+    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event);
 
 public slots:
     void fakeFocusOutEvent();
 
 private:
     SongAttributeDelegate* m_delegate;
+    static Qt::DropAction dropAction( QDropEvent* event );
 
 };
 

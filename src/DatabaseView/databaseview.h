@@ -11,12 +11,6 @@ public:
 
     QModelIndex indexUnderCursor() const;
 
-protected:
-    virtual void setUpContextMenu( QMenu* menu ) { Q_UNUSED( menu ); }
-
-private slots:
-    void showContextMenu( QPoint pos );
-
 
 
 };

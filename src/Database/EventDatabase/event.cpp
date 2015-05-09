@@ -91,6 +91,14 @@ void Event::setNotice(const QString &notice)
     m_notices = notice;
 }
 
+Event* Event::copy() const
+{
+    QJsonObject json = toJsonObject();
+    Event* event = new Event( database() );
+    event->restoreFromJsonObject( json );
+    return event;
+}
+
 
 
 
