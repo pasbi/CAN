@@ -921,12 +921,13 @@ void MainWindow::my_on_actionPaste_Song_triggered()
 
 void MainWindow::my_on_actionCopy_Event_triggered()
 {
-
+    QModelIndexList selectedSongs = ui->eventDatabaseWidget->eventTableView()->selectionModel()->selectedIndexes();
+    app().clipboard()->setMimeData( m_project.eventDatabase()->mimeData( selectedSongs ) );
 }
 
 void MainWindow::my_on_actionPaste_Event_triggered()
 {
-
+    ui->eventDatabaseWidget->eventTableView()->pasteEvents( app().clipboard()->mimeData(), m_project.eventDatabase()->rowCount(), Qt::CopyAction );
 }
 
 
