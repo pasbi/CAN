@@ -287,7 +287,6 @@ void SongDatabase::restoreColumn(const int section, const QString &label, const 
     insertColumn( section, label );
     endResetModel();
 }
-reset();
 
 bool SongDatabase::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
 {
