@@ -22,7 +22,10 @@ public:
 
     void setProject(Project* project);
     void setMainWindow(MainWindow *mainWindow);
+
     void pushCommand( Command* command );
+    void beginMacro( const QString& text );
+    void endMacro();
 
     void undo() const;
     void redo() const;

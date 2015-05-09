@@ -14,6 +14,7 @@ public:
 
 public slots:
     void editHeader(int section , bool endMacroOnFinish = false);
+    void setReadOnly();
 
 protected:
    void mouseDoubleClickEvent(QMouseEvent *event);
@@ -25,6 +26,7 @@ private slots:
 private:
     void setUpContextMenu(QMenu* menu);
     int sectionUnderCursor() const;
+    bool m_readOnly = false;
 
 };
 

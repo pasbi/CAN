@@ -19,12 +19,15 @@ RenamableHeaderView::RenamableHeaderView(Qt::Orientation orientation, SongTableV
 
 void RenamableHeaderView::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    // leave a space around the resize handles
-    int sectionLeft  = parent()->columnAt(event->pos().x() - 5);
-    int sectionRight = parent()->columnAt(event->pos().x() + 5);
+    if (!m_readOnly)
+    {
+        // leave a space around the resize handles
+        int sectionLeft  = parent()->columnAt(event->pos().x() - 5);
+        int sectionRight = parent()->columnAt(event->pos().x() + 5);
 
-    if (sectionLeft == sectionRight)
-        editHeader( sectionRight );
+        if (sectionLeft == sectionRight)
+            editHeader( sectionRight );
+    }
 
     QHeaderView::mouseDoubleClickEvent( event );
 }
@@ -73,6 +76,7 @@ void RenamableHeaderView::showContextMenu(QPoint pos)
     connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
 }
 
+#include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 void RenamableHeaderView::setUpContextMenu(QMenu *menu)
 {
     int section = sectionUnderCursor();
@@ -86,4 +90,19 @@ void RenamableHeaderView::setUpContextMenu(QMenu *menu)
     Util::addAction(menu, QString(tr("Delete Attribute %1")).arg(key), [this, database, section](){
         app().pushCommand( new SongDatabaseRemoveColumnCommand( database, section ) );
     });
+
+    Util::addAction(menu, tr("Add Attribute"), [this, database]() {
+        SongDatabaseNewAttributeCommand* naCommand = new SongDatabaseNewAttributeCommand( database );
+
+        // end macro is in renamableheaderview.cpp
+        app().beginMacro( naCommand->text() );
+        app().pushCommand( naCommand );
+        editHeader( model()->columnCount() - 1, true );
+    });
+}
+
+void RenamableHeaderView::setReadOnly()
+{
+    setContextMenuPolicy( Qt::NoContextMenu );
+    m_readOnly = true;
 }

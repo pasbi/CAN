@@ -146,10 +146,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
 
-    newAction( actionNew_Song,          ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
-    newAction( actionDelete_Song,       ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
-    newAction( actionNew_Event,         ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
-    newAction( actionDelete_Event,      ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
+    // very important to set associated widget. Else, shortcuts would be ambigous.
+    newAction( actionNew_Song,      ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
+    newAction( actionDelete_Song,   ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
+    newAction( actionNew_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
+    newAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
 }
 
 MainWindow::~MainWindow()

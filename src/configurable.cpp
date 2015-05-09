@@ -35,7 +35,14 @@ void Configurable::reset()
 {
     for (const QString & key : m_items.keys())
     {
-        m_items[key]->reset();
+        if (item(key))
+        {
+            m_items[key]->reset();
+        }
+        else
+        {
+            qWarning() << "cannot reset " << key;
+        }
     }
 }
 
@@ -43,7 +50,14 @@ void Configurable::apply()
 {
     for (const QString & key : m_items.keys())
     {
-        m_items[key]->apply();
+        if (item(key))
+        {
+            m_items[key]->apply();
+        }
+        else
+        {
+            qWarning() << "cannot apply " << key;
+        }
     }
 }
 
@@ -51,7 +65,14 @@ void Configurable::restore()
 {
     for (const QString & key : m_items.keys())
     {
-        m_items[key]->restore();
+        if (item(key))
+        {
+            m_items[key]->restore();
+        }
+        else
+        {
+            qWarning() << "cannot restore " << key;
+        }
     }
 }
 
@@ -62,7 +83,14 @@ void Configurable::saveConfiguration() const
     settings.beginGroup(m_prefix);
     for (const QString & key : m_items.keys() )
     {
-        settings.setValue(key, m_items[key]->actualValue());
+        if (m_items[key])
+        {
+            settings.setValue(key, m_items[key]->actualValue());
+        }
+        else
+        {
+            qWarning() << "cannot save " << key;
+        }
     }
     settings.endGroup();
     settings.endGroup();
@@ -77,7 +105,14 @@ void Configurable::restoreConfiguration()
     for (const QString & key : keys)
     {
         // only overwrite, dont create.
-        set( key, settings.value(key) );
+        if (item(key))
+        {
+            set( key, settings.value(key) );
+        }
+        else
+        {
+            qWarning() << "drop key " << key;
+        }
     }
     apply();
     settings.endGroup();

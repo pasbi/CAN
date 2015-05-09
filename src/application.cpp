@@ -55,3 +55,13 @@ void Application::redo() const
     return project()->redo();
 }
 
+void Application::beginMacro(const QString &text)
+{
+    m_project->beginMacro( text );
+}
+
+void Application::endMacro()
+{
+    m_project->endMacro();
+}
+

@@ -17,6 +17,8 @@ public:
     SongDatabase* model() const;
     SongDatabaseSortProxy* proxyModel() const;
 
+    void setReadOnly( );
+
 
 
 
@@ -24,8 +26,6 @@ public slots:
     void fakeFocusOutEvent();
 
 private:
-    void setUpContextMenu(QMenu* menu);
-
     SongAttributeDelegate* m_delegate;
 
 };

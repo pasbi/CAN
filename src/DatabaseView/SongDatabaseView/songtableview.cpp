@@ -3,9 +3,6 @@
 #include <QAction>
 #include "global.h"
 #include "project.h"
-#include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
-#include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
-#include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 #include "renamableheaderview.h"
 #include "util.h"
 #include <QFocusEvent>
@@ -45,36 +42,10 @@ SongTableView::SongTableView(QWidget *parent) :
     setDragEnabled( true );
     setDropIndicatorShown( true );
 
+    setContextMenuPolicy( Qt::NoContextMenu );
+
 }
 
-void SongTableView::setUpContextMenu(QMenu *menu)
-{
-    QModelIndex index = indexUnderCursor();
-
-    Song* song = model()->songAtIndex(index);
-    // new Song
-    Util::addAction(menu, tr("New Song"), [this](){
-        app().pushCommand( new SongDatabaseNewSongCommand( model(), new Song(model()) ) );
-    });
-
-    Util::addAction(menu, tr("Delete Song"), [this, song]() {
-        if (song)
-        {
-            app().pushCommand( new SongDatabaseRemoveSongCommand( model(), song ) );
-        }
-    })->setEnabled(!!song);
-
-    menu->addSeparator();
-
-    Util::addAction(menu, tr("Add Attribute"), [this]() {
-        SongDatabaseNewAttributeCommand* naCommand = new SongDatabaseNewAttributeCommand( model() );
-
-        // end macro is in renamableheaderview.cpp
-        model()->project()->beginMacro( naCommand->text() );
-        model()->project()->pushCommand( naCommand );
-        qobject_assert_cast<RenamableHeaderView*>(horizontalHeader())->editHeader( model()->columnCount() - 1, true );
-    });
-}
 
 void SongTableView::setModel(SongDatabaseSortProxy *model)
 {
@@ -101,6 +72,12 @@ SongDatabaseSortProxy* SongTableView::proxyModel() const
     SongDatabaseSortProxy* pm = qobject_assert_cast<SongDatabaseSortProxy*>( QTableView::model() );
     assert( pm == QTableView::model() );
     return pm;
+}
+
+void SongTableView::setReadOnly()
+{
+    qobject_assert_cast<RenamableHeaderView*>( horizontalHeader() )->setReadOnly();
+    setEditTriggers( QAbstractItemView::NoEditTriggers );
 }
 
 
