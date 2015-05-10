@@ -296,6 +296,11 @@ bool MainWindow::saveProjectAs()
     }
     else
     {
+        QString ending = QString(".%1").arg(m_project.ending());
+        if (!filename.endsWith( ending ))
+        {
+            filename.append(ending);
+        }
         setCurrentPath(filename);
         return saveProject();
     }
