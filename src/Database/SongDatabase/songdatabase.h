@@ -12,12 +12,40 @@ class SongDatabaseSortProxy;
 class CellEditor;
 class SongDatabase : public QAbstractTableModel, public Database
 {
+
+public:
+    class AttributeKey : public QString
+    {
+    public:
+        AttributeKey( const QString& string ) :
+            QString( string ),
+            visible( true )
+        {}
+        bool visible;
+        QJsonObject toJson() const
+        {
+            QJsonObject o;
+            o["key"] = *this;
+            o["visible"] = visible;
+            return o;
+        }
+
+        static AttributeKey fromJson( const QJsonObject& o )
+        {
+            checkJsonObject( o, "key", QJsonValue::String );
+            checkJsonObject( o, "visible", QJsonValue::Bool );
+            AttributeKey ak(o["key"].toString());
+            ak.visible = o["visible"].toBool();
+            return ak;
+        }
+    };
+
     Q_OBJECT
 public:
     SongDatabase(Project* project);
 
     QList<Song*> songs() const { return m_songs; }
-    QStringList attributeKeys() const { return m_attributeKeys; }
+    QStringList attributeKeys() const ;
 
     /////////////////////////////////////////////////
     ////
@@ -50,9 +78,10 @@ public:
 
     QModelIndex indexOfSong( const Song* song ) const;
 
+
 private:
     mutable QList<Song*> m_tmpSongBuffer; // Songs that was just removed or are about to be inserted.
-    mutable QStringList m_tmpColumnNameBuffer;
+    mutable QList<AttributeKey> m_tmpColumnNameBuffer;
     mutable QList<QVariantList> m_tmpColumnContentBuffer;
     friend class SongDatabaseSetDataCommand;
     friend class SongDatabaseNewSongCommand;
@@ -80,8 +109,8 @@ private:
     bool removeRows(int row, int count, const QModelIndex &parent);
     bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild);
 
-    void appendColumn(const QString & label);
-    void insertColumn(const int section, const QString & label);
+    void appendColumn(const AttributeKey &label);
+    void insertColumn(const int section, const AttributeKey &label);
     void restoreColumn(const int section, const QString& label, const QVariantList &attributes);
     bool insertColumns(int column, int count, const QModelIndex &parent);
     bool removeColumns(int column, int count, const QModelIndex &parent);
@@ -107,8 +136,12 @@ private:
     /////////////////////////////////////////////////
 public:
     QString editorType( const QModelIndex & index ) const;
+    bool attributeVisible( int i );
+    void setAttributeVisible( int i, bool visible );
 private:
-    QStringList  m_attributeKeys;
+
+    QList<AttributeKey>  m_attributeKeys;
+    friend class SongDatabaseSortProxy;
 
 
 
@@ -129,7 +162,7 @@ private:
      * @brief m_numSongsToRestore number of songs that will be restored. Use this only for loading issues.
      */
     int m_numSongsToRestore;
-    QStringList m_attributeKeysToRestore;
+    QList<AttributeKey> m_attributeKeysToRestore;
     void initAttributes();
 
 
@@ -138,6 +171,7 @@ private:
 
 public:
     static const QString SONG_POINTERS_MIME_DATA_FORMAT;
+    static void editorTypeAndHeaderLabel( const QString & encoding, QString & editorType, QString & attributeValue );
 
 
 signals:

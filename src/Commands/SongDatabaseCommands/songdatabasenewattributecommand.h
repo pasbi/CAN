@@ -6,12 +6,12 @@
 class SongDatabaseNewAttributeCommand : public SongDatabaseCommand
 {
 public:
-    SongDatabaseNewAttributeCommand( SongDatabase* songDatabase, const QString & attributeKey = QObject::tr("Unnamed") );
+    SongDatabaseNewAttributeCommand( SongDatabase* songDatabase, const SongDatabase::AttributeKey & attributeKey = QObject::tr("Unnamed") );
     void undo();
     void redo();
 
 private:
-    QString m_label;
+    SongDatabase::AttributeKey m_key;
 };
 
 #endif // SONGDATABASEADDCOLUMNCOMMAND_H

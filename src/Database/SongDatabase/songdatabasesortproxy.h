@@ -10,8 +10,16 @@ class SongDatabaseSortProxy : public QSortFilterProxyModel
 public:
     explicit SongDatabaseSortProxy(QObject* parent = 0);
 
-    void setSourceModel(SongDatabase *sourceModel) { QSortFilterProxyModel::setSourceModel(sourceModel); }
-    SongDatabase* sourceModel() const { return qobject_assert_cast<SongDatabase*>( QSortFilterProxyModel::sourceModel() ); }
+    void setSourceModel(SongDatabase *sourceModel);
+    SongDatabase* sourceModel() const;
+
+protected:
+    bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const;
+
+
+
+
+
 };
 
 #endif // SONGDATABASESORTPROXY_H

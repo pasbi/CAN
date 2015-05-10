@@ -156,6 +156,8 @@ MainWindow::MainWindow(QWidget *parent) :
     newAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
     newAction( actionCopy_Event,    ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected song."),    "Ctrl+C",   ui->menuEvents, "" )
     newAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste song."),            "Ctrl+V",   ui->menuEvents, "" )
+
+    connect( ui->menuVisible_attributes, SIGNAL(aboutToShow()), this, SLOT(createAttributeVisibilityMenu() ));
 }
 
 MainWindow::~MainWindow()
@@ -930,10 +932,29 @@ void MainWindow::my_on_actionPaste_Event_triggered()
     ui->eventDatabaseWidget->eventTableView()->pasteEvents( app().clipboard()->mimeData(), m_project.eventDatabase()->rowCount(), Qt::CopyAction );
 }
 
+#include "Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h"
+void MainWindow::createAttributeVisibilityMenu()
+{
+    QMenu* menu = ui->menuVisible_attributes;
 
+    for (int i = 0; i < m_project.songDatabase()->attributeKeys().length(); ++i )
+    {
+        QString name = m_project.songDatabase()->attributeKeys()[i];
+        QString editorType;
+        SongDatabase::editorTypeAndHeaderLabel( name, editorType, name );
+        QAction* action = menu->addAction( name );
+        action->setCheckable( true );
+        action->setChecked( m_project.songDatabase()->attributeVisible(i) );
 
+        connect( action, &QAction::triggered, [this, i](bool visible)
+        {
+            app().pushCommand( new SongDatabaseToggleAttributeVisibility( m_project.songDatabase(), i, visible ) );
+        });
 
+        connect( menu, SIGNAL(aboutToHide()), action, SLOT(deleteLater()) );
+    }
 
+}
 
 
 

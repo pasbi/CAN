@@ -267,6 +267,13 @@
     <property name="title">
      <string>Songs</string>
     </property>
+    <widget class="QMenu" name="menuVisible_attributes">
+     <property name="title">
+      <string>Visible attributes ...</string>
+     </property>
+     <addaction name="separator"/>
+    </widget>
+    <addaction name="menuVisible_attributes"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>

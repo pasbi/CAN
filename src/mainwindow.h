@@ -81,6 +81,8 @@ private slots:
     void my_on_actionCopy_Event_triggered();
     void my_on_actionPaste_Event_triggered();
 
+    void createAttributeVisibilityMenu();
+
 
 private:
     void setupAttachmentMenu();

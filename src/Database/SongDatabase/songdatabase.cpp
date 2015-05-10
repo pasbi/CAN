@@ -16,6 +16,14 @@ SongDatabase::SongDatabase(Project *project) :
 {
 }
 
+
+void SongDatabase::initAttributes()
+{
+    appendColumn(tr("Title"));
+    appendColumn(tr("Combo:Artist"));
+    appendColumn(tr("Date:Date Added"));
+}
+
 int SongDatabase::columnCount(const QModelIndex &parent) const
 {
     assert(!parent.isValid());
@@ -28,7 +36,7 @@ int SongDatabase::rowCount(const QModelIndex &parent) const
     return m_songs.length();
 }
 
-void editorTypeAndHeaderLabel( const QString & encoding, QString & editorType, QString & attributeValue )
+void SongDatabase::editorTypeAndHeaderLabel( const QString & encoding, QString & editorType, QString & attributeValue )
 {
     // "a:b"        -> "a", "b"
     // "a"          -> "", "a"
@@ -68,7 +76,6 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
     switch (role)
     {
     case Qt::DisplayRole:
-        return m_songs[index.row()]->attribute(index.column());
     case Qt::EditRole:
         return m_songs[index.row()]->attribute(index.column());
     default:
@@ -111,7 +118,12 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
 Qt::ItemFlags SongDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
-    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
+    Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
+    if (index.column() != 2)
+    {
+        flags |= Qt::ItemIsEditable;
+    }
+    return flags;
 }
 
 bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -268,13 +280,13 @@ Song* SongDatabase::songAtIndex(const QModelIndex &index) const
     }
 }
 
-void SongDatabase::insertColumn(const int section, const QString &label)
+void SongDatabase::insertColumn(const int section, const AttributeKey &label)
 {
     m_tmpColumnNameBuffer.append(label);
     assert( insertColumns(section, 1, QModelIndex()) );
 }
 
-void SongDatabase::appendColumn(const QString &label)
+void SongDatabase::appendColumn(const AttributeKey &label)
 {
     insertColumn( columnCount(), label );
 }
@@ -320,7 +332,7 @@ QJsonObject SongDatabase::toJsonObject() const
     QJsonArray attributeKeys;
     for (int i = 0; i < m_attributeKeys.size(); ++i)
     {
-        attributeKeys.append(m_attributeKeys[i]);
+        attributeKeys.append(m_attributeKeys[i].toJson());
     }
     json.insert("attributekeys", attributeKeys);
 
@@ -344,8 +356,9 @@ bool SongDatabase::restoreFromJsonObject(const QJsonObject &object)
     m_attributeKeysToRestore.clear();
     for (const QJsonValue & val : attributekeys )
     {
-        m_attributeKeysToRestore.append(val.toString());
+        m_attributeKeysToRestore.append(AttributeKey::fromJson(val.toObject()));
     }
+
 
     return m_numSongsToRestore >= 0;
 }
@@ -397,12 +410,6 @@ bool SongDatabase::loadFrom(const QString &path)
 
     emit attachmentAdded( -1 );
     return success;
-}
-
-void SongDatabase::initAttributes()
-{
-    appendColumn(tr("Song"));
-    appendColumn(tr("Combo:Artist"));
 }
 
 void SongDatabase::reset(bool initialize)
@@ -522,5 +529,27 @@ QModelIndex SongDatabase::indexOfSong(const Song *song) const
     assert( row >= 0 );
 
     return createIndex( row, 0 );
+}
+
+QStringList SongDatabase::attributeKeys() const
+{
+    QStringList keys;
+    for (const AttributeKey & key : m_attributeKeys)
+    {
+        keys << key;
+    }
+    return keys;
+}
+
+bool SongDatabase::attributeVisible(int i)
+{
+    return m_attributeKeys[i].visible;
+}
+
+void SongDatabase::setAttributeVisible(int i, bool visible)
+{
+    beginResetModel();
+    m_attributeKeys[i].visible = visible;
+    endResetModel();
 }
 

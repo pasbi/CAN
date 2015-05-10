@@ -6,6 +6,7 @@
 #include "Attachments/attachment.h"
 #include <QVariantMap>
 #include "song.h"
+#include <QDateTime>
 
 class SongDatabase;
 class Song : public QObject, public Taggable
@@ -31,7 +32,7 @@ public:
     //
     /////////////////////////////////////////////////
 private:
-    QVariantList m_attributes;
+    QVariantList m_attributes;      // Title, Artist, CreationDateTime, [User data ...]
 public:
     /**
      * @brief attribute return attribute at index or QVariant if index does not exist.
@@ -55,6 +56,8 @@ public:
     void removeAttribute(int index);
     QString title() const;
     QString artist() const;
+    QDateTime creationTime() const;
+
 signals:
     void attributesEdited();
 

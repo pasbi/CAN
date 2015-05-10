@@ -1,14 +1,14 @@
 #include "songdatabasenewattributecommand.h"
 
-SongDatabaseNewAttributeCommand::SongDatabaseNewAttributeCommand(SongDatabase *songDatabase, const QString &attributeKey) :
+SongDatabaseNewAttributeCommand::SongDatabaseNewAttributeCommand(SongDatabase *songDatabase, const SongDatabase::AttributeKey &attributeKey) :
     SongDatabaseCommand( songDatabase ),
-    m_label(attributeKey)
+    m_key(attributeKey)
 {
 }
 
 void SongDatabaseNewAttributeCommand::redo()
 {
-    database()->appendColumn(m_label);
+    database()->appendColumn(m_key);
 }
 
 void SongDatabaseNewAttributeCommand::undo()
