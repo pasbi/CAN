@@ -25,7 +25,6 @@ public:
     double duration() const;
     double pitch() const { return m_pitch; }
     double tempo() const { return m_tempo; }
-    double bpm() const { return m_bpm; }
 
     void setSection( const Section* section = NULL ) { m_section = section; }
     const Section* currentSection() const { return m_section; }
@@ -45,7 +44,6 @@ private:
     double m_pitch = 0;
     double m_tempo = 1;
     double m_offset = 0;
-    double m_bpm = 0;
     QAudioOutput* m_audioOutput = NULL;
     void seek();
 
