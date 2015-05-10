@@ -138,6 +138,7 @@ public:
     QString editorType( const QModelIndex & index ) const;
     bool attributeVisible( int i );
     void setAttributeVisible( int i, bool visible );
+    bool allowDeleteColumn(int i);
 private:
 
     QList<AttributeKey>  m_attributeKeys;

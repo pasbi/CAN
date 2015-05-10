@@ -159,7 +159,6 @@ void Song::setAttribute(int index, const QVariant &data)
     {
         m_attributes[index] = data;
     }
-
 }
 
 void Song::insertAttribute(int index, const QVariant &data)

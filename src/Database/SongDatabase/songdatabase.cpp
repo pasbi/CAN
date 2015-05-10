@@ -19,9 +19,16 @@ SongDatabase::SongDatabase(Project *project) :
 
 void SongDatabase::initAttributes()
 {
+    //@see allowDeleteColumn
     appendColumn(tr("Title"));
     appendColumn(tr("Combo:Artist"));
     appendColumn(tr("Date:Date Added"));
+}
+
+bool SongDatabase::allowDeleteColumn(int i)
+{
+    //@see initAttributes
+    return i >= 3;
 }
 
 int SongDatabase::columnCount(const QModelIndex &parent) const

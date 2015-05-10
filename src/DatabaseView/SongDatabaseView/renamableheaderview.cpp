@@ -8,6 +8,7 @@
 #include "util.h"
 #include "global.h"
 #include "application.h"
+#include <QMessageBox>
 
 RenamableHeaderView::RenamableHeaderView(Qt::Orientation orientation, SongTableView *parent) :
     QHeaderView(orientation, parent)
@@ -88,7 +89,18 @@ void RenamableHeaderView::setUpContextMenu(QMenu *menu)
     QString key = database->attributeKeys()[section];
 
     Util::addAction(menu, QString(tr("Delete Attribute %1")).arg(key), [this, database, section](){
-        app().pushCommand( new SongDatabaseRemoveColumnCommand( database, section ) );
+        if (parent()->model()->allowDeleteColumn(section))
+        {
+            app().pushCommand( new SongDatabaseRemoveColumnCommand( database, section ) );
+        }
+        else
+        {
+            QMessageBox::information( this,
+                                      tr("Cannot remove column"),
+                                      tr("Predefined rows cannot be deleted. You may hide or rename it."),
+                                      QMessageBox::Ok,
+                                      QMessageBox::NoButton );
+        }
     });
 
     Util::addAction(menu, tr("Add Attribute"), [this, database]() {

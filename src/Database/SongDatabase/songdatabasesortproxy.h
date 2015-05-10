@@ -16,10 +16,6 @@ public:
 protected:
     bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const;
 
-
-
-
-
 };
 
 #endif // SONGDATABASESORTPROXY_H
