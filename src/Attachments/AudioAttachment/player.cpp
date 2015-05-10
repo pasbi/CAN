@@ -48,7 +48,6 @@ void Player::open( const QString &filename )
     m_audioOutput->setNotifyInterval( 200 );    // sync
 
     connect( m_audioOutput, SIGNAL(notify()), this, SLOT(sync()) );
-    connect( m_audioOutput, SIGNAL(notify()), this, SIGNAL(bpmChanged()) );
 
     double pos = position();
     emit positionChanged( pos );
