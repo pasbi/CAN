@@ -12,8 +12,6 @@ public:
 
     void setSourceModel(SongDatabase *sourceModel) { QSortFilterProxyModel::setSourceModel(sourceModel); }
     SongDatabase* sourceModel() const { return qobject_assert_cast<SongDatabase*>( QSortFilterProxyModel::sourceModel() ); }
-
-//    bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 };
 
 #endif // SONGDATABASESORTPROXY_H

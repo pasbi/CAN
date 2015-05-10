@@ -5,8 +5,6 @@
 #include <QBuffer>
 #include <QAudioFormat>
 #include <soundtouch/SoundTouch.h>
-#include <soundtouch/BPMDetect.h>
-
 
 extern "C"
 {
