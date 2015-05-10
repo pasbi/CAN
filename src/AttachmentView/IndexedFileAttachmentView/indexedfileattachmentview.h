@@ -20,10 +20,9 @@ public:
 
     void updateAttachmentView();
 
-protected slots:
-    virtual void open() = 0;
 private:
     Ui::IndexedFileAttachmentView *ui;
+
 private slots:
     void updateStackedWidget();
     void chooseFile();

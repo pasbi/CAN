@@ -168,7 +168,7 @@ double Buffer::position() const
 {
     if (m_codecContext)
     {
-        qint64 pos = m_buffer.pos() / 2;
+        qint64 pos = positionInBytes() / 2;
         pos /= m_codecContext->channels;    // pos in samples per channel
         double dpos = pos / (double) m_codecContext->sample_rate; // pos in seconds
         return dpos + m_offset;
@@ -177,6 +177,11 @@ double Buffer::position() const
     {
         return -1;
     }
+}
+
+qint64 Buffer::positionInBytes() const
+{
+    return m_buffer.pos();
 }
 
 
@@ -249,7 +254,7 @@ typedef union
     } c;
 } CharShortConverter;
 
-void charToFloat( float& f, char c1, char c2 )
+void BufferConverters::charToFloat( float& f, char c1, char c2 )
 {
     CharShortConverter c;
     c.c.c1 = c1;
@@ -257,7 +262,7 @@ void charToFloat( float& f, char c1, char c2 )
     f = c.s / 32768.f;
 }
 
-void floatToChar( char& c1, char& c2, float f)
+void BufferConverters::floatToChar( char& c1, char& c2, float f)
 {
     CharShortConverter c;
     c.s = f * 32768.f;
@@ -265,7 +270,7 @@ void floatToChar( char& c1, char& c2, float f)
     c2 = c.c.c2;
 }
 
-void charToFloat( float* f, const char* c, int n )
+void BufferConverters::charToFloat( float* f, const char* c, int n )
 {
     for (int i = 0; i < n; i++)
     {
@@ -273,7 +278,7 @@ void charToFloat( float* f, const char* c, int n )
     }
 }
 
-void charToFloatInterleaved( float* f, const char* rc, const char* lc, int n )
+void BufferConverters::charToFloatInterleaved( float* f, const char* rc, const char* lc, int n )
 {
     for (int i = 0; i < n; i++)
     {
@@ -282,7 +287,7 @@ void charToFloatInterleaved( float* f, const char* rc, const char* lc, int n )
     }
 }
 
-void floatToChar( char* c, const float* f, int n )
+void BufferConverters::floatToChar( char* c, const float* f, int n )
 {
     for (int i = 0; i < n; ++i )
     {
@@ -333,17 +338,17 @@ bool Buffer::Decoder::decode()
                     if (m_codecContext->channels == 1)
                     {
                         float* buffer = new float[n];
-                        charToFloat( buffer, (char*) m_frame->extended_data[0], n );
+                        BufferConverters::charToFloat( buffer, (char*) m_frame->extended_data[0], n );
                         m_soundTouch.putSamples( buffer, n );
                         delete[] buffer;
                     }
                     else if (m_codecContext->channels == 2)
                     {
                         float* buffer = new float[2*n];
-                        charToFloatInterleaved( buffer,
-                                                (char*) m_frame->extended_data[0],
-                                                (char*) m_frame->extended_data[1],
-                                                n                                          );
+                        BufferConverters::charToFloatInterleaved( buffer,
+                                                                  (char*) m_frame->extended_data[0],
+                                                                  (char*) m_frame->extended_data[1],
+                                                                  n                                          );
                         m_soundTouch.putSamples( buffer, n );
                         delete[] buffer;
                     }
@@ -369,7 +374,7 @@ bool Buffer::Decoder::decode()
                     nSamples = m_codecContext->channels * m_soundTouch.receiveSamples(sampleBuffer, buffSizeSamples);
 
                     char charBuffer[BUFF_SIZE * 2];
-                    floatToChar( charBuffer, sampleBuffer, nSamples );
+                    BufferConverters::floatToChar( charBuffer, sampleBuffer, nSamples );
                     m_dest->append( charBuffer, nSamples * 2 );
                 } while (nSamples != 0);
             }
@@ -390,17 +395,17 @@ bool Buffer::Decoder::decode()
             if (m_codecContext->channels == 1)
             {
                 float* buffer = new float[n];
-                charToFloat( buffer, (char*) m_frame->extended_data[0], n );
+                BufferConverters::charToFloat( buffer, (char*) m_frame->extended_data[0], n );
                 m_soundTouch.putSamples( buffer, n );
                 delete[] buffer;
             }
             else if (m_codecContext->channels == 2)
             {
                 float* buffer = new float[2*n];
-                charToFloatInterleaved( buffer,
-                                        (char*) m_frame->extended_data[0],
-                                        (char*) m_frame->extended_data[1],
-                                        n                                          );
+                BufferConverters::charToFloatInterleaved( buffer,
+                                                            (char*) m_frame->extended_data[0],
+                                                            (char*) m_frame->extended_data[1],
+                                                            n                                          );
                 m_soundTouch.putSamples( buffer, n );
                 delete[] buffer;
             }
@@ -426,7 +431,7 @@ bool Buffer::Decoder::decode()
         nSamples = m_codecContext->channels * m_soundTouch.receiveSamples(sampleBuffer, buffSizeSamples);
 
         char charBuffer[BUFF_SIZE * 2];
-        floatToChar( charBuffer, sampleBuffer, nSamples );
+        BufferConverters::floatToChar( charBuffer, sampleBuffer, nSamples );
         m_dest->append( charBuffer, nSamples * 2 );
     } while (nSamples != 0);
 

@@ -38,27 +38,12 @@ void IndexedFileAttachmentView::setWidget(QWidget *widget)
 
 void IndexedFileAttachmentView::polish()
 {
-//    QStringList endings = attachment<IndexedFileAttachment>()->acceptedEndings();
-
-//    ui->advancedFileChooser->setFilterProperties( attachment()->song(), endings );
-
-//    connect( ui->advancedFileChooser, &AdvancedFileChooser::itemSelected, [this](QByteArray hash)
-//    {
-//        Command* c = new FileAttachmentCommandSetHashCommand( attachment<IndexedFileAttachment>(), hash );
-//        app().pushCommand( c );
-//    });
-
-//    ui->advancedFileChooser->blockSignals(true);    // do not create a command (see connect above)
-//    ui->advancedFileChooser->setHash( attachment<IndexedFileAttachment>()->hash() );
-//    open();
-//    attachment<IndexedFileAttachment>()->open();
-//    ui->advancedFileChooser->blockSignals(false);
-
     connect( attachment<IndexedFileAttachment>(), &IndexedFileAttachment::hashChanged, [this]()
     {
-        open();
+        attachment<IndexedFileAttachment>()->open();
         updateStackedWidget();
     });
+    attachment<IndexedFileAttachment>()->open();
     updateStackedWidget();
 }
 

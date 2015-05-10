@@ -5,6 +5,7 @@
 #include <QBuffer>
 #include <QAudioFormat>
 #include <soundtouch/SoundTouch.h>
+#include <soundtouch/BPMDetect.h>
 
 
 extern "C"
@@ -27,6 +28,7 @@ public:
 
     double duration() const;
     double position() const;
+    qint64 positionInBytes() const;
     static const double FACTOR;
 
     void stop();
@@ -59,6 +61,7 @@ private:
         void end();
         bool isInterruptionRequested() { return m_interruptionRequested; }
 
+
     protected:
         void run();
 
@@ -84,5 +87,14 @@ private:
     } * m_decoder = NULL;
 
 };
+
+namespace BufferConverters
+{
+void charToFloat( float& f, char c1, char c2 );
+void floatToChar( char& c1, char& c2, float f);
+void charToFloat( float* f, const char* c, int n );
+void charToFloatInterleaved( float* f, const char* rc, const char* lc, int n );
+void floatToChar( char* c, const float* f, int n );
+}
 
 #endif // BUFFER_H

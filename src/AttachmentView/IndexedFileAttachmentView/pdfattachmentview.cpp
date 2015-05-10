@@ -36,8 +36,8 @@ PDFAttachmentView::PDFAttachmentView(QWidget *parent) :
     connect(ui->buttonPreviousPage, SIGNAL(clicked()),              this, SLOT(on_buttonPreviousPage_clicked())     );
     connect(ui->spinBoxPage,        SIGNAL(valueChanged(int)),      this, SLOT(on_spinBoxPage_valueChanged(int))    );
 
+    polish();
     QTimer::singleShot(1, this, SLOT(open()));  // wait until scroll area has appropriate size
-
 }
 
 PDFAttachmentView::~PDFAttachmentView()

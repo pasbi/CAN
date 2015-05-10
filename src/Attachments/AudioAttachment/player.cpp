@@ -48,6 +48,7 @@ void Player::open( const QString &filename )
     m_audioOutput->setNotifyInterval( 200 );    // sync
 
     connect( m_audioOutput, SIGNAL(notify()), this, SLOT(sync()) );
+    connect( m_audioOutput, SIGNAL(notify()), this, SIGNAL(bpmChanged()) );
 
     double pos = position();
     emit positionChanged( pos );
@@ -89,9 +90,12 @@ void Player::seek()
         m_audioOutput->start( &m_buffer.buffer() );
         sync();
     }
+    else
+    {
+        qWarning() << "no audioOutput";
+    }
 }
 
-//TODO bmp detection?
 void Player::seek(double pitch, double tempo, double second)
 {
     m_pitch = pitch;
@@ -126,11 +130,12 @@ double Player::checkSectionAndGetPosition()
     return pos;
 }
 
+
 void Player::sync()
 {
+    // sync
     m_currentPosition = m_buffer.position();
 }
-
 
 
 
