@@ -197,8 +197,14 @@ void SetlistWidget::on_buttonExportPDF_clicked()
                                                             tr("*.pdf")             );
         if (!filename.isEmpty())
         {
+            if (!filename.endsWith(".pdf"))
+            {
+                filename.append(".pdf");
+            }
+
             QFileInfo fi(filename);
-            if (!fi.isWritable())
+
+            if (fi.exists() && !fi.isReadable())
             {
                 QMessageBox::warning( this,
                                       tr("Cannot write"),

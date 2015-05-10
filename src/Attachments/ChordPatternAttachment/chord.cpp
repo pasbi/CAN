@@ -205,7 +205,8 @@ bool Chord::parse(QString text)
     m_base += 12;
     m_base %= 12;
 
-    if ( baseChar.isLower() || ifStartsWithTake( text, "m" ) )
+    if ( baseChar.isLower()
+         || (!text.startsWith("min") && !text.startsWith("maj") && ifStartsWithTake( text, "m" ) ) )
     {
         m_isMinor = true;
     }
@@ -215,6 +216,7 @@ bool Chord::parse(QString text)
     }
 
     m_attachment = text;
+    qDebug() << text << baseChar;
     if (QRegExp( CHORD_EXTENSION_PATTERN ).exactMatch( m_attachment ))
     {
         return true;
