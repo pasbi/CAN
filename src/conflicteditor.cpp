@@ -24,8 +24,6 @@ ConflictEditor::ConflictEditor(const QList<File> &conflictingFiles, QWidget *par
     connect( ui->listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(selectConflict()) );
     connect( ui->buttonOk,     SIGNAL(clicked()), this, SLOT(accept()));
     connect( ui->buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
-
-
 }
 
 ConflictEditor::~ConflictEditor()

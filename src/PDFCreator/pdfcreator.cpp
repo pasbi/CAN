@@ -29,6 +29,16 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TR("dd.MM.yyyy, hh:mm"),
                        ConfigurationItemOptions::LineEditOptions( TR("Date time pattern") ) );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       LineSpacing,
+                       "Line spacing",
+                       1,
+                       ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" ) );
+CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       ChordLineSpacing,
+                       "Chord Line spacing",
+                       2,
+                       ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" ) );
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFSize,
                        "Page size",
                        pageSizeToInt( QPdfWriter::A4 ),
@@ -154,14 +164,7 @@ void PDFCreator::insertTableOfContentsStub()
 
 void PDFCreator::paintSetlist()
 {
-
     nextPage();
-//    QFont font = painter.font();
-//    font.setPointSizeF( font.pointSize() pt );
-//    painter.scale( scale(), scale() );
-//    painter.setFont( font );
-
-
     paintTitle();
     insertTableOfContentsStub();
 
@@ -407,27 +410,91 @@ bool pageBreak( const QStringList & lines, const int currentLine, const double h
     }
 }
 
+void configurePainter( QPainter* painter )
+{
+    QFont font = painter->font();
+    font.setFamily( "Courier" );
+    painter->setFont( font );
+}
+
+//TODO
+/*
+ * option to begin new songs on even/odd pages only
+ * lines may be to long
+ * pdf exporter should propose meaninigfull filename
+ */
 void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* attachment )
 {
+    painter()->save();
+    configurePainter( painter() );
     QStringList lines = attachment->chordPattern().split("\n", QString::KeepEmptyParts);
 
 
     double y = topMargin();
-    double width = pageRect().width() - leftMargin() - rightMargin();
     double height = painter()->fontMetrics().height();
     for (int i = 0; i < lines.length(); ++i)
     {
+        QString line = lines[i];
+        QStringList unusedA, unusedB;
+        bool isChordLine = Chord::parseLine( line , unusedA, unusedB );
+        if (i != 0)
+        {
+            if (isChordLine)
+            {
+                y += height * config["ChordLineSpacing"].toDouble();
+            }
+            else
+            {
+                y += height * config["LineSpacing"].toDouble();
+            }
+        }
+
         if ( pageBreak( lines,
                         i,
                         pageRect().height() - bottomMargin() - y,
                         *painter()                                   ))
         {
+            painter()->restore();
             nextPage();
+            painter()->save();
+            configurePainter( painter() );
             y = topMargin();
         }
-        painter()->drawText( QRectF( leftMargin(), y, width, height ), lines[i] );
-        y += height;
+
+        QRegExp regexp( Chord::SPLIT_PATTERN );
+        QStringList tokens;
+        int lastJ = 0;
+        int j = 0;
+        while ( (j = regexp.indexIn(line, j)) >= 0 )
+        {
+            int n;
+            n = regexp.matchedLength();
+            tokens << line.mid(lastJ, j - lastJ);
+            tokens << line.mid(j, n);
+            lastJ = j + 1;
+            j += n;
+        }
+        tokens << line.mid(lastJ);
+
+        int pos = leftMargin();
+        for (const QString & token : tokens)
+        {
+            painter()->save();
+
+            if (isChordLine && Chord(token).isValid())
+            {
+                QFont font = painter()->font();
+                font.setBold( true );
+                painter()->setFont( font );
+            }
+            int w = painter()->fontMetrics().width( token );
+            painter()->drawText( QRectF( pos, y, pos + w, height ), token );
+            pos += w;
+
+            painter()->restore();
+        }
     }
+    painter()->restore();
 }
 
 

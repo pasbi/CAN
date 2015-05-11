@@ -26,7 +26,6 @@ Song::~Song()
 // codec QVariant as string to prevent this.
 QString encodeAttribute( const QVariant& variant )
 {
-    qDebug() << "attributre " << variant.toString();
     return QString("%1,%2").arg(variant.type()).arg(variant.toString());
 }
 

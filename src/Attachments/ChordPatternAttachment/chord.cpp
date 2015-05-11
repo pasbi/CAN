@@ -134,7 +134,7 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
     }
 
     const int numChords = chords.length();
-    return ((float) numChords * numChords / numToken) >= 0.5;
+    return ((float) numChords * numChords / numToken) >= 0.7;
 }
 
 int parseBase( const QChar & c )
@@ -216,7 +216,6 @@ bool Chord::parse(QString text)
     }
 
     m_attachment = text;
-    qDebug() << text << baseChar;
     if (QRegExp( CHORD_EXTENSION_PATTERN ).exactMatch( m_attachment ))
     {
         return true;

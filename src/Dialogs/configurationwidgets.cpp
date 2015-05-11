@@ -66,9 +66,17 @@ DEFN_CONFIG_CLASS( QSpinBox,
                    static_cast< void(QSpinBox::*)(int) >(&QSpinBox::valueChanged),
                    emit valueChanged( m_edit->value() ),
                    m_edit->setValue( m_item->actualValue().toInt() ),
-                   m_edit->setMinimum( m_item->options().min_i() ); \
-                   m_edit->setMaximum( m_item->options().max_i() ); \
+                   m_edit->setMinimum( m_item->options().min_i() );
+                   m_edit->setMaximum( m_item->options().max_i() );
                    m_edit->setSingleStep( m_item->options().step_i() ); )
+
+DEFN_CONFIG_CLASS( QDoubleSpinBox,
+                   static_cast< void(QDoubleSpinBox::*)(double) >(&QDoubleSpinBox::valueChanged),
+                   emit valueChanged( m_edit->value() ),
+                   m_edit->setValue( m_item->actualValue().toDouble() ),
+                   m_edit->setMinimum( m_item->options().min_d() );
+                   m_edit->setMaximum( m_item->options().max_d() );
+                   m_edit->setSingleStep( m_item->options().step_d() ); )
 
 // some classes cannot be created with the fancy template above...
 class ConfigAdvancedDoubleSlider : public ConfigurationWidget
@@ -154,12 +162,13 @@ ConfigurationWidget* ConfigurationWidget::create( ConfigurationItem *item, QWidg
         return new ConfigQLineEdit( item, parent );
     case ConfigurationItemOptions::SpinBox:
         return new ConfigQSpinBox( item, parent );
+    case ConfigurationItemOptions::DoubleSpinBox:
+        return new ConfigQDoubleSpinBox( item, parent );
 
     //TODO implementation missing:
     case ConfigurationItemOptions::PathEdit:
     case ConfigurationItemOptions::Slider:
     case ConfigurationItemOptions::DoubleSlider:
-    case ConfigurationItemOptions::DoubleSpinBox:
     case ConfigurationItemOptions::AdvancedSlider:
     case ConfigurationItemOptions::RadioButtons:
     case ConfigurationItemOptions::EditableComboBox:
