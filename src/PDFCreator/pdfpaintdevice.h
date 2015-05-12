@@ -12,20 +12,19 @@ public:
     void save(const QString & filename) const;
 
     /**
-     * @brief activatePage activates the nth page. If this page does not exist,
-     *  it will be created. So after calling this function, numPages will be greater n.
-     * @note PDFPaintDevice::painter() will paint on the active page.
+     * @brief activatePage activates the nth page. The page must exist.
      * @see PDFPaintDevice::painter()
      * @param n the index of the wanted page.
      */
     void activatePage(int n);
 
     /**
-     * @brief nextPage activates the next page. Same as activatePage( numPages() );
+     * @brief nextPage inserts an empty page after current and activates it.
      */
-    void nextPage() { activatePage( numPages() ); }
+    void nextPage( PicturePainter::Flag flag );
     int numPages( ) const { return m_pages.size(); }
     int currentPageNumber() const;
+    PicturePainter* currentPage() const;
 
     /**
      * @brief painter returns a painter that paints on the currently active page.
@@ -38,7 +37,7 @@ public:
      *  will be created to prevent holes.
      * @param i
      */
-    void insertEmptyPage( int i );
+    void insertEmptyPage(int i , PicturePainter::Flag flag);
     QSizeF size() const { return QSizeF( UNIT, UNIT * aspectRatio() ); }
     double aspectRatio() const { return m_size.height() / m_size.width(); }
     double scale() const;
@@ -51,8 +50,8 @@ private:
     QSizeF m_size;
     QFont m_defaultFont;
 
-    PicturePainter* newPicturePainter() const;
-    QPainter* m_currentPainter = NULL;
+    PicturePainter* newPicturePainter(PicturePainter::Flag flag) const;
+    PicturePainter* m_currentPainter = NULL;
 
     static const double UNIT;
 };

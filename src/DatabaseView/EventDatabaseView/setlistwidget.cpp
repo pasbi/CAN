@@ -186,15 +186,19 @@ Setlist* SetlistWidget::setlist() const
     return ui->listView->model();
 }
 
+
 void SetlistWidget::on_buttonExportPDF_clicked()
 {
     Setlist* currentSetlist = setlist();
     if (currentSetlist)
     {
-        QString filename = QFileDialog::getSaveFileName(    this,
-                                                            tr("Export PDF ..."),
-                                                            config["DefaultPDFSavePath"].toString(),
-                                                            tr("*.pdf")             );
+        QString filename = currentSetlist->event()->label()
+                + "_"
+                + currentSetlist->event()->beginning().date().toString( PDFCreator::config["DateTimeFormat"].toString() );
+        filename = QFileDialog::getSaveFileName(    this,
+                                                    tr("Export PDF ..."),
+                                                    QDir::home().absoluteFilePath( filename ),
+                                                    tr("*.pdf")             );
         if (!filename.isEmpty())
         {
             if (!filename.endsWith(".pdf"))

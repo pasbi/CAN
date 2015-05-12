@@ -73,8 +73,21 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                                                                                 <<  "Letter"
                                                                                 <<  "Tabloid" ) );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       AlignSongs,
+                       "Align songs: ",
+                       0,
+                       ConfigurationItemOptions::ComboBoxOptions( QStringList() << "No alignment"
+                                                                                << "Odd pages"
+                                                                                << "Even pages" ) );
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TableOfContents,
                        "Table of Contents",
+                       true,
+                       ConfigurationItemOptions::CheckboxOptions() );
+
+CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       PageNumbers,
+                       "Page Numbers",
                        true,
                        ConfigurationItemOptions::CheckboxOptions() );
 
@@ -121,7 +134,29 @@ PDFCreator::PDFCreator( const Setlist *setlist ) :
     m_pdfPainter->setDefaultFont( font );
 
     paintSetlist();
-    decoratePageNumbers();
+
+    if ( config["TableOfContents"].toBool() )
+    {
+        paintTableOfContents( );
+    }
+
+    switch (config["AlignSongs"].toInt())
+    {
+    case 0:
+        // do not align songs;
+        break;
+    case 1:
+        alignSongs( 0 );
+        break;
+    case 2:
+        alignSongs( 1 );
+        break;
+    }
+
+    if ( config["PageNumbers"].toBool() )
+    {
+        decoratePageNumbers();
+    }
 }
 
 
@@ -132,11 +167,11 @@ PDFCreator::~PDFCreator()
     m_pdfPainter = NULL;
 }
 
-void PDFCreator::nextPage()
+void PDFCreator::nextPage(PicturePainter::Flag flag )
 {
     m_additionalTopMargin = 0;
     assert( m_pdfPainter );
-    m_pdfPainter->nextPage();
+    m_pdfPainter->nextPage( flag );
 }
 
 QPainter* PDFCreator::painter()
@@ -164,18 +199,13 @@ void PDFCreator::insertTableOfContentsStub()
 
 void PDFCreator::paintSetlist()
 {
-    nextPage();
+    nextPage( PicturePainter::NothingSpecial );
     paintTitle();
     insertTableOfContentsStub();
 
     for ( const Song* song : m_setlist->songs() )
     {
         paintSong( song );
-    }
-
-    if ( true )
-    {
-        paintTableOfContents( );
     }
 }
 
@@ -208,8 +238,7 @@ void PDFCreator::paintTableOfContents()
     const double dotsSpace = 1;
     const double lineHeight = painter()->fontMetrics().height();
 
-    m_pdfPainter->insertEmptyPage( m_tableOfContentsPage );
-    m_pdfPainter->activatePage( m_tableOfContentsPage );
+    m_pdfPainter->insertEmptyPage( m_tableOfContentsPage, PicturePainter::TableOfContentsStartsHere );
 
     paintHeadline( "Table of Content" );
 
@@ -261,7 +290,7 @@ void PDFCreator::paintTableOfContents()
                 m_tableOfContentsPage++;
                 m_tableOfContentsNumPages++;
                 painter()->restore();
-                m_pdfPainter->insertEmptyPage( m_tableOfContentsPage );
+                m_pdfPainter->insertEmptyPage( m_tableOfContentsPage, PicturePainter::NothingSpecial );
                 painter()->save();
                 m_additionalTopMargin = 0; // must be set explicitly since next() is not called but insertPage.
                 y = topMargin();
@@ -271,7 +300,7 @@ void PDFCreator::paintTableOfContents()
         painter()->restore();
     }
 
-    m_pdfPainter->activatePage( currentPage + m_tableOfContentsNumPages );
+//    m_pdfPainter->activatePage( currentPage + m_tableOfContentsNumPages ); //TODO required?
 }
 
 QString labelSong( const Song* song )
@@ -295,7 +324,7 @@ QString labelSong( const Song* song )
 
 void PDFCreator::paintSong(const Song *song)
 {
-    nextPage();
+    nextPage( PicturePainter::SongStartsHere );
     QString headline = labelSong( song );
     m_tableOfContents.append( headline, 1, m_pdfPainter->currentPageNumber() + 1 );
     paintHeadline( headline );
@@ -306,7 +335,7 @@ void PDFCreator::paintSong(const Song *song)
     {
         if (i++ != 0)
         {
-            nextPage();
+            nextPage( PicturePainter::NothingSpecial );
         }
         paintAttachment( attachment );
     }
@@ -368,7 +397,7 @@ void PDFCreator::paintPDFAttachment( PDFAttachment* attachment )
         {
             if (i != 0)
             {
-                nextPage();
+                nextPage( PicturePainter::NothingSpecial );
             }
             painter()->save();
             QSizeF pageSize = doc->page(i)->pageSizeF();
@@ -417,12 +446,6 @@ void configurePainter( QPainter* painter )
     painter->setFont( font );
 }
 
-//TODO
-/*
- * option to begin new songs on even/odd pages only
- * lines may be to long
- * pdf exporter should propose meaninigfull filename
- */
 void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* attachment )
 {
     painter()->save();
@@ -455,7 +478,7 @@ void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* atta
                         *painter()                                   ))
         {
             painter()->restore();
-            nextPage();
+            nextPage( PicturePainter::NothingSpecial );
             painter()->save();
             configurePainter( painter() );
             y = topMargin();
@@ -495,6 +518,46 @@ void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* atta
         }
     }
     painter()->restore();
+}
+
+PicturePainter* PDFCreator::currentPage() const
+{
+    return m_pdfPainter->currentPage();
+}
+
+int lengthOfSong( int start, PDFPaintDevice* pdfPainter )
+{
+    int currentPage = pdfPainter->currentPageNumber();
+
+    int length = pdfPainter->numPages() - start;
+    for (int i = start + 1; i < pdfPainter->numPages(); ++i)
+    {
+        pdfPainter->activatePage( i );
+        if (pdfPainter->currentPage()->flag() == PicturePainter::SongStartsHere)
+        {
+            length = i - start;
+            break;
+        }
+    }
+    pdfPainter->activatePage( currentPage );
+    return length;
+}
+
+void PDFCreator::alignSongs(int remainder)
+{
+    for (int currentPageNum = 0; currentPageNum < m_pdfPainter->numPages(); ++currentPageNum)
+    {
+        m_pdfPainter->activatePage( currentPageNum );
+
+        if (    currentPage()->flag() == PicturePainter::SongStartsHere            // if song starts here
+             && currentPageNum % 2 != remainder                                    // if song starts on wrong page
+             && lengthOfSong( currentPageNum, m_pdfPainter ) % 2 == 0 )            // if song length is even. Else, optimizing beginning
+                                                                                   // will destroy end-optimum
+        {
+            m_pdfPainter->insertEmptyPage( currentPageNum, PicturePainter::NothingSpecial );
+            currentPageNum++;
+        }
+    }
 }
 
 

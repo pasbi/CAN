@@ -1,16 +1,18 @@
 #include "picturepainter.h"
+#include "global.h"
 
-PicturePainter::PicturePainter() :
-    QPainter()
+PicturePainter::PicturePainter(Flag flags) :
+    QPainter(),
+    m_flags( flags )
 {
     QPainter::begin( this );
 }
 
 PicturePainter::~PicturePainter()
 {
-    if (isActive())
+    if (QPainter::isActive())
     {
-        end();
+        QPainter::end();
     }
 }
 

@@ -20,9 +20,9 @@ PDFPaintDevice::~PDFPaintDevice()
     m_pages.clear();
 }
 
-PicturePainter* PDFPaintDevice::newPicturePainter() const
+PicturePainter* PDFPaintDevice::newPicturePainter(PicturePainter::Flag flag ) const
 {
-    PicturePainter* pp = new PicturePainter();
+    PicturePainter* pp = new PicturePainter( flag );
     pp->QPainter::scale( scale(), scale() );
     pp->QPainter::setFont( m_defaultFont );
     return pp;
@@ -31,21 +31,13 @@ PicturePainter* PDFPaintDevice::newPicturePainter() const
 
 void PDFPaintDevice::activatePage(int n)
 {
-    assert(n >= 0);
-    if (n >= m_pages.size())
-    {
-        for (int i = m_pages.size(); i <= n; ++i)
-        {
-            m_pages.append( newPicturePainter() );
-        }
-    }
-
+    assert(n >= 0 && n < m_pages.size());
     m_currentPainter = m_pages[n];
 }
 
-void PDFPaintDevice::insertEmptyPage(int i)
+void PDFPaintDevice::insertEmptyPage(int i, PicturePainter::Flag flag)
 {
-    m_pages.insert( i, newPicturePainter() );
+    m_pages.insert( i, newPicturePainter( flag ) );
     activatePage( i );
 }
 
@@ -53,10 +45,6 @@ QPainter *PDFPaintDevice::painter() const
 {
     return m_currentPainter;
 }
-
-#include <QLabel>
-#include <QThread>
-#include <QApplication>
 
 void PDFPaintDevice::save(const QString &filename) const
 {
@@ -105,6 +93,11 @@ int PDFPaintDevice::currentPageNumber() const
     return -1;
 }
 
+PicturePainter* PDFPaintDevice::currentPage() const
+{
+    return m_currentPainter;
+}
+
 void PDFPaintDevice::setDefaultFont(const QFont &font)
 {
     m_defaultFont = font;
@@ -114,3 +107,7 @@ void PDFPaintDevice::setDefaultFont(const QFont &font)
     }
 }
 
+void PDFPaintDevice::nextPage(PicturePainter::Flag flag)
+{
+    insertEmptyPage( currentPageNumber() + 1, flag );
+}

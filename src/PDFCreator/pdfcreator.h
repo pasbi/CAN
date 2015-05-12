@@ -35,6 +35,7 @@ private: // METHODES
     double rightMargin() const { return 10; }
     double topMargin() { return 5 + m_additionalTopMargin; }
     double bottomMargin() const { return 5; }
+    void alignSongs( int remainder );
 
     void decoratePageNumbers();
 
@@ -44,9 +45,11 @@ private: // METHODES
      */
     void insertTableOfContentsStub();
     QPainter *painter();
-    void nextPage();
+    void nextPage(PicturePainter::Flag flag);
     QRectF pageRect() const { return QRectF(QPointF(), m_pdfPainter->size()); }
     QRectF line( double y ) const { return QRectF(QPointF(0, y), QSizeF(m_pdfPainter->size().width(), 10)); }
+
+    PicturePainter* currentPage() const;
 
 private: // MEMBERS
     PDFPaintDevice* m_pdfPainter = NULL;

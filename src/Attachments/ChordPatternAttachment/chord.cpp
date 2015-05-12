@@ -170,6 +170,11 @@ bool ifStartsWithTake( QString & string, const QString & pattern )
     return false;
 }
 
+//TOOD
+// E...
+// (F#m)
+// (G#m)
+// are not correctly classified
 bool Chord::parse(QString text)
 {
     if (text.isEmpty())

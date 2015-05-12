@@ -230,13 +230,13 @@ public:
                  const ConfigurationItemOptions &   options );
 
     bool contains(const QString & key) const;
-    ConfigurationItem* item(const QString & key) { return m_items[key]; }
-    const ConfigurationItem* item(const QString & key) const { return m_items[key]; }
-    QVariant value( const QString & key ) const { return item(key)->actualValue(); }
-    QVariant operator[] ( const QString & key ) const { return item(key)->actualValue(); }
+    ConfigurationItem* item(const QString & key);
+    const ConfigurationItem* item(const QString & key) const;
+    QVariant value( const QString & key ) const;
+    QVariant operator[] ( const QString & key ) const;
 
     // do never return QVariant& (note the lacking const). always call ConfigurationItem::set.
-    void set( const QString & key, const QVariant & value ) { item(key)->set(value); }
+    void set( const QString & key, const QVariant & value );
 
     void reset();
     void apply();

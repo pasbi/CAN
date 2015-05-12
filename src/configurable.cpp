@@ -162,6 +162,38 @@ void ConfigurationItem::reset()
     set( m_resetValue );
 }
 
+void Configurable::set(const QString &key, const QVariant &value)
+{
+    item(key)->set(value);
+}
+
+ConfigurationItem* Configurable::item(const QString & key)
+{
+    if (m_items.contains(key))
+    {
+        return m_items.value( key );
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
+const ConfigurationItem* Configurable::item(const QString & key) const
+{
+    return m_items.value( key, NULL );
+}
+
+QVariant Configurable::value( const QString & key ) const
+{
+    return item(key)->actualValue();
+}
+
+QVariant Configurable::operator[] ( const QString & key ) const
+{
+    return item(key)->actualValue();
+}
+
 
 
 

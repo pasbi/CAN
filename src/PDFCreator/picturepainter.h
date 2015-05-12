@@ -3,6 +3,8 @@
 
 #include <QPainter>
 #include <QPicture>
+#include "global.h"
+
 
 /**
  * @brief The PicturePainter class joins picture with painter.
@@ -14,14 +16,26 @@
 class PicturePainter : public QPainter, public QPicture
 {
 public:
-    explicit PicturePainter();
+    ENUM( Flag, NothingSpecial, SongStartsHere, TableOfContentsStartsHere, ExistingPage )
+
+    /**
+     * @brief PicturePainter
+     * @param blank nothing can be drawn on blank pages.
+     */
+    explicit PicturePainter( Flag flags );
     ~PicturePainter();
+
 
     /**
      * @brief stop saves the recording. If the recording was stopped once,
      *  it is not possible to continue.
      */
     void stop();
+    Flag flag() const { return m_flags; }
+
+private:
+    Flag m_flags;
+
 };
 
 #endif // PICTUREPAINTER_H
