@@ -158,6 +158,8 @@ MainWindow::MainWindow(QWidget *parent) :
     newAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste song."),            "Ctrl+V",   ui->menuEvents, "" )
 
     connect( ui->menuVisible_attributes, SIGNAL(aboutToShow()), this, SLOT(createAttributeVisibilityMenu() ));
+
+    connect( m_project.songDatabase(), SIGNAL(songRemoved(int)), ui->songDatabaseWidget, SLOT(updateAttachmentChooser()) );
 }
 
 MainWindow::~MainWindow()

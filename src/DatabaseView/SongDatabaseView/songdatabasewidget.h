@@ -24,7 +24,7 @@ public:
     AttachmentChooser* attachmentChooser() const;
     SongTableView* songTableView() const;
 
-private slots:
+public slots:
     void updateAttachmentChooser();
 
 private:
