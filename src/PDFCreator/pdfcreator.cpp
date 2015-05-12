@@ -29,6 +29,11 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TR("dd.MM.yyyy, hh:mm"),
                        ConfigurationItemOptions::LineEditOptions( TR("Date time pattern") ) );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       DateFormat,
+                       "Date format",
+                       TR("dd.MM.yyyy"),
+                       ConfigurationItemOptions::LineEditOptions( TR("Date time pattern") ) );
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        LineSpacing,
                        "Line spacing",
                        1,

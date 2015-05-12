@@ -257,10 +257,12 @@ public:
     QString caption() const { return m_caption; }
 
     QString prefix() const { return m_prefix; }
-    QStringList itemKeys() const { return m_items.keys(); }
+    QStringList itemKeys() const { return m_itemKeys; }
 
 private:
     QMap<QString, ConfigurationItem*> m_items;
+    QStringList m_itemKeys; // is needed to keep order. QMap::keys is arbitrary order.
+
     const QString m_prefix;
     const QString m_caption;
 

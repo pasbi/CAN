@@ -194,7 +194,7 @@ void SetlistWidget::on_buttonExportPDF_clicked()
     {
         QString filename = currentSetlist->event()->label()
                 + "_"
-                + currentSetlist->event()->beginning().date().toString( PDFCreator::config["DateTimeFormat"].toString() );
+                + currentSetlist->event()->beginning().date().toString( PDFCreator::config["DateFormat"].toString() );
         filename = QFileDialog::getSaveFileName(    this,
                                                     tr("Export PDF ..."),
                                                     QDir::home().absoluteFilePath( filename ),

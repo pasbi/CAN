@@ -23,6 +23,7 @@ Configurable::~Configurable()
 
 void Configurable::addItem(const QString & key, const QString & caption, const QVariant & defaultValue, const ConfigurationItemOptions & options)
 {
+    m_itemKeys << key;
     m_items.insert(key, new ConfigurationItem(caption, defaultValue, defaultValue, options));
 }
 
