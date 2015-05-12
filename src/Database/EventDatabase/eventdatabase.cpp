@@ -50,7 +50,9 @@ bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
 
 void EventDatabase::reset()
 {
-
+    beginResetModel();
+    m_events.clear();
+    endResetModel();
 }
 
 int EventDatabase::rowCount(const QModelIndex &parent) const

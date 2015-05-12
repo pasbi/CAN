@@ -136,9 +136,9 @@ void Project::redo()
 
 void Project::reset()
 {
-    QUndoStack::clear();
     m_songDatabase->reset();
     m_eventDatabase->reset();
+    QUndoStack::clear();
 }
 
 bool Project::canClose() const

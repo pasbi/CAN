@@ -158,6 +158,7 @@ public:
     bool loadFrom(const QString &path);
 public slots:
     void reset(bool initialize = true);
+
 private:
     /**
      * @brief m_numSongsToRestore number of songs that will be restored. Use this only for loading issues.

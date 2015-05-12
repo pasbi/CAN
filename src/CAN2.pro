@@ -17,7 +17,7 @@ CONFIG += debug
 QMAKE_CXXFLAGS_DEBUG -= -O2
 QMAKE_CXXFLAGS_DEBUG += -Og
 
-LIBS += -L../../ZipGit/build-ZipGit-Desktop-Debug/ -lzipgit
+LIBS += -L/home/pascal/ZipGit/build-ZipGit-Desktop-Debug/ -lzipgit
 LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
 LIBS += -lavformat -lavcodec -lavutil -lpthread

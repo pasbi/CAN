@@ -421,7 +421,6 @@ bool SongDatabase::loadFrom(const QString &path)
 
 void SongDatabase::reset(bool initialize)
 {
-    project()->QUndoStack::clear();
     beginResetModel();
     m_songs.clear();
     m_attributeKeys.clear();

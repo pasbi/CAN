@@ -720,6 +720,14 @@ void MainWindow::on_actionOpen_Terminal_here_triggered()
 
 void MainWindow::on_actionClone_triggered()
 {
+
+    if (!canProjectClose())
+    {
+        return;
+    }
+
+    m_project.reset();
+
     QUrl url = QUrl( StringDialog::getURL( tr("URL"), QDir::homePath(), "Local file, SSH or https" ) );
 
     if (!url.isValid())
