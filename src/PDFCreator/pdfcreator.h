@@ -47,7 +47,7 @@ private: // METHODES
     QPainter *painter();
     void nextPage(PicturePainter::Flag flag);
     QRectF pageRect() const { return QRectF(QPointF(), m_pdfPainter->size()); }
-    QRectF line( double y ) const { return QRectF(QPointF(0, y), QSizeF(m_pdfPainter->size().width(), 10)); }
+    QRectF line( double y, double height ) const { return QRectF(QPointF(0, y), QSizeF(m_pdfPainter->size().width(), height)); }
 
     PicturePainter* currentPage() const;
 
@@ -57,7 +57,7 @@ private: // MEMBERS
     int m_tableOfContentsPage = -1;
     int m_tableOfContentsNumPages = 0;
     double m_additionalTopMargin = 0; // is set if e.g. a headline need additional space.
-    TableOfContents m_tableOfContents;
+    QStringList m_tableOfContents;
 
 private: // STATIC MEMBERS and METHODES
     friend QString labelSetlist( const Setlist* setlist );

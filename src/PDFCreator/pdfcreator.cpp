@@ -232,75 +232,76 @@ void PDFCreator::paintHeadline( const QString &label, const EnumerationNumber& n
 
 void PDFCreator::paintTableOfContents()
 {
-    int currentPage = m_pdfPainter->currentPageNumber();
-    m_tableOfContentsNumPages = 1;                     // length of toc;
+    typedef struct PageNumberStub {
+        PageNumberStub( int page, int y ) :
+            page( page ),
+            y( y )
+        {}
+        const int page;
+        const int y;
+    } PageNumberStub;
 
-    const double dotsSpace = 1;
-    const double lineHeight = painter()->fontMetrics().height();
 
     m_pdfPainter->insertEmptyPage( m_tableOfContentsPage, PicturePainter::TableOfContentsStartsHere );
+    m_tableOfContentsNumPages = 1;                     // length of toc;
 
-    paintHeadline( "Table of Content" );
+    paintHeadline( QObject::tr("Table of Content") );
 
+    // draw entries and find places to fill in page numbers
+    QList<PageNumberStub> pageNumberStubs;
+    const double lineHeight = painter()->fontMetrics().height();
     double y = topMargin();
-    while (true)
-    {
-        painter()->save();
-        if ( m_tableOfContents.isEmpty() ) // no more content to draw
-        {
-            painter()->restore();
-            break;
-        }
-        else                              // draw more content
-        {
-            if ( y < pageRect().height() - bottomMargin() - lineHeight ) // content fits on page
-            {
-                TocEntry currentEntry = m_tableOfContents.take();
-                QString prologue = currentEntry.label;
-                QString epilogue = QString("%1").arg( currentEntry.pageNumber );
-                int prologueWidth = painter()->fontMetrics().width( prologue );
-                int epilogueWidth = painter()->fontMetrics().width( epilogue );
-                double indentation = 0;
-                if (currentEntry.level == 1)
-                {
-                    y += 1;
-                    QFont font = painter()->font();
-                    font.setBold( true );
-                    font.setFamily( "lucida ");
-                    painter()->setFont( font );
-                }
-                else
-                {
-                    indentation = 3;
-                    int dotsLength = pageRect().width() - prologueWidth - epilogueWidth - leftMargin() - rightMargin() - 2 * dotsSpace - indentation;
-                    QString dots = "";
-                    while (dotsLength - painter()->fontMetrics().width(dots) > painter()->fontMetrics().width("."))
-                    {
-                        dots.append(".");
-                    }
-                    painter()->drawText( QPointF( indentation + leftMargin() + prologueWidth + dotsSpace, y), dots );
-                }
-                painter()->drawText( QPointF( indentation + leftMargin(), y), prologue  );
-                painter()->drawText( QPointF( pageRect().width() - epilogueWidth - rightMargin(), y ), epilogue );
 
-                y += lineHeight;
-            }
-            else        // content does not fit on page
-            {
-                m_tableOfContentsPage++;
-                m_tableOfContentsNumPages++;
-                painter()->restore();
-                m_pdfPainter->insertEmptyPage( m_tableOfContentsPage, PicturePainter::NothingSpecial );
-                painter()->save();
-                m_additionalTopMargin = 0; // must be set explicitly since next() is not called but insertPage.
-                y = topMargin();
-                // content will fit on page next iteration
-            }
+    painter()->save();
+    QFont font = painter()->font();
+    font.setBold( true );
+    font.setFamily( "lucida" );
+    painter()->setFont( font );
+    while (!m_tableOfContents.isEmpty())
+    {
+        if ( y < pageRect().height() - bottomMargin() - lineHeight ) // content fits on page
+        {
+            QString currentEntry = m_tableOfContents.takeFirst();
+            painter()->drawText( QPointF( leftMargin(), y), currentEntry  );
+            pageNumberStubs << PageNumberStub( m_pdfPainter->currentPageNumber(), y );
+
+            y += lineHeight;
         }
-        painter()->restore();
+        else        // content does not fit on page
+        {
+            m_tableOfContentsPage++;
+            m_tableOfContentsNumPages++;
+            m_pdfPainter->insertEmptyPage( m_tableOfContentsPage, PicturePainter::NothingSpecial );
+            m_additionalTopMargin = 0; // must be set explicitly since next() is not called but insertPage.
+            y = topMargin();
+            // content will fit on page next iteration
+        }
     }
 
-//    m_pdfPainter->activatePage( currentPage + m_tableOfContentsNumPages ); //TODO required?
+
+    // replace page number stubs
+
+    int pageNumber = -1;
+    for (const PageNumberStub& stub : pageNumberStubs)
+    {
+        // find next pagenumber
+        for (int i = pageNumber + 1; i < m_pdfPainter->numPages(); ++i)
+        {
+            m_pdfPainter->activatePage( i );
+            if (m_pdfPainter->currentPage()->flag() == PicturePainter::SongStartsHere)
+            {
+                pageNumber = i;
+                break;
+            }
+        }
+
+        QString text = QString("%1").arg(pageNumber + 1);
+        m_pdfPainter->activatePage( stub.page );
+        double width = painter()->fontMetrics().boundingRect( text ).width();
+        painter()->drawText( QPointF( m_pdfPainter->size().width() - rightMargin() - width, stub.y), text );
+
+    }
+    painter()->restore();
 }
 
 QString labelSong( const Song* song )
@@ -326,7 +327,7 @@ void PDFCreator::paintSong(const Song *song)
 {
     nextPage( PicturePainter::SongStartsHere );
     QString headline = labelSong( song );
-    m_tableOfContents.append( headline, 1, m_pdfPainter->currentPageNumber() + 1 );
+    m_tableOfContents.append( headline );
     paintHeadline( headline );
 
 
@@ -370,14 +371,10 @@ void PDFCreator::decoratePageNumbers()
     double y = pageRect().height() - bottomMargin() + painter()->fontMetrics().height();
     for (int i = 0; i < m_pdfPainter->numPages(); ++i)
     {
-        int pageNumber = i - m_tableOfContentsNumPages;
-        if ( pageNumber > 0 )
-        {
-            m_pdfPainter->activatePage( i );
-            QTextOption option;
-            option.setAlignment( Qt::AlignCenter );
-            painter()->drawText( QRectF( 0, y - height/2, pageRect().width(), height ), QString("%1").arg( pageNumber ), option );
-        }
+        m_pdfPainter->activatePage( i );
+        QTextOption option;
+        option.setAlignment( Qt::AlignCenter );
+        painter()->drawText( QRectF( 0, y - height/2, pageRect().width(), height ), QString("%1").arg( i + 1 ), option );
     }
 }
 
