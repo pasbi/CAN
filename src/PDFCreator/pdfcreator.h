@@ -11,7 +11,6 @@
 #include "configurable.h"
 
 #include "pdfpaintdevice.h"
-#include "tableofcontents.h"
 
 class PDFCreator
 {
@@ -30,7 +29,7 @@ private: // METHODES
     void paintChordPatternAttachment(const ChordPatternAttachment* attachment);
     void paintTitle();
     void paintTableOfContents();
-    void paintHeadline(const QString& label , const EnumerationNumber &number = EnumerationNumber::invalid() );
+    void paintHeadline(const QString& label);
     double leftMargin() const { return 5; }
     double rightMargin() const { return 10; }
     double topMargin() { return 5 + m_additionalTopMargin; }

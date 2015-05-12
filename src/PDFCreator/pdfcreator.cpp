@@ -214,7 +214,7 @@ void PDFCreator::paintSetlist()
     }
 }
 
-void PDFCreator::paintHeadline( const QString &label, const EnumerationNumber& number )
+void PDFCreator::paintHeadline(const QString &label)
 {
     painter()->save();
 
@@ -225,11 +225,7 @@ void PDFCreator::paintHeadline( const QString &label, const EnumerationNumber& n
     painter()->setFont( font );
 
     QString text = label;
-    if (number.isValid())
-    {
-        text.prepend( " " );
-        text.prepend( number.toString( config["EnumerationPattern"].toString() ) );
-    }
+
     painter()->drawText( QPointF(leftMargin(), topMargin()), text);
     m_additionalTopMargin += 2 * painter()->fontMetrics().height();
     painter()->restore();

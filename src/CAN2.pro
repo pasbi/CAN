@@ -116,7 +116,6 @@ SOURCES += main.cpp\
     Commands/SetlistCommands/setlistmoverowscommand.cpp \
     PDFCreator/pdfpaintdevice.cpp \
     PDFCreator/pdfpagesizewrapper.cpp \
-    PDFCreator/tableofcontents.cpp \
     PDFCreator/picturepainter.cpp \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp \
     Attachments/AudioAttachment/sectionsmodel.cpp \
@@ -226,7 +225,6 @@ HEADERS  += mainwindow.h \
     Commands/SetlistCommands/setlistmoverowscommand.h \
     PDFCreator/pdfpaintdevice.h \
     PDFCreator/pdfpagesizewrapper.h \
-    PDFCreator/tableofcontents.h \
     PDFCreator/picturepainter.h \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h \
     Attachments/AudioAttachment/sectionsmodel.h \

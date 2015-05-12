@@ -6,6 +6,13 @@ const QString Chord::SPLIT_PATTERN = (QStringList() << QRegExp::escape("|") << Q
                                              << QRegExp::escape("-") << QRegExp::escape("/")
                                              << QRegExp::escape("`") << "\\s"   ).join("|");
 
+const QString Chord::IGNORE_BEFORE_PATTERN = "(" + (QStringList() << QRegExp::escape("(") << QRegExp::escape("[")
+                                               << QRegExp::escape("{")  << QRegExp::escape("<")).join("|") + ")*";
+
+const QString Chord::IGNORE_AFTER_PATTERN = "(" + (QStringList() << QRegExp::escape(")") << QRegExp::escape("]")
+                                               << QRegExp::escape("}")  << QRegExp::escape(">")
+                                               << QRegExp::escape(".")).join("|") + ")*";
+
 
 const QString CHORD_EXTENSION_PATTERN = "(maj|min|5|7th|maj7|min7|sus4|sus2|°|dim|dim7|aug|6|min6|"\
                                         "9|min9|maj9|11|min11|maj11|13|min13|maj13|add9|maj7th|7)*(\\(\\w+\\))?$" ;
@@ -110,9 +117,7 @@ QString Chord::toString(MinorPolicy mpolicy, EnharmonicPolicy epolicy) const
         }
     }
 
-    text += attachment();
-
-    return text;
+    return m_before + text + attachment() + m_after;
 }
 
 
@@ -170,16 +175,27 @@ bool ifStartsWithTake( QString & string, const QString & pattern )
     return false;
 }
 
-//TOOD
-// E...
-// (F#m)
-// (G#m)
-// are not correctly classified
 bool Chord::parse(QString text)
 {
     if (text.isEmpty())
     {
         return false;
+    }
+
+    QRegExp beforeMatcher( "^(" + IGNORE_BEFORE_PATTERN + ")" );
+    if (beforeMatcher.indexIn( text ) == 0 )
+    {
+        int n = beforeMatcher.matchedLength();
+        m_before = text.left(n);
+        text = text.mid(n);
+    }
+
+    QRegExp afterMatcher( "(" + IGNORE_AFTER_PATTERN + ")$" );
+    if ( afterMatcher.indexIn( text ) >= 0 )
+    {
+        int n = afterMatcher.matchedLength();
+        m_after = text.right( n );
+        text = text.mid( 0, text.length() - n );
     }
 
     QChar baseChar = text[0];

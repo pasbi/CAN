@@ -22,6 +22,8 @@ public:
     void transpose(int t);
 
     static const QString SPLIT_PATTERN;
+    static const QString IGNORE_BEFORE_PATTERN;
+    static const QString IGNORE_AFTER_PATTERN;
 
     /**
      * @brief countChords returns the number of chords in @code line.
@@ -31,6 +33,7 @@ public:
      */
     static bool parseLine(const QString &line, QStringList &chords, QStringList &tokens);
 private:
+    QString m_before, m_after;
     int m_base;
     QString m_attachment;
     bool parse(QString text);
