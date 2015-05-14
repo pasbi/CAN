@@ -45,7 +45,6 @@ private:
     QString m_currentPath;
     bool saveProject();
     bool saveProjectAs();
-    bool openProject();
     bool newProject();
     void loadDefaultProject();
 
@@ -95,6 +94,8 @@ private:
     enum Page { SongDatabasePage, EventDatabasePage };
     Page currentPage() const;
     bool canRemoveSong( Song* song );
+
+    bool open(const QString& filename);
 
 };
 

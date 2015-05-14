@@ -321,36 +321,6 @@ bool MainWindow::newProject()
     return true;
 }
 
-bool MainWindow::openProject()
-{
-    if (!canProjectClose())
-    {
-        return false;
-    }
-
-    QString filename =
-    QFileDialog::getOpenFileName( this,
-                                  tr("Open ..."),
-                                  proposedPath(),
-                                  filter()              );
-    bool success;
-    if (filename.isEmpty())
-    {
-        success = false;
-    }
-    else
-    {
-        setCurrentPath(filename);
-        updateWindowTitle();
-        success = m_project.loadZip( filename );
-        m_project.loadFromTempDir();
-    }
-
-
-    updateWhichWidgetsAreEnabled();
-    return success;
-}
-
 bool MainWindow::canProjectClose()
 {
     if (m_project.canClose())
@@ -407,38 +377,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::loadDefaultProject()
 {
     m_currentPath = config.value( "RecentProject" ).toString();
-
-    if (!m_currentPath.isEmpty())
-    {
-        if (QFileInfo(m_currentPath).isReadable())
-        {
-            if ( m_project.loadZip( m_currentPath ) )
-            {
-            }
-            else
-            {
-                QMessageBox::warning( this,
-                                      QString(tr("Opening %1")).arg(m_currentPath),
-                                      QString(tr("Cannot open %1. Unknown file format.")).arg(m_currentPath),
-                                      QMessageBox::Ok
-                                      );
-                m_project.reset();
-                config.set("RecentProject", "");
-            }
-        }
-        else
-        {
-            QMessageBox::warning( this,
-                                  QString(tr("Opening %1")).arg(m_currentPath),
-                                  QString(tr("File %1 not found.")).arg(m_currentPath),
-                                  QMessageBox::Ok
-                                  );
-            m_project.reset();
-            setCurrentPath("");
-        }
-        updateWindowTitle();
-        updateWhichWidgetsAreEnabled();
-    }
+    open( m_currentPath );
 }
 
 int MainWindow::currentAttachmentIndex() const
@@ -588,8 +527,22 @@ void MainWindow::on_actionSave_As_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
-    openProject();
-    updateWhichWidgetsAreEnabled();
+    if (!canProjectClose())
+    {
+        return; // user aborted opening;
+    }
+
+    QString filename =
+    QFileDialog::getOpenFileName( this,
+                                  tr("Open ..."),
+                                  proposedPath(),
+                                  filter()              );
+    if (filename.isEmpty())
+    {
+        return; // user aborted opening
+    }
+
+    open(filename);
 }
 
 bool MainWindow::canRemoveSong(Song *song)
@@ -969,6 +922,45 @@ void MainWindow::createAttributeVisibilityMenu()
         connect( menu, SIGNAL(aboutToHide()), action, SLOT(deleteLater()) );
     }
 
+}
+
+bool MainWindow::open(const QString &filename)
+{
+    if (!filename.isEmpty())
+    {
+        if (QFileInfo(filename).isReadable())
+        {
+            if ( m_project.loadZip( filename ) )
+            {
+                setCurrentPath( filename );
+                return true;
+            }
+            else
+            {
+                QMessageBox::warning( this,
+                                      QString(tr("Opening %1")).arg(filename),
+                                      QString(tr("Cannot open %1. Unknown file format.")).arg(filename),
+                                      QMessageBox::Ok
+                                      );
+                setCurrentPath("");
+                newProject();
+            }
+        }
+        else
+        {
+            QMessageBox::warning( this,
+                                  QString(tr("Opening %1")).arg(filename),
+                                  QString(tr("File %1 not found.")).arg(filename),
+                                  QMessageBox::Ok
+                                  );
+            m_project.reset();
+            setCurrentPath("");
+            newProject();
+        }
+        updateWindowTitle();
+        updateWhichWidgetsAreEnabled();
+    }
+    return false;
 }
 
 

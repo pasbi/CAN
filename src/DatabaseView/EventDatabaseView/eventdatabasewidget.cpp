@@ -9,8 +9,8 @@ EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     connect( ui->eventTableViewContainer->eventTableView(), SIGNAL(pressed(QModelIndex)), this, SLOT(updateSetlistView()) );
-
     ui->eventTableViewContainer->setModel( app().project()->eventDatabaseProxy() );
+    connect( ui->eventTableViewContainer->eventTableView()->model(), SIGNAL(modelReset()), this, SLOT(updateSetlistView()) );
 }
 
 EventDatabaseWidget::~EventDatabaseWidget()
@@ -33,6 +33,7 @@ Event* EventDatabaseWidget::currentEvent() const
 
 void EventDatabaseWidget::updateSetlistView()
 {
+    qDebug() << "here we go!";
     Event* e = currentEvent();
     if (e)
     {
