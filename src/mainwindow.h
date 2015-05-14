@@ -95,7 +95,7 @@ private:
     Page currentPage() const;
     bool canRemoveSong( Song* song );
 
-    bool open(const QString& filename);
+    void open(const QString& filename);
 
 };
 

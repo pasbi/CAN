@@ -924,7 +924,7 @@ void MainWindow::createAttributeVisibilityMenu()
 
 }
 
-bool MainWindow::open(const QString &filename)
+void MainWindow::open(const QString &filename)
 {
     if (!filename.isEmpty())
     {
@@ -933,7 +933,8 @@ bool MainWindow::open(const QString &filename)
             if ( m_project.loadZip( filename ) )
             {
                 setCurrentPath( filename );
-                return true;
+                updateWindowTitle();
+                updateWhichWidgetsAreEnabled();
             }
             else
             {
@@ -960,7 +961,6 @@ bool MainWindow::open(const QString &filename)
         updateWindowTitle();
         updateWhichWidgetsAreEnabled();
     }
-    return false;
 }
 
 
