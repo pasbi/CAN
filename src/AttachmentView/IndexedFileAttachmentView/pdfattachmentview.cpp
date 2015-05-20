@@ -59,7 +59,6 @@ bool PDFAttachmentView::eventFilter(QObject *o, QEvent *e)
 void PDFAttachmentView::polish()
 {
     IndexedFileAttachmentView::polish();
-    open();
 }
 
 

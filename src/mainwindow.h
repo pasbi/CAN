@@ -83,6 +83,16 @@ private slots:
     void createAttributeVisibilityMenu();
 
 
+    void on_action_Push_triggered();
+
+    void on_action_Fetch_triggered();
+
+    void on_action_Merge_triggered();
+
+    void on_action_Commit_triggered();
+
+    void on_action_Load_triggered();
+
 private:
     void setupAttachmentMenu();
     void setCurrentAttachment( int index );

@@ -51,7 +51,7 @@ bool ChordPatternEdit::eventFilter(QObject *o, QEvent *e)
         // catch undo and redo shortcuts and delegate to application's undo()/redo().
         // Does not work with QShortcutEvent or QActions.
         QKeyEvent* se = dynamic_assert_cast<QKeyEvent*>( e );
-        if ( se->modifiers() | Qt::CTRL )
+        if ( se->modifiers() & Qt::CTRL )
         {
             if ( se->key() == Qt::Key_Z)
             {

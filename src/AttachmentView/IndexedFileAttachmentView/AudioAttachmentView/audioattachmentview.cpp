@@ -79,10 +79,6 @@ void AudioAttachmentView::polish()
     ui->sectionView->setModel( a->sectionsModel() );
 }
 
-void AudioAttachmentView::open()
-{
-}
-
 void AudioAttachmentView::on_pushButtonStop_clicked()
 {
     player().stop();

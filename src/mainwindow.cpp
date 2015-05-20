@@ -128,20 +128,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadDefaultProject();
 
-    m_project.setResolveConflictsCallback( [this]()
-        {
-            QList<File> files = m_project.conflictingFiles();
-            while (!files.isEmpty())
-            {
-                ConflictEditor editor( files, this );
-                editor.exec();
-                files = m_project.conflictingFiles();
-            }
-
-        } );
-
     m_identityManager.restore();
-
 
     connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
@@ -688,6 +675,7 @@ void MainWindow::on_actionClone_triggered()
         return;
     }
 
+    m_project.reset();
     setCurrentPath("");
 
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
@@ -700,7 +688,7 @@ void MainWindow::on_actionClone_triggered()
     pd.setLabel(label);
     pd.show();
 
-    while ( !m_project.cloneFinished() )
+    while ( !m_project.cloningFinished() )
     {
         pd.setValue( (pd.value() + 1) % 100 );
         label->setText( tr("Cloning.") );
@@ -713,13 +701,24 @@ void MainWindow::on_actionClone_triggered()
     }
 
 
-    if ( !m_project.cloneResult() )
+    if ( !m_project.cloningSucceeded() )
     {
         QMessageBox::warning( this,
                               tr("Cloning failed"),
                               QString(tr("Failed to clone %1.").arg(url.url())),
                               QMessageBox::Ok,
                               QMessageBox::NoButton );
+        newProject();
+    }
+    else if ( !m_project.loadFromTempDir())
+    {
+        QMessageBox::warning( this,
+                              tr("Cannot load project"),
+                              QString(tr("Failed to load cloned project.\n"
+                                         "Make sure you cloned the correct repository and the repository is valid.")),
+                              QMessageBox::Ok,
+                              QMessageBox::NoButton );
+        newProject();
     }
 
     updateWindowTitle();
@@ -727,8 +726,12 @@ void MainWindow::on_actionClone_triggered()
 
 }
 
+
 void MainWindow::on_actionSync_triggered()
 {
+    //////////////////////////////////////////////////////////////////////////
+    /// retrieve message and Identity.
+    /// abort if one of them is invalid.
     QString message;
     Identity identity;
 
@@ -789,31 +792,76 @@ void MainWindow::on_actionSync_triggered()
     }
 
 
-
+    //////////////////////////////////////////////////////////////////////////
+    /// Set up progress dialog
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
-
-    m_project.syncDetached( message, identity );
-
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);
     pd.setLabel(label);
     pd.show();
+    label->setText( tr("Syncing.") );
 
-    while ( !m_project.syncFinished() )
+    //////////////////////////////////////////////////////////////////////////
+    /// begin syncing
+    m_project.saveToTempDir();
+
+    // wait until prepare is finished
+    m_project.prepareSyncDetached( message, identity );
+    while ( !m_project.prepareSyncFinished() )
     {
-        pd.setValue( (pd.value() + 1) % 100 );
-        label->setText( tr("Syncing.") );
         qApp->processEvents();
         QThread::msleep( 10 );
         if (pd.wasCanceled())
         {
+            //TODO ensure that the state is not weird.
             return;
         }
     }
 
+    // resolve conflicts
+    QList<File> files = m_project.conflictingFiles();
+    while (!files.isEmpty())
+    {
+        ConflictEditor editor( files, this );
+        editor.exec();
+        files = m_project.conflictingFiles();
+    }
 
-    if ( m_project.syncResult() )
+    // wait until polish is finished
+    m_project.polishSyncDetached( identity );
+    while ( !m_project.polishSyncFinished() )
+    {
+        qApp->processEvents();
+        QThread::msleep( 10 );
+        if (pd.wasCanceled())
+        {
+            //TODO ensure that the state is not weird.
+            return;
+        }
+    }
+
+    if (!m_project.loadFromTempDir())
+    {
+        QMessageBox::warning( this,
+                              tr("Failed to load project."),
+                              tr("Cannot open merged project.\n"
+                                 "Probably merging went wrong or the remote version was currupted.\n"
+                                 "Fix the error by hand and commit it over the current version, then clone the fixed repository."),
+                              QMessageBox::Ok,
+                              QMessageBox::NoButton );
+        newProject();
+    }
+    else if ( !m_project.polishSyncSucceeded() || !m_project.prepareSyncSucceeded() )
+    {
+        QMessageBox::information( this,
+                                  tr("Sync"),
+                                  tr("Sync failed."),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton );
+        newProject();
+    }
+    else
     {
         QMessageBox::information( this,
                                   tr("Sync"),
@@ -821,14 +869,7 @@ void MainWindow::on_actionSync_triggered()
                                   QMessageBox::Ok,
                                   QMessageBox::NoButton );
     }
-    else
-    {
-        QMessageBox::information( this,
-                                  tr("Sync"),
-                                  tr("Sync failed."),
-                                  QMessageBox::Ok,
-                                  QMessageBox::NoButton );
-    }
+
 }
 
 void MainWindow::on_actionIdentites_triggered()
@@ -965,16 +1006,28 @@ void MainWindow::open(const QString &filename)
 
 
 
+void MainWindow::on_action_Push_triggered()
+{
+    qDebug() << "push: " << m_project.GitRepository::push();
+}
 
+void MainWindow::on_action_Fetch_triggered()
+{
+    qDebug() << "fetch: " << m_project.fetch();
+}
 
+void MainWindow::on_action_Merge_triggered()
+{
+    qDebug() << "merge: " << m_project.merge();
+    qDebug() << "conflicts: " << m_project.conflictingFilenames();
+}
 
+void MainWindow::on_action_Commit_triggered()
+{
+    qDebug() << "commit: " << m_project.commit();
+}
 
-
-
-
-
-
-
-
-
-
+void MainWindow::on_action_Load_triggered()
+{
+    qDebug() << "load: " << m_project.loadFromTempDir();
+}

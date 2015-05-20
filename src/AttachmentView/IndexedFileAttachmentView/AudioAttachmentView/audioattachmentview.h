@@ -23,8 +23,6 @@ public:
 protected:
     void polish();
 
-protected slots:
-    void open();
 
 private slots:
     void setPitchTempo();

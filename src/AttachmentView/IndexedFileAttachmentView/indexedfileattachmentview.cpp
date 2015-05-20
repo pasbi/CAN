@@ -43,7 +43,7 @@ void IndexedFileAttachmentView::polish()
         attachment<IndexedFileAttachment>()->open();
         updateStackedWidget();
     });
-    attachment<IndexedFileAttachment>()->open();
+
     updateStackedWidget();
 }
 

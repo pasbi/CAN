@@ -200,6 +200,11 @@
     <addaction name="actionSync"/>
     <addaction name="actionClone"/>
     <addaction name="separator"/>
+    <addaction name="action_Commit"/>
+    <addaction name="action_Merge"/>
+    <addaction name="action_Fetch"/>
+    <addaction name="action_Push"/>
+    <addaction name="action_Load"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="toolTip">
@@ -485,6 +490,31 @@
    </property>
    <property name="toolTip">
     <string>Settings.</string>
+   </property>
+  </action>
+  <action name="action_Commit">
+   <property name="text">
+    <string>[ Commit ]</string>
+   </property>
+  </action>
+  <action name="action_Merge">
+   <property name="text">
+    <string>[ Merge ]</string>
+   </property>
+  </action>
+  <action name="action_Fetch">
+   <property name="text">
+    <string>[ Fetch ]</string>
+   </property>
+  </action>
+  <action name="action_Push">
+   <property name="text">
+    <string>[ Push ]</string>
+   </property>
+  </action>
+  <action name="action_Load">
+   <property name="text">
+    <string>[ Load ]</string>
    </property>
   </action>
  </widget>
