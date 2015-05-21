@@ -17,7 +17,6 @@ public:
     ~FilterWidget();
     void setFilterProxy( QSortFilterProxyModel* proxy );
 
-
 public slots:
     void setPattern(const QString & pattern);
 
@@ -26,6 +25,9 @@ signals:
 
 private:
     Ui::FilterWidget *ui;
+
+protected:
+    void hideEvent(QHideEvent *e);
 };
 
 #endif // FILTERWIDGET_H

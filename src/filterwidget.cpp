@@ -29,3 +29,10 @@ void FilterWidget::setPattern(const QString &pattern)
 {
     ui->comboBox->setCurrentText(pattern);
 }
+
+void FilterWidget::hideEvent(QHideEvent *e)
+{
+    // reset filter when filterwidget is about to be hidden.
+    emit filterChanged( "" );
+    QWidget::hideEvent(e);
+}
