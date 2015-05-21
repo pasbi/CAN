@@ -11,10 +11,14 @@ public:
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
-    bool eventFilter(QObject *o, QEvent *e);
+    void keyPressEvent(QKeyEvent *e);
+    void insertFromMimeData(const QMimeData *source);
 
 private:
     QMenu* m_contextMenu = NULL;
+
+signals:
+    void pasted();
 
 
 };

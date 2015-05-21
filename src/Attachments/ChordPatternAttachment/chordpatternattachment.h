@@ -18,16 +18,20 @@ public:
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject &object);
 
-    void setPattern( const QString & pattern );
-    void process(int transpose = 0);
+    void setPattern(const QString & pattern);
 
     void copy(Attachment *&copied) const;
+
+public slots:
+    void process( int transposing = 0 );
 
 
 private:
     QString m_pattern;
     Chord::EnharmonicPolicy m_enharmonicPolicy = Chord::Natural;
     Chord::MinorPolicy      m_minorPolicy      = Chord::LowerCase;
+
+    QString process(QString text, int transpose = 0);
 
 signals:
     void changed();

@@ -4,10 +4,6 @@
 #
 #-------------------------------------------------
 
-# TODO filter in event view influences filter in song view
-# TODO chord pattern attachment, tabs are not correctly printed in PDF
-
-
 QT       += core gui multimedia
 
 QT += testlib

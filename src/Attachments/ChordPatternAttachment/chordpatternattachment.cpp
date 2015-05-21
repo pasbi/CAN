@@ -30,16 +30,16 @@ QString white(int n)
 
 QString replaceTabs(QString text)
 {
-    QString s;
-    for (QString line : text.split("\n"))
+    QStringList lines = text.split("\n");
+    for (QString& line : lines)
     {
         int i = -1;
-        while ((i = line.indexOf("\t", i+1)) >= 0) {
-            line.replace("\t", white(TAB_WIDTH - (i % TAB_WIDTH)));
+        while ( (i = line.indexOf("\t", i+1)) >= 0 )
+        {
+            line.replace(i, 1, white( TAB_WIDTH - (i % TAB_WIDTH) ));
         }
-        s += line + "\n";
     }
-    return s.endsWith("\n") ? s.left(s.length() - 1) : s;
+    return lines.join("\n");
 }
 
 QJsonObject ChordPatternAttachment::toJsonObject() const
@@ -74,11 +74,15 @@ void ChordPatternAttachment::setPattern(const QString &pattern)
     }
 }
 
-void ChordPatternAttachment::process(int transpose)
+void ChordPatternAttachment::process(int transposing)
 {
-    QString text = m_pattern;
+    setPattern( process(m_pattern, transposing) );
+}
+
+QString ChordPatternAttachment::process(QString text, int transpose)
+{
     int i = 0;
-    for (QString line : m_pattern.split("\n")) {
+    for (QString line : text.split("\n")) {
         QStringList chords, tokens;
         bool isChordLine = Chord::parseLine( line, chords, tokens );
         for (QString token : tokens) {
@@ -93,7 +97,6 @@ void ChordPatternAttachment::process(int transpose)
             i += token.length() + 1 + additional;
         }
     }
-    m_pattern = replaceTabs(text);
-    emit changed();
+    return replaceTabs(text);
 }
 

@@ -36,7 +36,6 @@ ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
         app().pushCommand( new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), -1 ) );
     });
 
-
     m_toolBar->addActions( actions() );
     ui->verticalLayout->insertWidget(0, m_toolBar);
 
@@ -86,7 +85,6 @@ void ChordPatternAttachmentView::updateText()
 void ChordPatternAttachmentView::textEdited()
 {
     app().pushCommand( new ChordPatternAttachmentEditPatternCommand( attachment<ChordPatternAttachment>(), ui->textEdit->toPlainText() ) );
-//    attachment<ChordPatternAttachment>()->setPattern(ui->textEdit->toPlainText());
 }
 
 
@@ -95,4 +93,6 @@ void ChordPatternAttachmentView::polish()
     updateText();
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(textEdited()));
     connect(attachment<ChordPatternAttachment>(), SIGNAL(changed()), this, SLOT(updateText()));
+    connect( ui->textEdit, SIGNAL(pasted()), attachment<ChordPatternAttachment>(), SLOT(process()) );
+
 }

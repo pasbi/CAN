@@ -6,6 +6,7 @@
 #include <QMenu>
 #include <QDesktopWidget>
 #include <QRect>
+#include <QMimeData>
 
 ChordPatternEdit::ChordPatternEdit(QWidget *parent) :
     QTextEdit(parent)
@@ -44,27 +45,81 @@ void ChordPatternEdit::contextMenuEvent(QContextMenuEvent *e)
     menu->move( pos );
 }
 
-bool ChordPatternEdit::eventFilter(QObject *o, QEvent *e)
+void ChordPatternEdit::keyPressEvent(QKeyEvent* e)
 {
-    if (e->type() == QEvent::KeyPress)
+    // catch undo and redo shortcuts and delegate to application's undo()/redo().
+    // Does not work with QShortcutEvent or QActions.
+    QKeyEvent* se = dynamic_assert_cast<QKeyEvent*>( e );
+    if ( se->modifiers() & Qt::CTRL )
     {
-        // catch undo and redo shortcuts and delegate to application's undo()/redo().
-        // Does not work with QShortcutEvent or QActions.
-        QKeyEvent* se = dynamic_assert_cast<QKeyEvent*>( e );
-        if ( se->modifiers() & Qt::CTRL )
+        if ( se->key() == Qt::Key_Z)
         {
-            if ( se->key() == Qt::Key_Z)
-            {
-                app().undo();
-                return true;
-            }
-            else if ( se->key() == Qt::Key_Y )
-            {
-                app().redo();
-                return true;
-            }
+            app().undo();
+            se->accept();
+            return;
+        }
+        else if ( se->key() == Qt::Key_Y )
+        {
+            app().redo();
+            se->accept();
+            return;
         }
     }
-    return QTextEdit::eventFilter(o, e);
+
+    // catch tab key. Tabs should be replaced by whitespaces.
+    // Actually this is done in ChordPatternAttachment::setPattern,
+    // but this will not affect the cursor position.
+    // To provide a natural editing experience, replace tabs here and
+    // affect cursor position.
+    if ( se->key() == Qt::Key_Tab )
+    {
+        // find position in row
+        QString text = toPlainText();
+        int pos = textCursor().position();
+        int i = 0;
+        for (int j = 0; j < pos; ++j)
+        {
+            i++;
+            if (text[j] == '\n')
+            {
+                i = 0;
+            }
+        }
+
+        // compute length of tab in whitespaces
+        int tabWidth = 8;
+        int numberOfWhitespaces = tabWidth - (i % tabWidth);
+
+        // build replacement string
+        QString whiteSpaces;
+        for (int i = 0; i < numberOfWhitespaces; ++i)
+        {
+            whiteSpaces += " ";
+        }
+
+        // replace tab with whitespaces
+        setPlainText( text.insert(pos, whiteSpaces) );
+
+        // update cursor position
+        QTextCursor cursor = textCursor();
+        cursor.setPosition( pos + numberOfWhitespaces );
+        setTextCursor( cursor );
+
+        // do not insert actual tab.
+        e->accept();
+        return;
+    }
+
+    return QTextEdit::keyPressEvent(e);
+}
+
+void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
+{
+    QTextEdit::insertFromMimeData( source );
+
+    emit pasted();
+    QTextCursor c = textCursor();
+    c.setPosition( toPlainText().length() - 1 );
+    setTextCursor( c );
 }
 
