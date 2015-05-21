@@ -199,12 +199,6 @@
     <addaction name="separator"/>
     <addaction name="actionSync"/>
     <addaction name="actionClone"/>
-    <addaction name="separator"/>
-    <addaction name="action_Commit"/>
-    <addaction name="action_Merge"/>
-    <addaction name="action_Fetch"/>
-    <addaction name="action_Push"/>
-    <addaction name="action_Load"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="toolTip">

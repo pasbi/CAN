@@ -661,12 +661,11 @@ void MainWindow::on_actionOpen_Terminal_here_triggered()
 void MainWindow::on_actionClone_triggered()
 {
 
+    qDebug() << "can project close?";
     if (!canProjectClose())
     {
         return;
     }
-
-    m_project.reset();
 
     QUrl url = QUrl( StringDialog::getURL( tr("URL"), QDir::homePath(), "Local file, SSH or https" ) );
 
@@ -675,6 +674,7 @@ void MainWindow::on_actionClone_triggered()
         return;
     }
 
+    qDebug() << "reset?";
     m_project.reset();
     setCurrentPath("");
 
@@ -1002,32 +1002,4 @@ void MainWindow::open(const QString &filename)
         updateWindowTitle();
         updateWhichWidgetsAreEnabled();
     }
-}
-
-
-
-void MainWindow::on_action_Push_triggered()
-{
-    qDebug() << "push: " << m_project.GitRepository::push();
-}
-
-void MainWindow::on_action_Fetch_triggered()
-{
-    qDebug() << "fetch: " << m_project.fetch();
-}
-
-void MainWindow::on_action_Merge_triggered()
-{
-    qDebug() << "merge: " << m_project.merge();
-    qDebug() << "conflicts: " << m_project.conflictingFilenames();
-}
-
-void MainWindow::on_action_Commit_triggered()
-{
-    qDebug() << "commit: " << m_project.commit();
-}
-
-void MainWindow::on_action_Load_triggered()
-{
-    qDebug() << "load: " << m_project.loadFromTempDir();
 }
