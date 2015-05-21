@@ -6,6 +6,7 @@ SongDatabaseSortProxy::SongDatabaseSortProxy(QObject *parent) :
     // filter all columns
     setFilterKeyColumn(-1);
     setDynamicSortFilter( false );
+    setFilterCaseSensitivity( Qt::CaseInsensitive );
 }
 
 void SongDatabaseSortProxy::setSourceModel(SongDatabase *sourceModel)

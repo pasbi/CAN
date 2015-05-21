@@ -5,6 +5,8 @@ EventDatabaseSortProxy::EventDatabaseSortProxy(QObject *parent) :
 {
     // filter all columns
     setFilterKeyColumn(-1);
+    setDynamicSortFilter( false );
+    setFilterCaseSensitivity( Qt::CaseInsensitive );
 }
 
 bool EventDatabaseSortProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const
