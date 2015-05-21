@@ -4,6 +4,14 @@
 #
 #-------------------------------------------------
 
+
+#//TODO Translate to german
+#//TODO port to Windows
+#//TODO set default buttons (e.g. accept a dialog with enter)
+#//TODO Improve tab-navigation
+#//TODO shortcuts, e.g. for creating a chord pattern attachment
+#//TODO tags
+
 QT       += core gui multimedia
 
 QT += testlib
