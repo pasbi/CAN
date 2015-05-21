@@ -660,8 +660,6 @@ void MainWindow::on_actionOpen_Terminal_here_triggered()
 
 void MainWindow::on_actionClone_triggered()
 {
-
-    qDebug() << "can project close?";
     if (!canProjectClose())
     {
         return;
@@ -674,7 +672,6 @@ void MainWindow::on_actionClone_triggered()
         return;
     }
 
-    qDebug() << "reset?";
     m_project.reset();
     setCurrentPath("");
 
