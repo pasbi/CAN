@@ -11,11 +11,11 @@ const QString Chord::IGNORE_BEFORE_PATTERN = "(" + (QStringList() << QRegExp::es
 
 const QString Chord::IGNORE_AFTER_PATTERN = "(" + (QStringList() << QRegExp::escape(")") << QRegExp::escape("]")
                                                << QRegExp::escape("}")  << QRegExp::escape(">")
-                                               << QRegExp::escape(".")).join("|") + ")*";
+                                               << QRegExp::escape(".") << "\\(\\w*\\)" << "\\[\\w*\\]").join("|") + ")*";
 
 
-const QString CHORD_EXTENSION_PATTERN = "(maj|min|5|7th|maj7|min7|sus4|sus2|sus|°|dim|dim7|aug|6|min6|"\
-                                        "9|min9|maj9|11|min11|maj11|13|min13|maj13|add9|maj7th|7)*(\\(\\w+\\))?$" ;
+const QString CHORD_EXTENSION_PATTERN = "(maj|min|5|7th|maj7|min7|sus4|sus2|sus|°|dim|dim7|aug|6|min6|"
+                                        "9|min9|maj9|11|min11|maj11|13|min13|maj13|add9|maj7th|7)*$" ;
 
 Chord::Chord(const QString token) :
     m_isValid( parse(token) )

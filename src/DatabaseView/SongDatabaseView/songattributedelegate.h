@@ -16,6 +16,8 @@ public:
     SongDatabaseSortProxy *proxyModel() const;
     SongDatabase* model() const;
 
+    bool isEditing() const { return m_isEditing; }
+
 protected:
     QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
@@ -24,6 +26,8 @@ protected:
 private:
     QString editorType(const QModelIndex &index) const;
     QVariant editorOptions(const QModelIndex & index) const;
+    mutable bool m_isEditing = false;
+
 
 };
 

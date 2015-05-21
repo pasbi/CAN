@@ -23,7 +23,7 @@ QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOption
     {
         if (classname != "Editor")
         {
-            // default to StringEditor without warning
+            // default to StringEditor without 	warning
             WARNING << "Unknown editor widget \"" << classname << "\".";
         }
         classname = "StringEditor";
@@ -74,6 +74,7 @@ void SongAttributeDelegate::setModelData(QWidget *editor, QAbstractItemModel *, 
     }
 
     app().pushCommand( new SongDatabaseEditSongCommand( model(), proxyModel()->mapToSource(index), newData, Qt::EditRole ) );
+    m_isEditing = false;
 }
 
 void SongAttributeDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
@@ -81,6 +82,7 @@ void SongAttributeDelegate::setEditorData(QWidget *editor, const QModelIndex &in
     // since editor gather informations from model itself, this mehod should do nothing.
     Q_UNUSED(editor);
     Q_UNUSED(index);
+    m_isEditing = true;
 }
 
 

@@ -156,5 +156,18 @@ void SongTableView::pasteSongs(const QMimeData *mimeData, int row, Qt::DropActio
     app().endMacro();
 }
 
+void SongTableView::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Tab)
+    {
+        if ( m_delegate->isEditing() )
+        {
+            QTableView::keyPressEvent( event ); // sets the current index to the next item
+            edit( currentIndex() );             // start editing (closes editor automatically when finished)
+            return;                             // return to prevent interpreting the tab event further.
+        }
+    }
+    QTableView::keyPressEvent( event );
+}
 
 

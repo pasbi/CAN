@@ -33,7 +33,6 @@ Event* EventDatabaseWidget::currentEvent() const
 
 void EventDatabaseWidget::updateSetlistView()
 {
-    qDebug() << "here we go!";
     Event* e = currentEvent();
     if (e)
     {
