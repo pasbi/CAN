@@ -35,6 +35,7 @@ private: // METHODES
     double topMargin() { return 5 + m_additionalTopMargin; }
     double bottomMargin() const { return 5; }
     void alignSongs( int remainder );
+    void optimizeForDuplex();
 
     void decoratePageNumbers();
 

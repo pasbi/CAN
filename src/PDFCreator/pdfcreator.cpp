@@ -83,7 +83,8 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        0,
                        ConfigurationItemOptions::ComboBoxOptions( QStringList() << "No alignment"
                                                                                 << "Odd pages"
-                                                                                << "Even pages" ) );
+                                                                                << "Even pages"
+                                                                                << "Duplex"         ) );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TableOfContents,
                        "Table of Contents",
@@ -155,6 +156,9 @@ PDFCreator::PDFCreator( const Setlist *setlist ) :
         break;
     case 2:
         alignSongs( 1 );
+        break;
+    case 3:
+        optimizeForDuplex();
         break;
     }
 
@@ -554,6 +558,27 @@ void PDFCreator::alignSongs(int remainder)
         {
             m_pdfPainter->insertEmptyPage( currentPageNum, PicturePainter::NothingSpecial );
             currentPageNum++;
+        }
+    }
+}
+
+void PDFCreator::optimizeForDuplex()
+{
+    // an odd and the following even page will be printed on the same piece of paper.
+    // So ensure that no song is on more than one side of the same paper.
+    bool songsStarted = false;
+    for (int currentPageNum = 0; currentPageNum < m_pdfPainter->numPages(); ++currentPageNum)
+    {
+        m_pdfPainter->activatePage( currentPageNum );
+        if ( songsStarted
+             && currentPage()->flag() != PicturePainter::SongStartsHere   // start may be everywhere, but song shall only be continued on odd pages
+             && currentPageNum % 2 != 0 )
+        {
+            m_pdfPainter->insertEmptyPage( currentPageNum, PicturePainter::NothingSpecial );
+        }
+        else if (currentPage()->flag() == PicturePainter::SongStartsHere)
+        {
+            songsStarted = true;
         }
     }
 }
