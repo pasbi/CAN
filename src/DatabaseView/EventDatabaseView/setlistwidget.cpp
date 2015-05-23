@@ -195,17 +195,41 @@ void SetlistWidget::on_buttonExportPDF_clicked()
         QString filename = currentSetlist->event()->label()
                 + "_"
                 + currentSetlist->event()->beginning().date().toString( PDFCreator::config["DateFormat"].toString() );
-        filename = QFileDialog::getSaveFileName(    this,
-                                                    tr("Export PDF ..."),
-                                                    QDir::home().absoluteFilePath( filename ),
-                                                    tr("*.pdf")             );
-        if (!filename.isEmpty())
+
+        // QFileDialog::getSaveFilename does not asks for overwriting files when the default filename is used. Workaround: Disable overwrite
+        // confirmation for all files and ask for it in an other dialog.
+        bool allowWriteFile;
+        do
         {
+            filename = QFileDialog::getSaveFileName(    this,
+                                                        tr("Export PDF ..."),
+                                                        QDir::home().absoluteFilePath( filename ),
+                                                        tr("*.pdf"),
+                                                        NULL,
+                                                        QFileDialog::DontConfirmOverwrite );
             if (!filename.endsWith(".pdf"))
             {
                 filename.append(".pdf");
             }
 
+            allowWriteFile = !QFileInfo(filename).exists();
+            if ( !filename.isEmpty() && !allowWriteFile )
+            {
+                if (QMessageBox::question( this, windowTitle(), QString(tr("%1 already exists.\n"
+                                                                           "Do you want to replace it?")).arg(filename), QMessageBox::No, QMessageBox::Yes )
+                        == QMessageBox::Yes )
+                {
+                    allowWriteFile = true;
+                }
+            }
+
+        } while (     filename.isEmpty()  // user cancels
+                  || !allowWriteFile      // filename is not in use by now or user allows to overwrite.
+                );
+
+
+        if (!filename.isEmpty())
+        {
             QFileInfo fi(filename);
 
             if (fi.exists() && !fi.isReadable())
@@ -226,3 +250,4 @@ void SetlistWidget::on_buttonExportPDF_clicked()
         }
     }
 }
+
