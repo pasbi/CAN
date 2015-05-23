@@ -22,8 +22,6 @@ SongTableView::SongTableView(QWidget *parent) :
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);
 
-    setAlternatingRowColors(true);
-
     horizontalHeader()->setSectionsMovable(true);
     horizontalHeader()->setDragEnabled(true);
     horizontalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
@@ -44,6 +42,7 @@ SongTableView::SongTableView(QWidget *parent) :
 void SongTableView::setModel(SongDatabaseSortProxy *model)
 {
     QTableView::setModel(model);
+    connect( model, SIGNAL(modelReset()), this, SLOT(resizeColumnsToContents()) );
 }
 
 void SongTableView::fakeFocusOutEvent()

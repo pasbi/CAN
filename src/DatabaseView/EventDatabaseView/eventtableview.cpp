@@ -122,7 +122,6 @@ EventTableView::EventTableView(QWidget *parent) :
 
     setSelectionBehavior( QAbstractItemView::SelectRows );
     setSelectionMode( QAbstractItemView::SingleSelection );
-    setAlternatingRowColors( true );
 
     verticalHeader()->hide();
 

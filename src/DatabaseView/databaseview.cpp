@@ -5,6 +5,7 @@ DatabaseView::DatabaseView(QWidget *parent) :
     QTableView(parent)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
+    setAlternatingRowColors( true );
 }
 
 QModelIndex DatabaseView::indexUnderCursor() const

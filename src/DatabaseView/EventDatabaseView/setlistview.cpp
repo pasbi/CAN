@@ -18,6 +18,7 @@ SetlistView::SetlistView(QWidget *parent) :
     setDragDropMode( DragDrop );
     setSelectionMode( QAbstractItemView::ExtendedSelection );
     setDefaultDropAction( Qt::MoveAction );
+    setAlternatingRowColors( true );
     horizontalHeader()->hide();
     horizontalHeader()->setStretchLastSection( true );
     setHorizontalScrollMode( QTableView::ScrollPerPixel );

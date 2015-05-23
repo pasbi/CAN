@@ -19,7 +19,6 @@ public slots:
 protected:
    void mouseDoubleClickEvent(QMouseEvent *event);
 
-
 private slots:
     void showContextMenu(QPoint pos);
 
