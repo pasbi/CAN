@@ -227,7 +227,7 @@ void PDFCreator::paintHeadline(const QString &label)
     QString text = label;
 
     painter()->drawText( QPointF(leftMargin(), topMargin()), text);
-    m_additionalTopMargin += 2 * painter()->fontMetrics().height();
+    m_additionalTopMargin += 1.2 * painter()->fontMetrics().height();
     painter()->restore();
 }
 

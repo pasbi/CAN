@@ -14,6 +14,7 @@
 #include "DatabaseView/SongDatabaseView/songtableview.h"
 #include "conflicteditor.h"
 #include "Dialogs/commitdialog.h"
+#include "Dialogs/clonedialog.h"
 #include "Dialogs/identitydialog.h"
 #include "Dialogs/configurationdialog.h"
 #include <QProgressDialog>
@@ -665,7 +666,12 @@ void MainWindow::on_actionClone_triggered()
         return;
     }
 
-    QUrl url = QUrl( StringDialog::getURL( tr("URL"), QDir::homePath(), "Local file, SSH or https" ) );
+    CloneDialog dialog(m_identityManager, this);
+    if (dialog.exec() == QDialog::Rejected)
+    {
+        return;
+    }
+    QUrl url = dialog.url();
 
     if (!url.isValid())
     {
@@ -678,7 +684,7 @@ void MainWindow::on_actionClone_triggered()
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
 
-    m_project.cloneDetached( url.url() );
+    m_project.cloneDetached( url.url(), dialog.identity() );
 
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);
@@ -693,6 +699,7 @@ void MainWindow::on_actionClone_triggered()
         QThread::msleep( 10 );
         if (pd.wasCanceled())
         {
+            qDebug() << "return because of user cancel";
             return;
         }
     }
@@ -720,6 +727,7 @@ void MainWindow::on_actionClone_triggered()
 
     updateWindowTitle();
     updateWhichWidgetsAreEnabled();
+    qDebug() << "accept";
 
 }
 
@@ -782,7 +790,7 @@ void MainWindow::on_actionSync_triggered()
         else
         {
         }
-        m_project.setCredentials( name, password );
+        m_project.setCredentials( identity );
     }
     else
     {
