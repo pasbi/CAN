@@ -133,7 +133,7 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
         {
             chords << token;
         }
-        // do not count  . , - _  etc.
+        // do only count tokens that contains letters or numbers etc.
         if (token.contains(QRegExp("[A-Za-z0-9]")))
         {
             numToken++;

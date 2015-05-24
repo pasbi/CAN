@@ -6,6 +6,8 @@ DatabaseView::DatabaseView(QWidget *parent) :
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     setAlternatingRowColors( true );
+    setEditTriggers( QAbstractItemView::DoubleClicked
+                   | QAbstractItemView::EditKeyPressed );
 }
 
 QModelIndex DatabaseView::indexUnderCursor() const

@@ -9,8 +9,11 @@ SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
     ui(new Ui::SongDatabaseWidget)
 {
     ui->setupUi(this);
-    connect( ui->songTableViewContainer->songTableView(), SIGNAL(pressed(QModelIndex)), this, SLOT(updateAttachmentChooser()) );
     ui->songTableViewContainer->setModel( app().project()->songDatabaseProxy() );
+    connect( ui->songTableViewContainer->songTableView()->selectionModel(),
+             SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+             this,
+             SLOT(updateAttachmentChooser()) );
 }
 
 SongDatabaseWidget::~SongDatabaseWidget()

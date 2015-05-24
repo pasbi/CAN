@@ -12,7 +12,6 @@
 #//TODO shortcuts, e.g. for creating a chord pattern attachment
 #//TODO tags
 #//TODO what happens if network is requires but down?
-#//TODO `a` occurs very often in english lyrics. In some textes, it is misrecognized as A-minor chord.
 
 QT       += core gui multimedia
 
