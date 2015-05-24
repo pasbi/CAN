@@ -8,8 +8,11 @@ EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     ui(new Ui::EventDatabaseWidget)
 {
     ui->setupUi(this);
-    connect( ui->eventTableViewContainer->eventTableView(), SIGNAL(pressed(QModelIndex)), this, SLOT(updateSetlistView()) );
     ui->eventTableViewContainer->setModel( app().project()->eventDatabaseProxy() );
+    connect( ui->eventTableViewContainer->eventTableView()->selectionModel(),
+             SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+             this,
+             SLOT(updateSetlistView()) );
     connect( ui->eventTableViewContainer->eventTableView()->model(), SIGNAL(modelReset()), this, SLOT(updateSetlistView()) );
 }
 
