@@ -205,7 +205,7 @@
      <string>Tools.</string>
     </property>
     <property name="title">
-     <string>Tools</string>
+     <string>&amp;Tools</string>
     </property>
     <addaction name="actionIdentites"/>
     <addaction name="actionSettings"/>
@@ -215,9 +215,9 @@
      <string>Attachment related stuff.</string>
     </property>
     <property name="title">
-     <string>Attachments</string>
+     <string>&amp;Attachments</string>
     </property>
-    <addaction name="actionNew_Attachment"/>
+    <addaction name="separator"/>
     <addaction name="actionDelete_Attachment"/>
     <addaction name="actionRename_Attachment"/>
     <addaction name="actionDuplicate_Attachment"/>
@@ -227,7 +227,7 @@
      <string>Edit.</string>
     </property>
     <property name="title">
-     <string>Edit</string>
+     <string>&amp;Edit</string>
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -244,7 +244,7 @@
      <string>File index related stuff.</string>
     </property>
     <property name="title">
-     <string>File Index</string>
+     <string>F&amp;ile Index</string>
     </property>
     <addaction name="action_Index_Info"/>
     <addaction name="actionAdd_Folder"/>
@@ -256,7 +256,7 @@
      <string>Event related stuff.</string>
     </property>
     <property name="title">
-     <string>Events</string>
+     <string>E&amp;vents</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuSongs">
@@ -264,7 +264,7 @@
      <string>Song related stuff.</string>
     </property>
     <property name="title">
-     <string>Songs</string>
+     <string>&amp;Songs</string>
     </property>
     <widget class="QMenu" name="menuVisible_attributes">
      <property name="title">
@@ -386,6 +386,9 @@
    <property name="toolTip">
     <string>Delete Attachment selected attachment.</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Del</string>
+   </property>
   </action>
   <action name="actionUndo">
    <property name="icon">
@@ -445,6 +448,9 @@
    <property name="toolTip">
     <string>Rename selected attachment.</string>
    </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
   </action>
   <action name="actionDuplicate_Attachment">
    <property name="icon">
@@ -456,6 +462,9 @@
    </property>
    <property name="toolTip">
     <string>Duplicate selected attachment.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="actionSync">

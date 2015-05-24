@@ -96,6 +96,8 @@ private:
 
     void open(const QString& filename);
 
+    QList<QAction*> m_newAttachmentActions;
+
 };
 
 #endif // MAINWINDOW_H

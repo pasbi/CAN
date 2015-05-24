@@ -177,22 +177,24 @@ Event* MainWindow::currentEvent() const
 #include "Commands/SongCommands/songaddattachmentcommand.h"
 void MainWindow::setupAttachmentMenu()
 {
-    ui->actionNew_Attachment->setMenu( new QMenu( this ) );
-
     // gather attachment creators
+    QAction* actionBefore = ui->menuAttachments->actions().first();
     for (const QString & classname : Creatable::classnamesInCategory("Attachment"))
     {
-        Util::addAction( ui->actionNew_Attachment->menu(),
-                         QString(tr("New %1")).arg( Creatable::name(classname) ),
-                         [this, classname]()
-                         {
-                             Song* song = currentSong();
-                             if (song)
-                             {
-                                 SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, classname );
-                                 app().pushCommand( command );
-                             }
-                         } );
+        QAction* action = new QAction( ui->menuAttachments );
+        ui->menuAttachments->insertAction(actionBefore, action);
+        action->setText( QString(tr("New %1")).arg( Creatable::name(classname) ) );
+        action->setIcon(QIcon(":/oldIcons/oldIcons/1411698394_attachment_add-128.png"));
+        connect(action, &QAction::triggered, [this, classname]()
+        {
+            Song* song = currentSong();
+            if (song)
+            {
+                SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, classname );
+                app().pushCommand( command );
+            }
+        });
+        m_newAttachmentActions << action;
     }
 }
 
@@ -404,7 +406,11 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     // ui->actionUpdate_Index;
     // ui->actionAdd_Folder;
     // ui->actionClear_Index;
-    songObects          << ui->actionNew_Attachment;
+    for (QAction* action : m_newAttachmentActions)
+    {
+        songObects << action;
+    }
+
     attachmentObjects   << ui->actionDelete_Attachment;
     // ui->actionUndo;
     // ui->actionRedo;
