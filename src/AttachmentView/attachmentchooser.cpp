@@ -1,5 +1,8 @@
 #include "attachmentchooser.h"
 #include "ui_attachmentchooser.h"
+#include "Dialogs/tagdialog.h"
+#include "Commands/edittagscommand.h"
+#include "application.h"
 
 AttachmentChooser::AttachmentChooser(QWidget *parent) :
     QWidget(parent),
@@ -18,6 +21,7 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
         }
     });
     ui->comboBox->setInvalidText( tr("No Attachment") );
+    setSong( NULL );
 }
 
 AttachmentChooser::~AttachmentChooser()
@@ -48,6 +52,7 @@ void AttachmentChooser::setSong(Song *song)
         // restore last opened index
         ui->comboBox->setCurrentIndex( m_lastOpenedIndex.value( m_song, 0 ) );
     }
+    ui->pushButton->setEnabled( !!currentAttachment() );
 }
 
 void AttachmentChooser::setAttachment( int index )
@@ -95,4 +100,16 @@ Attachment* AttachmentChooser::currentAttachment() const
 void AttachmentChooser::updateAttachmentView()
 {
     ui->attachmentEditor->updateAttachmentView();
+}
+
+void AttachmentChooser::on_pushButton_clicked()
+{
+    if (currentAttachment())
+    {
+        TagDialog dialog( currentAttachment()->tags(), this );
+        if (dialog.exec() == QDialog::Accepted)
+        {
+            app().pushCommand( new EditTagsCommand(currentAttachment(), dialog.tags() ));
+        }
+    }
 }

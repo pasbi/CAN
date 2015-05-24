@@ -24,6 +24,9 @@ public slots:
     void setAttachment(int index );
     void updateAttachmentView();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::AttachmentChooser *ui;
     Song* m_song;

@@ -16,6 +16,7 @@ DatabaseView::DatabaseView(QWidget *parent) :
     addAction( editTagsAction );
     editTagsAction->setText(tr("Edit Tags"));
     editTagsAction->setShortcut(QKeySequence("Ctrl+T"));
+    editTagsAction->setIcon(QIcon(":/oldIcons/oldIcons/tag-2.png"));
     connect(editTagsAction, &QAction::triggered, [this]()
     {
         QModelIndexList list = selectionModel()->selectedIndexes();
