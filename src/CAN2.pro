@@ -9,6 +9,10 @@
 #//TODO port to Windows
 #//TODO shortcuts, e.g. for creating a chord pattern attachment
 #//TODO what happens if network is requires but down?
+#//TODO pasting song from other database (ctrl+c, ctrl+v) may lead to crash if columns are not compatible.
+#//TODO distinct icons for new-attachment-actions.
+#//TODO remove dead files
+#//TODO new song should be selected and visible.
 
 QT       += core gui multimedia
 

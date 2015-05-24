@@ -11,13 +11,17 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Identities</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QComboBox" name="comboBox"/>
+      <widget class="QComboBox" name="comboBox">
+       <property name="toolTip">
+        <string>Storded identities.</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="buttonAdd">
@@ -38,6 +42,9 @@
          <width>23</width>
          <height>23</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Add new identity.</string>
        </property>
        <property name="text">
         <string/>
@@ -68,6 +75,9 @@
          <height>23</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Remove this identity.</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -90,7 +100,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="nameEdit"/>
+    <widget class="QLineEdit" name="nameEdit">
+     <property name="toolTip">
+      <string>Name.</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_2">
@@ -103,7 +117,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="emailEdit"/>
+    <widget class="QLineEdit" name="emailEdit">
+     <property name="toolTip">
+      <string>Email for distinct identification.</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_4">
@@ -116,7 +134,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="loginEdit"/>
+    <widget class="QLineEdit" name="loginEdit">
+     <property name="toolTip">
+      <string>Username for login.</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_3">
@@ -130,6 +152,9 @@
    </item>
    <item>
     <widget class="QLineEdit" name="passwordEdit">
+     <property name="toolTip">
+      <string>Password for login.</string>
+     </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
      </property>

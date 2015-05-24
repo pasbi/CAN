@@ -31,7 +31,7 @@ void AddFileIndexSourceDialog::initFilterWidget()
     {
         QCheckBox* cb = new QCheckBox(m_filterWidget);
         checkBoxes.insert(ending, cb);
-        cb->setText(tr("*.%1").arg(ending));
+        cb->setText(QString("*.%1").arg(ending));
         hlayout->addWidget( cb );
     }
     QCheckBox* allCheckBox = new QCheckBox(m_filterWidget);

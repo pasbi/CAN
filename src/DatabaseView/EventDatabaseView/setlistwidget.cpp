@@ -204,7 +204,7 @@ void SetlistWidget::on_buttonExportPDF_clicked()
             filename = QFileDialog::getSaveFileName(    this,
                                                         tr("Export PDF ..."),
                                                         QDir::home().absoluteFilePath( filename ),
-                                                        tr("*.pdf"),
+                                                        "*.pdf",
                                                         NULL,
                                                         QFileDialog::DontConfirmOverwrite );
             if (!filename.endsWith(".pdf"))

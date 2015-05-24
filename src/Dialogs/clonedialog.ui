@@ -62,9 +62,12 @@
       </layout>
      </item>
      <item row="2" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
        <item>
         <widget class="QLineEdit" name="lineEdit">
+         <property name="toolTip">
+          <string>Url of the source repository.</string>
+         </property>
          <property name="placeholderText">
           <string>URL</string>
          </property>
@@ -79,7 +82,11 @@
           </size>
          </property>
          <property name="text">
-          <string>...</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../ressources.qrc">
+           <normaloff>:/icons/icons/open127.png</normaloff>:/icons/icons/open127.png</iconset>
          </property>
         </widget>
        </item>
@@ -100,7 +107,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
   <tabstop>pushButtonOpenFileDialog</tabstop>
   <tabstop>comboBox</tabstop>
   <tabstop>buttonEditIdentities</tabstop>

@@ -3,8 +3,6 @@
 
 const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/oldIcons/oldIcons/turnleft.png";
 const QString AudioAttachmentView::RECORD_RIGHT_POSITION_ICON_PATH = ":/oldIcons/oldIcons/turnright.png";
-const QString AudioAttachmentView::RECORD_LEFT_POSITION_CAPTION = tr("Record left");
-const QString AudioAttachmentView::RECORD_RIGHT_POSITION_CAPTION = tr("Record right");
 
 DEFN_CREATABLE( AudioAttachmentView, AttachmentView );
 

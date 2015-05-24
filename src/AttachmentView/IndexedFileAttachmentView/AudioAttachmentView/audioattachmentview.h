@@ -45,8 +45,6 @@ private:
 
     static const QString RECORD_LEFT_POSITION_ICON_PATH;
     static const QString RECORD_RIGHT_POSITION_ICON_PATH;
-    static const QString RECORD_LEFT_POSITION_CAPTION;
-    static const QString RECORD_RIGHT_POSITION_CAPTION;
 
 
 

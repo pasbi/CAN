@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>294</height>
+    <width>627</width>
+    <height>362</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,7 +20,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Begin and Ending</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
@@ -35,10 +35,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QCalendarWidget" name="calendarWidgetBeginning"/>
+        <widget class="QCalendarWidget" name="calendarWidgetBeginning">
+         <property name="toolTip">
+          <string>Date of the begin.</string>
+         </property>
+        </widget>
        </item>
        <item>
-        <widget class="QTimeEdit" name="timeEditBeginning"/>
+        <widget class="QTimeEdit" name="timeEditBeginning">
+         <property name="toolTip">
+          <string>Time of the begin.</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -85,10 +93,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QCalendarWidget" name="calendarWidgetEnding"/>
+        <widget class="QCalendarWidget" name="calendarWidgetEnding">
+         <property name="toolTip">
+          <string>Date of the ending.</string>
+         </property>
+        </widget>
        </item>
        <item>
-        <widget class="QTimeEdit" name="timeEditEnding"/>
+        <widget class="QTimeEdit" name="timeEditEnding">
+         <property name="toolTip">
+          <string>Time of the end.</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

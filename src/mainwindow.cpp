@@ -142,8 +142,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     newAction( actionNew_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
     newAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
-    newAction( actionCopy_Event,    ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected song."),    "Ctrl+C",   ui->menuEvents, "" )
-    newAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste song."),            "Ctrl+V",   ui->menuEvents, "" )
+    newAction( actionCopy_Event,    ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
+    newAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
 
     connect( ui->menuVisible_attributes, SIGNAL(aboutToShow()), this, SLOT(createAttributeVisibilityMenu() ));
 
@@ -606,8 +606,8 @@ void MainWindow::on_actionAdd_Folder_triggered()
     while (!app().fileIndex().operationIsFinished())
     {
         pd.setValue( (pd.value() + 1) % 100 );
-        label->setText( QString(tr("%1\n%2")).arg(app().fileIndex().currentFilename())
-                                              .arg(app().fileIndex().size())            );
+        label->setText( QString("%1\n%2").arg(app().fileIndex().currentFilename())
+                                         .arg(app().fileIndex().size())            );
         qApp->processEvents();
         QThread::msleep( 10 );
         if (pd.wasCanceled())

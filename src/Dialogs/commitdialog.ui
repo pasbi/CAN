@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Commit Changes</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -34,12 +34,18 @@
          <verstretch>1</verstretch>
         </sizepolicy>
        </property>
+       <property name="toolTip">
+        <string>Comment of the commit.</string>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Identity:</string>
+        <string>&amp;Identity:</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboBox</cstring>
        </property>
       </widget>
      </item>
@@ -53,6 +59,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>Identity to commit.</string>
+         </property>
         </widget>
        </item>
        <item>
@@ -62,6 +71,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Edit identities ...</string>
          </property>
          <property name="text">
           <string/>
@@ -102,8 +114,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>227</x>
-     <y>315</y>
+     <x>236</x>
+     <y>359</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -118,8 +130,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>295</x>
-     <y>321</y>
+     <x>304</x>
+     <y>359</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

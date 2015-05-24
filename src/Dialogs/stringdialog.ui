@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>String</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -32,7 +32,11 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="toolTip">
+        <string>The text.</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="buttonFileDialog">
@@ -42,8 +46,12 @@
          <height>16777215</height>
         </size>
        </property>
-       <property name="text">
-        <string>...</string>
+       <property name="toolTip">
+        <string>Open a file dialog.</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/icons/open127.png</normaloff>:/icons/icons/open127.png</iconset>
        </property>
       </widget>
      </item>
@@ -82,7 +90,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonCancel</sender>
@@ -91,8 +101,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>320</x>
-     <y>67</y>
+     <x>315</x>
+     <y>68</y>
     </hint>
     <hint type="destinationlabel">
      <x>179</x>

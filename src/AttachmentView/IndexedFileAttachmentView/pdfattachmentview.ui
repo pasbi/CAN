@@ -10,9 +10,6 @@
     <height>401</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -91,7 +88,7 @@
         <string>Adjust zoom.</string>
        </property>
        <property name="suffix">
-        <string> %</string>
+        <string notr="true"> %</string>
        </property>
        <property name="maximum">
         <double>200.000000000000000</double>

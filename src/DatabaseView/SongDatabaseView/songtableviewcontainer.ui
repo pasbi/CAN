@@ -10,9 +10,6 @@
     <height>398</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="SongTableView" name="tableView"/>
@@ -24,15 +21,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SongTableView</class>
-   <extends>QTableView</extends>
-   <header>DatabaseView/SongDatabaseView/songtableview.h</header>
-  </customwidget>
-  <customwidget>
    <class>FilterWidget</class>
    <extends>QWidget</extends>
    <header>filterwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SongTableView</class>
+   <extends>QTableView</extends>
+   <header>DatabaseView/SongDatabaseView/songtableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

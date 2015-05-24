@@ -175,7 +175,8 @@ QString FileIndex::currentFilename() const
     }
     else
     {
-        return tr("Inactive");
+        qWarning() << "expedted to have an m_indexer.";
+        return "";
     }
 }
 

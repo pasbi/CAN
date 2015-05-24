@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Tags</string>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -21,6 +21,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
      <item>
       <widget class="QComboBox" name="comboBox">
+       <property name="toolTip">
+        <string>Tags in use.</string>
+       </property>
        <property name="editable">
         <bool>true</bool>
        </property>
@@ -28,8 +31,15 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">
+       <property name="toolTip">
+        <string>Add tag.</string>
+       </property>
        <property name="text">
-        <string>Add</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/oldIcons/oldIcons/add-tag.png</normaloff>:/oldIcons/oldIcons/add-tag.png</iconset>
        </property>
        <property name="default">
         <bool>true</bool>
@@ -49,7 +59,7 @@
         <x>0</x>
         <y>0</y>
         <width>530</width>
-        <height>303</height>
+        <height>300</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -67,6 +77,9 @@
        </property>
        <item>
         <widget class="QLabel" name="label">
+         <property name="toolTip">
+          <string>Click on tag to remove it.</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -91,7 +104,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
