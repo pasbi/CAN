@@ -9,7 +9,6 @@
 #//TODO port to Windows
 #//TODO shortcuts, e.g. for creating a chord pattern attachment
 #//TODO what happens if network is requires but down?
-#//TODO new song should be selected and visible.
 
 QT       += core gui multimedia
 

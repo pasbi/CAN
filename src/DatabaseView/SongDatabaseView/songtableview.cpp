@@ -28,6 +28,7 @@ SongTableView::SongTableView(QWidget *parent) :
 
     connect(horizontalHeader(), SIGNAL(sectionMoved(int,int,int)), this, SLOT(fakeFocusOutEvent()));
 
+
     verticalHeader()->hide();
 
     setDragDropMode( QAbstractItemView::DragDrop );
@@ -35,12 +36,15 @@ SongTableView::SongTableView(QWidget *parent) :
     setDropIndicatorShown( true );
 }
 
-
 void SongTableView::setModel(SongDatabaseSortProxy *model)
 {
     QTableView::setModel(model);
     connect( model, SIGNAL(modelReset()), this, SLOT(resizeColumnsToContents()) );
+    connect( model->sourceModel(), &SongDatabase::rowsInserted, [this](QModelIndex, int first, int last) {
+        selectRow( last );
+    });
 }
+
 
 void SongTableView::fakeFocusOutEvent()
 {
