@@ -173,6 +173,14 @@ QVariant Song::attribute(int index) const
 
 QVariant& Song::attribute(int index)
 {
+    // copied songs may have inapropriate attribute length.
+
+    while ( index >= attributes().length() )
+    {
+        qWarning() << "Attribute " << index << " of " << title() << " does not exist. Create one.";
+        m_attributes.append( QVariant() );
+    }
+
     assert(index >= 0 && index < m_attributes.length());
     return m_attributes[index];
 }

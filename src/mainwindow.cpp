@@ -184,7 +184,24 @@ void MainWindow::setupAttachmentMenu()
         QAction* action = new QAction( ui->menuAttachments );
         ui->menuAttachments->insertAction(actionBefore, action);
         action->setText( QString(tr("New %1")).arg( Creatable::name(classname) ) );
-        action->setIcon(QIcon(":/oldIcons/oldIcons/1411698394_attachment_add-128.png"));
+
+        if (classname == "PDFAttachment")
+        {
+            action->setIcon(QIcon(":/icons/icons/pdf24.png"));
+        }
+        else if (classname == "ChordPatternAttachment")
+        {
+            action->setIcon(QIcon(":/oldIcons/oldIcons/1411698394_attachment_add-128.png"));
+        }
+        else if (classname == "AudioAttachment")
+        {
+            action->setIcon(QIcon(":/icons/icons/song1.png"));
+        }
+        else
+        {
+            action->setIcon(QIcon(":/icons/icons/write13.png"));
+        }
+
         connect(action, &QAction::triggered, [this, classname]()
         {
             Song* song = currentSong();

@@ -1,5 +1,4 @@
 #include "chordpatternattachmenttransposecommand.h"
-#include "Attachments/ChordPatternAttachment/chordpattern.h"
 
 ChordPatternAttachmentTransposeCommand::ChordPatternAttachmentTransposeCommand(ChordPatternAttachment* attachment , int transpose) :
     AttachmentCommand(attachment),
