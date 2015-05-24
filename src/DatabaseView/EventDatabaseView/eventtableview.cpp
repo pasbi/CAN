@@ -278,6 +278,9 @@ void EventTableView::pasteEvents(const QMimeData *mimeData, int row, Qt::DropAct
     app().endMacro();
 }
 
-
+Taggable* EventTableView::objectAt(const QModelIndex &index)
+{
+    return model()->eventAtIndex( proxyModel()->mapToSource(index) );
+}
 
 

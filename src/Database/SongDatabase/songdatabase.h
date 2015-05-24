@@ -191,7 +191,6 @@ private:
     {
         QString caption;
         bool fixEditor;
-        bool deletable;
     };
     static const QList<InitialColumn> INITIAL_COLUMNS;
     friend QList<InitialColumn> initColumns();

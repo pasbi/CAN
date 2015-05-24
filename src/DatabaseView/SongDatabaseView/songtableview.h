@@ -27,6 +27,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
     void keyPressEvent(QKeyEvent *event);
+    Taggable* objectAt(const QModelIndex &index);
 
 public slots:
     void fakeFocusOutEvent();

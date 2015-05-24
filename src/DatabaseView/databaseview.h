@@ -2,6 +2,7 @@
 #define DATABASEVIEW_H
 
 #include <QTableView>
+#include "taggable.h"
 
 class DatabaseView : public QTableView
 {
@@ -10,6 +11,7 @@ public:
     explicit DatabaseView(QWidget *parent = 0);
 
     QModelIndex indexUnderCursor() const;
+    virtual Taggable* objectAt(const QModelIndex& index) = 0;
 
 
 

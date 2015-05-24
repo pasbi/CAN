@@ -140,7 +140,8 @@ SOURCES += main.cpp\
     Commands/SongDatabaseCommands/songdatabasemovesongcommand.cpp \
     Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp \
-    Dialogs/tagdialog.cpp
+    Dialogs/tagdialog.cpp \
+    Commands/edittagscommand.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -250,7 +251,8 @@ HEADERS  += mainwindow.h \
     Commands/SongDatabaseCommands/songdatabasemovesongcommand.h \
     Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.h \
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h \
-    Dialogs/tagdialog.h
+    Dialogs/tagdialog.h \
+    Commands/edittagscommand.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

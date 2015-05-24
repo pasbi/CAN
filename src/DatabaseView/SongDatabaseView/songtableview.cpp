@@ -33,9 +33,6 @@ SongTableView::SongTableView(QWidget *parent) :
     setDragDropMode( QAbstractItemView::DragDrop );
     setDragEnabled( true );
     setDropIndicatorShown( true );
-
-    setContextMenuPolicy( Qt::NoContextMenu );
-
 }
 
 
@@ -169,4 +166,8 @@ void SongTableView::keyPressEvent(QKeyEvent *event)
     QTableView::keyPressEvent( event );
 }
 
+Taggable* SongTableView::objectAt(const QModelIndex &index)
+{
+    return model()->songAtIndex( proxyModel()->mapToSource(index) );
+}
 

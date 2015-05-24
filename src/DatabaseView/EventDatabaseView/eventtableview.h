@@ -25,6 +25,8 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
     void dropEvent(QDropEvent *event);
+    Taggable* objectAt(const QModelIndex &index);
+
 
 private:
     bool showDialog(QModelIndex index);

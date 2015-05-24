@@ -12,12 +12,11 @@ const QString SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT = "CAN/songs";
 
 QList<SongDatabase::InitialColumn> initColumns()
 {
-#define COLUMN( CAPTION, FIX_EDITOR, DELETABLE ) SongDatabase::InitialColumn({ SongDatabase::tr(CAPTION), FIX_EDITOR, DELETABLE })
+#define COLUMN( CAPTION, FIX_EDITOR ) SongDatabase::InitialColumn({ SongDatabase::tr(CAPTION), FIX_EDITOR })
     QList<SongDatabase::InitialColumn> cs;
-    cs << COLUMN( "Title", false, false )
-       << COLUMN( "Combo:Artist", false, false )
-       << COLUMN( "Date:Date Added", true, false )
-       << COLUMN( "Tags:Tags", true, false );
+    cs << COLUMN( "Title", false )
+       << COLUMN( "Combo:Artist", false )
+       << COLUMN( "Date:Date Added", true );
 
     return cs;
 #undef COLUMN
@@ -47,7 +46,7 @@ bool SongDatabase::allowDeleteColumn(int i)
     }
     else
     {
-        return INITIAL_COLUMNS[i].deletable;
+        return false;
     }
 }
 

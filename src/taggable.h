@@ -16,7 +16,7 @@ public:
     void removeTag(const QString & tag);
     bool hasTag(const QString & tag) const;
     QStringList tags() const { return m_tags; }
-    void setTags( const QStringList& tags ) { m_tags = tags; }
+    void setTags( const QStringList& tags );
 
     virtual bool restoreFromJsonObject( const QJsonObject & object );
     virtual QJsonObject toJsonObject() const;

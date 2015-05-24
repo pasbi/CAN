@@ -699,7 +699,6 @@ void MainWindow::on_actionClone_triggered()
         QThread::msleep( 10 );
         if (pd.wasCanceled())
         {
-            qDebug() << "return because of user cancel";
             return;
         }
     }
@@ -727,7 +726,6 @@ void MainWindow::on_actionClone_triggered()
 
     updateWindowTitle();
     updateWhichWidgetsAreEnabled();
-    qDebug() << "accept";
 
 }
 
@@ -954,7 +952,6 @@ void MainWindow::createAttributeVisibilityMenu()
     for (int i = 0; i < m_project.songDatabase()->attributeKeys().length(); ++i )
     {
         QString name = m_project.songDatabase()->attributeKeys()[i];
-        qDebug() << name;
         QString editorType;
         SongDatabase::editorTypeAndHeaderLabel( name, editorType, name );
         QAction* action = menu->addAction( name );

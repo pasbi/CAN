@@ -58,6 +58,20 @@ bool Taggable::hasTag(const QString & tag) const
     return m_tags.contains( tag );
 }
 
+void Taggable::setTags(const QStringList &tags)
+{
+    // to be able to track tags, remove and add each.
+    while (!m_tags.isEmpty())
+    {
+        removeTag( m_tags.takeFirst() );
+    }
+
+    for (const QString& tag : tags)
+    {
+        addTag( tag );
+    }
+}
+
 bool Taggable::restoreFromJsonObject(const QJsonObject& json)
 {
     if (!checkJsonObject(json, "tags", QJsonValue::Array))
@@ -70,7 +84,7 @@ bool Taggable::restoreFromJsonObject(const QJsonObject& json)
     {
         if (value.isString())
         {
-            m_tags.append(value.toString());
+            addTag( value.toString() );
         }
         else
         {
@@ -81,6 +95,7 @@ bool Taggable::restoreFromJsonObject(const QJsonObject& json)
 
     return true;
 }
+
 
 QJsonObject Taggable::toJsonObject() const
 {

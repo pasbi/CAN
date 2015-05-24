@@ -15,6 +15,8 @@ TagDialog::TagDialog(const QStringList & tags, QWidget *parent) :
     connect( ui->label, SIGNAL(linkActivated(QString)), this, SLOT(removeTag(QString)) );
     ui->label->setTextInteractionFlags(Qt::TextBrowserInteraction);
     ui->label->setWordWrap(true);
+
+    ui->comboBox->setCurrentIndex( -1 );
 }
 
 TagDialog::~TagDialog()
@@ -28,9 +30,10 @@ void TagDialog::updateTextEdit()
 
     QStringList tokens;
     QChar x = QChar(0x2717);
+
     for ( const QString & tag : m_tags)
     {
-        tokens << QString("<a href=%1 style=\"text-decoration: none\"><u>%1</u><sup>%2</sup></a>").arg(tag).arg(x);
+        tokens << QString("<a href=\"%1\" style=\"text-decoration: none\"><u>%1</u><sup>%2</sup></a>").arg(tag).arg(x);
     }
 
     ui->label->setText( QString("<html>%1</html>").arg(tokens.join(" ") ));
