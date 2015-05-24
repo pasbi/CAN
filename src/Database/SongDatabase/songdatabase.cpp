@@ -25,7 +25,6 @@ QList<SongDatabase::InitialColumn> initColumns()
 const QList<SongDatabase::InitialColumn> SongDatabase::INITIAL_COLUMNS = initColumns();
 
 SongDatabase::SongDatabase(Project *project) :
-    QAbstractTableModel( 0 ),
     Database(project)
 {
 }

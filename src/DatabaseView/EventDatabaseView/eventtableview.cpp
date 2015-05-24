@@ -182,7 +182,7 @@ void EventTableView::mouseDoubleClickEvent(QMouseEvent *event)
 
 void EventTableView::setModel(EventDatabaseSortProxy *model)
 {
-    QTableView::setModel( model );
+    DatabaseView::setModel( model );
 }
 
 EventDatabase* EventTableView::model() const

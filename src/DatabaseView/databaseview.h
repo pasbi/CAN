@@ -3,6 +3,7 @@
 
 #include <QTableView>
 #include "taggable.h"
+#include <QSortFilterProxyModel>
 
 class DatabaseView : public QTableView
 {
@@ -12,8 +13,7 @@ public:
 
     QModelIndex indexUnderCursor() const;
     virtual Taggable* objectAt(const QModelIndex& index) = 0;
-
-
+    void setModel(QSortFilterProxyModel *model);
 
 };
 

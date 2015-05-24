@@ -3,9 +3,8 @@
 
 #include "Database/database.h"
 #include "event.h"
-#include <QAbstractTableModel>
 
-class EventDatabase : public QAbstractTableModel, public Database
+class EventDatabase : public Database
 {
     Q_OBJECT
 public:

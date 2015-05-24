@@ -3,6 +3,7 @@
 #include "Dialogs/tagdialog.h"
 #include "application.h"
 #include "Commands/edittagscommand.h"
+#include "Database/database.h"
 
 DatabaseView::DatabaseView(QWidget *parent) :
     QTableView(parent)
@@ -33,6 +34,14 @@ DatabaseView::DatabaseView(QWidget *parent) :
             }
         }
 
+    });
+}
+
+void DatabaseView::setModel(QSortFilterProxyModel *model)
+{
+    QTableView::setModel( model );
+    connect( model->sourceModel(), &Database::rowsInserted, [this](QModelIndex, int last) {
+        selectRow( last );
     });
 }
 

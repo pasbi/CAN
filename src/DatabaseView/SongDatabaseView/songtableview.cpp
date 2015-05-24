@@ -38,11 +38,9 @@ SongTableView::SongTableView(QWidget *parent) :
 
 void SongTableView::setModel(SongDatabaseSortProxy *model)
 {
-    QTableView::setModel(model);
+    DatabaseView::setModel(model);
     connect( model, SIGNAL(modelReset()), this, SLOT(resizeColumnsToContents()) );
-    connect( model->sourceModel(), &SongDatabase::rowsInserted, [this](QModelIndex, int first, int last) {
-        selectRow( last );
-    });
+
 }
 
 

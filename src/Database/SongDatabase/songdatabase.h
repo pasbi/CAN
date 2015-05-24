@@ -2,7 +2,6 @@
 #define SONGDATABASE_H
 
 #include "Database/database.h"
-#include <QAbstractTableModel>
 #include "song.h"
 
 // SongID is the position of a song in a song database.
@@ -10,7 +9,7 @@
 typedef qint64 SongID;
 class SongDatabaseSortProxy;
 class CellEditor;
-class SongDatabase : public QAbstractTableModel, public Database
+class SongDatabase : public Database
 {
 
 public:
