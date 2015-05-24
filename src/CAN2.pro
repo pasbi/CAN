@@ -282,3 +282,7 @@ OTHER_FILES += \
 
 RESOURCES += \
     ressources.qrc
+
+TRANSLATIONS += \
+    can2_en.ts \
+    can2_de.ts
