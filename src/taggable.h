@@ -12,15 +12,19 @@ class Taggable : public PersistentObject
 public:
     Taggable();
     virtual ~Taggable();
-    void addTag(const QString & tag) { m_tags.insert(tag); }
-    void removeTag(const QString & tag) { m_tags.remove(tag); }
-    bool hasTag(const QString & tag) const { return m_tags.contains(tag); }
+    void addTag(const QString & tag);
+    void removeTag(const QString & tag);
+    bool hasTag(const QString & tag) const;
+    QStringList tags() const { return m_tags; }
+    void setTags( const QStringList& tags ) { m_tags = tags; }
 
     virtual bool restoreFromJsonObject( const QJsonObject & object );
     virtual QJsonObject toJsonObject() const;
+    static QStringList allTags() { return m_allTags.keys(); }
 
 private:
-    QSet<QString> m_tags;
+    QStringList m_tags;
+    static QMap<QString, int> m_allTags;
 
 };
 

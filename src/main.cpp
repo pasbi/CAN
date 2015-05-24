@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "application.h"
+#include "Dialogs/tagdialog.h"
 
 
 int main(int argc, char *argv[])
@@ -11,8 +12,6 @@ int main(int argc, char *argv[])
     MainWindow m;
     app.setMainWindow( &m );
     m.show();
+
     return app.exec();
-
-
-
 }

@@ -46,12 +46,35 @@ void RenamableHeaderView::editHeader(int section, bool endMacroOnFinish)
     lineEdit->setFixedSize(width, height() );
     lineEdit->move( x, 0 );
     lineEdit->setFocus();
-    lineEdit->setText( parent()->model()->headerData( section, orientation(), Qt::EditRole ).toString() );
+    QString oldText = parent()->proxyModel()->headerData( section, orientation(), Qt::EditRole ).toString();
+    lineEdit->setText( oldText );
     lineEdit->show();
 
-    connect(lineEdit, &QLineEdit::editingFinished, [this, endMacroOnFinish, lineEdit, section](){
+    connect(lineEdit, &QLineEdit::editingFinished, [this, endMacroOnFinish, lineEdit, oldText, section](){
         SongDatabase* database = parent()->model();
-        app().pushCommand( new SongDatabaseRenameHeaderCommand( database, lineEdit->text(), section, orientation() ) );
+
+        QString newText = lineEdit->text();
+
+        QString oldEditor, oldLabel;
+        SongDatabase::editorTypeAndHeaderLabel( oldText, oldEditor, oldLabel );
+
+        QString newEditor, newLabel;
+        SongDatabase::editorTypeAndHeaderLabel( newText, newEditor, newLabel );
+
+        if (parent()->model()->fixColumnEditor(section))
+        {
+            newText = QString("%1:%2").arg(oldEditor, newLabel);
+        }
+        else
+        {
+            newText = QString("%1:%2").arg(newEditor, newLabel);
+        }
+
+        if (newText != oldText)
+        {
+            app().pushCommand( new SongDatabaseRenameHeaderCommand( parent()->proxyModel(), lineEdit->text(), section, orientation() ) );
+        }
+
 
         if (endMacroOnFinish)
         {
@@ -88,7 +111,7 @@ void RenamableHeaderView::setUpContextMenu(QMenu *menu)
     SongDatabase* database =  parent()->model();
     QString key = database->attributeKeys()[section];
 
-    Util::addAction(menu, QString(tr("Delete Attribute %1")).arg(key), [this, database, section](){
+    Util::addAction(menu, QString(tr("Delete Attribute \"%1\"")).arg(key), [this, database, section](){
         if (parent()->model()->allowDeleteColumn(section))
         {
             app().pushCommand( new SongDatabaseRemoveColumnCommand( database, section ) );

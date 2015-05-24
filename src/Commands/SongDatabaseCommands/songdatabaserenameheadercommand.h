@@ -3,10 +3,10 @@
 
 #include "songdatabasecommand.h"
 
-class SongDatabaseRenameHeaderCommand : public SongDatabaseCommand
+class SongDatabaseRenameHeaderCommand : public Command
 {
 public:
-    SongDatabaseRenameHeaderCommand(SongDatabase*           songDatabase,
+    SongDatabaseRenameHeaderCommand(SongDatabaseSortProxy *songDatabase,
                                     const QString &         newName,
                                     const int               section,
                                     const Qt::Orientation   orientation);
@@ -15,6 +15,7 @@ public:
     void undo();
 
 private:
+    SongDatabaseSortProxy* m_songDatabase;
     QString m_newName;
     QString m_oldName;
     int m_section;

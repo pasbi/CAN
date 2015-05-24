@@ -10,25 +10,57 @@
 
 const QString SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT = "CAN/songs";
 
+QList<SongDatabase::InitialColumn> initColumns()
+{
+#define COLUMN( CAPTION, FIX_EDITOR, DELETABLE ) SongDatabase::InitialColumn({ SongDatabase::tr(CAPTION), FIX_EDITOR, DELETABLE })
+    QList<SongDatabase::InitialColumn> cs;
+    cs << COLUMN( "Title", false, false )
+       << COLUMN( "Combo:Artist", false, false )
+       << COLUMN( "Date:Date Added", true, false )
+       << COLUMN( "Tags:Tags", true, false );
+
+    return cs;
+#undef COLUMN
+}
+
+const QList<SongDatabase::InitialColumn> SongDatabase::INITIAL_COLUMNS = initColumns();
+
 SongDatabase::SongDatabase(Project *project) :
     QAbstractTableModel( 0 ),
     Database(project)
 {
 }
 
-
 void SongDatabase::initAttributes()
 {
-    //@see allowDeleteColumn
-    appendColumn(tr("Title"));
-    appendColumn(tr("Combo:Artist"));
-    appendColumn(tr("Date:Date Added"));
+    for (const InitialColumn& ic : INITIAL_COLUMNS)
+    {
+        appendColumn( ic.caption );
+    }
 }
 
 bool SongDatabase::allowDeleteColumn(int i)
 {
-    //@see initAttributes
-    return i >= 3;
+    if (i >= INITIAL_COLUMNS.length())
+    {
+        return true;
+    }
+    else
+    {
+        return INITIAL_COLUMNS[i].deletable;
+    }
+}
+
+bool SongDatabase::fixColumnEditor(int i)
+{
+    if (i >= INITIAL_COLUMNS.length())
+    {
+        return true;
+    }
+    else
+    {
+        return INITIAL_COLUMNS[i].fixEditor;
+    }
 }
 
 int SongDatabase::columnCount(const QModelIndex &parent) const

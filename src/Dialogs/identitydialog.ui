@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>352</width>
-    <height>284</height>
+    <height>305</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -157,6 +157,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>comboBox</tabstop>
+  <tabstop>buttonAdd</tabstop>
+  <tabstop>buttonRemove</tabstop>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>emailEdit</tabstop>
+  <tabstop>loginEdit</tabstop>
+  <tabstop>passwordEdit</tabstop>
+ </tabstops>
  <resources>
   <include location="../ressources.qrc"/>
  </resources>

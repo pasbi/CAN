@@ -7,7 +7,7 @@
 class SongDatabaseCommand : public Command
 {
 public:
-    SongDatabaseCommand( SongDatabase* songDatabase );
+    SongDatabaseCommand(SongDatabase *songDatabase );
     SongDatabase* database() const { return m_songDatabase; }
 
 private:

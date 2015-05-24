@@ -7,8 +7,6 @@
 
 #//TODO Translate to german
 #//TODO port to Windows
-#//TODO set default buttons (e.g. accept a dialog with enter)
-#//TODO Improve tab-navigation
 #//TODO shortcuts, e.g. for creating a chord pattern attachment
 #//TODO tags
 #//TODO what happens if network is requires but down?
@@ -141,7 +139,8 @@ SOURCES += main.cpp\
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp \
     Commands/SongDatabaseCommands/songdatabasemovesongcommand.cpp \
     Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.cpp \
-    Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp
+    Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp \
+    Dialogs/tagdialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -250,7 +249,8 @@ HEADERS  += mainwindow.h \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.h \
     Commands/SongDatabaseCommands/songdatabasemovesongcommand.h \
     Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.h \
-    Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h
+    Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h \
+    Dialogs/tagdialog.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -273,7 +273,8 @@ FORMS    += mainwindow.ui \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
-    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui
+    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui \
+    Dialogs/tagdialog.ui
 
 OTHER_FILES += \
     FileIndexRecycle.txt

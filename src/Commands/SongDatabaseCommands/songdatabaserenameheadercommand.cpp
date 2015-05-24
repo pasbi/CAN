@@ -1,10 +1,12 @@
 #include "songdatabaserenameheadercommand.h"
+#include "Database/SongDatabase/songdatabasesortproxy.h"
 
-SongDatabaseRenameHeaderCommand::SongDatabaseRenameHeaderCommand(SongDatabase *         songDatabase,
-                                                                 const QString &        newName,
-                                                                 const int              section,
-                                                                 const Qt::Orientation  orientation) :
-    SongDatabaseCommand(songDatabase),
+SongDatabaseRenameHeaderCommand::SongDatabaseRenameHeaderCommand(SongDatabaseSortProxy *    songDatabase,
+                                                                 const QString &            newName,
+                                                                 const int                  section,
+                                                                 const Qt::Orientation      orientation) :
+    Command(),
+    m_songDatabase( songDatabase ),
     m_newName(newName),
     m_section(section),
     m_orientation(orientation)
@@ -13,11 +15,11 @@ SongDatabaseRenameHeaderCommand::SongDatabaseRenameHeaderCommand(SongDatabase * 
 
 void SongDatabaseRenameHeaderCommand::redo()
 {
-    m_oldName = database()->headerData( m_section, m_orientation, Qt::DisplayRole ).toString();
-    database()->setHeaderData( m_section, m_orientation, m_newName, Qt::EditRole );
+    m_oldName = m_songDatabase->headerData( m_section, m_orientation, Qt::DisplayRole ).toString();
+    m_songDatabase->setHeaderData( m_section, m_orientation, m_newName, Qt::EditRole );
 }
 
 void SongDatabaseRenameHeaderCommand::undo()
 {
-    database()->setHeaderData( m_section, m_orientation, m_oldName, Qt::EditRole );
+    m_songDatabase->setHeaderData( m_section, m_orientation, m_oldName, Qt::EditRole );
 }

@@ -139,6 +139,8 @@ public:
     bool attributeVisible( int i );
     void setAttributeVisible( int i, bool visible );
     bool allowDeleteColumn(int i);
+    bool fixColumnEditor(int i);
+
 private:
 
     QList<AttributeKey>  m_attributeKeys;
@@ -182,6 +184,18 @@ signals:
     void attachmentRenamed(int, QString);
     void songAdded(int, Song*);
     void songRemoved(int);
+
+    //initial columns
+private:
+    struct InitialColumn
+    {
+        QString caption;
+        bool fixEditor;
+        bool deletable;
+    };
+    static const QList<InitialColumn> INITIAL_COLUMNS;
+    friend QList<InitialColumn> initColumns();
+
 
 };
 
