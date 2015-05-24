@@ -99,6 +99,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>pushButtonOpenFileDialog</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>buttonEditIdentities</tabstop>
+ </tabstops>
  <resources>
   <include location="../ressources.qrc"/>
  </resources>
