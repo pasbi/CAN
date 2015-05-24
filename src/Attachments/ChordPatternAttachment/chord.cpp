@@ -2,9 +2,10 @@
 #include "global.h"
 #include "persistentobject.h"
 
+// *?
 const QString Chord::SPLIT_PATTERN = (QStringList() << QRegExp::escape("|") << QRegExp::escape(",")
                                              << QRegExp::escape("-") << QRegExp::escape("/")
-                                             << QRegExp::escape("`") << "\\s"   ).join("|");
+                                             << QRegExp::escape("`") << QRegExp::escape("*") << "\\s"   ).join("|");
 
 const QString Chord::IGNORE_BEFORE_PATTERN = "(" + (QStringList() << QRegExp::escape("(") << QRegExp::escape("[")
                                                << QRegExp::escape("{")  << QRegExp::escape("<")).join("|") + ")*";
@@ -132,14 +133,16 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
         {
             chords << token;
         }
-        if (!token.isEmpty())
+        // do not count  . , - _  etc.
+        if (token.contains(QRegExp("[A-Za-z0-9]")))
         {
             numToken++;
         }
     }
 
+
     const int numChords = chords.length();
-    return ((float) numChords * numChords / numToken) >= 0.7;
+    return numChords > 1.3 * (numToken - numChords);
 }
 
 int parseBase( const QChar & c )
