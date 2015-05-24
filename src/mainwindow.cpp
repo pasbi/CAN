@@ -33,6 +33,7 @@ QString defaultStyleSheet()
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexFilter, "");
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, Language, "en");
 CONFIGURABLE_ADD_ITEM( MainWindow, Style,               "Style",                  QVariant(),           ConfigurationItemOptions::TextEditOptions( TR("Stylesheet") ) );
 CONFIGURABLE_ADD_ITEM( MainWindow, AskForCommitMessage, "Ask for commit message", QVariant(true),       ConfigurationItemOptions::CheckboxOptions() );
 CONFIGURABLE_ADD_ITEM( MainWindow, CommitMessage,       "Commit message",         TR("Sync"),           ConfigurationItemOptions::TextEditOptions( TR("commit message") ) );
@@ -148,6 +149,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( ui->menuVisible_attributes, SIGNAL(aboutToShow()), this, SLOT(createAttributeVisibilityMenu() ));
 
     connect( m_project.songDatabase(), SIGNAL(songRemoved(int)), ui->songDatabaseWidget, SLOT(updateAttachmentChooser()) );
+
+    connect( ui->menu_Language, SIGNAL(aboutToShow()), this, SLOT( createLanguageMenu() ));
 }
 
 MainWindow::~MainWindow()
@@ -1029,3 +1032,40 @@ void MainWindow::open(const QString &filename)
         updateWhichWidgetsAreEnabled();
     }
 }
+
+void MainWindow::createLanguageMenu()
+{
+    for (const QFileInfo& fileInfo : QDir().entryInfoList(QStringList() << "can2*.qm", QDir::Files, QDir::Name ))
+    {
+        QString shortcut = fileInfo.baseName().mid(5); // skip ending, skip can2_
+        QAction* action = new QAction( ui->menu_Language );
+        action->setText( QLocale::languageToString(QLocale(shortcut).language()) );
+        ui->menu_Language->addAction(action);
+        action->setCheckable( true );
+        connect(ui->menu_Language, SIGNAL(aboutToHide()), action, SLOT(deleteLater()));
+        if (config["Language"] == shortcut)
+        {
+            action->setChecked(true);
+        }
+
+        connect( action, &QAction::triggered, [this, shortcut]()
+        {
+            QMessageBox::information( this,
+                                      tr("Information"),
+                                      tr("Language changes will apply on next start."),
+                                      QMessageBox::Ok,
+                                      QMessageBox::NoButton );
+            config.set("Language", shortcut);
+        });
+    }
+}
+
+
+
+
+
+
+
+
+
+

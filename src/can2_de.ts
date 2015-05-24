@@ -278,7 +278,7 @@
 <context>
     <name>DatabaseView</name>
     <message>
-        <location filename="DatabaseView/databaseview.cpp" line="17"/>
+        <location filename="DatabaseView/databaseview.cpp" line="18"/>
         <source>Edit Tags</source>
         <translation>Tags bearbeiten</translation>
     </message>
@@ -580,364 +580,374 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
         <translation>Sichtbare Attribute ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="285"/>
+        <location filename="mainwindow.ui" line="276"/>
+        <source>&amp;Language</source>
+        <translation>&amp;Sprache</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="291"/>
         <source>&amp;New Project</source>
         <translation>&amp;Neues Projekt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="288"/>
+        <location filename="mainwindow.ui" line="294"/>
         <source>Create a new empty project.</source>
         <translation>Erzeuge neues leeres Projekt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="300"/>
+        <location filename="mainwindow.ui" line="306"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="303"/>
+        <location filename="mainwindow.ui" line="309"/>
         <source>Save the current project.</source>
         <translation>Speichere dieses Project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="315"/>
+        <location filename="mainwindow.ui" line="321"/>
         <source>Save As</source>
         <translation>Speichern unter ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="318"/>
+        <location filename="mainwindow.ui" line="324"/>
         <source>Save the current project as.</source>
         <translation>Speichere dieses Projekt als ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="330"/>
+        <location filename="mainwindow.ui" line="336"/>
         <source>Open</source>
         <translation>Öffnen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="333"/>
+        <location filename="mainwindow.ui" line="339"/>
         <source>Open an existing project.</source>
         <translation>Öffne ein existierendes Projekt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="341"/>
+        <location filename="mainwindow.ui" line="347"/>
         <source>Index Info ...</source>
         <oldsource>Index Info</oldsource>
         <translation>Index Info ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="344"/>
+        <location filename="mainwindow.ui" line="350"/>
         <source>Information about the file index.</source>
         <translation>Informationen über den Index anzeigen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="352"/>
+        <location filename="mainwindow.ui" line="358"/>
         <source>Add Folder ...</source>
         <oldsource>Add Folder</oldsource>
         <translation>Ordner hinzufügen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="355"/>
+        <location filename="mainwindow.ui" line="361"/>
         <source>Add Folder to the file index.</source>
         <translation>Ordner zum Index hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="363"/>
+        <location filename="mainwindow.ui" line="369"/>
         <source>Clear Index</source>
         <translation>Index löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="366"/>
+        <location filename="mainwindow.ui" line="372"/>
         <source>Remove all files from file index.</source>
         <translation>Alle Dateien vom Index entfernen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="378"/>
+        <location filename="mainwindow.ui" line="384"/>
         <source>Delete Attachment</source>
         <oldsource>New Attachment </oldsource>
         <translation>Anlage löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="381"/>
+        <location filename="mainwindow.ui" line="387"/>
         <source>Delete Attachment selected attachment.</source>
         <oldsource>Add new attachment to a song.</oldsource>
         <translation>Lösche ausgewählte Anlage.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="393"/>
+        <location filename="mainwindow.ui" line="399"/>
         <source>&amp;Undo</source>
         <oldsource>Undo</oldsource>
         <translation>&amp;Rückgängig</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="396"/>
+        <location filename="mainwindow.ui" line="402"/>
         <source>Undo the last action.</source>
         <translation>Letze Änderung rückgängig machen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="408"/>
+        <location filename="mainwindow.ui" line="414"/>
         <source>&amp;Redo</source>
         <oldsource>Redo</oldsource>
         <translation>&amp;Wiederholen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="411"/>
+        <location filename="mainwindow.ui" line="417"/>
         <source>Redo the last undone action.</source>
         <translation>Zuletzt rückgängig gemachte Änderung wiederholen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="423"/>
+        <location filename="mainwindow.ui" line="429"/>
         <source>Clone ...</source>
         <translation>Klonen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="426"/>
+        <location filename="mainwindow.ui" line="432"/>
         <source>Clone a repository.</source>
         <translation>Klone ein Repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="434"/>
+        <location filename="mainwindow.ui" line="440"/>
         <source>Open terminal</source>
         <translation>Terminal öffnen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="446"/>
+        <location filename="mainwindow.ui" line="452"/>
         <source>Rename Attachment ...</source>
         <translation>Anlage umbenennen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="637"/>
+        <location filename="mainwindow.cpp" line="657"/>
         <source>Rename Attachment</source>
         <translation>Anlage umbennen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="449"/>
+        <location filename="mainwindow.ui" line="455"/>
         <source>Rename selected attachment.</source>
         <translation>Diese Anlage umbennen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="461"/>
+        <location filename="mainwindow.ui" line="467"/>
         <source>Duplicate Attachment</source>
         <translation>Anlage duplizieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="464"/>
+        <location filename="mainwindow.ui" line="470"/>
         <source>Duplicate selected attachment.</source>
         <translation>Diese Anlage duplizieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="476"/>
-        <location filename="mainwindow.cpp" line="770"/>
-        <location filename="mainwindow.cpp" line="777"/>
-        <location filename="mainwindow.cpp" line="867"/>
-        <location filename="mainwindow.cpp" line="876"/>
+        <location filename="mainwindow.ui" line="482"/>
+        <location filename="mainwindow.cpp" line="790"/>
+        <location filename="mainwindow.cpp" line="797"/>
+        <location filename="mainwindow.cpp" line="887"/>
+        <location filename="mainwindow.cpp" line="896"/>
         <source>Sync</source>
         <translation>Synchronisieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="479"/>
+        <location filename="mainwindow.ui" line="485"/>
         <source>Synchronizes local project with remote repository.</source>
         <translation>Locales Repository synchronisieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="487"/>
+        <location filename="mainwindow.ui" line="493"/>
         <source>Identites ...</source>
         <translation>Identitäten ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="490"/>
+        <location filename="mainwindow.ui" line="496"/>
         <source>Manage identities.</source>
         <translation>Identitäten verwalten.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="498"/>
+        <location filename="mainwindow.ui" line="504"/>
         <source>Preferences ...</source>
         <translation>Einstellungen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="501"/>
+        <location filename="mainwindow.ui" line="507"/>
         <source>Settings.</source>
         <translation>Einstellungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="138"/>
+        <location filename="mainwindow.cpp" line="139"/>
         <source>&amp;New Song</source>
         <translation>&amp;Neuer Song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="138"/>
+        <location filename="mainwindow.cpp" line="139"/>
         <source>Add a new song.</source>
         <translation>Neuen Song hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="139"/>
+        <location filename="mainwindow.cpp" line="140"/>
         <source>&amp;Remove Song</source>
         <translation>Song &amp;Löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="139"/>
+        <location filename="mainwindow.cpp" line="140"/>
         <source>Remove selected song.</source>
         <translation>Lösche ausgewählten Song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="140"/>
+        <location filename="mainwindow.cpp" line="141"/>
         <source>&amp;Copy Song</source>
         <translation>Song &amp;Kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="140"/>
+        <location filename="mainwindow.cpp" line="141"/>
         <source>Copy selected song.</source>
         <translation>Ausgewählten Song kopieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="141"/>
+        <location filename="mainwindow.cpp" line="142"/>
         <source>&amp;Paste Song</source>
         <translation>Song &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="141"/>
+        <location filename="mainwindow.cpp" line="142"/>
         <source>Paste song.</source>
         <translation>Song einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="143"/>
+        <location filename="mainwindow.cpp" line="144"/>
         <source>&amp;New Event</source>
         <translation>&amp;Neues Event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="143"/>
+        <location filename="mainwindow.cpp" line="144"/>
         <source>Add a new event.</source>
         <translation>Neues Event hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="144"/>
+        <location filename="mainwindow.cpp" line="145"/>
         <source>&amp;Remove Event</source>
         <translation>Event &amp;Löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="144"/>
+        <location filename="mainwindow.cpp" line="145"/>
         <source>Remove selected event.</source>
         <translation>Ausgewähltes Event löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="145"/>
+        <location filename="mainwindow.cpp" line="146"/>
         <source>&amp;Copy Event</source>
         <translation>Event &amp;Kopieren</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="146"/>
+        <source>Copy selected event.</source>
+        <translation>Kopiere selektiertes Event.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="147"/>
         <source>&amp;Paste Event</source>
         <translation>Event &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="146"/>
+        <location filename="mainwindow.cpp" line="147"/>
         <source>Paste event.</source>
         <translation>Event einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="186"/>
+        <location filename="mainwindow.cpp" line="189"/>
         <source>New %1</source>
         <translation>Neues %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="221"/>
+        <location filename="mainwindow.cpp" line="241"/>
         <source>Unnamed</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="282"/>
+        <location filename="mainwindow.cpp" line="302"/>
         <source>Save As ...</source>
         <translation>Speichern unter ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="324"/>
+        <location filename="mainwindow.cpp" line="344"/>
         <source>Really close %1</source>
         <translation>%1 wirklich schließen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="325"/>
+        <location filename="mainwindow.cpp" line="345"/>
         <source>There are unsaved changes.</source>
         <translation>Es gibt ungespeicherte Änderungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="531"/>
+        <location filename="mainwindow.cpp" line="551"/>
         <source>Open ...</source>
         <translation>Öffnen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="572"/>
+        <location filename="mainwindow.cpp" line="592"/>
         <source>Song cannot be removed</source>
         <translation>Song kann nicht entfernt werden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="573"/>
+        <location filename="mainwindow.cpp" line="593"/>
         <source>This song is currently in use and can thus not be removed.</source>
         <translation>Diese Song wird momentan benutzt und kann deshalb nicht entfernt werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="637"/>
+        <location filename="mainwindow.cpp" line="657"/>
         <source>New Name for %1</source>
         <translation>Neuer Name für %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="703"/>
+        <location filename="mainwindow.cpp" line="723"/>
         <source>Cloning.</source>
         <translation>Am Klonen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="716"/>
+        <location filename="mainwindow.cpp" line="736"/>
         <source>Cloning failed</source>
         <translation>Klonen fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="717"/>
+        <location filename="mainwindow.cpp" line="737"/>
         <source>Failed to clone %1.</source>
         <translation>Fehlgeschlagener Klonversuch (%1).</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="725"/>
+        <location filename="mainwindow.cpp" line="745"/>
         <source>Cannot load project</source>
         <translation>Kann diese Projekt nicht laden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="726"/>
+        <location filename="mainwindow.cpp" line="746"/>
         <source>Failed to load cloned project.
 Make sure you cloned the correct repository and the repository is valid.</source>
         <translation>Kann geklontes Projekt nicht öffnen.
 Stelle sicher dass Du das richtige Repository geklont hast.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="771"/>
+        <location filename="mainwindow.cpp" line="791"/>
         <source>You must provide a valid identity to sync. Abort.</source>
         <translation>Du musst eine gültige Identität zum Synchronisieren angeben. Abbruch.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="778"/>
+        <location filename="mainwindow.cpp" line="798"/>
         <source>Commit message may not be empty. Abort.</source>
         <translation>Commit nachricht darf nicht leer sein. Abbruch.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="788"/>
+        <location filename="mainwindow.cpp" line="808"/>
         <source>Password for %1</source>
         <translation>Passwort für %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="788"/>
+        <location filename="mainwindow.cpp" line="808"/>
         <source>Password</source>
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="812"/>
+        <location filename="mainwindow.cpp" line="832"/>
         <source>Syncing.</source>
         <translation>Synchronisiere.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="856"/>
+        <location filename="mainwindow.cpp" line="876"/>
         <source>Failed to load project.</source>
         <translation>Konnte das Projekt nicht laden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="857"/>
+        <location filename="mainwindow.cpp" line="877"/>
         <source>Cannot open merged project.
 Probably merging went wrong or the remote version was currupted.
 Fix the error by hand and commit it over the current version, then clone the fixed repository.</source>
@@ -946,40 +956,50 @@ Wahrscheinlich ist das Zusammenführen schiefgegangen oder die Remote-Version wa
 Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="868"/>
+        <location filename="mainwindow.cpp" line="888"/>
         <source>Sync failed.</source>
         <translation>Synchronisieren fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="877"/>
+        <location filename="mainwindow.cpp" line="897"/>
         <source>Sync succeeded</source>
         <translation>Synchronisieren erfolgreich</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="899"/>
+        <location filename="mainwindow.cpp" line="919"/>
         <source>File index information</source>
         <translation>Informationen über Dateiindex</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="900"/>
+        <location filename="mainwindow.cpp" line="920"/>
         <source>Files: %1</source>
         <translation>Dateien: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="992"/>
-        <location filename="mainwindow.cpp" line="1003"/>
+        <location filename="mainwindow.cpp" line="1012"/>
+        <location filename="mainwindow.cpp" line="1023"/>
         <source>Opening %1</source>
         <translation>Öffne %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="993"/>
+        <location filename="mainwindow.cpp" line="1013"/>
         <source>Cannot open %1. Unknown file format.</source>
         <translation>Kann %1 nicht öffnen. Unbekanntes Format</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1004"/>
+        <location filename="mainwindow.cpp" line="1024"/>
         <source>File %1 not found.</source>
         <translation>Datei %1 nicht gefunden.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1054"/>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1055"/>
+        <source>Language changes will apply on next start.</source>
+        <translation>Sprache ändert sich beim nächsten Start.</translation>
     </message>
     <message>
         <location filename="mainwindow.h" line="43"/>
@@ -1048,6 +1068,18 @@ Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.<
         <location filename="PDFCreator/pdfcreator.cpp" line="253"/>
         <source>Table of Content</source>
         <translation>Inhaltsverzeichnis</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="19"/>
+        <source>Cannot find translation file</source>
+        <translation>Sprachdatei nicht gefunden</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="20"/>
+        <source>Translation file %1.qm not found.
+Using fallback-english which is not recommended.</source>
+        <translation>Sprachdatei %1.qm nicht gefunden.
+Benutze Notfall-English (nicht empfohlen).</translation>
     </message>
 </context>
 <context>
@@ -1216,7 +1248,7 @@ Do you want to replace it?</source>
 <context>
     <name>SongTableView</name>
     <message>
-        <location filename="DatabaseView/SongDatabaseView/songtableview.cpp" line="133"/>
+        <location filename="DatabaseView/SongDatabaseView/songtableview.cpp" line="135"/>
         <source>Paste songs</source>
         <translation>Songs einfügen</translation>
     </message>

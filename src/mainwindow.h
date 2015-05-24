@@ -81,6 +81,7 @@ private slots:
     void my_on_actionPaste_Event_triggered();
 
     void createAttributeVisibilityMenu();
+    void createLanguageMenu();
 
 private:
     void setupAttachmentMenu();

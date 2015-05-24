@@ -5,10 +5,9 @@
 #-------------------------------------------------
 
 
-#//TODO Translate to german
 #//TODO port to Windows
-#//TODO shortcuts, e.g. for creating a chord pattern attachment
 #//TODO what happens if network is requires but down?
+#//TODO e.g. text on QStandardButton is not translated.
 
 QT       += core gui multimedia
 

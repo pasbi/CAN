@@ -271,6 +271,11 @@
     </widget>
     <addaction name="menuVisible_attributes"/>
    </widget>
+   <widget class="QMenu" name="menu_Language">
+    <property name="title">
+     <string>&amp;Language</string>
+    </property>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
    <addaction name="menuSongs"/>
@@ -279,6 +284,7 @@
    <addaction name="menuTools"/>
    <addaction name="menuFile_Index"/>
    <addaction name="menuDebug"/>
+   <addaction name="menu_Language"/>
   </widget>
   <action name="actionNew_Project">
    <property name="text">
