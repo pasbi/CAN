@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<TS version="2.1" language="en_US">
 <context>
     <name>AddFileIndexSourceDialog</name>
     <message>
         <location filename="Dialogs/addfileindexsourcedialog.cpp" line="38"/>
         <source>all files</source>
-        <translation>Alle Dateien</translation>
+        <translation>All Files</translation>
     </message>
     <message>
         <location filename="Dialogs/addfileindexsourcedialog.cpp" line="43"/>
         <source>&lt; No files &gt;</source>
-        <translation>&lt; Keine Dataien &gt;</translation>
+        <translation>
+&lt; No Files &gt;</translation>
     </message>
 </context>
 <context>
@@ -19,17 +20,17 @@
     <message>
         <location filename="AttachmentView/attachmentchooser.ui" line="19"/>
         <source>Choose an attachment.</source>
-        <translation>Wähle Anlage.</translation>
+        <translation>Choose Attachment.</translation>
     </message>
     <message>
         <location filename="AttachmentView/attachmentchooser.ui" line="26"/>
         <source>Edit tags of the current attachment.</source>
-        <translation>Bearbeite die Tags der aktuellen Anlage.</translation>
+        <translation>Edit tags of the current attachment.</translation>
     </message>
     <message>
         <location filename="AttachmentView/attachmentchooser.cpp" line="23"/>
         <source>No Attachment</source>
-        <translation>Keine Anlage</translation>
+        <translation>No Attachment</translation>
     </message>
 </context>
 <context>
@@ -37,7 +38,7 @@
     <message>
         <location filename="Attachments/AudioAttachment/audioattachment.cpp" line="8"/>
         <source>Audio Attachment</source>
-        <translation>Audioanlage</translation>
+        <translation>Audio Attachment</translation>
     </message>
 </context>
 <context>
@@ -45,67 +46,67 @@
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="17"/>
         <source>List of all stored sections.</source>
-        <translation>Liste aller gesicherten Abschnitte.</translation>
+        <translation>List of all stored sections.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="44"/>
         <source>Record left and right end of a section.</source>
-        <translation>Anfang und Ende eines Abschnitts bestimmen.</translation>
+        <translation>Record left and right end of a section.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="54"/>
         <source>Abort section recording and drop loaded section.</source>
-        <translation>Breche Aufnahme des Abschnitts ab und verwerde den Abschnitt.</translation>
+        <translation>Abort section recording and drop loaded section.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="77"/>
         <source>Restore selected Section.</source>
-        <translation>Abschnitt wiederherstellen.</translation>
+        <translation>Restore selected section.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="91"/>
         <source>Delete selected section.</source>
-        <translation>Abschnitt löschen.</translation>
+        <translation>Delete selected section.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="116"/>
         <source>Adjust pitch in semi tones.</source>
-        <translation>Tonlage in Halbtonschritten verändern.</translation>
+        <translation>Adjust pitch in semi tones.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="135"/>
         <source>Adjust tempo</source>
-        <translation>Tempo anpassen</translation>
+        <translation>Adjust tempo</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="177"/>
         <source>Play or pause current song.</source>
-        <translation>Play oder Pause.</translation>
+        <translation>Play or pause current song.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="195"/>
         <source>Stop current song.</source>
-        <translation>Stop.</translation>
+        <translation>Stop current song.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="211"/>
         <source>Seek position in song.</source>
-        <translation>Suche im Song.</translation>
+        <translation>Seek position in song.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="34"/>
         <source>Delete Section</source>
-        <translation>Lösche Abschnitt</translation>
+        <translation>Delete section</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="41"/>
         <source>Restore Section</source>
-        <translation>Abschnitt wiederherstellen</translation>
+        <translation>Restore Section</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="142"/>
         <source>Unnamed</source>
-        <translation>Unbenannt</translation>
+        <translation>Unamed</translation>
     </message>
 </context>
 <context>
@@ -113,17 +114,17 @@
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="29"/>
         <source>Elapsed time in seconds.</source>
-        <translation>Vergangene Zeit in Sekunden.</translation>
+        <translation>Elapsed time in seconds.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="36"/>
         <source>Seek to the desired position.</source>
-        <translation>Suche gewünschte Position.</translation>
+        <translation>Seek the desired position.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="46"/>
         <source>Remaining time in seconds.</source>
-        <translation>Verbleibende Zeit in Sekunden.</translation>
+        <translation>Remaining time in seconds.</translation>
     </message>
 </context>
 <context>
@@ -131,7 +132,7 @@
     <message>
         <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="12"/>
         <source>Chord Pattern</source>
-        <translation>Akkord Schema</translation>
+        <translation>Chord Pattern</translation>
     </message>
 </context>
 <context>
@@ -139,12 +140,12 @@
     <message>
         <location filename="AttachmentView/chordpatternattachmentview.cpp" line="25"/>
         <source>Transpose up</source>
-        <translation>Nach oben transponieren</translation>
+        <translation>Transpose up</translation>
     </message>
     <message>
         <location filename="AttachmentView/chordpatternattachmentview.cpp" line="32"/>
         <source>Transpose down</source>
-        <translation>Nach unten transponieren</translation>
+        <translation>Transpose down</translation>
     </message>
 </context>
 <context>
@@ -152,22 +153,22 @@
     <message>
         <location filename="Dialogs/clonedialog.ui" line="14"/>
         <source>Clone Repository</source>
-        <translation>Repository klonen</translation>
+        <translation>Clone repository</translation>
     </message>
     <message>
         <location filename="Dialogs/clonedialog.ui" line="22"/>
         <source>&amp;Path:</source>
-        <translation>&amp;Pfad:</translation>
+        <translation>&amp;Path:</translation>
     </message>
     <message>
         <location filename="Dialogs/clonedialog.ui" line="29"/>
         <source>Identity:</source>
-        <translation>Identität:</translation>
+        <translation>Identity:</translation>
     </message>
     <message>
         <location filename="Dialogs/clonedialog.ui" line="69"/>
         <source>Url of the source repository.</source>
-        <translation>URL des Repositories.</translation>
+        <translation>URL of the source repository.</translation>
     </message>
     <message>
         <location filename="Dialogs/clonedialog.ui" line="72"/>
@@ -180,38 +181,38 @@
     <message>
         <location filename="Dialogs/commitdialog.ui" line="14"/>
         <source>Commit Changes</source>
-        <translation>Änderungen ins Repository übertragen</translation>
+        <translation>Commit changes into repository</translation>
     </message>
     <message>
         <location filename="Dialogs/commitdialog.ui" line="22"/>
         <source>&amp;Comment:</source>
-        <translation>&amp;Kommentar:</translation>
+        <translation>&amp;Comment:</translation>
     </message>
     <message>
         <location filename="Dialogs/commitdialog.ui" line="38"/>
         <source>Comment of the commit.</source>
-        <translation>Kommentar (Zusammenfassung der Änderungen).</translation>
+        <translation>Comment (summary of changes).</translation>
     </message>
     <message>
         <location filename="Dialogs/commitdialog.ui" line="45"/>
         <source>&amp;Identity:</source>
         <oldsource>Identity:</oldsource>
-        <translation>&amp;Identität:</translation>
+        <translation>&amp;Identity:</translation>
     </message>
     <message>
         <location filename="Dialogs/commitdialog.ui" line="63"/>
         <source>Identity to commit.</source>
-        <translation>Identität die für die Änderungen verantwortlich ist.</translation>
+        <translation>Idenity which is responsible for changes.</translation>
     </message>
     <message>
         <location filename="Dialogs/commitdialog.ui" line="76"/>
         <source>Edit identities ...</source>
-        <translation>Identitäten bearbeiten ...</translation>
+        <translation>Edit identities ...</translation>
     </message>
     <message>
         <location filename="Dialogs/commitdialog.ui" line="94"/>
         <source>Ok is enbled when a valid identity is choosen and comment is not empty.</source>
-        <translation>Ok wird nur aktiviert wenn weder Kommentar und Identität nicht leer sind.</translation>
+        <translation>Ok is only enabled if neither identity nor comment is empty.</translation>
     </message>
 </context>
 <context>
@@ -219,7 +220,7 @@
     <message>
         <location filename="Dialogs/configurationdialog.ui" line="14"/>
         <source>Preferences</source>
-        <translation>Einstellungen</translation>
+        <translation>Preferences</translation>
     </message>
 </context>
 <context>
@@ -227,42 +228,42 @@
     <message>
         <location filename="conflicteditor.ui" line="14"/>
         <source>Conflicts</source>
-        <translation>Konflikte</translation>
+        <translation>Conflicts</translation>
     </message>
     <message>
         <location filename="conflicteditor.ui" line="22"/>
         <source>List of all conflicted files.</source>
-        <translation>Liste aller Dateien mit Konflikten.</translation>
+        <translation>List of all conflicted files.</translation>
     </message>
     <message>
         <location filename="conflicteditor.ui" line="40"/>
         <source>Local version.</source>
-        <translation>Meine Version.</translation>
+        <translation>My version.</translation>
     </message>
     <message>
         <location filename="conflicteditor.ui" line="47"/>
         <source>Keep local version and overwrite remote version.</source>
-        <translation>Behalte meine Version und überschreibe andere.</translation>
+        <translation>Keep my version and overwrite other one.</translation>
     </message>
     <message>
         <location filename="conflicteditor.ui" line="50"/>
         <source>keep &amp;local</source>
-        <translation>Behalte &amp;meine Version</translation>
+        <translation>Keep &amp;my version</translation>
     </message>
     <message>
         <location filename="conflicteditor.ui" line="61"/>
         <source>Remote version.</source>
-        <translation>Deren Version.</translation>
+        <translation>Their version.</translation>
     </message>
     <message>
         <location filename="conflicteditor.ui" line="68"/>
         <source>Keep remote version and overwrite local version.</source>
-        <translation>Behalte deren Version und überschreibe meine.</translation>
+        <translation>Keep their version and overwrite mine.</translation>
     </message>
     <message>
         <location filename="conflicteditor.ui" line="71"/>
         <source>keep &amp;remote</source>
-        <translation>Behalte &amp;deren Version</translation>
+        <translation>Keep &amp;their version</translation>
     </message>
     <message>
         <location filename="conflicteditor.ui" line="97"/>
@@ -272,7 +273,7 @@
     <message>
         <location filename="conflicteditor.ui" line="104"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Abbrechen</translation>
+        <translation>&amp;Cancel</translation>
     </message>
 </context>
 <context>
@@ -280,7 +281,7 @@
     <message>
         <location filename="DatabaseView/databaseview.cpp" line="18"/>
         <source>Edit Tags</source>
-        <translation>Tags bearbeiten</translation>
+        <translation>Edit tags</translation>
     </message>
 </context>
 <context>
@@ -288,37 +289,37 @@
     <message>
         <location filename="Dialogs/datetimedialog.ui" line="23"/>
         <source>Begin and Ending</source>
-        <translation>Anfang und Ende</translation>
+        <translation>Begin and Ending</translation>
     </message>
     <message>
         <location filename="Dialogs/datetimedialog.ui" line="33"/>
         <source>Beginning:</source>
-        <translation>Anfang:</translation>
+        <translation>Beginning:</translation>
     </message>
     <message>
         <location filename="Dialogs/datetimedialog.ui" line="40"/>
         <source>Date of the begin.</source>
-        <translation>Anfangsdatum.</translation>
+        <translation>Beginning date.</translation>
     </message>
     <message>
         <location filename="Dialogs/datetimedialog.ui" line="47"/>
         <source>Time of the begin.</source>
-        <translation>Anfangszeit.</translation>
+        <translation>Beginning time.</translation>
     </message>
     <message>
         <location filename="Dialogs/datetimedialog.ui" line="91"/>
         <source>Ending:</source>
-        <translation>Ende:</translation>
+        <translation>Ending:</translation>
     </message>
     <message>
         <location filename="Dialogs/datetimedialog.ui" line="98"/>
         <source>Date of the ending.</source>
-        <translation>Enddatum.</translation>
+        <translation>End date.</translation>
     </message>
     <message>
         <location filename="Dialogs/datetimedialog.ui" line="105"/>
         <source>Time of the end.</source>
-        <translation>Endzeit.</translation>
+        <translation>End time.</translation>
     </message>
 </context>
 <context>
@@ -326,7 +327,7 @@
     <message>
         <location filename="DatabaseView/EventDatabaseView/eventtableview.cpp" line="259"/>
         <source>Paste events</source>
-        <translation>Events Einfügen</translation>
+        <translation>Paste events</translation>
     </message>
 </context>
 <context>
@@ -334,12 +335,12 @@
     <message>
         <location filename="filterwidget.ui" line="29"/>
         <source>Filter pattern.</source>
-        <translation>Filtermuster.</translation>
+        <translation>Filter pattern.</translation>
     </message>
     <message>
         <location filename="filterwidget.ui" line="51"/>
         <source>Clear filter</source>
-        <translation>Filter zurücksetzen</translation>
+        <translation>Clear filter</translation>
     </message>
     <message>
         <location filename="filterwidget.cpp" line="14"/>
@@ -352,22 +353,22 @@
     <message>
         <location filename="Dialogs/identitydialog.ui" line="14"/>
         <source>Identities</source>
-        <translation>Identitäten</translation>
+        <translation>Identities</translation>
     </message>
     <message>
         <location filename="Dialogs/identitydialog.ui" line="22"/>
         <source>Storded identities.</source>
-        <translation>Gespeicherte Identitäten.</translation>
+        <translation>Stored Identities.</translation>
     </message>
     <message>
         <location filename="Dialogs/identitydialog.ui" line="47"/>
         <source>Add new identity.</source>
-        <translation>Neue Identität hinzufügen.</translation>
+        <translation>Add new identity.</translation>
     </message>
     <message>
         <location filename="Dialogs/identitydialog.ui" line="79"/>
         <source>Remove this identity.</source>
-        <translation>Diese Identität löschen.</translation>
+        <translation>Delete this identity.</translation>
     </message>
     <message>
         <location filename="Dialogs/identitydialog.ui" line="95"/>
@@ -382,32 +383,32 @@
     <message>
         <location filename="Dialogs/identitydialog.ui" line="112"/>
         <source>&amp;Email:</source>
-        <translation>&amp;E-Mail:</translation>
+        <translation>&amp;Email:</translation>
     </message>
     <message>
         <location filename="Dialogs/identitydialog.ui" line="122"/>
         <source>Email for distinct identification.</source>
-        <translation>E-Mail für eindeutige Identifikation.</translation>
+        <translation>Email for distict identification.</translation>
     </message>
     <message>
         <location filename="Dialogs/identitydialog.ui" line="129"/>
         <source>&amp;Login name</source>
-        <translation>&amp;Benutzername</translation>
+        <translation>&amp;Username</translation>
     </message>
     <message>
         <location filename="Dialogs/identitydialog.ui" line="139"/>
         <source>Username for login.</source>
-        <translation>Benutzername zum einloggen.</translation>
+        <translation>Username for login.</translation>
     </message>
     <message>
         <location filename="Dialogs/identitydialog.ui" line="146"/>
         <source>&amp;Password (will be stored in plain text)</source>
-        <translation>&amp;Passwort (wird im Klartext gespeichert)</translation>
+        <translation>&amp;Password (will be stored in clear text)</translation>
     </message>
     <message>
         <location filename="Dialogs/identitydialog.ui" line="156"/>
         <source>Password for login.</source>
-        <translation>Passwort zum einloggen.</translation>
+        <translation>Password for login.</translation>
     </message>
 </context>
 <context>
@@ -415,25 +416,25 @@
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.ui" line="37"/>
         <source>Filename of the currently set file.</source>
-        <translation>Dateiname des aktuellen Anhangs.</translation>
+        <translation>Filename of the current attachment.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.ui" line="62"/>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.ui" line="160"/>
         <source>Choose a file.</source>
-        <translation>Wähle eine Datei.</translation>
+        <translation>Choose a file.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.ui" line="110"/>
         <source>File is not indexed
 or does not exist.</source>
-        <translation>Datei ist nicht im Index
-oder existiert nicht.</translation>
+        <translation>File is not indexed
+or does not exist.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="67"/>
         <source>&lt; No File &gt;</source>
-        <translation>&lt; Keine Datei &gt;</translation>
+        <translation>&lt; No file &gt;</translation>
     </message>
 </context>
 <context>
@@ -441,50 +442,50 @@ oder existiert nicht.</translation>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui" line="19"/>
         <source>Filename of the file</source>
-        <translation>Dateiname der Datei</translation>
+        <translation>Filename of the file</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui" line="32"/>
         <source>Clear file association.</source>
-        <translation>Zuordnung zu Datei entfernen.</translation>
+        <translation>Clear file association.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui" line="52"/>
         <source>Open file dialog.</source>
-        <translation>Dateidialog öffnen.</translation>
+        <translation>Open file dialog.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui" line="74"/>
         <source>Proposed files.</source>
-        <translation>Vorgeschlagene Dateien.</translation>
+        <translation>Proposed files.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="188"/>
         <source>File not indexed</source>
-        <translation>Datei ist nicht im Index</translation>
+        <translation>File is not indexed</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="189"/>
         <source>The file you want to use is not indexed.
 Index it before you can use it.</source>
-        <translation>Die Datei die Du benutzen möchtest ist nicht im Index enthalten.
-Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</translation>
+        <translation>The file you want to use is not indexed.
+Add it to the index before you can use it.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="237"/>
         <source>Open File ...</source>
-        <translation>Datei öffnen ...</translation>
+        <translation>Open file ...</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="260"/>
         <source>File is not readable.</source>
-        <translation>Datei ist nicht lesbar.</translation>
+        <translation>File is not readable.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="261"/>
         <source>The file is not readable.
 </source>
-        <translation>Die Datei ist nicht lesbar.</translation>
+        <translation>The file is not readable.</translation>
     </message>
 </context>
 <context>
@@ -492,52 +493,52 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
     <message>
         <location filename="mainwindow.ui" line="58"/>
         <source>Switch to song manager.</source>
-        <translation>Wechsle zu Song Ansicht.</translation>
+        <translation>Switch to song view.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="90"/>
         <source>Switch to event manager.</source>
-        <translation>Wechsle zu Event Ansicht.</translation>
+        <translation>Switch to event view.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="186"/>
         <source>File related stuff.</source>
-        <translation>Datei.</translation>
+        <translation>File related stuff.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="189"/>
         <source>&amp;File</source>
-        <translation>&amp;Datei</translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="202"/>
         <source>Tools.</source>
-        <translation>Werkzeuge.</translation>
+        <translation>Tools.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="205"/>
         <source>&amp;Tools</source>
-        <translation>&amp;Werkzeuge</translation>
+        <translation>Werkzeuge</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="212"/>
         <source>Attachment related stuff.</source>
-        <translation>Anlagen.</translation>
+        <translation>Attachment related stuff.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="215"/>
         <source>&amp;Attachments</source>
-        <translation>&amp;Anlagen</translation>
+        <translation>&amp;Attachments</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="224"/>
         <source>Edit.</source>
-        <translation>Bearbeiten.</translation>
+        <translation>Edit.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="227"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Bearbeiten</translation>
+        <translation>&amp;Edit</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="235"/>
@@ -547,17 +548,17 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
     <message>
         <location filename="mainwindow.ui" line="241"/>
         <source>File index related stuff.</source>
-        <translation>Dateiindex.</translation>
+        <translation>File index.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="244"/>
         <source>F&amp;ile Index</source>
-        <translation>Datei&amp;index</translation>
+        <translation>File&amp;index</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="253"/>
         <source>Event related stuff.</source>
-        <translation>Events.</translation>
+        <translation>Event related stuff.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="256"/>
@@ -567,7 +568,7 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
     <message>
         <location filename="mainwindow.ui" line="261"/>
         <source>Song related stuff.</source>
-        <translation>Songs.</translation>
+        <translation>Song related stuff.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="264"/>
@@ -577,158 +578,158 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
     <message>
         <location filename="mainwindow.ui" line="268"/>
         <source>Visible attributes ...</source>
-        <translation>Sichtbare Attribute ...</translation>
+        <translation>Visible attributes ...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="276"/>
         <source>&amp;Language</source>
-        <translation>&amp;Sprache</translation>
+        <translation>&amp;Language</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="291"/>
         <source>&amp;New Project</source>
-        <translation>&amp;Neues Projekt</translation>
+        <translation>&amp;New project</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="294"/>
         <source>Create a new empty project.</source>
-        <translation>Erzeuge neues leeres Projekt.</translation>
+        <translation>Create a new empty project.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="306"/>
         <source>&amp;Save</source>
-        <translation>&amp;Speichern</translation>
+        <translation>&amp;Save</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="309"/>
         <source>Save the current project.</source>
-        <translation>Speichere dieses Project.</translation>
+        <translation>Save the current project.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="321"/>
         <source>Save As</source>
-        <translation>Speichern unter ...</translation>
+        <translation>Save as ...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="324"/>
         <source>Save the current project as.</source>
-        <translation>Speichere dieses Projekt als ...</translation>
+        <translation>Save the current project as ...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="336"/>
         <source>Open</source>
-        <translation>Öffnen ...</translation>
+        <translation>Open ...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="339"/>
         <source>Open an existing project.</source>
-        <translation>Öffne ein existierendes Projekt.</translation>
+        <translation>Open an existing project.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="347"/>
         <source>Index Info ...</source>
         <oldsource>Index Info</oldsource>
-        <translation>Index Info ...</translation>
+        <translation>Index info ...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="350"/>
         <source>Information about the file index.</source>
-        <translation>Informationen über den Index anzeigen.</translation>
+        <translation>Show informations about the file index.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="358"/>
         <source>Add Folder ...</source>
         <oldsource>Add Folder</oldsource>
-        <translation>Ordner hinzufügen ...</translation>
+        <translation>Add folder ...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="361"/>
         <source>Add Folder to the file index.</source>
-        <translation>Ordner zum Index hinzufügen.</translation>
+        <translation>Add folder to the file index.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="369"/>
         <source>Clear Index</source>
-        <translation>Index löschen.</translation>
+        <translation>Clear index.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="372"/>
         <source>Remove all files from file index.</source>
-        <translation>Alle Dateien vom Index entfernen.</translation>
+        <translation>Remove all files from file index.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="384"/>
         <source>Delete Attachment</source>
         <oldsource>New Attachment </oldsource>
-        <translation>Anlage löschen</translation>
+        <translation>Delete attachment</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="387"/>
         <source>Delete Attachment selected attachment.</source>
         <oldsource>Add new attachment to a song.</oldsource>
-        <translation>Lösche ausgewählte Anlage.</translation>
+        <translation>Delete selected attachment.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="399"/>
         <source>&amp;Undo</source>
         <oldsource>Undo</oldsource>
-        <translation>&amp;Rückgängig</translation>
+        <translation>&amp;Undo</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="402"/>
         <source>Undo the last action.</source>
-        <translation>Letze Änderung rückgängig machen.</translation>
+        <translation>Undo the last action.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="414"/>
         <source>&amp;Redo</source>
         <oldsource>Redo</oldsource>
-        <translation>&amp;Wiederholen</translation>
+        <translation>&amp;Redo</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="417"/>
         <source>Redo the last undone action.</source>
-        <translation>Zuletzt rückgängig gemachte Änderung wiederholen.</translation>
+        <translation>Redo the last undone action.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="429"/>
         <source>Clone ...</source>
-        <translation>Klonen ...</translation>
+        <translation>Clone ...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="432"/>
         <source>Clone a repository.</source>
-        <translation>Klone ein Repository.</translation>
+        <translation>Klone a repository.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="440"/>
         <source>Open terminal</source>
-        <translation>Terminal öffnen</translation>
+        <translation>Open terminal</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="452"/>
         <source>Rename Attachment ...</source>
-        <translation>Anlage umbenennen ...</translation>
+        <translation>Rename attachment ...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="657"/>
         <source>Rename Attachment</source>
-        <translation>Anlage umbennen</translation>
+        <translation>Rename Attachment</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="455"/>
         <source>Rename selected attachment.</source>
-        <translation>Diese Anlage umbennen.</translation>
+        <translation>Rename selected attachment.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="467"/>
         <source>Duplicate Attachment</source>
-        <translation>Anlage duplizieren</translation>
+        <translation>Duplicate attachment</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="470"/>
         <source>Duplicate selected attachment.</source>
-        <translation>Diese Anlage duplizieren.</translation>
+        <translation>Duplicate selected attachment.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="482"/>
@@ -742,194 +743,194 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
     <message>
         <location filename="mainwindow.ui" line="485"/>
         <source>Synchronizes local project with remote repository.</source>
-        <translation>Locales Repository synchronisieren.</translation>
+        <translation>Synchronize local repository with remote repository.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="493"/>
         <source>Identites ...</source>
-        <translation>Identitäten ...</translation>
+        <translation>Identities ...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="496"/>
         <source>Manage identities.</source>
-        <translation>Identitäten verwalten.</translation>
+        <translation>Manage identities.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="504"/>
         <source>Preferences ...</source>
-        <translation>Einstellungen ...</translation>
+        <translation>Preferences ...</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="507"/>
         <source>Settings.</source>
-        <translation>Einstellungen.</translation>
+        <translation>Preferences.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="139"/>
         <source>&amp;New Song</source>
-        <translation>&amp;Neuer Song</translation>
+        <translation>&amp;New song</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="139"/>
         <source>Add a new song.</source>
-        <translation>Neuen Song hinzufügen.</translation>
+        <translation>Add a new Song.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="140"/>
         <source>&amp;Remove Song</source>
-        <translation>Song &amp;Löschen</translation>
+        <translation>&amp;Remove song</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="140"/>
         <source>Remove selected song.</source>
-        <translation>Lösche ausgewählten Song.</translation>
+        <translation>Remove selected song.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="141"/>
         <source>&amp;Copy Song</source>
-        <translation>Song &amp;Kopieren</translation>
+        <translation>&amp;Copy song</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="141"/>
         <source>Copy selected song.</source>
-        <translation>Ausgewählten Song kopieren.</translation>
+        <translation>Copy selected song.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="142"/>
         <source>&amp;Paste Song</source>
-        <translation>Song &amp;einfügen</translation>
+        <translation>&amp;Paste song.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="142"/>
         <source>Paste song.</source>
-        <translation>Song einfügen.</translation>
+        <translation>Paste song.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="144"/>
         <source>&amp;New Event</source>
-        <translation>&amp;Neues Event</translation>
+        <translation>&amp;New event</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="144"/>
         <source>Add a new event.</source>
-        <translation>Neues Event hinzufügen.</translation>
+        <translation>Add a new event.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="145"/>
         <source>&amp;Remove Event</source>
-        <translation>Event &amp;Löschen</translation>
+        <translation>&amp;Remove event</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="145"/>
         <source>Remove selected event.</source>
-        <translation>Ausgewähltes Event löschen.</translation>
+        <translation>Remove selected event.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="146"/>
         <source>&amp;Copy Event</source>
-        <translation>Event &amp;Kopieren</translation>
+        <translation>&amp;Copy event</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="146"/>
         <source>Copy selected event.</source>
-        <translation>Kopiere selektiertes Event.</translation>
+        <translation>Copy selected event.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="147"/>
         <source>&amp;Paste Event</source>
-        <translation>Event &amp;einfügen</translation>
+        <translation>&amp;Paste event</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="147"/>
         <source>Paste event.</source>
-        <translation>Event einfügen.</translation>
+        <translation>Paste event.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="189"/>
         <source>New %1</source>
-        <translation>Neues %1</translation>
+        <translation>New %1</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="241"/>
         <source>Unnamed</source>
-        <translation>Unbenannt</translation>
+        <translation>Unamed</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="302"/>
         <source>Save As ...</source>
-        <translation>Speichern unter ...</translation>
+        <translation>Save as ...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="344"/>
         <source>Really close %1</source>
-        <translation>%1 wirklich schließen</translation>
+        <translation>Really close %1</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="345"/>
         <source>There are unsaved changes.</source>
-        <translation>Es gibt ungespeicherte Änderungen.</translation>
+        <translation>There are unsaved changes.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="551"/>
         <source>Open ...</source>
-        <translation>Öffnen ...</translation>
+        <translation>Open ...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="592"/>
         <source>Song cannot be removed</source>
-        <translation>Song kann nicht entfernt werden</translation>
+        <translation>Song cannot be removed</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="593"/>
         <source>This song is currently in use and can thus not be removed.</source>
-        <translation>Diese Song wird momentan benutzt und kann deshalb nicht entfernt werden.</translation>
+        <translation>This song is currently in use and thus cannot be removed.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="657"/>
         <source>New Name for %1</source>
-        <translation>Neuer Name für %1</translation>
+        <translation>New name for %1</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="723"/>
         <source>Cloning.</source>
-        <translation>Am Klonen.</translation>
+        <translation>Cloning.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="736"/>
         <source>Cloning failed</source>
-        <translation>Klonen fehlgeschlagen.</translation>
+        <translation>Cloning failed.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="737"/>
         <source>Failed to clone %1.</source>
-        <translation>Fehlgeschlagener Klonversuch (%1).</translation>
+        <translation>Failed to clone %1.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="745"/>
         <source>Cannot load project</source>
-        <translation>Kann diese Projekt nicht laden</translation>
+        <translation>Cannot load project</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="746"/>
         <source>Failed to load cloned project.
 Make sure you cloned the correct repository and the repository is valid.</source>
-        <translation>Kann geklontes Projekt nicht öffnen.
-Stelle sicher dass Du das richtige Repository geklont hast.</translation>
+        <translation>Failed to load cloned project.
+Make sure you cloned the correct repository and the repository is valid.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="791"/>
         <source>You must provide a valid identity to sync. Abort.</source>
-        <translation>Du musst eine gültige Identität zum Synchronisieren angeben. Abbruch.</translation>
+        <translation>You must provide a valid identity to sync. Abort.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="798"/>
         <source>Commit message may not be empty. Abort.</source>
-        <translation>Commit nachricht darf nicht leer sein. Abbruch.</translation>
+        <translation>Commit message may not be empty. Abort.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="808"/>
         <source>Password for %1</source>
-        <translation>Passwort für %1</translation>
+        <translation>Password for %1</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="808"/>
@@ -939,72 +940,72 @@ Stelle sicher dass Du das richtige Repository geklont hast.</translation>
     <message>
         <location filename="mainwindow.cpp" line="832"/>
         <source>Syncing.</source>
-        <translation>Synchronisiere.</translation>
+        <translation>Synchronising.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="876"/>
         <source>Failed to load project.</source>
-        <translation>Konnte das Projekt nicht laden.</translation>
+        <translation>Failed to load project.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="877"/>
         <source>Cannot open merged project.
 Probably merging went wrong or the remote version was currupted.
 Fix the error by hand and commit it over the current version, then clone the fixed repository.</source>
-        <translation>Kann zusammengefügtes Projekt nicht öffnen.
-Wahrscheinlich ist das Zusammenführen schiefgegangen oder die Remote-Version war defekt.
-Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.</translation>
+        <translation>Cannot open merged project.
+Probably merging went wrong or the remote version was currupted.
+Fix the error by hand and commit it over the current version, then clone the fixed repository.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="888"/>
         <source>Sync failed.</source>
-        <translation>Synchronisieren fehlgeschlagen.</translation>
+        <translation>Synchronizing failed.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="897"/>
         <source>Sync succeeded</source>
-        <translation>Synchronisieren erfolgreich</translation>
+        <translation>Sync succeeded</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="919"/>
         <source>File index information</source>
-        <translation>Informationen über Dateiindex</translation>
+        <translation>File index information</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="920"/>
         <source>Files: %1</source>
-        <translation>Dateien: %1</translation>
+        <translation>Files: %1</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="1012"/>
         <location filename="mainwindow.cpp" line="1023"/>
         <source>Opening %1</source>
-        <translation>Öffne %1</translation>
+        <translation>Opening %1</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="1013"/>
         <source>Cannot open %1. Unknown file format.</source>
-        <translation>Kann %1 nicht öffnen. Unbekanntes Format</translation>
+        <translation>Cannot open %1. Unknown file format.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="1024"/>
         <source>File %1 not found.</source>
-        <translation>Datei %1 nicht gefunden.</translation>
+        <translation>File %1 not found.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1054"/>
+        <location filename="mainwindow.cpp" line="1055"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1055"/>
+        <location filename="mainwindow.cpp" line="1056"/>
         <source>Language changes will apply on next start.</source>
-        <translation>Sprache ändert sich beim nächsten Start.</translation>
+        <translation>Language changes will apply on next start.</translation>
     </message>
     <message>
         <location filename="mainwindow.h" line="43"/>
         <source>All files (*);;CAN files (*.can)</source>
-        <translation>Alle Dateien (*);;CAN Dateien (*.can)</translation>
+        <translation>All files (*);;CAN files (*.can)</translation>
     </message>
 </context>
 <context>
@@ -1012,7 +1013,7 @@ Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.<
     <message>
         <location filename="Attachments/pdfattachment.cpp" line="8"/>
         <source>PDF Attachment</source>
-        <translation>PDF Anlage</translation>
+        <translation>PDF attachment</translation>
     </message>
 </context>
 <context>
@@ -1020,32 +1021,32 @@ Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.<
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui" line="56"/>
         <source>Zoom in PDF.</source>
-        <translation>In PDF hereinzoomen.</translation>
+        <translation>Zoom in PDF.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui" line="88"/>
         <source>Adjust zoom.</source>
-        <translation>Zoom anpassen.</translation>
+        <translation>Adjust zoom.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui" line="119"/>
         <source>Zoom out PDF.</source>
-        <translation>Aus PDF herauszoomen.</translation>
+        <translation>Zoom out PDF.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui" line="161"/>
         <source>Goto previous page.</source>
-        <translation>Gehe zu vorheriger Seite.</translation>
+        <translation>Goto previous page.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui" line="196"/>
         <source>Select page.</source>
-        <translation>Seite auswählen.</translation>
+        <translation>Select page.</translation>
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui" line="224"/>
         <source>Goto next page.</source>
-        <translation>Gehe zu nächster Seite.</translation>
+        <translation>Goto next page.</translation>
     </message>
 </context>
 <context>
@@ -1053,7 +1054,7 @@ Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.<
     <message>
         <location filename="progressdialog.ui" line="14"/>
         <source>Progress</source>
-        <translation>Fortschritt</translation>
+        <translation>Progress</translation>
     </message>
 </context>
 <context>
@@ -1062,24 +1063,25 @@ Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.<
         <location filename="Commands/SongDatabaseCommands/songdatabasenewattributecommand.h" line="9"/>
         <location filename="Database/EventDatabase/setlist.h" line="19"/>
         <source>Unnamed</source>
-        <translation>Unbenannt</translation>
+        <translation>Unamed</translation>
     </message>
     <message>
         <location filename="PDFCreator/pdfcreator.cpp" line="253"/>
         <source>Table of Content</source>
-        <translation>Inhaltsverzeichnis</translation>
+        <translation>Table of Content</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="19"/>
-        <source>Cannot find translation file</source>
-        <translation>Sprachdatei nicht gefunden</translation>
+        <location filename="main.cpp" line="24"/>
+        <source>Cannot find translation files</source>
+        <translation>Sprachdatei nicht gefunden.
+Benutze Notfallenglisch (nicht empfohlen).</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="20"/>
-        <source>Translation file %1.qm not found.
+        <location filename="main.cpp" line="25"/>
+        <source>Translation file &quot;%1&quot; not found.
 Using fallback-english which is not recommended.</source>
-        <translation>Sprachdatei %1.qm nicht gefunden.
-Benutze Notfall-English (nicht empfohlen).</translation>
+        <translation>Translation file &quot;%1&quot; not found.
+Using fallback-english which is not recommended.</translation>
     </message>
 </context>
 <context>
@@ -1087,27 +1089,27 @@ Benutze Notfall-English (nicht empfohlen).</translation>
     <message>
         <location filename="DatabaseView/SongDatabaseView/renamableheaderview.cpp" line="45"/>
         <source>Attribute Name</source>
-        <translation>Attributename</translation>
+        <translation>Attribute Name</translation>
     </message>
     <message>
         <location filename="DatabaseView/SongDatabaseView/renamableheaderview.cpp" line="114"/>
         <source>Delete Attribute &quot;%1&quot;</source>
-        <translation>Lösche Attribut %1</translation>
+        <translation>Delete attribute %1</translation>
     </message>
     <message>
         <location filename="DatabaseView/SongDatabaseView/renamableheaderview.cpp" line="122"/>
         <source>Cannot remove column</source>
-        <translation>Kann Spalte nicht entfernen</translation>
+        <translation>Cannot remove column</translation>
     </message>
     <message>
         <location filename="DatabaseView/SongDatabaseView/renamableheaderview.cpp" line="123"/>
         <source>Predefined rows cannot be deleted. You may hide or rename it.</source>
-        <translation>Vorgegebene Spalten können nicht entfernt werden. Du kannst sie aber verstecken oder umbenennen.</translation>
+        <translation>Predefined rows cannot be deleted. But you may hide or rename it.</translation>
     </message>
     <message>
         <location filename="DatabaseView/SongDatabaseView/renamableheaderview.cpp" line="129"/>
         <source>Add Attribute</source>
-        <translation>Attribut hinzufügen</translation>
+        <translation>Add Attribute</translation>
     </message>
 </context>
 <context>
@@ -1115,7 +1117,7 @@ Benutze Notfall-English (nicht empfohlen).</translation>
     <message>
         <location filename="Database/EventDatabase/setlist.cpp" line="329"/>
         <source>Remove dragged items</source>
-        <translation>Gezogene elemente entfernen</translation>
+        <translation>Remove dragged items</translation>
     </message>
 </context>
 <context>
@@ -1123,67 +1125,67 @@ Benutze Notfall-English (nicht empfohlen).</translation>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="29"/>
         <source>&amp;New Item</source>
-        <translation>&amp;Neues Element</translation>
+        <translation>&amp;New item</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="29"/>
         <source>Insert new item</source>
-        <translation>Neues Element einfügen.</translation>
+        <translation>Insert new item.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="30"/>
         <source>&amp;Remove Item</source>
-        <translation>Elemente &amp;entfernen</translation>
+        <translation>&amp;Remove items</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="30"/>
         <source>Delete selected items</source>
-        <translation>Selektierte Elemente löschen.</translation>
+        <translation>Delete selecteded items.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="31"/>
         <source>&amp;Copy Items</source>
-        <translation>Elemente &amp;kopieren</translation>
+        <translation>&amp;Copy items</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="31"/>
         <source>Copy selected items</source>
-        <translation>Selektierte Elemente kopieren.</translation>
+        <translation>Copy selected items.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="32"/>
         <source>&amp;Paste Items</source>
-        <translation>Elemente &amp;einfügen</translation>
+        <translation>&amp;Paste items</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="32"/>
         <source>Paste items</source>
-        <translation>Elemente einfügen.</translation>
+        <translation>Paste items.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="61"/>
         <source>Paste setlist items</source>
-        <translation>Setlistelemente einfügen</translation>
+        <translation>Paste setlist items</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="108"/>
         <source>Drop Songs</source>
-        <translation>Songs ablegen</translation>
+        <translation>Drop songs</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="126"/>
         <source>Move setlist items</source>
-        <translation>Setlistelemente verschieben</translation>
+        <translation>Move setlist items</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="130"/>
         <source>Copy setlist items</source>
-        <translation>Setlistelemente kopieren</translation>
+        <translation>Copy setlist items</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="220"/>
         <source>Remove Setlist Items</source>
-        <translation>Setlistelemente löschen</translation>
+        <translation>Remove setlist items</translation>
     </message>
 </context>
 <context>
@@ -1191,58 +1193,58 @@ Benutze Notfall-English (nicht empfohlen).</translation>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="38"/>
         <source>Move selected items up.</source>
-        <translation>Verschiebe selektierte Elemente nach oben.</translation>
+        <translation>Move selected items up.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="64"/>
         <source>Move selected items down.</source>
-        <translation>Verschieben selektierte Elemente nach unten.</translation>
+        <translation>Move selected items down.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="97"/>
         <source>Remove selected items.</source>
-        <translation>Lösche selektierte Elemente.</translation>
+        <translation>Remove selected items.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="123"/>
         <source>Add a label item.</source>
-        <translation>Labelelement hinzufügen.</translation>
+        <translation>Add label item.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="149"/>
         <source>Add song items.</source>
-        <translation>Songelemente hinzufügen.</translation>
+        <translation>Add song item.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="182"/>
         <source>Export to PDF.</source>
-        <translation>In PDF exportieren.</translation>
+        <translation>Export to PDF.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="127"/>
         <source>Remove Setlist Items</source>
-        <translation>Setlistelemente löschen.</translation>
+        <translation>Remove setlist items</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="205"/>
         <source>Export PDF ...</source>
-        <translation>Exportiere in PDF ...</translation>
+        <translation>Export to PDF ...</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="218"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1 existiert bereits. Möchtest du es überschreiben?</translation>
+        <translation>%1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="238"/>
         <source>Cannot write</source>
-        <translation>Kann nicht schreiben.</translation>
+        <translation>Cannot write.</translation>
     </message>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="239"/>
         <source>File %1 is not writable.</source>
-        <translation>%1 ist nicht schreibbar.</translation>
+        <translation>%1 is not writable.</translation>
     </message>
 </context>
 <context>
@@ -1250,7 +1252,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="DatabaseView/SongDatabaseView/songtableview.cpp" line="135"/>
         <source>Paste songs</source>
-        <translation>Songs einfügen</translation>
+        <translation>Paste songs</translation>
     </message>
 </context>
 <context>
@@ -1258,22 +1260,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="Dialogs/stringdialog.ui" line="14"/>
         <source>String</source>
-        <translation>Text</translation>
+        <translation>String</translation>
     </message>
     <message>
         <location filename="Dialogs/stringdialog.ui" line="37"/>
         <source>The text.</source>
-        <translation>Der text.</translation>
+        <translation>The text.</translation>
     </message>
     <message>
         <location filename="Dialogs/stringdialog.ui" line="50"/>
         <source>Open a file dialog.</source>
-        <translation>Dateidialog öffnen.</translation>
+        <translation>Open a file dialog.</translation>
     </message>
     <message>
         <location filename="Dialogs/stringdialog.ui" line="78"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Abbrechen</translation>
+        <translation>&amp;Cancel</translation>
     </message>
     <message>
         <location filename="Dialogs/stringdialog.ui" line="85"/>
@@ -1291,17 +1293,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="Dialogs/tagdialog.ui" line="25"/>
         <source>Tags in use.</source>
-        <translation>Bereits benutzte Tags.</translation>
+        <translation>Tags in use.</translation>
     </message>
     <message>
         <location filename="Dialogs/tagdialog.ui" line="35"/>
         <source>Add tag.</source>
-        <translation>Tag hinzufügen.</translation>
+        <translation>Add tag.</translation>
     </message>
     <message>
         <location filename="Dialogs/tagdialog.ui" line="81"/>
         <source>Click on tag to remove it.</source>
-        <translation>Klicke auf ein Tag um es zu entfernen.</translation>
+        <translation>Click on tag to remove it.</translation>
     </message>
 </context>
 </TS>

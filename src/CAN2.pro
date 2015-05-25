@@ -281,5 +281,5 @@ RESOURCES += \
     ressources.qrc
 
 TRANSLATIONS += \
-    can2_en.ts \
-    can2_de.ts
+    can2_en_US.ts \
+    can2_de_DE.ts
