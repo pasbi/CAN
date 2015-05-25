@@ -7,7 +7,6 @@
 
 #//TODO port to Windows
 #//TODO what happens if network is requires but down?
-#//TODO e.g. text on QStandardButton is not translated.
 
 QT       += core gui multimedia
 
