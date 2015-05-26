@@ -451,6 +451,11 @@
         <translation>Resolution</translation>
     </message>
     <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="107"/>
+        <source>Show to-be-continued-hint</source>
+        <translation>To be continued hint</translation>
+    </message>
+    <message>
         <location filename="mainwindow.cpp" line="39"/>
         <source>Style</source>
         <translation>Style</translation>
@@ -1334,6 +1339,34 @@ Fix the error by hand and commit it over the current version, then clone the fix
     </message>
 </context>
 <context>
+    <name>PDFCreator</name>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="161"/>
+        <source>Generate table of contents ...</source>
+        <translation>Generate table of contents ...</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="171"/>
+        <source>Align songs ...</source>
+        <translation>Align songs ...</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="195"/>
+        <source>Generate page numbers ...</source>
+        <translation>Generate page numbers ...</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="207"/>
+        <source>Save pdf ...</source>
+        <translation>Save pdf ...</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="394"/>
+        <source>Draw attachment %1 of song %2</source>
+        <translation>Draw attachment %1 of song %2 ...</translation>
+    </message>
+</context>
+<context>
     <name>ProgressDialog</name>
     <message>
         <location filename="progressdialog.ui" line="14"/>
@@ -1350,7 +1383,7 @@ Fix the error by hand and commit it over the current version, then clone the fix
         <translation>Unamed</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="252"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="304"/>
         <source>Table of Content</source>
         <translation>Table of Content</translation>
     </message>
@@ -1505,28 +1538,28 @@ Using fallback-english which is not recommended.</translation>
         <translation>Export to PDF.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="128"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="129"/>
         <source>Remove Setlist Items</source>
         <translation>Remove setlist items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="206"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="207"/>
         <source>Export PDF ...</source>
         <translation>Export to PDF ...</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="225"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="226"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="244"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="245"/>
         <source>Cannot write</source>
         <translation>Cannot write.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="245"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="246"/>
         <source>File %1 is not writable.</source>
         <translation>%1 is not writable.</translation>
     </message>

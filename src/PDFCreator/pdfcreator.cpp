@@ -102,7 +102,12 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        72,
                        ConfigurationItemOptions::AdvancedDoubleSliderOptions(0, 400, 1, QT_TRANSLATE_NOOP("ConfigurableItem", "dpi") )
                      );
-
+CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       ContiuneOnNextPageMark,
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Show to-be-continued-hint"),
+                       true,
+                       ConfigurationItemOptions::CheckboxOptions()
+                     );
 
 QMap<QString, QString> init_dictionary()
 {
@@ -471,6 +476,7 @@ void PDFCreator::paintPDFAttachment( PDFAttachment* attachment )
 
 bool pageBreak( const QStringList & lines, const int currentLine, const double heightLeft, const QPainter& painter )
 {
+    // return whether we must use another page to fit the content
     if (lines[currentLine].isEmpty())
     {
         // we are currently at a paragraph break
@@ -529,6 +535,11 @@ void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* atta
                         pageRect().height() - bottomMargin() - y,
                         *painter()                                   ))
         {
+            if (config["ContiuneOnNextPageMark"].toBool())
+            {
+                drawContinueOnNextPageMark();
+            }
+
             painter()->restore();
             nextPage( PicturePainter::NothingSpecial );
             painter()->save();
@@ -631,6 +642,19 @@ void PDFCreator::optimizeForDuplex()
             songsStarted = true;
         }
     }
+}
+
+void PDFCreator::drawContinueOnNextPageMark()
+{
+    painter()->save();
+    QFont font = painter()->font();
+    font.setBold( true );
+    font.setPointSizeF( font.pointSizeF() * 3 );
+    painter()->setFont( font );
+    QTextOption option;
+    option.setAlignment( Qt::AlignBottom | Qt::AlignRight );
+    painter()->drawText( pageRect(), QChar(0x293E), option );
+    painter()->restore();
 }
 
 

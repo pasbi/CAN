@@ -44,6 +44,7 @@ private: // METHODES
     double bottomMargin() const { return 5; }
     void alignSongs( int remainder );
     void optimizeForDuplex();
+    void drawContinueOnNextPageMark();
 
     void decoratePageNumbers();
 
