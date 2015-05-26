@@ -154,7 +154,6 @@ void PDFCreator::run()
         return;
     }
 
-    qDebug() << "toc";
     emit progress( maximum() - 3 );
     if ( config["TableOfContents"].toBool() )
     {
@@ -169,7 +168,6 @@ void PDFCreator::run()
     }
     emit progress( maximum() - 2 );
     emit currentTask( tr("Align songs ...") );
-    qDebug() << "align songs";
     switch (config["AlignSongs"].toInt())
     {
     case 0:
@@ -190,7 +188,6 @@ void PDFCreator::run()
     {
         return;
     }
-    qDebug() << "generate";
     emit progress( maximum() - 1);
     emit currentTask( tr("Generate page numbers ...") );
     if ( config["PageNumbers"].toBool() )
@@ -202,7 +199,6 @@ void PDFCreator::run()
     {
         return;
     }
-    qDebug() << "save";
     emit progress( maximum() );
     emit currentTask( tr("Save pdf ...") );
     save( m_filename );

@@ -53,11 +53,6 @@ void IndexedFileAttachmentView::updateStackedWidget()
 {
     IndexedFileAttachment* a = attachment<IndexedFileAttachment>();
 
-    qDebug() << a;
-    if (a)
-    {
-        qDebug() << a->fileExists() << a->filename();
-    }
     if (a && a->fileExists())
     {
         ui->stackedWidget->setCurrentIndex(1);

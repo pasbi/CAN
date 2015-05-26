@@ -102,8 +102,6 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
             a->setSong( this );
             m_attachments.append( a );
 
-            qDebug() << title() << "insert attachment" << a;
-
             connectAttachment(a);
         }
     }
@@ -228,12 +226,10 @@ void Song::insertAttachment(Attachment *attachment, int index)
 
 void Song::connectAttachment(Attachment *attachment)
 {
-    qDebug() << ">>attachment[" << attachment << "]";
     connect( attachment, &Attachment::attachmentRenamed, [this](QString name)
     {
         emit attachmentRenamed( m_songDatabase->songs().indexOf(this), name );
     });
-    qDebug() << "<<attachment[" << attachment << "]";
 }
 
 Song* Song::copy() const
