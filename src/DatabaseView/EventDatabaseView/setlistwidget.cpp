@@ -37,7 +37,7 @@ void SetlistWidget::updateButtonsEnabled()
     bool upperLimit = false;
     bool lowerLimit = false;
 
-    if (!ui->listView->selectionModel())
+    if (!ui->listView->selectionModel() || ui->listView->selectionModel()->selectedRows().isEmpty())
     {
         upperLimit = true;
         lowerLimit = true;
@@ -56,6 +56,7 @@ void SetlistWidget::updateButtonsEnabled()
             }
         }
     }
+
     ui->buttonAdd->setEnabled( buttonsEnabled );
     ui->buttonShowSongs->setEnabled( buttonsEnabled );
     ui->buttonDelete->setEnabled( itemButtonsEnabled );

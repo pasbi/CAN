@@ -41,7 +41,6 @@ PDFAttachmentView::PDFAttachmentView(QWidget *parent) :
     connect(ui->buttonPreviousPage, SIGNAL(clicked()),              this, SLOT(on_buttonPreviousPage_clicked())     );
     connect(ui->spinBoxPage,        SIGNAL(valueChanged(int)),      this, SLOT(on_spinBoxPage_valueChanged(int))    );
 
-    polish();
     QTimer::singleShot(1, this, SLOT(open()));  // wait until scroll area has appropriate size
 }
 
@@ -64,17 +63,22 @@ bool PDFAttachmentView::eventFilter(QObject *o, QEvent *e)
 void PDFAttachmentView::polish()
 {
     IndexedFileAttachmentView::polish();
+    open();
 }
-
 
 void PDFAttachmentView::open()
 {
+    IndexedFileAttachmentView::open();
     handlePageControlEnabled();
 
-    Poppler::Document* doc = attachment<PDFAttachment>()->document();
-    if (!doc) {
+    PDFAttachment* pdf = attachment<PDFAttachment>();
+    Poppler::Document* doc = pdf ? pdf->document() : NULL;
+    if (!doc)
+    {
         ui->label->setPixmap(QPixmap());
-    } else {
+    }
+    else
+    {
         m_currentPage = qMin( m_currentPage, doc->numPages() - 1);
 
         int size = ui->scrollArea->width();

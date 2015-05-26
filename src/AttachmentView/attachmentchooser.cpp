@@ -52,7 +52,7 @@ void AttachmentChooser::setSong(Song *song)
         // restore last opened index
         ui->comboBox->setCurrentIndex( m_lastOpenedIndex.value( m_song, 0 ) );
     }
-    ui->pushButton->setEnabled( !!currentAttachment() );
+    ui->pushButton->setEnabled( m_song && !!currentAttachment() );
 }
 
 void AttachmentChooser::setAttachment( int index )

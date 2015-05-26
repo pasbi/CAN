@@ -422,7 +422,7 @@ bool SongDatabase::loadFrom(const QString &path)
 
     if (Database::loadFrom(path))
     {
-
+        blockSignals(true);
         for (int i = 0; i < m_attributeKeysToRestore.size(); ++i)
         {
             app().pushCommand( new SongDatabaseNewAttributeCommand( this, m_attributeKeysToRestore[i] ));
@@ -435,6 +435,7 @@ bool SongDatabase::loadFrom(const QString &path)
             s->loadFrom(path);
             appendSong( s );
         }
+        blockSignals(false);
 
     }
     else

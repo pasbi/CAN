@@ -20,8 +20,9 @@ public:
     AudioAttachmentView(QWidget* parent = 0);
     ~AudioAttachmentView();
 
-protected:
+protected slots:
     void polish();
+    void open() {}
 
 
 private slots:

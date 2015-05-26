@@ -32,18 +32,15 @@ void IndexedFileAttachmentView::setWidget(QWidget *widget)
 {
     assert( ui->stackedWidget->count() == 1 );
     ui->stackedWidget->addWidget(widget);
-
-    updateStackedWidget();
 }
 
 void IndexedFileAttachmentView::polish()
 {
     connect( attachment<IndexedFileAttachment>(), &IndexedFileAttachment::hashChanged, [this]()
     {
-        attachment<IndexedFileAttachment>()->open();
         updateStackedWidget();
+        open();
     });
-
     updateStackedWidget();
 }
 
@@ -56,6 +53,11 @@ void IndexedFileAttachmentView::updateStackedWidget()
 {
     IndexedFileAttachment* a = attachment<IndexedFileAttachment>();
 
+    qDebug() << a;
+    if (a)
+    {
+        qDebug() << a->fileExists() << a->filename();
+    }
     if (a && a->fileExists())
     {
         ui->stackedWidget->setCurrentIndex(1);
@@ -77,5 +79,14 @@ void IndexedFileAttachmentView::chooseFile()
     if (dialog.exec() == QDialog::Accepted)
     {
         app().pushCommand( new FileAttachmentCommandSetHashCommand( attachment<IndexedFileAttachment>(), dialog.hash() ) );
+    }
+}
+
+void IndexedFileAttachmentView::open()
+{
+    IndexedFileAttachment* ifa = attachment<IndexedFileAttachment>();
+    if (ifa)
+    {
+       ifa->open();
     }
 }

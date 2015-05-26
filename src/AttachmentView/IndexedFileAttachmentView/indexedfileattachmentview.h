@@ -16,7 +16,10 @@ public:
     ~IndexedFileAttachmentView();
 
     void setWidget(QWidget *widget);
+
+protected slots:
     virtual void polish();
+    virtual void open();
 
     void updateAttachmentView();
 

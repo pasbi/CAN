@@ -28,13 +28,16 @@ public:
     void restoreOptions(const QByteArray &options);
     QByteArray options() const;
 
-protected:
+protected slots:
     void polish();
+    void open();
+
+
+protected:
     bool eventFilter(QObject *o, QEvent *e);
     void resizeEvent(QResizeEvent *e);
 
 protected slots:
-    void open();
 
 private slots:
     void on_buttonZoomIn_clicked();
