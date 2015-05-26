@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include "PDFCreator/pdfcreator.h"
 #include <QMessageBox>
+#include <QProgressDialog>
 
 DEFN_CONFIG( SetlistWidget, "SetlistWidget" );
 CONFIGURABLE_ADD_ITEM_HIDDEN( SetlistWidget, DefaultPDFSavePath, QDir::homePath() );
@@ -248,10 +249,22 @@ void SetlistWidget::on_buttonExportPDF_clicked()
             }
             else
             {
-                PDFCreator pc(currentSetlist);
-                pc.save( filename );
                 config.set( "DefaultPDFSavePath", filename );
+                PDFCreator pdfCreator( currentSetlist, filename );
 
+                QProgressDialog dialog;
+                dialog.setRange(0, currentSetlist->items().length());
+                connect( &pdfCreator, SIGNAL(progress(int)), &dialog, SLOT(setValue(int)) );
+                connect( &pdfCreator, SIGNAL(currentTask(QString)), &dialog, SLOT(setLabelText(QString)) );
+                connect( &pdfCreator, SIGNAL(finished()), &dialog, SLOT(close()) );
+                connect( &dialog, &QProgressDialog::canceled, [&pdfCreator]()
+                {
+                    pdfCreator.requestInterruption();
+                });
+                pdfCreator.start();
+
+                dialog.exec();
+                pdfCreator.wait();
             }
         }
     }

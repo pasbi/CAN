@@ -12,18 +12,26 @@
 
 #include "pdfpaintdevice.h"
 
-class PDFCreator
+class PDFCreator : public QThread
 {
+    Q_OBJECT
     DECL_CONFIG( PDFCreator )
+
 public:
-    PDFCreator( const Setlist* setlist );
+    PDFCreator(const Setlist* setlist , const QString &filename);
     ~PDFCreator();
 
     void save( const QString & filename );
+    void run();
+
+    int maximum() const;
+signals:
+    void progress(int);
+    void currentTask(QString);
 
 private: // METHODES
     void paintSetlist( );
-    void paintSong( const Song* song );
+    bool paintSong( const Song* song );
     void paintAttachment(Attachment *attachment );
     void paintPDFAttachment(PDFAttachment *attachment );
     void paintChordPatternAttachment(const ChordPatternAttachment* attachment);
@@ -58,6 +66,7 @@ private: // MEMBERS
     int m_tableOfContentsNumPages = 0;
     double m_additionalTopMargin = 0; // is set if e.g. a headline need additional space.
     QStringList m_tableOfContents;
+    QString m_filename;
 
 private: // STATIC MEMBERS and METHODES
     friend QString labelSetlist( const Setlist* setlist );

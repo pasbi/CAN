@@ -127,8 +127,9 @@ QString labelSetlist( const Setlist* setlist )
     return title;
 }
 
-PDFCreator::PDFCreator( const Setlist *setlist ) :
-    m_setlist( setlist )
+PDFCreator::PDFCreator( const Setlist *setlist, const QString& filename) :
+    m_setlist( setlist ),
+    m_filename( filename )
 {
     QString title = labelSetlist( m_setlist );
     QPdfWriter::PageSize pageSize = intToPageSize( config["PDFSize"].toInt() );
@@ -137,14 +138,33 @@ PDFCreator::PDFCreator( const Setlist *setlist ) :
     QFont font( "times" );
     font.setPointSizeF( 12 pt );
     m_pdfPainter->setDefaultFont( font );
+}
 
+void PDFCreator::run()
+{
     paintSetlist();
 
+    if (isInterruptionRequested())
+    {
+        return;
+    }
+
+    qDebug() << "toc";
+    emit progress( maximum() - 3 );
     if ( config["TableOfContents"].toBool() )
     {
+        emit currentTask( tr("Generate table of contents ...") );
         paintTableOfContents( );
     }
 
+
+    if (isInterruptionRequested())
+    {
+        return;
+    }
+    emit progress( maximum() - 2 );
+    emit currentTask( tr("Align songs ...") );
+    qDebug() << "align songs";
     switch (config["AlignSongs"].toInt())
     {
     case 0:
@@ -161,10 +181,31 @@ PDFCreator::PDFCreator( const Setlist *setlist ) :
         break;
     }
 
+    if (isInterruptionRequested())
+    {
+        return;
+    }
+    qDebug() << "generate";
+    emit progress( maximum() - 1);
+    emit currentTask( tr("Generate page numbers ...") );
     if ( config["PageNumbers"].toBool() )
     {
         decoratePageNumbers();
     }
+
+    if (isInterruptionRequested())
+    {
+        return;
+    }
+    qDebug() << "save";
+    emit progress( maximum() );
+    emit currentTask( tr("Save pdf ...") );
+    save( m_filename );
+}
+
+int PDFCreator::maximum() const
+{
+    return m_setlist->items().length() + 4; // toc, align, pagenumbers, save
 }
 
 
@@ -211,9 +252,15 @@ void PDFCreator::paintSetlist()
     paintTitle();
     insertTableOfContentsStub();
 
+    int i = 0;
     for ( const Song* song : m_setlist->songs() )
     {
-        paintSong( song );
+        if (!paintSong( song ))
+        {
+            // interruption has been requested
+            return;
+        }
+        emit progress(i++);
     }
 }
 
@@ -327,23 +374,27 @@ QString labelSong( const Song* song )
 
 
 
-void PDFCreator::paintSong(const Song *song)
+bool PDFCreator::paintSong(const Song *song)
 {
+
     nextPage( PicturePainter::SongStartsHere );
     QString headline = labelSong( song );
     m_tableOfContents.append( headline );
     paintHeadline( headline );
 
-
     int i = 0;
     for ( Attachment* attachment : song->attachments() )
     {
+        if (isInterruptionRequested()) return false;
+        emit currentTask( QString(tr("Draw attachment %1 of song %2")).arg(song->title()).arg(attachment->name()) );
+
         if (i++ != 0)
         {
             nextPage( PicturePainter::NothingSpecial );
         }
         paintAttachment( attachment );
     }
+    return true;
 }
 
 bool printAttachment( const Attachment* attachment )
