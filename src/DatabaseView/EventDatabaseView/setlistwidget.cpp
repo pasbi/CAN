@@ -194,7 +194,7 @@ void SetlistWidget::on_buttonExportPDF_clicked()
     {
         QString filename = currentSetlist->event()->label()
                 + "_"
-                + currentSetlist->event()->beginning().date().toString( PDFCreator::config["DateFormat"].toString() );
+                + QLocale().toString( currentSetlist->event()->beginning().date(), QLocale().dateFormat( QLocale::ShortFormat )).replace(".", "_");
 
         // QFileDialog::getSaveFilename does not asks for overwriting files when the default filename is used. Workaround: Disable overwrite
         // confirmation for all files and ask for it in an other dialog.
@@ -207,6 +207,12 @@ void SetlistWidget::on_buttonExportPDF_clicked()
                                                         "*.pdf",
                                                         NULL,
                                                         QFileDialog::DontConfirmOverwrite );
+
+            if (filename.isEmpty())
+            {
+                break;  // putting this break in while( ... ), means complicating the whole thing since it will be
+                        // expanded to *.pdf in the following and thus would not be empty
+            }
             if (!filename.endsWith(".pdf"))
             {
                 filename.append(".pdf");
@@ -223,8 +229,7 @@ void SetlistWidget::on_buttonExportPDF_clicked()
                 }
             }
 
-        } while (     filename.isEmpty()  // user cancels
-                  || !allowWriteFile      // filename is not in use by now or user allows to overwrite.
+        } while ( !allowWriteFile      // filename is not in use by now or user allows to overwrite.
                 );
 
 

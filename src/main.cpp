@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     Application app(argc, argv);
 
     QString locale = MainWindow::config["locale"].toString();
+    QLocale::setDefault( QLocale(locale) );
     QString language = QLocale::languageToString(QLocale(locale).language());
 
     QTranslator qtTranslator;

@@ -54,6 +54,7 @@ private:
 
     Setlist m_setlist;
 
+    // format for exporting. The format should contain all information of QDateTime
     static const Qt::DateFormat DATE_TIME_FORMAT;
 
 

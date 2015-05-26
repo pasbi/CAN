@@ -1,6 +1,6 @@
 #include "audioattachment.h"
 
-DEFN_CREATABLE_NAME(AudioAttachment, Attachment, "Audio Attachment")
+DEFN_CREATABLE_NAME(AudioAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Audio Attachment"))
 
 AudioAttachment::AudioAttachment() :
     m_sectionsModel( new SectionsModel(this ) )

@@ -7,15 +7,6 @@
 #include <QJsonObject>
 #include <QObject>
 
-
-/**
- * @brief The ConfigurableTranslator class is used to be able to write ConfigurableTranslator::tr("foobar").
- *  This is better than writing QObject::tr("foobar") since there is a distinct namespace for Configurable-related
- *  translations.
- */
-class ConfigurableTranslator : public QObject { };
-#define TR(arg) ConfigurableTranslator::tr(arg)
-
 #include "global.h"
 
 #define DECL_CONFIG( CLASSNAME )    \
@@ -24,13 +15,13 @@ class ConfigurableTranslator : public QObject { };
 
 
 #define DEFN_CONFIG( CLASSNAME, Caption )    \
-    Configurable CLASSNAME::config(#CLASSNAME, ConfigurableTranslator::tr(Caption, "Configurable Caption"))
+    Configurable CLASSNAME::config(#CLASSNAME, Caption)
 
 
 #define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, CAPTION, DEFAULT_VALUE, OPTIONS )  \
     struct ConfigurableStaticInitializer_##CLASSNAME##_##KEY {    \
         ConfigurableStaticInitializer_##CLASSNAME##_##KEY() {     \
-            CLASSNAME::config.addItem( #KEY, ConfigurableTranslator::tr(CAPTION, "Configurable Item Caption"), DEFAULT_VALUE, OPTIONS );   \
+            CLASSNAME::config.addItem( #KEY, CAPTION, DEFAULT_VALUE, OPTIONS );   \
         }                                                       \
     } private__ConfigurableStaticInitializer_##CLASSNAME##_##KEY
 
@@ -166,7 +157,7 @@ public:
 
     }
 
-    ConfigurationItem( const QString &                  caption,
+    ConfigurationItem( const char*                      caption,
                        const QVariant &                 actualValue,
                        const QVariant &                 defaultValue,
                        const ConfigurationItemOptions & options) :
@@ -179,7 +170,7 @@ public:
 
     }
 
-    QString caption() const { return m_caption; }
+    QString caption() const;
     ConfigurationItemOptions options() const { return m_options; }
     QVariant actualValue() const { return m_actualValue; }
     QVariant defaultValue() const { return m_defaultValue; }
@@ -210,7 +201,7 @@ signals:
     void valueChanged( QVariant );
 
 private:
-    const QString m_caption;
+    const char* m_caption;
 
 };
 
@@ -221,11 +212,11 @@ private:
 class Configurable
 {
 public:
-    Configurable(const QString & prefix, const QString & caption );
+    Configurable(const QString & prefix, const char *caption );
     ~Configurable();
 
     void addItem(const QString &                    key,
-                 const QString &                    caption,
+                 const char*                        caption,
                  const QVariant &                   defaultValue,
                  const ConfigurationItemOptions &   options );
 
@@ -254,7 +245,7 @@ public:
      */
     void restoreConfiguration();
 
-    QString caption() const { return m_caption; }
+    QString caption() const;
 
     QString prefix() const { return m_prefix; }
     QStringList itemKeys() const { return m_itemKeys; }
@@ -264,7 +255,7 @@ private:
     QStringList m_itemKeys; // is needed to keep order. QMap::keys is arbitrary order.
 
     const QString m_prefix;
-    const QString m_caption;
+    const char* m_caption;
 
     // we want to know all classes that have a static Configurable member
     // i.e. we want to know the Configurable member in particular

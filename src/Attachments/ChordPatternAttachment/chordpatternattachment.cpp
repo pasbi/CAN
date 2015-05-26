@@ -1,8 +1,9 @@
 #include "chordpatternattachment.h"
 
 #include "../attachment.h"
+#include <QApplication>
 
-DEFN_CREATABLE_NAME(ChordPatternAttachment, Attachment, "Chord Attachment")
+DEFN_CREATABLE_NAME(ChordPatternAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Attachment"))
 
 const int TAB_WIDTH = 8;
 

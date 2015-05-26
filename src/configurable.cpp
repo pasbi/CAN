@@ -4,7 +4,7 @@
 #include <QJsonDocument>
 #include "application.h"
 
-Configurable::Configurable(const QString &prefix, const QString & caption ) :
+Configurable::Configurable(const QString &prefix, const char* caption ) :
     m_prefix(prefix),
     m_caption(caption)
 {
@@ -21,7 +21,7 @@ Configurable::~Configurable()
 {
 }
 
-void Configurable::addItem(const QString & key, const QString & caption, const QVariant & defaultValue, const ConfigurationItemOptions & options)
+void Configurable::addItem(const QString & key, const char *caption, const QVariant & defaultValue, const ConfigurationItemOptions & options)
 {
     m_itemKeys << key;
     m_items.insert(key, new ConfigurationItem(caption, defaultValue, defaultValue, options));
@@ -183,6 +183,16 @@ ConfigurationItem* Configurable::item(const QString & key)
 const ConfigurationItem* Configurable::item(const QString & key) const
 {
     return m_items.value( key, NULL );
+}
+
+QString Configurable::caption() const
+{
+    return QApplication::translate("Configurable", m_caption);
+}
+
+QString ConfigurationItem::caption() const
+{
+    return QApplication::translate("ConfigurableItem", m_caption);
 }
 
 QVariant Configurable::value( const QString & key ) const

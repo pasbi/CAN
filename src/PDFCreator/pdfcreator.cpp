@@ -10,98 +10,98 @@ DEFN_CONFIG( PDFCreator, "PDF Export" );
 
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFTitlePattern,
-                       "Title",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Title"),
                        "Setlist\n\n-- {EventTitle} --\n\n{Begin}",
-                       ConfigurationItemOptions::TextEditOptions( TR("Pattern") ) );
+                       ConfigurationItemOptions::TextEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
+                     );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        SongTitle,
-                       "Song Title",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
                        true,
-                       ConfigurationItemOptions::CheckboxOptions() );
+                       ConfigurationItemOptions::CheckboxOptions()
+                     );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        SongTitlePattern,
-                       "Song Title",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
                        "{Title} -- {Artist}",
-                       ConfigurationItemOptions::LineEditOptions( TR("Pattern") ) );
-CONFIGURABLE_ADD_ITEM( PDFCreator,
-                       DateTimeFormat,
-                       "Date time format",
-                       TR("dd.MM.yyyy, hh:mm"),
-                       ConfigurationItemOptions::LineEditOptions( TR("Date time pattern") ) );
-CONFIGURABLE_ADD_ITEM( PDFCreator,
-                       DateFormat,
-                       "Date format",
-                       TR("dd.MM.yyyy"),
-                       ConfigurationItemOptions::LineEditOptions( TR("Date time pattern") ) );
+                       ConfigurationItemOptions::LineEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
+                     );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        LineSpacing,
-                       "Line spacing",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Line spacing"),
                        1,
-                       ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" ) );
+                       ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
+                     );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        ChordLineSpacing,
-                       "Chord Line spacing",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Chord Line spacing"),
                        2,
-                       ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" ) );
+                       ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
+                     );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFSize,
-                       "Page size",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Page size"),
                        pageSizeToInt( QPdfWriter::A4 ),
-                       ConfigurationItemOptions::ComboBoxOptions( QStringList() <<  "A0"
-                                                                                <<  "A1"
-                                                                                <<  "A2"
-                                                                                <<  "A3"
-                                                                                <<  "A4"
-                                                                                <<  "A5"
-                                                                                <<  "A6"
-                                                                                <<  "A7"
-                                                                                <<  "A8"
-                                                                                <<  "A9"
-                                                                                <<  "B0"
-                                                                                <<  "B1"
-                                                                                <<  "B2"
-                                                                                <<  "B3"
-                                                                                <<  "B4"
-                                                                                <<  "B5"
-                                                                                <<  "B6"
-                                                                                <<  "B7"
-                                                                                <<  "B8"
-                                                                                <<  "B9"
-                                                                                <<  "B10"
-                                                                                <<  "C5E"
-                                                                                <<  "Comm10E"
-                                                                                <<  "DLE"
-                                                                                <<  "Executive"
-                                                                                <<  "Folio"
-                                                                                <<  "Ledger"
-                                                                                <<  "Legal"
-                                                                                <<  "Letter"
-                                                                                <<  "Tabloid" ) );
+                       ConfigurationItemOptions::ComboBoxOptions( QStringList() <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A0")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A1")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A2")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A3")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A4")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A5")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A6")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A7")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A8")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A9")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B0")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B1")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B2")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B3")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B4")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B5")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B6")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B7")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B8")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B9")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "B10")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "C5E")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Comm10E")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "DLE")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Executive")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Folio")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Ledger")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Legal")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Letter")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Tabloid")
+                                                                    )
+                     );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        AlignSongs,
-                       "Align songs: ",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Align songs: "),
                        0,
-                       ConfigurationItemOptions::ComboBoxOptions( QStringList() << "No alignment"
-                                                                                << "Odd pages"
-                                                                                << "Even pages"
-                                                                                << "Duplex"         ) );
+                       ConfigurationItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "No alignment")
+                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Odd pages")
+                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Even pages")
+                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Duplex")         )
+                     );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TableOfContents,
-                       "Table of Contents",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Table of Contents"),
                        true,
-                       ConfigurationItemOptions::CheckboxOptions() );
+                       ConfigurationItemOptions::CheckboxOptions()
+                     );
 
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PageNumbers,
-                       "Page Numbers",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Page Numbers"),
                        true,
-                       ConfigurationItemOptions::CheckboxOptions() );
-
+                       ConfigurationItemOptions::CheckboxOptions()
+                     );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFResolution,
-                       "Resolution",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Resolution"),
                        72,
-                       ConfigurationItemOptions::AdvancedDoubleSliderOptions(0, 400, 1, "dpi") );
+                       ConfigurationItemOptions::AdvancedDoubleSliderOptions(0, 400, 1, QT_TRANSLATE_NOOP("ConfigurableItem", "dpi") )
+                     );
 
 
 QMap<QString, QString> init_dictionary()
@@ -116,10 +116,9 @@ const QMap<QString, QString> DICTIONARY = init_dictionary();
 QString labelSetlist( const Setlist* setlist )
 {
     QString title = PDFCreator::config["PDFTitlePattern"].toString();
-    QString format = PDFCreator::config["DateTimeFormat"].toString();
     title.replace( "{EventTitle}", setlist->event()->label());
-    title.replace( "{Begin}", setlist->event()->beginning().toString(format) );
-    title.replace( "{End}",   setlist->event()->ending().toString(format) );
+    title.replace( "{Begin}", QLocale().toString( setlist->event()->beginning(), QLocale().dateTimeFormat( QLocale::ShortFormat ) ) );
+    title.replace( "{End}",   QLocale().toString( setlist->event()->ending(),    QLocale().dateTimeFormat( QLocale::ShortFormat ) ) );
 
     for (const QString & key : DICTIONARY.keys())
     {
