@@ -2,7 +2,6 @@
 #include <QFile>
 #include "global.h"
 #include "indexer.h"
-#include "progressdialog.h"
 #include <QFileInfo>
 
 DEFN_CONFIG( FileIndex, "File Index" );

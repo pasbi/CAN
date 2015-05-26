@@ -63,7 +63,6 @@ SOURCES += main.cpp\
     Database/SongDatabase/songdatabasesortproxy.cpp \
     DatabaseView/SongDatabaseView/songtableviewcontainer.cpp \
     filterwidget.cpp \
-    progressdialog.cpp \
     FileIndex/fileindex.cpp \
     FileIndex/indexer.cpp \
     Attachments/indexedfileattachment.cpp \
@@ -171,7 +170,6 @@ HEADERS  += mainwindow.h \
     Database/SongDatabase/songdatabasesortproxy.h \
     DatabaseView/SongDatabaseView/songtableviewcontainer.h \
     filterwidget.h \
-    progressdialog.h \
     FileIndex/fileindex.h \
     FileIndex/indexer.h \
     Attachments/indexedfileattachment.h \
@@ -252,7 +250,6 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
     filterwidget.ui \
-    progressdialog.ui \
     AttachmentView/chordpatternattachmentview.ui \
     AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui \
     DatabaseView/SongDatabaseView/songdatabasewidget.ui \
