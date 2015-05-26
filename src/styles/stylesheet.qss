@@ -3,7 +3,8 @@ Source:
 http://www.yasinuludag.com/darkorange.stylesheet
 slightly modified
 */
-s
+
+
  QSplitter::handle {
 color: #00FFFF;
 background-color: #ffa02f;
@@ -424,7 +425,7 @@ border: 1px solid #ffaa00;
 }
 QCheckBox::indicator:checked
 {
-image:url(:/images/checkbox.png);
+image:url(icons/check40.png);
 }
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 {
