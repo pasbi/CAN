@@ -5,6 +5,8 @@
 #include "configurationwidgets.h"
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QLabel>
+#include <QScrollArea>
 
 ConfigurationDialog::ConfigurationDialog(QWidget *parent) :
     QDialog(parent),
@@ -58,29 +60,45 @@ QWidget* createWidget( QWidget* parent, ConfigurationItem* item )
 void ConfigurationDialog::buildPage(const QString &key)
 {
     Configurable* config = Configurable::registerer()->configs()[key];
-    QWidget* page = new QWidget( ui->tabWidget );
-    QFormLayout* layout = new QFormLayout( page );
-    bool skip = true;
+    QScrollArea* scrollArea = new QScrollArea( ui->tabWidget );
+    scrollArea->setWidgetResizable( true );
+    QWidget* page = new QWidget( scrollArea );
+
+    QGridLayout* layout = new QGridLayout( page );
+    int row = 0;
     for (const QString & key : config->itemKeys())
     {
         ConfigurationItem* item = config->item( key );
         if (item->options().interface() != ConfigurationItemOptions::Hidden)
         {
-            layout->addRow( item->caption().append(":"), createWidget( page, item ) );
-            skip = false;
+            if (row > 0)
+            {
+                QFrame* frame = new QFrame(page);
+                frame->setFrameStyle( QFrame::HLine );
+                frame->setFixedHeight(3);
+                layout->addWidget(frame, row++, 0, 1, -1 );
+            }
+            QLabel* label = new QLabel(page);
+            label->setText( item->caption() + ":" );
+            layout->addWidget( label,                      row, 0 );
+            layout->addWidget( createWidget( page, item ), row, 1 );
+
+            row++;
         }
     }
 
-    if (!skip)
+    scrollArea->setWidget( page );
+    if (row > 0)    // if any widget was inserted, else the page would be empty
     {
-        ui->tabWidget->addTab( page, config->caption() );
+        ui->tabWidget->addTab( scrollArea, config->caption() );
         m_configurables << config;
     }
     else
     {
-        delete page;
-        page = NULL;
+        delete scrollArea;
+        scrollArea = NULL;
     }
+
 }
 
 void ConfigurationDialog::accept()
