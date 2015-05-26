@@ -21,8 +21,6 @@ void FileIndex::add(const QString& filename)
     QFile file(filename);
     QByteArray hash;
 
-
-
     if (file.open(QIODevice::ReadOnly))
     {
 
@@ -39,6 +37,7 @@ void FileIndex::add(const QString& filename)
     else
     {
         hash.clear();
+        return;
     }
 
     if (m_backward.contains(filename))
@@ -46,6 +45,9 @@ void FileIndex::add(const QString& filename)
         remove( filename );
     }
 
+    // one hash can have multiple filenames.
+    // the files then are exact copies of each others.
+    // but one filename must have one single hash.
     m_forward.insert(hash, filename);
     m_backward.insert(filename, hash);
 }
@@ -55,7 +57,7 @@ void FileIndex::remove(const QString & filename)
     QByteArray hash = m_backward.value(filename);
 
     m_backward.remove(filename);
-    m_forward.remove(hash);
+    m_forward.remove(hash, filename);
 }
 
 void FileIndex::clear()
@@ -67,7 +69,16 @@ void FileIndex::clear()
 
 QString FileIndex::filename(const QByteArray &hash) const
 {
-    return m_forward.value(hash);
+    // find the first filename associated to that hash which is readable.
+    QStringList filenames = m_forward.values( hash );
+    for (const QString & filename : filenames)
+    {
+        if (QFileInfo(filename).isReadable())
+        {
+            return filename;
+        }
+    }
+    return filenames.isEmpty() ? QString() : filenames.first();
 }
 
 QByteArray FileIndex::hash(const QString &filename) const
@@ -175,7 +186,7 @@ QString FileIndex::currentFilename() const
     }
     else
     {
-        qWarning() << "expedted to have an m_indexer.";
+        qWarning() << "expected to have an m_indexer.";
         return "";
     }
 }

@@ -38,7 +38,7 @@ public slots:
     void abortOperations();
 
 private:
-    QMap<QByteArray, QString> m_forward;
+    QMultiMap<QByteArray, QString> m_forward;
     QMap<QString, QByteArray> m_backward;
 
     const static QCryptographicHash::Algorithm m_hashAlgorithm;
