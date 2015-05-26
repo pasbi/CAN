@@ -462,7 +462,7 @@
     <message>
         <location filename="mainwindow.cpp" line="45"/>
         <source>Ask for commit message</source>
-        <translation type="unfinished">Nach Kommentar beim
+        <translation>Nach Kommentar beim
 Synchronisieren fragen</translation>
     </message>
     <message>
@@ -474,10 +474,6 @@ Synchronisieren fragen</translation>
         <location filename="mainwindow.cpp" line="52"/>
         <source>Synchronizing</source>
         <translation>Synchronisiere</translation>
-    </message>
-    <message>
-        <source>Sync</source>
-        <translation type="obsolete">Synchronisieren</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="53"/>
@@ -615,7 +611,7 @@ Synchronisieren fragen</translation>
     <message>
         <location filename="DatabaseView/EventDatabaseView/eventtableview.cpp" line="259"/>
         <source>Paste events</source>
-        <translation>Events Einfügen</translation>
+        <translation>Events einfügen</translation>
     </message>
 </context>
 <context>
@@ -720,7 +716,7 @@ or does not exist.</source>
 oder existiert nicht.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="67"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="69"/>
         <source>&lt; No File &gt;</source>
         <translation>&lt; Keine Datei &gt;</translation>
     </message>
@@ -1066,7 +1062,7 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
     <message>
         <location filename="mainwindow.cpp" line="155"/>
         <source>&amp;Remove Song</source>
-        <translation>Song &amp;Löschen</translation>
+        <translation>Song &amp;löschen</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="155"/>
@@ -1076,7 +1072,7 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
     <message>
         <location filename="mainwindow.cpp" line="156"/>
         <source>&amp;Copy Song</source>
-        <translation>Song &amp;Kopieren</translation>
+        <translation>Song &amp;kopieren</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="156"/>
@@ -1509,28 +1505,28 @@ Benutze Notfall-English (nicht empfohlen).
         <translation>In PDF exportieren.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="127"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="128"/>
         <source>Remove Setlist Items</source>
         <translation>Setlistelemente löschen.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="207"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="206"/>
         <source>Export PDF ...</source>
         <translation>Exportiere in PDF ...</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="226"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="225"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 existiert bereits. Möchtest du es überschreiben?</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="245"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="244"/>
         <source>Cannot write</source>
         <translation>Kann nicht schreiben.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="246"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="245"/>
         <source>File %1 is not writable.</source>
         <translation>%1 ist nicht schreibbar.</translation>
     </message>

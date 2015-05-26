@@ -476,10 +476,6 @@
         <translation>Synchronizing</translation>
     </message>
     <message>
-        <source>Sync</source>
-        <translation type="obsolete">Synchronisieren</translation>
-    </message>
-    <message>
         <location filename="mainwindow.cpp" line="53"/>
         <source>commit message</source>
         <translation>Kommentar</translation>
@@ -720,7 +716,7 @@ or does not exist.</source>
 or does not exist.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="67"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="69"/>
         <source>&lt; No File &gt;</source>
         <translation>&lt; No file &gt;</translation>
     </message>
@@ -1509,28 +1505,28 @@ Using fallback-english which is not recommended.</translation>
         <translation>Export to PDF.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="127"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="128"/>
         <source>Remove Setlist Items</source>
         <translation>Remove setlist items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="207"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="206"/>
         <source>Export PDF ...</source>
         <translation>Export to PDF ...</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="226"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="225"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="245"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="244"/>
         <source>Cannot write</source>
         <translation>Cannot write.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="246"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="245"/>
         <source>File %1 is not writable.</source>
         <translation>%1 is not writable.</translation>
     </message>
