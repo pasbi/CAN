@@ -169,6 +169,10 @@ double Buffer::position() const
     if (m_codecContext)
     {
         qint64 pos = positionInBytes() / 2;
+        if (pos == 0)
+        {
+            return 0;   // avoid fpe
+        }
         pos /= m_codecContext->channels;    // pos in samples per channel
         double dpos = pos / (double) m_codecContext->sample_rate; // pos in seconds
         return dpos + m_offset;

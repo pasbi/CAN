@@ -36,6 +36,7 @@ void Player::stop()
 
 void Player::open( const QString &filename )
 {
+    qDebug() << "<<" << filename;
     stop();
     if (m_audioOutput)
     {
@@ -50,8 +51,9 @@ void Player::open( const QString &filename )
     connect( m_audioOutput, SIGNAL(notify()), this, SLOT(sync()) );
 
     double pos = position();
+    qDebug() << "pos" << pos;
     emit positionChanged( pos );
-    emit durationChanged( pos );
+    emit durationChanged( duration() );
 }
 
 void Player::play()

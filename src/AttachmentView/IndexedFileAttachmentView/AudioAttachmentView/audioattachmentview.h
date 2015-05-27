@@ -22,7 +22,7 @@ public:
 
 protected slots:
     void polish();
-    void open() {}
+    void open();
 
 
 private slots:

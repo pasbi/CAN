@@ -15,6 +15,11 @@ public:
     template< typename T = Attachment >
     T* attachment() const
     {
+        qDebug() << "==================";
+        qDebug() << m_attachment;
+        qDebug() << m_attachment->metaObject()->className();
+        qDebug() << T::staticMetaObject.className();
+        qDebug() << "==================";
         return qobject_assert_cast<T*>( m_attachment );
     }
 

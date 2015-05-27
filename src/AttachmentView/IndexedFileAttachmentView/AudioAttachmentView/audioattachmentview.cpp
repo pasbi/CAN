@@ -75,6 +75,7 @@ void AudioAttachmentView::polish()
     ui->doubleSpinBoxTempo->setValue( player().tempo() );
 
     ui->sectionView->setModel( a->sectionsModel() );
+    open();
 }
 
 void AudioAttachmentView::on_pushButtonStop_clicked()
@@ -168,5 +169,10 @@ void AudioAttachmentView::deleteCurrentSection()
     {
         attachment<AudioAttachment>()->sectionsModel()->removeSection( indexes.first().row() );
     }
+}
+
+void AudioAttachmentView::open()
+{
+    IndexedFileAttachmentView::open();
 }
 

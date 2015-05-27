@@ -79,6 +79,7 @@ void IndexedFileAttachmentView::chooseFile()
 
 void IndexedFileAttachmentView::open()
 {
+    qDebug() << "IndexedFileAttachmentView::open";
     IndexedFileAttachment* ifa = attachment<IndexedFileAttachment>();
     if (ifa)
     {
