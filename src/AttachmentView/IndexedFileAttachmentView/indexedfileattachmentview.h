@@ -20,6 +20,7 @@ public:
 protected slots:
     virtual void polish();
     virtual void open();
+    virtual void chooseFile();
 
     void updateAttachmentView();
 
@@ -28,7 +29,6 @@ private:
 
 private slots:
     void updateStackedWidget();
-    void chooseFile();
 
 private://tmp
     static QList<Ui::IndexedFileAttachmentView*> initializedUis;

@@ -85,14 +85,21 @@ void Player::seek()
 {
     if (m_audioOutput)
     {
-        m_timer->stop();
+        bool timerRun = m_timer->isActive();
+        if (timerRun)
+        {
+            m_timer->stop();
+        }
         blockSignals(true);
         m_audioOutput->stop();
         m_buffer.decode( m_pitch, m_tempo, m_offset );
         m_audioOutput->start( &m_buffer.buffer() );
         blockSignals(false);
         sync();
-        m_timer->start();
+        if (timerRun)
+        {
+            m_timer->start();
+        }
     }
     else
     {

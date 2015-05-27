@@ -23,6 +23,7 @@ public:
 protected slots:
     void polish();
     void open();
+    void chooseFile();
 
 
 private slots:
@@ -38,7 +39,6 @@ private slots:
 
     void restoreCurrentSection();
     void deleteCurrentSection();
-
 
 private:
     Ui::AudioAttachmentView *ui;

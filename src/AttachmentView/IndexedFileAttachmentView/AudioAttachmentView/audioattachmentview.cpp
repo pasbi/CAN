@@ -51,6 +51,7 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
 AudioAttachmentView::~AudioAttachmentView()
 {
     on_pushButtonStop_clicked();
+    ui->pushButtonStop->click();
     delete ui;
 }
 
@@ -174,5 +175,12 @@ void AudioAttachmentView::deleteCurrentSection()
 void AudioAttachmentView::open()
 {
     IndexedFileAttachmentView::open();
+}
+
+void AudioAttachmentView::chooseFile()
+{
+    on_pushButtonStop_clicked();
+    ui->pushButtonStop->click();
+    IndexedFileAttachmentView::chooseFile();
 }
 
