@@ -111,23 +111,24 @@ void Player::seek(double pitch, double tempo, double second)
 {
     m_pitch = pitch;
     m_tempo = tempo;
+    emit durationChanged( duration() );
     seek( second );
 }
 
 void Player::seek(double second)
 {
-    m_offset = second / m_tempo;
+    m_offset = second;
     seek();
 }
 
 double Player::duration() const
 {
-    return m_buffer.duration();
+    return m_buffer.duration() / m_tempo;
 }
 
 double Player::position() const
 {
-    return m_tempo * m_currentPosition;
+    return m_currentPosition;
 }
 
 double Player::checkSectionAndGetPosition()

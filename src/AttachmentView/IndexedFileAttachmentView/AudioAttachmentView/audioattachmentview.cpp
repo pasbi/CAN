@@ -61,7 +61,11 @@ void AudioAttachmentView::polish()
 
     AudioAttachment* a = attachment<AudioAttachment>();
 
-    connect( &a->player(), SIGNAL(positionChanged(double)), ui->slider, SLOT(setValue(double)) );
+    connect( &a->player(), &Player::positionChanged, [this](double value)
+    {
+        ui->slider->setValue( value / ui->doubleSpinBoxTempo->value() );
+    });
+
     connect( &a->player(), SIGNAL(durationChanged(double)), ui->slider, SLOT(setMaximum(double)) );
 
     connect( a, &AudioAttachment::hashChanged, [this, a]()
@@ -102,7 +106,7 @@ void AudioAttachmentView::on_pushButtonPlayPause_toggled(bool checked)
 
 void AudioAttachmentView::seek(double pos)
 {
-    player().seek( pos );
+    player().seek( ui->doubleSpinBoxTempo->value() * pos );
 }
 
 void AudioAttachmentView::setPitchTempo()
