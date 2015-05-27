@@ -2,6 +2,7 @@
 #include <QHBoxLayout>
 #include "global.h"
 #include <QLineEdit>
+#include <QCompleter>
 
 
 DEFN_CREATABLE(ComboEditor, CellEditor);
@@ -15,7 +16,11 @@ ComboEditor::ComboEditor(QWidget *parent) :
 
 void ComboEditor::polish()
 {
+
     m_combo->setEditable(true);
+
+    // although case sensitive is marked as default, completer is case insenstive without the following.
+    m_combo->completer()->setCaseSensitivity( Qt::CaseSensitive );
 
 
     QStringList items;
