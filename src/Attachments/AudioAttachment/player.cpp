@@ -9,7 +9,7 @@ Player::Player()
     connect( m_timer, &QTimer::timeout, [this]()
     {
         m_currentPosition += interval / 1000.0;
-        emit positionChanged( position() );
+        emit positionChanged( checkSectionAndGetPosition() );
     });
 }
 
@@ -36,7 +36,6 @@ void Player::stop()
 
 void Player::open( const QString &filename )
 {
-    qDebug() << "<<" << filename;
     stop();
     if (m_audioOutput)
     {
@@ -51,7 +50,7 @@ void Player::open( const QString &filename )
     connect( m_audioOutput, SIGNAL(notify()), this, SLOT(sync()) );
 
     double pos = position();
-    qDebug() << "pos" << pos;
+
     emit positionChanged( pos );
     emit durationChanged( duration() );
 }
@@ -86,10 +85,14 @@ void Player::seek()
 {
     if (m_audioOutput)
     {
+        m_timer->stop();
+        blockSignals(true);
         m_audioOutput->stop();
         m_buffer.decode( m_pitch, m_tempo, m_offset );
         m_audioOutput->start( &m_buffer.buffer() );
+        blockSignals(false);
         sync();
+        m_timer->start();
     }
     else
     {
