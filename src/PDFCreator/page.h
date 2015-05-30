@@ -37,13 +37,14 @@ public:
      */
     QSizeF sizePainter() const;
 
-    void growDown( double mm );
+    void growDownMM( double mm );
 
-    double dpiX() const;
-    double dpiY() const;
+    double dpi() const;
 
     static const double MM_INCH;
-    static const double INCH_MM;
+
+    double mmInPainterUnits( double mm ) const;
+    double painterUnitsInMM( double painter ) const;
 
 
     Flags flags() const { return m_flags; }

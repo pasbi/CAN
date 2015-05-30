@@ -422,12 +422,13 @@ void EndlessPDFCreator::paintChordPatternAttachment(ChordPatternAttachment *atta
 
         if (isEndlessPage())
         {
-            double height = currentPage()->sizePainter().height() / 6.5;    // why 6.5?
-            double spaceLeft = height - y;
+            double spaceLeft = pageRectMargins().height() - y;
 
             if (spaceLeft < 0)
             {
-                currentPage()->growDown( -spaceLeft );
+                // space left must be converted from painter-units to mm
+
+                currentPage()->growDownMM( -currentPage()->painterUnitsInMM( spaceLeft ) );
             }
         }
         else
@@ -550,7 +551,7 @@ void EndlessPDFCreator::paintTableOfContents()
             currentPainter().drawText( QPointF( leftMargin(), y), currentEntry  );
             pageNumberStubs << PageNumberStub( currentIndex(), y );
 
-            y += lineHeight;
+            y += lineHeight * 1.1;
         }
         else        // content does not fit on page
         {

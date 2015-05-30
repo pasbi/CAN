@@ -2,7 +2,6 @@
 #include "global.h"
 
 const double Page::MM_INCH = 25.4;
-const double Page::INCH_MM = 1.0 / Page::MM_INCH;
 
 Page::Page(QSizeF baseSizeInMM, Flags flags ) :
     m_sizeInMM( baseSizeInMM ),
@@ -21,23 +20,51 @@ const QPicture& Page::picture()
     return m_picture;
 }
 
-double Page::dpiX() const
+double Page::dpi() const
 {
-    return m_picture.physicalDpiX();
+    // I guess physicalDpi and logicalDpi should be isotropic and the same
+    // ( pdpix = pdpiy = ldpix = ldpiy )
+    // one might test this on e.g. a device with a "retina" display
+    double physicalDpi = m_picture.physicalDpiX();
+    if (!qFuzzyCompare( physicalDpi, m_picture.physicalDpiY() ))
+    {
+        qWarning() << "phyiscal dpi is anisotropic.";
+    }
+
+    double logicalDpi = m_picture.logicalDpiX();
+    if (!qFuzzyCompare( logicalDpi, m_picture.logicalDpiY() ))
+    {
+        qWarning() << "logical dpi is anisotropic.";
+    }
+
+    if (!qFuzzyCompare( logicalDpi, physicalDpi ))
+    {
+        qWarning() << "logical dpi is not the same as physical dpi.";
+    }
+
+    return logicalDpi;
 }
 
-double Page::dpiY() const
-{
-    return m_picture.physicalDpiY();
-}
 
-void Page::growDown(double mm)
+void Page::growDownMM(double mm)
 {
     m_sizeInMM.setHeight( m_sizeInMM.height() + mm );
 }
 
 QSizeF Page::sizePainter() const
 {
-    QSizeF sizeInches = sizeInMM() * INCH_MM;
-    return QSizeF( sizeInches.width() * dpiX(), sizeInches.height() * dpiY() );
+    return QSizeF( mmInPainterUnits(sizeInMM().width()), mmInPainterUnits(sizeInMM().height()) );
+}
+
+
+double Page::mmInPainterUnits( double mm ) const
+{
+    double inches = mm / MM_INCH;
+    return inches * dpi();
+}
+
+double Page::painterUnitsInMM( double painter ) const
+{
+    double inches = painter / dpi();
+    return inches * MM_INCH;
 }
