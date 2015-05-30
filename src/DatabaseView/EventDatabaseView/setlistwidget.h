@@ -37,6 +37,8 @@ private slots:
 
     void on_buttonExportPDF_clicked();
 
+    void on_listView_doubleClicked(const QModelIndex &index);
+
 protected:
     void hideEvent(QHideEvent *e);
     void showEvent(QShowEvent *e);

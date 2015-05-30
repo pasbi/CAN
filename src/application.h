@@ -10,6 +10,7 @@
 class MainWindow;
 class Project;
 class Command;
+class Song;
 class Application : public QApplication
 {
     Q_OBJECT
@@ -29,6 +30,8 @@ public:
 
     void undo() const;
     void redo() const;
+
+    void selectSong(const Song *song );
 
 private:
     FileIndex m_fileIndex;

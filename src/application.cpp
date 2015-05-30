@@ -2,6 +2,7 @@
 #include "project.h"
 #include "global.h"
 #include "mainwindow.h"
+#include "Database/SongDatabase/song.h"
 
 Application::Application(int &argc, char **argv) :
     QApplication( argc, argv)
@@ -63,5 +64,13 @@ void Application::beginMacro(const QString &text)
 void Application::endMacro()
 {
     m_project->endMacro();
+}
+
+void Application::selectSong(const Song *song)
+{
+    m_mainWindow->gotoSongView();
+    QModelIndex index = m_mainWindow->songTableView()->model()->indexOfSong( song );
+    index = m_mainWindow->songTableView()->proxyModel()->mapFromSource( index );
+    m_mainWindow->songTableView()->selectRow( index.row() );
 }
 

@@ -5,6 +5,7 @@
 #include "project.h"
 #include "configurable.h"
 #include "identitymanager.h"
+#include "DatabaseView/SongDatabaseView/songtableview.h"
 
 
 namespace Ui {
@@ -21,6 +22,8 @@ public:
 
     QAction* undoAction() const;
     QAction* redoAction() const;
+
+    SongTableView* songTableView();
 
 private slots:
     void resizeSplitter();  // left column should be as small as possible.
@@ -51,9 +54,11 @@ private:
 protected:
     void closeEvent(QCloseEvent *e);
 
-private slots:
+public slots:
     void gotoSongView();
     void gotoEventView();
+
+private slots:
     void updateWindowTitle();
     void on_actionSave_triggered();
     void on_actionSave_As_triggered();

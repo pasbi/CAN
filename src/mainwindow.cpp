@@ -11,7 +11,6 @@
 #include "application.h"
 #include "Dialogs/addfileindexsourcedialog.h"
 #include "Dialogs/stringdialog.h"
-#include "DatabaseView/SongDatabaseView/songtableview.h"
 #include "conflicteditor.h"
 #include "Dialogs/commitdialog.h"
 #include "Dialogs/clonedialog.h"
@@ -1076,7 +1075,10 @@ void MainWindow::createLanguageMenu()
 }
 
 
-
+SongTableView* MainWindow::songTableView()
+{
+    return ui->songDatabaseWidget->songTableView();
+}
 
 
 

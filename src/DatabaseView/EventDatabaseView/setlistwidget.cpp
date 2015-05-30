@@ -274,3 +274,20 @@ void SetlistWidget::on_buttonExportPDF_clicked()
     }
 }
 
+
+void SetlistWidget::on_listView_doubleClicked(const QModelIndex &index)
+{
+    SetlistItem* item = ui->listView->model()->itemAt( index );
+    if (!item)
+    {
+        return;
+    }
+
+    const Song* song = item->song();
+    if (!song)
+    {
+        return;
+    }
+
+    app().selectSong( song );
+}
