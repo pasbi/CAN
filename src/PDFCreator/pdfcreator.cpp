@@ -26,10 +26,10 @@ void PDFCreator::save(const QString &filename)
 {
     QPdfWriter writer( filename );
 
-//    writer.setMargins( {0, 0, 0, 0} );
+    writer.setMargins( {0, 0, 0, 0} );
     QPageSize pageSize( m_baseSizeMM, QPageSize::Millimeter );
     writer.setPageSize( pageSize );
-    writer.setTitle( "TEST" );
+    writer.setTitle( QFileInfo(filename).baseName() );
     QPainter painter( &writer );
 
     bool isEmpty = true;
@@ -203,7 +203,7 @@ QMap<QString, QString> PDFCreator::dictionary()
     });
 }
 
-QString labelSetlistDEP(Setlist *setlist)
+QString labelSetlist(Setlist *setlist)
 {
     QString title = PDFCreator::config["PDFTitlePattern"].toString();
     title.replace( "{EventTitle}", setlist->event()->label());
@@ -228,14 +228,14 @@ void PDFCreator::paintHeadline(const QString& label)
     font.setFamily( "lucida" );
     currentPainter().setFont( font );
 
-    QString text = label;
-
-    currentPainter().drawText( QPointF(leftMargin(), topMargin()), text);
-    m_additionalTopMargin += 1.2 * currentPainter().fontMetrics().height();
+    qDebug() << topMargin();
+    double fontHeight = currentPainter().fontMetrics().height();
+    currentPainter().drawText( QPointF(leftMargin(), topMargin() + fontHeight), label);
+    m_additionalTopMargin += 2 * fontHeight;
     currentPainter().restore();
 }
 
-QString labelSongDEP( const Song* song )
+QString labelSong( const Song* song )
 {
     QString pattern = PDFCreator::config["SongTitlePattern"].toString();
     for (int i = 0; i < song->database()->attributeKeys().length(); ++i)
@@ -254,8 +254,8 @@ QString labelSongDEP( const Song* song )
 
 void PDFCreator::paintTitle()
 {
-    QString title = labelSetlistDEP( m_setlist );
-    currentPainter().drawText( pageRect(), Qt::AlignCenter, title );
+    QString title = labelSetlist( m_setlist );
+    currentPainter().drawText( pageRectMargins(), Qt::AlignCenter, title );
 }
 
 void PDFCreator::insertTableOfContentsStub()
@@ -266,7 +266,7 @@ void PDFCreator::insertTableOfContentsStub()
 bool PDFCreator::paintSong(const Song* song)
 {
     newPage( Page::SongStartsHere );
-    QString headline = labelSongDEP( song );
+    QString headline = labelSong( song );
     m_tableOfContents.append( headline );
     paintHeadline( headline );
 
