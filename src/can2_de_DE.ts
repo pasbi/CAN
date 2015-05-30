@@ -103,7 +103,7 @@
         <translation>Abschnitt wiederherstellen</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="142"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="148"/>
         <source>Unnamed</source>
         <translation>Unbenannt</translation>
     </message>
@@ -223,265 +223,270 @@
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="21"/>
-        <location filename="PDFCreator/pdfcreator.cpp" line="103"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="154"/>
         <source>dpi</source>
         <translation>DPI</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="13"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="63"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="15"/>
-        <location filename="PDFCreator/pdfcreator.cpp" line="27"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="65"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="77"/>
         <source>Pattern</source>
         <translation>Muster</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="19"/>
-        <location filename="PDFCreator/pdfcreator.cpp" line="25"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="69"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="75"/>
         <source>Song Title</source>
         <translation>Song Titel</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="31"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="81"/>
         <source>Line spacing</source>
         <translation>Zeilenabstand</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="37"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="87"/>
         <source>Chord Line spacing</source>
         <translation>Zeilenabstand in Akkordzeile</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="43"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="93"/>
         <source>Page size</source>
         <translation>Seitengröße</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="45"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="95"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="46"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="96"/>
         <source>A1</source>
         <translation>A1</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="47"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="97"/>
         <source>A2</source>
         <translation>A2</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="48"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="98"/>
         <source>A3</source>
         <translation>A3</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="49"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="99"/>
         <source>A4</source>
         <translation>A4</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="50"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="100"/>
         <source>A5</source>
         <translation>A5</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="51"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="101"/>
         <source>A6</source>
         <translation>A6</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="52"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="102"/>
         <source>A7</source>
         <translation>A7</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="53"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="103"/>
         <source>A8</source>
         <translation>A8</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="54"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="104"/>
         <source>A9</source>
         <translation>A9</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="55"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="105"/>
         <source>B0</source>
         <translation>B0</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="56"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="106"/>
         <source>B1</source>
         <translation>B1</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="57"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="107"/>
         <source>B2</source>
         <translation>B2</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="58"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="108"/>
         <source>B3</source>
         <translation>B3</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="59"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="109"/>
         <source>B4</source>
         <translation>B4</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="60"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="110"/>
         <source>B5</source>
         <translation>B5</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="61"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="111"/>
         <source>B6</source>
         <translation>B6</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="62"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="112"/>
         <source>B7</source>
         <translation>B7</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="63"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="113"/>
         <source>B8</source>
         <translation>B8</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="64"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="114"/>
         <source>B9</source>
         <translation>B9</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="65"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="115"/>
         <source>B10</source>
         <translation>B10</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="66"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="116"/>
         <source>C5E</source>
         <translation>C5E</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="67"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="117"/>
         <source>Comm10E</source>
         <translation>Comm10E</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="68"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="118"/>
         <source>DLE</source>
         <translation>DLE</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="69"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="119"/>
         <source>Executive</source>
         <translation>Executive</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="70"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="120"/>
         <source>Folio</source>
         <translation>Folio</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="71"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="121"/>
         <source>Ledger</source>
         <translation>Ledger</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="72"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="122"/>
         <source>Legal</source>
         <translation>Legal</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="73"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="123"/>
         <source>Letter</source>
         <translation>Letter</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="74"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="124"/>
         <source>Tabloid</source>
         <translation>Tabloid</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="79"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="129"/>
         <source>Align songs: </source>
         <translation>Songs ausrichten:</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="81"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="131"/>
         <source>No alignment</source>
         <translation>Keine Ausrichtung</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="82"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="132"/>
         <source>Odd pages</source>
         <translation>Ungerade Seiten</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="83"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="133"/>
         <source>Even pages</source>
         <translation>Gerade Seiten</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="84"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="134"/>
         <source>Duplex</source>
         <translation>Duplex Druck</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="88"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="135"/>
+        <source>Endless</source>
+        <translation>Endlos</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="139"/>
         <source>Table of Contents</source>
         <translation>Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="95"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="146"/>
         <source>Page Numbers</source>
         <translation>Seitenzahlen</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="101"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="152"/>
         <source>Resolution</source>
         <translation>Auflösung</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="107"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="158"/>
         <source>Show to-be-continued-hint</source>
         <translation>Fortsetzungs-Hinweis</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="39"/>
+        <location filename="mainwindow.cpp" line="38"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="41"/>
+        <location filename="mainwindow.cpp" line="40"/>
         <source>Stylesheet</source>
         <translation>Formatvorlage</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="45"/>
+        <location filename="mainwindow.cpp" line="44"/>
         <source>Ask for commit message</source>
         <translation>Nach Kommentar beim
 Synchronisieren fragen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="51"/>
+        <location filename="mainwindow.cpp" line="50"/>
         <source>Commit message</source>
         <translation>Kommentar</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="52"/>
+        <location filename="mainwindow.cpp" line="51"/>
         <source>Synchronizing</source>
         <translation>Synchronisiere</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="53"/>
+        <location filename="mainwindow.cpp" line="52"/>
         <source>commit message</source>
         <translation>Kommentar</translation>
     </message>
@@ -721,7 +726,7 @@ or does not exist.</source>
 oder existiert nicht.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="69"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="64"/>
         <source>&lt; No File &gt;</source>
         <translation>&lt; Keine Datei &gt;</translation>
     </message>
@@ -1001,7 +1006,7 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
         <translation>Anlage umbenennen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="672"/>
+        <location filename="mainwindow.cpp" line="671"/>
         <source>Rename Attachment</source>
         <translation>Anlage umbennen</translation>
     </message>
@@ -1022,10 +1027,10 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
     </message>
     <message>
         <location filename="mainwindow.ui" line="482"/>
-        <location filename="mainwindow.cpp" line="805"/>
-        <location filename="mainwindow.cpp" line="812"/>
-        <location filename="mainwindow.cpp" line="902"/>
-        <location filename="mainwindow.cpp" line="911"/>
+        <location filename="mainwindow.cpp" line="804"/>
+        <location filename="mainwindow.cpp" line="811"/>
+        <location filename="mainwindow.cpp" line="901"/>
+        <location filename="mainwindow.cpp" line="910"/>
         <source>Sync</source>
         <translation>Synchronisieren</translation>
     </message>
@@ -1055,189 +1060,189 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
         <translation>Einstellungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="154"/>
+        <location filename="mainwindow.cpp" line="153"/>
         <source>&amp;New Song</source>
         <translation>&amp;Neuer Song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="154"/>
+        <location filename="mainwindow.cpp" line="153"/>
         <source>Add a new song.</source>
         <translation>Neuen Song hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="155"/>
+        <location filename="mainwindow.cpp" line="154"/>
         <source>&amp;Remove Song</source>
         <translation>Song &amp;löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="155"/>
+        <location filename="mainwindow.cpp" line="154"/>
         <source>Remove selected song.</source>
         <translation>Lösche ausgewählten Song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="156"/>
+        <location filename="mainwindow.cpp" line="155"/>
         <source>&amp;Copy Song</source>
         <translation>Song &amp;kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="156"/>
+        <location filename="mainwindow.cpp" line="155"/>
         <source>Copy selected song.</source>
         <translation>Ausgewählten Song kopieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="157"/>
+        <location filename="mainwindow.cpp" line="156"/>
         <source>&amp;Paste Song</source>
         <translation>Song &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="157"/>
+        <location filename="mainwindow.cpp" line="156"/>
         <source>Paste song.</source>
         <translation>Song einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="159"/>
+        <location filename="mainwindow.cpp" line="158"/>
         <source>&amp;New Event</source>
         <translation>&amp;Neues Event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="159"/>
+        <location filename="mainwindow.cpp" line="158"/>
         <source>Add a new event.</source>
         <translation>Neues Event hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="160"/>
+        <location filename="mainwindow.cpp" line="159"/>
         <source>&amp;Remove Event</source>
         <translation>Event &amp;Löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="160"/>
+        <location filename="mainwindow.cpp" line="159"/>
         <source>Remove selected event.</source>
         <translation>Ausgewähltes Event löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="161"/>
+        <location filename="mainwindow.cpp" line="160"/>
         <source>&amp;Copy Event</source>
         <translation>Event &amp;Kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="161"/>
+        <location filename="mainwindow.cpp" line="160"/>
         <source>Copy selected event.</source>
         <translation>Kopiere selektiertes Event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="162"/>
+        <location filename="mainwindow.cpp" line="161"/>
         <source>&amp;Paste Event</source>
         <translation>Event &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="162"/>
+        <location filename="mainwindow.cpp" line="161"/>
         <source>Paste event.</source>
         <translation>Event einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="204"/>
+        <location filename="mainwindow.cpp" line="203"/>
         <source>New %1</source>
         <translation>Neues %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="256"/>
+        <location filename="mainwindow.cpp" line="255"/>
         <source>Unnamed</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="317"/>
+        <location filename="mainwindow.cpp" line="316"/>
         <source>Save As ...</source>
         <translation>Speichern unter ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="359"/>
+        <location filename="mainwindow.cpp" line="358"/>
         <source>Really close %1</source>
         <translation>%1 wirklich schließen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="360"/>
+        <location filename="mainwindow.cpp" line="359"/>
         <source>There are unsaved changes.</source>
         <translation>Es gibt ungespeicherte Änderungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="566"/>
+        <location filename="mainwindow.cpp" line="565"/>
         <source>Open ...</source>
         <translation>Öffnen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="607"/>
+        <location filename="mainwindow.cpp" line="606"/>
         <source>Song cannot be removed</source>
         <translation>Song kann nicht entfernt werden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="608"/>
+        <location filename="mainwindow.cpp" line="607"/>
         <source>This song is currently in use and can thus not be removed.</source>
         <translation>Diese Song wird momentan benutzt und kann deshalb nicht entfernt werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="672"/>
+        <location filename="mainwindow.cpp" line="671"/>
         <source>New Name for %1</source>
         <translation>Neuer Name für %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="738"/>
+        <location filename="mainwindow.cpp" line="737"/>
         <source>Cloning.</source>
         <translation>Am Klonen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="751"/>
+        <location filename="mainwindow.cpp" line="750"/>
         <source>Cloning failed</source>
         <translation>Klonen fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="752"/>
+        <location filename="mainwindow.cpp" line="751"/>
         <source>Failed to clone %1.</source>
         <translation>Fehlgeschlagener Klonversuch (%1).</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="760"/>
+        <location filename="mainwindow.cpp" line="759"/>
         <source>Cannot load project</source>
         <translation>Kann diese Projekt nicht laden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="761"/>
+        <location filename="mainwindow.cpp" line="760"/>
         <source>Failed to load cloned project.
 Make sure you cloned the correct repository and the repository is valid.</source>
         <translation>Kann geklontes Projekt nicht öffnen.
 Stelle sicher dass Du das richtige Repository geklont hast.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="806"/>
+        <location filename="mainwindow.cpp" line="805"/>
         <source>You must provide a valid identity to sync. Abort.</source>
         <translation>Du musst eine gültige Identität zum Synchronisieren angeben. Abbruch.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="813"/>
+        <location filename="mainwindow.cpp" line="812"/>
         <source>Commit message may not be empty. Abort.</source>
         <translation>Commit nachricht darf nicht leer sein. Abbruch.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="823"/>
+        <location filename="mainwindow.cpp" line="822"/>
         <source>Password for %1</source>
         <translation>Passwort für %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="823"/>
+        <location filename="mainwindow.cpp" line="822"/>
         <source>Password</source>
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="847"/>
+        <location filename="mainwindow.cpp" line="846"/>
         <source>Syncing.</source>
         <translation>Synchronisiere.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="891"/>
+        <location filename="mainwindow.cpp" line="890"/>
         <source>Failed to load project.</source>
         <translation>Konnte das Projekt nicht laden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="892"/>
+        <location filename="mainwindow.cpp" line="891"/>
         <source>Cannot open merged project.
 Probably merging went wrong or the remote version was currupted.
 Fix the error by hand and commit it over the current version, then clone the fixed repository.</source>
@@ -1246,53 +1251,53 @@ Wahrscheinlich ist das Zusammenführen schiefgegangen oder die Remote-Version wa
 Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="903"/>
+        <location filename="mainwindow.cpp" line="902"/>
         <source>Sync failed.</source>
         <translation>Synchronisieren fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="912"/>
+        <location filename="mainwindow.cpp" line="911"/>
         <source>Sync succeeded</source>
         <translation>Synchronisieren erfolgreich</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="934"/>
+        <location filename="mainwindow.cpp" line="933"/>
         <source>File index information</source>
         <translation>Informationen über Dateiindex</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="935"/>
+        <location filename="mainwindow.cpp" line="934"/>
         <source>Files: %1</source>
         <translation>Dateien: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1027"/>
-        <location filename="mainwindow.cpp" line="1038"/>
+        <location filename="mainwindow.cpp" line="1026"/>
+        <location filename="mainwindow.cpp" line="1037"/>
         <source>Opening %1</source>
         <translation>Öffne %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1028"/>
+        <location filename="mainwindow.cpp" line="1027"/>
         <source>Cannot open %1. Unknown file format.</source>
         <translation>Kann %1 nicht öffnen. Unbekanntes Format</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1039"/>
+        <location filename="mainwindow.cpp" line="1038"/>
         <source>File %1 not found.</source>
         <translation>Datei %1 nicht gefunden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1069"/>
+        <location filename="mainwindow.cpp" line="1068"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1070"/>
+        <location filename="mainwindow.cpp" line="1069"/>
         <source>Language changes will apply on next start.</source>
         <translation>Sprache ändert sich beim nächsten Start.</translation>
     </message>
     <message>
-        <location filename="mainwindow.h" line="43"/>
+        <location filename="mainwindow.h" line="46"/>
         <source>All files (*);;CAN files (*.can)</source>
         <translation>Alle Dateien (*);;CAN Dateien (*.can)</translation>
     </message>
@@ -1341,37 +1346,29 @@ Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.<
 <context>
     <name>PDFCreator</name>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="161"/>
-        <source>Generate table of contents ...</source>
-        <translation>Erzeuge Inhaltsverzeichnis ...</translation>
+        <location filename="PDFCreator/pdfcreator.cpp" line="123"/>
+        <source>Table of contents</source>
+        <translation>Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="171"/>
-        <source>Align songs ...</source>
-        <translation>Richte songs aus ...</translation>
+        <location filename="PDFCreator/pdfcreator.cpp" line="134"/>
+        <source>Align songs</source>
+        <translation>Songs ausrichten</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="195"/>
-        <source>Generate page numbers ...</source>
-        <translation>Generiere Seitenzahlen ...</translation>
+        <location filename="PDFCreator/pdfcreator.cpp" line="157"/>
+        <source>Generate page numbers</source>
+        <translation>Erzeuge Seitenzahlen</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="207"/>
-        <source>Save pdf ...</source>
-        <translation>Speichere PDF ...</translation>
+        <location filename="PDFCreator/pdfcreator.cpp" line="168"/>
+        <source>Save PDF</source>
+        <translation>Speichere PDF</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="394"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="277"/>
         <source>Draw attachment %1 of song %2</source>
         <translation>Zeichne Anlage %1 von Song %2 ...</translation>
-    </message>
-</context>
-<context>
-    <name>ProgressDialog</name>
-    <message>
-        <location filename="progressdialog.ui" line="14"/>
-        <source>Progress</source>
-        <translation>Fortschritt</translation>
     </message>
 </context>
 <context>
@@ -1383,17 +1380,17 @@ Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.<
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="304"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="534"/>
         <source>Table of Content</source>
         <translation>Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="33"/>
+        <location filename="main.cpp" line="32"/>
         <source>Cannot find translation files</source>
         <translation>Cannot find translation files.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="34"/>
+        <location filename="main.cpp" line="33"/>
         <source>Translation file &quot;%1&quot; not found.
 Using fallback-english which is not recommended.</source>
         <translation>Sprachdatei &quot;%1&quot; nicht gefunden.
@@ -1432,7 +1429,7 @@ Benutze Notfall-English (nicht empfohlen).
 <context>
     <name>Setlist</name>
     <message>
-        <location filename="Database/EventDatabase/setlist.cpp" line="329"/>
+        <location filename="Database/EventDatabase/setlist.cpp" line="333"/>
         <source>Remove dragged items</source>
         <translation>Gezogene elemente entfernen</translation>
     </message>
@@ -1480,27 +1477,27 @@ Benutze Notfall-English (nicht empfohlen).
         <translation>Elemente einfügen.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="61"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="62"/>
         <source>Paste setlist items</source>
         <translation>Setlistelemente einfügen</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="108"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="109"/>
         <source>Drop Songs</source>
         <translation>Songs ablegen</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="126"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="127"/>
         <source>Move setlist items</source>
         <translation>Setlistelemente verschieben</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="130"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="131"/>
         <source>Copy setlist items</source>
         <translation>Setlistelemente kopieren</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="220"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="221"/>
         <source>Remove Setlist Items</source>
         <translation>Setlistelemente löschen</translation>
     </message>
@@ -1548,18 +1545,18 @@ Benutze Notfall-English (nicht empfohlen).
         <translation>Exportiere in PDF ...</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="226"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="228"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 existiert bereits. Möchtest du es überschreiben?</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="245"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="249"/>
         <source>Cannot write</source>
         <translation>Kann nicht schreiben.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="246"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="250"/>
         <source>File %1 is not writable.</source>
         <translation>%1 ist nicht schreibbar.</translation>
     </message>
