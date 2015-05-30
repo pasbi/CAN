@@ -126,12 +126,18 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
 {
     tokens = line.split(QRegExp(SPLIT_PATTERN));
 
+    int numberOfUncertainChords = 0;
+
     int numToken = 0;
     for (const QString & token : tokens)
     {
         if (Chord(token).isValid())
         {
             chords << token;
+            if ( token == "a" )
+            {
+                numberOfUncertainChords++;
+            }
         }
         // do only count tokens that contains letters or numbers etc.
         if (token.contains(QRegExp("[A-Za-z0-9]")))
@@ -141,8 +147,8 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
     }
 
 
-    const int numChords = chords.length();
-    return numChords > 1.3 * (numToken - numChords);
+    const int numChords = chords.length() - numberOfUncertainChords;
+    return (double) numChords / (numToken - numChords) > 0.8;
 }
 
 int parseBase( const QChar & c )
