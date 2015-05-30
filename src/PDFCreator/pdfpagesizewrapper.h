@@ -3,7 +3,7 @@
 
 #include <QPagedPaintDevice>
 
-int pageSizeToInt( QPagedPaintDevice::PageSize s );
-QPagedPaintDevice::PageSize intToPageSize( int s );
+//int pageSizeToInt( QPagedPaintDevice::PageSize s );
+//QPagedPaintDevice::PageSize intToPageSize( int s );
 
 #endif // PDFPAGESIZEWRAPPER_H

@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QPicture>
 #include "global.h"
+#include <QPageSize>
 
 
 /**
@@ -22,7 +23,7 @@ public:
      * @brief PicturePainter
      * @param blank nothing can be drawn on blank pages.
      */
-    explicit PicturePainter( Flag flags );
+    explicit PicturePainter( Flag flags, QPageSize initialSize );
     ~PicturePainter();
 
 
@@ -33,8 +34,16 @@ public:
     void stop();
     Flag flag() const { return m_flags; }
 
+    /**
+     * @brief pageSize returns the size of this page. May be grown down.
+     * @return
+     */
+    QPageSize pageSize() const { return m_pageSize; }
+    void growDown(double mm);
+
 private:
     Flag m_flags;
+    QPageSize m_pageSize;
 
 };
 

@@ -8,7 +8,8 @@ PDFPaintDevice::PDFPaintDevice(const QString& title, const QPdfWriter::PageSize 
     m_title( title.simplified() ),  // title cannot display \n etc.
     m_pageSize( pageSize )
 {
-    // create a dummy writer to determine pagesize
+    // create a dummy writer to determine pagesize. This is the base page size, it may grow
+    // if m_endlessPageSize == true.
     QPdfWriter writer("");
     writer.setPageSize( m_pageSize );
     m_size = writer.pageSizeMM();
@@ -22,7 +23,7 @@ PDFPaintDevice::~PDFPaintDevice()
 
 PicturePainter* PDFPaintDevice::newPicturePainter(PicturePainter::Flag flag ) const
 {
-    PicturePainter* pp = new PicturePainter( flag );
+    PicturePainter* pp = new PicturePainter( flag, initialPageSize() );
     pp->QPainter::scale( scale(), scale() );
     pp->QPainter::setFont( m_defaultFont );
     return pp;
@@ -41,7 +42,7 @@ void PDFPaintDevice::insertEmptyPage(int i, PicturePainter::Flag flag)
     activatePage( i );
 }
 
-QPainter *PDFPaintDevice::painter() const
+PicturePainter *PDFPaintDevice::painter() const
 {
     return m_currentPainter;
 }
@@ -56,12 +57,15 @@ void PDFPaintDevice::save(const QString &filename) const
     int i = 0;
     for ( PicturePainter* pp : m_pages)
     {
-        pp->stop();
-        if (i++ != 0)
+        pp->stop(); // stop recording on pp. I.e. pp is freezed for reading.
+
+        if (i != 0)
         {
+            writer.setPageSize( pp->pageSize() );
             assert( writer.newPage() );
         }
         pdfwriterPainter.drawPicture( QPoint(), *pp );
+        i++;
     }
 }
 
@@ -110,4 +114,12 @@ void PDFPaintDevice::setDefaultFont(const QFont &font)
 void PDFPaintDevice::nextPage(PicturePainter::Flag flag)
 {
     insertEmptyPage( currentPageNumber() + 1, flag );
+}
+
+QPageSize PDFPaintDevice::initialPageSize() const
+{
+    // create a dummy writer to determine pagesize
+    QPdfWriter writer("");
+    writer.setPageSize( m_pageSize );
+    return QPageSize( writer.pageSizeMM(), QPageSize::Millimeter );
 }

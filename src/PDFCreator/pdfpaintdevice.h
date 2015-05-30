@@ -30,7 +30,7 @@ public:
      * @brief painter returns a painter that paints on the currently active page.
      * @return
      */
-    QPainter* painter() const;
+    PicturePainter* painter() const;
 
     /**
      * @brief insertEmptyPage inserts an empty page at index i. Maybe more empty pages
@@ -43,6 +43,9 @@ public:
     double scale() const;
     void setDefaultFont( const QFont & font );
 
+    void setEndlessPageSize( bool s ) { m_endlessPageSize = s; }
+    QPageSize initialPageSize() const;
+
 private:
     QList<PicturePainter*> m_pages;
     const QString m_title;
@@ -53,7 +56,10 @@ private:
     PicturePainter* newPicturePainter(PicturePainter::Flag flag) const;
     PicturePainter* m_currentPainter = NULL;
 
+    bool m_endlessPageSize = false;
+
     static const double UNIT;
+
 };
 
 

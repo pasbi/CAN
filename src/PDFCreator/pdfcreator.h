@@ -53,7 +53,7 @@ private: // METHODES
      *  table of contents will be inserted there.
      */
     void insertTableOfContentsStub();
-    QPainter *painter();
+    PicturePainter *painter();
     void nextPage(PicturePainter::Flag flag);
     QRectF pageRect() const { return QRectF(QPointF(), m_pdfPainter->size()); }
     QRectF line( double y, double height ) const { return QRectF(QPointF(0, y), QSizeF(m_pdfPainter->size().width(), height)); }
@@ -68,9 +68,8 @@ private: // MEMBERS
     double m_additionalTopMargin = 0; // is set if e.g. a headline need additional space.
     QStringList m_tableOfContents;
     QString m_filename;
+    bool isEndlessPage() const;
 
-private: // STATIC MEMBERS and METHODES
-    friend QString labelSetlist( const Setlist* setlist );
 };
 
 #endif // PDFCREATOR_H

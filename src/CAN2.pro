@@ -6,7 +6,7 @@
 
 
 #//TODO port to Windows
-#//TODO what happens if network is requires but down?
+#//TODO what happens if network is required but down?
 
 QT       += core gui multimedia
 
@@ -28,7 +28,6 @@ LIBS += -lavformat -lavcodec -lavutil -lpthread
 LIBS += -lSoundTouch
 
 QMAKE_CXXFLAGS += -std=c++0x
-
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -136,7 +135,9 @@ SOURCES += main.cpp\
     Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp \
     Dialogs/tagdialog.cpp \
-    Commands/edittagscommand.cpp
+    Commands/edittagscommand.cpp \
+    PDFCreator/endlesspdfcreator.cpp \
+    PDFCreator/page.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -245,7 +246,10 @@ HEADERS  += mainwindow.h \
     Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.h \
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h \
     Dialogs/tagdialog.h \
-    Commands/edittagscommand.h
+    Commands/edittagscommand.h \
+    PDFCreator/endlesspdfcreator.h \
+    PDFCreator/page.h \
+    PDFCreator/pdfcreatorconfig.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

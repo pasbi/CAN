@@ -8,6 +8,8 @@
 #include "global.h"
 
 
+#include "PDFCreator/endlesspdfcreator.h"
+
 int main(int argc, char *argv[])
 {
     Application app(argc, argv);

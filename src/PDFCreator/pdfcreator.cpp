@@ -41,7 +41,8 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFSize,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Page size"),
-                       pageSizeToInt( QPdfWriter::A4 ),
+                       0, //TODO WRONG
+                       //pageSizeToInt( QPdfWriter::A4 ),
                        ConfigurationItemOptions::ComboBoxOptions( QStringList() <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A0")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A1")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A2")
@@ -81,8 +82,9 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        ConfigurationItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "No alignment")
                                                                                 << QT_TRANSLATE_NOOP("ConfigurableItem", "Odd pages")
                                                                                 << QT_TRANSLATE_NOOP("ConfigurableItem", "Even pages")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Duplex")         )
-                     );
+                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Duplex")
+                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Endless")         )
+                       );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TableOfContents,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Table of Contents"),
@@ -137,8 +139,9 @@ PDFCreator::PDFCreator( const Setlist *setlist, const QString& filename) :
     m_filename( filename )
 {
     QString title = labelSetlist( m_setlist );
-    QPdfWriter::PageSize pageSize = intToPageSize( config["PDFSize"].toInt() );
+    QPdfWriter::PageSize pageSize = QPdfWriter::A0; //intToPageSize( config["PDFSize"].toInt() ); //TODO WRONG
     m_pdfPainter = new PDFPaintDevice( title, pageSize );
+    m_pdfPainter->setEndlessPageSize( isEndlessPage() );
 
     QFont font( "times" );
     font.setPointSizeF( 12 pt );
@@ -173,14 +176,17 @@ void PDFCreator::run()
     case 0:
         // do not align songs;
         break;
-    case 1:
+    case 1: // odd pages
         alignSongs( 0 );
         break;
-    case 2:
+    case 2: // even pages
         alignSongs( 1 );
         break;
-    case 3:
+    case 3: // duplex
         optimizeForDuplex();
+        break;
+    case 4: // endless
+        // no actions needed
         break;
     }
 
@@ -209,8 +215,6 @@ int PDFCreator::maximum() const
     return m_setlist->items().length() + 4; // toc, align, pagenumbers, save
 }
 
-
-
 PDFCreator::~PDFCreator()
 {
     delete m_pdfPainter;
@@ -224,7 +228,7 @@ void PDFCreator::nextPage(PicturePainter::Flag flag )
     m_pdfPainter->nextPage( flag );
 }
 
-QPainter* PDFCreator::painter()
+PicturePainter* PDFCreator::painter()
 {
     assert( m_pdfPainter );
     return m_pdfPainter->painter();
@@ -267,7 +271,7 @@ void PDFCreator::paintSetlist()
 
 void PDFCreator::paintHeadline(const QString &label)
 {
-    painter()->save();
+    painter()->QPainter::save();
 
     QFont font = painter()->font();
     font.setBold( true );
@@ -304,7 +308,7 @@ void PDFCreator::paintTableOfContents()
     const double lineHeight = painter()->fontMetrics().height();
     double y = topMargin();
 
-    painter()->save();
+    painter()->QPainter::save();
     QFont font = painter()->font();
     font.setBold( true );
     font.setFamily( "lucida" );
@@ -321,12 +325,19 @@ void PDFCreator::paintTableOfContents()
         }
         else        // content does not fit on page
         {
-            m_tableOfContentsPage++;
-            m_tableOfContentsNumPages++;
-            m_pdfPainter->insertEmptyPage( m_tableOfContentsPage, PicturePainter::NothingSpecial );
-            m_additionalTopMargin = 0; // must be set explicitly since next() is not called but insertPage.
-            y = topMargin();
-            // content will fit on page next iteration
+            if (isEndlessPage())
+            {
+                //?
+            }
+            else
+            {
+                m_tableOfContentsPage++;
+                m_tableOfContentsNumPages++;
+                m_pdfPainter->insertEmptyPage( m_tableOfContentsPage, PicturePainter::NothingSpecial );
+                m_additionalTopMargin = 0; // must be set explicitly since next() is not called but insertPage.
+                y = topMargin();
+                // content will fit on page next iteration
+            }
         }
     }
 
@@ -377,7 +388,6 @@ QString labelSong( const Song* song )
 
 bool PDFCreator::paintSong(const Song *song)
 {
-
     nextPage( PicturePainter::SongStartsHere );
     QString headline = labelSong( song );
     m_tableOfContents.append( headline );
@@ -398,17 +408,17 @@ bool PDFCreator::paintSong(const Song *song)
     return true;
 }
 
-bool printAttachment( const Attachment* attachment )
-{
-    Q_UNUSED( attachment );
-    //TODO filter tags, etc
+//bool printAttachment( const Attachment* attachment )
+//{
+//    Q_UNUSED( attachment );
+//    //TODO filter tags, etc
 
-    return true;
-}
+//    return true;
+//}
 
 void PDFCreator::paintAttachment( Attachment *attachment )
 {
-    if (printAttachment( attachment ))
+    if (/*printAttachment( attachment )*/ true)
     {
         if (attachment->type() == PDFAttachment::TYPE)
         {
@@ -452,7 +462,7 @@ void PDFCreator::paintPDFAttachment( PDFAttachment* attachment )
             {
                 nextPage( PicturePainter::NothingSpecial );
             }
-            painter()->save();
+            painter()->QPainter::save();
             QSizeF pageSize = doc->page(i)->pageSizeF();
             QSizeF targetSize = pageRect().size();
             double fx = targetSize.width() / pageSize.width();
@@ -470,7 +480,7 @@ void PDFCreator::paintPDFAttachment( PDFAttachment* attachment )
     }
 }
 
-bool pageBreak( const QStringList & lines, const int currentLine, const double heightLeft, const QPainter& painter )
+bool pageBreakDEP( const QStringList & lines, const int currentLine, const double heightLeft, const QPainter& painter )
 {
     // return whether we must use another page to fit the content
     if (lines[currentLine].isEmpty())
@@ -502,7 +512,8 @@ void configurePainter( QPainter* painter )
 
 void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* attachment )
 {
-    painter()->save();
+    qDebug() << "paint " << attachment << "on page" << currentPage();
+    painter()->QPainter::save();
     configurePainter( painter() );
     QStringList lines = attachment->chordPattern().split("\n", QString::KeepEmptyParts);
 
@@ -526,21 +537,34 @@ void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* atta
             }
         }
 
-        if ( pageBreak( lines,
-                        i,
-                        pageRect().height() - bottomMargin() - y,
-                        *painter()                                   ))
+        if (isEndlessPage())
         {
-            if (config["ContiuneOnNextPageMark"].toBool())
-            {
-                drawContinueOnNextPageMark();
-            }
+            double height = painter()->pageSize().size(QPageSize::Point).height() / 6.5;    // why 6.5?
+            double spaceLeft = height - y;
 
-            painter()->restore();
-            nextPage( PicturePainter::NothingSpecial );
-            painter()->save();
-            configurePainter( painter() );
-            y = topMargin();
+            if (spaceLeft < 0)
+            {
+                currentPage()->growDown( -spaceLeft );
+            }
+        }
+        else
+        {
+            if ( pageBreakDEP( lines,
+                            i,
+                            pageRect().height() - bottomMargin() - y,
+                            *painter()                                   ))
+            {
+                    if (config["ContiuneOnNextPageMark"].toBool())
+                    {
+                        drawContinueOnNextPageMark();
+                    }
+
+                    painter()->restore();
+                    nextPage( PicturePainter::NothingSpecial );
+                    painter()->QPainter::save();
+                    configurePainter( painter() );
+                    y = topMargin();
+            }
         }
 
         QRegExp regexp( Chord::SPLIT_PATTERN );
@@ -561,7 +585,7 @@ void PDFCreator::paintChordPatternAttachment( const ChordPatternAttachment* atta
         int pos = leftMargin();
         for (const QString & token : tokens)
         {
-            painter()->save();
+            painter()->QPainter::save();
 
             if (isChordLine && Chord(token).isValid())
             {
@@ -642,7 +666,7 @@ void PDFCreator::optimizeForDuplex()
 
 void PDFCreator::drawContinueOnNextPageMark()
 {
-    painter()->save();
+    painter()->QPainter::save();
     QFont font = painter()->font();
     font.setBold( true );
     font.setPointSizeF( font.pointSizeF() * 3 );
@@ -653,4 +677,8 @@ void PDFCreator::drawContinueOnNextPageMark()
     painter()->restore();
 }
 
+bool PDFCreator::isEndlessPage() const
+{
+    return config["AlignSongs"].toInt() == 4;
+}
 

@@ -8,6 +8,7 @@
 #include <QDialogButtonBox>
 #include <QFileDialog>
 #include "PDFCreator/pdfcreator.h"
+#include "PDFCreator/endlesspdfcreator.h"
 #include <QMessageBox>
 #include <QProgressDialog>
 
@@ -223,8 +224,12 @@ void SetlistWidget::on_buttonExportPDF_clicked()
             allowWriteFile = !QFileInfo(filename).exists();
             if ( !filename.isEmpty() && !allowWriteFile )
             {
-                if (QMessageBox::question( this, windowTitle(), QString(tr("%1 already exists.\n"
-                                                                           "Do you want to replace it?")).arg(filename), QMessageBox::No, QMessageBox::Yes )
+                if (QMessageBox::question( this,
+                                           windowTitle(),
+                                           QString(tr("%1 already exists.\n"
+                                                      "Do you want to replace it?")).arg(filename),
+                                           QMessageBox::Yes | QMessageBox::No,
+                                           QMessageBox::Yes )
                         == QMessageBox::Yes )
                 {
                     allowWriteFile = true;
@@ -250,12 +255,12 @@ void SetlistWidget::on_buttonExportPDF_clicked()
             else
             {
                 config.set( "DefaultPDFSavePath", filename );
-                PDFCreator pdfCreator( currentSetlist, filename );
+                EndlessPDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), currentSetlist, filename );
 
                 QProgressDialog dialog;
                 dialog.setRange(0, currentSetlist->items().length());
                 connect( &pdfCreator, SIGNAL(progress(int)), &dialog, SLOT(setValue(int)) );
-                connect( &pdfCreator, SIGNAL(currentTask(QString)), &dialog, SLOT(setLabelText(QString)) );
+                connect( &pdfCreator, SIGNAL(currentTaskChanged(QString)), &dialog, SLOT(setLabelText(QString)) );
                 connect( &pdfCreator, SIGNAL(finished()), &dialog, SLOT(close()) );
                 connect( &dialog, &QProgressDialog::canceled, [&pdfCreator]()
                 {
