@@ -95,7 +95,6 @@ SOURCES += main.cpp\
     Dialogs/configurationdialog.cpp \
     Dialogs/configurationwidgets.cpp \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp \
-    PDFCreator/pdfcreator.cpp \
     DatabaseView/EventDatabaseView/eventtableview.cpp \
     DatabaseView/EventDatabaseView/eventdatabasewidget.cpp \
     Dialogs/datetimedialog.cpp \
@@ -115,9 +114,6 @@ SOURCES += main.cpp\
     Commands/SetlistCommands/setlistinsertitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistview.cpp \
     Commands/SetlistCommands/setlistmoverowscommand.cpp \
-    PDFCreator/pdfpaintdevice.cpp \
-    PDFCreator/pdfpagesizewrapper.cpp \
-    PDFCreator/picturepainter.cpp \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp \
     Attachments/AudioAttachment/sectionsmodel.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.cpp \
@@ -136,8 +132,8 @@ SOURCES += main.cpp\
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp \
     Dialogs/tagdialog.cpp \
     Commands/edittagscommand.cpp \
-    PDFCreator/endlesspdfcreator.cpp \
-    PDFCreator/page.cpp
+    PDFCreator/page.cpp \
+    PDFCreator/pdfcreator.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -205,7 +201,6 @@ HEADERS  += mainwindow.h \
     Dialogs/configurationdialog.h \
     Dialogs/configurationwidgets.h \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h \
-    PDFCreator/pdfcreator.h \
     DatabaseView/EventDatabaseView/eventtableview.h \
     DatabaseView/EventDatabaseView/eventdatabasewidget.h \
     Dialogs/datetimedialog.h \
@@ -226,9 +221,6 @@ HEADERS  += mainwindow.h \
     Commands/SetlistCommands/setlistinsertitemcommand.h \
     DatabaseView/EventDatabaseView/setlistview.h \
     Commands/SetlistCommands/setlistmoverowscommand.h \
-    PDFCreator/pdfpaintdevice.h \
-    PDFCreator/pdfpagesizewrapper.h \
-    PDFCreator/picturepainter.h \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h \
     Attachments/AudioAttachment/sectionsmodel.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.h \
@@ -247,9 +239,9 @@ HEADERS  += mainwindow.h \
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h \
     Dialogs/tagdialog.h \
     Commands/edittagscommand.h \
-    PDFCreator/endlesspdfcreator.h \
     PDFCreator/page.h \
-    PDFCreator/pdfcreatorconfig.h
+    PDFCreator/pdfcreatorconfig.h \
+    PDFCreator/pdfcreator.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

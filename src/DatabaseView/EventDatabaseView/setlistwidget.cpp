@@ -8,7 +8,6 @@
 #include <QDialogButtonBox>
 #include <QFileDialog>
 #include "PDFCreator/pdfcreator.h"
-#include "PDFCreator/endlesspdfcreator.h"
 #include <QMessageBox>
 #include <QProgressDialog>
 
@@ -255,7 +254,7 @@ void SetlistWidget::on_buttonExportPDF_clicked()
             else
             {
                 config.set( "DefaultPDFSavePath", filename );
-                EndlessPDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), currentSetlist, filename );
+                PDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), currentSetlist, filename );
 
                 QProgressDialog dialog;
                 dialog.setRange(0, currentSetlist->items().length());

@@ -1,74 +1,138 @@
 #ifndef PDFCREATOR_H
 #define PDFCREATOR_H
 
-#include "Attachments/attachment.h"
-#include "Attachments/pdfattachment.h"
-#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
-#include "Attachments/AudioAttachment/audioattachment.h"
-
-#include "Database/SongDatabase/song.h"
-#include "Database/EventDatabase/setlist.h"
+#include "page.h"
+#include <QThread>
 #include "configurable.h"
-
-#include "pdfpaintdevice.h"
+#include "Database/EventDatabase/setlist.h"
+#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
+#include "Attachments/pdfattachment.h"
 
 class PDFCreator : public QThread
 {
-    Q_OBJECT
     DECL_CONFIG( PDFCreator )
+    Q_OBJECT
 
 public:
-    PDFCreator(const Setlist* setlist , const QString &filename);
+    PDFCreator( QSizeF baseSizeMM, Setlist* setlist, const QString& filename );
     ~PDFCreator();
 
-    void save( const QString & filename );
-    void run();
-
-    int maximum() const;
-signals:
-    void progress(int);
-    void currentTask(QString);
-
-private: // METHODES
-    void paintSetlist( );
-    bool paintSong( const Song* song );
-    void paintAttachment(Attachment *attachment );
-    void paintPDFAttachment(PDFAttachment *attachment );
-    void paintChordPatternAttachment(const ChordPatternAttachment* attachment);
-    void paintTitle();
-    void paintTableOfContents();
-    void paintHeadline(const QString& label);
-    double leftMargin() const { return 5; }
-    double rightMargin() const { return 10; }
-    double topMargin() { return 5 + m_additionalTopMargin; }
-    double bottomMargin() const { return 5; }
-    void alignSongs( int remainder );
-    void optimizeForDuplex();
-    void drawContinueOnNextPageMark();
-
-    void decoratePageNumbers();
+    QPainter &currentPainter();
+    /**
+     * @brief currentSizeInMM
+     * @return the size of the current page in mm
+     */
+    QSizeF currentSizeInMM() const;
 
     /**
-     * @brief insertTableOfContentsStub insert a stub at current page.
-     *  table of contents will be inserted there.
+     * @brief currentSizePainter
+     * @return the size of the current page in QPainter units.
      */
-    void insertTableOfContentsStub();
-    PicturePainter *painter();
-    void nextPage(PicturePainter::Flag flag);
-    QRectF pageRect() const { return QRectF(QPointF(), m_pdfPainter->size()); }
-    QRectF line( double y, double height ) const { return QRectF(QPointF(0, y), QSizeF(m_pdfPainter->size().width(), height)); }
+    QSizeF currentSizePainter() const;
 
-    PicturePainter* currentPage() const;
+    /**
+     * @brief newPage insert a new page at index i (at the end if i<0) and
+     *  activates it.
+     * @param i the index of the new page.
+     */
+    void newPage(Page::Flags flags, int i = -1 );
 
-private: // MEMBERS
-    PDFPaintDevice* m_pdfPainter = NULL;
-    const Setlist* const m_setlist;
-    int m_tableOfContentsPage = -1;
-    int m_tableOfContentsNumPages = 0;
-    double m_additionalTopMargin = 0; // is set if e.g. a headline need additional space.
-    QStringList m_tableOfContents;
-    QString m_filename;
+    /**
+     * @brief activatePage activate page i
+     * @param i
+     */
+    void activatePage( int i );
+
+    /**
+     * @brief currentIndex returns the current index
+     * @return
+     */
+    int currentIndex() const;
+
+
+    /**
+     * @brief run since run ivokes save, run can only be called once
+     *  on a PDFCreator.
+     */
+    virtual void run();
+
+    QRectF pageRect() const;
+    QRectF pageRectMargins() const;
+
     bool isEndlessPage() const;
+
+    const Page* currentPage() const;
+
+
+private:
+    QList<Page*> m_pages;
+    int m_currentIndex;
+    QSizeF m_baseSizeMM;
+    Page *currentPage();
+    Setlist* m_setlist;
+    const QString& m_filename;
+
+    /**
+     * @brief save saves the pdf at given filename.
+     *  After calling this function, the PDFCreator is unable to paint
+     *  on the pdf again.
+     * @param filename
+     */
+    void save( const QString& filename );
+
+    /////////////////////////////////////
+    ////
+    ///   progress controll
+    //
+    ////////////////////////////////////
+public:
+    /**
+     * @brief numberOfSteps creating this pdf takes
+     *  numberOfSteps() steps.
+     * @return
+     */
+    int numberOfSteps() const;
+private:
+    int m_currentStep;
+    void notifyCurrentTaskChanged( const QString& message );
+signals:
+    void progress(int);
+    void currentTaskChanged(QString);
+
+
+
+    ////////////////////////////////////
+    ////
+    ///  actual pdf-paint functions
+    //
+    ///////////////////////////////////
+private:
+    void paintTitle();
+    void paintHeadline(const QString &label);
+    bool paintSong(const Song *song);
+    void paintAttachment(Attachment *attachment );
+    void paintPDFAttachment(PDFAttachment *attachment );
+    void paintChordPatternAttachment(ChordPatternAttachment *attachment );
+    void insertTableOfContentsStub();
+    void paintSetlist();
+    void paintTableOfContents();
+    void alignSongs( int mode );
+    void optimizeForDuplex();
+    void decoratePageNumbers();
+    void drawContinueOnNextPageMark();
+    int lengthOfSong( int start );
+
+    double m_additionalTopMargin = 0;
+    int m_tableOfContentsPage = -1;
+    QStringList m_tableOfContents;
+
+    // margins in painter-units
+    double leftMargin() const { return 15; }
+    double rightMargin() const { return 10; }
+    double topMargin() const { return 15 + m_additionalTopMargin; }
+    double bottomMargin() const { return 15 + 25; } // bottom line is 15 below the end of the page
+public:
+    static QMap<QString, QString> dictionary();
 
 };
 

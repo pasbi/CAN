@@ -1,7 +1,7 @@
 #ifndef PDFCONFIG_H
 #define PDFCONFIG_H
 
-#include "endlesspdfcreator.h"
+#include "pdfcreator.h"
 #include <QPagedPaintDevice>
 
 QList<QPagedPaintDevice::PageSize> pageSizes()
@@ -58,37 +58,37 @@ QPagedPaintDevice::PageSize intToPageSize( int s )
     }
 }
 
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFTitlePattern,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Title"),
                        "Setlist\n\n-- {EventTitle} --\n\n{Begin}",
                        ConfigurationItemOptions::TextEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
                      );
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        SongTitle,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
                        true,
                        ConfigurationItemOptions::CheckboxOptions()
                      );
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        SongTitlePattern,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
                        "{Title} -- {Artist}",
                        ConfigurationItemOptions::LineEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
                      );
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        LineSpacing,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Line spacing"),
                        1.3,
                        ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
                      );
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        ChordLineSpacing,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Chord Line spacing"),
                        1,
                        ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
                      );
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFSize,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Page size"),
                        pageSizeToInt( QPdfWriter::A4 ),
@@ -124,7 +124,7 @@ CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Tabloid")
                                                                     )
                      );
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        AlignSongs,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Align songs: "),
                        0,
@@ -134,26 +134,26 @@ CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
                                                                                 << QT_TRANSLATE_NOOP("ConfigurableItem", "Duplex")
                                                                                 << QT_TRANSLATE_NOOP("ConfigurableItem", "Endless")         )
                        );
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TableOfContents,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Table of Contents"),
                        true,
                        ConfigurationItemOptions::CheckboxOptions()
                      );
 
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PageNumbers,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Page Numbers"),
                        true,
                        ConfigurationItemOptions::CheckboxOptions()
                      );
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFResolution,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Resolution"),
                        72,
                        ConfigurationItemOptions::AdvancedDoubleSliderOptions(0, 400, 1, QT_TRANSLATE_NOOP("ConfigurableItem", "dpi") )
                      );
-CONFIGURABLE_ADD_ITEM( EndlessPDFCreator,
+CONFIGURABLE_ADD_ITEM( PDFCreator,
                        ContiuneOnNextPageMark,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Show to-be-continued-hint"),
                        true,
