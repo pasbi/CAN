@@ -609,5 +609,15 @@ void EndlessPDFCreator::optimizeForDuplex()
 
 void EndlessPDFCreator::decoratePageNumbers()
 {
-
+    double height = currentPainter().fontMetrics().height();
+    for (int i = 0; i < m_pages.length(); ++i)
+    {
+        activatePage( i );
+        qDebug() << currentPainter().fontMetrics().height();
+        double y = pageRect().height() - bottomMargin();
+        currentPainter().drawText( QRectF( 0, y - height/2, pageRect().width(), height ),
+                                   QString("%1").arg( i + 1 ),
+                                   QTextOption( Qt::AlignCenter )                       );
+        qDebug() << y << i;
+    }
 }

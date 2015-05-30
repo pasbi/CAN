@@ -125,10 +125,10 @@ private:
     QStringList m_tableOfContents;
 
     // margins in painter-units
-    double leftMargin() const { return 10; }
-    double rightMargin() const { return 25; }
-    double topMargin() const { return 10 + m_additionalTopMargin; }
-    double bottomMargin() const { return 10 - m_additionalTopMargin; }
+    double leftMargin() const { return 15; }
+    double rightMargin() const { return 10; }
+    double topMargin() const { return 15 + m_additionalTopMargin; }
+    double bottomMargin() const { return 15 + 25; } // bottom line is 15 below the end of the page
 public:
     static QMap<QString, QString> dictionary();
 
