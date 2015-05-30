@@ -29,12 +29,12 @@ QWidget* createWidget( QWidget* parent, ConfigurationItem* item )
 {
     QWidget* widget = new QWidget(parent);
     QHBoxLayout* layout = new QHBoxLayout( widget );
+    layout->setContentsMargins( 0, 0, 0, 0 );
 
     ConfigurationWidget* configWidget = ConfigurationWidget::create( item );
 
     QPushButton* defaultButton = new QPushButton( widget );
-    defaultButton->setMinimumSize( 30, 30 );
-    defaultButton->setMaximumSize( 30, 30 );
+    defaultButton->setMaximumSize( 20, 20 );
     defaultButton->setIcon( QIcon(":/oldIcons/oldIcons/1411737168_POWER - RESTART.png") );
     QObject::connect( defaultButton, &QPushButton::clicked, [item, configWidget, defaultButton]()
     {
@@ -65,21 +65,25 @@ void ConfigurationDialog::buildPage(const QString &key)
     QWidget* page = new QWidget( scrollArea );
 
     QGridLayout* layout = new QGridLayout( page );
+//    layout->seuutSpacing( -20 );
+    layout->setContentsMargins( 0, 0, 0, 0 );
     int row = 0;
     for (const QString & key : config->itemKeys())
     {
         ConfigurationItem* item = config->item( key );
         if (item->options().interface() != ConfigurationItemOptions::Hidden)
         {
-            if (row > 0)
-            {
-                QFrame* frame = new QFrame(page);
-                frame->setFrameStyle( QFrame::HLine );
-                frame->setFixedHeight(3);
-                layout->addWidget(frame, row++, 0, 1, -1 );
-            }
+            // hlines between items
+//            if (row > 0)
+//            {
+//                QFrame* frame = new QFrame(page);
+//                frame->setFrameStyle( QFrame::HLine );
+//                frame->setFixedHeight(3);
+//                layout->addWidget(frame, row++, 0, 1, -1 );
+//            }
             QLabel* label = new QLabel(page);
             label->setText( item->caption() + ":" );
+            layout->setContentsMargins( 0, 0, 0, 0 );
             layout->addWidget( label,                      row, 0 );
             layout->addWidget( createWidget( page, item ), row, 1 );
 
