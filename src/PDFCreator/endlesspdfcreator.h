@@ -120,6 +120,8 @@ private:
     void optimizeForDuplex();
     void decoratePageNumbers();
     void drawContinueOnNextPageMark();
+    int lengthOfSong( int start );
+
     double m_additionalTopMargin = 0;
     int m_tableOfContentsPage = -1;
     QStringList m_tableOfContents;

@@ -599,12 +599,60 @@ void EndlessPDFCreator::paintTableOfContents()
 
 void EndlessPDFCreator::alignSongs( int mode )
 {
+    for (int currentPageNum = 0; currentPageNum < m_pages.length(); ++currentPageNum)
+    {
+        activatePage( currentPageNum );
 
+        if (    (currentPage()->flags() & Page::SongStartsHere)                    // if song starts here
+             && currentPageNum % 2 != mode                                         // if song starts on wrong page
+             && lengthOfSong( currentPageNum ) % 2 == 0 )                          // if song length is even. Else, optimizing beginning
+                                                                                   // will destroy end-optimum
+        {
+            newPage( Page::NothingSpecial, currentPageNum );
+            currentPageNum++;
+        }
+    }
 }
 
-void EndlessPDFCreator::optimizeForDuplex()
+int EndlessPDFCreator::lengthOfSong( int start )
 {
+    int savedIndex = currentIndex();
 
+    int length = m_pages.length() - start;
+    for (int i = start + 1; i < m_pages.length(); ++i)
+    {
+        activatePage( i );
+        if (currentPage()->flags() & Page::SongStartsHere)
+        {
+            length = i - start;
+            break;
+        }
+    }
+
+    // activate the page that was active before this function call.
+    activatePage( savedIndex );
+    return length;
+}
+
+void EndlessPDFCreator::optimizeForDuplex( )
+{
+    // an odd and the following even page will be printed on the same piece of paper.
+    // So ensure that no song is on more than one side of the same paper.
+    bool songsStarted = false;
+    for (int currentPageNum = 0; currentPageNum < m_pages.length(); ++currentPageNum)
+    {
+        activatePage( currentPageNum );
+        if ( songsStarted
+             && !(currentPage()->flags() & Page::SongStartsHere)   // start may be everywhere, but song shall only be continued on odd pages
+             && currentPageNum % 2 != 0 )
+        {
+            newPage( Page::NothingSpecial, currentPageNum );
+        }
+        else if (currentPage()->flags() & Page::SongStartsHere)
+        {
+            songsStarted = true;
+        }
+    }
 }
 
 void EndlessPDFCreator::decoratePageNumbers()
@@ -613,11 +661,10 @@ void EndlessPDFCreator::decoratePageNumbers()
     for (int i = 0; i < m_pages.length(); ++i)
     {
         activatePage( i );
-        qDebug() << currentPainter().fontMetrics().height();
+
         double y = pageRect().height() - bottomMargin();
         currentPainter().drawText( QRectF( 0, y - height/2, pageRect().width(), height ),
                                    QString("%1").arg( i + 1 ),
                                    QTextOption( Qt::AlignCenter )                       );
-        qDebug() << y << i;
     }
 }
