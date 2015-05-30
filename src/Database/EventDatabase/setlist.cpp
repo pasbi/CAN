@@ -193,7 +193,11 @@ bool Setlist::setData_(const QModelIndex &index, const QVariant &value, int role
 #include "Commands/SetlistCommands/setlisteditdatacommand.h"
 bool Setlist::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    app().project()->pushCommand( new SetlistEditDataCommand( this, index, value, role ) );
+    // push a command only when it is required
+    if (data(index, role) != value)
+    {
+        app().project()->pushCommand( new SetlistEditDataCommand( this, index, value, role ) );
+    }
     return true;
 }
 

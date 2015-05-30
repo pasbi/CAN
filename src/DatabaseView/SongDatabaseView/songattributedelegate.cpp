@@ -73,7 +73,10 @@ void SongAttributeDelegate::setModelData(QWidget *editor, QAbstractItemModel *, 
         newData = qobject_assert_cast<CellEditor*>(editor)->editedData();
     }
 
-    app().pushCommand( new SongDatabaseEditSongCommand( model(), proxyModel()->mapToSource(index), newData, Qt::EditRole ) );
+    if ( model()->data( index, Qt::EditRole ) != newData  )
+    {
+        app().pushCommand( new SongDatabaseEditSongCommand( model(), proxyModel()->mapToSource(index), newData, Qt::EditRole ) );
+    }
     m_isEditing = false;
 }
 

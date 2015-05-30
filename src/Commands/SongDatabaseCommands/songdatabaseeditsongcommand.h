@@ -19,12 +19,6 @@ private:
     const QVariant        m_newData;
     const QVariant        m_oldData;
     const int             m_role;
-
-//    QVariant& getAttribute() const;
-
-
-
-
 };
 
 #endif // SONGDATABASEEDITSONGCOMMAND_H

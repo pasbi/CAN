@@ -163,7 +163,10 @@ Event* EventDatabase::eventAtIndex(const QModelIndex & index) const
 
 bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    app().pushCommand( new EventDatabaseEditEventCommand( this, index, value, role ) );
+    if (data(index, role) != value)
+    {
+        app().pushCommand( new EventDatabaseEditEventCommand( this, index, value, role ) );
+    }
     return true;
 }
 

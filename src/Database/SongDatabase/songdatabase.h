@@ -82,7 +82,6 @@ private:
     mutable QList<Song*> m_tmpSongBuffer; // Songs that was just removed or are about to be inserted.
     mutable QList<AttributeKey> m_tmpColumnNameBuffer;
     mutable QList<QVariantList> m_tmpColumnContentBuffer;
-    friend class SongDatabaseSetDataCommand;
     friend class SongDatabaseNewSongCommand;
     friend class SongDatabaseRemoveSongCommand;
     friend class SongDatabaseNewAttributeCommand;

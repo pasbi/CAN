@@ -1,7 +1,5 @@
 #include "songdatabase.h"
 #include "project.h"
-#include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
-#include "Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 #include "songdatabasesortproxy.h"
 #include <QSize>
