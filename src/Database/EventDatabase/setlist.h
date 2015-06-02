@@ -48,7 +48,7 @@ class Setlist : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    Setlist( Event* event, QObject* parent = NULL );
+    Setlist( Event* event );
     ~Setlist() {}
 
     void insertItem( int position, SetlistItem* item );

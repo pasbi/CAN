@@ -147,6 +147,11 @@ public:
     static const int ALIGN_SONGS__SEPARATE_PAGES;
     static QMap<QString, QString> dictionary();
 
+    static QString setlistFilename(QWidget* parent, Setlist* setlist , bool separatePages);
+    static void exportSetlist(Setlist *setlist, QWidget *widgetParent);
+
+
+
 };
 
 #endif // PDFCREATOR_H

@@ -88,6 +88,8 @@ private slots:
     void createAttributeVisibilityMenu();
     void createLanguageMenu();
 
+    void on_action_Export_all_songs_triggered();
+
 private:
     void setupAttachmentMenu();
     void setCurrentAttachment( int index );

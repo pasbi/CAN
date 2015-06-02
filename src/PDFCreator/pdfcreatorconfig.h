@@ -163,4 +163,7 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        ConfigurationItemOptions::CheckboxOptions()
                      );
 
+CONFIGURABLE_ADD_ITEM_HIDDEN( PDFCreator, DefaultPDFSavePath, QDir::homePath() );
+
+
 #endif // PDFCONFIG_H

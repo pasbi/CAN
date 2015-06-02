@@ -206,6 +206,7 @@
     </property>
     <addaction name="actionIdentites"/>
     <addaction name="actionSettings"/>
+    <addaction name="action_Export_all_songs"/>
    </widget>
    <widget class="QMenu" name="menuAttachments">
     <property name="toolTip">
@@ -508,6 +509,11 @@
    </property>
    <property name="shortcut">
     <string notr="true"/>
+   </property>
+  </action>
+  <action name="action_Export_all_songs">
+   <property name="text">
+    <string>&amp;Export all songs</string>
    </property>
   </action>
  </widget>

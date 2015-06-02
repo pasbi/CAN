@@ -5,6 +5,7 @@
 #include <QMenu>
 #include <functional>
 
+
 #define initAction( name, associated_widget, text, tooltip, shortcut, menu, icon )                          \
     {                                                                                                       \
     m_##name = new QAction( associated_widget );                                                                \
@@ -38,6 +39,7 @@
     }
 
 
+class Setlist;
 namespace Util
 {
 QAction* addAction( QMenu* menu, const QString & caption, std::function<void ()> do_action );

@@ -1081,8 +1081,17 @@ SongTableView* MainWindow::songTableView()
 }
 
 
+#include "PDFCreator/pdfcreator.h"
+void MainWindow::on_action_Export_all_songs_triggered()
+{
+    Project tmpProject;
+    EventDatabase tmpDatabase( &tmpProject );
+    Event tmpEvent(&tmpDatabase);
 
+    for( Song* song : m_project.songDatabase()->songs() )
+    {
+        tmpEvent.setlist()->appendItem( new SetlistItem( song ) );
+    }
 
-
-
-
+    PDFCreator::exportSetlist( tmpEvent.setlist(), this );
+}

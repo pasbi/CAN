@@ -4,6 +4,9 @@
 #include "Database/EventDatabase/event.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "util.h"
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QProgressDialog>
 
 DEFN_CONFIG( PDFCreator, "PDF Export" );
 
@@ -503,7 +506,7 @@ void PDFCreator::paintTableOfContents()
 
     newPage( Page::TableOfContentsStartsHere, "", m_tableOfContentsPage );
 
-    paintHeadline( QObject::tr("Table of Content") );
+    paintHeadline( tr("Table of Content") );
 
     // draw entries and find places to fill in page numbers
     QList<PageNumberStub> pageNumberStubs;
@@ -765,5 +768,122 @@ void PDFCreator::save(QString filename)
         Document document;
         document.pages = m_pages;
         paintAndSaveDocument( document, labelSetlist( m_setlist ), filename );
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// static helper
+
+QString PDFCreator::setlistFilename( QWidget* parent, Setlist* setlist, bool separatePages )
+{
+
+    QString filename = setlist->event()->label()
+            + "_"
+            + QLocale().toString( setlist->event()->beginning().date(), QLocale().dateFormat( QLocale::ShortFormat )).replace(".", "_");
+
+    // QFileDialog::getSaveFilename does not asks for overwriting files when the default filename is used. Workaround: Disable overwrite
+    // confirmation for all files and ask for it in an other dialog.
+    bool allowWriteFile;
+    do
+    {
+        if (separatePages)
+        {
+            filename = QFileDialog::getExistingDirectory( parent,
+                                                          tr("Export PDF ..."),
+                                                          QDir::home().absoluteFilePath( filename ),
+                                                          QFileDialog::DontConfirmOverwrite );
+        }
+        else
+        {
+            filename = QFileDialog::getSaveFileName(    parent,
+                                                        tr("Export PDF ..."),
+                                                        QDir::home().absoluteFilePath( filename ),
+                                                        "*.pdf",
+                                                        NULL,
+                                                        QFileDialog::DontConfirmOverwrite );
+        }
+
+        if (filename.isEmpty())
+        {
+            break;  // putting this break in while( ... ), means complicating the whole thing since it will be
+                    // expanded to *.pdf in the following and thus would not be empty
+        }
+        if (!separatePages && !filename.endsWith(".pdf"))
+        {
+            filename.append(".pdf");
+        }
+
+        allowWriteFile = !QFileInfo(filename).exists();
+        if ( !separatePages && !filename.isEmpty() && !allowWriteFile )
+        {
+            if (QMessageBox::question( parent,
+                                       tr("Confirm overwrite"),
+                                       QString(tr( "%1 already exists.\n"
+                                                   "Do you want to replace it?" )).arg(filename),
+                                       QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::Yes )
+                    == QMessageBox::Yes )
+            {
+                allowWriteFile = true;
+            }
+        }
+
+        if (separatePages)
+        {
+            allowWriteFile = true;  // always write to existing dirs.
+        }
+
+    }
+    while ( !allowWriteFile );     // filename is not in use by now or user allows to overwrite.
+                                   // note the break if filename is empty.
+    return filename;
+}
+
+
+void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
+{
+    bool askForDirectory = (config["AlignSongs"].toInt() == ALIGN_SONGS__SEPARATE_PAGES);
+    QString filename = setlistFilename( widgetParent, setlist, askForDirectory );
+
+    if (!filename.isEmpty())
+    {
+        QFileInfo fi(filename);
+
+        if (fi.exists() && !fi.isReadable())
+        {
+            QMessageBox::warning( widgetParent,
+                                  tr("Cannot write"),
+                                  QString(tr("File %1 is not writable.").arg(filename)),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton );
+        }
+        else
+        {
+            config.set( "DefaultPDFSavePath", filename );
+            PDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), setlist, filename );
+
+            QProgressDialog dialog;
+            dialog.setRange(0, setlist->items().length());
+            connect( &pdfCreator, SIGNAL(progress(int)), &dialog, SLOT(setValue(int)) );
+            connect( &pdfCreator, SIGNAL(currentTaskChanged(QString)), &dialog, SLOT(setLabelText(QString)) );
+            connect( &pdfCreator, SIGNAL(finished()), &dialog, SLOT(close()) );
+            connect( &dialog, &QProgressDialog::canceled, [&pdfCreator]()
+            {
+                pdfCreator.requestInterruption();
+            });
+            pdfCreator.start();
+
+            dialog.exec();
+            pdfCreator.wait();
+        }
     }
 }
