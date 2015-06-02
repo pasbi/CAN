@@ -13,6 +13,7 @@ public:
     typedef QFlags<Flag> Flags;
 
     Page(QSizeF baseSizeInMM, Flags flags = NothingSpecial );
+    Page(QSizeF baseSizeInMM, const QString& title, Flags flags);
     ~Page();
 
 
@@ -24,6 +25,8 @@ public:
      * @return
      */
     const QPicture &picture();
+
+    QString title() const { return m_title; }
 
     /**
      * @brief sizeInMM
@@ -55,6 +58,7 @@ private:
     QPainter m_painter;
     QSizeF m_sizeInMM;
     Flags m_flags;
+    const QString m_title;
 };
 
 #endif // PAGE_H

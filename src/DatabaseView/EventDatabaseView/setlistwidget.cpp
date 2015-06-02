@@ -192,6 +192,7 @@ Setlist* SetlistWidget::setlist() const
 void SetlistWidget::on_buttonExportPDF_clicked()
 {
     Setlist* currentSetlist = setlist();
+    bool askForDirectory = (PDFCreator::config["AlignSongs"].toInt() == PDFCreator::ALIGN_SONGS__SEPARATE_PAGES);
     if (currentSetlist)
     {
         QString filename = currentSetlist->event()->label()
@@ -203,25 +204,35 @@ void SetlistWidget::on_buttonExportPDF_clicked()
         bool allowWriteFile;
         do
         {
-            filename = QFileDialog::getSaveFileName(    this,
-                                                        tr("Export PDF ..."),
-                                                        QDir::home().absoluteFilePath( filename ),
-                                                        "*.pdf",
-                                                        NULL,
-                                                        QFileDialog::DontConfirmOverwrite );
+            if (askForDirectory)
+            {
+                filename = QFileDialog::getExistingDirectory( this,
+                                                              tr("Export PDF ..."),
+                                                              QDir::home().absoluteFilePath( filename ),
+                                                              QFileDialog::DontConfirmOverwrite );
+            }
+            else
+            {
+                filename = QFileDialog::getSaveFileName(    this,
+                                                            tr("Export PDF ..."),
+                                                            QDir::home().absoluteFilePath( filename ),
+                                                            "*.pdf",
+                                                            NULL,
+                                                            QFileDialog::DontConfirmOverwrite );
+            }
 
             if (filename.isEmpty())
             {
                 break;  // putting this break in while( ... ), means complicating the whole thing since it will be
                         // expanded to *.pdf in the following and thus would not be empty
             }
-            if (!filename.endsWith(".pdf"))
+            if (!askForDirectory && !filename.endsWith(".pdf"))
             {
                 filename.append(".pdf");
             }
 
             allowWriteFile = !QFileInfo(filename).exists();
-            if ( !filename.isEmpty() && !allowWriteFile )
+            if ( !askForDirectory && !filename.isEmpty() && !allowWriteFile )
             {
                 if (QMessageBox::question( this,
                                            windowTitle(),
@@ -235,8 +246,14 @@ void SetlistWidget::on_buttonExportPDF_clicked()
                 }
             }
 
-        } while ( !allowWriteFile      // filename is not in use by now or user allows to overwrite.
-                );
+            if (askForDirectory)
+            {
+                allowWriteFile = true;  // always write to existing dirs.
+            }
+
+        }
+        while ( !allowWriteFile );     // filename is not in use by now or user allows to overwrite.
+                                       // note the break if filename is empty.
 
 
         if (!filename.isEmpty())

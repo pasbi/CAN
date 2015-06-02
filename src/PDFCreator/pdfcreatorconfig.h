@@ -124,6 +124,8 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Tabloid")
                                                                     )
                      );
+
+const int PDFCreator::ALIGN_SONGS__SEPARATE_PAGES = 5;
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        AlignSongs,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Align songs: "),
@@ -132,7 +134,8 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                                                                                 << QT_TRANSLATE_NOOP("ConfigurableItem", "Odd pages")
                                                                                 << QT_TRANSLATE_NOOP("ConfigurableItem", "Even pages")
                                                                                 << QT_TRANSLATE_NOOP("ConfigurableItem", "Duplex")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Endless")         )
+                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Endless")
+                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Separate pages"))
                        );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TableOfContents,

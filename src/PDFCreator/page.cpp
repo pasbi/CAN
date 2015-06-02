@@ -10,6 +10,14 @@ Page::Page(QSizeF baseSizeInMM, Flags flags ) :
     m_painter.begin( &m_picture );
 }
 
+Page::Page(QSizeF baseSizeInMM, const QString& title, Flags flags ) :
+    m_sizeInMM( baseSizeInMM ),
+    m_flags( flags ),
+    m_title( title )
+{
+    m_painter.begin( &m_picture );
+}
+
 Page::~Page()
 {
 }

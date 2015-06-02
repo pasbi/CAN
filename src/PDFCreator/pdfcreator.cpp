@@ -3,6 +3,7 @@
 #include "global.h"
 #include "Database/EventDatabase/event.h"
 #include "Database/SongDatabase/songdatabase.h"
+#include "util.h"
 
 DEFN_CONFIG( PDFCreator, "PDF Export" );
 
@@ -22,35 +23,6 @@ PDFCreator::~PDFCreator()
     m_pages.clear();
 }
 
-void PDFCreator::save(const QString &filename)
-{
-    QPdfWriter writer( filename );
-
-    writer.setMargins( {0, 0, 0, 0} );
-    QPageSize pageSize( m_baseSizeMM, QPageSize::Millimeter );
-    writer.setPageSize( pageSize );
-    writer.setTitle( QFileInfo(filename).baseName() );
-    QPainter painter( &writer );
-
-    bool isEmpty = true;
-    for (int i = 0; i < m_pages.size(); ++i)
-    {
-        writer.setPageSizeMM( m_pages[i]->sizeInMM() );
-        if (i != 0)
-        {
-            assert( writer.newPage() );
-        }
-
-
-        painter.drawPicture( QPoint(0, 0), m_pages[i]->picture() );
-        isEmpty = false;
-    }
-
-    if (isEmpty)
-    {
-        qWarning() << "Empty PDF will not be created.";
-    }
-}
 
 QPainter& PDFCreator::currentPainter()
 {
@@ -67,7 +39,7 @@ QSizeF PDFCreator::currentSizePainter() const
     return currentPage()->sizePainter();
 }
 
-void PDFCreator::newPage( Page::Flags flags, int i )
+void PDFCreator::newPage( Page::Flags flags, const QString& title = "", int i = -1 )
 {
     if (i < 0)
     {
@@ -75,7 +47,7 @@ void PDFCreator::newPage( Page::Flags flags, int i )
     }
 
     m_additionalTopMargin = 0;
-    m_pages.insert( i, new Page( m_baseSizeMM, flags ) );
+    m_pages.insert( i, new Page( m_baseSizeMM, title, flags ) );
     activatePage( i );
 }
 
@@ -145,7 +117,8 @@ void PDFCreator::run()
     case 3: // duplex
         optimizeForDuplex();    //TODO distinguish duplex even/odd
         break;
-    case 4: // endless, songs will not be alignt either.
+    case 4: // endless, songs will not be aligned either.
+    case 5: // separate songs, will not be aligned.
         break;
     }
 
@@ -228,7 +201,6 @@ void PDFCreator::paintHeadline(const QString& label)
     font.setFamily( "lucida" );
     currentPainter().setFont( font );
 
-    qDebug() << topMargin();
     double fontHeight = currentPainter().fontMetrics().height();
     currentPainter().drawText( QPointF(leftMargin(), topMargin() + fontHeight), label);
     m_additionalTopMargin += 2 * fontHeight;
@@ -265,7 +237,7 @@ void PDFCreator::insertTableOfContentsStub()
 
 bool PDFCreator::paintSong(const Song* song)
 {
-    newPage( Page::SongStartsHere );
+    newPage( Page::SongStartsHere, labelSong(song) );
     QString headline = labelSong( song );
     m_tableOfContents.append( headline );
     paintHeadline( headline );
@@ -529,7 +501,7 @@ void PDFCreator::paintTableOfContents()
         const int y;
     } PageNumberStub;
 
-    newPage( Page::TableOfContentsStartsHere, m_tableOfContentsPage );
+    newPage( Page::TableOfContentsStartsHere, "", m_tableOfContentsPage );
 
     paintHeadline( QObject::tr("Table of Content") );
 
@@ -562,7 +534,7 @@ void PDFCreator::paintTableOfContents()
             else
             {
                 m_tableOfContentsPage++;
-                newPage( Page::NothingSpecial, m_tableOfContentsPage );
+                newPage( Page::NothingSpecial, "", m_tableOfContentsPage );
                 m_additionalTopMargin = 0; // must be set explicitly since next() is not called but insertPage.
                 y = topMargin();
                 // content will fit on page next iteration
@@ -608,7 +580,7 @@ void PDFCreator::alignSongs( int mode )
              && lengthOfSong( currentPageNum ) % 2 == 0 )                          // if song length is even. Else, optimizing beginning
                                                                                    // will destroy end-optimum
         {
-            newPage( Page::NothingSpecial, currentPageNum );
+            newPage( Page::NothingSpecial, "", currentPageNum );
             currentPageNum++;
         }
     }
@@ -646,7 +618,7 @@ void PDFCreator::optimizeForDuplex( )
              && !(currentPage()->flags() & Page::SongStartsHere)   // start may be everywhere, but song shall only be continued on odd pages
              && currentPageNum % 2 != 0 )
         {
-            newPage( Page::NothingSpecial, currentPageNum );
+            newPage( Page::NothingSpecial, "", currentPageNum );
         }
         else if (currentPage()->flags() & Page::SongStartsHere)
         {
@@ -658,13 +630,140 @@ void PDFCreator::optimizeForDuplex( )
 void PDFCreator::decoratePageNumbers()
 {
     double height = currentPainter().fontMetrics().height();
+
+    // we have to introduce another variable because i must be reset when
+    // separate pages-options is on. but i shall not be reset, therefore use j.
+    int j = 0;
     for (int i = 0; i < m_pages.length(); ++i)
     {
         activatePage( i );
 
+        if (    (currentPage()->flags() & Page::SongStartsHere       )
+             && (config["AlignSongs"] == ALIGN_SONGS__SEPARATE_PAGES ) )
+        {
+            j = 0;
+        }
+
         double y = pageRect().height() - bottomMargin();
         currentPainter().drawText( QRectF( 0, y - height/2, pageRect().width(), height ),
-                                   QString("%1").arg( i + 1 ),
+                                   QString("%1").arg( j + 1 ),
                                    QTextOption( Qt::AlignCenter )                       );
+        j++;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+QString makeFilename( QString filename )
+{
+    // find non-word characters and replace them by `_`
+    filename.replace( QRegExp( "\\W" ), "_" );
+
+    // replace diacritics
+    filename = Util::replaceDiacritics( filename );
+
+
+    //to be sure not to have forget some fancy letter, force conversion to char*
+    filename = QString( filename.toStdString().c_str() );
+
+    // now this hypothetic fancy char might turnt into a `/` or else.
+    filename.replace( QRegExp( "\\W" ), "_" );
+
+    return filename;
+}
+
+void PDFCreator::paintAndSaveDocument( const Document& document, const QString& title, const QString& filename )
+{
+
+    QPdfWriter writer( filename );
+
+    writer.setMargins( {0, 0, 0, 0} );
+    QPageSize pageSize( m_baseSizeMM, QPageSize::Millimeter );
+    writer.setPageSize( pageSize );
+    writer.setTitle( title );
+    QPainter painter( &writer );
+
+    bool isEmpty = true;
+    for (int i = 0; i < document.pages.size(); ++i)
+    {
+        writer.setPageSizeMM( document.pages[i]->sizeInMM() );
+        if (i != 0)
+        {
+            assert( writer.newPage() );
+        }
+
+
+        painter.drawPicture( QPoint(0, 0), document.pages[i]->picture() );
+        isEmpty = false;
+    }
+
+    if (isEmpty)
+    {
+        qWarning() << "Empty PDF will not be created.";
+    }
+
+}
+
+
+void PDFCreator::save(QString filename)
+{
+    if (config["AlignSongs"].toInt() == ALIGN_SONGS__SEPARATE_PAGES)
+    {
+        // each document holds exactly one song and becomes one file.
+        QList<Document> documents;
+
+        // iterate over pages to distribute them to the documents
+        for (Page* page : m_pages)
+        {
+            if (page->flags() & Page::SongStartsHere)
+            {
+                documents << Document( page->title() );
+            }
+
+            if (!documents.isEmpty())   // skip table of contents, title page
+            {
+                documents.last().pages << page;
+            }
+        }
+
+        // check whether the folder exist, create one if not.
+        QFileInfo fi(filename);
+        if (fi.isFile())
+        {
+            qWarning() << filename << "already exist and is not a directory.";
+            return;
+        }
+
+        // generate and save the document
+        for (const Document& document : documents)
+        {
+            QString name = makeFilename( document.title );
+            QString actualFilename = QDir( filename ).absoluteFilePath( name + ".pdf" );
+
+            paintAndSaveDocument( document, document.title, actualFilename );
+        }
+
+    }
+    else                                   // all songs in one pdf
+    {
+        Document document;
+        document.pages = m_pages;
+        paintAndSaveDocument( document, labelSetlist( m_setlist ), filename );
     }
 }
