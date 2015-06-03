@@ -3,7 +3,7 @@
 
 #include "indexedfileattachmentview.h"
 #include "AttachmentView/attachmentview.h"
-#include <poppler/qt5/poppler-qt5.h>
+#include "poppler.h"
 #include <QSignalSpy>
 
 

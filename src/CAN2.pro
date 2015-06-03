@@ -17,18 +17,29 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = CAN2
 TEMPLATE = app
 
-CONFIG += debug
+#CONFIG += debug
 QMAKE_CXXFLAGS_DEBUG -= -O2
 QMAKE_CXXFLAGS_DEBUG += -Og
 
 unix {
-LIBS += -L/home/pascal/CAN-Project/ZipGit/build-ZipGit-Desktop-Debug/ -lzipgit
+#you must have libgit2, poppler, libav, libsoundtouch installed.
+#checkout zipgit, build it and update the path.
+INCLUDEPATH += ../../ZipGit/src/
+LIBS += -L../../ZipGit/build-ZipGit-Desktop-Debug/ -lzipgit
 LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
 LIBS += -lavformat -lavcodec -lavutil -lpthread
 LIBS += -lSoundTouch
 }
+
 win32 {
+INCLUDEPATH += ../../
+INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
+INCLUDEPATH += ../../ZipGit/src/
+LIBS += -L../../ZipGit/build-ZipGit-Desktop_Qt_5_4_1_MinGW_32bit-Debug/debug/ -lzipgit
+LIBS += -L../../poppler/bin -lfreetype6 -ljpeg-8 -lopenjpeg -lpng12 -lpoppler -lpoppler-qt5
+LIBS += -L../../libav-10.6-win32/win32/usr/bin -lavformat-55 -lavcodec-55 -lavutil-53
+LIBS += -L../../\soundtouch\source\build-soundtouch-Desktop_Qt_5_4_1_MinGW_32bit-Debug\debug -lsoundtouch
 }
 
 
@@ -246,7 +257,9 @@ HEADERS  += mainwindow.h \
     Commands/edittagscommand.h \
     PDFCreator/page.h \
     PDFCreator/pdfcreatorconfig.h \
-    PDFCreator/pdfcreator.h
+    PDFCreator/pdfcreator.h \
+    poppler.h \
+    soundtouch.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

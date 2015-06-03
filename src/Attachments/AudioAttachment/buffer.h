@@ -4,14 +4,8 @@
 #include <QThread>
 #include <QBuffer>
 #include <QAudioFormat>
-#include <soundtouch/SoundTouch.h>
+#include "soundtouch.h"
 
-extern "C"
-{
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libavutil/avutil.h>
-}
 
 class Buffer
 {

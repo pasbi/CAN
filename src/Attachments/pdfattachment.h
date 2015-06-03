@@ -2,7 +2,7 @@
 #define PDFATTACHMENT_H
 
 #include "indexedfileattachment.h"
-#include "poppler/qt5/poppler-qt5.h"
+#include "poppler.h"
 
 
 class PDFAttachment : public IndexedFileAttachment
