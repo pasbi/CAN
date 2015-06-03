@@ -8,8 +8,8 @@ class ConfigurationWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ConfigurationWidget(ConfigurationItem *item, QWidget *parent = 0 );
-    static ConfigurationWidget* create(ConfigurationItem *item , QWidget *parent = 0);
+    explicit ConfigurationWidget(ConfigurableItem *item, QWidget *parent = 0 );
+    static ConfigurationWidget* create(ConfigurableItem *item , QWidget *parent = 0);
 
 signals:
     void valueChanged(QVariant);
@@ -18,7 +18,7 @@ public slots:
     virtual void updateEdit() = 0;
 
 protected:
-    ConfigurationItem* const m_item;
+    ConfigurableItem* const m_item;
 
 };
 

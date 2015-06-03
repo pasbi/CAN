@@ -7,17 +7,29 @@
 #include <QDoubleSpinBox>
 #include <QComboBox>
 #include <QLineEdit>
+#include "application.h"
+
+
+QStringList translate( const char* prefix, const QStringList& keys )
+{
+    QStringList translation;
+    for (const QString& key : keys)
+    {
+        translation << QApplication::translate( prefix, key.toStdString().c_str() );
+    }
+    return translation;
+}
 
 
 // magic configuration-class-template:
-// most configuration widgets are set up the same.
+// most configuration widgets are set up equally.
 // this defines a template to define a class based on a specific QWidget (as QLineEdit or QCheckBox, ...).
 #define DEFN_CONFIG_CLASS( TYPE, SIGNAL_NAME, ACTION_ON_VALUE_CHANGED, UPDATE_ACTION, INITIALIZE )          \
 class Config##TYPE : public ConfigurationWidget                                                             \
 {                                                                                                           \
     TYPE* m_edit;                                                                                           \
 public:                                                                                                     \
-    Config##TYPE( ConfigurationItem *item, QWidget* parent ) : ConfigurationWidget(item, parent)            \
+    Config##TYPE( ConfigurableItem *item, QWidget* parent ) : ConfigurationWidget(item, parent)             \
     {                                                                                                       \
         m_edit = new TYPE( this );                                                                          \
         QVBoxLayout* layout = new QVBoxLayout( this );                                                      \
@@ -54,7 +66,7 @@ DEFN_CONFIG_CLASS( QComboBox,
                    static_cast< void(QComboBox::*)(int) >(&QComboBox::currentIndexChanged),
                    emit valueChanged( m_edit->currentIndex() ),
                    m_edit->setCurrentIndex( m_item->actualValue().toInt() ),
-                   m_edit->addItems( m_item->options().alternatives() ) )
+                   m_edit->addItems( translate( "ConfigurableItem",  m_item->options().alternatives()  )) )
 
 DEFN_CONFIG_CLASS( QLineEdit,
                    &QLineEdit::textChanged,
@@ -84,7 +96,7 @@ class ConfigAdvancedDoubleSlider : public ConfigurationWidget
     QSlider* m_slider;
     QDoubleSpinBox* m_spinBox;
 public:
-    ConfigAdvancedDoubleSlider( ConfigurationItem* item, QWidget* parent ) : ConfigurationWidget(item, parent)
+    ConfigAdvancedDoubleSlider( ConfigurableItem* item, QWidget* parent ) : ConfigurationWidget(item, parent)
     {
         m_slider = new QSlider(this);
         m_spinBox = new QDoubleSpinBox(this);
@@ -135,44 +147,44 @@ public slots:
 
 
 
-ConfigurationWidget::ConfigurationWidget(ConfigurationItem *item, QWidget *parent) :
+ConfigurationWidget::ConfigurationWidget(ConfigurableItem *item, QWidget *parent) :
     QWidget(parent),
     m_item( item )
 {
     connect( this, SIGNAL(valueChanged(QVariant)), m_item, SLOT(set(QVariant)) );
 }
 
-ConfigurationWidget* ConfigurationWidget::create( ConfigurationItem *item, QWidget* parent )
+ConfigurationWidget* ConfigurationWidget::create( ConfigurableItem *item, QWidget* parent )
 {
     switch (item->options().interface())
     {
-    case ConfigurationItemOptions::Hidden:
-    case ConfigurationItemOptions::Invalid:
+    case ConfigurableItemOptions::Hidden:
+    case ConfigurableItemOptions::Invalid:
         assert( false );
         break;
-    case ConfigurationItemOptions::TextEdit:
+    case ConfigurableItemOptions::TextEdit:
         return new ConfigQTextEdit( item, parent );
-    case ConfigurationItemOptions::Checkbox:
+    case ConfigurableItemOptions::Checkbox:
         return new ConfigQCheckBox( item, parent );
-    case ConfigurationItemOptions::AdvancedDoubleSlider:
+    case ConfigurableItemOptions::AdvancedDoubleSlider:
         return new ConfigAdvancedDoubleSlider( item, parent );
-    case ConfigurationItemOptions::ComboBox:
+    case ConfigurableItemOptions::ComboBox:
         return new ConfigQComboBox( item, parent );
-    case ConfigurationItemOptions::LineEdit:
+    case ConfigurableItemOptions::LineEdit:
         return new ConfigQLineEdit( item, parent );
-    case ConfigurationItemOptions::SpinBox:
+    case ConfigurableItemOptions::SpinBox:
         return new ConfigQSpinBox( item, parent );
-    case ConfigurationItemOptions::DoubleSpinBox:
+    case ConfigurableItemOptions::DoubleSpinBox:
         return new ConfigQDoubleSpinBox( item, parent );
 
     //TODO implementation missing:
-    case ConfigurationItemOptions::PathEdit:
-    case ConfigurationItemOptions::Slider:
-    case ConfigurationItemOptions::DoubleSlider:
-    case ConfigurationItemOptions::AdvancedSlider:
-    case ConfigurationItemOptions::RadioButtons:
-    case ConfigurationItemOptions::EditableComboBox:
-    case ConfigurationItemOptions::ColorEditor:
+    case ConfigurableItemOptions::PathEdit:
+    case ConfigurableItemOptions::Slider:
+    case ConfigurableItemOptions::DoubleSlider:
+    case ConfigurableItemOptions::AdvancedSlider:
+    case ConfigurableItemOptions::RadioButtons:
+    case ConfigurableItemOptions::EditableComboBox:
+    case ConfigurableItemOptions::ColorEditor:
     default:
         return NULL;
     }

@@ -14,12 +14,13 @@ DEFN_CONFIG( PDFAttachmentView, "PDF" );
 CONFIGURABLE_ADD_ITEM( PDFAttachmentView,
                        Quality,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Quality"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFAttachmentView/Quality"),
                        72.0,
-                       ConfigurationItemOptions::AdvancedDoubleSliderOptions( 0,
-                                                                              100,
-                                                                              1,
-                                                                              QT_TRANSLATE_NOOP("ConfigurableItem", "dpi")
-                                                                              )
+                       ConfigurableItemOptions::AdvancedDoubleSliderOptions( 0,
+                                                                             100,
+                                                                             1,
+                                                                             QT_TRANSLATE_NOOP("ConfigurableItem", "dpi")
+                                                                            )
                      );
 
 

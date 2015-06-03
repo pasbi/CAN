@@ -425,7 +425,7 @@ border: 1px solid #ffaa00;
 }
 QCheckBox::indicator:checked
 {
-image:url(icons/check40.png);
+image:url(:/icons/icons/check40.png);
 }
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 {

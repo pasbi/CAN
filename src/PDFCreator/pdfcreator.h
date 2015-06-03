@@ -14,7 +14,7 @@ class PDFCreator : public QThread
     Q_OBJECT
 
 public:
-    PDFCreator( QSizeF baseSizeMM, Setlist* setlist, const QString& filename );
+    PDFCreator(QSizeF baseSizeMM, Setlist* setlist, const QString& dirname );
     ~PDFCreator();
 
     QPainter &currentPainter();
@@ -35,7 +35,8 @@ public:
      *  activates it.
      * @param i the index of the new page.
      */
-    void newPage(Page::Flags flags, int i = -1 );
+    void newPage( Page::Flags flags, const QString &title, int i);
+
 
     /**
      * @brief activatePage activate page i
@@ -70,7 +71,7 @@ private:
     QSizeF m_baseSizeMM;
     Page *currentPage();
     Setlist* m_setlist;
-    const QString& m_filename;
+    const QString& m_filename;      // if each song gets one pdf, this will be the dirname (skipping *.pdf)
 
     /**
      * @brief save saves the pdf at given filename.
@@ -78,7 +79,7 @@ private:
      *  on the pdf again.
      * @param filename
      */
-    void save( const QString& filename );
+    void save(QString filenameOrDirname );
 
     /////////////////////////////////////
     ////
@@ -107,6 +108,15 @@ signals:
     //
     ///////////////////////////////////
 private:
+    // define a convienience struct to abbreviate QList<QList<QPage>> and handle the title
+    struct Document
+    {
+        Document( const QString& title = "" ) : title(title) {}
+
+        const QString title;
+        QList<Page*> pages;
+    };
+
     void paintTitle();
     void paintHeadline(const QString &label);
     bool paintSong(const Song *song);
@@ -120,6 +130,7 @@ private:
     void optimizeForDuplex();
     void decoratePageNumbers();
     void drawContinueOnNextPageMark();
+    void paintAndSaveDocument(const Document& document, const QString &title, const QString& dirname );
     int lengthOfSong( int start );
 
     double m_additionalTopMargin = 0;
@@ -131,8 +142,15 @@ private:
     double rightMargin() const { return 10; }
     double topMargin() const { return 15 + m_additionalTopMargin; }
     double bottomMargin() const { return 15 + 25; } // bottom line is 15 below the end of the page
+
 public:
+    static const int ALIGN_SONGS__SEPARATE_PAGES;
     static QMap<QString, QString> dictionary();
+
+    static QString setlistFilename(QWidget* parent, Setlist* setlist , bool separatePages);
+    static void exportSetlist(Setlist *setlist, QWidget *widgetParent);
+
+
 
 };
 

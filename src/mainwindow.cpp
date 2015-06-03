@@ -32,24 +32,27 @@ QString defaultStyleSheet()
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexFilter, "");
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, locale, QLocale::system().name());
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, locale, QLocale::system().name().toStdString().c_str());
 CONFIGURABLE_ADD_ITEM( MainWindow,
                        Style,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Style"),
-                       QVariant(),
-                       ConfigurationItemOptions::TextEditOptions( QT_TRANSLATE_NOOP( "ConfigurableItem", "Stylesheet") )
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/Style"),
+                       QVariant(),  // is set in MainWindow constructor since ::defaultStyleSheet() is not available in static context.
+                       ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP( "ConfigurableItem", "Stylesheet") )
                        );
 CONFIGURABLE_ADD_ITEM( MainWindow,
                        AskForCommitMessage,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Ask for commit message"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/AskForCommitMessage"),
                        QVariant(true),
-                       ConfigurationItemOptions::CheckboxOptions()
+                       ConfigurableItemOptions::CheckboxOptions()
                        );
 CONFIGURABLE_ADD_ITEM( MainWindow,
                        CommitMessage,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Commit message"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/CommitMessage"),
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Synchronizing"),
-                       ConfigurationItemOptions::TextEditOptions( QT_TRANSLATE_NOOP( "ConfigurableItem", "commit message") )
+                       ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP( "ConfigurableItem", "commit message") )
                        );
 
 
@@ -65,14 +68,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //     load stylesheet
     config.item("Style")->setDefaultValue( defaultStyleSheet() );
-    connect( config.item("Style"), &ConfigurationItem::valueChanged, [this](QVariant value)
+    connect( config.item("Style"), &ConfigurableItem::valueChanged, [this](QVariant value)
     {
         app().setStyleSheet( value.toString() );
     });
     app().setStyleSheet( config.value( "Style" ).toString() );
 
     //////////////////////////////////////////
-    /// restore configuration
+    /// restore Configurable
     //////////////////////////////////////////
     /// is done implicitly when Configurable is loaded
 
@@ -1081,8 +1084,17 @@ SongTableView* MainWindow::songTableView()
 }
 
 
+#include "PDFCreator/pdfcreator.h"
+void MainWindow::on_action_Export_all_songs_triggered()
+{
+    Project tmpProject;
+    EventDatabase tmpDatabase( &tmpProject );
+    Event tmpEvent(&tmpDatabase);
 
+    for( Song* song : m_project.songDatabase()->songs() )
+    {
+        tmpEvent.setlist()->appendItem( new SetlistItem( song ) );
+    }
 
-
-
-
+    PDFCreator::exportSetlist( tmpEvent.setlist(), this );
+}

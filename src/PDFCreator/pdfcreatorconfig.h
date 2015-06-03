@@ -61,38 +61,44 @@ QPagedPaintDevice::PageSize intToPageSize( int s )
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFTitlePattern,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Title"),
-                       "Setlist\n\n-- {EventTitle} --\n\n{Begin}",
-                       ConfigurationItemOptions::TextEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/PDFTitlePattern"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Setlist\n\n-- {EventTitle} --\n\n{Begin}"),
+                       ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
                      );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        SongTitle,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/SongTitle"),
                        true,
-                       ConfigurationItemOptions::CheckboxOptions()
+                       ConfigurableItemOptions::CheckboxOptions()
                      );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        SongTitlePattern,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
-                       "{Title} -- {Artist}",
-                       ConfigurationItemOptions::LineEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/SongTitlePattern"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "{Title} -- {Artist}" ),
+                       ConfigurableItemOptions::LineEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
                      );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        LineSpacing,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Line spacing"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/LineSpacing"),
                        1.3,
-                       ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
+                       ConfigurableItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
                      );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        ChordLineSpacing,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Chord Line spacing"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/ChordLineSpacing"),
                        1,
-                       ConfigurationItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
+                       ConfigurableItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
                      );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFSize,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Page size"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/PageSize"),
                        pageSizeToInt( QPdfWriter::A4 ),
-                       ConfigurationItemOptions::ComboBoxOptions( QStringList() <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A0")
+                       ConfigurableItemOptions::ComboBoxOptions( QStringList() <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A0")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A1")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A2")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A3")
@@ -124,40 +130,51 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "Tabloid")
                                                                     )
                      );
+
+const int PDFCreator::ALIGN_SONGS__SEPARATE_PAGES = 5;
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        AlignSongs,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Align songs: "),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/AlignSongs"),
                        0,
-                       ConfigurationItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "No alignment")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Odd pages")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Even pages")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Duplex")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Endless")         )
+                       ConfigurableItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "No alignment")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Odd pages")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Even pages")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Duplex")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Endless")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Separate pages"))
                        );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TableOfContents,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Table of Contents"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/TableOfContents"),
                        true,
-                       ConfigurationItemOptions::CheckboxOptions()
+                       ConfigurableItemOptions::CheckboxOptions()
                      );
 
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PageNumbers,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Page Numbers"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/PageNumbers"),
                        true,
-                       ConfigurationItemOptions::CheckboxOptions()
+                       ConfigurableItemOptions::CheckboxOptions()
                      );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFResolution,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Resolution"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/Resolution"),
                        72,
-                       ConfigurationItemOptions::AdvancedDoubleSliderOptions(0, 400, 1, QT_TRANSLATE_NOOP("ConfigurableItem", "dpi") )
+                       ConfigurableItemOptions::AdvancedDoubleSliderOptions(0, 400, 1, QT_TRANSLATE_NOOP("ConfigurableItem", "dpi") )
                      );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        ContiuneOnNextPageMark,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Show to-be-continued-hint"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/ContinueOnNextPageMark"),
                        true,
-                       ConfigurationItemOptions::CheckboxOptions()
+                       ConfigurableItemOptions::CheckboxOptions()
                      );
+
+CONFIGURABLE_ADD_ITEM_HIDDEN( PDFCreator, DefaultPDFSavePath, QDir::homePath() );
+
 
 #endif // PDFCONFIG_H
