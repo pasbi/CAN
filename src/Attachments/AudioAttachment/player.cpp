@@ -6,7 +6,7 @@ Player::Player()
     const int interval = 10;
     m_timer = new QTimer(this);
     m_timer->setInterval( 10 );
-    connect( m_timer, &QTimer::timeout, [this]()
+    connect( m_timer, &QTimer::timeout, [this, interval]()
     {
         m_currentPosition += interval / 1000.0;
         emit positionChanged( checkSectionAndGetPosition() );

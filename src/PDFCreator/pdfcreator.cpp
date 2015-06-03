@@ -173,10 +173,9 @@ bool PDFCreator::isEndlessPage() const
 QMap<QString, QString> PDFCreator::dictionary()
 {
     // define nice replacements, e.g. replace -- with a real hyphen.
-    return QMap<QString, QString>(
-    {
-    { "--", QChar(0x2014) }
-    });
+    QMap<QString, QString> dict;
+    dict.insert( "--", QChar(0x2014) );
+    return dict;
 }
 
 QString labelSetlist(Setlist *setlist)

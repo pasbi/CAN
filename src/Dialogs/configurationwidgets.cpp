@@ -161,6 +161,7 @@ ConfigurationWidget* ConfigurationWidget::create( ConfigurableItem *item, QWidge
     case ConfigurableItemOptions::Hidden:
     case ConfigurableItemOptions::Invalid:
         assert( false );
+        return NULL;
         break;
     case ConfigurableItemOptions::TextEdit:
         return new ConfigQTextEdit( item, parent );

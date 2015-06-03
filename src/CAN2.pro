@@ -20,8 +20,8 @@ TARGET = CAN2
 TEMPLATE = app
 
 #CONFIG += debug
-QMAKE_CXXFLAGS_DEBUG -= -O2
-QMAKE_CXXFLAGS_DEBUG += -Og
+#QMAKE_CXXFLAGS_DEBUG -= -O2
+#QMAKE_CXXFLAGS_DEBUG += -Og
 
 unix {
 #you must have libgit2, poppler, libav, libsoundtouch installed.
@@ -32,20 +32,20 @@ LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
 LIBS += -lavformat -lavcodec -lavutil -lpthread
 LIBS += -lSoundTouch
+QMAKE_CXXFLAGS += -std=c++0x
 }
 
 win32 {
-INCLUDEPATH += ../../
+#INCLUDEPATH += ../../
 INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
 INCLUDEPATH += ../../ZipGit/src/
-LIBS += -L../../ZipGit/build-ZipGit-Desktop_Qt_5_4_1_MinGW_32bit-Debug/debug/ -lzipgit
-LIBS += -L../../poppler/bin -lfreetype6 -ljpeg-8 -lopenjpeg -lpng12 -lpoppler -lpoppler-qt5
-LIBS += -L../../libav-10.6-win32/win32/usr/bin -lavformat-55 -lavcodec-55 -lavutil-53
-LIBS += -L../../\soundtouch\source\build-soundtouch-Desktop_Qt_5_4_1_MinGW_32bit-Debug\debug -lsoundtouch
+LIBS += -L../../bin -lzipgit
+LIBS += -L../../bin -lpoppler-qt5
+#LIBS += -L../../libav-10.6-win32/win32/usr/bin -lavformat-55 -lavcodec-55 -lavutil-53
+#LIBS += -L../../\soundtouch\source\build-soundtouch-Desktop_Qt_5_4_1_MinGW_32bit-Debug\debug -lsoundtouch
 }
 
 
-QMAKE_CXXFLAGS += -std=c++0x
 
 SOURCES += main.cpp\
         mainwindow.cpp \

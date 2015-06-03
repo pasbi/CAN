@@ -9,7 +9,7 @@
 class Page
 {
 public:
-    ENUM( Flag, NothingSpecial, SongStartsHere, TableOfContentsStartsHere, ExistingPage  )
+    enum Flag { NothingSpecial, SongStartsHere, TableOfContentsStartsHere, ExistingPage };
     typedef QFlags<Flag> Flags;
 
     Page(QSizeF baseSizeInMM, Flags flags = NothingSpecial );

@@ -12,7 +12,7 @@ class EventDatabase;
 class Event : public QObject, public Taggable
 {
 public:
-    ENUM( Type,  Rehearsal, Gig, Other )
+    enum Type { Rehearsal, Gig, Other };
     Event( EventDatabase*   database,
            const QDateTime& beginning = QDateTime(),
            const QDateTime& ending    = QDateTime(),

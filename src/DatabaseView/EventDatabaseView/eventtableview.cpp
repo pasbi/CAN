@@ -33,9 +33,12 @@ public:
         // first column:
         if (index.column() == 0)
         {
-            for ( Event::Type type : Event::getInstancesOf_Type() )
+            // fancy smart enums does not work because microsoft compiler does not support
+            // variadic macros :(
+            QStringList eventTypes = QStringList( { tr("Rehearsal"), tr("Gig"), tr("Other") } );
+            for ( const QString& type : eventTypes )
             {
-                comboBox->addItem( Event::getTranslatedNameOf_Type( type ) );
+                comboBox->addItem( type );
             }
         }
         comboBox->setCurrentIndex( database->data( index, Qt::EditRole ).toInt() );
