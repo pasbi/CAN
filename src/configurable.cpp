@@ -8,12 +8,12 @@ Configurable::Configurable(const QString &prefix, const char* caption ) :
     m_prefix(prefix),
     m_caption(caption)
 {
-    // do not restore configuration here.
+    // do not restore Configurable here.
     // at the time this code is executed, QApplication does not exist.
     // Hence, QApplication cannot provide applicationName or
     // organizationName for QSettings.
-    // Restore Configuration is better done in Application constructor.
-    //restoreConfiguration();
+    // Restore Configurable is better done in Application constructor.
+    //restoreConfigurable();
     registerer()->registerConfigurable(this);
 }
 
@@ -21,10 +21,14 @@ Configurable::~Configurable()
 {
 }
 
-void Configurable::addItem(const QString & key, const char *caption, const QVariant & defaultValue, const ConfigurationItemOptions & options)
+void Configurable::addItem( const QString &                 key,
+                            const QString &                 caption,
+                            const QString &                 help,
+                            const QVariant &                defaultValue,
+                            const ConfigurableItemOptions & options)
 {
     m_itemKeys << key;
-    m_items.insert(key, new ConfigurationItem(caption, defaultValue, defaultValue, options));
+    m_items.insert(key, new ConfigurableItem(caption, help, defaultValue, defaultValue, options));
 }
 
 bool Configurable::contains(const QString & key) const
@@ -77,7 +81,7 @@ void Configurable::restore()
     }
 }
 
-void Configurable::saveConfiguration() const
+void Configurable::saveConfigurable() const
 {
     QSettings settings;
     settings.beginGroup("Configurables");
@@ -97,7 +101,7 @@ void Configurable::saveConfiguration() const
     settings.endGroup();
 }
 
-void Configurable::restoreConfiguration()
+void Configurable::restoreConfigurable()
 {
     QSettings settings;
     settings.beginGroup("Configurables");
@@ -131,7 +135,7 @@ void Configurable::saveAll()
 {
     for (const Configurable* c : registerer()->configs().values())
     {
-        c->saveConfiguration();
+        c->saveConfigurable();
     }
 }
 
@@ -139,17 +143,17 @@ void Configurable::restoreAll()
 {
     for (Configurable* c : registerer()->configs().values())
     {
-        c->restoreConfiguration();
+        c->restoreConfigurable();
     }
 }
 
-void ConfigurationItem::setDefaultValue(const QVariant &value)
+void ConfigurableItem::setDefaultValue(const QVariant &value)
 {
     assert( !m_defaultValue.isValid() );
     m_defaultValue = value;
 }
 
-void ConfigurationItem::set(const QVariant &value)
+void ConfigurableItem::set(const QVariant &value)
 {
     if ( m_actualValue != value )
     {
@@ -158,7 +162,7 @@ void ConfigurationItem::set(const QVariant &value)
     }
 }
 
-void ConfigurationItem::reset()
+void ConfigurableItem::reset()
 {
     set( m_resetValue );
 }
@@ -168,7 +172,7 @@ void Configurable::set(const QString &key, const QVariant &value)
     item(key)->set(value);
 }
 
-ConfigurationItem* Configurable::item(const QString & key)
+ConfigurableItem* Configurable::item(const QString & key)
 {
     if (m_items.contains(key))
     {
@@ -180,7 +184,7 @@ ConfigurationItem* Configurable::item(const QString & key)
     }
 }
 
-const ConfigurationItem* Configurable::item(const QString & key) const
+const ConfigurableItem* Configurable::item(const QString & key) const
 {
     return m_items.value( key, NULL );
 }
@@ -190,9 +194,9 @@ QString Configurable::caption() const
     return QApplication::translate("Configurable", m_caption);
 }
 
-QString ConfigurationItem::caption() const
+QString ConfigurableItem::caption() const
 {
-    return QApplication::translate("ConfigurableItem", m_caption);
+    return QApplication::translate("ConfigurableItem", m_caption.toStdString().c_str());
 }
 
 QVariant Configurable::value( const QString & key ) const
@@ -203,6 +207,18 @@ QVariant Configurable::value( const QString & key ) const
 QVariant Configurable::operator[] ( const QString & key ) const
 {
     return item(key)->actualValue();
+}
+
+QVariant ConfigurableItem::defaultValue() const
+{
+    if (m_defaultValue.type() == QVariant::String)
+    {
+        return QApplication::translate("ConfigurableItem", m_defaultValue.toString().toStdString().c_str());
+    }
+    else
+    {
+        return m_defaultValue;
+    }
 }
 
 

@@ -224,7 +224,7 @@
     </message>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="21"/>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="154"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="157"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
@@ -411,52 +411,57 @@
         <translation>Tabloid</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="129"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="131"/>
         <source>Align songs: </source>
         <translation>Align songs:</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="131"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="133"/>
         <source>No alignment</source>
         <translation>No alignment</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="132"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="134"/>
         <source>Odd pages</source>
         <translation>Odd pages</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="133"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="135"/>
         <source>Even pages</source>
         <translation>Even pages</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="134"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="136"/>
         <source>Duplex</source>
         <translation>Duplex</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="135"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="137"/>
         <source>Endless</source>
         <translation>Endless</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="139"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="138"/>
+        <source>Separate pages</source>
+        <translation>Separate pages</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="142"/>
         <source>Table of Contents</source>
         <translation>Table of Contents</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="146"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="149"/>
         <source>Page Numbers</source>
         <translation>Page numbers</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="152"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="155"/>
         <source>Resolution</source>
         <translation>Resolution</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="158"/>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="161"/>
         <source>Show to-be-continued-hint</source>
         <translation>To be continued hint</translation>
     </message>
@@ -754,29 +759,29 @@ or does not exist.</translation>
         <translation>Proposed files.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="188"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="175"/>
         <source>File not indexed</source>
         <translation>File is not indexed</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="189"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="176"/>
         <source>The file you want to use is not indexed.
 Index it before you can use it.</source>
         <translation>The file you want to use is not indexed.
 Add it to the index before you can use it.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="237"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="224"/>
         <source>Open File ...</source>
         <translation>Open file ...</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="260"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="247"/>
         <source>File is not readable.</source>
         <translation>File is not readable.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="261"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp" line="248"/>
         <source>The file is not readable.
 </source>
         <translation>The file is not readable.</translation>
@@ -815,195 +820,200 @@ Add it to the index before you can use it.</translation>
         <translation>Werkzeuge</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="212"/>
+        <location filename="mainwindow.ui" line="213"/>
         <source>Attachment related stuff.</source>
         <translation>Attachment related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="215"/>
+        <location filename="mainwindow.ui" line="216"/>
         <source>&amp;Attachments</source>
         <translation>&amp;Attachments</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="224"/>
+        <location filename="mainwindow.ui" line="225"/>
         <source>Edit.</source>
         <translation>Edit.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="227"/>
+        <location filename="mainwindow.ui" line="228"/>
         <source>&amp;Edit</source>
         <translation>&amp;Edit</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="235"/>
+        <location filename="mainwindow.ui" line="236"/>
         <source>Debug</source>
         <translation>[Debug]</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="241"/>
+        <location filename="mainwindow.ui" line="242"/>
         <source>File index related stuff.</source>
         <translation>File index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="244"/>
+        <location filename="mainwindow.ui" line="245"/>
         <source>F&amp;ile Index</source>
         <translation>File&amp;index</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="253"/>
+        <location filename="mainwindow.ui" line="254"/>
         <source>Event related stuff.</source>
         <translation>Event related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="256"/>
+        <location filename="mainwindow.ui" line="257"/>
         <source>E&amp;vents</source>
         <translation>E&amp;vents</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="261"/>
+        <location filename="mainwindow.ui" line="262"/>
         <source>Song related stuff.</source>
         <translation>Song related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="264"/>
+        <location filename="mainwindow.ui" line="265"/>
         <source>&amp;Songs</source>
         <translation>&amp;Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="268"/>
+        <location filename="mainwindow.ui" line="269"/>
         <source>Visible attributes ...</source>
         <translation>Visible attributes ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="276"/>
+        <location filename="mainwindow.ui" line="277"/>
         <source>&amp;Language</source>
         <translation>&amp;Language</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="291"/>
+        <location filename="mainwindow.ui" line="292"/>
         <source>&amp;New Project</source>
         <translation>&amp;New project</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="294"/>
+        <location filename="mainwindow.ui" line="295"/>
         <source>Create a new empty project.</source>
         <translation>Create a new empty project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="306"/>
+        <location filename="mainwindow.ui" line="307"/>
         <source>&amp;Save</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="309"/>
+        <location filename="mainwindow.ui" line="310"/>
         <source>Save the current project.</source>
         <translation>Save the current project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="321"/>
+        <location filename="mainwindow.ui" line="322"/>
         <source>Save As</source>
         <translation>Save as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="324"/>
+        <location filename="mainwindow.ui" line="325"/>
         <source>Save the current project as.</source>
         <translation>Save the current project as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="336"/>
+        <location filename="mainwindow.ui" line="337"/>
         <source>Open</source>
         <translation>Open ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="339"/>
+        <location filename="mainwindow.ui" line="340"/>
         <source>Open an existing project.</source>
         <translation>Open an existing project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="347"/>
+        <location filename="mainwindow.ui" line="348"/>
         <source>Index Info ...</source>
         <oldsource>Index Info</oldsource>
         <translation>Index info ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="350"/>
+        <location filename="mainwindow.ui" line="351"/>
         <source>Information about the file index.</source>
         <translation>Show informations about the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="358"/>
+        <location filename="mainwindow.ui" line="359"/>
         <source>Add Folder ...</source>
         <oldsource>Add Folder</oldsource>
         <translation>Add folder ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="361"/>
+        <location filename="mainwindow.ui" line="362"/>
         <source>Add Folder to the file index.</source>
         <translation>Add folder to the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="369"/>
+        <location filename="mainwindow.ui" line="370"/>
         <source>Clear Index</source>
         <translation>Clear index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="372"/>
+        <location filename="mainwindow.ui" line="373"/>
         <source>Remove all files from file index.</source>
         <translation>Remove all files from file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="384"/>
+        <location filename="mainwindow.ui" line="385"/>
         <source>Delete Attachment</source>
         <oldsource>New Attachment </oldsource>
         <translation>Delete attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="387"/>
+        <location filename="mainwindow.ui" line="388"/>
         <source>Delete Attachment selected attachment.</source>
         <oldsource>Add new attachment to a song.</oldsource>
         <translation>Delete selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="399"/>
+        <location filename="mainwindow.ui" line="400"/>
         <source>&amp;Undo</source>
         <oldsource>Undo</oldsource>
         <translation>&amp;Undo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="402"/>
+        <location filename="mainwindow.ui" line="403"/>
         <source>Undo the last action.</source>
         <translation>Undo the last action.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="414"/>
+        <location filename="mainwindow.ui" line="415"/>
         <source>&amp;Redo</source>
         <oldsource>Redo</oldsource>
         <translation>&amp;Redo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="417"/>
+        <location filename="mainwindow.ui" line="418"/>
         <source>Redo the last undone action.</source>
         <translation>Redo the last undone action.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="429"/>
+        <location filename="mainwindow.ui" line="430"/>
         <source>Clone ...</source>
         <translation>Clone ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="432"/>
+        <location filename="mainwindow.ui" line="433"/>
         <source>Clone a repository.</source>
         <translation>Klone a repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="440"/>
+        <location filename="mainwindow.ui" line="441"/>
         <source>Open terminal</source>
         <translation>Open terminal</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="452"/>
+        <location filename="mainwindow.ui" line="453"/>
         <source>Rename Attachment ...</source>
         <translation>Rename attachment ...</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="516"/>
+        <source>&amp;Export all songs</source>
+        <translation>&amp;Export all songs</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="671"/>
@@ -1011,22 +1021,22 @@ Add it to the index before you can use it.</translation>
         <translation>Rename Attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="455"/>
+        <location filename="mainwindow.ui" line="456"/>
         <source>Rename selected attachment.</source>
         <translation>Rename selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="467"/>
+        <location filename="mainwindow.ui" line="468"/>
         <source>Duplicate Attachment</source>
         <translation>Duplicate attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="470"/>
+        <location filename="mainwindow.ui" line="471"/>
         <source>Duplicate selected attachment.</source>
         <translation>Duplicate selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="482"/>
+        <location filename="mainwindow.ui" line="483"/>
         <location filename="mainwindow.cpp" line="804"/>
         <location filename="mainwindow.cpp" line="811"/>
         <location filename="mainwindow.cpp" line="901"/>
@@ -1035,27 +1045,27 @@ Add it to the index before you can use it.</translation>
         <translation>Synchronisieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="485"/>
+        <location filename="mainwindow.ui" line="486"/>
         <source>Synchronizes local project with remote repository.</source>
         <translation>Synchronize local repository with remote repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="493"/>
+        <location filename="mainwindow.ui" line="494"/>
         <source>Identites ...</source>
         <translation>Identities ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="496"/>
+        <location filename="mainwindow.ui" line="497"/>
         <source>Manage identities.</source>
         <translation>Manage identities.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="504"/>
+        <location filename="mainwindow.ui" line="505"/>
         <source>Preferences ...</source>
         <translation>Preferences ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="507"/>
+        <location filename="mainwindow.ui" line="508"/>
         <source>Settings.</source>
         <translation>Preferences.</translation>
     </message>
@@ -1346,29 +1356,61 @@ Fix the error by hand and commit it over the current version, then clone the fix
 <context>
     <name>PDFCreator</name>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="123"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="98"/>
         <source>Table of contents</source>
         <translation>Table of contents</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="134"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="109"/>
         <source>Align songs</source>
         <translation>Align songs</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="157"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="133"/>
         <source>Generate page numbers</source>
         <translation>Generate page numbers</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="168"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="144"/>
         <source>Save PDF</source>
         <translation>Save PDF</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="277"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="252"/>
         <source>Draw attachment %1 of song %2</source>
         <translation>Draw attachment %1 of song %2 ...</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="509"/>
+        <source>Table of Content</source>
+        <translation>Table of Content</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="801"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="808"/>
+        <source>Export PDF ...</source>
+        <translation>Export to PDF ...</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="829"/>
+        <source>Confirm overwrite</source>
+        <translation>Confirm overwrite</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="830"/>
+        <source>%1 already exists.
+Do you want to replace it?</source>
+        <translation>%1 already exists. Do you want to overwrite it?</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="864"/>
+        <source>Cannot write</source>
+        <translation>Cannot write.</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="865"/>
+        <source>File %1 is not writable.</source>
+        <translation>%1 is not writable.</translation>
     </message>
 </context>
 <context>
@@ -1380,9 +1422,8 @@ Fix the error by hand and commit it over the current version, then clone the fix
         <translation>Unamed</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="534"/>
         <source>Table of Content</source>
-        <translation>Table of Content</translation>
+        <translation type="vanished">Table of Content</translation>
     </message>
     <message>
         <location filename="main.cpp" line="32"/>
@@ -1540,25 +1581,21 @@ Using fallback-english which is not recommended.</translation>
         <translation>Remove setlist items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="207"/>
         <source>Export PDF ...</source>
-        <translation>Export to PDF ...</translation>
+        <translation type="vanished">Export to PDF ...</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="228"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1 already exists. Do you want to overwrite it?</translation>
+        <translation type="vanished">%1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="249"/>
         <source>Cannot write</source>
-        <translation>Cannot write.</translation>
+        <translation type="vanished">Cannot write.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="250"/>
         <source>File %1 is not writable.</source>
-        <translation>%1 is not writable.</translation>
+        <translation type="vanished">%1 is not writable.</translation>
     </message>
 </context>
 <context>

@@ -24,10 +24,12 @@ ConfigurationDialog::~ConfigurationDialog()
     delete ui;
 }
 
-
-QWidget* createWidget( QWidget* parent, ConfigurationItem* item )
+//
+QWidget* createWidget( QWidget* parent, ConfigurableItem* item )
 {
+    QString tooltip = item->help();
     QWidget* widget = new QWidget(parent);
+    widget->setToolTip( tooltip );
     QHBoxLayout* layout = new QHBoxLayout( widget );
     layout->setContentsMargins( 0, 0, 0, 0 );
 
@@ -36,6 +38,7 @@ QWidget* createWidget( QWidget* parent, ConfigurationItem* item )
     QPushButton* defaultButton = new QPushButton( widget );
     defaultButton->setMaximumSize( 20, 20 );
     defaultButton->setIcon( QIcon(":/oldIcons/oldIcons/1411737168_POWER - RESTART.png") );
+    defaultButton->setToolTip( ConfigurationDialog::tr("Reset value to default.") );
     QObject::connect( defaultButton, &QPushButton::clicked, [item, configWidget, defaultButton]()
     {
         item->restore();
@@ -70,8 +73,8 @@ void ConfigurationDialog::buildPage(const QString &key)
     int row = 0;
     for (const QString & key : config->itemKeys())
     {
-        ConfigurationItem* item = config->item( key );
-        if (item->options().interface() != ConfigurationItemOptions::Hidden)
+        ConfigurableItem* item = config->item( key );
+        if (item->options().interface() != ConfigurableItemOptions::Hidden)
         {
             // hlines between items
 //            if (row > 0)

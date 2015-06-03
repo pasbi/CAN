@@ -18,17 +18,17 @@
     Configurable CLASSNAME::config(#CLASSNAME, Caption)
 
 
-#define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, CAPTION, DEFAULT_VALUE, OPTIONS )  \
+#define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, CAPTION, HELP, DEFAULT_VALUE, OPTIONS )  \
     struct ConfigurableStaticInitializer_##CLASSNAME##_##KEY {    \
         ConfigurableStaticInitializer_##CLASSNAME##_##KEY() {     \
-            CLASSNAME::config.addItem( #KEY, CAPTION, DEFAULT_VALUE, OPTIONS );   \
+            CLASSNAME::config.addItem( #KEY, CAPTION, HELP, DEFAULT_VALUE, OPTIONS );   \
         }                                                       \
     } private__ConfigurableStaticInitializer_##CLASSNAME##_##KEY
 
 #define CONFIGURABLE_ADD_ITEM_HIDDEN( CLASSNAME, KEY, DEFAULT_VALUE )  \
-    CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, #KEY, DEFAULT_VALUE, ConfigurationItemOptions::HiddenInterface() )
+    CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, #KEY, "", DEFAULT_VALUE, ConfigurableItemOptions::HiddenInterface() )
 
-class ConfigurationItemOptions
+class ConfigurableItemOptions
 {
 public:
     enum Interface { Invalid, Hidden,
@@ -38,7 +38,7 @@ public:
                      AdvancedSlider, AdvancedDoubleSlider,
                      RadioButtons, ComboBox, EditableComboBox,
                      ColorEditor, Checkbox                   };
-    ConfigurationItemOptions() :
+    ConfigurableItemOptions() :
         m_interface( Invalid ),
         m_placeHolderText(),
         m_fileFilter(),
@@ -57,7 +57,7 @@ public:
     }
 
 private:
-    ConfigurationItemOptions( const Interface       interface,
+    ConfigurableItemOptions( const Interface       interface,
                               const QString &       placeHolderText,
                               const QString &       fileFilter,
                               const bool            isOpenDialog,
@@ -124,30 +124,30 @@ private:
 #undef MEMBER
 
 
-    // ConfigurationItemOptions factory
-    static ConfigurationItemOptions HiddenInterface             (                                                                       )  { return ConfigurationItemOptions( Hidden,               "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
-    static ConfigurationItemOptions LineEditOptions             ( const QString & placeHolderText                                       )  { return ConfigurationItemOptions( LineEdit,             placeHolderText,    "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
-    static ConfigurationItemOptions TextEditOptions             ( const QString & placeHolderText                                       )  { return ConfigurationItemOptions( TextEdit,             placeHolderText,    "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
-    static ConfigurationItemOptions PathEditOptions             ( const QString fileFilter, bool isOpenDialog, bool isFileDialog        )  { return ConfigurationItemOptions( PathEdit,             "",                 fileFilter, isOpenDialog,   isFileDialog,   0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
-    static ConfigurationItemOptions SliderOptions               ( int min, int max, int step = 1                                        )  { return ConfigurationItemOptions( Slider,               "",                 "",         false,          false,          min,    max,    step,   0,      0,      0,      "",     QStringList()   ); }
-    static ConfigurationItemOptions SpinBoxOptions              ( int min, int max, int step = 1, const QString & suffix = ""           )  { return ConfigurationItemOptions( SpinBox,              "",                 "",         false,          false,          min,    max,    step,   0,      0,      0,      suffix, QStringList()   ); }
-    static ConfigurationItemOptions AdvancedSliderOptions       ( int min, int max, int step = 1, const QString & suffix = ""           )  { return ConfigurationItemOptions( AdvancedSlider,       "",                 "",         false,          false,          min,    max,    step,   0,      0,      0,      suffix, QStringList()   ); }
-    static ConfigurationItemOptions DoubleSliderOptions         ( double min, double max, double step = 1                               )  { return ConfigurationItemOptions( DoubleSlider,         "",                 "",         false,          false,          0,      0,      0,      min,    max,    step,   "",     QStringList()   ); }
-    static ConfigurationItemOptions DoubleSpinBoxOptions        ( double min, double max, double step = 1, const QString & suffix = ""  )  { return ConfigurationItemOptions( DoubleSpinBox,        "",                 "",         false,          false,          0,      0,      0,      min,    max,    step,   suffix, QStringList()   ); }
-    static ConfigurationItemOptions AdvancedDoubleSliderOptions ( double min, double max, double step = 1, const QString & suffix = ""  )  { return ConfigurationItemOptions( AdvancedDoubleSlider, "",                 "",         false,          false,          0,      0,      0,      min,    max,    step,   suffix, QStringList()   ); }
-    static ConfigurationItemOptions RadioButtonsOptions         ( const QStringList & alternatives                                      )  { return ConfigurationItemOptions( RadioButtons,         "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     alternatives    ); }
-    static ConfigurationItemOptions ComboBoxOptions             ( const QStringList & alternatives                                      )  { return ConfigurationItemOptions( ComboBox,             "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     alternatives    ); }
-    static ConfigurationItemOptions EditableComboBoxOptions     ( const QStringList & alternatives                                      )  { return ConfigurationItemOptions( EditableComboBox,     "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     alternatives    ); }
-    static ConfigurationItemOptions ColorEditorOptions          (                                                                       )  { return ConfigurationItemOptions( ColorEditor,          "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
-    static ConfigurationItemOptions CheckboxOptions             (                                                                       )  { return ConfigurationItemOptions( Checkbox,             "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
+    // ConfigurableItemOptions factory
+    static ConfigurableItemOptions HiddenInterface             (                                                                       )  { return ConfigurableItemOptions( Hidden,               "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
+    static ConfigurableItemOptions LineEditOptions             ( const QString & placeHolderText                                       )  { return ConfigurableItemOptions( LineEdit,             placeHolderText,    "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
+    static ConfigurableItemOptions TextEditOptions             ( const QString & placeHolderText                                       )  { return ConfigurableItemOptions( TextEdit,             placeHolderText,    "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
+    static ConfigurableItemOptions PathEditOptions             ( const QString fileFilter, bool isOpenDialog, bool isFileDialog        )  { return ConfigurableItemOptions( PathEdit,             "",                 fileFilter, isOpenDialog,   isFileDialog,   0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
+    static ConfigurableItemOptions SliderOptions               ( int min, int max, int step = 1                                        )  { return ConfigurableItemOptions( Slider,               "",                 "",         false,          false,          min,    max,    step,   0,      0,      0,      "",     QStringList()   ); }
+    static ConfigurableItemOptions SpinBoxOptions              ( int min, int max, int step = 1, const QString & suffix = ""           )  { return ConfigurableItemOptions( SpinBox,              "",                 "",         false,          false,          min,    max,    step,   0,      0,      0,      suffix, QStringList()   ); }
+    static ConfigurableItemOptions AdvancedSliderOptions       ( int min, int max, int step = 1, const QString & suffix = ""           )  { return ConfigurableItemOptions( AdvancedSlider,       "",                 "",         false,          false,          min,    max,    step,   0,      0,      0,      suffix, QStringList()   ); }
+    static ConfigurableItemOptions DoubleSliderOptions         ( double min, double max, double step = 1                               )  { return ConfigurableItemOptions( DoubleSlider,         "",                 "",         false,          false,          0,      0,      0,      min,    max,    step,   "",     QStringList()   ); }
+    static ConfigurableItemOptions DoubleSpinBoxOptions        ( double min, double max, double step = 1, const QString & suffix = ""  )  { return ConfigurableItemOptions( DoubleSpinBox,        "",                 "",         false,          false,          0,      0,      0,      min,    max,    step,   suffix, QStringList()   ); }
+    static ConfigurableItemOptions AdvancedDoubleSliderOptions ( double min, double max, double step = 1, const QString & suffix = ""  )  { return ConfigurableItemOptions( AdvancedDoubleSlider, "",                 "",         false,          false,          0,      0,      0,      min,    max,    step,   suffix, QStringList()   ); }
+    static ConfigurableItemOptions RadioButtonsOptions         ( const QStringList & alternatives                                      )  { return ConfigurableItemOptions( RadioButtons,         "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     alternatives    ); }
+    static ConfigurableItemOptions ComboBoxOptions             ( const QStringList & alternatives                                      )  { return ConfigurableItemOptions( ComboBox,             "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     alternatives    ); }
+    static ConfigurableItemOptions EditableComboBoxOptions     ( const QStringList & alternatives                                      )  { return ConfigurableItemOptions( EditableComboBox,     "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     alternatives    ); }
+    static ConfigurableItemOptions ColorEditorOptions          (                                                                       )  { return ConfigurableItemOptions( ColorEditor,          "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
+    static ConfigurableItemOptions CheckboxOptions             (                                                                       )  { return ConfigurableItemOptions( Checkbox,             "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
 
 };
 
-class ConfigurationItem : public QObject
+class ConfigurableItem : public QObject
 {
     Q_OBJECT
 public:
-    ConfigurationItem() :
+    ConfigurableItem() :
         m_actualValue(),
         m_defaultValue(),
         m_resetValue(),
@@ -157,23 +157,26 @@ public:
 
     }
 
-    ConfigurationItem( const char*                      caption,
+    ConfigurableItem(  const QString &                  caption,
+                       const QString &                  help,
                        const QVariant &                 actualValue,
                        const QVariant &                 defaultValue,
-                       const ConfigurationItemOptions & options) :
+                       const ConfigurableItemOptions &  options) :
         m_actualValue(actualValue),
         m_defaultValue(defaultValue),
         m_resetValue(actualValue),
         m_options(options),
-        m_caption( caption )
+        m_caption( caption ),
+        m_help( help )
     {
 
     }
 
     QString caption() const;
-    ConfigurationItemOptions options() const { return m_options; }
+    ConfigurableItemOptions options() const { return m_options; }
     QVariant actualValue() const { return m_actualValue; }
-    QVariant defaultValue() const { return m_defaultValue; }
+    QVariant defaultValue() const;
+    QString help() const { return m_help; }
 
     /**
      * @brief setDefaultValue normally, default value is set in constructor and should not be set
@@ -195,13 +198,12 @@ private:
     QVariant m_actualValue;
     QVariant m_defaultValue;
     QVariant m_resetValue;
-    ConfigurationItemOptions m_options;
+    ConfigurableItemOptions m_options;
+    QString m_caption;
+    QString m_help;
 
 signals:
     void valueChanged( QVariant );
-
-private:
-    const char* m_caption;
 
 };
 
@@ -216,17 +218,18 @@ public:
     ~Configurable();
 
     void addItem(const QString &                    key,
-                 const char*                        caption,
-                 const QVariant &                   defaultValue,
-                 const ConfigurationItemOptions &   options );
+                 const QString &                    caption,
+                 const QString &                    help,
+                 const QVariant &                   defaultValue,    // is set as char* to be translatable, there is a implicit QVariant(const char*) ctor.
+                 const ConfigurableItemOptions &    options );
 
     bool contains(const QString & key) const;
-    ConfigurationItem* item(const QString & key);
-    const ConfigurationItem* item(const QString & key) const;
+    ConfigurableItem* item(const QString & key);
+    const ConfigurableItem* item(const QString & key) const;
     QVariant value( const QString & key ) const;
     QVariant operator[] ( const QString & key ) const;
 
-    // do never return QVariant& (note the lacking const). always call ConfigurationItem::set.
+    // do never return QVariant& (note the lacking const). always call ConfigurableItem::set.
     void set( const QString & key, const QVariant & value );
 
     void reset();
@@ -234,16 +237,16 @@ public:
     void restore();
 
     /**
-     * @brief saveConfiguration saves the configuration with QSettings system.
+     * @brief saveConfigurable saves the Configurable with QSettings system.
      *  Is automatically called in destructor.
      */
-    void saveConfiguration() const;
+    void saveConfigurable() const;
 
     /**
-     * @brief restoreConfiguration restores the configuration with QSettings system.
+     * @brief restoreConfigurable restores the Configurable with QSettings system.
      *  Is automatically called in constructor.
      */
-    void restoreConfiguration();
+    void restoreConfigurable();
 
     QString caption() const;
 
@@ -251,7 +254,7 @@ public:
     QStringList itemKeys() const { return m_itemKeys; }
 
 private:
-    QMap<QString, ConfigurationItem*> m_items;
+    QMap<QString, ConfigurableItem*> m_items;
     QStringList m_itemKeys; // is needed to keep order. QMap::keys is arbitrary order.
 
     const QString m_prefix;
