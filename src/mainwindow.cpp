@@ -727,7 +727,7 @@ void MainWindow::on_actionClone_triggered()
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
 
-    m_project.cloneDetached( url.url(), dialog.identity() );
+    m_project.cloneDetached( url.url(), Identity("", "", "", "") );
 
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);
@@ -831,7 +831,7 @@ void MainWindow::on_actionSync_triggered()
         else
         {
         }
-        m_project.setCredentials( identity );
+//        m_project.setCredentials( identity );
     }
     else
     {

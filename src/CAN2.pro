@@ -261,6 +261,8 @@ HEADERS  += mainwindow.h \
     PDFCreator/pdfcreatorconfig.h \
     PDFCreator/pdfcreator.h \
     poppler.h \
+    soundtouch.h \
+    poppler.h \
     soundtouch.h
 
 FORMS    += mainwindow.ui \

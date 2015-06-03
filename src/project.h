@@ -1,7 +1,7 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include "../../ZipGit/src/zipgit.h"
+#include "zipgit.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/eventdatabase.h"
 
