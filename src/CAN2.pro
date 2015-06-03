@@ -7,6 +7,8 @@
 
 #//TODO port to Windows
 #//TODO what happens if network is required but down?
+#//TODO pdfattachment seems to be rasterized before written in pdf.
+#       this is slow and stupid for obvious reasons.
 
 QT       += core gui multimedia
 

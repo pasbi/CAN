@@ -62,7 +62,7 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFTitlePattern,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Title"),
                        QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/PDFTitlePattern"),
-                       "Setlist\n\n-- {EventTitle} --\n\n{Begin}",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Setlist\n\n-- {EventTitle} --\n\n{Begin}"),
                        ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
                      );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
@@ -76,7 +76,7 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        SongTitlePattern,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
                        QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/SongTitlePattern"),
-                       "{Title} -- {Artist}",
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "{Title} -- {Artist}" ),
                        ConfigurableItemOptions::LineEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
                      );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
@@ -138,11 +138,11 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/AlignSongs"),
                        0,
                        ConfigurableItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "No alignment")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Odd pages")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Even pages")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Duplex")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Endless")
-                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Separate pages"))
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Odd pages")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Even pages")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Duplex")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Endless")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Separate pages"))
                        );
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        TableOfContents,

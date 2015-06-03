@@ -7,6 +7,18 @@
 #include <QDoubleSpinBox>
 #include <QComboBox>
 #include <QLineEdit>
+#include "application.h"
+
+
+QStringList translate( const char* prefix, const QStringList& keys )
+{
+    QStringList translation;
+    for (const QString& key : keys)
+    {
+        translation << QApplication::translate( prefix, key.toStdString().c_str() );
+    }
+    return translation;
+}
 
 
 // magic configuration-class-template:
@@ -54,7 +66,7 @@ DEFN_CONFIG_CLASS( QComboBox,
                    static_cast< void(QComboBox::*)(int) >(&QComboBox::currentIndexChanged),
                    emit valueChanged( m_edit->currentIndex() ),
                    m_edit->setCurrentIndex( m_item->actualValue().toInt() ),
-                   m_edit->addItems( m_item->options().alternatives() ) )
+                   m_edit->addItems( translate( "ConfigurableItem",  m_item->options().alternatives()  )) )
 
 DEFN_CONFIG_CLASS( QLineEdit,
                    &QLineEdit::textChanged,

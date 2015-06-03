@@ -4,7 +4,7 @@
 #include <QJsonDocument>
 #include "application.h"
 
-Configurable::Configurable(const QString &prefix, const char* caption ) :
+Configurable::Configurable(const QString &prefix, const QString & caption ) :
     m_prefix(prefix),
     m_caption(caption)
 {
@@ -191,12 +191,17 @@ const ConfigurableItem* Configurable::item(const QString & key) const
 
 QString Configurable::caption() const
 {
-    return QApplication::translate("Configurable", m_caption);
+    return QApplication::translate("Configurable", m_caption.toStdString().c_str());
 }
 
 QString ConfigurableItem::caption() const
 {
     return QApplication::translate("ConfigurableItem", m_caption.toStdString().c_str());
+}
+
+QString ConfigurableItem::help() const
+{
+    return QApplication::translate("ConfigurableItem", m_help.toStdString().c_str());
 }
 
 QVariant Configurable::value( const QString & key ) const

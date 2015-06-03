@@ -176,7 +176,7 @@ public:
     ConfigurableItemOptions options() const { return m_options; }
     QVariant actualValue() const { return m_actualValue; }
     QVariant defaultValue() const;
-    QString help() const { return m_help; }
+    QString help() const;
 
     /**
      * @brief setDefaultValue normally, default value is set in constructor and should not be set
@@ -190,7 +190,7 @@ public:
 public slots:
     void apply() { m_resetValue = m_actualValue; }
     void reset();
-    void restore() { set( m_defaultValue ); }
+    void restore() { set( defaultValue() ); }
     void set( const QVariant & value );
 
 
@@ -214,7 +214,7 @@ signals:
 class Configurable
 {
 public:
-    Configurable(const QString & prefix, const char *caption );
+    Configurable(const QString & prefix, const QString& caption );
     ~Configurable();
 
     void addItem(const QString &                    key,
@@ -258,7 +258,7 @@ private:
     QStringList m_itemKeys; // is needed to keep order. QMap::keys is arbitrary order.
 
     const QString m_prefix;
-    const char* m_caption;
+    const QString m_caption;
 
     // we want to know all classes that have a static Configurable member
     // i.e. we want to know the Configurable member in particular

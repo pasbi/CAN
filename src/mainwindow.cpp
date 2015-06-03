@@ -37,7 +37,7 @@ CONFIGURABLE_ADD_ITEM( MainWindow,
                        Style,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Style"),
                        QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/Style"),
-                       QVariant(),
+                       QVariant(),  // is set in MainWindow constructor since ::defaultStyleSheet() is not available in static context.
                        ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP( "ConfigurableItem", "Stylesheet") )
                        );
 CONFIGURABLE_ADD_ITEM( MainWindow,
