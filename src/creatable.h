@@ -28,13 +28,14 @@ public:
      * @param object
      * @return success
      */
-    static bool create(const QString & classname, Creatable *&object);
+    static Creatable* create(const QString & classname);
     static QString category(const QString & classname);
     static QStringList classnamesInCategory( const QString & category );
     static QString name(const QString &classname );
 
 
 private:
+public://TODO
     static QHash<QString, Creatable* (*)()> m_constructorMap;
     static QHash<QString, QString> m_categoryMap;
     static QHash<QString, QString> m_inverseCategoryMap;

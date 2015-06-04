@@ -9,17 +9,15 @@ Creatable::Creatable()
 {
 }
 
-
-bool Creatable::create(const QString & classname, Creatable* &object)
+Creatable* Creatable::create(const QString & classname)
 {
     if (!m_constructorMap.contains(classname))
     {
-        return false;
+        return NULL;
     }
     else
     {
-        object = m_constructorMap.value(classname)();
-        return true;
+        return m_constructorMap.value(classname)();
     }
 }
 

@@ -178,6 +178,8 @@ void PDFAttachmentView::on_spinBoxPage_valueChanged(int arg1)
     m_currentPage = arg1 - 1;
     assert( m_currentPage >= 0 && m_currentPage < a->document()->numPages() );
     open();
+#else
+    Q_UNUSED( arg1 );
 #endif
 }
 

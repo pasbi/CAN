@@ -19,8 +19,7 @@ AttachmentView* createAttachmentView(Attachment* attachment)
 
     assert( Creatable::category(classname) == "AttachmentView" );
 
-    AttachmentView* attachmentView = 0;
-    CREATE( classname, attachmentView );
+    AttachmentView* attachmentView = (AttachmentView*) Creatable::create( classname );
     assert( attachmentView );
     attachmentView->setAttachment( attachment );
 

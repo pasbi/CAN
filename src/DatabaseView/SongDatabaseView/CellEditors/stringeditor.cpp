@@ -6,6 +6,7 @@ StringEditor::StringEditor(QWidget *parent) :
     CellEditor(parent),
     m_lineEdit( new QLineEdit(this) )
 {
+    qDebug() << "Hi, i am a string editor";
     setSolitaryWidget(m_lineEdit);
 }
 

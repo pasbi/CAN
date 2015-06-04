@@ -11,11 +11,13 @@
 SongAttributeDelegate::SongAttributeDelegate(SongTableView *parent) :
     QItemDelegate(parent)
 {
-}
 
+   }
+
+#include "CellEditors/stringeditor.h"
 QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
+    qDebug() << "create editor...";
     CellEditor* editor = NULL;
     QString classname = QString("%1Editor").arg(editorType(index));
 
@@ -28,15 +30,26 @@ QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOption
         }
         classname = "StringEditor";
     }
-    assert( CREATE(classname, editor) );
+//    qDebug() << "A";
+//    CREATE(classname, editor);
+//    qDebug() << "B";
+////    editor = new StringEditor();
+      editor = (CellEditor*) Creatable::create( classname );
+
+
+
+    qDebug() << "editor: " << (void*) editor;
 
     editor->setParent(parent);
     editor->setStyleOption(option);
     editor->setIndex(index);
+    qDebug() << "C";
     editor->setModel(SongAttributeDelegate::parent()->proxyModel());
     editor->setCurrentData( proxyModel()->data( index, Qt::EditRole ) );
     editor->polish();
     editor->setFocus();
+
+    qDebug() << "editor: " << editor;
 
     return editor;
 }
