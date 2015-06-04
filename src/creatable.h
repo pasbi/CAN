@@ -33,9 +33,7 @@ public:
     static QStringList classnamesInCategory( const QString & category );
     static QString name(const QString &classname );
 
-
 private:
-public://TODO
     static QHash<QString, Creatable* (*)()> m_constructorMap;
     static QHash<QString, QString> m_categoryMap;
     static QHash<QString, QString> m_inverseCategoryMap;
@@ -68,8 +66,5 @@ public:                                     \
 
 #define DEFN_CREATABLE( CLASSNAME, CATEGORY ) \
     Registerer<CLASSNAME> CLASSNAME::reg(#CLASSNAME, #CATEGORY, #CLASSNAME)
-
-#define CREATE(CLASSNAME, OBJECT) \
-    Creatable::create(CLASSNAME, (Creatable*&) OBJECT)
 
 #endif // CREATABLE_H

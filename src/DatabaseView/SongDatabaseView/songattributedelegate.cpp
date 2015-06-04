@@ -30,26 +30,15 @@ QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOption
         }
         classname = "StringEditor";
     }
-//    qDebug() << "A";
-//    CREATE(classname, editor);
-//    qDebug() << "B";
-////    editor = new StringEditor();
-      editor = (CellEditor*) Creatable::create( classname );
 
-
-
-    qDebug() << "editor: " << (void*) editor;
-
+    editor = static_cast<CellEditor*>( Creatable::create( classname ) );
     editor->setParent(parent);
     editor->setStyleOption(option);
     editor->setIndex(index);
-    qDebug() << "C";
     editor->setModel(SongAttributeDelegate::parent()->proxyModel());
     editor->setCurrentData( proxyModel()->data( index, Qt::EditRole ) );
     editor->polish();
     editor->setFocus();
-
-    qDebug() << "editor: " << editor;
 
     return editor;
 }

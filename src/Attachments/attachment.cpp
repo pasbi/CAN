@@ -49,7 +49,8 @@ bool Attachment::create(const QJsonObject &object, Attachment *&attachment)
         return false;
     }
 
-    attachment = (Attachment*) Creatable::create(classname);
+    attachment = static_cast<Attachment*>( Creatable::create( classname ) );
+
     attachment->setName( object["name"].toString() );
     return attachment->restoreFromJsonObject( object );
 }

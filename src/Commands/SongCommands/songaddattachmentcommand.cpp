@@ -20,7 +20,7 @@ void SongAddAttachmentCommand::redo()
 {
     if (!m_attachment)
     {
-        m_attachment = (Attachment*) Creatable::create(m_classname);
+        m_attachment = static_cast<Attachment*>( Creatable::create(m_classname) );
         m_attachment->setSong( song() );
         m_attachment->makeNameUnique();
     }
