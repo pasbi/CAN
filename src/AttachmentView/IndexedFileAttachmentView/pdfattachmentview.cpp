@@ -69,28 +69,30 @@ void PDFAttachmentView::polish()
 
 void PDFAttachmentView::open()
 {
-//    IndexedFileAttachmentView::open();
-//    handlePageControlEnabled();
+#ifdef HAVE_POPPLER
+    IndexedFileAttachmentView::open();
+    handlePageControlEnabled();
 
-//    PDFAttachment* pdf = attachment<PDFAttachment>();
-//    Poppler::Document* doc = pdf ? pdf->document() : NULL;
-//    if (!doc)
-//    {
-//        ui->label->setPixmap(QPixmap());
-//    }
-//    else
-//    {
-//        m_currentPage = qMin( m_currentPage, doc->numPages() - 1);
+    PDFAttachment* pdf = attachment<PDFAttachment>();
+    Poppler::Document* doc = pdf ? pdf->document() : NULL;
+    if (!doc)
+    {
+        ui->label->setPixmap(QPixmap());
+    }
+    else
+    {
+        m_currentPage = qMin( m_currentPage, doc->numPages() - 1);
 
-//        int size = ui->scrollArea->width();
+        int size = ui->scrollArea->width();
 
-//        double quality = config.value("Quality").toDouble();
-//        QImage image = doc->page(m_currentPage)->renderToImage( quality, quality );
+        double quality = config.value("Quality").toDouble();
+        QImage image = doc->page(m_currentPage)->renderToImage( quality, quality );
 
-//        image = image.scaledToWidth( size * m_zoom - 10 );
+        image = image.scaledToWidth( size * m_zoom - 10 );
 
-//        ui->label->setPixmap(QPixmap::fromImage(image));
-//    }
+        ui->label->setPixmap(QPixmap::fromImage(image));
+    }
+#endif
 }
 
 void PDFAttachmentView::on_buttonZoomIn_clicked()
@@ -115,16 +117,17 @@ void PDFAttachmentView::on_spinBoxScale_editingFinished()
 
 int PDFAttachmentView::numPages() const
 {
-    return 0;
-//    Poppler::Document* doc = attachment<PDFAttachment>()->document();
-//    if (doc)
-//    {
-//        return doc->numPages();
-//    }
-//    else
-//    {
-//        return 0;
-//    }
+#ifdef HAVE_POPPLER
+    Poppler::Document* doc = attachment<PDFAttachment>()->document();
+    if (doc)
+    {
+        return doc->numPages();
+    }
+    else
+#endif
+    {
+        return 0;
+    }
 }
 
 void PDFAttachmentView::handlePageControlEnabled()

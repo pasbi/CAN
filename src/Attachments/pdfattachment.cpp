@@ -10,22 +10,24 @@ PDFAttachment::PDFAttachment()
 
 void PDFAttachment::open()
 {
-//    delete m_document;
-//    m_document = NULL;
+#ifdef HAVE_POPPLER
+    delete m_document;
+    m_document = NULL;
 
-//    if (filename().isEmpty())
-//    {
-//        // if filename is empty, dont try to open it.
-//    }
-//    else
-//    {
-//        m_document = Poppler::Document::load( filename() );
-//        if (m_document)
-//        {
-//            m_document->setRenderHint(Poppler::Document::TextAntialiasing);
-//        }
+    if (filename().isEmpty())
+    {
+        // if filename is empty, dont try to open it.
+    }
+    else
+    {
+        m_document = Poppler::Document::load( filename() );
+        if (m_document)
+        {
+            m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+        }
 
-//    }
+    }
+#endif
 
 }
 
