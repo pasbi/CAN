@@ -35,7 +35,7 @@ private slots:
     void abortSection() { recordSection(true);}
     void recordSection( bool abort = false );
 
-    Player& player() { return attachment<AudioAttachment>()->player(); }
+//    Player& player() { return attachment<AudioAttachment>()->player(); }
 
     void restoreCurrentSection();
     void deleteCurrentSection();

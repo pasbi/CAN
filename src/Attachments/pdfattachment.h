@@ -12,7 +12,7 @@ class PDFAttachment : public IndexedFileAttachment
 public:
     PDFAttachment();
     QStringList acceptedEndings() const { return QStringList() << "pdf"; }
-    Poppler::Document* document() const { return m_document; }
+//    Poppler::Document* document() const { return m_document; }
 
     void copy(Attachment *&copied) const;
 
@@ -21,7 +21,7 @@ public slots:
 
 
 private:
-    Poppler::Document* m_document = NULL;
+//    Poppler::Document* m_document = NULL;
 
 
 

@@ -2,196 +2,7 @@
 #include <QFile>
 #include "global.h"
 
-QAudioFormat audioFormat( const int channels, const int sampleRate, AVSampleFormat sampleFormat );
-
-
-Buffer::Buffer()
-{
-    m_buffer.open( QIODevice::ReadOnly );
-}
-
-Buffer::~Buffer()
-{
-    if (m_decoder)
-    {
-        delete m_decoder;
-    }
-    if (m_formatContext)
-    {
-        avformat_free_context( m_formatContext );
-    }
-}
-
-void Buffer::open(const QString &filename)
-{
-    // Initialize FFmpeg
-
-    stop();
-    if (m_formatContext)
-    {
-        avformat_free_context( m_formatContext );
-        m_formatContext = NULL;
-    }
-
-    av_register_all();
-
-    if (avformat_open_input(&m_formatContext, filename.toStdString().c_str(), NULL, NULL) != 0)
-    {
-        qWarning() << "Error opening the file" << filename;
-        return;
-    }
-
-
-    if (avformat_find_stream_info(m_formatContext, NULL) < 0)
-    {
-        qWarning() << "Error finding the stream info";
-        return;
-    }
-
-
-    // Find the audio stream
-    AVCodec* cdc = nullptr;
-    m_streamIndex = av_find_best_stream(m_formatContext, AVMEDIA_TYPE_AUDIO, -1, -1, &cdc, 0);
-    if (m_streamIndex < 0)
-    {
-        qWarning() << "Could not find any audio stream in the file";
-        return;
-    }
-
-    m_audioStream = m_formatContext->streams[m_streamIndex];
-    m_codecContext = m_audioStream->codec;
-    m_codecContext->codec = cdc;
-
-    if (avcodec_open2(m_codecContext, m_codecContext->codec, NULL) != 0)
-    {
-        qWarning() << "Couldn't open the context with the decoder";
-        return;
-    }
-
-    m_audioFormat = ::audioFormat( m_codecContext->channels, m_codecContext->sample_rate, m_codecContext->sample_fmt );
-    if ( m_codecContext->channels != 1 && m_codecContext->channels != 2 )
-    {
-        qWarning() << m_codecContext->channels << " Channel formats are not supported. Use Mono or Stereo.";
-        return;
-    }
-}
-
-void Buffer::stop()
-{
-    if (m_decoder)
-    {
-        delete m_decoder;
-    }
-    m_decoder = NULL;
-    m_buffer.buffer().clear();
-    m_buffer.reset();
-}
-
-void Buffer::decode(double pitch, double tempo, double offset)
-{
-    stop();
-    if (m_formatContext && m_audioStream && m_codecContext && m_streamIndex >= 0)
-    {
-        m_decoder = new Decoder( m_formatContext,
-                                 m_audioStream,
-                                 m_codecContext,
-                                 m_streamIndex,
-                                 pitch,
-                                 tempo,
-                                 offset,
-                                 &m_buffer.buffer() );
-        m_decoder->start();
-        m_offset = offset;
-    }
-}
-
-Buffer::Decoder::Decoder( AVFormatContext * formatContext,
-                          AVStream*         audioStream,
-                          AVCodecContext *  codecContext,
-                          int               streamIndex,
-                          double            pitch,
-                          double            tempo,
-                          double            offset,
-                          QByteArray*       dest            ) :
-    QThread( NULL ),
-    m_formatContext( formatContext ),
-    m_audioStream( audioStream ),
-    m_codecContext( codecContext ),
-    m_streamIndex( streamIndex ),
-    m_dest( dest ),
-    m_pitch( pitch ),
-    m_tempo( tempo ),
-    m_offset( offset )
-{
-    m_soundTouch.setChannels( m_codecContext->channels );
-    m_soundTouch.setSampleRate( m_codecContext->sample_rate );
-    m_soundTouch.setTempo( tempo );
-    m_soundTouch.setPitchSemiTones( (float) pitch );
-    m_frame = av_frame_alloc();
-}
-
-Buffer::Decoder::~Decoder()
-{
-    end();
-    av_frame_free( &m_frame );
-}
-
-void Buffer::Decoder::run()
-{
-    decode();
-}
-
-void Buffer::Decoder::end()
-{
-    requestInterruption();
-    if (!wait(2000))
-    {
-        terminate();
-    }
-
-    wait();
-}
-
-double Buffer::duration() const
-{
-    if (m_formatContext)
-    {
-        return m_formatContext->duration / AV_TIME_BASE;
-    }
-    else
-    {
-        return -1;
-    }
-}
-
-double Buffer::position() const
-{
-    if (m_codecContext)
-    {
-        qint64 pos = positionInBytes() / 2;
-        if (pos == 0)
-        {
-            return m_offset + 0;   // avoid fpe
-        }
-
-        pos /= m_codecContext->channels;    // pos in samples per channel
-        double dpos = pos / (double) m_codecContext->sample_rate; // pos in seconds
-
-        return dpos + m_offset;
-    }
-    else
-    {
-        qWarning() << "no codecContext";
-        return -1;
-    }
-}
-
-qint64 Buffer::positionInBytes() const
-{
-    return m_buffer.pos();
-}
-
-
+#ifdef HAVE_SOUNDTOUCH
 QAudioFormat audioFormat( const int channels, const int sampleRate, AVSampleFormat sampleFormat )
 {
     QAudioFormat format;
@@ -249,6 +60,215 @@ QAudioFormat audioFormat( const int channels, const int sampleRate, AVSampleForm
     format.setSampleRate( sampleRate );
     return format;
 }
+#endif
+
+Buffer::Buffer()
+{
+    m_buffer.open( QIODevice::ReadOnly );
+}
+
+Buffer::~Buffer()
+{
+    if (m_decoder)
+    {
+        delete m_decoder;
+    }
+#ifdef HAVE_SOUNDTOUCH
+    if (m_formatContext)
+    {
+        avformat_free_context( m_formatContext );
+    }
+#endif
+}
+
+void Buffer::open(const QString &filename)
+{
+#ifdef HAVE_SOUNDTOUCH
+    // Initialize FFmpeg
+
+    stop();
+    if (m_formatContext)
+    {
+        avformat_free_context( m_formatContext );
+        m_formatContext = NULL;
+    }
+
+    av_register_all();
+
+    if (avformat_open_input(&m_formatContext, filename.toStdString().c_str(), NULL, NULL) != 0)
+    {
+        qWarning() << "Error opening the file" << filename;
+        return;
+    }
+
+
+    if (avformat_find_stream_info(m_formatContext, NULL) < 0)
+    {
+        qWarning() << "Error finding the stream info";
+        return;
+    }
+
+
+    // Find the audio stream
+    AVCodec* cdc = nullptr;
+    m_streamIndex = av_find_best_stream(m_formatContext, AVMEDIA_TYPE_AUDIO, -1, -1, &cdc, 0);
+    if (m_streamIndex < 0)
+    {
+        qWarning() << "Could not find any audio stream in the file";
+        return;
+    }
+
+    m_audioStream = m_formatContext->streams[m_streamIndex];
+    m_codecContext = m_audioStream->codec;
+    m_codecContext->codec = cdc;
+
+    if (avcodec_open2(m_codecContext, m_codecContext->codec, NULL) != 0)
+    {
+        qWarning() << "Couldn't open the context with the decoder";
+        return;
+    }
+
+    m_audioFormat = ::audioFormat( m_codecContext->channels, m_codecContext->sample_rate, m_codecContext->sample_fmt );
+    if ( m_codecContext->channels != 1 && m_codecContext->channels != 2 )
+    {
+        qWarning() << m_codecContext->channels << " Channel formats are not supported. Use Mono or Stereo.";
+        return;
+    }
+#else
+    Q_UNUSED( filename );
+#endif
+}
+
+void Buffer::stop()
+{
+    if (m_decoder)
+    {
+        delete m_decoder;
+    }
+    m_decoder = NULL;
+    m_buffer.buffer().clear();
+    m_buffer.reset();
+}
+
+void Buffer::decode(double pitch, double tempo, double offset)
+{
+#ifdef HAVE_SOUNDTOUCH
+    stop();
+    if (m_formatContext && m_audioStream && m_codecContext && m_streamIndex >= 0)
+    {
+        m_decoder = new Decoder( m_formatContext,
+                                 m_audioStream,
+                                 m_codecContext,
+                                 m_streamIndex,
+                                 pitch,
+                                 tempo,
+                                 offset,
+                                 &m_buffer.buffer() );
+        m_decoder->start();
+        m_offset = offset;
+    }
+#else
+    Q_UNUSED( pitch  );
+    Q_UNUSED( tempo  );
+    Q_UNUSED( offset );
+#endif
+}
+
+#ifdef HAVE_SOUNDTOUCH
+Buffer::Decoder::Decoder( AVFormatContext * formatContext,
+                          AVStream*         audioStream,
+                          AVCodecContext *  codecContext,
+                          int               streamIndex,
+                          double            pitch,
+                          double            tempo,
+                          double            offset,
+                          QByteArray*       dest            ) :
+    QThread( NULL ),
+    m_formatContext( formatContext ),
+    m_audioStream( audioStream ),
+    m_codecContext( codecContext ),
+    m_streamIndex( streamIndex ),
+    m_dest( dest ),
+    m_pitch( pitch ),
+    m_tempo( tempo ),
+    m_offset( offset )
+{
+    m_soundTouch.setChannels( m_codecContext->channels );
+    m_soundTouch.setSampleRate( m_codecContext->sample_rate );
+    m_soundTouch.setTempo( tempo );
+    m_soundTouch.setPitchSemiTones( (float) pitch );
+    m_frame = av_frame_alloc();
+}
+#endif
+Buffer::Decoder::~Decoder()
+{
+    end();
+#ifdef HAVE_SOUNDTOUCH
+    av_frame_free( &m_frame );
+#endif
+}
+
+void Buffer::Decoder::run()
+{
+    decode();
+}
+
+void Buffer::Decoder::end()
+{
+    requestInterruption();
+    if (!wait(2000))
+    {
+        terminate();
+    }
+
+    wait();
+}
+
+double Buffer::duration() const
+{
+#ifdef HAVE_SOUNDTOUCH
+    if (m_formatContext)
+    {
+        return m_formatContext->duration / AV_TIME_BASE;
+    }
+    else
+#endif
+    {
+        return -1;
+    }
+}
+
+double Buffer::position() const
+{
+#ifdef HAVE_SOUNDTOUCH
+    if (m_codecContext)
+    {
+        qint64 pos = positionInBytes() / 2;
+        if (pos == 0)
+        {
+            return m_offset + 0;   // avoid fpe
+        }
+
+        pos /= m_codecContext->channels;    // pos in samples per channel
+        double dpos = pos / (double) m_codecContext->sample_rate; // pos in seconds
+
+        return dpos + m_offset;
+    }
+    else
+    {
+        qWarning() << "no codecContext";
+        return -1;
+    }
+#else
+    return -1;
+#endif
+}
+
+qint64 Buffer::positionInBytes() const
+{
+    return m_buffer.pos();
+}
+
 
 
 typedef union
@@ -305,6 +325,7 @@ void BufferConverters::floatToChar( char* c, const float* f, int n )
 
 bool Buffer::Decoder::decode()
 {
+#ifdef HAVE_SOUNDTOUCH
     AVPacket readingPacket;
     av_init_packet(&readingPacket);
 
@@ -443,4 +464,7 @@ bool Buffer::Decoder::decode()
     } while (nSamples != 0);
 
     return true;
+#else
+    return false;
+#endif
 }

@@ -26,9 +26,11 @@ public:
     void stop();
 
 private:
+#ifdef HAVE_SOUNDTOUCH
     AVFormatContext* m_formatContext = NULL;
     AVStream* m_audioStream = NULL;
     AVCodecContext* m_codecContext = NULL;
+#endif
     int m_streamIndex = -1;
 
     double m_offset = 0;
@@ -41,6 +43,7 @@ private:
     class Decoder : public QThread
     {
     public:
+#ifdef HAVE_SOUNDTOUCH
         Decoder( AVFormatContext *  formatContext,
                  AVStream*          audioStream,
                  AVCodecContext*    codecContext,
@@ -49,6 +52,7 @@ private:
                  double             tempo,
                  double             offset,
                  QByteArray*        dest );
+#endif
         ~Decoder();
         void end();
         bool isInterruptionRequested() { return m_interruptionRequested; }
@@ -58,14 +62,15 @@ private:
         void run();
 
     private:
-
+#ifdef HAVE_SOUNDTOUCH
         AVFormatContext* m_formatContext = NULL;
         AVStream* m_audioStream = NULL;
         AVCodecContext* m_codecContext = NULL;
         AVFrame* m_frame = NULL;
+        soundtouch::SoundTouch m_soundTouch;
+#endif
         int m_streamIndex = -1;
 
-        soundtouch::SoundTouch m_soundTouch;
 
         QByteArray* const m_dest;
         double m_pitch;

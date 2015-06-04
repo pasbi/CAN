@@ -61,23 +61,23 @@ void AudioAttachmentView::polish()
 
     AudioAttachment* a = attachment<AudioAttachment>();
 
-    connect( &a->player(), &Player::positionChanged, [this](double value)
-    {
-        ui->slider->setValue( value / ui->doubleSpinBoxTempo->value() );
-    });
+//    connect( &a->player(), &Player::positionChanged, [this](double value)
+//    {
+//        ui->slider->setValue( value / ui->doubleSpinBoxTempo->value() );
+//    });
 
-    connect( &a->player(), SIGNAL(durationChanged(double)), ui->slider, SLOT(setMaximum(double)) );
+//    connect( &a->player(), SIGNAL(durationChanged(double)), ui->slider, SLOT(setMaximum(double)) );
 
     connect( a, &AudioAttachment::hashChanged, [this, a]()
     {
-        ui->slider->setMaximum( a->player().duration() );
+//        ui->slider->setMaximum( a->player().duration() );
     });
     connect( a, SIGNAL(currentSectionChanged(const Section*)), ui->slider, SLOT(setSection(const Section*)));
-    ui->slider->setSection( a->player().currentSection() );
+//    ui->slider->setSection( a->player().currentSection() );
 
-    ui->slider->setMaximum( a->player().duration() );
-    ui->doubleSpinBoxPitch->setValue( player().pitch() );
-    ui->doubleSpinBoxTempo->setValue( player().tempo() );
+//    ui->slider->setMaximum( a->player().duration() );
+//    ui->doubleSpinBoxPitch->setValue( player().pitch() );
+//    ui->doubleSpinBoxTempo->setValue( player().tempo() );
 
     ui->sectionView->setModel( a->sectionsModel() );
     open();
@@ -85,7 +85,7 @@ void AudioAttachmentView::polish()
 
 void AudioAttachmentView::on_pushButtonStop_clicked()
 {
-    player().stop();
+//    player().stop();
     ui->pushButtonPlayPause->blockSignals( true );
     ui->pushButtonPlayPause->setChecked( false );
     ui->pushButtonPlayPause->blockSignals( false );
@@ -95,23 +95,23 @@ void AudioAttachmentView::on_pushButtonPlayPause_toggled(bool checked)
 {
     if (checked)
     {
-        player().seek( player().position() );
-        player().play();
+//        player().seek( player().position() );
+//        player().play();
     }
     else
     {
-        player().pause();
+//        player().pause();
     }
 }
 
 void AudioAttachmentView::seek(double pos)
 {
-    player().seek( ui->doubleSpinBoxTempo->value() * pos );
+//    player().seek( ui->doubleSpinBoxTempo->value() * pos );
 }
 
 void AudioAttachmentView::setPitchTempo()
 {
-    player().seek( ui->doubleSpinBoxPitch->value(), ui->doubleSpinBoxTempo->value(), player().position() );
+//    player().seek( ui->doubleSpinBoxPitch->value(), ui->doubleSpinBoxTempo->value(), player().position() );
 }
 
 
@@ -130,7 +130,7 @@ void AudioAttachmentView::recordSection(bool abort)
     }
     else
     {
-        double pos = player().position();
+        double pos = 0;// player().position();
         if (state == Idle)
         {
             ui->slider->clearIndicators();

@@ -40,9 +40,9 @@ win32 {
 INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
 INCLUDEPATH += ../../ZipGit/src/
 LIBS += -L../../bin -lzipgit
-LIBS += -L../../bin -lpoppler-qt5
-#LIBS += -L../../libav-10.6-win32/win32/usr/bin -lavformat-55 -lavcodec-55 -lavutil-53
-#LIBS += -L../../\soundtouch\source\build-soundtouch-Desktop_Qt_5_4_1_MinGW_32bit-Debug\debug -lsoundtouch
+#LIBS += -L../../bin -lpoppler-qt5
+LIBS += -L../../bin -lavformat -lavcodec -lavutil
+LIBS += -L../../bin -lsoundtouch
 }
 
 

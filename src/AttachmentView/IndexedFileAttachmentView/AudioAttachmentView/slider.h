@@ -31,7 +31,7 @@ public slots:
     void setLeftIndicator( double value );
     void clearIndicators();
 
-    void setSection( const Section* section );
+//    void setSection( const Section* section );
 
 protected:
     void paintEvent(QPaintEvent *ev);
@@ -39,7 +39,7 @@ protected:
 private:
     static const double SLIDER_MULTIPLIER;
     double m_leftIndicator = -1;
-    const Section* m_section = NULL;
+//    const Section* m_section = NULL;
 
 };
 

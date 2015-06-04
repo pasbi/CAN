@@ -286,35 +286,35 @@ void PDFCreator::paintAttachment(Attachment *attachment)
 
 void PDFCreator::paintPDFAttachment( PDFAttachment* attachment )
 {
-    // ensure that there is the right loaded
-    attachment->open();
-    Poppler::Document* doc = attachment->document();
-    if (doc)
-    {
-        Poppler::Document::RenderBackend backendBefore = doc->renderBackend();
-        doc->setRenderBackend( Poppler::Document::ArthurBackend );  // the other backend will not work.
-        for (int i = 0; i < doc->numPages(); ++i)
-        {
-            if (i != 0)
-            {
-                newPage( Page::NothingSpecial );
-            }
-            currentPainter().save();
-            QSizeF pageSize = doc->page(i)->pageSizeF();
-            QSizeF targetSize = pageRect().size();
-            double fx = targetSize.width() / pageSize.width();
-            double fy = targetSize.height() / pageSize.height();
+//    // ensure that there is the right loaded
+//    attachment->open();
+//    Poppler::Document* doc = attachment->document();
+//    if (doc)
+//    {
+//        Poppler::Document::RenderBackend backendBefore = doc->renderBackend();
+//        doc->setRenderBackend( Poppler::Document::ArthurBackend );  // the other backend will not work.
+//        for (int i = 0; i < doc->numPages(); ++i)
+//        {
+//            if (i != 0)
+//            {
+//                newPage( Page::NothingSpecial );
+//            }
+//            currentPainter().save();
+//            QSizeF pageSize = doc->page(i)->pageSizeF();
+//            QSizeF targetSize = pageRect().size();
+//            double fx = targetSize.width() / pageSize.width();
+//            double fy = targetSize.height() / pageSize.height();
 
-            double resolution = config["PDFResolution"].toDouble();
-            double f = qMin(fx, fy) * 72.0 / resolution;
+//            double resolution = config["PDFResolution"].toDouble();
+//            double f = qMin(fx, fy) * 72.0 / resolution;
 
-            currentPainter().scale( f, f );
+//            currentPainter().scale( f, f );
 
-            doc->page(i)->renderToPainter( &currentPainter(), resolution, resolution );
-            currentPainter().restore();
-        }
-        doc->setRenderBackend( backendBefore );
-    }
+//            doc->page(i)->renderToPainter( &currentPainter(), resolution, resolution );
+//            currentPainter().restore();
+//        }
+//        doc->setRenderBackend( backendBefore );
+//    }
 }
 
 void configurePainter( QPainter& painter )
