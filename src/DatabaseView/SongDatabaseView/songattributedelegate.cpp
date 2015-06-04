@@ -17,7 +17,6 @@ SongAttributeDelegate::SongAttributeDelegate(SongTableView *parent) :
 #include "CellEditors/stringeditor.h"
 QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    qDebug() << "create editor...";
     CellEditor* editor = NULL;
     QString classname = QString("%1Editor").arg(editorType(index));
 
