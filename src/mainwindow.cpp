@@ -62,9 +62,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
 
+
     app().setProject( &m_project );
 
     ui->setupUi(this);
+
+    QSettings settings;
+    restoreGeometry( settings.value("Geometry").toByteArray() );
 
     //     load stylesheet
     config.item("Style")->setDefaultValue( defaultStyleSheet() );
@@ -172,8 +176,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    QSettings settings;
+    settings.setValue( "Geometry", saveGeometry() );
     delete ui;
     m_identityManager.save();
+
 }
 
 void MainWindow::resizeSplitter()

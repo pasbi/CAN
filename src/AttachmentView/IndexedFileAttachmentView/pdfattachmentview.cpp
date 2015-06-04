@@ -172,12 +172,13 @@ void PDFAttachmentView::on_buttonNextPage_clicked()
 
 void PDFAttachmentView::on_spinBoxPage_valueChanged(int arg1)
 {
+#ifdef HAVE_POPPLER
     PDFAttachment* a = attachment<PDFAttachment>();
 
     m_currentPage = arg1 - 1;
     assert( m_currentPage >= 0 && m_currentPage < a->document()->numPages() );
-
     open();
+#endif
 }
 
 

@@ -57,66 +57,81 @@ AudioAttachmentView::~AudioAttachmentView()
 
 void AudioAttachmentView::polish()
 {
+#ifdef HAVE_SOUNDTOUCH
     IndexedFileAttachmentView::polish();
 
     AudioAttachment* a = attachment<AudioAttachment>();
 
-//    connect( &a->player(), &Player::positionChanged, [this](double value)
-//    {
-//        ui->slider->setValue( value / ui->doubleSpinBoxTempo->value() );
-//    });
+    connect( &a->player(), &Player::positionChanged, [this](double value)
+    {
+        ui->slider->setValue( value / ui->doubleSpinBoxTempo->value() );
+    });
 
-//    connect( &a->player(), SIGNAL(durationChanged(double)), ui->slider, SLOT(setMaximum(double)) );
+    connect( &a->player(), SIGNAL(durationChanged(double)), ui->slider, SLOT(setMaximum(double)) );
 
     connect( a, &AudioAttachment::hashChanged, [this, a]()
     {
-//        ui->slider->setMaximum( a->player().duration() );
+        ui->slider->setMaximum( a->player().duration() );
     });
     connect( a, SIGNAL(currentSectionChanged(const Section*)), ui->slider, SLOT(setSection(const Section*)));
-//    ui->slider->setSection( a->player().currentSection() );
+    ui->slider->setSection( a->player().currentSection() );
 
-//    ui->slider->setMaximum( a->player().duration() );
-//    ui->doubleSpinBoxPitch->setValue( player().pitch() );
-//    ui->doubleSpinBoxTempo->setValue( player().tempo() );
+    ui->slider->setMaximum( a->player().duration() );
+    ui->doubleSpinBoxPitch->setValue( player().pitch() );
+    ui->doubleSpinBoxTempo->setValue( player().tempo() );
 
     ui->sectionView->setModel( a->sectionsModel() );
     open();
+#endif
 }
 
 void AudioAttachmentView::on_pushButtonStop_clicked()
 {
-//    player().stop();
+#ifdef HAVE_SOUNDTOUCH
+    player().stop();
     ui->pushButtonPlayPause->blockSignals( true );
     ui->pushButtonPlayPause->setChecked( false );
     ui->pushButtonPlayPause->blockSignals( false );
+#endif
 }
 
 void AudioAttachmentView::on_pushButtonPlayPause_toggled(bool checked)
 {
+#ifdef HAVE_SOUNDTOUCH
     if (checked)
     {
-//        player().seek( player().position() );
-//        player().play();
+        player().seek( player().position() );
+        player().play();
     }
     else
     {
-//        player().pause();
+        player().pause();
     }
+#else
+    Q_UNUSED( checked );
+#endif
 }
 
 void AudioAttachmentView::seek(double pos)
 {
-//    player().seek( ui->doubleSpinBoxTempo->value() * pos );
+#ifdef HAVE_SOUNDTOUCH
+    player().seek( ui->doubleSpinBoxTempo->value() * pos );
+#else
+    Q_UNUSED( pos );
+#endif
 }
 
 void AudioAttachmentView::setPitchTempo()
 {
-//    player().seek( ui->doubleSpinBoxPitch->value(), ui->doubleSpinBoxTempo->value(), player().position() );
+#ifdef HAVE_SOUNDTOUCH
+    player().seek( ui->doubleSpinBoxPitch->value(), ui->doubleSpinBoxTempo->value(), player().position() );
+#endif
 }
 
 
 void AudioAttachmentView::recordSection(bool abort)
 {
+#ifdef HAVE_SOUNDTOUCH
     enum State { Idle, LeftRecorded };
     static State state;
     static double leftPos = -1;
@@ -130,7 +145,7 @@ void AudioAttachmentView::recordSection(bool abort)
     }
     else
     {
-        double pos = 0;// player().position();
+        double pos = player().position();
         if (state == Idle)
         {
             ui->slider->clearIndicators();
@@ -154,6 +169,9 @@ void AudioAttachmentView::recordSection(bool abort)
             leftPos = -1;
         }
     }
+#else
+    Q_UNUSED( abort );
+#endif
 }
 
 void AudioAttachmentView::restoreCurrentSection()
