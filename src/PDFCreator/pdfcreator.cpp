@@ -503,8 +503,8 @@ void PDFCreator::paintTableOfContents()
             page( page ),
             y( y )
         {}
-        const int page;
-        const int y;
+        int page;
+        int y;
     } PageNumberStub;
 
     newPage( Page::TableOfContentsStartsHere, "", m_tableOfContentsPage );

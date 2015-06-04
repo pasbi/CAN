@@ -80,21 +80,21 @@ void Slider::paintEvent(QPaintEvent *ev)
         painter.restore();
     }
 
-//    if (m_section)
-//    {
-//        const double relPosL = (m_section->begin() - minimum()) / (maximum() - minimum());
-//        const double relPosR = (m_section->end()   - minimum()) / (maximum() - minimum());
+    if (m_section)
+    {
+        const double relPosL = (m_section->begin() - minimum()) / (maximum() - minimum());
+        const double relPosR = (m_section->end()   - minimum()) / (maximum() - minimum());
 
-//        const int posL = relPosL * (width() - lMargin - rMargin) + lMargin;
-//        const int posR = relPosR * (width() - lMargin - rMargin) + lMargin;
+        const int posL = relPosL * (width() - lMargin - rMargin) + lMargin;
+        const int posR = relPosR * (width() - lMargin - rMargin) + lMargin;
 
-//        painter.drawLine( posL, 0, posL, height() );
-//        painter.drawLine( posR, 0, posR, height() );
-//    }
+        painter.drawLine( posL, 0, posL, height() );
+        painter.drawLine( posR, 0, posR, height() );
+    }
 }
 
-//void Slider::setSection(const Section *section)
-//{
-//    m_section = section;
-//    update();
-//}
+void Slider::setSection(const Section *section)
+{
+    m_section = section;
+    update();
+}

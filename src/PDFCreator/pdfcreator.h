@@ -113,7 +113,7 @@ private:
     {
         Document( const QString& title = "" ) : title(title) {}
 
-        const QString title;
+        QString title;
         QList<Page*> pages;
     };
 

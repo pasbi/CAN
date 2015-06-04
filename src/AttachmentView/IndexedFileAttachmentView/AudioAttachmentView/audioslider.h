@@ -25,7 +25,7 @@ public slots:
     void setLeftIndicator( double value );
     void clearIndicators();
 
-//    void setSection( const Section* section );
+    void setSection( const Section* section );
 
 signals:
     void valueChanged(double);
