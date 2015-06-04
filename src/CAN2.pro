@@ -40,7 +40,7 @@ win32 {
 INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
 INCLUDEPATH += ../../ZipGit/src/
 LIBS += -L../../bin -lzipgit
-#LIBS += -L../../bin -lpoppler-qt5
+LIBS += -L../../bin -lpoppler-qt5
 LIBS += -L../../bin -lavformat -lavcodec -lavutil
 LIBS += -L../../bin -lsoundtouch
 }
