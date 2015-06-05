@@ -62,8 +62,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
 
-
+    app().setMainWindow( this );
     app().setProject( &m_project );
+    createAttachmentActions();
 
     ui->setupUi(this);
 
@@ -82,20 +83,6 @@ MainWindow::MainWindow(QWidget *parent) :
     /// restore Configurable
     //////////////////////////////////////////
     /// is done implicitly when Configurable is loaded
-
-
-    //////////////////////////////////////////
-    ///
-    //////////////////////////////////////////
-    connect( ui->buttonSongDatabase, &QPushButton::clicked, [this]()
-    {
-        ui->stackedWidget->setCurrentIndex( 0 );
-    });
-    connect( ui->buttonEventDatabase, &QPushButton::clicked, [this]()
-    {
-        ui->stackedWidget->setCurrentIndex( 1 );
-    });
-    ui->stackedWidget->setCurrentIndex( 0 );
 
 
     menuBar()->setNativeMenuBar(false);
@@ -157,21 +144,35 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
 
     // very important to set associated widget. Else, shortcuts would be ambigous.
-    newAction( actionNew_Song,      ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
-    newAction( actionDelete_Song,   ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
-    newAction( actionCopy_Song,     ui->songDatabaseWidget->songTableView(),    tr("&Copy Song"),      tr("Copy selected song."),    "Ctrl+C",   ui->menuSongs,  "" )
-    newAction( actionPaste_Song,    ui->songDatabaseWidget->songTableView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
+    initAction( actionNew_Song,      ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
+    initAction( actionDelete_Song,   ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
+    initAction( actionCopy_Song,     ui->songDatabaseWidget->songTableView(),    tr("&Copy Song"),      tr("Copy selected song."),    "Ctrl+C",   ui->menuSongs,  "" )
+    initAction( actionPaste_Song,    ui->songDatabaseWidget->songTableView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
 
-    newAction( actionNew_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
-    newAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
-    newAction( actionCopy_Event,    ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
-    newAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
+    initAction( actionNew_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
+    initAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
+    initAction( actionCopy_Event,    ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
+    initAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
 
     connect( ui->menuVisible_attributes, SIGNAL(aboutToShow()), this, SLOT(createAttributeVisibilityMenu() ));
 
     connect( m_project.songDatabase(), SIGNAL(songRemoved(int)), ui->songDatabaseWidget, SLOT(updateAttachmentChooser()) );
 
     connect( ui->menu_Language, SIGNAL(aboutToShow()), this, SLOT( createLanguageMenu() ));
+
+
+    //////////////////////////////////////////
+    ///
+    //////////////////////////////////////////
+    connect( ui->buttonSongDatabase, &QPushButton::clicked, [this]()
+    {
+        selectPage( SongDatabasePage );
+    });
+    connect( ui->buttonEventDatabase, &QPushButton::clicked, [this]()
+    {
+        selectPage( EventDatabasePage );
+    });
+    selectPage( SongDatabasePage );
 }
 
 MainWindow::~MainWindow()
@@ -202,14 +203,13 @@ Event* MainWindow::currentEvent() const
 }
 
 #include "Commands/SongCommands/songaddattachmentcommand.h"
-void MainWindow::setupAttachmentMenu()
+
+void MainWindow::createAttachmentActions()
 {
     // gather attachment creators
-    QAction* actionBefore = ui->menuAttachments->actions().first();
     for (const QString & classname : Creatable::classnamesInCategory("Attachment"))
     {
         QAction* action = new QAction( ui->menuAttachments );
-        ui->menuAttachments->insertAction(actionBefore, action);
         action->setText( QString(tr("New %1")).arg( Creatable::name(classname) ) );
 
         if (classname == "PDFAttachment")
@@ -218,7 +218,7 @@ void MainWindow::setupAttachmentMenu()
         }
         else if (classname == "ChordPatternAttachment")
         {
-            action->setIcon(QIcon(":/oldIcons/oldIcons/1411698394_attachment_add-128.png"));
+            action->setIcon(QIcon(":/icons/icons/write13.png"));
         }
         else if (classname == "AudioAttachment")
         {
@@ -226,7 +226,7 @@ void MainWindow::setupAttachmentMenu()
         }
         else
         {
-            action->setIcon(QIcon(":/icons/icons/write13.png"));
+            qWarning() << QString("action <create %1> has no icon.").arg( classname );
         }
 
         connect(action, &QAction::triggered, [this, classname]()
@@ -236,9 +236,21 @@ void MainWindow::setupAttachmentMenu()
             {
                 SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, classname );
                 app().pushCommand( command );
+                updateWhichWidgetsAreEnabled();
             }
         });
-        m_newAttachmentActions << action;
+        m_newAttachmentActions.insert( classname, action );
+    }
+}
+
+void MainWindow::setupAttachmentMenu()
+{
+    // gather attachment creators
+    QAction* actionBefore = ui->menuAttachments->actions().first();
+    for (const QString & classname : Creatable::classnamesInCategory("Attachment"))
+    {
+        QAction* action = newAttachment_Action( classname );
+        ui->menuAttachments->insertAction(actionBefore, action );
     }
 }
 
@@ -487,12 +499,12 @@ MainWindow::Page MainWindow::currentPage() const
 
 void MainWindow::gotoSongView()
 {
-    ui->stackedWidget->setCurrentIndex( 0 );
+    selectPage( SongDatabasePage );
 }
 
 void MainWindow::gotoEventView()
 {
-    ui->stackedWidget->setCurrentIndex( 1 );
+    selectPage( EventDatabasePage );
 }
 
 
@@ -972,6 +984,19 @@ QAction* MainWindow::redoAction() const
     return ui->actionRedo;
 }
 
+QAction* MainWindow::newAttachment_Action( const QString& classname )
+{
+    if (m_newAttachmentActions.contains(classname))
+    {
+        return m_newAttachmentActions[classname];
+    }
+    else
+    {
+        qWarning() << "Attachment " << classname << "not known." << m_newAttachmentActions.keys();
+        return NULL;
+    }
+}
+
 void MainWindow::my_on_actionCopy_Song_triggered()
 {
     QModelIndexList selectedSongs = ui->songDatabaseWidget->songTableView()->selectionModel()->selectedIndexes();
@@ -1105,3 +1130,68 @@ void MainWindow::on_action_Export_all_songs_triggered()
 
     PDFCreator::exportSetlist( tmpEvent.setlist(), this );
 }
+
+void MainWindow::selectPage(Page page)
+{
+    switch (page)
+    {
+    case SongDatabasePage:
+        ui->stackedWidget->setCurrentIndex( 0 );
+        break;
+    case EventDatabasePage:
+        ui->stackedWidget->setCurrentIndex( 1 );
+        break;
+    }
+}
+
+//void MainWindow::updateToolBar()
+//{
+//    ui->toolBar->clear();
+//    QToolBar* t = ui->toolBar;
+
+//    switch (currentPage())
+//    {
+//    case SongDatabasePage:
+//        t->addAction( m_actionNew_Song );
+//        t->addAction( m_actionDelete_Song );
+//        t->addSeparator();
+//        t->addAction( newAttachment_Action( "ChordPatternAttachment" ) );
+//        t->addAction( newAttachment_Action( "PDFAttachment" ) );
+//        t->addAction( newAttachment_Action( "AudioAttachment" ) );
+//        t->addAction( ui->actionRename_Attachment );
+//        t->addAction( ui->actionDelete_Attachment );
+//        break;
+
+//    case EventDatabasePage:
+//        t->addAction( m_actionNew_Event );
+//        t->addAction( m_actionDelete_Event );
+//        break;
+//    }
+
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

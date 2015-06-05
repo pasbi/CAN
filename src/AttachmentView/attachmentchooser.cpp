@@ -3,6 +3,7 @@
 #include "Dialogs/tagdialog.h"
 #include "Commands/edittagscommand.h"
 #include "application.h"
+#include "mainwindow.h"
 
 AttachmentChooser::AttachmentChooser(QWidget *parent) :
     QWidget(parent),
@@ -21,7 +22,21 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
         }
     });
     ui->comboBox->setInvalidText( tr("No Attachment") );
+
+
+    m_editTagAction = new QAction( this );
+    m_editTagAction->setIcon( QIcon(":/oldIcons/oldIcons/tag-2.png") );
+    connect( m_editTagAction, SIGNAL(triggered()), this, SLOT(editTags()) );
+    m_editTagAction->setText( tr("Edit tags ...") );
+
+    ui->toolButton->addAction( m_editTagAction );
+    ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "ChordPatternAttachment" ) );
+    ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "AudioAttachment" ) );
+    ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "PDFAttachment" ) );
+    ui->toolButton->setDefaultAction( ui->toolButton->actions()[1] );
+
     setSong( NULL );
+
 }
 
 AttachmentChooser::~AttachmentChooser()
@@ -52,7 +67,9 @@ void AttachmentChooser::setSong(Song *song)
         // restore last opened index
         ui->comboBox->setCurrentIndex( m_lastOpenedIndex.value( m_song, 0 ) );
     }
-    ui->pushButton->setEnabled( m_song && !!currentAttachment() );
+
+    // other actions in toolButton are updated in mainwindow
+
 }
 
 void AttachmentChooser::setAttachment( int index )
@@ -85,6 +102,8 @@ void AttachmentChooser::setAttachment( int index )
         }
         ui->comboBox->blockSignals(false);
     }
+    m_editTagAction->setEnabled( song() && currentAttachment() );
+
 }
 
 int AttachmentChooser::currentAttachmentIndex() const
@@ -102,7 +121,7 @@ void AttachmentChooser::updateAttachmentView()
     ui->attachmentEditor->updateAttachmentView();
 }
 
-void AttachmentChooser::on_pushButton_clicked()
+void AttachmentChooser::editTags()
 {
     if (currentAttachment())
     {

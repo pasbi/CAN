@@ -59,7 +59,7 @@ private:
         const Conflict& m_conflict;
     };
 
-    QList<Item> m_items;
+    QList<Item*> m_items;
 
     const Conflict& currentConflict() const;
     QString m_defaultStyle;

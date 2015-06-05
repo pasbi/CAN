@@ -15,8 +15,8 @@ ConflictEditor::ConflictEditor(const QList<File> &conflictingFiles, QWidget *par
     {
         for (const Conflict & conflict : file.conflicts())
         {
-            m_items << Item( ui->listWidget, conflict );
-            ui->listWidget->addItem( &m_items.last() );
+            m_items << new Item( ui->listWidget, conflict );
+            ui->listWidget->addItem( m_items.last() );
         }
     }
 
@@ -29,6 +29,7 @@ ConflictEditor::ConflictEditor(const QList<File> &conflictingFiles, QWidget *par
 ConflictEditor::~ConflictEditor()
 {
     delete ui;
+    qDeleteAll( m_items );
 }
 
 const Conflict& ConflictEditor::currentConflict() const

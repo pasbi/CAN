@@ -25,13 +25,14 @@ public slots:
     void updateAttachmentView();
 
 private slots:
-    void on_pushButton_clicked();
+    void editTags();
 
 private:
     Ui::AttachmentChooser *ui;
     Song* m_song;
     Attachment* m_currentAttachment = NULL;
     QMap<Song*, int> m_lastOpenedIndex;
+    QAction* m_editTagAction;
 
 };
 

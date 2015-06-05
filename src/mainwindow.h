@@ -14,6 +14,7 @@ class MainWindow;
 
 class MainWindow : public QMainWindow
 {
+    enum Page { SongDatabasePage, EventDatabasePage };
     Q_OBJECT
     DECL_CONFIG( MainWindow )
 public:
@@ -22,8 +23,15 @@ public:
 
     QAction* undoAction() const;
     QAction* redoAction() const;
+    /**
+     * @brief newAttachmentAction returns the action that is used to create Attachment with given classname.
+     * @param classname
+     * @return QAction to create the Attachment or NULL if no action is known to create it.
+     */
+    QAction* newAttachment_Action(const QString &classname);
 
     SongTableView* songTableView();
+
 
 private slots:
     void resizeSplitter();  // left column should be as small as possible.
@@ -51,6 +59,9 @@ private:
     bool newProject();
     void loadDefaultProject();
 
+//    void updateToolBar();
+
+
 protected:
     void closeEvent(QCloseEvent *e);
 
@@ -59,6 +70,7 @@ public slots:
     void gotoEventView();
 
 private slots:
+    void selectPage( Page page );
     void updateWindowTitle();
     void on_actionSave_triggered();
     void on_actionSave_As_triggered();
@@ -91,20 +103,29 @@ private slots:
     void on_action_Export_all_songs_triggered();
 
 private:
+    void createAttachmentActions();
     void setupAttachmentMenu();
+    QMap<QString, QAction*> m_newAttachmentActions;
     void setCurrentAttachment( int index );
     Song* currentSong() const;
     Event* currentEvent() const;
 
     int currentAttachmentIndex() const;
     Attachment* currentAttachment() const;
-    enum Page { SongDatabasePage, EventDatabasePage };
     Page currentPage() const;
     bool canRemoveSong( Song* song );
 
     void open(const QString& filename);
 
-    QList<QAction*> m_newAttachmentActions;
+    QAction* m_actionNew_Song;
+    QAction* m_actionDelete_Song;
+    QAction* m_actionCopy_Song;
+    QAction* m_actionPaste_Song;
+
+    QAction* m_actionNew_Event;
+    QAction* m_actionDelete_Event;
+    QAction* m_actionCopy_Event;
+    QAction* m_actionPaste_Event;
 
 };
 

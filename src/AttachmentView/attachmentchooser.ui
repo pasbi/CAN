@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>472</width>
-    <height>343</height>
+    <width>564</width>
+    <height>407</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
@@ -21,16 +21,33 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="toolTip">
-        <string>Edit tags of the current attachment.</string>
+      <widget class="QToolButton" name="toolButton">
+       <property name="minimumSize">
+        <size>
+         <width>58</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>58</width>
+         <height>32</height>
+        </size>
        </property>
        <property name="text">
         <string/>
        </property>
-       <property name="icon">
-        <iconset resource="../ressources.qrc">
-         <normaloff>:/oldIcons/oldIcons/tag-2.png</normaloff>:/oldIcons/oldIcons/tag-2.png</iconset>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::MenuButtonPopup</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -54,8 +71,6 @@
    <header>combobox.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../ressources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

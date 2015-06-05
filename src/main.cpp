@@ -48,7 +48,6 @@ int main(int argc, char *argv[])
     app.fileIndex().restore();
 
     MainWindow m;
-    app.setMainWindow( &m );
     m.show();
 
     return app.exec();

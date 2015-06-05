@@ -32,6 +32,7 @@ public:
     void redo() const;
 
     void selectSong(const Song *song );
+    MainWindow* mainWindow() { return m_mainWindow; }
 
 private:
     FileIndex m_fileIndex;
