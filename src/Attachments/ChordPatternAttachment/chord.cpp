@@ -146,9 +146,8 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
         }
     }
 
-
-    const int numChords = chords.length() - numberOfUncertainChords;
-    return (double) numChords / (numToken - numChords) > 0.8;
+    const int numChords = chords.length();
+    return (double) (numChords - numberOfUncertainChords) / qMax(0, (numToken - numChords)) > 0.8;
 }
 
 int parseBase( const QChar & c )
