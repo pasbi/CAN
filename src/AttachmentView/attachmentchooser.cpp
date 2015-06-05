@@ -35,6 +35,8 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "PDFAttachment" ) );
     ui->toolButton->setDefaultAction( ui->toolButton->actions()[1] );
 
+    connect( ui->toolButton, SIGNAL(triggered(QAction*)), ui->toolButton, SLOT(setDefaultAction(QAction*)) );
+
     setSong( NULL );
 
 }
