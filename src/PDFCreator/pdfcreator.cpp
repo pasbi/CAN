@@ -228,8 +228,12 @@ QString labelSong( const Song* song )
 
 void PDFCreator::paintTitle()
 {
-    QString title = labelSetlist( m_setlist );
-    currentPainter().drawText( pageRectMargins(), Qt::AlignCenter, title );
+    if (PDFCreator::config["TitlePage"].toBool())
+    {
+        newPage( Page::NothingSpecial );
+        QString title = labelSetlist( m_setlist );
+        currentPainter().drawText( pageRectMargins(), Qt::AlignCenter, title );
+    }
 }
 
 void PDFCreator::insertTableOfContentsStub()
@@ -480,7 +484,7 @@ void PDFCreator::paintChordPatternAttachment(ChordPatternAttachment *attachment)
 
 void PDFCreator::paintSetlist()
 {
-    newPage( Page::NothingSpecial );
+    m_currentIndex = -1;
     paintTitle();
     insertTableOfContentsStub();
 
@@ -498,6 +502,7 @@ void PDFCreator::paintSetlist()
 
 void PDFCreator::paintTableOfContents()
 {
+    qDebug() << "stup is at " << m_tableOfContentsPage;
     typedef struct PageNumberStub {
         PageNumberStub( int page, int y ) :
             page( page ),
@@ -739,6 +744,7 @@ void PDFCreator::save(QString filename)
         {
             if (page->flags() & Page::SongStartsHere)
             {
+                return;
                 documents << Document( page->title() );
             }
 

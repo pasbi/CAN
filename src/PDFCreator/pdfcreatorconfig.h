@@ -173,6 +173,13 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        true,
                        ConfigurableItemOptions::CheckboxOptions()
                      );
+CONFIGURABLE_ADD_ITEM( PDFCreator,
+                       TitlePage,
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Title page"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/ContinueOnNextPageMark"),
+                       true,
+                       ConfigurableItemOptions::CheckboxOptions()
+                     );
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( PDFCreator, DefaultPDFSavePath, QDir::homePath() );
 
