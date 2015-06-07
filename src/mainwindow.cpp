@@ -1122,6 +1122,7 @@ void MainWindow::on_action_Export_all_songs_triggered()
     Project tmpProject;
     EventDatabase tmpDatabase( &tmpProject );
     Event tmpEvent(&tmpDatabase);
+    tmpEvent.setLabel( tr("All songs") );
 
     for( Song* song : m_project.songDatabase()->songs() )
     {

@@ -502,7 +502,6 @@ void PDFCreator::paintSetlist()
 
 void PDFCreator::paintTableOfContents()
 {
-    qDebug() << "stup is at " << m_tableOfContentsPage;
     typedef struct PageNumberStub {
         PageNumberStub( int page, int y ) :
             page( page ),
@@ -699,6 +698,35 @@ QString makeFilename( QString filename )
     return filename;
 }
 
+bool mkdir( const QString& path )
+{
+    QDir dir(path);
+    if (!dir.cdUp())
+    {
+        return false;
+    }
+
+    QStringList tokens = path.split("/");
+    QString newDir;
+    while( !tokens.isEmpty() )
+    {
+        newDir = tokens.takeLast();
+        if (!newDir.isEmpty())
+        {
+            break;
+        }
+    }
+
+    if (newDir.isEmpty())
+    {
+        return false;
+    }
+    else
+    {
+        return dir.mkdir( newDir );
+    }
+}
+
 void PDFCreator::paintAndSaveDocument( const Document& document, const QString& title, const QString& filename )
 {
 
@@ -744,7 +772,6 @@ void PDFCreator::save(QString filename)
         {
             if (page->flags() & Page::SongStartsHere)
             {
-                return;
                 documents << Document( page->title() );
             }
 
@@ -759,6 +786,12 @@ void PDFCreator::save(QString filename)
         if (fi.isFile())
         {
             qWarning() << filename << "already exist and is not a directory.";
+            return;
+        }
+
+        if (!QDir(filename).exists() && !mkdir(filename))
+        {
+            qWarning() << filename << "does not exist and cannot be created.";
             return;
         }
 
@@ -788,16 +821,46 @@ void PDFCreator::save(QString filename)
 
 
 
+QString defaultFilename( Setlist* setlist )
+{
+    QString label = setlist->event()->label();
+    QString type;
+    switch (setlist->event()->type())
+    {
+    case Event::Gig:
+        type = PDFCreator::tr("Gig");
+        break;
+    case Event::Rehearsal:
+        type = PDFCreator::tr("Rehearsal");
+        break;
+    case Event::Other:
+        type = PDFCreator::tr("Misc");
+        break;
+    }
 
+    QString date = QLocale().toString( setlist->event()->beginning().date(), QLocale().dateFormat( QLocale::ShortFormat ) ).replace(".", "_");
+
+    if (label.isEmpty())
+    {
+        label = type;
+    }
+
+    if (date.isEmpty())
+    {
+        return label;
+    }
+    else
+    {
+        return label + "__" + date;
+    }
+}
 
 // static helper
-
 QString PDFCreator::setlistFilename( QWidget* parent, Setlist* setlist, bool separatePages )
 {
 
-    QString filename = setlist->event()->label()
-            + "_"
-            + QLocale().toString( setlist->event()->beginning().date(), QLocale().dateFormat( QLocale::ShortFormat )).replace(".", "_");
+    QString filename = config["DefaultPDFSavePath"].toString();
+    filename = QDir(filename).absoluteFilePath( defaultFilename( setlist ) );
 
     // QFileDialog::getSaveFilename does not asks for overwriting files when the default filename is used. Workaround: Disable overwrite
     // confirmation for all files and ask for it in an other dialog.
@@ -806,16 +869,16 @@ QString PDFCreator::setlistFilename( QWidget* parent, Setlist* setlist, bool sep
     {
         if (separatePages)
         {
-            filename = QFileDialog::getExistingDirectory( parent,
-                                                          tr("Export PDF ..."),
-                                                          QDir::home().absoluteFilePath( filename ),
-                                                          QFileDialog::DontConfirmOverwrite );
+            filename = QFileDialog::getExistingDirectory(   parent,
+                                                            tr("Export PDF ..."),
+                                                            filename,
+                                                            QFileDialog::DontConfirmOverwrite );
         }
         else
         {
             filename = QFileDialog::getSaveFileName(    parent,
                                                         tr("Export PDF ..."),
-                                                        QDir::home().absoluteFilePath( filename ),
+                                                        filename,
                                                         "*.pdf",
                                                         NULL,
                                                         QFileDialog::DontConfirmOverwrite );
@@ -826,9 +889,12 @@ QString PDFCreator::setlistFilename( QWidget* parent, Setlist* setlist, bool sep
             break;  // putting this break in while( ... ), means complicating the whole thing since it will be
                     // expanded to *.pdf in the following and thus would not be empty
         }
-        if (!separatePages && !filename.endsWith(".pdf"))
+        if (!separatePages)
         {
-            filename.append(".pdf");
+            if (!filename.endsWith(".pdf"))
+            {
+                filename.append(".pdf");
+            }
         }
 
         allowWriteFile = !QFileInfo(filename).exists();
@@ -854,6 +920,7 @@ QString PDFCreator::setlistFilename( QWidget* parent, Setlist* setlist, bool sep
     }
     while ( !allowWriteFile );     // filename is not in use by now or user allows to overwrite.
                                    // note the break if filename is empty.
+
     return filename;
 }
 
@@ -877,7 +944,7 @@ void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
         }
         else
         {
-            config.set( "DefaultPDFSavePath", filename );
+            config.set( "DefaultPDFSavePath", QFileInfo( filename ).path() );
             PDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), setlist, filename );
 
             QProgressDialog dialog;
