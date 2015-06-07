@@ -18,16 +18,25 @@
     Configurable CLASSNAME::config(#CLASSNAME, Caption)
 
 
-#define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, CAPTION, HELP, DEFAULT_VALUE, OPTIONS )  \
+#define CONFIGURABLE_ADD_ITEM_PRIVATE( CLASSNAME, KEY, CAPTION, HELP, DEFAULT_VALUE, SWITCH_ITEM_KEY, OPTIONS )  \
     struct ConfigurableStaticInitializer_##CLASSNAME##_##KEY {    \
         ConfigurableStaticInitializer_##CLASSNAME##_##KEY() {     \
-            CLASSNAME::config.addItem( #KEY, CAPTION, HELP, DEFAULT_VALUE, OPTIONS );   \
+            CLASSNAME::config.addItem( #KEY, CAPTION, HELP, DEFAULT_VALUE, SWITCH_ITEM_KEY, OPTIONS );   \
         }                                                       \
-    } private__ConfigurableStaticInitializer_##CLASSNAME##_##KEY
+    } private__ConfigurableStaticInitializer_##CLASSNAME##_##KEY    \
+
+#define CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, CAPTION, HELP, DEFAULT_VALUE, OPTIONS )  \
+    CONFIGURABLE_ADD_ITEM_PRIVATE( CLASSNAME, KEY, CAPTION, HELP, DEFAULT_VALUE, "", OPTIONS )
 
 #define CONFIGURABLE_ADD_ITEM_HIDDEN( CLASSNAME, KEY, DEFAULT_VALUE )  \
     CONFIGURABLE_ADD_ITEM( CLASSNAME, KEY, #KEY, "", DEFAULT_VALUE, ConfigurableItemOptions::HiddenInterface() )
 
+#define CONFIGURABLE_ADD_DEFEATABLE_ITEM( CLASSNAME, KEY, CAPTION, HELP, DEFAULT_VALUE, DEFAULT_ENABLED, OPTIONS )  \
+    CONFIGURABLE_ADD_ITEM_PRIVATE( CLASSNAME, KEY, CAPTION, HELP, DEFAULT_VALUE, "enable_"#KEY, OPTIONS ); \
+    CONFIGURABLE_ADD_ITEM_HIDDEN( CLASSNAME, enable_##KEY, DEFAULT_ENABLED)
+
+
+class Configurable;
 class ConfigurableItemOptions
 {
 public:
@@ -124,6 +133,8 @@ private:
 #undef MEMBER
 
 
+public:
+
     // ConfigurableItemOptions factory
     static ConfigurableItemOptions HiddenInterface             (                                                                       )  { return ConfigurableItemOptions( Hidden,               "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
     static ConfigurableItemOptions LineEditOptions             ( const QString & placeHolderText                                       )  { return ConfigurableItemOptions( LineEdit,             placeHolderText,    "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
@@ -140,7 +151,6 @@ private:
     static ConfigurableItemOptions EditableComboBoxOptions     ( const QStringList & alternatives                                      )  { return ConfigurableItemOptions( EditableComboBox,     "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     alternatives    ); }
     static ConfigurableItemOptions ColorEditorOptions          (                                                                       )  { return ConfigurableItemOptions( ColorEditor,          "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
     static ConfigurableItemOptions CheckboxOptions             (                                                                       )  { return ConfigurableItemOptions( Checkbox,             "",                 "",         false,          false,          0,      0,      0,      0,      0,      0,      "",     QStringList()   ); }
-
 };
 
 class ConfigurableItem : public QObject
@@ -157,17 +167,21 @@ public:
 
     }
 
-    ConfigurableItem(  const QString &                  caption,
+    ConfigurableItem(  Configurable*                    configurable,
+                       const QString &                  caption,
                        const QString &                  help,
                        const QVariant &                 actualValue,
                        const QVariant &                 defaultValue,
+                       const QString &                  switchItemKey,
                        const ConfigurableItemOptions &  options) :
+        m_configurable( configurable ),
         m_actualValue(actualValue),
         m_defaultValue(defaultValue),
         m_resetValue(actualValue),
         m_options(options),
         m_caption( caption ),
-        m_help( help )
+        m_help( help ),
+        m_switchItemKey( switchItemKey )
     {
 
     }
@@ -187,20 +201,42 @@ public:
      */
     void setDefaultValue( const QVariant & value );
 
+
+    // some general options
+    void makeDefeatable( const QString& switchItemKey )
+    {
+        m_switchItemKey = switchItemKey;
+    }
+
+    void makeNotDefeatable( )
+    {
+        m_switchItemKey = "";
+    }
+
+    bool isDefeatable() const { return !m_switchItemKey.isEmpty(); }
+
+    ConfigurableItem* getSwitchItem() const;
+
+
+
 public slots:
-    void apply() { m_resetValue = m_actualValue; }
+    void apply();
     void reset();
-    void restore() { set( defaultValue() ); }
+    void restore();
     void set( const QVariant & value );
 
 
 private:
+    Configurable* m_configurable;
     QVariant m_actualValue;
     QVariant m_defaultValue;
     QVariant m_resetValue;
     ConfigurableItemOptions m_options;
     QString m_caption;
     QString m_help;
+
+    // some items are defeatable. Store a link to the corresponding checkbox-item
+    QString m_switchItemKey;
 
 signals:
     void valueChanged( QVariant );
@@ -220,7 +256,8 @@ public:
     void addItem(const QString &                    key,
                  const QString &                    caption,
                  const QString &                    help,
-                 const QVariant &                   defaultValue,    // is set as char* to be translatable, there is a implicit QVariant(const char*) ctor.
+                 const QVariant &                   defaultValue,
+                 const QString &                    switchItemKey,
                  const ConfigurableItemOptions &    options );
 
     bool contains(const QString & key) const;

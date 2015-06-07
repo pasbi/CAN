@@ -33,7 +33,7 @@ QWidget* createWidget( QWidget* parent, ConfigurableItem* item )
     QHBoxLayout* layout = new QHBoxLayout( widget );
     layout->setContentsMargins( 0, 0, 0, 0 );
 
-    ConfigurationWidget* configWidget = ConfigurationWidget::create( item );
+    ConfigurationWidget* configWidget = ConfigurationWidget::create( item, widget );
 
     QPushButton* defaultButton = new QPushButton( widget );
     defaultButton->setMaximumSize( 20, 20 );

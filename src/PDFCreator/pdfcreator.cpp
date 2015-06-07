@@ -17,7 +17,6 @@ PDFCreator::PDFCreator(QSizeF baseSizeMM, Setlist* setlist, const QString &filen
     m_setlist( setlist ),
     m_filename( filename )
 {
-
 }
 
 PDFCreator::~PDFCreator()
@@ -96,7 +95,7 @@ void PDFCreator::run()
     }
 
     notifyCurrentTaskChanged( tr("Table of contents") );
-    if (config["TableOfContents"].toBool())
+    if (config["enable_TableOfContentsPattern"].toBool())
     {
         paintTableOfContents();
     }
@@ -180,7 +179,7 @@ QMap<QString, QString> PDFCreator::dictionary()
 
 QString labelSetlist(Setlist *setlist)
 {
-    QString title = PDFCreator::config["PDFTitlePattern"].toString();
+    QString title = PDFCreator::config["TitlePagePattern"].toString();
     title.replace( "{EventTitle}", setlist->event()->label());
     title.replace( "{Begin}", QLocale().toString( setlist->event()->beginning(), QLocale().dateTimeFormat( QLocale::ShortFormat ) ) );
     title.replace( "{End}",   QLocale().toString( setlist->event()->ending(),    QLocale().dateTimeFormat( QLocale::ShortFormat ) ) );
@@ -212,6 +211,12 @@ void PDFCreator::paintHeadline(const QString& label)
 QString labelSong( const Song* song )
 {
     QString pattern = PDFCreator::config["SongTitlePattern"].toString();
+
+    // replace some standard keys to prevent translation issues
+    pattern = pattern.replace( "{Title}", song->title() );
+    pattern = pattern.replace( "{Artist}", song->artist() );
+
+    // other (mostly user defined attribute) may cause issues when translated.
     for (int i = 0; i < song->database()->attributeKeys().length(); ++i)
     {
         QString attribute = song->attribute(i).toString();
@@ -228,7 +233,7 @@ QString labelSong( const Song* song )
 
 void PDFCreator::paintTitle()
 {
-    if (PDFCreator::config["TitlePage"].toBool())
+    if (PDFCreator::config["enable_SongTitlePattern"].toBool())
     {
         newPage( Page::NothingSpecial );
         QString title = labelSetlist( m_setlist );
@@ -500,6 +505,12 @@ void PDFCreator::paintSetlist()
     }
 }
 
+QString labelTableOfContents()
+{
+    return PDFCreator::config["TableOfContentsPattern"].toString();
+}
+
+
 void PDFCreator::paintTableOfContents()
 {
     typedef struct PageNumberStub {
@@ -513,7 +524,7 @@ void PDFCreator::paintTableOfContents()
 
     newPage( Page::TableOfContentsStartsHere, "", m_tableOfContentsPage );
 
-    paintHeadline( tr("Table of Content") );
+    paintHeadline( labelTableOfContents() );
 
     // draw entries and find places to fill in page numbers
     QList<PageNumberStub> pageNumberStubs;

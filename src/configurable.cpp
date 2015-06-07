@@ -25,10 +25,11 @@ void Configurable::addItem( const QString &                 key,
                             const QString &                 caption,
                             const QString &                 help,
                             const QVariant &                defaultValue,
+                            const QString &                 switchItemKey,
                             const ConfigurableItemOptions & options)
 {
     m_itemKeys << key;
-    m_items.insert(key, new ConfigurableItem(caption, help, defaultValue, defaultValue, options));
+    m_items.insert(key, new ConfigurableItem( this, caption, help, defaultValue, defaultValue, switchItemKey, options ));
 }
 
 bool Configurable::contains(const QString & key) const
@@ -162,9 +163,34 @@ void ConfigurableItem::set(const QVariant &value)
     }
 }
 
+void ConfigurableItem::apply()
+{
+    m_resetValue = m_actualValue;
+    ConfigurableItem* switchItem = getSwitchItem();
+    if (switchItem)
+    {
+        switchItem->apply();
+    }
+}
+
 void ConfigurableItem::reset()
 {
     set( m_resetValue );
+    ConfigurableItem* switchItem = getSwitchItem();
+    if (switchItem)
+    {
+        switchItem->reset();
+    }
+}
+
+void ConfigurableItem::restore()
+{
+    set( defaultValue() );
+    ConfigurableItem* switchItem = getSwitchItem();
+    if (switchItem)
+    {
+        switchItem->restore();
+    }
 }
 
 void Configurable::set(const QString &key, const QVariant &value)
@@ -224,6 +250,12 @@ QVariant ConfigurableItem::defaultValue() const
     {
         return m_defaultValue;
     }
+}
+
+ConfigurableItem* ConfigurableItem::getSwitchItem() const
+{
+    ConfigurableItem* switchItem = m_configurable->item( m_switchItemKey );
+    return switchItem;
 }
 
 

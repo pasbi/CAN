@@ -58,27 +58,24 @@ QPagedPaintDevice::PageSize intToPageSize( int s )
     }
 }
 
-CONFIGURABLE_ADD_ITEM( PDFCreator,
-                       PDFTitlePattern,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Title"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/PDFTitlePattern"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Setlist\n\n-- {EventTitle} --\n\n{Begin}"),
-                       ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
-                     );
-CONFIGURABLE_ADD_ITEM( PDFCreator,
-                       SongTitle,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/SongTitle"),
-                       true,
-                       ConfigurableItemOptions::CheckboxOptions()
-                     );
-CONFIGURABLE_ADD_ITEM( PDFCreator,
-                       SongTitlePattern,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/SongTitlePattern"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "{Title} -- {Artist}" ),
-                       ConfigurableItemOptions::LineEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
-                     );
+CONFIGURABLE_ADD_DEFEATABLE_ITEM(  PDFCreator,
+                                   TitlePagePattern,
+                                   QT_TRANSLATE_NOOP("ConfigurableItem", "Title Page"),
+                                   QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/PDFTitlePattern"),
+                                   QT_TRANSLATE_NOOP("ConfigurableItem", "Setlist\n\n-- {EventTitle} --\n\n{Begin}"),
+                                   true,
+                                   ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
+                                );
+
+CONFIGURABLE_ADD_DEFEATABLE_ITEM(  PDFCreator,
+                                   SongTitlePattern,
+                                   QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
+                                   QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/SongTitlePattern"),
+                                   QT_TRANSLATE_NOOP("ConfigurableItem", "{Title} -- {Artist}" ),
+                                   true,
+                                   ConfigurableItemOptions::LineEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
+                                 );
+
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        LineSpacing,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Line spacing"),
@@ -144,13 +141,15 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Endless")
                                                                                << QT_TRANSLATE_NOOP("ConfigurableItem", "Separate pages"))
                        );
-CONFIGURABLE_ADD_ITEM( PDFCreator,
-                       TableOfContents,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Table of Contents"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/TableOfContents"),
-                       true,
-                       ConfigurableItemOptions::CheckboxOptions()
-                     );
+
+CONFIGURABLE_ADD_DEFEATABLE_ITEM(  PDFCreator,
+                                   TableOfContentsPattern,
+                                   QT_TRANSLATE_NOOP("ConfigurableItem", "Table of Contents"),
+                                   QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/TableOfContents"),
+                                   QT_TRANSLATE_NOOP("ConfigurableItem", "Set List"),
+                                   true,
+                                   ConfigurableItemOptions::LineEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
+                                 );
 
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PageNumbers,
@@ -159,6 +158,7 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        true,
                        ConfigurableItemOptions::CheckboxOptions()
                      );
+
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFResolution,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Resolution"),
@@ -166,6 +166,7 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        72,
                        ConfigurableItemOptions::AdvancedDoubleSliderOptions(0, 400, 1, QT_TRANSLATE_NOOP("ConfigurableItem", "dpi") )
                      );
+
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        ContiuneOnNextPageMark,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Show to-be-continued-hint"),
@@ -173,13 +174,7 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        true,
                        ConfigurableItemOptions::CheckboxOptions()
                      );
-CONFIGURABLE_ADD_ITEM( PDFCreator,
-                       TitlePage,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Title page"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/ContinueOnNextPageMark"),
-                       true,
-                       ConfigurableItemOptions::CheckboxOptions()
-                     );
+
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( PDFCreator, DefaultPDFSavePath, QDir::homePath() );
 

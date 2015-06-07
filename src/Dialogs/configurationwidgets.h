@@ -9,7 +9,7 @@ class ConfigurationWidget : public QWidget
     Q_OBJECT
 public:
     explicit ConfigurationWidget(ConfigurableItem *item, QWidget *parent = 0 );
-    static ConfigurationWidget* create(ConfigurableItem *item , QWidget *parent = 0);
+    static ConfigurationWidget* create(ConfigurableItem *item , QWidget *parent = 0, bool ignoreDefeatable = false );
 
 signals:
     void valueChanged(QVariant);

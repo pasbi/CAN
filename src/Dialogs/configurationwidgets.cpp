@@ -141,52 +141,109 @@ public slots:
     {
         m_spinBox->setValue( m_item->actualValue().toDouble() );
     }
-
-
 };
 
+class DefeatableConfigurationWidget : public ConfigurationWidget
+{
+
+private:
+    ConfigQCheckBox* m_switchWidget;
+    ConfigurableItem* m_switchItem;
+
+    ConfigurationWidget* m_configWidget;
+    ConfigurableItem* m_item;
+
+public:
+    DefeatableConfigurationWidget( ConfigurableItem* switchItem, ConfigurableItem* item, QWidget* parent = NULL ) :
+        ConfigurationWidget( NULL, parent ),
+        m_switchWidget( new ConfigQCheckBox( switchItem, this ) ),
+        m_switchItem( switchItem ),
+        m_configWidget( create( item, parent, true )),
+        m_item( item )
+    {
+        if ( switchItem->options().interface() != ConfigurableItemOptions::Hidden )
+        {
+            qWarning() << "switchItem in DefeatableConfigurationWidget should be hidden.";
+        }
+
+        connect( switchItem, &ConfigurableItem::valueChanged, [this](QVariant value)
+        {
+            m_configWidget->setEnabled( value.toBool() );
+        });
+        m_configWidget->setEnabled( m_switchItem->actualValue().toBool() );
+
+        connect( m_item, SIGNAL(valueChanged(QVariant)), this, SIGNAL(valueChanged(QVariant)) );
+
+        QHBoxLayout* layout = new QHBoxLayout( this );
+        layout->addWidget( m_switchWidget );
+        layout->addWidget( m_configWidget );
+        layout->setStretch( 0, 0 );
+        layout->setStretch( 1, 1 );
+        layout->setContentsMargins(0, 0, 0, 0);
+        setLayout( layout );
+    }
+
+public slots:
+    void updateEdit()
+    {
+        m_switchWidget->updateEdit();
+        m_configWidget->updateEdit();
+    }
+};
 
 
 ConfigurationWidget::ConfigurationWidget(ConfigurableItem *item, QWidget *parent) :
     QWidget(parent),
     m_item( item )
 {
-    connect( this, SIGNAL(valueChanged(QVariant)), m_item, SLOT(set(QVariant)) );
+    if (m_item)
+    {
+        connect( this, SIGNAL(valueChanged(QVariant)), m_item, SLOT(set(QVariant)) );
+    }
 }
 
-ConfigurationWidget* ConfigurationWidget::create( ConfigurableItem *item, QWidget* parent )
-{
-    switch (item->options().interface())
-    {
-    case ConfigurableItemOptions::Hidden:
-    case ConfigurableItemOptions::Invalid:
-        assert( false );
-        return NULL;
-        break;
-    case ConfigurableItemOptions::TextEdit:
-        return new ConfigQTextEdit( item, parent );
-    case ConfigurableItemOptions::Checkbox:
-        return new ConfigQCheckBox( item, parent );
-    case ConfigurableItemOptions::AdvancedDoubleSlider:
-        return new ConfigAdvancedDoubleSlider( item, parent );
-    case ConfigurableItemOptions::ComboBox:
-        return new ConfigQComboBox( item, parent );
-    case ConfigurableItemOptions::LineEdit:
-        return new ConfigQLineEdit( item, parent );
-    case ConfigurableItemOptions::SpinBox:
-        return new ConfigQSpinBox( item, parent );
-    case ConfigurableItemOptions::DoubleSpinBox:
-        return new ConfigQDoubleSpinBox( item, parent );
 
-    //TODO implementation missing:
-    case ConfigurableItemOptions::PathEdit:
-    case ConfigurableItemOptions::Slider:
-    case ConfigurableItemOptions::DoubleSlider:
-    case ConfigurableItemOptions::AdvancedSlider:
-    case ConfigurableItemOptions::RadioButtons:
-    case ConfigurableItemOptions::EditableComboBox:
-    case ConfigurableItemOptions::ColorEditor:
-    default:
-        return NULL;
+ConfigurationWidget* ConfigurationWidget::create( ConfigurableItem *item, QWidget* parent, bool ignoreDefeatable )
+{
+    if ( !ignoreDefeatable && item->isDefeatable())
+    {
+        ConfigurableItem* switchItem = item->getSwitchItem();
+        return new DefeatableConfigurationWidget( switchItem, item, parent );
+    }
+    else
+    {
+        switch (item->options().interface())
+        {
+        case ConfigurableItemOptions::Hidden:
+        case ConfigurableItemOptions::Invalid:
+            assert( false );
+            return NULL;
+            break;
+        case ConfigurableItemOptions::TextEdit:
+            return new ConfigQTextEdit( item, parent );
+        case ConfigurableItemOptions::Checkbox:
+            return new ConfigQCheckBox( item, parent );
+        case ConfigurableItemOptions::AdvancedDoubleSlider:
+            return new ConfigAdvancedDoubleSlider( item, parent );
+        case ConfigurableItemOptions::ComboBox:
+            return new ConfigQComboBox( item, parent );
+        case ConfigurableItemOptions::LineEdit:
+            return new ConfigQLineEdit( item, parent );
+        case ConfigurableItemOptions::SpinBox:
+            return new ConfigQSpinBox( item, parent );
+        case ConfigurableItemOptions::DoubleSpinBox:
+            return new ConfigQDoubleSpinBox( item, parent );
+
+        //TODO implementation missing:
+        case ConfigurableItemOptions::PathEdit:
+        case ConfigurableItemOptions::Slider:
+        case ConfigurableItemOptions::DoubleSlider:
+        case ConfigurableItemOptions::AdvancedSlider:
+        case ConfigurableItemOptions::RadioButtons:
+        case ConfigurableItemOptions::EditableComboBox:
+        case ConfigurableItemOptions::ColorEditor:
+        default:
+            return NULL;
+        }
     }
 }
