@@ -7,6 +7,7 @@
 #include <QDesktopWidget>
 #include <QRect>
 #include <QMimeData>
+#include <QScrollBar>
 
 ChordPatternEdit::ChordPatternEdit(QWidget *parent) :
     QTextEdit(parent)
@@ -86,6 +87,11 @@ void ChordPatternEdit::keyPressEvent(QKeyEvent* e)
             }
         }
 
+        // remember scroll position
+        int scrollX, scrollY;
+        scrollY = verticalScrollBar()->value();
+        scrollX = horizontalScrollBar()->value();
+
         // compute length of tab in whitespaces
         int tabWidth = 8;
         int numberOfWhitespaces = tabWidth - (i % tabWidth);
@@ -100,10 +106,14 @@ void ChordPatternEdit::keyPressEvent(QKeyEvent* e)
         // replace tab with whitespaces
         setPlainText( text.insert(pos, whiteSpaces) );
 
-        // update cursor position
+        // restore cursor position
         QTextCursor cursor = textCursor();
         cursor.setPosition( pos + numberOfWhitespaces );
         setTextCursor( cursor );
+
+        // restore scrollbars
+        verticalScrollBar()->setValue( scrollY );
+        horizontalScrollBar()->setValue( scrollX );
 
         // do not insert actual tab.
         e->accept();
