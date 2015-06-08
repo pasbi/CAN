@@ -209,7 +209,7 @@ void MainWindow::createAttachmentActions()
     // gather attachment creators
     for (const QString & classname : Creatable::classnamesInCategory("Attachment"))
     {
-        QAction* action = new QAction( ui->menuAttachments );
+        QAction* action = new QAction( this );
         action->setText( QString(tr("New %1")).arg( Creatable::name(classname) ) );
 
         if (classname == "PDFAttachment")
@@ -847,10 +847,6 @@ void MainWindow::on_actionSync_triggered()
                 return;
             }
         }
-        else
-        {
-        }
-//        m_project.setCredentials( identity );
     }
     else
     {
@@ -921,10 +917,10 @@ void MainWindow::on_actionSync_triggered()
     {
         QMessageBox::information( this,
                                   tr("Sync"),
-                                  tr("Sync failed."),
+                                  tr("Sync failed.\n"
+                                     "Make sure your username/password is correct and the remote repository is reachable"),
                                   QMessageBox::Ok,
                                   QMessageBox::NoButton );
-        newProject();
     }
     else
     {
