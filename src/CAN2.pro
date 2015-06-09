@@ -152,7 +152,8 @@ SOURCES += main.cpp\
     Dialogs/tagdialog.cpp \
     Commands/edittagscommand.cpp \
     PDFCreator/page.cpp \
-    PDFCreator/pdfcreator.cpp
+    PDFCreator/pdfcreator.cpp \
+    AttachmentView/looselines.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -264,7 +265,8 @@ HEADERS  += mainwindow.h \
     poppler.h \
     soundtouch.h \
     poppler.h \
-    soundtouch.h
+    soundtouch.h \
+    AttachmentView/looselines.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

@@ -77,7 +77,7 @@ void ChordPatternAttachmentView::updateText()
             i += token.length() + 1;
         }
     }
-    ui->textEdit->setExtraSelections(highlights);
+    ui->textEdit->setExternalExtraSelections(highlights);
     ui->textEdit->blockSignals(false);
 }
 
