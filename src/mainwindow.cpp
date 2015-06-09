@@ -173,6 +173,8 @@ MainWindow::MainWindow(QWidget *parent) :
         selectPage( EventDatabasePage );
     });
     selectPage( SongDatabasePage );
+
+    askForSync();
 }
 
 MainWindow::~MainWindow()
@@ -369,6 +371,7 @@ bool MainWindow::newProject()
 
 bool MainWindow::canProjectClose()
 {
+    askForSync();
     if (m_project.canClose())
     {
         return true;
@@ -929,6 +932,7 @@ void MainWindow::on_actionSync_triggered()
                                   tr("Sync succeeded"),
                                   QMessageBox::Ok,
                                   QMessageBox::NoButton );
+        m_project.setIsSynchronized();
     }
 
 }
@@ -1166,6 +1170,32 @@ void MainWindow::selectPage(Page page)
 //    }
 
 //}
+
+void MainWindow::askForSync()
+{
+    if (!m_project.isGitRepository())
+    {
+        return;
+    }
+
+    if (m_project.isSynchronized())
+    {
+        return;
+    }
+
+    if ( QMessageBox::Yes == QMessageBox::question(    this,
+                                                       tr("Synchronize?"),
+                                                       tr("The project may not be synchronized with the remote.\n"
+                                                          "Do you want to synchronize them now?\n"
+                                                          "You can always do this later, but it is recommended to do it now."),
+                                                       QMessageBox::Yes | QMessageBox::No,
+                                                       QMessageBox::Yes
+                                                    )
+         )
+    {
+        on_actionSync_triggered();
+    }
+}
 
 
 

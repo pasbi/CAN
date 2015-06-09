@@ -127,6 +127,8 @@ private:
     QAction* m_actionCopy_Event;
     QAction* m_actionPaste_Event;
 
+    void askForSync();
+
 };
 
 #endif // MAINWINDOW_H

@@ -47,11 +47,16 @@ private:
 
 public:
     bool canClose() const;
+    bool isSynchronized() const;
+    void setIsSynchronized();
+
 private:
     void setCanClose( bool b );
     bool m_canClose = true;
+    bool m_isSynchronized = false;
     void resetUndoStack();
     void emitCommandPushedSignal(Command::Type type);
+
 signals:
     void canCloseChanged( bool );
 
