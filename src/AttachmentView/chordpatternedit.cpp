@@ -31,16 +31,28 @@ ChordPatternEdit::ChordPatternEdit(QWidget *parent) :
 
     installEventFilter( this );
 
-    m_copyAction = new QAction( "Copy Loose Lines", this );
-    connect( m_copyAction, SIGNAL(triggered()), this, SLOT(copyLooseLines()) );
-    m_pasteAction = new QAction( "Paste Loose Lines", this );
-    connect( m_pasteAction, SIGNAL(triggered()), this, SLOT(pasteLooseLines()) );
+    m_copyAction = new QAction( "Copy", this );
+    m_copyAction->setShortcut( QKeySequence( "CTRL+C") );
+    connect( m_copyAction, SIGNAL(triggered()), this, SLOT(copy()) );
+    m_pasteAction = new QAction( "Paste", this );
+    m_pasteAction->setShortcut( QKeySequence( "CTRL+V") );
+    connect( m_pasteAction, SIGNAL(triggered()), this, SLOT(paste()) );
+
+    addAction( m_copyAction );
+    addAction( m_pasteAction );
 }
 
 
 void ChordPatternEdit::contextMenuEvent(QContextMenuEvent *e)
 {
-    QMenu* menu = createStandardContextMenu( e->pos() );
+    // default copy, paste actions are not suitable for our purpose.
+    // also, undo and redo shall not appear. So it is easier to build a menu on our own.
+
+    QMenu* menu = new QMenu( this );
+    connect( menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()) );
+
+    menu->addAction( m_copyAction );
+    menu->addAction( m_pasteAction );
 
     int width = menu->sizeHint().width();
     int height = menu->sizeHint().height();
@@ -57,10 +69,10 @@ void ChordPatternEdit::contextMenuEvent(QContextMenuEvent *e)
         pos.setY( pos.y() - height );
     }
 
-    menu->removeAction( menu->actions()[0] );   // remove undo
-    menu->removeAction( menu->actions()[0] );   // remove redo
-    menu->addAction( m_pasteAction );
-    menu->addAction( m_copyAction );
+//    menu->removeAction( menu->actions()[0] );   // remove undo
+//    menu->removeAction( menu->actions()[0] );   // remove redo
+//    menu->addAction( m_pasteAction );
+//    menu->addAction( m_copyAction );
     menu->show();
     menu->move( pos );
 }
@@ -336,7 +348,6 @@ QMimeData* ChordPatternEdit::createMimeDataFromSelection() const
             QString content = line(plainText, n);
             int spaceToNext = m_selectedLines[i + 1] - n;
             lines.add( content, spaceToNext );
-            qDebug() << "copied " << content << spaceToNext;
         }
         lines.add( line(plainText, m_selectedLines.last()), -1 );   // finally add last line with arbitrary nextTo-value
         QByteArray data;
@@ -353,29 +364,22 @@ QString ChordPatternEdit::pasteLooseLines(const QString &base, const LooseLines 
 {
     QStringList lines = base.split("\n");
 
-    qDebug() << "lineNumber";
-
-    qDebug() << "before: " << lines;
-
     int i = currentLineNumber;
     for (const Line& line : looseLines)
     {
-        qDebug() << "paste " << i << line.content;
         lines.insert( i, line.content );
         i += line.spaceToNext;
     }
 
-    qDebug() << "after: " << lines;
-
     return lines.join("\n");
 }
 
-void ChordPatternEdit::copyLooseLines()
+void ChordPatternEdit::copy()
 {
     qApp->clipboard()->setMimeData( createMimeDataFromSelection() );
 }
 
-void ChordPatternEdit::pasteLooseLines()
+void ChordPatternEdit::paste()
 {
     const QMimeData* mimeData = qApp->clipboard()->mimeData();
     if (canInsertFromMimeData(mimeData))

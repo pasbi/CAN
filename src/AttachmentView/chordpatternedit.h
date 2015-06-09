@@ -11,8 +11,9 @@ public:
     explicit ChordPatternEdit(QWidget *parent = 0);
 
 public slots:
-    void copyLooseLines();
-    void pasteLooseLines();
+    // similar to QTextEdit::{copy,paste}(), but better :)
+    void copy();
+    void paste();
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
