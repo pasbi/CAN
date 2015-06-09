@@ -54,6 +54,13 @@ CONFIGURABLE_ADD_ITEM( MainWindow,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Synchronizing"),
                        ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP( "ConfigurableItem", "commit message") )
                        );
+CONFIGURABLE_ADD_ITEM( MainWindow,
+                       AskForSynchronizing,
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Remind synchronizing"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/AskForSynchronizing"),
+                       true,
+                       ConfigurableItemOptions::CheckboxOptions()
+                       );
 
 
 
@@ -1173,6 +1180,10 @@ void MainWindow::selectPage(Page page)
 
 void MainWindow::askForSync()
 {
+    if (!config["AskForSynchronizing"].toBool())
+    {
+        return;
+    }
     if (!m_project.isGitRepository())
     {
         return;
