@@ -1,7 +1,6 @@
 #include "pdfattachmentview.h"
 #include "ui_pdfattachmentview.h"
 #include "Attachments/pdfattachment.h"
-#include <QPainter>
 #include <qmath.h>
 #include <QTimer>
 #include "configurable.h"

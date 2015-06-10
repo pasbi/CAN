@@ -217,6 +217,7 @@ public:
 
     ConfigurableItem* getSwitchItem() const;
 
+    ConfigurableItem* copy() const;
 
 
 public slots:
@@ -224,6 +225,7 @@ public slots:
     void reset();
     void restore();
     void set( const QVariant & value );
+
 
 
 private:
@@ -290,12 +292,15 @@ public:
     QString prefix() const { return m_prefix; }
     QStringList itemKeys() const { return m_itemKeys; }
 
+    Configurable& operator= (const Configurable& other);
+    Configurable( const Configurable& other );
+
 private:
     QMap<QString, ConfigurableItem*> m_items;
     QStringList m_itemKeys; // is needed to keep order. QMap::keys is arbitrary order.
 
-    QString m_prefix;
-    QString m_caption;
+    const QString m_prefix;
+    const QString m_caption;
 
     // we want to know all classes that have a static Configurable member
     // i.e. we want to know the Configurable member in particular
@@ -323,14 +328,10 @@ public:
     }
     static QMap<QString, Configurable*> configurables() { return registerer()->configs(); }
 
+
 public:
     static void saveAll();
     static void restoreAll();
-
-
-
-
-
 };
 
 #endif // CONFIGURABLE_H

@@ -19,6 +19,7 @@ Configurable::Configurable(const QString &prefix, const QString & caption ) :
 
 Configurable::~Configurable()
 {
+    qDeleteAll( m_items.values() );
 }
 
 void Configurable::addItem( const QString &                 key,
@@ -193,6 +194,22 @@ void ConfigurableItem::restore()
     }
 }
 
+ConfigurableItem* ConfigurableItem::copy() const
+{
+    ConfigurableItem* c = new ConfigurableItem();
+    c->m_actualValue = this->m_actualValue;
+    c->m_defaultValue = this->m_defaultValue;
+    c->m_resetValue = this->m_resetValue;
+
+    c->m_caption = this->m_caption;
+    c->m_configurable = this->m_configurable;
+    c->m_help = this->m_help;
+    c->m_options = this->m_options;
+    c->m_switchItemKey = this->m_switchItemKey;
+
+    return c;
+}
+
 void Configurable::set(const QString &key, const QVariant &value)
 {
     item(key)->set(value);
@@ -256,6 +273,26 @@ ConfigurableItem* ConfigurableItem::getSwitchItem() const
 {
     ConfigurableItem* switchItem = m_configurable->item( m_switchItemKey );
     return switchItem;
+}
+
+Configurable& Configurable::operator =(const Configurable &other)
+{
+    qDeleteAll( m_items.values() );
+    m_items.clear();
+
+    m_itemKeys = other.m_itemKeys;
+    for (const QString& key : m_itemKeys)
+    {
+        ConfigurableItem* item = other.m_items[key]->copy();
+        m_items.insert( key, item );
+    }
+
+    return *this;
+}
+
+Configurable::Configurable(const Configurable &other)
+{
+    *this = other;
 }
 
 

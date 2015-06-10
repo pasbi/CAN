@@ -407,6 +407,7 @@ void PDFCreator::paintChordPatternAttachment(ChordPatternAttachment *attachment)
     {
         QString line = lines[i];
 
+//        qDebug() << "is endless: " << isEndlessPage();
         if (isEndlessPage())
         {
             double spaceLeft = pageRectMargins().height() - y;
@@ -414,7 +415,6 @@ void PDFCreator::paintChordPatternAttachment(ChordPatternAttachment *attachment)
             if (spaceLeft < 0)
             {
                 // space left must be converted from painter-units to mm
-
                 currentPage()->growDownMM( -currentPage()->painterUnitsInMM( spaceLeft ) );
             }
         }
@@ -741,31 +741,30 @@ bool mkdir( const QString& path )
 void PDFCreator::paintAndSaveDocument( const Document& document, const QString& title, const QString& filename )
 {
 
+    if (document.pages.length() == 0)
+    {
+        qWarning() << "Empty PDF will not be created.";
+        return;
+    }
+
     QPdfWriter writer( filename );
 
     writer.setMargins( {0, 0, 0, 0} );
-    QPageSize pageSize( m_baseSizeMM, QPageSize::Millimeter );
+    QPageSize pageSize( document.pages[0]->sizeInMM(), QPageSize::Millimeter );     // size needs to be correctly initialized. cannot be done in loop.
     writer.setPageSize( pageSize );
     writer.setTitle( title );
     QPainter painter( &writer );
 
-    bool isEmpty = true;
     for (int i = 0; i < document.pages.size(); ++i)
     {
         writer.setPageSizeMM( document.pages[i]->sizeInMM() );
-        if (i != 0)
+
+        if (i != 0) // weird position, but this is correct.
         {
             assert( writer.newPage() );
         }
 
-
         painter.drawPicture( QPoint(0, 0), document.pages[i]->picture() );
-        isEmpty = false;
-    }
-
-    if (isEmpty)
-    {
-        qWarning() << "Empty PDF will not be created.";
     }
 
 }
@@ -819,6 +818,10 @@ void PDFCreator::save(QString filename)
     else                                   // all songs in one pdf
     {
         Document document;
+        for (const Page* page : m_pages)
+        {
+            qDebug() << "size" << page->sizeInMM();
+        }
         document.pages = m_pages;
         QString label = "";
         if (m_setlist)
@@ -985,12 +988,12 @@ void PDFCreator::paintChordPatternAttachment(ChordPatternAttachment *attachment,
     // save config and replace it at the end.
     Configurable savedConfigs = config;
 
-    config["enable_TitlePagePattern"] = false;
-    config["enable_SongTitlePattern"] = false;
-    config["PDFSize"] = 4; // DinA4
-    config["AlignSongs"] = 4; // we always want to have one page per song.
-    config["enable_TableOfContentsPattern"] = false;
-    config["PageNumbers"] = false;
+    config.set("enable_TitlePagePattern", false);
+    config.set("enable_SongTitlePattern", false);
+    config.set("PDFSize", 4); // DinA4
+    config.set("AlignSongs", 4); // we always want to have one page per song.
+    config.set("enable_TableOfContentsPattern", false);
+    config.set("PageNumbers", false);
 
     PDFCreator creator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), NULL, "" );
     creator.m_currentIndex = -1;
