@@ -290,7 +290,6 @@ void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
     }
     else if (source->formats().contains("text/lines"))
     {
-        qDebug() << "position: " << textCursor().position();
         // harder case: paste the lines but leave the lines in between.
         LooseLines lines;
         QDataStream stream(source->data( "text/lines" ));

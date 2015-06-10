@@ -3,7 +3,6 @@
 
 #include <QAction>
 #include <QMenu>
-#include <functional>
 
 
 #define initAction( name, associated_widget, text, tooltip, shortcut, menu, icon )                          \
@@ -42,8 +41,6 @@
 class Setlist;
 namespace Util
 {
-//QAction* addAction( QMenu* menu, const QString & caption, auto do_action );
-
 QStringList findAllFiles(const QString & dirname, bool findHidden = false );
 
 QString replaceDiacritics(QString string );

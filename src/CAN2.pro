@@ -5,8 +5,6 @@
 #-------------------------------------------------
 
 
-#//TODO port to Windows
-#//TODO what happens if network is required but down?
 #//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
 
@@ -19,9 +17,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = CAN2
 TEMPLATE = app
 
-#CONFIG += debug
-#QMAKE_CXXFLAGS_DEBUG -= -O2
-#QMAKE_CXXFLAGS_DEBUG += -Og
 
 unix {
 #you must have libgit2, poppler, libav, libsoundtouch installed.
@@ -290,9 +285,6 @@ FORMS    += mainwindow.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui \
     Dialogs/tagdialog.ui
-
-OTHER_FILES += \
-    FileIndexRecycle.txt
 
 RESOURCES += \
     ressources.qrc
