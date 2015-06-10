@@ -20,7 +20,12 @@ QDataStream& operator>>( QDataStream& stream, Line& line);
 class LooseLines : public QList<Line>
 {
 public:
-    void add( const QString& line, int spaceToNext ) { append( { line, spaceToNext } ); }
+    /**
+     * @brief add
+     * @param line
+     * @param spaceToNext last line must have `spaceToNext == 0`
+     */
+    void add( const QString& line, int spaceToNext = 0 ) { append( { line, spaceToNext } ); }
 };
 
 

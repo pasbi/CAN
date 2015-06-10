@@ -46,7 +46,7 @@ private:
     void updateHighlights();
     void clearHighlights();
 
-    QString pasteLooseLines(const QString& base, const LooseLines& looseLines, int currentLineNumber);
+    QString pasteLooseLines(const QString& base, const LooseLines& looseLines, int currentLineNumber, int &newCursorPosition);
 
     QAction* m_pasteAction;
     QAction* m_copyAction;

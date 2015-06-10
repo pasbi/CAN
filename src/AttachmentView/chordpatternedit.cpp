@@ -221,6 +221,9 @@ void ChordPatternEdit::updateHighlights()
         QColor color = palette().color( QPalette::Highlight );
         color.setAlpha( 80 );
         highlight.format.setBackground( color );
+        highlight.format.setUnderlineStyle( QTextCharFormat::DashUnderline );
+        highlight.format.setUnderlineColor( QColor(Qt::blue) );
+
         highlights << highlight;
     }
 
@@ -256,15 +259,15 @@ void ChordPatternEdit::mousePressEvent(QMouseEvent *e)
         if (m_selectedLines.contains(n))
         {
             m_selectedLines.removeOne(n);
+            cursor.clearSelection();
         }
         else if ( !line(plainText, n).isEmpty() )   // do not insert empty lines.
         {
             insertSorted( m_selectedLines, n );
             cursor.movePosition( QTextCursor::StartOfLine, QTextCursor::MoveAnchor );
             cursor.movePosition( QTextCursor::EndOfLine, QTextCursor::KeepAnchor );
-            setTextCursor( cursor );
         }
-
+        setTextCursor( cursor );
         updateHighlights();
     }
     else
@@ -284,12 +287,10 @@ void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
         QTextEdit::insertFromMimeData( source );
 
         emit pasted();
-//        QTextCursor c = textCursor();
-//        c.setPosition( toPlainText().length() - 1 );
-//        setTextCursor( c );
     }
     else if (source->formats().contains("text/lines"))
     {
+        qDebug() << "position: " << textCursor().position();
         // harder case: paste the lines but leave the lines in between.
         LooseLines lines;
         QDataStream stream(source->data( "text/lines" ));
@@ -298,24 +299,25 @@ void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
         QString plainText = toPlainText();
         int n = lineNumber( plainText, textCursor().position());
 
-        // for better user experience, if cursor is on last position in this line, set n to next line.
+        // for convenience, if cursor is on last position in this line, set n to next line.
+        //TODO ignore trailing whitespaces
         if ( plainText[textCursor().position()] == '\n')
         {
             n++;
         }
 
         QTextCursor cursor = textCursor();
-        int pos = cursor.position();
-        QString newText = pasteLooseLines( plainText, lines, n );
-        int add = newText.length() - plainText.length();
+        int newCursorPos;
+        QString newText = pasteLooseLines( plainText, lines, n, newCursorPos );
 
         setText( newText );
-        cursor.setPosition( pos + add + 1 );
+        cursor.setPosition( newCursorPos );
 
         setTextCursor( cursor );
-        qDebug() << "fancy copy";
 
         updateHighlights();
+        emit pasted();
+
     }
 }
 
@@ -353,7 +355,7 @@ QMimeData* ChordPatternEdit::createMimeDataFromSelection() const
             int spaceToNext = m_selectedLines[i + 1] - n;
             lines.add( content, spaceToNext );
         }
-        lines.add( line(plainText, m_selectedLines.last()), -1 );   // finally add last line with arbitrary nextTo-value
+        lines.add( line(plainText, m_selectedLines.last()) );   // finally add last line
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
         stream << lines;
@@ -375,16 +377,25 @@ void insert(QStringList& list, int pos, const QString & item )
     list.insert(pos, item);
 }
 
-QString ChordPatternEdit::pasteLooseLines(const QString &base, const LooseLines &looseLines, int currentLineNumber)
+QString ChordPatternEdit::pasteLooseLines(const QString &base, const LooseLines &looseLines, int currentLineNumber, int& newCursorPosition)
 {
     QStringList lines = base.split("\n");
 
+    // paste text
     int i = currentLineNumber;
     for (const Line& line : looseLines)
     {
         insert( lines, i, line.content );
         i += line.spaceToNext;
     }
+
+    // find new cursor position
+    newCursorPosition = 0;
+    for (int j = 0; j <= i; ++j)
+    {
+        newCursorPosition += lines[j].length() + 1; // dont forget the newline!
+    }
+    newCursorPosition -= 1; // last `\n` charachter was too much.
 
     return lines.join("\n");
 }
