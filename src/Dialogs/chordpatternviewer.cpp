@@ -19,7 +19,6 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
         QTemporaryFile file;
         file.open();
         PDFCreator::paintChordPatternAttachment( attachment, file.fileName() );
-        qDebug() << file.fileName();
         document = Poppler::Document::load( file.fileName() );
     }
 
@@ -50,6 +49,8 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
     QTimer::singleShot( 1, this, SLOT(adjustPDFSize()) );
     ui->sliderSize->setValue( config["zoom"].toDouble() * ui->sliderSize->maximum() );
     connect( ui->sliderSize, SIGNAL(valueChanged(int)), this, SLOT(adjustPDFSizeLater()) );
+
+    setWindowState( Qt::WindowFullScreen );
 }
 
 ChordPatternViewer::~ChordPatternViewer()
