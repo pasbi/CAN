@@ -11,9 +11,8 @@ public:
     explicit ChordPatternEdit(QWidget *parent = 0);
 
 public slots:
-    // similar to QTextEdit::{copy,paste}(), but better :)
-    void copy();
-    void paste();
+//    void myCopy();
+//    void myPaste();
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
@@ -40,10 +39,12 @@ private:
     QList<ExtraSelection> m_externalExtraSelections;
     void setExtraSelections(const QList<ExtraSelection> &selections);
 
+
     /**
      * @brief updateHighlights update line highlightings (@see m_selectedLines);
      */
     void updateHighlights();
+    void clearHighlights();
 
     QString pasteLooseLines(const QString& base, const LooseLines& looseLines, int currentLineNumber);
 

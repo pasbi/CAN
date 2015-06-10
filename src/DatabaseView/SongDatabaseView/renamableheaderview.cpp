@@ -111,7 +111,10 @@ void RenamableHeaderView::setUpContextMenu(QMenu *menu)
     SongDatabase* database =  parent()->model();
     QString key = database->attributeKeys()[section];
 
-    Util::addAction(menu, QString(tr("Delete Attribute \"%1\"")).arg(key), [this, database, section](){
+    QAction* deleteAttributeAction = new QAction( menu );
+    deleteAttributeAction->setText(QString(tr("Delete Attribute \"%1\"")).arg(key));
+    connect( deleteAttributeAction, &QAction::triggered, [this, database, section]()
+    {
         if (parent()->model()->allowDeleteColumn(section))
         {
             app().pushCommand( new SongDatabaseRemoveColumnCommand( database, section ) );
@@ -125,8 +128,12 @@ void RenamableHeaderView::setUpContextMenu(QMenu *menu)
                                       QMessageBox::NoButton );
         }
     });
+    menu->addAction( deleteAttributeAction );
 
-    Util::addAction(menu, tr("Add Attribute"), [this, database]() {
+    QAction* addAttributeAction = new QAction( menu );
+    addAttributeAction->setText( tr("Add Attribute") );
+    connect( addAttributeAction, &QAction::triggered, [this, database]()
+    {
         SongDatabaseNewAttributeCommand* naCommand = new SongDatabaseNewAttributeCommand( database );
 
         // end macro is in renamableheaderview.cpp

@@ -42,7 +42,7 @@
 class Setlist;
 namespace Util
 {
-QAction* addAction( QMenu* menu, const QString & caption, std::function<void ()> do_action );
+//QAction* addAction( QMenu* menu, const QString & caption, auto do_action );
 
 QStringList findAllFiles(const QString & dirname, bool findHidden = false );
 

@@ -31,28 +31,12 @@ ChordPatternEdit::ChordPatternEdit(QWidget *parent) :
 
     installEventFilter( this );
 
-    m_copyAction = new QAction( "Copy", this );
-    m_copyAction->setShortcut( QKeySequence( "CTRL+C") );
-    connect( m_copyAction, SIGNAL(triggered()), this, SLOT(copy()) );
-    m_pasteAction = new QAction( "Paste", this );
-    m_pasteAction->setShortcut( QKeySequence( "CTRL+V") );
-    connect( m_pasteAction, SIGNAL(triggered()), this, SLOT(paste()) );
-
-    addAction( m_copyAction );
-    addAction( m_pasteAction );
 }
 
 
 void ChordPatternEdit::contextMenuEvent(QContextMenuEvent *e)
 {
-    // default copy, paste actions are not suitable for our purpose.
-    // also, undo and redo shall not appear. So it is easier to build a menu on our own.
-
-    QMenu* menu = new QMenu( this );
-    connect( menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()) );
-
-    menu->addAction( m_copyAction );
-    menu->addAction( m_pasteAction );
+    QMenu* menu = createStandardContextMenu( e->pos() );
 
     int width = menu->sizeHint().width();
     int height = menu->sizeHint().height();
@@ -69,16 +53,25 @@ void ChordPatternEdit::contextMenuEvent(QContextMenuEvent *e)
         pos.setY( pos.y() - height );
     }
 
-//    menu->removeAction( menu->actions()[0] );   // remove undo
-//    menu->removeAction( menu->actions()[0] );   // remove redo
-//    menu->addAction( m_pasteAction );
-//    menu->addAction( m_copyAction );
+    menu->removeAction( menu->actions()[0] );   // remove undo
+    menu->removeAction( menu->actions()[0] );   // remove redo
     menu->show();
     menu->move( pos );
 }
 
+void ChordPatternEdit::clearHighlights()
+{
+    m_selectedLines.clear();
+    updateHighlights();
+}
+
 void ChordPatternEdit::keyPressEvent(QKeyEvent* e)
 {
+    if (e->modifiers() == Qt::NoModifier)
+    {
+        clearHighlights();
+    }
+
     // catch undo and redo shortcuts and delegate to application's undo()/redo().
     // Does not work with QShortcutEvent or QActions.
     QKeyEvent* se = dynamic_assert_cast<QKeyEvent*>( e );
@@ -149,12 +142,6 @@ void ChordPatternEdit::keyPressEvent(QKeyEvent* e)
         // do not insert actual tab.
         e->accept();
         return;
-    }
-
-    if (e->key() == Qt::Key_Escape)
-    {
-        m_selectedLines.clear();
-        updateHighlights();
     }
 
     return QTextEdit::keyPressEvent(e);
@@ -231,8 +218,9 @@ void ChordPatternEdit::updateHighlights()
         cursor.setPosition( linepos[i].first );
         cursor.setPosition( linepos[i].second, QTextCursor::KeepAnchor );
         highlight.cursor = cursor;
-        highlight.format.setUnderlineColor( QColor(Qt::green).darker() );
-        highlight.format.setUnderlineStyle( QTextCharFormat::WaveUnderline );
+        QColor color = palette().color( QPalette::Highlight );
+        color.setAlpha( 80 );
+        highlight.format.setBackground( color );
         highlights << highlight;
     }
 
@@ -272,26 +260,33 @@ void ChordPatternEdit::mousePressEvent(QMouseEvent *e)
         else if ( !line(plainText, n).isEmpty() )   // do not insert empty lines.
         {
             insertSorted( m_selectedLines, n );
-            emit copyAvailable( true );
+            cursor.movePosition( QTextCursor::StartOfLine, QTextCursor::MoveAnchor );
+            cursor.movePosition( QTextCursor::EndOfLine, QTextCursor::KeepAnchor );
+            setTextCursor( cursor );
         }
 
         updateHighlights();
     }
-    QTextEdit::mousePressEvent(e);
+    else
+    {
+        clearHighlights();
+        QTextEdit::mousePressEvent(e);
+    }
 }
 
 
 void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
 {
+    clearHighlights();
     if (source->hasText())
     {
         // the easy case: standard pasting
         QTextEdit::insertFromMimeData( source );
 
         emit pasted();
-        QTextCursor c = textCursor();
-        c.setPosition( toPlainText().length() - 1 );
-        setTextCursor( c );
+//        QTextCursor c = textCursor();
+//        c.setPosition( toPlainText().length() - 1 );
+//        setTextCursor( c );
     }
     else if (source->formats().contains("text/lines"))
     {
@@ -309,7 +304,16 @@ void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
             n++;
         }
 
-        setText( pasteLooseLines( plainText, lines, n ) );
+        QTextCursor cursor = textCursor();
+        int pos = cursor.position();
+        QString newText = pasteLooseLines( plainText, lines, n );
+        int add = newText.length() - plainText.length();
+
+        setText( newText );
+        cursor.setPosition( pos + add + 1 );
+
+        setTextCursor( cursor );
+        qDebug() << "fancy copy";
 
         updateHighlights();
     }
@@ -360,6 +364,17 @@ QMimeData* ChordPatternEdit::createMimeDataFromSelection() const
     }
 }
 
+//("a", "b").insert(4, "d") == ("a", "b", "d")
+//insert( ("a", "b"), 4, "d" ) == ("a", "b", "", "d")
+void insert(QStringList& list, int pos, const QString & item )
+{
+    while (pos > list.length())
+    {
+        list.append("");
+    }
+    list.insert(pos, item);
+}
+
 QString ChordPatternEdit::pasteLooseLines(const QString &base, const LooseLines &looseLines, int currentLineNumber)
 {
     QStringList lines = base.split("\n");
@@ -367,23 +382,9 @@ QString ChordPatternEdit::pasteLooseLines(const QString &base, const LooseLines 
     int i = currentLineNumber;
     for (const Line& line : looseLines)
     {
-        lines.insert( i, line.content );
+        insert( lines, i, line.content );
         i += line.spaceToNext;
     }
 
     return lines.join("\n");
-}
-
-void ChordPatternEdit::copy()
-{
-    qApp->clipboard()->setMimeData( createMimeDataFromSelection() );
-}
-
-void ChordPatternEdit::paste()
-{
-    const QMimeData* mimeData = qApp->clipboard()->mimeData();
-    if (canInsertFromMimeData(mimeData))
-    {
-        insertFromMimeData( mimeData );
-    }
 }
