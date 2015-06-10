@@ -820,7 +820,12 @@ void PDFCreator::save(QString filename)
     {
         Document document;
         document.pages = m_pages;
-        paintAndSaveDocument( document, labelSetlist( m_setlist ), filename );
+        QString label = "";
+        if (m_setlist)
+        {
+            label = labelSetlist( m_setlist );
+        }
+        paintAndSaveDocument( document, label, filename );
     }
 }
 
@@ -974,3 +979,49 @@ void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
         }
     }
 }
+
+void PDFCreator::paintChordPatternAttachment(ChordPatternAttachment *attachment, const QString &path)
+{
+    // save config and replace it at the end.
+    Configurable savedConfigs = config;
+
+    config["enable_TitlePagePattern"] = false;
+    config["enable_SongTitlePattern"] = false;
+    config["PDFSize"] = 4; // DinA4
+    config["AlignSongs"] = 4; // we always want to have one page per song.
+    config["enable_TableOfContentsPattern"] = false;
+    config["PageNumbers"] = false;
+
+    PDFCreator creator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), NULL, "" );
+    creator.m_currentIndex = -1;
+    creator.newPage( Page::SongStartsHere );
+    creator.paintChordPatternAttachment( attachment );
+    creator.save( path );
+
+    // restore preference
+    config = savedConfigs;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

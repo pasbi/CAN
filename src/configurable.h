@@ -294,8 +294,8 @@ private:
     QMap<QString, ConfigurableItem*> m_items;
     QStringList m_itemKeys; // is needed to keep order. QMap::keys is arbitrary order.
 
-    const QString m_prefix;
-    const QString m_caption;
+    QString m_prefix;
+    QString m_caption;
 
     // we want to know all classes that have a static Configurable member
     // i.e. we want to know the Configurable member in particular

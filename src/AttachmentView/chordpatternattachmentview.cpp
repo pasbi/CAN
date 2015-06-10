@@ -8,9 +8,11 @@
 #include "project.h"
 #include "Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h"
 #include "application.h"
+#include "Dialogs/chordpatternviewer.h"
 
 DEFN_CREATABLE(ChordPatternAttachmentView, AttachmentView);
 DEFN_CONFIG( ChordPatternAttachmentView, "Chord Pattern Attachment" );
+
 
 ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     AttachmentView(parent),
@@ -34,6 +36,13 @@ ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     connect( transposeDownAction, &QAction::triggered, [this]()
     {
         app().pushCommand( new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), -1 ) );
+    });
+
+    QAction* showInViewerAction = new QAction( QIcon(":/icons/icons/war4.png"), tr("Show in viewer"), this );
+    addAction( showInViewerAction );
+    connect( showInViewerAction, &QAction::triggered, [this]()
+    {
+        ChordPatternViewer::displayChordPatternAttachment( attachment<ChordPatternAttachment>(), this );
     });
 
     m_toolBar->addActions( actions() );

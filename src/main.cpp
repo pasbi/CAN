@@ -9,7 +9,6 @@
 
 int main(int argc, char *argv[])
 {
-
     Application app(argc, argv);
 
     QString locale = MainWindow::config["locale"].toString();

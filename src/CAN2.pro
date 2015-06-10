@@ -22,7 +22,7 @@ unix {
 #you must have libgit2, poppler, libav, libsoundtouch installed.
 #checkout zipgit, build it and update the path.
 INCLUDEPATH += ../../ZipGit/src/
-LIBS += -L../../ZipGit/build-ZipGit-Desktop-Debug/ -lzipgit
+LIBS += -L../ZipGit/build-ZipGit-Desktop-Debug/ -lzipgit
 LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
 LIBS += -lavformat -lavcodec -lavutil -lpthread
@@ -148,7 +148,9 @@ SOURCES += main.cpp\
     Commands/edittagscommand.cpp \
     PDFCreator/page.cpp \
     PDFCreator/pdfcreator.cpp \
-    AttachmentView/looselines.cpp
+    AttachmentView/looselines.cpp \
+    Dialogs/chordpatternviewer.cpp \
+    PDFCreator/orphantsetlist.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -261,7 +263,9 @@ HEADERS  += mainwindow.h \
     soundtouch.h \
     poppler.h \
     soundtouch.h \
-    AttachmentView/looselines.h
+    AttachmentView/looselines.h \
+    Dialogs/chordpatternviewer.h \
+    PDFCreator/orphantsetlist.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -284,7 +288,8 @@ FORMS    += mainwindow.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui \
-    Dialogs/tagdialog.ui
+    Dialogs/tagdialog.ui \
+    Dialogs/chordpatternviewer.ui
 
 RESOURCES += \
     ressources.qrc

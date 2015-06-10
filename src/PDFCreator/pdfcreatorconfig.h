@@ -98,7 +98,7 @@ CONFIGURABLE_ADD_ITEM( PDFCreator,
                        ConfigurableItemOptions::ComboBoxOptions( QStringList() <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A0")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A1")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A2")
-                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A3")
+                                                                                <<  QT_TRANSLATE_NOOP("ConfigurableItemE", "A3")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A4")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A5")
                                                                                 <<  QT_TRANSLATE_NOOP("ConfigurableItem", "A6")

@@ -1124,19 +1124,17 @@ SongTableView* MainWindow::songTableView()
 
 
 #include "PDFCreator/pdfcreator.h"
+#include "PDFCreator/orphantsetlist.h"
 void MainWindow::on_action_Export_all_songs_triggered()
 {
-    Project tmpProject;
-    EventDatabase tmpDatabase( &tmpProject );
-    Event tmpEvent(&tmpDatabase);
-    tmpEvent.setLabel( tr("All songs") );
+    OrphantSetlist setlist( tr("All songs"));
 
     for( Song* song : m_project.songDatabase()->songs() )
     {
-        tmpEvent.setlist()->appendItem( new SetlistItem( song ) );
+        setlist.appendItem( new SetlistItem( song ) );
     }
 
-    PDFCreator::exportSetlist( tmpEvent.setlist(), this );
+    PDFCreator::exportSetlist( &setlist, this );
 }
 
 void MainWindow::selectPage(Page page)
@@ -1151,32 +1149,6 @@ void MainWindow::selectPage(Page page)
         break;
     }
 }
-
-//void MainWindow::updateToolBar()
-//{
-//    ui->toolBar->clear();
-//    QToolBar* t = ui->toolBar;
-
-//    switch (currentPage())
-//    {
-//    case SongDatabasePage:
-//        t->addAction( m_actionNew_Song );
-//        t->addAction( m_actionDelete_Song );
-//        t->addSeparator();
-//        t->addAction( newAttachment_Action( "ChordPatternAttachment" ) );
-//        t->addAction( newAttachment_Action( "PDFAttachment" ) );
-//        t->addAction( newAttachment_Action( "AudioAttachment" ) );
-//        t->addAction( ui->actionRename_Attachment );
-//        t->addAction( ui->actionDelete_Attachment );
-//        break;
-
-//    case EventDatabasePage:
-//        t->addAction( m_actionNew_Event );
-//        t->addAction( m_actionDelete_Event );
-//        break;
-//    }
-
-//}
 
 void MainWindow::askForSync()
 {

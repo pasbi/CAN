@@ -7,6 +7,7 @@
 #include "Database/EventDatabase/setlist.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include "Attachments/pdfattachment.h"
+#include "orphantsetlist.h"
 
 class PDFCreator : public QThread
 {
@@ -63,6 +64,8 @@ public:
     bool isEndlessPage() const;
 
     const Page* currentPage() const;
+
+    static void paintChordPatternAttachment(ChordPatternAttachment *attachment, const QString& path);
 
 
 private:

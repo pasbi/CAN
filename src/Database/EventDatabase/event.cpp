@@ -118,5 +118,3 @@ Event* Event::copy() const
 
 
 
-
-
