@@ -22,8 +22,8 @@ public:
 
     void copy(Attachment *&copied) const;
 
-    double scrollDownTempo() const { return 0; }
-    void setScrollDownTempo( double tempo ) {}
+    double scrollDownTempo() const { return m_scrollDownTempo; }
+    void setScrollDownTempo( double tempo ) { m_scrollDownTempo = tempo; }
 
 public slots:
     void process( int transposing = 0 );
@@ -35,6 +35,7 @@ private:
     Chord::MinorPolicy      m_minorPolicy      = Chord::LowerCase;
 
     QString process(QString text, int transpose = 0);
+    double m_scrollDownTempo;
 
 signals:
     void changed();

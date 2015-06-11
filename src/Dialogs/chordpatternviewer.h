@@ -23,8 +23,11 @@ private: // you should use the static method `displayChordPatternAttachment()`
 
 public:
     static void displayChordPatternAttachment(ChordPatternAttachment* attachment , QWidget *parent = 0);
-    double scrollDownTempo() { return 0; }
+    double scrollDownTempo() { return m_speed; }
     int pdfWidth();
+
+public slots:
+    void update();
 
 
 private:
@@ -35,6 +38,11 @@ private:
     double m_zoom;
     double m_speed;
     HUD* m_hud;
+
+    double m_pos;
+    bool m_atEnd = false;
+    QTimer* m_playTimer;
+
 
 
 private slots:
@@ -47,8 +55,17 @@ private slots:
     void on_buttonFaster_clicked();
     void on_buttonSlower_clicked();
 
+    void on_pushButtonPauseJumpToBegin_clicked();
+    void on_playTimerTimeout();
+
+
+    void on_pushButtonPlay_clicked(bool checked);
+
+    void on_pushButton_clicked(bool checked);
+
 protected:
     void resizeEvent(QResizeEvent *e);
+    bool eventFilter(QObject *o, QEvent *e);
 };
 
 

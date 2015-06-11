@@ -11,9 +11,6 @@ public:
     explicit HUD(QWidget *parent = 0);
     void setText( const QString& text );
 
-protected:
-//    void paintEvent(QPaintEvent *e);
-
 public slots:
     void show();
     void replace();

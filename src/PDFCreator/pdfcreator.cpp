@@ -407,7 +407,6 @@ void PDFCreator::paintChordPatternAttachment(ChordPatternAttachment *attachment)
     {
         QString line = lines[i];
 
-//        qDebug() << "is endless: " << isEndlessPage();
         if (isEndlessPage())
         {
             double spaceLeft = pageRectMargins().height() - y;
@@ -818,10 +817,7 @@ void PDFCreator::save(QString filename)
     else                                   // all songs in one pdf
     {
         Document document;
-        for (const Page* page : m_pages)
-        {
-            qDebug() << "size" << page->sizeInMM();
-        }
+
         document.pages = m_pages;
         QString label = "";
         if (m_setlist)

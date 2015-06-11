@@ -6,11 +6,13 @@
 
 DEFN_CONFIG( ChordPatternViewer, "ChordPatternViewer" );
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, zoom, 1.0 );
+CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, line, true );
 
 ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChordPatternViewer),
-    m_attachment( attachment )
+    m_attachment( attachment ),
+    m_pos( 0 )
 {
     ui->setupUi(this);
 
@@ -53,7 +55,17 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
 
 //    setWindowState( Qt::WindowFullScreen );
     m_hud = new HUD(this);
+    applySpeed();
     m_hud->hide();
+
+    ui->label->installEventFilter( this );
+
+    m_playTimer = new QTimer( this );
+    m_playTimer->setInterval( 50 );
+    connect( m_playTimer, SIGNAL(timeout()), this, SLOT(on_playTimerTimeout()) );
+
+    ui->buttonEnableLine->setChecked( config["line"].toBool() );
+
 }
 
 ChordPatternViewer::~ChordPatternViewer()
@@ -66,6 +78,7 @@ void ChordPatternViewer::displayChordPatternAttachment(ChordPatternAttachment *a
 {
     ChordPatternViewer cpv( attachment, parent );
     cpv.exec();
+
 
     if (cpv.scrollDownTempo() != attachment->scrollDownTempo())
     {
@@ -135,21 +148,21 @@ void ChordPatternViewer::on_buttonZoomIn_clicked()
 
 void ChordPatternViewer::on_buttonFaster_clicked()
 {
-    m_speed *= 1.05;
+    m_speed *= 1.02;
     applySpeed();
 }
 
 void ChordPatternViewer::on_buttonSlower_clicked()
 {
-    m_speed /= 1.05;
+    m_speed /= 1.02;
     applySpeed();
 }
 
 void ChordPatternViewer::applySpeed()
 {
-    if (m_speed >= 100)
+    if (m_speed >= 10)
     {
-        m_speed = 100;
+        m_speed = 10;
         ui->buttonFaster->setEnabled( false );
     }
     else
@@ -157,9 +170,9 @@ void ChordPatternViewer::applySpeed()
         ui->buttonFaster->setEnabled( true );
     }
 
-    if (m_speed <= 0.1)
+    if (m_speed <= 0.05)
     {
-        m_speed = 0.1;
+        m_speed = 0.05;
         ui->buttonSlower->setEnabled( false );
     }
     else
@@ -167,12 +180,74 @@ void ChordPatternViewer::applySpeed()
         ui->buttonSlower->setEnabled( true );
     }
 
-    m_hud->setText( QString("%1").arg(qRound(m_speed * 100) / 100.0) );
+    m_hud->setText( QString("%1").arg(qRound(m_speed * 1000) / 1000.0) );
+
     m_hud->show();
 }
 
+bool ChordPatternViewer::eventFilter(QObject *o, QEvent *e)
+{
+    if (o == ui->label && e->type() == QEvent::Paint)
+    {
+        QLabel* label = (QLabel*) o;
+        QPainter painter(label);
+        const QPixmap* pixmap = label->pixmap();
+        painter.drawPixmap( 0, 0, *pixmap );
+        painter.setPen( Qt::red );
+        if (config["line"].toBool())
+        {
+            painter.drawLine( 0, m_pos, label->width(), m_pos );
+        }
+        return true;
+    }
+    else
+    {
+        return QDialog::eventFilter(o, e);
+    }
+}
 
 
+void ChordPatternViewer::on_playTimerTimeout()
+{
+    m_pos += m_speed;
+    if (m_pos >= ui->label->height())
+    {
+        m_atEnd = true;
+        m_playTimer->stop();
+        ui->pushButtonPlay->setChecked(false);
+    }
+    update();
+}
 
 
+void ChordPatternViewer::on_pushButtonPauseJumpToBegin_clicked()
+{
+    m_playTimer->stop();
+    ui->pushButtonPlay->setChecked(false);
+    m_pos = 0;
+    update();
+}
 
+void ChordPatternViewer::on_pushButtonPlay_clicked(bool checked)
+{
+    if (checked)
+    {
+        m_playTimer->start();
+    }
+    else
+    {
+        m_playTimer->stop();
+    }
+}
+
+void ChordPatternViewer::update()
+{
+    ui->scrollArea->ensureVisible( ui->label->width() / 2, m_pos, 0, ui->scrollArea->viewport()->height() / 2 );
+    QDialog::update();
+}
+
+void ChordPatternViewer::on_pushButton_clicked(bool checked)
+{
+    config.set("line", checked);
+    update();
+}

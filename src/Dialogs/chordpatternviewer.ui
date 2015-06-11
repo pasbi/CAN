@@ -104,6 +104,19 @@
       </widget>
      </item>
      <item>
+      <spacer name="verticalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonZoomOut">
        <property name="minimumSize">
         <size>
@@ -176,6 +189,45 @@
       </widget>
      </item>
      <item>
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonEnableLine">
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/oldIcons/oldIcons/minus.png</normaloff>:/oldIcons/oldIcons/minus.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonFaster">
        <property name="minimumSize">
         <size>
@@ -198,6 +250,9 @@
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
+       </property>
+       <property name="autoRepeatInterval">
+        <number>5</number>
        </property>
       </widget>
      </item>
@@ -224,6 +279,9 @@
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
+       </property>
+       <property name="autoRepeatInterval">
+        <number>5</number>
        </property>
       </widget>
      </item>

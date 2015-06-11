@@ -20,8 +20,18 @@ HUD::HUD(QWidget *parent) :
 void HUD::show()
 {
     m_i = 0;
-    m_timer->start();
-    QLabel::show();
+
+    if (!m_timer->isActive())
+    {
+        // this seems to be slow. so use it only if needed.
+        m_timer->start();
+    }
+
+    if (!isVisible())
+    {
+        // this seems to be slow. so use it only if needed.
+        QLabel::show();
+    }
 }
 
 void HUD::updateTransparency()
@@ -41,11 +51,11 @@ void HUD::updateTransparency()
 
     QPainter painter;
 
+
+    painter.begin(&image);
     QFont font = painter.font();
     font.setPointSizeF( 20 );
     font.setWeight( QFont::Bold );
-
-    painter.begin(&image);
     painter.setFont( font );
     painter.setPen( QColor(0, 0, 0, alpha) );
     int width = painter.fontMetrics().width( m_text );
@@ -72,15 +82,6 @@ void HUD::setText(const QString &text)
 {
     m_text = text;
 }
-
-//void HUD::paintEvent(QPaintEvent *e)
-//{
-//    QLabel::paintEvent(e);
-
-//    QPainter painter(this);
-//    painter.fillRect( rect(), Qt::red );
-
-//}
 
 void HUD::replace()
 {
