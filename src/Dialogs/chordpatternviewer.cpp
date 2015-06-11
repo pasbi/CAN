@@ -46,16 +46,19 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
     ui->label->setPixmap( m_pixmap );
     }
 
-    QTimer::singleShot( 1, this, SLOT(adjustPDFSize()) );
-    ui->sliderSize->setValue( config["zoom"].toDouble() * ui->sliderSize->maximum() );
-    connect( ui->sliderSize, SIGNAL(valueChanged(int)), this, SLOT(adjustPDFSizeLater()) );
+    m_zoom = config["zoom"].toDouble();
+    m_speed = attachment->scrollDownTempo();
 
-    setWindowState( Qt::WindowFullScreen );
+    QTimer::singleShot( 1, this, SLOT(applyZoom()) );
+
+//    setWindowState( Qt::WindowFullScreen );
+    m_hud = new HUD(this);
+    m_hud->hide();
 }
 
 ChordPatternViewer::~ChordPatternViewer()
 {
-    config.set("zoom", (double) ui->sliderSize->value() / ui->sliderSize->maximum());
+    config.set( "zoom", m_zoom );
     delete ui;
 }
 
@@ -81,24 +84,95 @@ void ChordPatternViewer::displayChordPatternAttachment(ChordPatternAttachment *a
 
 void ChordPatternViewer::resizeEvent(QResizeEvent *e)
 {
-    adjustPDFSize();
+    applyZoom();
+    m_hud->replace();
     QDialog::resizeEvent(e);
-}
-
-void ChordPatternViewer::adjustPDFSizeLater()
-{
-    adjustPDFSize();
-}
-
-void ChordPatternViewer::adjustPDFSize()
-{
-    QPixmap pixmap = m_pixmap.scaledToWidth( pdfWidth(), Qt::SmoothTransformation );
-    ui->label->setPixmap( pixmap  );
 }
 
 int ChordPatternViewer::pdfWidth()
 {
-    double v = ui->sliderSize->value();
-    double max = ui->sliderSize->maximum();
-    return ui->scrollArea->viewport()->width() * (double) v / max;
+    return ui->scrollArea->viewport()->width() * m_zoom;
 }
+
+void ChordPatternViewer::applyZoom()
+{
+    if (m_zoom <= 0.05)
+    {
+        m_zoom = 0.05;
+        ui->buttonZoomOut->setEnabled( false );
+    }
+    else
+    {
+        ui->buttonZoomOut->setEnabled( true );
+    }
+
+    if (m_zoom >= 1)
+    {
+        m_zoom = 1;
+        ui->buttonZoomIn->setEnabled( false );
+    }
+    else
+    {
+        ui->buttonZoomIn->setEnabled( true );
+    }
+
+    QPixmap pixmap = m_pixmap.scaledToWidth( pdfWidth(), Qt::SmoothTransformation );
+    ui->label->setPixmap( pixmap  );
+}
+
+void ChordPatternViewer::on_buttonZoomOut_clicked()
+{
+    m_zoom /= 1.05;
+    applyZoom();
+}
+
+void ChordPatternViewer::on_buttonZoomIn_clicked()
+{
+    m_zoom *= 1.05;
+    applyZoom();
+}
+
+
+void ChordPatternViewer::on_buttonFaster_clicked()
+{
+    m_speed *= 1.05;
+    applySpeed();
+}
+
+void ChordPatternViewer::on_buttonSlower_clicked()
+{
+    m_speed /= 1.05;
+    applySpeed();
+}
+
+void ChordPatternViewer::applySpeed()
+{
+    if (m_speed >= 100)
+    {
+        m_speed = 100;
+        ui->buttonFaster->setEnabled( false );
+    }
+    else
+    {
+        ui->buttonFaster->setEnabled( true );
+    }
+
+    if (m_speed <= 0.1)
+    {
+        m_speed = 0.1;
+        ui->buttonSlower->setEnabled( false );
+    }
+    else
+    {
+        ui->buttonSlower->setEnabled( true );
+    }
+
+    m_hud->setText( QString("%1").arg(qRound(m_speed * 100) / 100.0) );
+    m_hud->show();
+}
+
+
+
+
+
+

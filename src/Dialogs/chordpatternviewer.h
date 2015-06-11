@@ -6,6 +6,7 @@
 #include <QTemporaryFile>
 #include "poppler.h"
 #include "configurable.h"
+#include "hud.h"
 
 namespace Ui {
 class ChordPatternViewer;
@@ -31,10 +32,20 @@ private:
     ChordPatternAttachment* m_attachment;
     QTemporaryFile m_pdfFile;
     QPixmap m_pixmap;
+    double m_zoom;
+    double m_speed;
+    HUD* m_hud;
+
 
 private slots:
-    void adjustPDFSizeLater();
-    void adjustPDFSize();
+    void on_buttonZoomOut_clicked();
+    void on_buttonZoomIn_clicked();
+    void applyZoom();
+    void applySpeed();
+
+
+    void on_buttonFaster_clicked();
+    void on_buttonSlower_clicked();
 
 protected:
     void resizeEvent(QResizeEvent *e);

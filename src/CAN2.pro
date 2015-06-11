@@ -150,7 +150,8 @@ SOURCES += main.cpp\
     PDFCreator/pdfcreator.cpp \
     AttachmentView/looselines.cpp \
     Dialogs/chordpatternviewer.cpp \
-    PDFCreator/orphantsetlist.cpp
+    PDFCreator/orphantsetlist.cpp \
+    Dialogs/hud.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -265,7 +266,8 @@ HEADERS  += mainwindow.h \
     soundtouch.h \
     AttachmentView/looselines.h \
     Dialogs/chordpatternviewer.h \
-    PDFCreator/orphantsetlist.h
+    PDFCreator/orphantsetlist.h \
+    Dialogs/hud.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
