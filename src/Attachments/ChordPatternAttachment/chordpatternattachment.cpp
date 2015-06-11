@@ -1,7 +1,9 @@
 #include "chordpatternattachment.h"
 
 #include "../attachment.h"
-#include <QApplication>
+#include "application.h"
+#include "project.h"
+
 
 DEFN_CREATABLE_NAME(ChordPatternAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Attachment"))
 
@@ -114,5 +116,14 @@ QString ChordPatternAttachment::process(QString text, int transpose)
         }
     }
     return replaceTabs(text);
+}
+
+void ChordPatternAttachment::setScrollDownTempo( double tempo )
+{
+    if (m_scrollDownTempo != tempo)
+    {
+        m_scrollDownTempo = tempo;
+        app().project()->pushCommand( NULL ); // push empty command to indicate project changed.
+    }
 }
 

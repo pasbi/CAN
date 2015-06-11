@@ -23,7 +23,7 @@ public:
     void copy(Attachment *&copied) const;
 
     double scrollDownTempo() const { return m_scrollDownTempo; }
-    void setScrollDownTempo( double tempo ) { m_scrollDownTempo = tempo; }
+    void setScrollDownTempo( double tempo );
 
 public slots:
     void process( int transposing = 0 );

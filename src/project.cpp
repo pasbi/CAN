@@ -89,9 +89,12 @@ bool Project::saveToTempDir()
 void Project::pushCommand(Command *command)
 {
     setCanClose(false);
-    QUndoStack::push(command);
 
-    emitCommandPushedSignal( command->type() );
+    if (command)
+    {
+        QUndoStack::push(command);
+        emitCommandPushedSignal( command->type() );
+    }
 
 }
 
