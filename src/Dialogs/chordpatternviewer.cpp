@@ -135,12 +135,14 @@ void ChordPatternViewer::applyZoom()
 
 void ChordPatternViewer::on_buttonZoomOut_clicked()
 {
+    m_pos /= 1.05;
     m_zoom /= 1.05;
     applyZoom();
 }
 
 void ChordPatternViewer::on_buttonZoomIn_clicked()
 {
+    m_pos *= 1.05;
     m_zoom *= 1.05;
     applyZoom();
 }
@@ -192,7 +194,8 @@ bool ChordPatternViewer::eventFilter(QObject *o, QEvent *e)
         QLabel* label = (QLabel*) o;
         QPainter painter(label);
         const QPixmap* pixmap = label->pixmap();
-        painter.drawPixmap( 0, 0, *pixmap );
+        int xshift = ui->scrollArea->viewport()->width() - pixmap->width();
+        painter.drawPixmap( xshift/2, 0, *pixmap );
         painter.setPen( Qt::red );
         if (config["line"].toBool())
         {
@@ -209,8 +212,8 @@ bool ChordPatternViewer::eventFilter(QObject *o, QEvent *e)
 
 void ChordPatternViewer::on_playTimerTimeout()
 {
-    m_pos += m_speed;
-    if (m_pos >= ui->label->height())
+    m_pos += m_speed * m_zoom;
+    if (m_pos >= ui->label->height() * m_zoom)
     {
         m_atEnd = true;
         m_playTimer->stop();
@@ -218,7 +221,6 @@ void ChordPatternViewer::on_playTimerTimeout()
     }
     update();
 }
-
 
 void ChordPatternViewer::on_pushButtonPauseJumpToBegin_clicked()
 {
@@ -242,7 +244,8 @@ void ChordPatternViewer::on_pushButtonPlay_clicked(bool checked)
 
 void ChordPatternViewer::update()
 {
-    ui->scrollArea->ensureVisible( ui->label->width() / 2, m_pos, 0, ui->scrollArea->viewport()->height() / 2 );
+    double pos = m_pos * m_zoom;
+    ui->scrollArea->ensureVisible( ui->label->width() / 2, pos, 0, ui->scrollArea->viewport()->height() / 2 );
     QDialog::update();
 }
 
