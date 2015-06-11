@@ -3,6 +3,8 @@
 #include <QMessageBox>
 #include <PDFCreator/pdfcreator.h>
 #include <QTimer>
+#include <QMouseEvent>
+#include <QKeyEvent>
 
 DEFN_CONFIG( ChordPatternViewer, "ChordPatternViewer" );
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, zoom, 1.0 );
@@ -59,6 +61,8 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
     m_hud->hide();
 
     ui->label->installEventFilter( this );
+    ui->scrollArea->installEventFilter( this );
+    ui->scrollAreaWidgetContents->installEventFilter( this );
 
     m_playTimer = new QTimer( this );
     m_playTimer->setInterval( 50 );
@@ -196,24 +200,47 @@ bool ChordPatternViewer::eventFilter(QObject *o, QEvent *e)
         const QPixmap* pixmap = label->pixmap();
         int xshift = ui->scrollArea->viewport()->width() - pixmap->width();
         painter.drawPixmap( xshift/2, 0, *pixmap );
-        painter.setPen( Qt::red );
+        painter.setPen( QColor(255, 0, 0, 100));
         if (config["line"].toBool())
         {
             painter.drawLine( 0, m_pos, label->width(), m_pos );
         }
         return true;
     }
-    else
+    // catch the events before QWidget::keyEvent has chance.
+    else if ( e->type() == QEvent::KeyPress )
     {
-        return QDialog::eventFilter(o, e);
+        QKeyEvent* ke = (QKeyEvent*) e;
+        if (ke->key() == Qt::Key_Space)
+        {
+            ui->pushButtonPlay->toggle();
+        }
+        else if (ke->key() == Qt::Key_Up)
+        {
+            m_pos = qMax(0.0, m_pos - 10 * m_zoom );
+            update();
+            return true;
+        }
+        else if (ke->key() == Qt::Key_Down)
+        {
+            m_pos = qMin( (double) ui->label->height(), m_pos + 20 * m_zoom );
+            update();
+            return true;
+        }
+        else
+        {
+            return QDialog::eventFilter(o, e);
+        }
     }
+    return QDialog::eventFilter(o, e);
+
 }
 
 
 void ChordPatternViewer::on_playTimerTimeout()
 {
     m_pos += m_speed * m_zoom;
-    if (m_pos >= ui->label->height() * m_zoom)
+    if (m_pos >= ui->label->height())
     {
         m_atEnd = true;
         m_playTimer->stop();
@@ -230,7 +257,20 @@ void ChordPatternViewer::on_pushButtonPauseJumpToBegin_clicked()
     update();
 }
 
-void ChordPatternViewer::on_pushButtonPlay_clicked(bool checked)
+void ChordPatternViewer::update()
+{
+    double pos = m_pos;
+    ui->scrollArea->ensureVisible( ui->label->width() / 2, pos, 0, ui->scrollArea->viewport()->height() / 2 );
+    QDialog::update();
+}
+
+void ChordPatternViewer::on_buttonEnableLine_clicked(bool checked)
+{
+    config.set("line", checked);
+    update();
+}
+
+void ChordPatternViewer::on_pushButtonPlay_toggled(bool checked)
 {
     if (checked)
     {
@@ -240,17 +280,4 @@ void ChordPatternViewer::on_pushButtonPlay_clicked(bool checked)
     {
         m_playTimer->stop();
     }
-}
-
-void ChordPatternViewer::update()
-{
-    double pos = m_pos * m_zoom;
-    ui->scrollArea->ensureVisible( ui->label->width() / 2, pos, 0, ui->scrollArea->viewport()->height() / 2 );
-    QDialog::update();
-}
-
-void ChordPatternViewer::on_pushButton_clicked(bool checked)
-{
-    config.set("line", checked);
-    update();
 }

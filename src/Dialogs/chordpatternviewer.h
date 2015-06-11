@@ -44,7 +44,6 @@ private:
     QTimer* m_playTimer;
 
 
-
 private slots:
     void on_buttonZoomOut_clicked();
     void on_buttonZoomIn_clicked();
@@ -54,14 +53,11 @@ private slots:
 
     void on_buttonFaster_clicked();
     void on_buttonSlower_clicked();
-
     void on_pushButtonPauseJumpToBegin_clicked();
     void on_playTimerTimeout();
+    void on_pushButtonPlay_toggled(bool checked);
+    void on_buttonEnableLine_clicked(bool checked);
 
-
-    void on_pushButtonPlay_clicked(bool checked);
-
-    void on_pushButton_clicked(bool checked);
 
 protected:
     void resizeEvent(QResizeEvent *e);
