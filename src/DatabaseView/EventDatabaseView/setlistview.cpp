@@ -7,6 +7,9 @@
 #include <QHeaderView>
 #include <QClipboard>
 #include "util.h"
+#include <QToolButton>
+#include "Dialogs/chordpatternviewer.h"
+
 
 const QString SetlistView::ITEMS_MIMEDATA_FORMAT = "CAN/Setlist/Item";
 
@@ -20,8 +23,9 @@ SetlistView::SetlistView(QWidget *parent) :
     setDefaultDropAction( Qt::MoveAction );
     setAlternatingRowColors( true );
     horizontalHeader()->hide();
-    horizontalHeader()->setStretchLastSection( true );
     setHorizontalScrollMode( QTableView::ScrollPerPixel );
+
+    setEditTriggers( QAbstractItemView::SelectedClicked );
 
     setContextMenuPolicy( Qt::CustomContextMenu );
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
@@ -166,21 +170,28 @@ void SetlistView::mousePressEvent(QMouseEvent *event)
 
 void SetlistView::setModel(Setlist *setlist)
 {
-     QTableView::setModel( setlist );
-     if (setlist)
-     {
-         connect(setlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateMinimumHorizontalHeaderSize()));
-         updateMinimumHorizontalHeaderSize();
-     }
+    if (model())
+    {
+        disconnect( model(), SIGNAL(rowsInserted(QModelIndex,int,int)),                this, SLOT(updateCellWidgets()) );
+        disconnect( model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
+        disconnect( model(), SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
+    }
+    QTableView::setModel( setlist );
+    if (setlist)
+    {
+        connect( setlist, SIGNAL(rowsInserted(QModelIndex,int,int)),                this, SLOT(updateCellWidgets()) );
+        connect( setlist, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
+        connect( setlist, SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
+        updateCellWidgets();
+        horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );
+        horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Fixed );
+        horizontalHeader()->resizeSection( 1, 45 );
+    }
 }
 
-void SetlistView::updateMinimumHorizontalHeaderSize()
+Setlist* SetlistView::model() const
 {
-    horizontalHeader()->setMinimumWidth( qMin(0, sizeHintForColumn( 0 )) );
-
-    // shake the size to show or hide scrollbars that might have become visible or hidden
-    resize( QSize( size().width() + 1, size().height() + 1) );
-    resize( QSize( size().width() - 1, size().height() - 1) );
+    return qobject_assert_cast<Setlist*>( QTableView::model() );
 }
 
 void SetlistView::showContextMenu(QPoint pos)
@@ -256,5 +267,68 @@ QList<SetlistItem*> SetlistView::selectedItems() const
     else
     {
         return QList<SetlistItem*>();
+    }
+}
+
+void SetlistView::updateCellWidgets()
+{
+    for (QWidget* w : m_cellWidgets)
+    {
+        w->deleteLater();
+    }
+    m_cellWidgets.clear();
+
+    if (!model())
+    {
+        return;
+    }
+
+    for (int i = 0; i < model()->rowCount(); ++i)
+    {
+        QModelIndex index = model()->index( i, 1 );
+        QToolButton* button = new QToolButton( this );
+        m_cellWidgets << button;
+        button->setIcon( QIcon(":/icons/icons/war4.png") );
+
+        setIndexWidget( index, button );
+
+        SetlistItem* item = model()->itemAt( index );
+        const Song* song = NULL;
+        if (!item || !(song = item->song()))
+        {
+            button->setEnabled( false );
+        }
+        else
+        {
+            QMenu* menu = new QMenu( button );
+            button->setMenu( menu );
+            button->setPopupMode( QToolButton::MenuButtonPopup );
+
+            for (Attachment* attachment : song->attachments())
+            {
+                if (attachment->type() == ChordPatternAttachment::TYPE )
+                {
+                    ChordPatternAttachment* cpa = qobject_assert_cast<ChordPatternAttachment*>( attachment );
+                    QAction* action = new QAction(menu);
+                    action->setText( cpa->name() );
+                    menu->addAction( action );
+
+                    connect( action, &QAction::triggered, [this, cpa]()
+                    {
+                        ChordPatternViewer::displayChordPatternAttachment( cpa, this );
+                    });
+                }
+            }
+            if (!menu->actions().isEmpty())
+            {
+                menu->setDefaultAction( menu->actions().first() );
+            }
+
+            connect( button, &QToolButton::clicked, [this, menu]()
+            {
+                menu->actions().first()->trigger();
+            });
+
+        }
     }
 }

@@ -5,7 +5,6 @@
 #include <QList>
 #include "Attachments/attachment.h"
 #include <QVariantMap>
-#include "song.h"
 #include <QDateTime>
 
 class SongDatabase;

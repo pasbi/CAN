@@ -44,7 +44,7 @@ QDataStream& operator << (QDataStream& out, const SetlistItem* item );
 QDataStream& operator >> (QDataStream& in,  SetlistItem* &item );
 
 class Event;
-class Setlist : public QAbstractListModel
+class Setlist : public QAbstractTableModel
 {
     Q_OBJECT
 public:
@@ -55,8 +55,8 @@ public:
     void appendItem( SetlistItem* item );
     void removeItem( SetlistItem* item );
     void moveItem( int from, int to );
-    int rowCount(const QModelIndex &parent) const;
-    int rowCount() const { return rowCount( QModelIndex() ); }
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount( const QModelIndex& parent = QModelIndex() ) const { assert( !parent.isValid()); return 2; }
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
@@ -90,6 +90,8 @@ private:
     QList<SetlistItem*> m_items;
     mutable QList<SetlistItem*> m_tmpItemBuffer;    // temp buffer for inserting items
     mutable QList<SetlistItem*> m_draggedItems;     // temp buffer for remove dragged items
+
+    QList<void*> viewableAttachments( const QModelIndex& index ) const;    // returns a list of viewable attachments
 
     Event* m_event = NULL;
 };

@@ -21,9 +21,9 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setSetlist( NULL );
 
     connect(ui->listView, SIGNAL(clicked()), this, SLOT(updateButtonsEnabled()) );
+    setSetlist( NULL );
 }
 
 SetlistWidget::~SetlistWidget()
@@ -71,7 +71,6 @@ void SetlistWidget::setSetlist(Setlist *setlist)
     ui->listView->setModel( setlist );
 
     updateButtonsEnabled();
-
 }
 
 
@@ -102,6 +101,7 @@ void SetlistWidget::on_buttonSortUp_clicked()
     }
     updateButtonsEnabled();
 }
+
 
 void SetlistWidget::on_buttonSortDown_clicked()
 {

@@ -210,7 +210,7 @@
  <customwidgets>
   <customwidget>
    <class>SetlistView</class>
-   <extends>QListView</extends>
+   <extends>QTableView</extends>
    <header>DatabaseView/EventDatabaseView/setlistview.h</header>
   </customwidget>
  </customwidgets>

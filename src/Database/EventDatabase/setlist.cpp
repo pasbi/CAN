@@ -24,7 +24,7 @@ bool SetlistItem::setLabel(const QString label)
     }
     else
     {
-        qWarning() << "Cannot set label of non-label type SetlistItem.";
+        // ignore.
         return false;
     }
 }
@@ -120,9 +120,10 @@ QDataStream& operator >> (QDataStream& in,  SetlistItem* &item )
 }
 
 Setlist::Setlist(Event *event) :
-    QAbstractListModel(event),
+    QAbstractTableModel(event),
     m_event( event )
 {
+
 }
 
 void Setlist::insertItem( int position, SetlistItem* item )
@@ -150,29 +151,80 @@ int Setlist::rowCount(const QModelIndex& parent) const
 Qt::ItemFlags Setlist::flags(const QModelIndex &index) const
 {
     Q_UNUSED( index );
-    switch (itemAt(index)->type())
+    switch (index.column())
     {
-    case SetlistItem::LabelType:
-        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable;
-    case SetlistItem::SongType:
-        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled;
-    default:
-        return Qt::ItemFlags();
+    case 0:
+        switch (itemAt(index)->type())
+        {
+        case SetlistItem::LabelType:
+            return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable;
+        case SetlistItem::SongType:
+            return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled;
+        default:
+            return Qt::ItemFlags();
+        }
+    case 1:
+        switch (itemAt(index)->type())
+        {
+        case SetlistItem::LabelType:
+            return Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
+        case SetlistItem::SongType:
+            return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable;
+        default:
+            return Qt::ItemFlags();
+        }
     }
 
 }
 
+QList<void*> Setlist::viewableAttachments(const QModelIndex &index) const
+{
+    QList<void*> list;
+    SetlistItem* item = itemAt( index );
+    if (item && item->song())
+    {
+        for (Attachment* attachment : item->song()->attachments())
+        {
+            if (attachment->type() == "ChordPatternAttachment")
+            {
+                list << attachment;
+            }
+            else if (attachment->type() == "PDFAttachment")
+            {
+                list << attachment;
+            }
+        }
+    }
+    return list;
+}
+
 QVariant Setlist::data(const QModelIndex &index, int role) const
 {
-    assert(index.column() == 0);
-    switch (role)
+    switch ( index.column() )
     {
-    case Qt::DisplayRole:
-    case Qt::EditRole:
-        return m_items[index.row()]->label();
+    case 0:
+        switch (role)
+        {
+        case Qt::DisplayRole:
+        case Qt::EditRole:
+            return m_items[index.row()]->label();
+        default:
+            return QVariant();
+        }
+    case 1:
+        switch (role)
+        {
+        case Qt::DisplayRole:
+        case Qt::EditRole:
+            return ""; //QVariant::fromValue( viewableAttachments( index ) );"
+        default:
+            return QVariant();
+        }
+
     default:
         return QVariant();
     }
+
 }
 
 bool Setlist::setData_(const QModelIndex &index, const QVariant &value, int role)

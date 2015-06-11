@@ -7,6 +7,8 @@
 #include <QDragMoveEvent>
 #include "Database/EventDatabase/setlist.h"
 #include <QMenu>
+#include <QItemDelegate>
+
 
 class SetlistView : public QTableView
 {
@@ -14,7 +16,7 @@ class SetlistView : public QTableView
 public:
     explicit SetlistView(QWidget *parent = 0);
 
-    Setlist* model() const { return qobject_assert_cast<Setlist*>( QTableView::model() ); }
+    Setlist* model() const;
     void setModel(Setlist* setlist);
     void paste(const QMimeData* mime);
 
@@ -31,13 +33,13 @@ protected:
     void mousePressEvent(QMouseEvent *event);
 
 private slots:
-    void updateMinimumHorizontalHeaderSize();
     void showContextMenu(QPoint pos);
 
     void my_on_actionNewSetlistItem_triggered();
     void my_on_actionDeleteSetlistItem_triggered();
     void my_on_actionCopySetlistItem_triggered();
     void my_on_actionPasteSetlistItem_triggered();
+    void updateCellWidgets();
 
 private:
     void setUpContextMenu(QMenu* menu, QPoint pos);
@@ -45,7 +47,7 @@ private:
     QAction* m_actionDeleteSetlistItem;
     QAction* m_actionCopySetlistItem;
     QAction* m_actionPasteSetlistItem;
-
+    QWidgetList m_cellWidgets;
 
 public:
     static const QString ITEMS_MIMEDATA_FORMAT;

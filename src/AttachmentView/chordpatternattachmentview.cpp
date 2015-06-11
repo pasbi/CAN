@@ -30,6 +30,7 @@ ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     {
         app().pushCommand( new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), 1 ) );
     });
+    m_toolBar->addAction( transposeUpAction );
 
     QAction* transposeDownAction = new QAction( QIcon(":/icons/icons/down27.png"), tr("Transpose down"), this );
     addAction( transposeDownAction );
@@ -37,6 +38,11 @@ ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     {
         app().pushCommand( new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), -1 ) );
     });
+    m_toolBar->addAction( transposeDownAction );
+
+    QWidget* empty = new QWidget( this );
+    empty->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    m_toolBar->addWidget(empty);
 
     QAction* showInViewerAction = new QAction( QIcon(":/icons/icons/war4.png"), tr("Show in viewer"), this );
     addAction( showInViewerAction );
@@ -44,8 +50,8 @@ ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     {
         ChordPatternViewer::displayChordPatternAttachment( attachment<ChordPatternAttachment>(), this );
     });
+    m_toolBar->addAction( showInViewerAction );
 
-    m_toolBar->addActions( actions() );
     ui->verticalLayout->insertWidget(0, m_toolBar);
 
 }
