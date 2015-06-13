@@ -4,15 +4,46 @@
 <context>
     <name>AddFileIndexSourceDialog</name>
     <message>
-        <location filename="Dialogs/addfileindexsourcedialog.cpp" line="38"/>
         <source>all files</source>
-        <translation>All Files</translation>
+        <translation type="vanished">All Files</translation>
     </message>
     <message>
-        <location filename="Dialogs/addfileindexsourcedialog.cpp" line="43"/>
         <source>&lt; No files &gt;</source>
-        <translation>
+        <translation type="vanished">
 &lt; No Files &gt;</translation>
+    </message>
+</context>
+<context>
+    <name>AddFilesToIndexDialog</name>
+    <message>
+        <location filename="Dialogs/addfilestoindexdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>Index ...</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/addfilestoindexdialog.ui" line="22"/>
+        <source>Path</source>
+        <translation>Path</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/addfilestoindexdialog.ui" line="54"/>
+        <source>*.pdf</source>
+        <translation>*.pdf</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/addfilestoindexdialog.ui" line="61"/>
+        <source>*.mp3</source>
+        <translation>*.mp3</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/addfilestoindexdialog.ui" line="68"/>
+        <source>*.ogg</source>
+        <translation>*.ogg</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/addfilestoindexdialog.cpp" line="36"/>
+        <source>Directory ...</source>
+        <translation>Directory ...</translation>
     </message>
 </context>
 <context>
@@ -134,7 +165,7 @@
 <context>
     <name>ChordPatternAttachment</name>
     <message>
-        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="13"/>
+        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="15"/>
         <source>Chord Pattern</source>
         <translation>Chord Pattern</translation>
     </message>
@@ -142,14 +173,50 @@
 <context>
     <name>ChordPatternAttachmentView</name>
     <message>
-        <location filename="AttachmentView/chordpatternattachmentview.cpp" line="25"/>
+        <location filename="AttachmentView/chordpatternattachmentview.cpp" line="27"/>
         <source>Transpose up</source>
         <translation>Transpose up</translation>
     </message>
     <message>
-        <location filename="AttachmentView/chordpatternattachmentview.cpp" line="32"/>
+        <location filename="AttachmentView/chordpatternattachmentview.cpp" line="35"/>
         <source>Transpose down</source>
         <translation>Transpose down</translation>
+    </message>
+    <message>
+        <location filename="AttachmentView/chordpatternattachmentview.cpp" line="47"/>
+        <source>Show in viewer</source>
+        <translation>Show in viewer</translation>
+    </message>
+</context>
+<context>
+    <name>ChordPatternViewer</name>
+    <message>
+        <location filename="Dialogs/chordpatternviewer.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>Viewer</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="75"/>
+        <source>Poppler is not available</source>
+        <translation>Poppler is not available.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="76"/>
+        <source>It seems this application was build without poppler.
+Thus, this feature is not available.</source>
+        <translation>It seems this application was build without poppler.
+Thus, this feature is not available.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="97"/>
+        <source>Apply new tempo?</source>
+        <translation>Apply new tempo?</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="98"/>
+        <source>You changed the tempo of this chord pattern.
+Do you want to keep it?</source>
+        <translation>You changed the tempo of this chord pattern. Do you want to keep it?</translation>
     </message>
 </context>
 <context>
@@ -178,6 +245,154 @@
         <location filename="Dialogs/clonedialog.ui" line="72"/>
         <source>URL</source>
         <translation>URL</translation>
+    </message>
+</context>
+<context>
+    <name>CommandTranslator</name>
+    <message>
+        <location filename="Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp" line="7"/>
+        <source>Delete Section [%1 - %2]</source>
+        <translation>Delete section [%1 - %2]</translation>
+    </message>
+    <message>
+        <location filename="Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.cpp" line="10"/>
+        <source>Edit section %1 -&gt; %2</source>
+        <translation>Edit section %1 -&gt; %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.cpp" line="9"/>
+        <source>New Section [%1 - %2]</source>
+        <translation>New Section [%1 - %2]</translation>
+    </message>
+    <message>
+        <location filename="Commands/AttachmentCommands/attachmentrenamecommand.cpp" line="9"/>
+        <source>Rename attachment %1 -&gt; %2</source>
+        <translation>Rename attachment %1 -&gt; %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp" line="54"/>
+        <source>Edit chord pattern %1 -&gt; %2</source>
+        <translation>Edit chord pattern %1 -&gt; %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/AttachmentCommands/chordpatternattachmenttransposecommand.cpp" line="7"/>
+        <source>Transpose chord pattern %1</source>
+        <translation>Transpose chord pattern (%1)</translation>
+    </message>
+    <message>
+        <location filename="Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp" line="13"/>
+        <source>Set file %1 -&gt; %2</source>
+        <translation>Change file %1 -&gt; %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/EventDatabaseCommands/eventdatabaseediteventcommand.cpp" line="13"/>
+        <source>Edit event %1 -&gt; %2</source>
+        <translation>Edit event %1 -&gt; %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.cpp" line="8"/>
+        <source>Move event %1 -&gt; %2</source>
+        <translation>Move event %1 -&gt; %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/EventDatabaseCommands/eventdatabaseneweventcommand.cpp" line="17"/>
+        <source>New event</source>
+        <translation>New event</translation>
+    </message>
+    <message>
+        <location filename="Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.cpp" line="9"/>
+        <source>Delete event %1</source>
+        <translation>Delete event %1</translation>
+    </message>
+    <message>
+        <location filename="Commands/SetlistCommands/setlistadditemcommand.cpp" line="7"/>
+        <source>Add item to setlist %1</source>
+        <translation>Add item to setlist (%1)</translation>
+    </message>
+    <message>
+        <location filename="Commands/SetlistCommands/setlisteditdatacommand.cpp" line="10"/>
+        <source>Edit setlist %1 -&gt; %2</source>
+        <translation>Edit setlist %1 -&gt; %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/SetlistCommands/setlistinsertitemcommand.cpp" line="8"/>
+        <source>Insert item to setlist %1</source>
+        <translation>Insert item in setlist %1</translation>
+    </message>
+    <message>
+        <location filename="Commands/SetlistCommands/setlistmoverowscommand.cpp" line="8"/>
+        <source>Move items in setlist</source>
+        <translation>Move items in setlist</translation>
+    </message>
+    <message>
+        <location filename="Commands/SetlistCommands/setlistremoveitemcommand.cpp" line="7"/>
+        <source>Remove item from setlist %1</source>
+        <translation>Remove item from setlist %1</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongCommands/songaddattachmentcommand.cpp" line="8"/>
+        <source>Add song %1</source>
+        <translation>Add song %1</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongCommands/songduplicateattachmentcommand.cpp" line="8"/>
+        <source>Duplicate attachment %1</source>
+        <translation>Duplicate attachment (%1)</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongCommands/songremoveattachmentcommand.cpp" line="8"/>
+        <source>Remove attachment %1</source>
+        <translation>Remove attachment (%1)</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp" line="13"/>
+        <source>Edit song %1 -&gt; %2</source>
+        <translation>Edit song %1 -&gt; %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabasemovesongcommand.cpp" line="8"/>
+        <source>Move song %1 -&gt; %2</source>
+        <translation>Move song %1 -&gt; %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabasenewattributecommand.cpp" line="7"/>
+        <source>New attribute %1</source>
+        <translation>New attribute (%1)</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp" line="14"/>
+        <source>New song</source>
+        <translation>New song</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.cpp" line="7"/>
+        <source>Remove column %1</source>
+        <translation>Remove column (%1)</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp" line="9"/>
+        <source>Delete song %1</source>
+        <translation>Delete song (%1)</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabaserenameheadercommand.cpp" line="16"/>
+        <source>Rename attribute %1 -&gt; %2</source>
+        <translation>Rename attribute (%1 -&gt; %2)</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp" line="9"/>
+        <source>Make %1 %2</source>
+        <translation>Make %1 %2</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp" line="11"/>
+        <source>visible</source>
+        <translation>visible</translation>
+    </message>
+    <message>
+        <location filename="Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp" line="11"/>
+        <source>invisible</source>
+        <translation>invisible</translation>
     </message>
 </context>
 <context>
@@ -222,18 +437,18 @@
 <context>
     <name>ConfigurableItem</name>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="16"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="15"/>
         <source>Quality</source>
         <translation>Quality</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="17"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="16"/>
         <source>ConfigurableItem/PDFAttachmentView/Quality</source>
         <translation>Quality of PDF rendering.
 Higher is better but slower.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="22"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="21"/>
         <location filename="PDFCreator/pdfcreatorconfig.h" line="167"/>
         <source>dpi</source>
         <translation>dpi</translation>
@@ -336,9 +551,8 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
         <translation>A2</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="101"/>
         <source>A3</source>
-        <translation>A3</translation>
+        <translation type="vanished">A3</translation>
     </message>
     <message>
         <location filename="PDFCreator/pdfcreatorconfig.h" line="102"/>
@@ -612,6 +826,14 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
     </message>
 </context>
 <context>
+    <name>ConfigurableItemE</name>
+    <message>
+        <location filename="PDFCreator/pdfcreatorconfig.h" line="101"/>
+        <source>A3</source>
+        <translation>A3</translation>
+    </message>
+</context>
+<context>
     <name>ConfigurationDialog</name>
     <message>
         <location filename="Dialogs/configurationdialog.ui" line="14"/>
@@ -685,7 +907,7 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
         <translation>Audio Attachment</translation>
     </message>
     <message>
-        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="6"/>
+        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="8"/>
         <source>Chord Attachment</source>
         <translation>Chord Attachment</translation>
     </message>
@@ -960,419 +1182,420 @@ Add it to the index before you can use it.</translation>
         <translation>&amp;Edit</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="236"/>
         <source>Debug</source>
-        <translation>[Debug]</translation>
+        <translation type="vanished">[Debug]</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="242"/>
+        <location filename="mainwindow.ui" line="236"/>
         <source>File index related stuff.</source>
         <translation>File index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="245"/>
+        <location filename="mainwindow.ui" line="239"/>
         <source>F&amp;ile Index</source>
         <translation>File&amp;index</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="254"/>
+        <location filename="mainwindow.ui" line="248"/>
         <source>Event related stuff.</source>
         <translation>Event related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="257"/>
+        <location filename="mainwindow.ui" line="251"/>
         <source>E&amp;vents</source>
         <translation>E&amp;vents</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="262"/>
+        <location filename="mainwindow.ui" line="256"/>
         <source>Song related stuff.</source>
         <translation>Song related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="265"/>
+        <location filename="mainwindow.ui" line="259"/>
         <source>&amp;Songs</source>
         <translation>&amp;Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="269"/>
+        <location filename="mainwindow.ui" line="263"/>
         <source>Visible attributes ...</source>
         <translation>Visible attributes ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="277"/>
+        <location filename="mainwindow.ui" line="271"/>
         <source>&amp;Language</source>
         <translation>&amp;Language</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="292"/>
+        <location filename="mainwindow.ui" line="285"/>
         <source>&amp;New Project</source>
         <translation>&amp;New project</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="295"/>
+        <location filename="mainwindow.ui" line="288"/>
         <source>Create a new empty project.</source>
         <translation>Create a new empty project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="307"/>
+        <location filename="mainwindow.ui" line="300"/>
         <source>&amp;Save</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="310"/>
+        <location filename="mainwindow.ui" line="303"/>
         <source>Save the current project.</source>
         <translation>Save the current project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="322"/>
+        <location filename="mainwindow.ui" line="315"/>
         <source>Save As</source>
         <translation>Save as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="325"/>
+        <location filename="mainwindow.ui" line="318"/>
         <source>Save the current project as.</source>
         <translation>Save the current project as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="337"/>
+        <location filename="mainwindow.ui" line="330"/>
         <source>Open</source>
         <translation>Open ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="340"/>
+        <location filename="mainwindow.ui" line="333"/>
         <source>Open an existing project.</source>
         <translation>Open an existing project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="348"/>
+        <location filename="mainwindow.ui" line="341"/>
         <source>Index Info ...</source>
         <oldsource>Index Info</oldsource>
         <translation>Index info ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="351"/>
+        <location filename="mainwindow.ui" line="344"/>
         <source>Information about the file index.</source>
         <translation>Show informations about the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="359"/>
+        <location filename="mainwindow.ui" line="352"/>
         <source>Add Folder ...</source>
         <oldsource>Add Folder</oldsource>
         <translation>Add folder ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="362"/>
+        <location filename="mainwindow.ui" line="355"/>
         <source>Add Folder to the file index.</source>
         <translation>Add folder to the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="370"/>
+        <location filename="mainwindow.ui" line="363"/>
         <source>Clear Index</source>
         <translation>Clear index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="373"/>
+        <location filename="mainwindow.ui" line="366"/>
         <source>Remove all files from file index.</source>
         <translation>Remove all files from file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="385"/>
+        <location filename="mainwindow.ui" line="378"/>
         <source>Delete Attachment</source>
         <oldsource>New Attachment </oldsource>
         <translation>Delete attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="388"/>
+        <location filename="mainwindow.ui" line="381"/>
         <source>Delete Attachment selected attachment.</source>
         <oldsource>Add new attachment to a song.</oldsource>
         <translation>Delete selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="400"/>
+        <location filename="mainwindow.cpp" line="109"/>
+        <location filename="mainwindow.cpp" line="128"/>
         <source>&amp;Undo</source>
         <oldsource>Undo</oldsource>
         <translation>&amp;Undo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="403"/>
+        <location filename="mainwindow.ui" line="396"/>
         <source>Undo the last action.</source>
         <translation>Undo the last action.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="415"/>
+        <location filename="mainwindow.cpp" line="110"/>
+        <location filename="mainwindow.cpp" line="129"/>
         <source>&amp;Redo</source>
         <oldsource>Redo</oldsource>
         <translation>&amp;Redo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="418"/>
+        <location filename="mainwindow.ui" line="411"/>
         <source>Redo the last undone action.</source>
         <translation>Redo the last undone action.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="430"/>
+        <location filename="mainwindow.ui" line="423"/>
         <source>Clone ...</source>
         <translation>Clone ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="433"/>
+        <location filename="mainwindow.ui" line="426"/>
         <source>Clone a repository.</source>
         <translation>Klone a repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="441"/>
+        <location filename="mainwindow.ui" line="434"/>
         <source>Open terminal</source>
         <translation>Open terminal</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="453"/>
+        <location filename="mainwindow.ui" line="446"/>
         <source>Rename Attachment ...</source>
         <translation>Rename attachment ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="516"/>
+        <location filename="mainwindow.ui" line="509"/>
         <source>&amp;Export all songs</source>
         <translation>&amp;Export all songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="703"/>
+        <location filename="mainwindow.cpp" line="730"/>
         <source>Rename Attachment</source>
         <translation>Rename Attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="456"/>
+        <location filename="mainwindow.ui" line="449"/>
         <source>Rename selected attachment.</source>
         <translation>Rename selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="468"/>
+        <location filename="mainwindow.ui" line="461"/>
         <source>Duplicate Attachment</source>
         <translation>Duplicate attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="471"/>
+        <location filename="mainwindow.ui" line="464"/>
         <source>Duplicate selected attachment.</source>
         <translation>Duplicate selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="483"/>
-        <location filename="mainwindow.cpp" line="836"/>
-        <location filename="mainwindow.cpp" line="843"/>
-        <location filename="mainwindow.cpp" line="929"/>
-        <location filename="mainwindow.cpp" line="938"/>
+        <location filename="mainwindow.ui" line="476"/>
+        <location filename="mainwindow.cpp" line="863"/>
+        <location filename="mainwindow.cpp" line="870"/>
+        <location filename="mainwindow.cpp" line="956"/>
+        <location filename="mainwindow.cpp" line="965"/>
         <source>Sync</source>
         <translation>Synchronisieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="486"/>
+        <location filename="mainwindow.ui" line="479"/>
         <source>Synchronizes local project with remote repository.</source>
         <translation>Synchronize local repository with remote repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="494"/>
+        <location filename="mainwindow.ui" line="487"/>
         <source>Identites ...</source>
         <translation>Identities ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="497"/>
+        <location filename="mainwindow.ui" line="490"/>
         <source>Manage identities.</source>
         <translation>Manage identities.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="505"/>
+        <location filename="mainwindow.ui" line="498"/>
         <source>Preferences ...</source>
         <translation>Preferences ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="508"/>
+        <location filename="mainwindow.ui" line="501"/>
         <source>Settings.</source>
         <translation>Preferences.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="154"/>
+        <location filename="mainwindow.cpp" line="184"/>
         <source>&amp;New Song</source>
         <translation>&amp;New song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="154"/>
+        <location filename="mainwindow.cpp" line="184"/>
         <source>Add a new song.</source>
         <translation>Add a new Song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="155"/>
+        <location filename="mainwindow.cpp" line="185"/>
         <source>&amp;Remove Song</source>
         <translation>&amp;Remove song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="155"/>
+        <location filename="mainwindow.cpp" line="185"/>
         <source>Remove selected song.</source>
         <translation>Remove selected song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="156"/>
+        <location filename="mainwindow.cpp" line="186"/>
         <source>&amp;Copy Song</source>
         <translation>&amp;Copy song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="156"/>
+        <location filename="mainwindow.cpp" line="186"/>
         <source>Copy selected song.</source>
         <translation>Copy selected song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="157"/>
+        <location filename="mainwindow.cpp" line="187"/>
         <source>&amp;Paste Song</source>
         <translation>&amp;Paste song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="157"/>
+        <location filename="mainwindow.cpp" line="187"/>
         <source>Paste song.</source>
         <translation>Paste song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="159"/>
+        <location filename="mainwindow.cpp" line="189"/>
         <source>&amp;New Event</source>
         <translation>&amp;New event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="159"/>
+        <location filename="mainwindow.cpp" line="189"/>
         <source>Add a new event.</source>
         <translation>Add a new event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="160"/>
+        <location filename="mainwindow.cpp" line="190"/>
         <source>&amp;Remove Event</source>
         <translation>&amp;Remove event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="160"/>
+        <location filename="mainwindow.cpp" line="190"/>
         <source>Remove selected event.</source>
         <translation>Remove selected event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="161"/>
+        <location filename="mainwindow.cpp" line="191"/>
         <source>&amp;Copy Event</source>
         <translation>&amp;Copy event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="161"/>
+        <location filename="mainwindow.cpp" line="191"/>
         <source>Copy selected event.</source>
         <translation>Copy selected event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="162"/>
+        <location filename="mainwindow.cpp" line="192"/>
         <source>&amp;Paste Event</source>
         <translation>&amp;Paste event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="162"/>
+        <location filename="mainwindow.cpp" line="192"/>
         <source>Paste event.</source>
         <translation>Paste event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="222"/>
+        <location filename="mainwindow.cpp" line="252"/>
         <source>New %1</source>
         <translation>New %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="286"/>
+        <location filename="mainwindow.cpp" line="316"/>
         <source>Unnamed</source>
         <translation>Unamed</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="347"/>
+        <location filename="mainwindow.cpp" line="377"/>
         <source>Save As ...</source>
         <translation>Save as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="390"/>
+        <location filename="mainwindow.cpp" line="420"/>
         <source>Really close %1</source>
         <translation>Really close %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="391"/>
+        <location filename="mainwindow.cpp" line="421"/>
         <source>There are unsaved changes.</source>
         <translation>There are unsaved changes.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="597"/>
+        <location filename="mainwindow.cpp" line="627"/>
         <source>Open ...</source>
         <translation>Open ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="638"/>
+        <location filename="mainwindow.cpp" line="668"/>
         <source>Song cannot be removed</source>
         <translation>Song cannot be removed</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="639"/>
+        <location filename="mainwindow.cpp" line="669"/>
         <source>This song is currently in use and can thus not be removed.</source>
         <translation>This song is currently in use and thus cannot be removed.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="703"/>
+        <location filename="mainwindow.cpp" line="730"/>
         <source>New Name for %1</source>
         <translation>New name for %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="769"/>
+        <location filename="mainwindow.cpp" line="796"/>
         <source>Cloning.</source>
         <translation>Cloning.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="782"/>
+        <location filename="mainwindow.cpp" line="809"/>
         <source>Cloning failed</source>
         <translation>Cloning failed.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="783"/>
+        <location filename="mainwindow.cpp" line="810"/>
         <source>Failed to clone %1.</source>
         <translation>Failed to clone %1.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="791"/>
+        <location filename="mainwindow.cpp" line="818"/>
         <source>Cannot load project</source>
         <translation>Cannot load project</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="792"/>
+        <location filename="mainwindow.cpp" line="819"/>
         <source>Failed to load cloned project.
 Make sure you cloned the correct repository and the repository is valid.</source>
         <translation>Failed to load cloned project.
 Make sure you cloned the correct repository and the repository is valid.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="837"/>
+        <location filename="mainwindow.cpp" line="864"/>
         <source>You must provide a valid identity to sync. Abort.</source>
         <translation>You must provide a valid identity to sync. Abort.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="844"/>
+        <location filename="mainwindow.cpp" line="871"/>
         <source>Commit message may not be empty. Abort.</source>
         <translation>Commit message may not be empty. Abort.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="854"/>
+        <location filename="mainwindow.cpp" line="881"/>
         <source>Password for %1</source>
         <translation>Password for %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="854"/>
+        <location filename="mainwindow.cpp" line="881"/>
         <source>Password</source>
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="874"/>
+        <location filename="mainwindow.cpp" line="901"/>
         <source>Syncing.</source>
         <translation>Synchronising.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="918"/>
+        <location filename="mainwindow.cpp" line="945"/>
         <source>Failed to load project.</source>
         <translation>Failed to load project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="919"/>
+        <location filename="mainwindow.cpp" line="946"/>
         <source>Cannot open merged project.
 Probably merging went wrong or the remote version was currupted.
 Fix the error by hand and commit it over the current version, then clone the fixed repository.</source>
@@ -1381,24 +1604,24 @@ Probably merging went wrong or the remote version was currupted.
 Fix the error by hand and commit it over the current version, then clone the fixed repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="930"/>
+        <location filename="mainwindow.cpp" line="957"/>
         <source>Sync failed.
 Make sure your username/password is correct and the remote repository is reachable</source>
         <translation>Synchronizing failed. Make sure your username and password is correct
 and the remote repository is reachable.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1132"/>
+        <location filename="mainwindow.cpp" line="1157"/>
         <source>All songs</source>
         <translation>All songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1198"/>
+        <location filename="mainwindow.cpp" line="1197"/>
         <source>Synchronize?</source>
         <translation>Synchronize?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1199"/>
+        <location filename="mainwindow.cpp" line="1198"/>
         <source>The project may not be synchronized with the remote.
 Do you want to synchronize them now?
 You can always do this later, but it is recommended to do it now.</source>
@@ -1411,43 +1634,43 @@ You can always do this later, but it is recommended to do it now.</translation>
         <translation type="vanished">Synchronizing failed.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="939"/>
+        <location filename="mainwindow.cpp" line="966"/>
         <source>Sync succeeded</source>
         <translation>Sync succeeded</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="962"/>
+        <location filename="mainwindow.cpp" line="989"/>
         <source>File index information</source>
         <translation>File index information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="963"/>
+        <location filename="mainwindow.cpp" line="990"/>
         <source>Files: %1</source>
         <translation>Files: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1068"/>
-        <location filename="mainwindow.cpp" line="1079"/>
+        <location filename="mainwindow.cpp" line="1095"/>
+        <location filename="mainwindow.cpp" line="1106"/>
         <source>Opening %1</source>
         <translation>Opening %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1069"/>
+        <location filename="mainwindow.cpp" line="1096"/>
         <source>Cannot open %1. Unknown file format.</source>
         <translation>Cannot open %1. Unknown file format.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1080"/>
+        <location filename="mainwindow.cpp" line="1107"/>
         <source>File %1 not found.</source>
         <translation>File %1 not found.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1110"/>
+        <location filename="mainwindow.cpp" line="1137"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1111"/>
+        <location filename="mainwindow.cpp" line="1138"/>
         <source>Language changes will apply on next start.</source>
         <translation>Language changes will apply on next start.</translation>
     </message>
@@ -1526,17 +1749,17 @@ You can always do this later, but it is recommended to do it now.</translation>
         <translation>Draw attachment %1 of song %2 ...</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="842"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="846"/>
         <source>Gig</source>
         <translation>Gig</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="845"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="849"/>
         <source>Rehearsal</source>
         <translation>Rehearsal</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="848"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="852"/>
         <source>Misc</source>
         <translation>Misc</translation>
     </message>
@@ -1545,29 +1768,29 @@ You can always do this later, but it is recommended to do it now.</translation>
         <translation type="vanished">Table of Contents</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="884"/>
-        <location filename="PDFCreator/pdfcreator.cpp" line="891"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="888"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="895"/>
         <source>Export PDF ...</source>
         <translation>Export to PDF ...</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="915"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="919"/>
         <source>Confirm overwrite</source>
         <translation>Confirm overwrite</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="916"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="920"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="951"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="955"/>
         <source>Cannot write</source>
         <translation>Cannot write.</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="952"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="956"/>
         <source>File %1 is not writable.</source>
         <translation>%1 is not writable.</translation>
     </message>
@@ -1585,13 +1808,13 @@ Do you want to replace it?</source>
         <translation type="vanished">Table of Content</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="33"/>
+        <location filename="main.cpp" line="32"/>
         <source>Cannot find translation files</source>
         <translation>Sprachdatei nicht gefunden.
 Benutze Notfallenglisch (nicht empfohlen).</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="34"/>
+        <location filename="main.cpp" line="33"/>
         <source>Translation file &quot;%1&quot; not found.
 Using fallback-english which is not recommended.</source>
         <translation>Translation file &quot;%1&quot; not found.
@@ -1629,7 +1852,7 @@ Using fallback-english which is not recommended.</translation>
 <context>
     <name>Setlist</name>
     <message>
-        <location filename="Database/EventDatabase/setlist.cpp" line="333"/>
+        <location filename="Database/EventDatabase/setlist.cpp" line="385"/>
         <source>Remove dragged items</source>
         <translation>Remove dragged items</translation>
     </message>
@@ -1637,67 +1860,67 @@ Using fallback-english which is not recommended.</translation>
 <context>
     <name>SetlistView</name>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="29"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="33"/>
         <source>&amp;New Item</source>
         <translation>&amp;New item</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="29"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="33"/>
         <source>Insert new item</source>
         <translation>Insert new item.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="30"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="34"/>
         <source>&amp;Remove Item</source>
         <translation>&amp;Remove items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="30"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="34"/>
         <source>Delete selected items</source>
         <translation>Delete selecteded items.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="31"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="35"/>
         <source>&amp;Copy Items</source>
         <translation>&amp;Copy items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="31"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="35"/>
         <source>Copy selected items</source>
         <translation>Copy selected items.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="32"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="36"/>
         <source>&amp;Paste Items</source>
         <translation>&amp;Paste items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="32"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="36"/>
         <source>Paste items</source>
         <translation>Paste items.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="62"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="66"/>
         <source>Paste setlist items</source>
         <translation>Paste setlist items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="109"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="113"/>
         <source>Drop Songs</source>
         <translation>Drop songs</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="127"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="131"/>
         <source>Move setlist items</source>
         <translation>Move setlist items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="131"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="135"/>
         <source>Copy setlist items</source>
         <translation>Copy setlist items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="221"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="232"/>
         <source>Remove Setlist Items</source>
         <translation>Remove setlist items</translation>
     </message>
