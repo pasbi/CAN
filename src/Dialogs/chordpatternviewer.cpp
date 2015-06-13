@@ -210,8 +210,10 @@ bool ChordPatternViewer::eventFilter(QObject *o, QEvent *e)
         painter.setPen( QColor(255, 0, 0, 100));
         if (config["line"].toBool())
         {
+            qDebug() << "draw line " << m_pos;
             painter.drawLine( 0, m_pos, label->width(), m_pos );
         }
+        label->update();
         return true;
     }
     // catch the events before QWidget::keyEvent has chance.
