@@ -31,7 +31,7 @@ public:
 
     virtual QString type() const = 0;
 
-    QString description() const { return name(); } //TODO include type?
+    QString description() const;
 
 signals:
     void attachmentRenamed(QString);

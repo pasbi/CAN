@@ -12,18 +12,17 @@ Event::Event( EventDatabase* database, const QDateTime& beginning, const QDateTi
 
 }
 
-#define TRANSLATE_OPTIONAL( T, STRING ) ( T ? tr(STRING) : STRING )
 
 QString Event::typeString(Type type, bool translated)
 {
     switch (type)
     {
     case Rehearsal:
-        return TRANSLATE_OPTIONAL( translated, "Rehearsal" );
+        return translated ? tr("Rehearsal") : "Rehearsal";
     case Gig:
-        return TRANSLATE_OPTIONAL( translated, "Gig" );
+        return translated ? tr("Gig") : "Gig";
     case Other:
-        return TRANSLATE_OPTIONAL( translated, "Other" );
+        return translated ? tr("Other") : "Other";
     default:
         assert(false);
         return "";
@@ -97,6 +96,18 @@ Event* Event::copy() const
     Event* event = new Event( database() );
     event->restoreFromJsonObject( json );
     return event;
+}
+
+QString Event::description() const
+{
+    if (label().isEmpty())
+    {
+        return typeString( type(), true );
+    }
+    else
+    {
+        return label();
+    }
 }
 
 

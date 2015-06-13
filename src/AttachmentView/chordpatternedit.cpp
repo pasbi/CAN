@@ -319,7 +319,6 @@ void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
         int n = lineNumber( plainText, textCursor().position());
 
         // for convenience, if cursor is on last position in this line, set n to next line.
-        //TODO ignore trailing whitespaces
         if ( isAtEndOfLine( plainText, textCursor().position() ) )
         {
             n++;

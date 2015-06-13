@@ -66,6 +66,11 @@ QJsonObject Attachment::toJsonObject() const
     return object;
 }
 
+QString Attachment::description() const
+{
+    return name();
+}
+
 
 
 

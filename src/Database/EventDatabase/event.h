@@ -21,7 +21,7 @@ public:
 
     Type type() const { return m_type; }
     QString label() const { return m_label; }
-    QString description() const { return m_label; } //TODO return label if there is a label, else type.
+    QString description() const;
     QDateTime beginning() const { return m_timeSpan.beginning; }
     QDateTime ending() const { return m_timeSpan.ending; }
     TimeSpan timeSpan() const { return m_timeSpan; }
