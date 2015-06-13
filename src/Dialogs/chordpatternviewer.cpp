@@ -17,6 +17,10 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
     m_pos( 0 )
 {
     ui->setupUi(this);
+    m_hud = new HUD(this);
+    m_playTimer = new QTimer( this );
+    m_speed = attachment->scrollDownTempo();
+    setWindowState( Qt::WindowFullScreen );
 
 #ifdef HAVE_POPPLER
     Poppler::Document* document = NULL;
@@ -52,12 +56,9 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
     }
 
     m_zoom = config["zoom"].toDouble();
-    m_speed = attachment->scrollDownTempo();
 
     QTimer::singleShot( 1, this, SLOT(applyZoom()) );
 
-//    setWindowState( Qt::WindowFullScreen );
-    m_hud = new HUD(this);
     applySpeed();
     m_hud->hide();
 
@@ -65,11 +66,16 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
     ui->scrollArea->installEventFilter( this );
     ui->scrollAreaWidgetContents->installEventFilter( this );
 
-    m_playTimer = new QTimer( this );
     m_playTimer->setInterval( 50 );
     connect( m_playTimer, SIGNAL(timeout()), this, SLOT(on_playTimerTimeout()) );
 
     ui->buttonEnableLine->setChecked( config["line"].toBool() );
+#else
+    QMessageBox::information( this,
+                              tr("Poppler is not available"),
+                              tr("It seems this application was build without poppler.\n"
+                                 "Thus, this feature is not available."));
+    QTimer::singleShot( 1, this, SLOT(reject()) );
 #endif
 }
 
