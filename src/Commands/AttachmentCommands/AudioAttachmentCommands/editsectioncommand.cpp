@@ -12,6 +12,7 @@ EditSectionCommand::EditSectionCommand(SectionsModel *model, const QVariant &new
 void EditSectionCommand::undo()
 {
     model()->setData_( m_index, m_oldValue, m_role );
+    setText(QString(CommandTranslator::tr("Edit section %1 -> %2")).arg( m_oldValue.toString() ).arg( m_newValue.toString() ));
 }
 
 void EditSectionCommand::redo()

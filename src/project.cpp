@@ -118,6 +118,7 @@ void Project::undo()
 {
     const QUndoCommand* uc = QUndoStack::command(QUndoStack::index() - 1);
     const Command* c = dynamic_cast<const Command*>( uc );
+    QUndoStack::undo();
 
     if (c)  // cast may fail (e.g. command-macro)
     {
@@ -126,13 +127,14 @@ void Project::undo()
 
     setCanClose( false );
 
-    QUndoStack::undo();
 }
 
 void Project::redo()
 {
     const QUndoCommand* uc = QUndoStack::command(QUndoStack::index());
     const Command* c = dynamic_cast<const Command*>( uc );
+    QUndoStack::redo();
+
     if (c)  // cast may fail (e.g. command-macro)
     {
         emitCommandPushedSignal( c->type() );
@@ -140,7 +142,6 @@ void Project::redo()
 
     setCanClose( false );
 
-    QUndoStack::redo();
 }
 
 void Project::reset()

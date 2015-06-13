@@ -9,6 +9,7 @@ DeleteSectionCommand::DeleteSectionCommand(SectionsModel *model, const int row) 
 void DeleteSectionCommand::redo()
 {
     m_section = *model()->section( m_row );
+    setText( QString(CommandTranslator::tr("Delete Section [%1 - %2]")).arg(m_section.begin()).arg(m_section.end()) );
     model()->removeRows( m_row, 1, QModelIndex() );
 }
 

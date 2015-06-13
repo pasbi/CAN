@@ -2,6 +2,9 @@
 #define COMMAND_H
 
 #include <QUndoCommand>
+#include <QObject>
+
+class CommandTranslator : public QObject { Q_OBJECT };
 
 class Command : public QUndoCommand
 {
