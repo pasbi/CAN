@@ -174,7 +174,7 @@ Qt::ItemFlags Setlist::flags(const QModelIndex &index) const
             return Qt::ItemFlags();
         }
     }
-
+    return Qt::ItemFlags();
 }
 
 QList<void*> Setlist::viewableAttachments(const QModelIndex &index) const

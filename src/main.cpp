@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[])
 {
-    Application app(argc, argv);
+    Application app( argc, argv );
 
     QString locale = MainWindow::config["locale"].toString();
     QLocale::setDefault( QLocale(locale) );
@@ -52,3 +52,4 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+

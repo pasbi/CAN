@@ -34,10 +34,13 @@ public:
     static QString name(const QString &classname );
 
 private:
-    static QHash<QString, Creatable* (*)()> m_constructorMap;
-    static QHash<QString, QString> m_categoryMap;
-    static QHash<QString, QString> m_inverseCategoryMap;
-    static QHash<QString, const char*> m_nameMap;
+    // pointers to hashmaps since they are required in a static
+    // initialization and maybe constructor would not have been called
+    // when creating them statically on stack.
+    static QHash<QString, Creatable* (*)()>* m_constructorMap;
+    static QHash<QString, QString>* m_categoryMap;
+    static QHash<QString, QString>* m_inverseCategoryMap;
+    static QHash<QString, const char*>* m_nameMap;
     template<typename T> friend struct Registerer;
 
 };
@@ -47,10 +50,14 @@ struct Registerer
 {
     Registerer( const QString& className, const QString & category, const char* name )
     {
-        Creatable::m_constructorMap.insert( className, &createT<T> );
-        Creatable::m_categoryMap.insert( className, category );
-        Creatable::m_inverseCategoryMap.insertMulti( category, className );
-        Creatable::m_nameMap.insertMulti( className, name );
+        if (!Creatable::m_categoryMap)          Creatable::m_categoryMap        = new QHash<QString, QString>();
+        if (!Creatable::m_inverseCategoryMap)   Creatable::m_inverseCategoryMap = new QHash<QString, QString>();
+        if (!Creatable::m_constructorMap)       Creatable::m_constructorMap     = new QHash<QString, Creatable* (*)()>();
+        if (!Creatable::m_nameMap)              Creatable::m_nameMap            = new QHash<QString, const char*>();
+        Creatable::m_constructorMap->insert( className, &createT<T> );
+        Creatable::m_categoryMap->insert( className, category );
+        Creatable::m_inverseCategoryMap->insertMulti( category, className );
+        Creatable::m_nameMap->insertMulti( className, name );
     }
 };
 

@@ -72,7 +72,7 @@ private:
         int m_streamIndex = -1;
 
 
-        QByteArray* const m_dest;
+        QByteArray* m_dest;
         double m_pitch;
         double m_tempo;
         double m_offset;

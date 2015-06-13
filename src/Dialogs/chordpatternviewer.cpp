@@ -18,6 +18,7 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
 {
     ui->setupUi(this);
 
+#ifdef HAVE_POPPLER
     Poppler::Document* document = NULL;
     { // open pdf document
         QTemporaryFile file;
@@ -69,7 +70,7 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
     connect( m_playTimer, SIGNAL(timeout()), this, SLOT(on_playTimerTimeout()) );
 
     ui->buttonEnableLine->setChecked( config["line"].toBool() );
-
+#endif
 }
 
 ChordPatternViewer::~ChordPatternViewer()

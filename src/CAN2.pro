@@ -17,6 +17,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = CAN2
 TEMPLATE = app
 
+QMAKE_CXXFLAGS += -std=c++0x
 
 unix {
 #you must have libgit2, poppler, libav, libsoundtouch installed.
@@ -27,16 +28,15 @@ LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
 LIBS += -lavformat -lavcodec -lavutil -lpthread
 LIBS += -lSoundTouch
-QMAKE_CXXFLAGS += -std=c++0x
 }
 
 win32 {
-INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
+#INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
 INCLUDEPATH += ../../ZipGit/src/
 LIBS += -L../../bin -lzipgit
+LIBS += -L../../lib -lpoppler-qt5
 
 #poppler and soundtouch arent supported on windows for now.
-#LIBS += -L../../bin -lpoppler-qt5
 #LIBS += -L../../bin -lavformat -lavcodec -lavutil
 #LIBS += -L../../bin -lsoundtouch
 }
