@@ -277,6 +277,26 @@ void ChordPatternEdit::mousePressEvent(QMouseEvent *e)
     }
 }
 
+bool isAtEndOfLine( const QString& text, int pos )
+{
+    while (pos < text.length())
+    {
+        if (text[pos] == '\n')
+        {
+            return true;
+        }
+        else if (!text[pos].isSpace())
+        {
+            return false;
+        }
+        else
+        {
+            pos++;
+        }
+    }
+    return true;
+}
+
 
 void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
 {
@@ -300,7 +320,7 @@ void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
 
         // for convenience, if cursor is on last position in this line, set n to next line.
         //TODO ignore trailing whitespaces
-        if ( plainText[textCursor().position()] == '\n')
+        if ( isAtEndOfLine( plainText, textCursor().position() ) )
         {
             n++;
         }
@@ -309,10 +329,14 @@ void ChordPatternEdit::insertFromMimeData(const QMimeData *source)
         int newCursorPos;
         QString newText = pasteLooseLines( plainText, lines, n, newCursorPos );
 
+
+        int scrollY = verticalScrollBar()->value();
         setText( newText );
         cursor.setPosition( newCursorPos );
 
         setTextCursor( cursor );
+        verticalScrollBar()->setValue( scrollY );
+        ensureCursorVisible();
 
         updateHighlights();
         emit pasted();
