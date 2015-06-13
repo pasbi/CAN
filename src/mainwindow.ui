@@ -231,12 +231,6 @@
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
    </widget>
-   <widget class="QMenu" name="menuDebug">
-    <property name="title">
-     <string>Debug</string>
-    </property>
-    <addaction name="actionOpen_Terminal_here"/>
-   </widget>
    <widget class="QMenu" name="menuFile_Index">
     <property name="toolTip">
      <string>File index related stuff.</string>
@@ -284,7 +278,6 @@
    <addaction name="menuEvents"/>
    <addaction name="menuTools"/>
    <addaction name="menuFile_Index"/>
-   <addaction name="menuDebug"/>
    <addaction name="menu_Language"/>
   </widget>
   <action name="actionNew_Project">

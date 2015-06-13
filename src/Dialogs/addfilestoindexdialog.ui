@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>174</width>
-    <height>150</height>
+    <width>194</width>
+    <height>169</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,6 +39,10 @@
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/icons/open127.png</normaloff>:/icons/icons/open127.png</iconset>
        </property>
       </widget>
      </item>
@@ -74,7 +78,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
