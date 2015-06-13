@@ -27,7 +27,7 @@ public:
     void save() const;
     void restore();
 
-    void addSource(const QString & path, const QStringList &filter = QStringList() << "*");
+    void addSource(const QString & path, bool pdf, bool mp3, bool ogg);
     QString currentFilename() const;
     bool operationIsFinished() const;
 

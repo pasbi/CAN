@@ -10,7 +10,11 @@ class Indexer : public QThread
     Q_OBJECT
 public:
     enum Mode { Update, Scan };
-    explicit Indexer(const QString & path, const QStringList & filter, Mode mode, FileIndex* fileIndex, QObject *parent = 0);
+    explicit Indexer(const QString & path,
+                     bool pdf,
+                     bool mp3,
+                     bool ogg,
+                     Mode mode, FileIndex* fileIndex, QObject *parent = 0);
 
     void abort();
     QString currentFilename() const;
@@ -21,7 +25,7 @@ protected:
 private:
 
     const QString m_path;
-    const QStringList m_filter;
+    const bool m_pdf, m_mp3, m_ogg;
     FileIndex* const m_fileIndex;
     const Mode m_mode;
 

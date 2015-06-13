@@ -14,7 +14,7 @@ extern "C"
 }
 #elif defined Q_OS_WIN32
 
-#if 0
+#if 1
 #include "../../soundtouch/include/SoundTouch.h"
 #define HAVE_SOUNDTOUCH
 extern "C"

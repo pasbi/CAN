@@ -18,6 +18,7 @@ TARGET = CAN2
 TEMPLATE = app
 
 QMAKE_CXXFLAGS += -std=c++0x
+QMAKE_LFLAGS += -static-libgcc
 
 unix {
 #you must have libgit2, poppler, libav, libsoundtouch installed.
@@ -31,14 +32,13 @@ LIBS += -lSoundTouch
 }
 
 win32 {
-#INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
+INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
 INCLUDEPATH += ../../ZipGit/src/
 LIBS += -L../../bin -lzipgit
 LIBS += -L../../lib -lpoppler-qt5
+LIBS += -L../../bin -lavformat -lavcodec -lavutil
+LIBS += -L../../bin -lsoundtouch
 
-#poppler and soundtouch arent supported on windows for now.
-#LIBS += -L../../bin -lavformat -lavcodec -lavutil
-#LIBS += -L../../bin -lsoundtouch
 }
 
 
@@ -95,7 +95,6 @@ SOURCES += main.cpp\
     Attachments/ChordPatternAttachment/chord.cpp \
     Dialogs/clonedialog.cpp \
     Commands/AttachmentCommands/chordpatternattachmenttransposecommand.cpp \
-    Dialogs/addfileindexsourcedialog.cpp \
     Dialogs/stringdialog.cpp \
     Commands/SongCommands/songduplicateattachmentcommand.cpp \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp \
@@ -151,7 +150,8 @@ SOURCES += main.cpp\
     AttachmentView/looselines.cpp \
     Dialogs/chordpatternviewer.cpp \
     PDFCreator/orphantsetlist.cpp \
-    Dialogs/hud.cpp
+    Dialogs/hud.cpp \
+    Dialogs/addfilestoindexdialog.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
@@ -204,7 +204,6 @@ HEADERS  += mainwindow.h \
     Attachments/ChordPatternAttachment/chord.h \
     Dialogs/clonedialog.h \
     Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h \
-    Dialogs/addfileindexsourcedialog.h \
     Dialogs/stringdialog.h \
     Commands/SongCommands/songduplicateattachmentcommand.h \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h \
@@ -267,7 +266,8 @@ HEADERS  += mainwindow.h \
     AttachmentView/looselines.h \
     Dialogs/chordpatternviewer.h \
     PDFCreator/orphantsetlist.h \
-    Dialogs/hud.h
+    Dialogs/hud.h \
+    Dialogs/addfilestoindexdialog.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -291,7 +291,8 @@ FORMS    += mainwindow.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui \
     Dialogs/tagdialog.ui \
-    Dialogs/chordpatternviewer.ui
+    Dialogs/chordpatternviewer.ui \
+    Dialogs/addfilestoindexdialog.ui
 
 RESOURCES += \
     ressources.qrc

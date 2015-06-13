@@ -9,7 +9,7 @@
 #include <QProcess>
 #include <QClipboard>
 #include "application.h"
-#include "Dialogs/addfileindexsourcedialog.h"
+#include "Dialogs/addfilestoindexdialog.h"
 #include "Dialogs/stringdialog.h"
 #include "conflicteditor.h"
 #include "Dialogs/commitdialog.h"
@@ -646,23 +646,20 @@ void MainWindow::my_on_actionDelete_Song_triggered()
 
 void MainWindow::on_actionAdd_Folder_triggered()
 {
-    AddFileIndexSourceDialog dialog( config.value("FileIndexFilter").toString(), this );
-    dialog.setDirectory( QDir::homePath() );
-    dialog.setOptions( QFileDialog::ShowDirsOnly );
-    dialog.setFileMode( QFileDialog::Directory );
+    AddFilesToIndexDialog dialog( this );
+
     if (dialog.exec() != QDialog::Accepted)
     {
         return;
     }
-    config.set("FileIndexFilter", dialog.filter() );
-
-    QStringList filter = dialog.filterList();
-    QString path = dialog.selectedFiles().first();
 
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
 
-    app().fileIndex().addSource( path, filter );
+    app().fileIndex().addSource( dialog.path(),
+                                 dialog.includePDF(),
+                                 dialog.includeMP3(),
+                                 dialog.includeOgg() );
 
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);
