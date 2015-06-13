@@ -11,7 +11,7 @@ SongDatabaseNewSongCommand::SongDatabaseNewSongCommand(SongDatabase *songDatabas
         m_song = new Song( songDatabase );
     }
 
-    setText( "New Song" );
+    setText(QString(CommandTranslator::tr("New song %1")).arg( song->description() ));
 }
 
 SongDatabaseNewSongCommand::~SongDatabaseNewSongCommand()

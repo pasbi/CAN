@@ -6,6 +6,9 @@ SongDatabaseToggleAttributeVisibility::SongDatabaseToggleAttributeVisibility(Son
     m_newState( state )
 {
 
+    setText(QString(CommandTranslator::tr("Make %1 %2"))
+            .arg( database->attributeKeys()[column] )
+            .arg( state ? CommandTranslator::tr("visible") : CommandTranslator::tr("invisible") ));
 }
 
 void SongDatabaseToggleAttributeVisibility::undo()

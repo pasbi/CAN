@@ -57,6 +57,7 @@ bool Project::loadFromTempDir()
 
 
     QUndoStack::clear();
+    emit undoStackCleared();
     setCanClose(true);
 
     return success;
@@ -149,6 +150,7 @@ void Project::reset()
     m_songDatabase->reset();
     m_eventDatabase->reset();
     QUndoStack::clear();
+    emit undoStackCleared();
 }
 
 bool Project::canClose() const

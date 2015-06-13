@@ -4,7 +4,7 @@ ChordPatternAttachmentTransposeCommand::ChordPatternAttachmentTransposeCommand(C
     AttachmentCommand(attachment),
     m_transpose( transpose )
 {
-
+    setText( QString(CommandTranslator::tr("Transpose chord pattern %1").arg(m_transpose)) );
 }
 
 void ChordPatternAttachmentTransposeCommand::undo()
@@ -14,5 +14,6 @@ void ChordPatternAttachmentTransposeCommand::undo()
 
 void ChordPatternAttachmentTransposeCommand::redo()
 {
+
     attachment<ChordPatternAttachment>()->process( m_transpose );
 }

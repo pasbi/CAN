@@ -6,6 +6,7 @@ AttachmentRenameCommand::AttachmentRenameCommand(Attachment *attachment, const Q
     m_newName( newName )
 {
     m_oldName = m_attachment->name();
+    setText( QString(CommandTranslator::tr("Rename attachment %1 -> %2").arg(m_oldName, m_newName) ) );
 }
 
 void AttachmentRenameCommand::redo()

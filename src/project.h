@@ -60,6 +60,7 @@ private:
 
 signals:
     void canCloseChanged( bool );
+    void undoStackCleared();
 
 
 };

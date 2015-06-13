@@ -5,6 +5,7 @@ SetlistInsertItemCommand::SetlistInsertItemCommand(Setlist *setlist, int positio
     m_position(position),
     m_item(item)
 {
+    setText( QString(CommandTranslator::tr("Insert item to setlist %1").arg( item->description())) );
 
 }
 

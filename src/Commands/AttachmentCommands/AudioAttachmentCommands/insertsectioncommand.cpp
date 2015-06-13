@@ -6,7 +6,7 @@ InsertSectionCommand::InsertSectionCommand(SectionsModel *model, const Section &
     m_section( section ),
     m_index( index )
 {
-
+    setText( QString(CommandTranslator::tr("New Section [%1 - %2]")).arg(m_section.begin()).arg(m_section.end()) );
 }
 
 void InsertSectionCommand::undo()
@@ -17,6 +17,7 @@ void InsertSectionCommand::undo()
 
 void InsertSectionCommand::redo()
 {
+
     assert( model()->m_sectionsToBeInserted.isEmpty() );
     model()->m_sectionsToBeInserted.append( m_section );
     model()->insertRows( m_index, 1, QModelIndex() );

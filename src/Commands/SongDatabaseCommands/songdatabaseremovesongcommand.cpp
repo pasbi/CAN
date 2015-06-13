@@ -6,6 +6,7 @@ SongDatabaseRemoveSongCommand::SongDatabaseRemoveSongCommand(SongDatabase *songD
     m_song(song)
 {
     assert( song );
+    setText(QString(CommandTranslator::tr("Delete song %1")).arg( song->description() ));
 }
 
 SongDatabaseRemoveSongCommand::~SongDatabaseRemoveSongCommand()

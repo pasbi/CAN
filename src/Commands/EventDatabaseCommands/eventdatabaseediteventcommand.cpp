@@ -10,6 +10,7 @@ EventDatabaseEditEventCommand::EventDatabaseEditEventCommand(EventDatabase*     
     m_oldData( eventDatabase->data( index, role ) ),
     m_role(role)
 {
+    setText( QString(CommandTranslator::tr("Edit event %1 -> %2").arg( m_oldData.toString(), m_newData.toString() )) );
 }
 
 void EventDatabaseEditEventCommand::redo()

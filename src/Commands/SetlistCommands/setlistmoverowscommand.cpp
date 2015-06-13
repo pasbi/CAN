@@ -5,6 +5,7 @@ SetlistMoveRowsCommand::SetlistMoveRowsCommand(Setlist *setlist, const QModelInd
 {
     m_from = index.row();
     m_to = m_from + direction;
+    setText( QString(CommandTranslator::tr("Move items in setlist") ));
 }
 
 void SetlistMoveRowsCommand::moveRow( int from, int to )

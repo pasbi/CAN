@@ -55,6 +55,7 @@ public:
     void removeAttribute(int index);
     QString title() const;
     QString artist() const;
+    QString description() const { return title(); }   //TODO include artist?
     QDateTime creationTime() const;
 
 signals:

@@ -13,6 +13,8 @@ EventDatabaseNewEventCommand::EventDatabaseNewEventCommand( EventDatabase *datab
                              Event::Rehearsal,
                              "" );
     }
+
+    setText( QString(CommandTranslator::tr("New event %1").arg( event->description() )) );
 }
 
 EventDatabaseNewEventCommand::~EventDatabaseNewEventCommand()

@@ -4,6 +4,7 @@ SongDatabaseRemoveColumnCommand::SongDatabaseRemoveColumnCommand(SongDatabase *s
     SongDatabaseCommand(songDatabase),
     m_section(section)
 {
+    setText(QString(CommandTranslator::tr("Remove column %1")).arg( songDatabase->attributeKeys()[section] ));
 }
 
 void SongDatabaseRemoveColumnCommand::undo()

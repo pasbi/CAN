@@ -5,6 +5,7 @@ SongDatabaseMoveSongCommand::SongDatabaseMoveSongCommand(SongDatabase *database,
     m_sourceRow( sourceRow ),
     m_targetRow( destRow )
 {
+    setText(QString(CommandTranslator::tr("Move song %1 -> %2")).arg( sourceRow, destRow ));
 }
 
 void SongDatabaseMoveSongCommand::undo()

@@ -6,6 +6,7 @@ EventDatabaseRemoveEventCommand::EventDatabaseRemoveEventCommand(EventDatabase *
     m_event( event )
 {
     assert( event );
+    setText( QString(CommandTranslator::tr("Delete event %1").arg( event->description() )) );
 }
 
 EventDatabaseRemoveEventCommand::~EventDatabaseRemoveEventCommand()
