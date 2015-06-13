@@ -390,7 +390,7 @@
      <normaloff>:/icons/icons/left64.png</normaloff>:/icons/icons/left64.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Undo</string>
+    <string notr="true">&lt;Undo&gt;</string>
    </property>
    <property name="toolTip">
     <string>Undo the last action.</string>
@@ -405,7 +405,7 @@
      <normaloff>:/icons/icons/right53.png</normaloff>:/icons/icons/right53.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Redo</string>
+    <string notr="true">&lt;Redo&gt;</string>
    </property>
    <property name="toolTip">
     <string>Redo the last undone action.</string>

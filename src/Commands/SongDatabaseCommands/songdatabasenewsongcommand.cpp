@@ -10,6 +10,8 @@ SongDatabaseNewSongCommand::SongDatabaseNewSongCommand(SongDatabase *songDatabas
     {
         m_song = new Song( songDatabase );
     }
+
+    setText( "New Song" );
 }
 
 SongDatabaseNewSongCommand::~SongDatabaseNewSongCommand()

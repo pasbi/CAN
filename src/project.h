@@ -34,6 +34,7 @@ public slots:
 signals:
     void songDatabaseCommandPushed();
     void eventDatabaseCommandPushed();
+    void commandPushed();
 
 public:
     bool loadFromTempDir();

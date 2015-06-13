@@ -108,9 +108,10 @@ void Project::emitCommandPushedSignal(Command::Type type)
     case Command::EventDatabaseRelated:
         emit eventDatabaseCommandPushed();
         break;
-    default:
+    case Command::Other:
         ;
     }
+    emit commandPushed();
 }
 
 void Project::undo()

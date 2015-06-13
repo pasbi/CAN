@@ -100,6 +100,29 @@ MainWindow::MainWindow(QWidget *parent) :
     //////////////////////////////////////////
     connect( &m_project, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
     connect( &m_project, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
+
+    auto action = [this]()
+    {
+        const QUndoCommand* nextUndoCommand = m_project.command( m_project.QUndoStack::index() - 1 );
+        const QUndoCommand* nextRedoCommand = m_project.command( m_project.QUndoStack::index() );
+
+        QString undoText = tr("&Undo");
+        QString redoText = tr("&Redo");
+        if (nextUndoCommand)
+        {
+            undoText += " \""+nextUndoCommand->actionText()+"\"";
+        }
+
+        if (nextRedoCommand)
+        {
+            redoText += " \""+nextRedoCommand->actionText()+"\"";
+        }
+
+        undoAction()->setText( undoText );
+        redoAction()->setText( redoText );
+    };
+
+    connect( &m_project, &Project::commandPushed, action );
     ui->actionUndo->setEnabled( m_project.canUndo() );
     ui->actionRedo->setEnabled( m_project.canRedo() );
 
