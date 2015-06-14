@@ -120,7 +120,6 @@
     <qresource prefix="/translations">
         <file>can2_de_DE.qm</file>
         <file>can2_en_US.qm</file>
-        <file>qt_de.qm</file>
         <file>qtmultimedia_de.qm</file>
         <file>qtbase_de.qm</file>
     </qresource>

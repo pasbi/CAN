@@ -15,6 +15,7 @@ class SetlistView : public QTableView
     Q_OBJECT
 public:
     explicit SetlistView(QWidget *parent = 0);
+    ~SetlistView();
 
     Setlist* model() const;
     void setModel(Setlist* setlist);
@@ -47,7 +48,6 @@ private:
     QAction* m_actionDeleteSetlistItem;
     QAction* m_actionCopySetlistItem;
     QAction* m_actionPasteSetlistItem;
-    QWidgetList m_cellWidgets;
 
 public:
     static const QString ITEMS_MIMEDATA_FORMAT;

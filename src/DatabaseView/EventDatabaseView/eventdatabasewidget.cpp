@@ -39,6 +39,7 @@ void EventDatabaseWidget::updateSetlistView()
     Event* e = currentEvent();
     if (e)
     {
+        qDebug() << e->label();
         ui->setlistWidget->setSetlist( e->setlist() );
     }
     else

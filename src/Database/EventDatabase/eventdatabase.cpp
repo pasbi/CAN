@@ -79,7 +79,6 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case Qt::DisplayRole:
-            qDebug() << "event type: " << Event::typeString( m_events[row]->type(), true );
             return Event::typeString( m_events[row]->type(), true );
         case Qt::EditRole:
             return (int) m_events[row]->type();

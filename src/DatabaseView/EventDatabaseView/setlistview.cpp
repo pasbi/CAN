@@ -37,6 +37,11 @@ SetlistView::SetlistView(QWidget *parent) :
 
 }
 
+SetlistView::~SetlistView()
+{
+    qDebug() << "destroy setlistview";
+}
+
 bool acceptMimeData( const QMimeData* data )
 {
     // CAN/song from SongDatabase, CAN/Setlist/Item from internal move/copy
@@ -272,12 +277,6 @@ QList<SetlistItem*> SetlistView::selectedItems() const
 
 void SetlistView::updateCellWidgets()
 {
-    for (QWidget* w : m_cellWidgets)
-    {
-        w->deleteLater();
-    }
-    m_cellWidgets.clear();
-
     if (!model())
     {
         return;
@@ -286,8 +285,10 @@ void SetlistView::updateCellWidgets()
     for (int i = 0; i < model()->rowCount(); ++i)
     {
         QModelIndex index = model()->index( i, 1 );
-        QToolButton* button = new QToolButton( this );
-        m_cellWidgets << button;
+
+        // menu is deleted when hidden. So do not delete the buttons.
+        QToolButton* button = new QToolButton();
+
         button->setIcon( QIcon(":/icons/icons/war4.png") );
 
         setIndexWidget( index, button );

@@ -129,17 +129,17 @@
         <translation>Seek position in song.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="34"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="33"/>
         <source>Delete Section</source>
         <translation>Delete section</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="41"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="40"/>
         <source>Restore Section</source>
         <translation>Restore Section</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="163"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="164"/>
         <source>Unnamed</source>
         <translation>Unamed</translation>
     </message>

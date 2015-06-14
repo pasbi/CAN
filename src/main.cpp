@@ -18,23 +18,6 @@ int main(int argc, char *argv[])
 
     bool useQtTranslator = (localeCode != "en_US");
 
-    QTranslator qtTranslator;
-    // load qt-translator
-    if (useQtTranslator)
-    {
-        if (qtTranslator.load(":/translations/qt_" + localeCode))
-        {
-            if (!Application::installTranslator( &qtTranslator ))
-            {
-                qWarning() << "failed to install translator.";
-            }
-        }
-        else
-        {
-            qWarning() << "failed to load translator qt.";
-        }
-    }
-
     QTranslator qtBaseTranslator;
     // load qtbase-translator
     if (useQtTranslator)
