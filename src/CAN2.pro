@@ -297,6 +297,9 @@ FORMS    += mainwindow.ui \
 RESOURCES += \
     ressources.qrc
 
+RC_FILE = can.rc
+
+
 TRANSLATIONS += \
     can2_en_US.ts \
     can2_de_DE.ts
