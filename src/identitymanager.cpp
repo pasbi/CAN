@@ -117,8 +117,17 @@ Identity IdentityManager::currentIdentity() const
 void IdentityManager::setIdentities(const QList<Identity> &identities)
 {
     m_identities.clear();
-    for (const Identity & i : identities)
+    for (Identity i : identities)
     {
+        if (i.email().isEmpty())
+        {
+            i.setEmail( "-" );
+        }
+        if (i.name().isEmpty())
+        {
+            i.setName("anonymous");
+        }
+
         if (i.isValid())
         {
             m_identities << i;
