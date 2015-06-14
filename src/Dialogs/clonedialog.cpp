@@ -3,7 +3,7 @@
 #include <QFileDialog>
 #include "identitydialog.h"
 
-CloneDialog::CloneDialog(IdentityManager &identityManager, QWidget *parent) :
+CloneDialog::CloneDialog(IdentityManager &identityManager, const QUrl &defaultURL, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CloneDialog),
     m_identityManager( &identityManager )
@@ -14,7 +14,7 @@ CloneDialog::CloneDialog(IdentityManager &identityManager, QWidget *parent) :
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtonEnabled()));
     connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateButtonEnabled()));
     updateButtonEnabled();
-    ui->lineEdit->setText( QDir::homePath() );
+    ui->lineEdit->setText( defaultURL.toString() );
 }
 
 CloneDialog::~CloneDialog()

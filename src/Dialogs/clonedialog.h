@@ -14,7 +14,7 @@ class CloneDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CloneDialog(IdentityManager& identityManager, QWidget *parent = 0);
+    explicit CloneDialog(IdentityManager& identityManager, const QUrl& defaultURL, QWidget *parent = 0);
     ~CloneDialog();
 
     QUrl url() const;

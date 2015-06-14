@@ -31,6 +31,7 @@ QString defaultStyleSheet()
 }
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentCloneURL, QDir::homePath());
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexFilter, "");
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, locale, QLocale::system().name().toStdString().c_str());
 CONFIGURABLE_ADD_ITEM( MainWindow,
@@ -760,17 +761,20 @@ void MainWindow::on_actionOpen_Terminal_here_triggered()
 
 void MainWindow::on_actionClone_triggered()
 {
+
     if (!canProjectClose())
     {
         return;
     }
 
-    CloneDialog dialog(m_identityManager, this);
+    QUrl url = config["RecentCloneURL"].toUrl();
+    CloneDialog dialog(m_identityManager, url, this);
     if (dialog.exec() == QDialog::Rejected)
     {
         return;
     }
-    QUrl url = dialog.url();
+    url = dialog.url();
+    config.set("RecentCloneURL", url);
 
     if (!url.isValid())
     {
