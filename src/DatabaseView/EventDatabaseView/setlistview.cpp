@@ -39,7 +39,6 @@ SetlistView::SetlistView(QWidget *parent) :
 
 SetlistView::~SetlistView()
 {
-    qDebug() << "destroy setlistview";
 }
 
 bool acceptMimeData( const QMimeData* data )

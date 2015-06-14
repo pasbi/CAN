@@ -68,7 +68,6 @@ void SetlistWidget::updateButtonsEnabled()
 
 void SetlistWidget::setSetlist(Setlist *setlist)
 {
-    qDebug() << "oname =" << ui->listView->objectName();
     ui->listView->setModel( setlist );
 
     updateButtonsEnabled();
