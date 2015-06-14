@@ -51,6 +51,7 @@ bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
 void EventDatabase::reset()
 {
     beginResetModel();
+    qDeleteAll( m_events );
     m_events.clear();
     endResetModel();
 }

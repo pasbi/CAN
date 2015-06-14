@@ -537,7 +537,8 @@ void PDFCreator::paintTableOfContents()
     currentPainter().setFont( font );
     while (!m_tableOfContents.isEmpty())
     {
-        if ( y < pageRect().height() - bottomMargin() - lineHeight ) // content fits on page
+        double spaceLeft = pageRect().height() - bottomMargin() - lineHeight - y;
+        if ( spaceLeft < 0) // content fits on page
         {
             QString currentEntry = m_tableOfContents.takeFirst();
             currentPainter().drawText( QPointF( leftMargin(), y), currentEntry  );
@@ -549,7 +550,7 @@ void PDFCreator::paintTableOfContents()
         {
             if (isEndlessPage())
             {
-                //? //TODO
+                currentPage()->growDownMM( -currentPage()->painterUnitsInMM( spaceLeft ) );
             }
             else
             {
