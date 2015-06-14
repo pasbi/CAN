@@ -1826,16 +1826,14 @@ Do you want to replace it?</source>
         <translation type="vanished">Table of Content</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="32"/>
         <source>Cannot find translation files</source>
-        <translation>Sprachdatei nicht gefunden.
+        <translation type="vanished">Sprachdatei nicht gefunden.
 Benutze Notfallenglisch (nicht empfohlen).</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="33"/>
         <source>Translation file &quot;%1&quot; not found.
 Using fallback-english which is not recommended.</source>
-        <translation>Translation file &quot;%1&quot; not found.
+        <translation type="vanished">Translation file &quot;%1&quot; not found.
 Using fallback-english which is not recommended.</translation>
     </message>
 </context>

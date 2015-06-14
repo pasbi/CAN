@@ -1827,15 +1827,13 @@ Do you want to replace it?</source>
         <translation type="vanished">Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="32"/>
         <source>Cannot find translation files</source>
-        <translation>Cannot find translation files.</translation>
+        <translation type="vanished">Cannot find translation files.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="33"/>
         <source>Translation file &quot;%1&quot; not found.
 Using fallback-english which is not recommended.</source>
-        <translation>Sprachdatei &quot;%1&quot; nicht gefunden.
+        <translation type="vanished">Sprachdatei &quot;%1&quot; nicht gefunden.
 Benutze Notfall-English (nicht empfohlen).
 </translation>
     </message>

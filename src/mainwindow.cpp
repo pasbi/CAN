@@ -1122,7 +1122,7 @@ void MainWindow::open(const QString &filename)
 
 void MainWindow::createLanguageMenu()
 {
-    for (const QFileInfo& fileInfo : QDir().entryInfoList(QStringList() << "can2*.qm", QDir::Files, QDir::Name ))
+    for (const QFileInfo& fileInfo : QDir(":/translations/").entryInfoList(QStringList() << "can2*.qm", QDir::Files, QDir::Name ))
     {
         QString locale = fileInfo.baseName().mid(5); // skip ending, skip can2_
         QAction* action = new QAction( ui->menu_Language );

@@ -11,39 +11,78 @@ int main(int argc, char *argv[])
 {
     Application app( argc, argv );
 
-    QString locale = MainWindow::config["locale"].toString();
-    QLocale::setDefault( QLocale(locale) );
-    QString language = QLocale::languageToString(QLocale(locale).language());
+    QString localeCode = MainWindow::config["locale"].toString();
+    QLocale locale( localeCode );
+    QLocale::setDefault( locale );
+    QString language = QLocale::languageToString( locale.language() );
+
+    bool useQtTranslator = (localeCode != "en_US");
 
     QTranslator qtTranslator;
-    QTranslator translator;
-
-    bool useQtTranslator = (locale != "en_US");
-
-    if ( ! (translator.load( QString("can2_%1").arg( locale ) )
-            && (
-                 !useQtTranslator
-                 || qtTranslator.load(QString("qt_%1").arg( locale ),  QLibraryInfo::location(QLibraryInfo::TranslationsPath) )
-               )
-           )
-       )
+    // load qt-translator
+    if (useQtTranslator)
     {
-        QMessageBox::warning( NULL,
-                              QObject::tr("Cannot find translation files"),
-                              QString(QObject::tr("Translation file \"%1\" not found.\n"
-                                                  "Using fallback-english which is not recommended."))
-                                    .arg( language ),
-                              QMessageBox::Ok,
-                              QMessageBox::NoButton );
+        if (qtTranslator.load(":/translations/qt_" + localeCode))
+        {
+            if (!Application::installTranslator( &qtTranslator ))
+            {
+                qWarning() << "failed to install translator.";
+            }
+        }
+        else
+        {
+            qWarning() << "failed to load translator qt.";
+        }
+    }
+
+    QTranslator qtBaseTranslator;
+    // load qtbase-translator
+    if (useQtTranslator)
+    {
+        if (qtBaseTranslator.load(":/translations/qtbase_" + localeCode))
+        {
+            if (!Application::installTranslator( &qtBaseTranslator ))
+            {
+                qWarning() << "failed to install translator.";
+            }
+        }
+        else
+        {
+            qWarning() << "failed to load translator qtbase.";
+        }
+    }
+
+    // load qtmultimedia-translator
+    QTranslator qtMultimediaTranslator;
+    if (useQtTranslator)
+    {
+        if (qtMultimediaTranslator.load(":/translations/qtmultimedia_" + localeCode))
+        {
+            if (!Application::installTranslator( &qtMultimediaTranslator ))
+            {
+                qWarning() << "failed to install translator qtmultimedia.";
+            }
+        }
+        else
+        {
+            qWarning() << "failed to load translator.";
+        }
+    }
+
+    // load translator
+    QTranslator translator;
+    if (translator.load(":/translations/can2_" + localeCode))
+    {
+        if (!Application::installTranslator( &translator ))
+        {
+            qWarning() << "failed to install translator.";
+        }
     }
     else
     {
-        app.installTranslator( &translator );
-        if (useQtTranslator)
-        {
-            app.installTranslator( &qtTranslator );
-        }
+        qWarning() << "cannot load translation file for " << language;
     }
+
 
     app.fileIndex().restore();
 
