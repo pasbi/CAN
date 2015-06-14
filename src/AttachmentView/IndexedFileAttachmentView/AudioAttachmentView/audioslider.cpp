@@ -10,11 +10,10 @@ AudioSlider::AudioSlider(QWidget *parent) :
     ui->setupUi(this);
 
     connect( ui->slider,                SIGNAL( valueChanged(double) ), this, SIGNAL( valueChanged(double) )    );
-    connect( ui->slider,                SIGNAL( valueChanged(double) ), this, SLOT( setValue(double) )          );
     connect( ui->doubleSpinBoxLeft,     SIGNAL( valueChanged(double) ), this, SIGNAL( valueChanged(double) )    );
-    connect( ui->doubleSpinBoxLeft,     SIGNAL( valueChanged(double) ), this, SLOT( setValue(double) )          );
     connect( ui->doubleSpinBoxRight,    SIGNAL( valueChanged(double) ), this, SIGNAL( valueChanged(double) )    );
-    connect( ui->doubleSpinBoxRight,    SIGNAL( valueChanged(double) ), this, SLOT( setValue(double) )          );
+    connect( &m_timer, SIGNAL(timeout()), this, SLOT(onTimerTimeout()));
+    m_timer.setInterval( 20 );
 
 }
 
@@ -28,18 +27,17 @@ double AudioSlider::value() const
     return ui->doubleSpinBoxLeft->value();
 }
 
-
-void AudioSlider::setValue(double value)
+void AudioSlider::setPosition( double pos )
 {
-    double remaining = ui->doubleSpinBoxRight->maximum() - value;
+    double remaining = ui->doubleSpinBoxRight->maximum() - pos;
 
     ui->doubleSpinBoxLeft->blockSignals( true );
     ui->doubleSpinBoxRight->blockSignals( true );
     ui->slider->blockSignals( true );
 
-    ui->doubleSpinBoxLeft->setValue( value );
+    ui->doubleSpinBoxLeft->setValue( pos );
     ui->doubleSpinBoxRight->setValue( remaining );
-    ui->slider->setValue( value );
+    ui->slider->setValue( pos );
 
     ui->doubleSpinBoxLeft->blockSignals( false );
     ui->doubleSpinBoxRight->blockSignals( false );
@@ -77,4 +75,31 @@ void AudioSlider::clearIndicators()
 void AudioSlider::setSection(const Section *section)
 {
     ui->slider->setSection( section );
+}
+
+void AudioSlider::setTempo(double tempo)
+{
+    m_tempo = tempo;
+}
+
+void AudioSlider::play()
+{
+    m_timer.start();
+}
+
+void AudioSlider::pause()
+{
+    m_timer.stop();
+}
+
+void AudioSlider::stop()
+{
+    setPosition( 0 );
+    m_timer.stop();
+}
+
+void AudioSlider::onTimerTimeout()
+{
+    double pos = ui->slider->value() + m_timer.interval() / 1000.0 * m_tempo;
+    setPosition( pos );
 }

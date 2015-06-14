@@ -22,7 +22,6 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     connect( ui->pushButtonClearSection,    SIGNAL(clicked()),              this, SLOT(abortSection()) );
     connect( ui->pushButtonRecordSection,   SIGNAL(clicked()),              this, SLOT(recordSection()) );
 
-
     ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
     ui->pushButtonClearSection->setIcon( QIcon(":/icons/icons/cross56.png") );
 
@@ -62,18 +61,17 @@ void AudioAttachmentView::polish()
 
     AudioAttachment* a = attachment<AudioAttachment>();
 
-    connect( &a->player(), &Player::positionChanged, [this](double value)
-    {
-        ui->slider->setValue( value / ui->doubleSpinBoxTempo->value() );
-    });
-
-    connect( &a->player(), SIGNAL(durationChanged(double)), ui->slider, SLOT(setMaximum(double)) );
-
     connect( a, &AudioAttachment::hashChanged, [this, a]()
     {
         ui->slider->setMaximum( a->player().duration() );
+        ui->slider->stop();
     });
+
     connect( a, SIGNAL(currentSectionChanged(const Section*)), ui->slider, SLOT(setSection(const Section*)));
+
+    open();
+
+    ui->slider->setMaximum( a->player().duration() );
     ui->slider->setSection( a->player().currentSection() );
 
     ui->slider->setMaximum( a->player().duration() );
@@ -81,7 +79,6 @@ void AudioAttachmentView::polish()
     ui->doubleSpinBoxTempo->setValue( player().tempo() );
 
     ui->sectionView->setModel( a->sectionsModel() );
-    open();
 #endif
 }
 
@@ -92,6 +89,7 @@ void AudioAttachmentView::on_pushButtonStop_clicked()
     ui->pushButtonPlayPause->blockSignals( true );
     ui->pushButtonPlayPause->setChecked( false );
     ui->pushButtonPlayPause->blockSignals( false );
+    ui->slider->stop();
 #endif
 }
 
@@ -102,10 +100,12 @@ void AudioAttachmentView::on_pushButtonPlayPause_toggled(bool checked)
     {
         player().seek( player().position() );
         player().play();
+        ui->slider->play();
     }
     else
     {
         player().pause();
+        ui->slider->pause();
     }
 #else
     Q_UNUSED( checked );
@@ -125,6 +125,7 @@ void AudioAttachmentView::setPitchTempo()
 {
 #ifdef HAVE_SOUNDTOUCH
     player().seek( ui->doubleSpinBoxPitch->value(), ui->doubleSpinBoxTempo->value(), player().position() );
+    ui->slider->setTempo( ui->doubleSpinBoxTempo->value() );
 #endif
 }
 

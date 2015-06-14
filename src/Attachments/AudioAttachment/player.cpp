@@ -3,19 +3,10 @@
 
 Player::Player()
 {
-    const int interval = 10;
-    m_timer = new QTimer(this);
-    m_timer->setInterval( 10 );
-    connect( m_timer, &QTimer::timeout, [this, interval]()
-    {
-        m_currentPosition += interval / 1000.0;
-        emit positionChanged( checkSectionAndGetPosition() );
-    });
 }
 
 Player::~Player()
 {
-    m_timer->stop();
     if (m_audioOutput)
     {
         m_audioOutput->stop();
@@ -25,7 +16,6 @@ Player::~Player()
 
 void Player::stop()
 {
-    m_timer->stop();
     if (m_audioOutput)
     {
         m_audioOutput->stop();
@@ -48,11 +38,6 @@ void Player::open( const QString &filename )
     m_audioOutput->setNotifyInterval( 200 );    // sync
 
     connect( m_audioOutput, SIGNAL(notify()), this, SLOT(sync()) );
-
-    double pos = position();
-
-    emit positionChanged( pos );
-    emit durationChanged( duration() );
 }
 
 void Player::play()
@@ -60,7 +45,6 @@ void Player::play()
     if (m_audioOutput)
     {
         m_audioOutput->start( &m_buffer.buffer() );
-        m_timer->start();
     }
     else
     {
@@ -73,7 +57,6 @@ void Player::pause()
     if (m_audioOutput)
     {
         m_audioOutput->stop();
-        m_timer->stop();
     }
     else
     {
@@ -85,21 +68,12 @@ void Player::seek()
 {
     if (m_audioOutput)
     {
-        bool timerRun = m_timer->isActive();
-        if (timerRun)
-        {
-            m_timer->stop();
-        }
         blockSignals(true);
         m_audioOutput->stop();
         m_buffer.decode( m_pitch, m_tempo, m_offset );
         m_audioOutput->start( &m_buffer.buffer() );
         blockSignals(false);
         sync();
-        if (timerRun)
-        {
-            m_timer->start();
-        }
     }
     else
     {
@@ -111,24 +85,23 @@ void Player::seek(double pitch, double tempo, double second)
 {
     m_pitch = pitch;
     m_tempo = tempo;
-    emit durationChanged( duration() );
     seek( second );
 }
 
 void Player::seek(double second)
 {
-    m_offset = second;
+    m_offset = second / m_tempo;
     seek();
 }
 
 double Player::duration() const
 {
-    return m_buffer.duration() / m_tempo;
+    return m_buffer.duration();
 }
 
 double Player::position() const
 {
-    return m_currentPosition;
+    return m_currentPosition * m_tempo;
 }
 
 double Player::checkSectionAndGetPosition()

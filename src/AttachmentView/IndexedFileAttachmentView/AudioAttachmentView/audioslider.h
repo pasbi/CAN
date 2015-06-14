@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "Attachments/AudioAttachment/sectionsmodel.h"
+#include <QTimer>
 
 namespace Ui {
 class AudioSlider;
@@ -17,15 +18,19 @@ public:
     ~AudioSlider();
 
     double value() const;
+    void setTempo( double tempo );
 
 public slots:
     void setMaximum( double max );
 
-    void setValue( double value );
     void setLeftIndicator( double value );
     void clearIndicators();
 
     void setSection( const Section* section );
+
+    void pause();
+    void play();
+    void stop();
 
 signals:
     void valueChanged(double);
@@ -33,6 +38,12 @@ signals:
 
 private:
     Ui::AudioSlider *ui;
+    double m_tempo = 1;
+    void setPosition( double pos );
+    QTimer m_timer;
+
+private slots:
+    void onTimerTimeout();
 
 };
 

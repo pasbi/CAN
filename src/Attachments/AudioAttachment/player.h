@@ -34,11 +34,6 @@ public slots:
     void pause();
     void stop();
 
-
-signals:
-    void positionChanged(double);
-    void durationChanged(double);
-
 private:
     Buffer m_buffer;
     double m_pitch = 0;
@@ -49,9 +44,6 @@ private:
 
     const Section* m_section = NULL;
 
-    // QAudioOutput position and buffer position is not realiable for small changes.
-    // so use a timer for small changes and sync it regulary with real buffer position.
-    QTimer* m_timer;
     double m_currentPosition = 0;
 
 private slots:
