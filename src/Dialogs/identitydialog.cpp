@@ -1,6 +1,7 @@
 #include "identitydialog.h"
 #include "ui_identitydialog.h"
 #include <QMessageBox>
+#include <QSignalBlocker>
 
 IdentityDialog::IdentityDialog(IdentityManager* manager, QWidget *parent) :
     QDialog(parent),
@@ -121,10 +122,12 @@ void IdentityDialog::setEditsAndIcons()
     ui->emailEdit->blockSignals( true );
     ui->loginEdit->blockSignals( true );
     ui->passwordEdit->blockSignals( true );
+    ui->buttonRemove->blockSignals( true );
 
     setEdits();
     setIcon();
 
+    ui->buttonRemove->blockSignals( false );
     ui->nameEdit->blockSignals( false );
     ui->emailEdit->blockSignals( false );
     ui->loginEdit->blockSignals( false );
@@ -179,6 +182,7 @@ void IdentityDialog::setEdits()
     ui->emailEdit->setEnabled( !!currentIdentity() );
     ui->loginEdit->setEnabled( !!currentIdentity() );
     ui->passwordEdit->setEnabled( !!currentIdentity() );
+    ui->buttonRemove->setEnabled( !!currentIdentity() );
 }
 
 void IdentityDialog::accept()
