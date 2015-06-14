@@ -538,7 +538,7 @@ void PDFCreator::paintTableOfContents()
     while (!m_tableOfContents.isEmpty())
     {
         double spaceLeft = pageRect().height() - bottomMargin() - lineHeight - y;
-        if ( spaceLeft < 0) // content fits on page
+        if ( spaceLeft > 0) // content fits on page
         {
             QString currentEntry = m_tableOfContents.takeFirst();
             currentPainter().drawText( QPointF( leftMargin(), y), currentEntry  );
