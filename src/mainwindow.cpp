@@ -908,7 +908,16 @@ void MainWindow::on_actionSync_triggered()
 
     //////////////////////////////////////////////////////////////////////////
     /// begin syncing
+
+    if (m_project.isGitRepository())
+    {
+        m_project.removeDirRecursively( m_project.path() );
+    }
     m_project.saveToTempDir();
+    if (m_project.isGitRepository())
+    {
+        m_project.addDirRecursively( m_project.path() );
+    }
 
     // wait until prepare is finished
     m_project.prepareSyncDetached( message, identity );

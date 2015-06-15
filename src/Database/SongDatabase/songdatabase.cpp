@@ -363,7 +363,6 @@ QVariant SongDatabase::data(const int row, const int column, const int role)
 QJsonObject SongDatabase::toJsonObject() const
 {
     QJsonObject json;
-    json.insert("numsongs", m_songs.size());
     json["id"] = randomID();
 
     QJsonArray attributeKeys;
@@ -463,29 +462,17 @@ void SongDatabase::reset(bool initialize)
     emit attachmentAdded( -1 );
 }
 
-SongID SongDatabase::songID( const Song* song ) const
+
+Song* SongDatabase::song( const QString& id ) const
 {
-    for (int i = 0; i < m_songs.length(); ++i)
+    for (Song* song : m_songs)
     {
-        if (song == m_songs[i])
+        if (song->randomID() == id)
         {
-            return i;
+            return song;
         }
     }
-    return -1;
-}
-
-Song* SongDatabase::song( SongID id ) const
-{
-    if (id < 0 || id >= m_songs.length())
-    {
-        qWarning() << "song with id " << id << " does not exist";
-        return NULL;
-    }
-    else
-    {
-        return m_songs[id];
-    }
+    return NULL;
 }
 
 Qt::DropActions SongDatabase::supportedDragActions() const

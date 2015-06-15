@@ -47,7 +47,6 @@ bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
         Event* e = new Event( this );
         success &= e->loadFrom( project()->makeAbsolute( filename ) );
         m_events << e;
-        qDebug() << "restore event " << filename;
     }
 
     endResetModel();

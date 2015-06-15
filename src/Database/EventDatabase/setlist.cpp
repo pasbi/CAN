@@ -34,7 +34,14 @@ QJsonObject SetlistItem::toJson() const
     QJsonObject object;
 
     object["type"] = (int) m_type;
-    object["SongID"] = app().project()->songDatabase()->songID( m_song );
+    if (m_song)
+    {
+        object["SongID"] = m_song->randomID();
+    }
+    else
+    {
+        object["SongID"] = "";
+    }
     object["Label"] = m_label;
 
     return object;
@@ -49,13 +56,13 @@ SetlistItem* SetlistItem::fromJson( const QJsonObject & object )
     switch ((Type) object["type"].toInt())
     {
     case SongType:
-        if (!checkJsonObject(object, "SongID", QJsonValue::Double))
+        if (!checkJsonObject(object, "SongID", QJsonValue::String))
         {
             return NULL;
         }
         else
         {
-            Song* song = app().project()->songDatabase()->song( object["SongID"].toInt() );
+            Song* song = app().project()->songDatabase()->song( object["SongID"].toString() );
             if (song)
             {
                 return new SetlistItem( song );

@@ -104,7 +104,6 @@ void ConflictEditor::resolveAllMine()
     {
         for (const Conflict c : file.conflicts())
         {
-            qDebug() << "conflict " << c.m_local << c.m_remote << "mine";
             c.m_resolvePolicy = Conflict::KeepLocal;
         }
     }
@@ -117,7 +116,6 @@ void ConflictEditor::resolveAllTheirs()
     {
         for (const Conflict c : file.conflicts())
         {
-            qDebug() << "conflict " << c.m_local << c.m_remote << "tehris";
             c.m_resolvePolicy = Conflict::KeepRemote;
         }
     }

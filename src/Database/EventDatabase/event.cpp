@@ -68,6 +68,16 @@ bool Event::restoreFromJsonObject(const QJsonObject &json)
     {
         success = false;
     }
+
+    if (!checkJsonObject( json, "id", QJsonValue::String))
+    {
+        qWarning() << "expected id. create one: " << randomID();
+    }
+    else
+    {
+        m_randomID = json["id"].toString();
+    }
+
     return success;
 }
 
@@ -81,6 +91,7 @@ QJsonObject Event::toJsonObject() const
     json["label"]     = m_label;
     json["notices"]   = m_notices;
     json["setlist"]   = m_setlist.toJson();
+    json["id"]        = randomID();
 
     return json;
 }

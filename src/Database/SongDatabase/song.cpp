@@ -83,6 +83,15 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
         return false;
     }
 
+    if (!checkJsonObject( json, "id", QJsonValue::String))
+    {
+        qWarning() << "expected id. create one: " << randomID();
+    }
+    else
+    {
+        m_randomID = json["id"].toString();
+    }
+
     QJsonArray attributes = json["attributes"].toArray();
     m_attributes.clear();
     m_attributes.reserve(attributes.size());
@@ -127,6 +136,7 @@ QJsonObject Song::toJsonObject() const
         attachments.append( o );
     }
     json.insert("attachments", attachments);
+    json["id"] = randomID();
 
 
 

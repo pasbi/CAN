@@ -73,7 +73,7 @@ public:
     static QString extractHeaderLabel(const QString & key);
 
     SongID songID( const Song* song ) const;
-    Song* song( SongID id ) const;
+    Song* song(const QString &id ) const;
 
     QModelIndex indexOfSong( const Song* song ) const;
 
@@ -160,10 +160,6 @@ public slots:
     void reset(bool initialize = true);
 
 private:
-    /**
-     * @brief m_numSongsToRestore number of songs that will be restored. Use this only for loading issues.
-     */
-    int m_numSongsToRestore;
     QList<AttributeKey> m_attributeKeysToRestore;
     void initAttributes();
 
