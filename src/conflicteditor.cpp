@@ -97,3 +97,29 @@ void ConflictEditor::resolveConflicts()
         file.resolveConflicts();
     }
 }
+
+void ConflictEditor::resolveAllMine()
+{
+    for (File& file : m_files)
+    {
+        for (const Conflict c : file.conflicts())
+        {
+            qDebug() << "conflict " << c.m_local << c.m_remote << "mine";
+            c.m_resolvePolicy = Conflict::KeepLocal;
+        }
+    }
+    resolveConflicts();
+}
+
+void ConflictEditor::resolveAllTheirs()
+{
+    for (File& file : m_files)
+    {
+        for (const Conflict c : file.conflicts())
+        {
+            qDebug() << "conflict " << c.m_local << c.m_remote << "tehris";
+            c.m_resolvePolicy = Conflict::KeepRemote;
+        }
+    }
+    resolveConflicts();
+}

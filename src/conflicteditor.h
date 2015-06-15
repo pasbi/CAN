@@ -25,6 +25,8 @@ public:
 public slots:
     void accept();
     void resolveConflicts();
+    void resolveAllTheirs();
+    void resolveAllMine();
     QList<File> files() const { return m_files; }
 
 private:

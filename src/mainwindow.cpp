@@ -927,9 +927,33 @@ void MainWindow::on_actionSync_triggered()
     while (!files.isEmpty())
     {
         ConflictEditor editor( files, this );
-        editor.exec();
+        if ( editor.exec() == QDialog::Rejected )
+        {
+            QMessageBox box( this );
+            box.setWindowTitle( tr("Pending conflicts not allowed.") );
+            box.setText( tr("There must not be conficts.") );
+            box.addButton( QMessageBox::Yes );
+            box.addButton( QMessageBox::No );
+            box.addButton( QMessageBox::Abort );
+            box.setButtonText( QMessageBox::Yes, tr("Keep theirs") );
+            box.setButtonText( QMessageBox::No, tr("Keep mine") );
+            switch (box.exec())
+            {
+            case QMessageBox::Yes:
+                editor.resolveAllTheirs();
+                goto resolved;
+            case QMessageBox::No:
+                editor.resolveAllTheirs();
+                goto resolved;
+            case QMessageBox::Abort:
+            default:
+                ;   // next iteration
+            }
+        }
         files = m_project.conflictingFiles();
     }
+
+    resolved:
 
     // wait until polish is finished
     m_project.polishSyncDetached( identity );
