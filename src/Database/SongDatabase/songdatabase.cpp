@@ -25,6 +25,7 @@ const QList<SongDatabase::InitialColumn> SongDatabase::INITIAL_COLUMNS = initCol
 SongDatabase::SongDatabase(Project *project) :
     Database(project)
 {
+    Song::seedRandomID();
 }
 
 void SongDatabase::initAttributes()
@@ -363,6 +364,7 @@ QJsonObject SongDatabase::toJsonObject() const
 {
     QJsonObject json;
     json.insert("numsongs", m_songs.size());
+    json["id"] = randomID();
 
     QJsonArray attributeKeys;
     for (int i = 0; i < m_attributeKeys.size(); ++i)
@@ -377,16 +379,13 @@ QJsonObject SongDatabase::toJsonObject() const
 bool SongDatabase::restoreFromJsonObject(const QJsonObject &object)
 {
 
-    if (       !checkJsonObject(object, "numsongs", QJsonValue::Double)
-            || !checkJsonObject(object, "attributekeys", QJsonValue::Array)  )
+    if ( !checkJsonObject(object, "attributekeys", QJsonValue::Array)  )
     {
         return false;
     }
 
-    checkJsonObject(object, "numsongs", QJsonValue::Double);
-
-    m_numSongsToRestore = object["numsongs"].toInt();
     QJsonArray attributekeys = object["attributekeys"].toArray();
+    m_randomID = object["id"].toString();
 
     m_attributeKeysToRestore.clear();
     for (const QJsonValue & val : attributekeys )
@@ -394,8 +393,7 @@ bool SongDatabase::restoreFromJsonObject(const QJsonObject &object)
         m_attributeKeysToRestore.append(AttributeKey::fromJson(val.toObject()));
     }
 
-
-    return m_numSongsToRestore >= 0;
+    return true;
 }
 
 bool SongDatabase::saveTo(const QString &path) const
@@ -403,7 +401,7 @@ bool SongDatabase::saveTo(const QString &path) const
     Database::saveTo(path);
     for (int i = 0; i < m_songs.size(); ++i)
     {
-        QString path = project()->makeAbsolute( QString("song%1").arg(i) );
+        QString path = project()->makeAbsolute( QString("song%1").arg( m_songs[i]->randomID() ) );
         m_songs[i]->saveTo(path);
     }
 
@@ -426,9 +424,12 @@ bool SongDatabase::loadFrom(const QString &path)
             app().pushCommand( new SongDatabaseNewAttributeCommand( this, m_attributeKeysToRestore[i] ));
         }
 
-        for (int i = 0; i < m_numSongsToRestore; ++i)
+        QStringList filenames = QDir( project()->path() ).entryList( QStringList() << "song*" );
+        filenames.removeOne( "songDatabase" );
+
+        for (const QString& filename : filenames)
         {
-            QString path = project()->makeAbsolute( QString("song%1").arg(i) );
+            QString path = project()->makeAbsolute( filename );
             Song* s = new Song(this);
             s->loadFrom(path);
             appendSong( s );

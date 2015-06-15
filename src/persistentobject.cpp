@@ -2,9 +2,11 @@
 #include <QFile>
 #include <QJsonDocument>
 #include "global.h"
+#include <QDateTime>
 
 PersistentObject::PersistentObject()
 {
+    m_randomID = createRandomID();
 }
 
 PersistentObject::~PersistentObject()
@@ -56,4 +58,30 @@ bool PersistentObject::saveTo(const QString &path) const
     file.write(doc.toJson());
 
     return true;
+}
+
+void PersistentObject::seedRandomID()
+{
+    qsrand( QDateTime::currentMSecsSinceEpoch() );
+}
+
+QString PersistentObject::createRandomID()
+{
+    QString s;
+
+
+    for (int i = 0; i < 32; ++i)
+    {
+        char c = qrand() % 36;
+        if (c < 10)
+        {
+            s += QChar( char(c + '0') );
+        }
+        else
+        {
+            c -= 10;
+            s += QChar( char( c + 'a' ) );
+        }
+    }
+    return s;
 }

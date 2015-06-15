@@ -8,6 +8,7 @@ const QString EventDatabase::EVENT_POINTERS_MIME_DATA_FORMAT = "can/events";
 EventDatabase::EventDatabase(Project *project) :
     Database(project)
 {
+    Event::seedRandomID();
 }
 
 
@@ -15,10 +16,10 @@ QJsonObject EventDatabase::toJsonObject() const
 {
     QJsonObject json;
 
-    json["numEvents"] = m_events.length();
+    json["id"] = randomID();
     for (int i = 0; i < m_events.length(); ++i)
     {
-        m_events[i]->saveTo( project()->makeAbsolute( QString("event%1").arg(i) ) );
+        m_events[i]->saveTo( project()->makeAbsolute( QString("event%1").arg( m_events[i]->randomID() ) ) );
     }
 
     return json;
@@ -31,17 +32,22 @@ Qt::DropActions EventDatabase::supportedDragActions() const
 
 bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
 {
+    Q_UNUSED( object );
+
     beginResetModel();
     bool success = true;
-    success &= checkJsonObject( object, "numEvents", QJsonValue::Double );
-    int numEvents = object["numEvents"].toInt();
 
     m_events.clear();
-    for (int i = 0; i < numEvents; ++i)
+    QStringList filenames = QDir( project()->path() ).entryList( QStringList() << "event*" );
+    filenames.removeOne( "eventDatabase" );
+    m_randomID = object["id"].toString();
+
+    for (const QString& filename : filenames)
     {
         Event* e = new Event( this );
-        success &= e->loadFrom( project()->makeAbsolute( QString("event%1").arg(i) ) );
+        success &= e->loadFrom( project()->makeAbsolute( filename ) );
         m_events << e;
+        qDebug() << "restore event " << filename;
     }
 
     endResetModel();

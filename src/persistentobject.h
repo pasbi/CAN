@@ -25,6 +25,15 @@ protected:
 public:
     virtual bool saveTo(const QString & path) const;
     virtual bool loadFrom(const QString & path);
+
+private:
+    static QString createRandomID();
+protected:
+    QString m_randomID;
+public:
+    QString randomID() const { return m_randomID; }
+    static void seedRandomID();
+
 };
 
 #endif // PERSISTENTOBJECT_H
