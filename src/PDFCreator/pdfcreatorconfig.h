@@ -58,6 +58,10 @@ QPagedPaintDevice::PageSize intToPageSize( int s )
     }
 }
 
+// user shall not manipulate them (ChordPatternViewer scroll speed relies on constant spacing)
+CONFIGURABLE_ADD_ITEM_HIDDEN( PDFCreator, LineSpacing, 1.3 );
+CONFIGURABLE_ADD_ITEM_HIDDEN( PDFCreator, ChordLineSpacing, 1 );
+
 CONFIGURABLE_ADD_DEFEATABLE_ITEM(  PDFCreator,
                                    TitlePagePattern,
                                    QT_TRANSLATE_NOOP("ConfigurableItem", "Title Page"),
@@ -76,20 +80,7 @@ CONFIGURABLE_ADD_DEFEATABLE_ITEM(  PDFCreator,
                                    ConfigurableItemOptions::LineEditOptions( QT_TRANSLATE_NOOP("ConfigurableItem", "Pattern") )
                                  );
 
-CONFIGURABLE_ADD_ITEM( PDFCreator,
-                       LineSpacing,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Line spacing"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/LineSpacing"),
-                       1.3,
-                       ConfigurableItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
-                     );
-CONFIGURABLE_ADD_ITEM( PDFCreator,
-                       ChordLineSpacing,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Chord Line spacing"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/ChordLineSpacing"),
-                       1,
-                       ConfigurableItemOptions::DoubleSpinBoxOptions( 0, 10, 0.01, "" )
-                     );
+
 CONFIGURABLE_ADD_ITEM( PDFCreator,
                        PDFSize,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Page size"),
