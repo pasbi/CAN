@@ -141,6 +141,8 @@ void RenamableHeaderView::setUpContextMenu(QMenu *menu)
         app().pushCommand( naCommand );
         editHeader( model()->columnCount() - 1, true );
     });
+    menu->addAction( addAttributeAction );
+
 }
 
 void RenamableHeaderView::setReadOnly()
