@@ -58,6 +58,8 @@ private:
     bool saveProjectAs();
     bool newProject();
     void loadDefaultProject();
+    void createDebugMenu();
+
 
 //    void updateToolBar();
 

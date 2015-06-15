@@ -76,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createAttachmentActions();
 
     ui->setupUi(this);
+    createDebugMenu();
 
     QSettings settings;
     restoreGeometry( settings.value("Geometry").toByteArray() );
@@ -1234,6 +1235,22 @@ void MainWindow::askForSync()
     {
         on_actionSync_triggered();
     }
+}
+
+void MainWindow::createDebugMenu()
+{
+#ifdef QT_DEBUG
+    QMenu* menu = new QMenu( this );
+    QAction* action = new QAction( menu );
+    menu->addAction( action );
+    menu->setTitle( "Debug" );
+    action->setText("open terminal");
+    ui->menuBar->addMenu( menu );
+    connect( action, &QAction::triggered, [this]()
+    {
+        QProcess::startDetached( "gnome-terminal", QStringList(), m_project.path() );
+    });
+#endif
 }
 
 
