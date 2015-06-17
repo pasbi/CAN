@@ -16,7 +16,6 @@ QJsonObject EventDatabase::toJsonObject() const
 {
     QJsonObject json;
 
-    json["id"] = randomID();
     for (int i = 0; i < m_events.length(); ++i)
     {
         m_events[i]->saveTo( project()->makeAbsolute( QString("event%1").arg( m_events[i]->randomID() ) ) );
@@ -40,7 +39,6 @@ bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
     m_events.clear();
     QStringList filenames = QDir( project()->path() ).entryList( QStringList() << "event*" );
     filenames.removeOne( "eventDatabase" );
-    m_randomID = object["id"].toString();
 
     for (const QString& filename : filenames)
     {
