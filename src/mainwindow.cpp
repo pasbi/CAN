@@ -761,9 +761,9 @@ void MainWindow::on_actionOpen_Terminal_here_triggered()
     QProcess::startDetached( "gnome-terminal", QStringList(), m_project.path() );
 }
 
+
 void MainWindow::on_actionClone_triggered()
 {
-
     if (!canProjectClose())
     {
         return;
@@ -786,17 +786,17 @@ void MainWindow::on_actionClone_triggered()
     m_project.reset();
     setCurrentPath("");
 
-    QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
+    QProgressDialog pd( tr("Task in Progress"), tr("Cancel"), 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
 
-    m_project.cloneDetached( url.url(), Identity("", "", "", "") );
+    m_project.cloneDetached( url.url() );
 
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);
     pd.setLabel(label);
     pd.show();
 
-    while ( !m_project.cloningFinished() )
+    while ( !m_project.detachedTaskFinished() )
     {
         pd.setValue( (pd.value() + 1) % 100 );
         label->setText( tr("Cloning.") );
@@ -808,8 +808,26 @@ void MainWindow::on_actionClone_triggered()
         }
     }
 
+    if (m_project.needsInitialCommit())
+    {
+        m_project.saveToTempDir();
+        m_project.initialize( m_identityManager.currentIdentity() );
+        while ( !m_project.detachedTaskFinished() )
+        {
+            pd.setValue( (pd.value() + 1) % 100 );
+            label->setText( tr("Initializing.") );
+            qApp->processEvents();
+            QThread::msleep( 10 );
+            if (pd.wasCanceled())
+            {
+                return;
+            }
+        }
+    }
 
-    if ( !m_project.cloningSucceeded() )
+
+
+    if ( !m_project.detachedTaskSucceeded() )
     {
         QMessageBox::warning( this,
                               tr("Cloning failed"),
@@ -891,10 +909,6 @@ void MainWindow::on_actionSync_triggered()
             }
         }
     }
-    else
-    {
-    }
-
 
     //////////////////////////////////////////////////////////////////////////
     /// Set up progress dialog
@@ -903,25 +917,14 @@ void MainWindow::on_actionSync_triggered()
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);
     pd.setLabel(label);
-    pd.show();
     label->setText( tr("Syncing.") );
+    pd.show();
 
     //////////////////////////////////////////////////////////////////////////
     /// begin syncing
-
-    if (m_project.isGitRepository())
-    {
-        m_project.removeDirRecursively( m_project.path() );
-    }
-    m_project.saveToTempDir();
-    if (m_project.isGitRepository())
-    {
-        m_project.addDirRecursively( m_project.path() );
-    }
-
-    // wait until prepare is finished
+    m_project.initCommit();
     m_project.prepareSyncDetached( message, identity );
-    while ( !m_project.prepareSyncFinished() )
+    while ( !m_project.detachedTaskFinished() )
     {
         qApp->processEvents();
         QThread::msleep( 10 );
@@ -930,6 +933,13 @@ void MainWindow::on_actionSync_triggered()
             //TODO ensure that the state is not weird.
             return;
         }
+    }
+    if (!m_project.detachedTaskSucceeded())
+    {
+        QMessageBox::warning( this,
+                              tr("Sync failed"),
+                              tr("Cannot get files from remote.") );
+        return;
     }
 
     // resolve conflicts
@@ -965,9 +975,8 @@ void MainWindow::on_actionSync_triggered()
 
     resolved:
 
-    // wait until polish is finished
-    m_project.polishSyncDetached( identity );
-    while ( !m_project.polishSyncFinished() )
+    m_project.polishSyncDetached( message, identity );
+    while ( !m_project.detachedTaskFinished() )
     {
         qApp->processEvents();
         QThread::msleep( 10 );
@@ -976,6 +985,14 @@ void MainWindow::on_actionSync_triggered()
             //TODO ensure that the state is not weird.
             return;
         }
+    }
+
+    if (!m_project.detachedTaskSucceeded())
+    {
+        QMessageBox::warning( this,
+                              tr("Sync failed"),
+                              tr("Cannot push files to remote.") );
+        return;
     }
 
     if (!m_project.loadFromTempDir())
@@ -988,24 +1005,6 @@ void MainWindow::on_actionSync_triggered()
                               QMessageBox::Ok,
                               QMessageBox::NoButton );
         newProject();
-    }
-    else if ( !m_project.polishSyncSucceeded() || !m_project.prepareSyncSucceeded() )
-    {
-        QMessageBox::information( this,
-                                  tr("Sync"),
-                                  tr("Sync failed.\n"
-                                     "Make sure your username/password is correct and the remote repository is reachable"),
-                                  QMessageBox::Ok,
-                                  QMessageBox::NoButton );
-    }
-    else
-    {
-        QMessageBox::information( this,
-                                  tr("Sync"),
-                                  tr("Sync succeeded"),
-                                  QMessageBox::Ok,
-                                  QMessageBox::NoButton );
-        m_project.setIsSynchronized();
     }
 
 }
