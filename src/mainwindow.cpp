@@ -855,6 +855,10 @@ void MainWindow::on_actionClone_triggered()
 
 void MainWindow::on_actionSync_triggered()
 {
+
+    m_project.synchronize( "sync", Identity("n", "e", "l", "p") );
+    return;
+
     //////////////////////////////////////////////////////////////////////////
     /// retrieve message and Identity.
     /// abort if one of them is invalid.
@@ -922,8 +926,8 @@ void MainWindow::on_actionSync_triggered()
 
     //////////////////////////////////////////////////////////////////////////
     /// begin syncing
-    m_project.initCommit();
-    m_project.prepareSyncDetached( message, identity );
+    m_project.commit( message, identity );
+    m_project.pullOriginMasterDetached();
     while ( !m_project.detachedTaskFinished() )
     {
         qApp->processEvents();
@@ -944,6 +948,7 @@ void MainWindow::on_actionSync_triggered()
 
     // resolve conflicts
     QList<File> files = m_project.conflictingFiles();
+    bool resolvedConflicts = !files.isEmpty();
     while (!files.isEmpty())
     {
         ConflictEditor editor( files, this );
@@ -961,21 +966,23 @@ void MainWindow::on_actionSync_triggered()
             {
             case QMessageBox::Yes:
                 editor.resolveAllTheirs();
-                goto resolved;
+                break;
             case QMessageBox::No:
                 editor.resolveAllTheirs();
-                goto resolved;
+                break;
             case QMessageBox::Abort:
             default:
-                ;   // next iteration
+                break;
             }
         }
         files = m_project.conflictingFiles();
     }
 
-    resolved:
+    m_project.commit( tr("conflict resolving") , identity);
 
-    m_project.polishSyncDetached( message, identity );
+    m_project.mergeCommits( "merge FETCH_HEAD with HEAD", identity );
+
+    m_project.pushOriginMasterDetached( identity );
     while ( !m_project.detachedTaskFinished() )
     {
         qApp->processEvents();
