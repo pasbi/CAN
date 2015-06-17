@@ -50,6 +50,7 @@ public:
     bool canClose() const;
     bool isSynchronized() const;
     void setIsSynchronized();
+    void markFileRemoved( const QString& filename );
 
 private:
     void setCanClose( bool b );
@@ -61,7 +62,6 @@ private:
 signals:
     void canCloseChanged( bool );
     void undoStackCleared();
-
 
 };
 
