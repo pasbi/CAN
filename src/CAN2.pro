@@ -280,7 +280,6 @@ FORMS    += mainwindow.ui \
     Dialogs/stringdialog.ui \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui \
-    conflicteditor.ui \
     Dialogs/commitdialog.ui \
     Dialogs/identitydialog.ui \
     Dialogs/configurationdialog.ui \
