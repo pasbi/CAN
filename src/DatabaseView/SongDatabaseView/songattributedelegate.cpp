@@ -5,7 +5,7 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h"
 #include <QLineEdit>
-#include "project.h"
+#include "Project/project.h"
 #include "application.h"
 
 SongAttributeDelegate::SongAttributeDelegate(SongTableView *parent) :

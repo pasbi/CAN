@@ -763,7 +763,6 @@ void MainWindow::on_actionOpen_Terminal_here_triggered()
 
 void MainWindow::on_actionClone_triggered()
 {
-
     if (!canProjectClose())
     {
         return;
@@ -789,14 +788,14 @@ void MainWindow::on_actionClone_triggered()
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
 
-    m_project.cloneDetached( url.url(), Identity("", "", "", "") );
 
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);
     pd.setLabel(label);
     pd.show();
 
-    while ( !m_project.cloningFinished() )
+    m_project.cloneDetached( url.url() );
+    while ( !m_project.detachedTaskFinished() )
     {
         pd.setValue( (pd.value() + 1) % 100 );
         label->setText( tr("Cloning.") );
@@ -808,17 +807,39 @@ void MainWindow::on_actionClone_triggered()
         }
     }
 
-
-    if ( !m_project.cloningSucceeded() )
+    if ( m_project.detachedTaskSucceeded() )
     {
-        QMessageBox::warning( this,
-                              tr("Cloning failed"),
-                              QString(tr("Failed to clone %1.").arg(url.url())),
-                              QMessageBox::Ok,
-                              QMessageBox::NoButton );
-        newProject();
+        if (m_project.needsInitialCommit())
+        {
+            m_project.saveToTempDir();
+            m_project.initializeDetached( m_identityManager.currentIdentity() );
+            while ( !m_project.detachedTaskFinished() )
+            {
+                pd.setValue( (pd.value() + 1) % 100 );
+                label->setText( tr("Cloning.") );
+                qApp->processEvents();
+                QThread::msleep( 10 );
+                if (pd.wasCanceled())
+                {
+                    return;
+                }
+            }
+        }
+        else
+        {
+            QMessageBox::warning( this,
+                                  tr("Cloning failed"),
+                                  QString(tr("Failed to clone %1.").arg(url.url())),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton );
+            newProject();
+            updateWindowTitle();
+            updateWhichWidgetsAreEnabled();
+            return;
+        }
     }
-    else if ( !m_project.loadFromTempDir())
+
+    if ( !m_project.loadFromTempDir())
     {
         QMessageBox::warning( this,
                               tr("Cannot load project"),
@@ -911,8 +932,9 @@ void MainWindow::on_actionSync_triggered()
     m_project.saveToTempDir();
 
     // wait until prepare is finished
-    m_project.prepareSyncDetached( message, identity );
-    while ( !m_project.prepareSyncFinished() )
+    m_project.commit( message, m_identityManager.currentIdentity() );
+    m_project.pullOriginMasterDetached();
+    while ( !m_project.detachedTaskFinished() )
     {
         qApp->processEvents();
         QThread::msleep( 10 );
@@ -924,7 +946,7 @@ void MainWindow::on_actionSync_triggered()
     }
 
     // resolve conflicts
-    QList<File> files = m_project.conflictingFiles();
+    QList<ConflictFile> files = m_project.conflictingFiles();
     while (!files.isEmpty())
     {
         ConflictEditor editor( files, this );
@@ -957,8 +979,8 @@ void MainWindow::on_actionSync_triggered()
     resolved:
 
     // wait until polish is finished
-    m_project.polishSyncDetached( identity );
-    while ( !m_project.polishSyncFinished() )
+    m_project.pushOriginMasterDetached( identity );
+    while ( !m_project.detachedTaskFinished() )
     {
         qApp->processEvents();
         QThread::msleep( 10 );
@@ -980,7 +1002,7 @@ void MainWindow::on_actionSync_triggered()
                               QMessageBox::NoButton );
         newProject();
     }
-    else if ( !m_project.polishSyncSucceeded() || !m_project.prepareSyncSucceeded() )
+    else if ( !m_project.detachedTaskSucceeded() )  //TODO check if pull succeeds
     {
         QMessageBox::information( this,
                                   tr("Sync"),

@@ -2,7 +2,7 @@
 #include "ui_songdatabasewidget.h"
 #include <QTimer>
 #include "application.h"
-#include "project.h"
+#include "Project/project.h"
 
 SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
     QWidget(parent),

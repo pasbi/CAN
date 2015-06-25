@@ -2,7 +2,7 @@
 #include "Database/EventDatabase/event.h"
 #include "Database/EventDatabase/eventdatabase.h"
 
-#include "project.h"
+#include "Project/project.h"
 #include "Database/EventDatabase/event.h"
 #include "Database/EventDatabase/eventdatabase.h"
 

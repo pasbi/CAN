@@ -1,5 +1,5 @@
 #include "songdatabase.h"
-#include "project.h"
+#include "Project/project.h"
 #include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 #include "songdatabasesortproxy.h"
 #include <QSize>

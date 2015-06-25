@@ -2,7 +2,7 @@
 #include <QMouseEvent>
 #include <QLineEdit>
 #include "global.h"
-#include "project.h"
+#include "Project/project.h"
 #include "Commands/SongDatabaseCommands/songdatabaserenameheadercommand.h"
 #include "Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h"
 #include "util.h"

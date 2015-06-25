@@ -1,5 +1,5 @@
 #include "application.h"
-#include "project.h"
+#include "Project/project.h"
 #include "global.h"
 #include "mainwindow.h"
 #include "Database/SongDatabase/song.h"

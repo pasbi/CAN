@@ -22,9 +22,6 @@ QMAKE_LFLAGS += -static-libgcc
 
 unix {
 #you must have libgit2, poppler, libav, libsoundtouch installed.
-#checkout zipgit, build it and update the path.
-INCLUDEPATH += ../../ZipGit/src/
-LIBS += -L../ZipGit/build-ZipGit-Desktop-Debug/ -lzipgit
 LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
 LIBS += -lavformat -lavcodec -lavutil -lpthread
@@ -33,8 +30,7 @@ LIBS += -lSoundTouch
 
 win32 {
 INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
-INCLUDEPATH += ../../ZipGit/src/
-LIBS += -L../../bin -lzipgit
+#link against libgit2
 LIBS += -L../../lib -lpoppler-qt5
 LIBS += -L../../bin -lavformat -lavcodec -lavutil
 LIBS += -L../../bin -lsoundtouch
@@ -46,7 +42,7 @@ LIBS += -L../../bin -lsoundtouch
 SOURCES += main.cpp\
         mainwindow.cpp \
     configurable.cpp \
-    project.cpp \
+    Project/project.cpp \
     Database/SongDatabase/songdatabase.cpp \
     Database/EventDatabase/eventdatabase.cpp \
     Database/database.cpp \
@@ -151,10 +147,15 @@ SOURCES += main.cpp\
     Dialogs/chordpatternviewer.cpp \
     PDFCreator/orphantsetlist.cpp \
     Dialogs/hud.cpp \
-    Dialogs/addfilestoindexdialog.cpp
+    Dialogs/addfilestoindexdialog.cpp \
+    Project/zipped.cpp \
+    Project/conflictfile.cpp \
+    Project/gitrepository.cpp \
+    Project/identity.cpp \
+    Project/gitutil.cpp
 
 HEADERS  += mainwindow.h \
-    project.h \
+    Project/project.h \
     configurable.h \
     Database/SongDatabase/songdatabase.h \
     Database/EventDatabase/eventdatabase.h \
@@ -267,7 +268,13 @@ HEADERS  += mainwindow.h \
     Dialogs/chordpatternviewer.h \
     PDFCreator/orphantsetlist.h \
     Dialogs/hud.h \
-    Dialogs/addfilestoindexdialog.h
+    Dialogs/addfilestoindexdialog.h \
+    Project/zipped.h \
+    Project/conflictfile.h \
+    Project/gitrepository.h \
+    Project/identity.h \
+    Project/gitutil.h \
+    git.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \

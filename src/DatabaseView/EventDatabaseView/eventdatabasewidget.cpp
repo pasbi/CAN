@@ -1,7 +1,7 @@
 #include "eventdatabasewidget.h"
 #include "ui_eventdatabasewidget.h"
 #include "application.h"
-#include "project.h"
+#include "Project/project.h"
 
 EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     QWidget(parent),

@@ -5,7 +5,7 @@
 #include "util.h"
 #include "Database/SongDatabase/song.h"
 #include "Database/SongDatabase/songdatabase.h"
-#include "project.h"
+#include "Project/project.h"
 #include "Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h"
 #include "application.h"
 #include "Dialogs/chordpatternviewer.h"

@@ -2,7 +2,7 @@
 #include "QHeaderView"
 #include <QAction>
 #include "global.h"
-#include "project.h"
+#include "Project/project.h"
 #include "renamableheaderview.h"
 #include "util.h"
 #include <QFocusEvent>

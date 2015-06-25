@@ -1,7 +1,7 @@
 #include "setlistitemselector.h"
 #include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
 #include "application.h"
-#include "project.h"
+#include "Project/project.h"
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 

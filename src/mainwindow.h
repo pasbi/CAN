@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "project.h"
+#include "Project/project.h"
 #include "configurable.h"
 #include "identitymanager.h"
 #include "DatabaseView/SongDatabaseView/songtableview.h"

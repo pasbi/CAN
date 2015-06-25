@@ -1,7 +1,7 @@
 #include "setlistview.h"
 #include <QMimeData>
 #include "application.h"
-#include "project.h"
+#include "Project/project.h"
 #include "Commands/SetlistCommands/setlistinsertitemcommand.h"
 #include <QAction>
 #include <QHeaderView>

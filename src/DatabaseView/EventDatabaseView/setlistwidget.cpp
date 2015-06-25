@@ -2,7 +2,7 @@
 #include "ui_setlistwidget.h"
 #include "application.h"
 #include "Database/SongDatabase/songdatabase.h"
-#include "project.h"
+#include "Project/project.h"
 #include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
 #include <QDialog>
 #include <QDialogButtonBox>

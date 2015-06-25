@@ -2,7 +2,7 @@
 
 #include "../attachment.h"
 #include "application.h"
-#include "project.h"
+#include "Project/project.h"
 
 
 DEFN_CREATABLE_NAME(ChordPatternAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Attachment"))

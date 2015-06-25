@@ -5,7 +5,7 @@
 #include "Attachments/indexedfileattachment.h"
 #include "Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h"
 #include "Database/SongDatabase/songdatabase.h"
-#include "project.h"
+#include "Project/project.h"
 #include "indexedfilechoosedialog.h"
 
 QList<Ui::IndexedFileAttachmentView*> IndexedFileAttachmentView::initializedUis;

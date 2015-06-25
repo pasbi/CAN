@@ -3,7 +3,7 @@
 #include "util.h"
 #include <QScrollBar>
 
-ConflictEditor::ConflictEditor(const QList<File> &conflictingFiles, QWidget *parent) :
+ConflictEditor::ConflictEditor(const QList<ConflictFile> &conflictingFiles, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConflictEditor)
 {
@@ -11,9 +11,9 @@ ConflictEditor::ConflictEditor(const QList<File> &conflictingFiles, QWidget *par
 
     m_files = conflictingFiles;
 
-    for (const File & file : m_files)
+    for (ConflictFile & file : m_files)
     {
-        for (const Conflict & conflict : file.conflicts())
+        for (Conflict & conflict : file.conflicts())
         {
             m_items << new Item( ui->listWidget, conflict );
             ui->listWidget->addItem( m_items.last() );
@@ -32,7 +32,7 @@ ConflictEditor::~ConflictEditor()
     qDeleteAll( m_items );
 }
 
-const Conflict& ConflictEditor::currentConflict() const
+ Conflict& ConflictEditor::currentConflict() const
 {
     return ((Item*) ui->listWidget->currentItem())->conflict();
 }
@@ -66,7 +66,7 @@ void ConflictEditor::selectConflict()
 
 void ConflictEditor::on_buttonKeepRemote_clicked()
 {
-    const Conflict& conflict = currentConflict();
+    Conflict& conflict = currentConflict();
     conflict.m_custom = ui->plainTextEditRemote->toPlainText();
     conflict.m_resolvePolicy = conflict.m_custom == conflict.m_remote ? Conflict::KeepRemote : Conflict::KeepCustom;
 
@@ -76,7 +76,7 @@ void ConflictEditor::on_buttonKeepRemote_clicked()
 
 void ConflictEditor::on_buttonKeepLocal_clicked()
 {
-    const Conflict& conflict = currentConflict();
+    Conflict& conflict = currentConflict();
     conflict.m_custom = ui->plainTextEditLocal->toPlainText();
     conflict.m_resolvePolicy = conflict.m_custom == conflict.m_local ? Conflict::KeepLocal : Conflict::KeepCustom;
 
@@ -92,7 +92,7 @@ void ConflictEditor::accept()
 
 void ConflictEditor::resolveConflicts()
 {
-    for (File& file : m_files)
+    for (ConflictFile& file : m_files)
     {
         file.resolveConflicts();
     }
@@ -100,9 +100,9 @@ void ConflictEditor::resolveConflicts()
 
 void ConflictEditor::resolveAllMine()
 {
-    for (File& file : m_files)
+    for (ConflictFile& file : m_files)
     {
-        for (const Conflict c : file.conflicts())
+        for (Conflict c : file.conflicts())
         {
             c.m_resolvePolicy = Conflict::KeepLocal;
         }
@@ -112,9 +112,9 @@ void ConflictEditor::resolveAllMine()
 
 void ConflictEditor::resolveAllTheirs()
 {
-    for (File& file : m_files)
+    for (ConflictFile& file : m_files)
     {
-        for (const Conflict c : file.conflicts())
+        for (Conflict c : file.conflicts())
         {
             c.m_resolvePolicy = Conflict::KeepRemote;
         }

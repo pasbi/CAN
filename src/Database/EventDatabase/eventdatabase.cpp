@@ -1,5 +1,5 @@
 #include "eventdatabase.h"
-#include "project.h"
+#include "Project/project.h"
 #include "Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h"
 #include "application.h"
 
