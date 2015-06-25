@@ -45,21 +45,6 @@ bool PersistentObject::loadFrom(const QString &path)
     return true;
 }
 
-bool PersistentObject::saveTo(const QString &path) const
-{
-    QFile file(path);
-    if (!file.open(QIODevice::WriteOnly))
-    {
-        WARNING << "Cannot open file " << path << " for writing.";
-        return false;
-    }
-
-    QJsonDocument doc(toJsonObject());
-    file.write(doc.toJson());
-
-    return true;
-}
-
 void PersistentObject::seedRandomID()
 {
     qsrand( QDateTime::currentMSecsSinceEpoch() );

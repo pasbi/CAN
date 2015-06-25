@@ -3,6 +3,7 @@
 
 #include <QTemporaryDir>
 #include <QDataStream>
+#include "file.h"
 
 class Zipped
 {
@@ -52,12 +53,25 @@ public:
      */
 public:
     virtual bool loadFromTempDir() = 0;
+    virtual bool saveToTempDir() const;
+    /**
+     * @brief onRemoveFile is called when a file is removed.
+     * @param filename the absolute filename of the removed file.
+     */
+    virtual void onRemoveFile( const QString& filename ) const { Q_UNUSED( filename ); }
 
     /**
-     * @brief saveToTempDir saves the project to temporary directory.
+     * @brief onAddFile is called when a file is added or its content has changed.
+     * @param filename the absolute filename of the added/changed file.
+     */
+    virtual void onAddFile( const QString& filename ) const { Q_UNUSED( filename ); }
+
+protected:
+    /**
+     * @brief getFiles returns the content of all files that shall be saved to temp dir.
      * @return
      */
-    virtual bool saveToTempDir() = 0;
+    virtual QList<File> getFiles() const = 0;
 
 private:
     QTemporaryDir m_tempDir;

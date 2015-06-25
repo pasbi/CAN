@@ -2,6 +2,7 @@
 #include "Project/project.h"
 #include "Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h"
 #include "application.h"
+#include <QJsonDocument>
 
 const QString EventDatabase::EVENT_POINTERS_MIME_DATA_FORMAT = "can/events";
 
@@ -11,17 +12,23 @@ EventDatabase::EventDatabase(Project *project) :
     Event::seedRandomID();
 }
 
+QList<File> EventDatabase::getFiles() const
+{
+    QList<File> files;
+    files << File( "eventDatabase", QJsonDocument(toJsonObject()).toJson() );
+
+    for (int i = 0; i < m_events.size(); ++i)
+    {
+        files << File( QString("event%1").arg( m_events[i]->randomID() ),
+                       QJsonDocument(m_events[i]->toJsonObject()).toJson() );
+    }
+
+    return files;
+}
 
 QJsonObject EventDatabase::toJsonObject() const
 {
-    QJsonObject json;
-
-    for (int i = 0; i < m_events.length(); ++i)
-    {
-        m_events[i]->saveTo( project()->makeAbsolute( QString("event%1").arg( m_events[i]->randomID() ) ) );
-    }
-
-    return json;
+    return QJsonObject();
 }
 
 Qt::DropActions EventDatabase::supportedDragActions() const

@@ -10,6 +10,7 @@ class Database : public PersistentObject, public QAbstractTableModel
 public:
     Database(Project* project);
     Project* project() const { return m_project; }
+    virtual QList<File> getFiles() const = 0;
 
 private:
     Project* m_project;

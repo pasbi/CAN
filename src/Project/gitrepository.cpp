@@ -15,12 +15,7 @@ GitRepository::GitRepository( const QString ending ) :
 GitRepository::~GitRepository()
 {
     git_libgit2_shutdown();
-    if (m_index)
-    {
-        qDebug() << "free index ~" << m_index;
-        git_index_free( m_index );
-        m_index = NULL;
-    }
+    endIndex();
 }
 
 bool GitRepository::cloneAndInitialize( const QString& url, const Identity& identity )
@@ -46,6 +41,9 @@ bool GitRepository::cloneAndInitialize( const QString& url, const Identity& iden
 
 bool GitRepository::synchronize( const QString& message, const Identity& identity )
 {
+//    beginIndex();
+
+    saveToTempDir();
     commit( message, identity );
 
     if (!pullOriginMaster())
@@ -64,6 +62,8 @@ bool GitRepository::synchronize( const QString& message, const Identity& identit
     {
         return false;
     }
+
+//    endIndex();
 
     return loadFromTempDir();
 }
@@ -86,12 +86,7 @@ bool GitRepository::loadZip(const QString &filename)
         if (QFileInfo( makeAbsolute(".git") ).exists())
         {
             assert( CHECK_GIT( git_repository_open( &m_repository, CSTR(path() ) ) ) );
-            if (m_index)
-            {
-                qDebug() << "free index load" << m_index;
-                git_index_free( m_index );
-                m_index = NULL;
-            }
+            beginIndex();
         }
         return true;
     }
@@ -99,20 +94,10 @@ bool GitRepository::loadZip(const QString &filename)
 
 bool GitRepository::saveZip(const QString &filename)
 {
-    // all files must be removed from index. imagine:
-    // there are fileA, fileB.
-    // user deletes fileA
-    // user saves. so just fileB is there, so git thinks fileA was accidentaly deleted.
-    // user commits (internally, git_rm_All deletes fileB from index, BUT NOT fileA, since it is not there!
-    //               then git_add_All adds fileB again)
-    // => commit, pull, merge, push will restore fileA!
-    // so here is the last chance to tell git that a file _shall_ be removed. removing to many files is not
-    // crucial since they get removed anyway from index (and added certainly)
-    git_rm_all();
     return Zipped::saveZip( filename );
 }
 
-bool GitRepository::isGitRepository()
+bool GitRepository::isGitRepository() const
 {
     return !!m_repository;
 }
@@ -252,11 +237,6 @@ void GitRepository::commit( const QString& message, const Identity& identity )
         qWarning() << "cannot sync non-gitrepository";
         return;
     }
-
-    git_rm_all();
-    saveToTempDir();
-    git_add_all();
-
     if ( m_index == NULL )
     {
         qWarning() << "nothing to commit.";
@@ -294,10 +274,6 @@ void GitRepository::commit( const QString& message, const Identity& identity )
 
     assert( CHECK_GIT( git_index_write(m_index) ) );
 
-    qDebug() << "free index commit" << m_index;
-    git_index_free( m_index );
-    m_index = NULL;
-
     git_signature_free(sig);
     git_commit_free(parent);
     git_tree_free(tree);
@@ -310,10 +286,12 @@ bool GitRepository::checkGitCall(int errorCode)
         const git_error* error = giterr_last();
         if (error)
         {
-            m_errorSender.sendError( QString("Error %1.%2: %3")
+            QString message = QString("Error %1.%2: %3")
                                         .arg(errorCode)
                                         .arg(error->klass)
-                                        .arg(error->message) );
+                                        .arg(error->message);
+            m_errorSender.sendError( message );
+            qWarning() << "Git error: " << message;
         }
         else
         {
@@ -343,6 +321,7 @@ bool GitRepository::clone(const QString& url)
     }
     else
     {
+        beginIndex();
         return true;
     }
 }
@@ -351,8 +330,7 @@ bool GitRepository::initialize(const Identity &identity)
 {
     CHECK_IS_REPOSITORY();
 
-    git_add_all();
-
+//    beginIndex();
     git_oid tree_id, commit_id;
     git_tree* tree;
     assert( CHECK_GIT( git_index_write_tree(&tree_id, index()) ) );
@@ -374,12 +352,11 @@ bool GitRepository::initialize(const Identity &identity)
     git_signature_free( sig );
     sig = NULL;
 
-    qDebug() << "free index init" << m_index;
-    git_index_free( m_index );
-    m_index = NULL;
 
     // push the initialization. Else, sync will not work.
-    return pushOriginMaster( identity );
+    bool success = pushOriginMaster( identity );
+//    endIndex();
+    return success;
 }
 
 void GitRepository::mergeCommits(const QString &message, const Identity &identity)
@@ -419,9 +396,6 @@ void GitRepository::mergeCommits(const QString &message, const Identity &identit
                                             parents                      /* parents */      ) ) );
     assert( CHECK_GIT( git_index_write(index()) ) );
 
-    qDebug() << "free index merge commits " << m_index;
-    git_index_free( m_index );
-    m_index = NULL;
     git_signature_free(sig);
     git_commit_free(parentLocal);
     git_commit_free(parentRemote);
@@ -437,80 +411,40 @@ void GitRepository::mergeCommits(const QString &message, const Identity &identit
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-git_index* GitRepository::index()
+git_index* GitRepository::index() const
 {
     assert( m_repository );
     if (!m_index)
     {
+        qDebug() << "create index...";
         git_repository_index(&m_index, m_repository);
-        qDebug() << "create index " << m_index;
+        qDebug() << "fresh index count = " << git_index_entrycount( index() );
     }
     return m_index;
 }
 
-
-void GitRepository::git_add_all()
-{
-    addDirRecursively( path() );
-}
-
-void GitRepository::git_rm_all()
-{
-    removeDirRecursively( path() );
-}
-
-void GitRepository::git_add(const QString & absoluteFilename)
+void GitRepository::onAddFile(const QString & absoluteFilename) const
 {
     QString relativeFilename = QDir(path()).relativeFilePath( absoluteFilename );
     if (isGitRepository())
     {
-        qDebug() << "add " << absoluteFilename;
         git_index_add_bypath(index(), CSTR(relativeFilename));
+        qDebug() << "add file " << absoluteFilename;
+
     }
 }
 
-void GitRepository::git_rm(const QString & absoluteFilename)
+void GitRepository::onRemoveFile(const QString & absoluteFilename) const
 {
     QString relativeFilename = QDir(path()).relativeFilePath( absoluteFilename );
     if (isGitRepository())
     {
-        qDebug() << "rm " << absoluteFilename;
         git_index_remove_bypath(index(), CSTR(relativeFilename));
+        qDebug() << "rm file " << absoluteFilename;
     }
     QFile(absoluteFilename).remove();
 }
 
-void GitRepository::removeDirRecursively(const QString& path)
-{
-    for (const QString& filename : QDir(path).entryList(QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot))
-    {
-        git_rm( QDir(path).absoluteFilePath( filename ) );
-    }
-
-    for (const QString& dirname : QDir(path).entryList(QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot))
-    {
-        if (dirname != ".git")
-        {
-            removeDirRecursively( QDir(path).absoluteFilePath( dirname ) );
-        }
-    }
-}
-
-void GitRepository::addDirRecursively(const QString& path)
-{
-    for (const QString& filename : QDir(path).entryList(QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot))
-    {
-        git_add( QDir(path).absoluteFilePath( filename ) );
-    }
-
-    for (const QString& dirname : QDir(path).entryList(QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot))
-    {
-        if ( dirname != ".git" )
-        {
-            addDirRecursively( QDir(path).absoluteFilePath( dirname ) );
-        }
-    }
-}
 
 class CloneThread : public QThread
 {
@@ -650,8 +584,6 @@ bool GitRepository::detachedTaskFinished() const
 QList<ConflictFile> GitRepository::conflictingFiles( ) const
 {
     QStringList filenames = dir().entryList( QDir::Files );
-    qDebug() << "dir = " << dir().absolutePath();
-    qDebug() << "all files: " << filenames << dir().entryList();
     QList<ConflictFile> conflictFiles;
     for ( const QString & filename : filenames )
     {
@@ -661,21 +593,44 @@ QList<ConflictFile> GitRepository::conflictingFiles( ) const
             continue;
         }
 
-        qDebug() << "file " << absoluteFilename << "has ...";
         ConflictFile file( absoluteFilename );
         if ( !file.conflicts().isEmpty() )
         {
-            qDebug() << "...conflicts";
+            qDebug() << "file " << absoluteFilename << "has CONFLICTS";
             conflictFiles << file;
         }
         else
         {
-            qDebug() << "...no conflicts";
+            qDebug() << "file " << absoluteFilename << "has NO conflicts";
         }
     }
 
-    qDebug() << conflictFiles.length() << "conflicts";
+    qDebug() << "total: " << conflictFiles.length() << " conflicts";
     return conflictFiles;
+}
+
+void GitRepository::addAllFiles() const
+{
+    for (const QString& filename : dir().entryList(QDir::Files))
+    {
+        onAddFile( makeAbsolute(filename) );
+    }
+}
+
+void GitRepository::beginIndex()
+{
+    git_repository_index( &m_index, m_repository );
+}
+
+void GitRepository::endIndex()
+{
+    if (m_index)
+    {
+        git_index_clear( m_index );
+        git_index_write( m_index );
+        git_index_free( m_index );
+        m_index = NULL;
+    }
 }
 
 

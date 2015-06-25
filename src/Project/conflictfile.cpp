@@ -14,14 +14,12 @@ ConflictFile::ConflictFile( const QString & filename ) :
     m_filename( filename ),
     m_conflicts( findConflicts() )
 {
-    qDebug() << "examine " << filename;
 }
 
 QString ConflictFile::readFile( const QString & filename )
 {
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
-    qDebug() << "open file " << filename;
     return file.readAll();
 }
 

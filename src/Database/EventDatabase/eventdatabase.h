@@ -55,6 +55,8 @@ public:
     bool restoreFromJsonObject(const QJsonObject & object);
     QJsonObject toJsonObject() const;
 
+    QList<File> getFiles() const;
+
 
     QList<Event*> events() const { return m_events; }
 

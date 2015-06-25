@@ -20,6 +20,12 @@
 #include <QScrollArea>
 #include <QLabel>
 
+//TODO//
+/*
+ * - save/load? -> include timestamps
+ * - crash after conflict resolving
+ */
+
 DEFN_CONFIG( MainWindow, "Global" );
 
 QString defaultStyleSheet()
@@ -824,19 +830,32 @@ void MainWindow::on_actionClone_triggered()
                     return;
                 }
             }
+
+            if (!m_project.detachedTaskSucceeded())
+            {
+                QMessageBox::warning( this,
+                                      tr("Initializing failed"),
+                                      QString(tr("Failed to clone %1.").arg(url.url())),
+                                      QMessageBox::Ok,
+                                      QMessageBox::NoButton );
+                newProject();
+                updateWindowTitle();
+                updateWhichWidgetsAreEnabled();
+                return;
+            }
         }
-        else
-        {
-            QMessageBox::warning( this,
-                                  tr("Cloning failed"),
-                                  QString(tr("Failed to clone %1.").arg(url.url())),
-                                  QMessageBox::Ok,
-                                  QMessageBox::NoButton );
-            newProject();
-            updateWindowTitle();
-            updateWhichWidgetsAreEnabled();
-            return;
-        }
+    }
+    else
+    {
+        QMessageBox::warning( this,
+                              tr("Cloning failed"),
+                              QString(tr("Failed to clone %1.").arg(url.url())),
+                              QMessageBox::Ok,
+                              QMessageBox::NoButton );
+        newProject();
+        updateWindowTitle();
+        updateWhichWidgetsAreEnabled();
+        return;
     }
 
     if ( !m_project.loadFromTempDir())
@@ -858,6 +877,10 @@ void MainWindow::on_actionClone_triggered()
 
 void MainWindow::on_actionSync_triggered()
 {
+
+//    m_project.synchronize( "message", m_identityManager.currentIdentity() );
+//    return;
+
     //////////////////////////////////////////////////////////////////////////
     /// retrieve message and Identity.
     /// abort if one of them is invalid.
@@ -929,9 +952,11 @@ void MainWindow::on_actionSync_triggered()
 
     //////////////////////////////////////////////////////////////////////////
     /// begin syncing
-    m_project.saveToTempDir();
 
     // wait until prepare is finished
+    m_project.beginIndex();
+    m_project.saveToTempDir();
+    m_project.addAllFiles();
     m_project.commit( message, m_identityManager.currentIdentity() );
     m_project.pullOriginMasterDetached();
     while ( !m_project.detachedTaskFinished() )
@@ -940,6 +965,7 @@ void MainWindow::on_actionSync_triggered()
         QThread::msleep( 10 );
         if (pd.wasCanceled())
         {
+            m_project.endIndex();
             //TODO ensure that the state is not weird.
             return;
         }
@@ -978,6 +1004,10 @@ void MainWindow::on_actionSync_triggered()
 
     resolved:
 
+//    m_project.addAllFiles();
+//    m_project.commit( "Merge", m_identityManager.currentIdentity() );
+    m_project.mergeCommits( "Merge commits", m_identityManager.currentIdentity() );
+
     // wait until polish is finished
     m_project.pushOriginMasterDetached( identity );
     while ( !m_project.detachedTaskFinished() )
@@ -986,10 +1016,12 @@ void MainWindow::on_actionSync_triggered()
         QThread::msleep( 10 );
         if (pd.wasCanceled())
         {
+            m_project.endIndex();
             //TODO ensure that the state is not weird.
             return;
         }
     }
+    m_project.endIndex();
 
     if (!m_project.loadFromTempDir())
     {
@@ -1020,6 +1052,7 @@ void MainWindow::on_actionSync_triggered()
                                   QMessageBox::NoButton );
         m_project.setIsSynchronized();
     }
+
 
 }
 

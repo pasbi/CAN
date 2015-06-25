@@ -318,3 +318,82 @@ QStringList Zipped::find() const
     return files;
 }
 
+
+bool Zipped::saveToTempDir() const
+{
+    QList<File> files = getFiles();
+
+    // first of all, we need to remove no longer needed files.
+    // easiest way would be to remove all files, as all necessary files will be restored anyway.
+    // problem is that higher-level abstractions (as GitRepository) rely on correct modification times.
+    // Thus, remove only files that will not be restored afterwards.
+    QStringList entrylist = dir().entryList( QDir::Files );
+    int rm = 0;
+    int add = 0;
+    for (const QString& filename : entrylist)
+    {
+        bool removeThisFile = true;
+        for (const File& file : files)
+        {
+            if (file.filename == filename)
+            {
+                removeThisFile = false;
+                break;
+            }
+        }
+        if (removeThisFile)
+        {
+            QString absoluteFilename = makeAbsolute( filename );
+            qDebug() << "remove file " << absoluteFilename;
+            rm++;
+            onRemoveFile( absoluteFilename );
+            if (!QFile(absoluteFilename).remove())
+            {
+                qWarning() << "tried to remove " << makeAbsolute(filename) << "which failed.";
+            }
+        }
+    }
+
+
+    // now check whether a file changed and update it as may be necessary.
+    bool success = true;
+    for (const File& file : files )
+    {
+        // get oldContent
+        QByteArray oldContent;
+        QFile readFile( makeAbsolute(file.filename) );
+        if (readFile.exists())
+        {
+            if (readFile.open(QIODevice::ReadOnly))
+            {
+                oldContent = readFile.readAll();
+            }
+            else
+            {
+                qWarning() << "cannot open file " << readFile.fileName();
+            }
+        }
+
+        // update file
+        if (oldContent != file.content)
+        {
+            QFile writeFile( makeAbsolute(file.filename) );
+            if (writeFile.open(QIODevice::WriteOnly))
+            {
+                add++;
+                qDebug() << "add: " << writeFile.fileName();
+                writeFile.write( file.content );
+                writeFile.close();
+                onAddFile( writeFile.fileName() );
+            }
+            else
+            {
+                qWarning() << "cannot write to file " << writeFile.fileName();
+                success = false;
+            }
+        }
+    }
+    return success;
+
+}
+

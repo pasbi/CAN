@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "global.h"
+#include "Project/file.h"
 
 
 // check if object has a certain key of certain type. return false if not and print warning.
@@ -23,7 +24,6 @@ protected:
     virtual QJsonObject toJsonObject() const = 0;
 
 public:
-    virtual bool saveTo(const QString & path) const;
     virtual bool loadFrom(const QString & path);
 
 private:

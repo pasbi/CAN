@@ -29,7 +29,7 @@ public:
      * @brief isGitRepository returns whether therer is a repository.
      * @return
      */
-    bool isGitRepository();
+    bool isGitRepository() const;
 
     /**
      * @brief clone clones a repository from  @code path.
@@ -104,11 +104,16 @@ public:
      */
     ErrorSender* errorSender() const { return &m_errorSender; }
 
+
+    void beginIndex();
+    void endIndex();
+    void addAllFiles() const;
+
 private:
     mutable ErrorSender m_errorSender;
     git_repository* m_repository;
-    git_index* index();
-    git_index* m_index;
+    git_index* index() const;
+    mutable git_index* m_index;
 
     /**
      * @brief checkGitCall check whether call succeeded. if not, emit an error.
@@ -117,12 +122,8 @@ private:
      */
     bool checkGitCall( int errorCode );
 
-    void git_add(const QString & absoluteFilename);
-    void git_rm(const QString & absoluteFilename);
-    void git_rm_all();
-    void git_add_all();
-    void removeDirRecursively( const QString& path );
-    void addDirRecursively( const QString& path );
+    void onAddFile(const QString & absoluteFilename) const;
+    void onRemoveFile(const QString & absoluteFilename) const;
     git_commit* getCommit( const QString& ref );
 
 

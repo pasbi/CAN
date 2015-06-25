@@ -154,8 +154,8 @@ private:
 public:
     bool restoreFromJsonObject(const QJsonObject & object);
     QJsonObject toJsonObject() const;
-    bool saveTo(const QString &path) const;
     bool loadFrom(const QString &path);
+    QList<File> getFiles() const;
 public slots:
     void reset(bool initialize = true);
 

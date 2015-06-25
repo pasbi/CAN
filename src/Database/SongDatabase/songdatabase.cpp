@@ -5,6 +5,7 @@
 #include <QSize>
 #include "application.h"
 #include "commontypes.h"
+#include <QJsonDocument>
 
 const QString SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT = "CAN/songs";
 
@@ -395,16 +396,18 @@ bool SongDatabase::restoreFromJsonObject(const QJsonObject &object)
     return true;
 }
 
-bool SongDatabase::saveTo(const QString &path) const
+QList<File> SongDatabase::getFiles() const
 {
-    Database::saveTo(path);
+    QList<File> files;
+    files << File( "songDatabase", QJsonDocument(toJsonObject()).toJson() );
+
     for (int i = 0; i < m_songs.size(); ++i)
     {
-        QString path = project()->makeAbsolute( QString("song%1").arg( m_songs[i]->randomID() ) );
-        m_songs[i]->saveTo(path);
+        files << File( QString("song%1").arg( m_songs[i]->randomID() ),
+                       QJsonDocument(m_songs[i]->toJsonObject()).toJson() );
     }
 
-    return true;
+    return files;
 }
 
 bool SongDatabase::loadFrom(const QString &path)

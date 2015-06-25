@@ -152,7 +152,8 @@ SOURCES += main.cpp\
     Project/conflictfile.cpp \
     Project/gitrepository.cpp \
     Project/identity.cpp \
-    Project/gitutil.cpp
+    Project/gitutil.cpp \
+    Project/file.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -274,7 +275,8 @@ HEADERS  += mainwindow.h \
     Project/gitrepository.h \
     Project/identity.h \
     Project/gitutil.h \
-    git.h
+    git.h \
+    Project/file.h
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
