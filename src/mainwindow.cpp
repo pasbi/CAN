@@ -20,12 +20,6 @@
 #include <QScrollArea>
 #include <QLabel>
 
-//TODO//
-/*
- * - save/load? -> include timestamps
- * - crash after conflict resolving
- */
-
 DEFN_CONFIG( MainWindow, "Global" );
 
 QString defaultStyleSheet()
@@ -970,6 +964,19 @@ void MainWindow::on_actionSync_triggered()
         }
     }
 
+    if (!m_project.detachedTaskSucceeded())
+    {
+        QMessageBox::warning( this,
+                              tr("Failed to pull from remote."),
+                              tr("Cannot get changes from the repository.\n"
+                                 "Check that you have access to the remote (e.g. a connection to the internet)"),
+                              QMessageBox::Ok,
+                              QMessageBox::NoButton );
+        newProject();
+        m_project.endIndex();
+        return;
+    }
+
     // resolve conflicts
     while (m_project.hasConflicts())
     {
@@ -1037,7 +1044,7 @@ void MainWindow::on_actionSync_triggered()
                               QMessageBox::NoButton );
         newProject();
     }
-    else if ( !m_project.detachedTaskSucceeded() )  //TODO check if pull succeeds
+    else if ( !m_project.detachedTaskSucceeded() )
     {
         QMessageBox::information( this,
                                   tr("Sync"),

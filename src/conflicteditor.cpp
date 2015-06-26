@@ -93,7 +93,6 @@ void ConflictEditor::accept()
 
 void ConflictEditor::resolveConflicts()
 {
-    qDebug() << "resolve " << m_files.length() << " files";
     for (ConflictFile* file : m_files)
     {
         file->resolveConflicts();
@@ -106,7 +105,6 @@ void ConflictEditor::resolveAllMine()
     {
         for (Conflict* c : file->conflicts())
         {
-            qDebug() << "conflict " << c << " --> local";
             c->m_resolvePolicy = Conflict::KeepLocal;
         }
     }
@@ -119,7 +117,6 @@ void ConflictEditor::resolveAllTheirs()
     {
         for (Conflict* c : file->conflicts())
         {
-            qDebug() << "conflict " << c << " --> remote";
             c->m_resolvePolicy = Conflict::KeepRemote;
         }
     }

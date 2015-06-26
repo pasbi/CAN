@@ -344,7 +344,6 @@ bool Zipped::saveToTempDir() const
         if (removeThisFile)
         {
             QString absoluteFilename = makeAbsolute( filename );
-            qDebug() << "remove file " << absoluteFilename;
             rm++;
             onRemoveFile( absoluteFilename );
             if (!QFile(absoluteFilename).remove())
@@ -381,7 +380,6 @@ bool Zipped::saveToTempDir() const
             if (writeFile.open(QIODevice::WriteOnly))
             {
                 add++;
-                qDebug() << "add: " << writeFile.fileName();
                 writeFile.write( file.content );
                 writeFile.close();
                 onAddFile( writeFile.fileName() );

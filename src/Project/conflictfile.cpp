@@ -10,11 +10,10 @@ const QRegExp BEGIN_CONFLICT        = QRegExp("^<<<<<<< .+$");
 const QRegExp END_CONFLICT          = QRegExp("^>>>>>>> .+$");
 const QRegExp SEPARATE_CONFLICT     = QRegExp("^=======$");
 
-ConflictFile::ConflictFile( const GitRepository* project, const QString & filename ) :
+ConflictFile::ConflictFile(const QString & filename ) :
     m_content( readFile(filename).split("\n") ),
     m_filename( filename ),
-    m_conflicts( findConflicts() ),
-    m_project( project )
+    m_conflicts( findConflicts() )
 {
 }
 
@@ -268,29 +267,23 @@ bool ConflictFile::save() const
 
 void ConflictFile::resolveConflicts()
 {
-    qDebug() << "   resolve " << m_filename;
     // go down to top to keep line numbers valid
     for ( int i = m_conflicts.length() - 1; i >= 0; --i )
     {
         Conflict* c = m_conflicts[i];
-        qDebug() << "conflict " << &c;
         QStringList newContent;
         switch (c->m_resolvePolicy)
         {
         case Conflict::KeepCustom:
-            qDebug() << ">custom";
             newContent = c->m_custom.split("\n");
             break;
         case Conflict::KeepLocal:
-            qDebug() << ">local";
             newContent = c->m_local.split("\n");
             break;
         case Conflict::KeepRemote:
-            qDebug() << ">remote";
             newContent = c->m_remote.split("\n");
             break;
         case Conflict::Undefined:
-            qWarning() << "file " << m_filename << "unmerged.";
             goto SkipResolving;
         }
 
@@ -311,7 +304,6 @@ void ConflictFile::resolveConflicts()
     }
 
     // finally save file and add the new version to the index.
-    qDebug() << "save file...";
     assert( save() );
 }
 

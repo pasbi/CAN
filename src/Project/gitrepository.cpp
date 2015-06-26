@@ -330,7 +330,7 @@ bool GitRepository::initialize(const Identity &identity)
 {
     CHECK_IS_REPOSITORY();
 
-//    beginIndex();
+
     git_oid tree_id, commit_id;
     git_tree* tree;
     assert( CHECK_GIT( git_index_write_tree(&tree_id, m_index) ) );
@@ -355,7 +355,7 @@ bool GitRepository::initialize(const Identity &identity)
 
     // push the initialization. Else, sync will not work.
     bool success = pushOriginMaster( identity );
-//    endIndex();
+
     return success;
 }
 
@@ -417,8 +417,6 @@ void GitRepository::onAddFile(const QString & absoluteFilename) const
     if (isGitRepository())
     {
         git_index_add_bypath( m_index, CSTR(relativeFilename));
-        qDebug() << "add file " << absoluteFilename;
-
     }
 }
 
@@ -428,7 +426,6 @@ void GitRepository::onRemoveFile(const QString & absoluteFilename) const
     if (isGitRepository())
     {
         git_index_remove_bypath( m_index, CSTR(relativeFilename));
-        qDebug() << "rm file " << absoluteFilename;
     }
     QFile(absoluteFilename).remove();
 }
@@ -579,7 +576,7 @@ bool GitRepository::hasConflicts() const
             continue;
         }
 
-        if ( !ConflictFile(this, absoluteFilename).conflicts().isEmpty() )
+        if ( !ConflictFile(absoluteFilename).conflicts().isEmpty() )
         {
             return true;
         }
@@ -599,19 +596,13 @@ QList<ConflictFile*> GitRepository::createConflictingFiles( ) const
             continue;
         }
 
-        ConflictFile* file = new ConflictFile( this, absoluteFilename );
+        ConflictFile* file = new ConflictFile( absoluteFilename );
         if ( !file->conflicts().isEmpty() )
         {
-            qDebug() << "file " << absoluteFilename << "has CONFLICTS";
             conflictFiles << file;
-        }
-        else
-        {
-            qDebug() << "file " << absoluteFilename << "has NO conflicts";
         }
     }
 
-    qDebug() << "total: " << conflictFiles.length() << " conflicts";
     return conflictFiles;
 }
 
