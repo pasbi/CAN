@@ -18,6 +18,12 @@ ConflictFile::ConflictFile( const GitRepository* project, const QString & filena
 {
 }
 
+ConflictFile::~ConflictFile()
+{
+    qDeleteAll( m_conflicts );
+    m_conflicts.clear();
+}
+
 QString ConflictFile::readFile( const QString & filename )
 {
     QFile file(filename);
@@ -25,9 +31,9 @@ QString ConflictFile::readFile( const QString & filename )
     return file.readAll();
 }
 
-QList<Conflict> ConflictFile::findConflicts()
+QList<Conflict *> ConflictFile::findConflicts()
 {
-    QList<Conflict> conflicts;
+    QList<Conflict*> conflicts;
 
     State state = NoConflict;
 
@@ -90,7 +96,7 @@ QList<Conflict> ConflictFile::findConflicts()
             {
                 lineNumberEnd = i;
                 state = NoConflict;
-                conflicts << Conflict( currentType, localContentLines.join("\n"), remoteContentLines.join("\n"), lineNumberBegin, lineNumberEnd );
+                conflicts << new Conflict( currentType, localContentLines.join("\n"), remoteContentLines.join("\n"), lineNumberBegin, lineNumberEnd );
                 localContentLines.clear();
                 remoteContentLines.clear();
             }
@@ -262,28 +268,34 @@ bool ConflictFile::save() const
 
 void ConflictFile::resolveConflicts()
 {
+    qDebug() << "   resolve " << m_filename;
     // go down to top to keep line numbers valid
     for ( int i = m_conflicts.length() - 1; i >= 0; --i )
     {
-        Conflict c = m_conflicts[i];
+        Conflict* c = m_conflicts[i];
+        qDebug() << "conflict " << &c;
         QStringList newContent;
-        switch (c.m_resolvePolicy)
+        switch (c->m_resolvePolicy)
         {
         case Conflict::KeepCustom:
-            newContent = c.m_custom.split("\n");
+            qDebug() << ">custom";
+            newContent = c->m_custom.split("\n");
             break;
         case Conflict::KeepLocal:
-            newContent = c.m_local.split("\n");
+            qDebug() << ">local";
+            newContent = c->m_local.split("\n");
             break;
         case Conflict::KeepRemote:
-            newContent = c.m_remote.split("\n");
+            qDebug() << ">remote";
+            newContent = c->m_remote.split("\n");
             break;
         case Conflict::Undefined:
+            qWarning() << "file " << m_filename << "unmerged.";
             goto SkipResolving;
         }
 
         // remove conflicting content
-        for (int lineNumber = c.m_lineNumberEnd; lineNumber >= c.m_lineNumberBegin; --lineNumber)
+        for (int lineNumber = c->m_lineNumberEnd; lineNumber >= c->m_lineNumberBegin; --lineNumber)
         {
             m_content.removeAt( lineNumber );
         }
@@ -291,7 +303,7 @@ void ConflictFile::resolveConflicts()
         // insert resolved content
         for (int lineNumber = newContent.length() - 1; lineNumber >= 0; --lineNumber)
         {
-            m_content.insert( c.m_lineNumberBegin, newContent[lineNumber] );
+            m_content.insert( c->m_lineNumberBegin, newContent[lineNumber] );
         }
 
         SkipResolving:
@@ -299,6 +311,7 @@ void ConflictFile::resolveConflicts()
     }
 
     // finally save file and add the new version to the index.
+    qDebug() << "save file...";
     assert( save() );
 }
 

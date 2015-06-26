@@ -3,7 +3,7 @@
 #include "util.h"
 #include <QScrollBar>
 
-ConflictEditor::ConflictEditor(const QList<ConflictFile> &conflictingFiles, QWidget *parent) :
+ConflictEditor::ConflictEditor(const QList<ConflictFile*>& conflictingFiles, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConflictEditor)
 {
@@ -11,9 +11,9 @@ ConflictEditor::ConflictEditor(const QList<ConflictFile> &conflictingFiles, QWid
 
     m_files = conflictingFiles;
 
-    for (ConflictFile & file : m_files)
+    for (ConflictFile* file : m_files)
     {
-        for (Conflict & conflict : file.conflicts())
+        for (Conflict* conflict : file->conflicts())
         {
             m_items << new Item( ui->listWidget, conflict );
             ui->listWidget->addItem( m_items.last() );
@@ -24,6 +24,7 @@ ConflictEditor::ConflictEditor(const QList<ConflictFile> &conflictingFiles, QWid
     connect( ui->listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(selectConflict()) );
     connect( ui->buttonOk,     SIGNAL(clicked()), this, SLOT(accept()));
     connect( ui->buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
+
 }
 
 ConflictEditor::~ConflictEditor()
@@ -32,24 +33,24 @@ ConflictEditor::~ConflictEditor()
     qDeleteAll( m_items );
 }
 
- Conflict& ConflictEditor::currentConflict() const
+ Conflict *ConflictEditor::currentConflict() const
 {
     return ((Item*) ui->listWidget->currentItem())->conflict();
 }
 
 void ConflictEditor::selectConflict()
 {
-    const Conflict& conflict = currentConflict();
+    const Conflict* conflict = currentConflict();
 
-    ui->plainTextEditLocal->setPlainText( conflict.m_local );
-    ui->plainTextEditRemote->setPlainText( conflict.m_remote );
+    ui->plainTextEditLocal->setPlainText( conflict->m_local );
+    ui->plainTextEditRemote->setPlainText( conflict->m_remote );
 
     ui->plainTextEditLocal->setStyleSheet( "" );
     ui->plainTextEditRemote->setStyleSheet( "" );
 
     QString seemsToBeDisabledPalette = "* { background-color: #EEEEEE; color: #999999 }";
 
-    switch (conflict.m_resolvePolicy)
+    switch (conflict->m_resolvePolicy)
     {
     case Conflict::KeepCustom:
         break;
@@ -66,9 +67,9 @@ void ConflictEditor::selectConflict()
 
 void ConflictEditor::on_buttonKeepRemote_clicked()
 {
-    Conflict& conflict = currentConflict();
-    conflict.m_custom = ui->plainTextEditRemote->toPlainText();
-    conflict.m_resolvePolicy = conflict.m_custom == conflict.m_remote ? Conflict::KeepRemote : Conflict::KeepCustom;
+    Conflict* conflict = currentConflict();
+    conflict->m_custom = ui->plainTextEditRemote->toPlainText();
+    conflict->m_resolvePolicy = conflict->m_custom == conflict->m_remote ? Conflict::KeepRemote : Conflict::KeepCustom;
 
     ui->listWidget->currentItem()->setIcon(QIcon(":/icons/icons/check40.png"));
     selectConflict();
@@ -76,9 +77,9 @@ void ConflictEditor::on_buttonKeepRemote_clicked()
 
 void ConflictEditor::on_buttonKeepLocal_clicked()
 {
-    Conflict& conflict = currentConflict();
-    conflict.m_custom = ui->plainTextEditLocal->toPlainText();
-    conflict.m_resolvePolicy = conflict.m_custom == conflict.m_local ? Conflict::KeepLocal : Conflict::KeepCustom;
+    Conflict* conflict = currentConflict();
+    conflict->m_custom = ui->plainTextEditLocal->toPlainText();
+    conflict->m_resolvePolicy = conflict->m_custom == conflict->m_local ? Conflict::KeepLocal : Conflict::KeepCustom;
 
     ui->listWidget->currentItem()->setIcon(QIcon(":/icons/icons/check40.png"));
     selectConflict();
@@ -92,19 +93,21 @@ void ConflictEditor::accept()
 
 void ConflictEditor::resolveConflicts()
 {
-    for (ConflictFile& file : m_files)
+    qDebug() << "resolve " << m_files.length() << " files";
+    for (ConflictFile* file : m_files)
     {
-        file.resolveConflicts();
+        file->resolveConflicts();
     }
 }
 
 void ConflictEditor::resolveAllMine()
 {
-    for (ConflictFile& file : m_files)
+    for (ConflictFile* file : m_files)
     {
-        for (Conflict c : file.conflicts())
+        for (Conflict* c : file->conflicts())
         {
-            c.m_resolvePolicy = Conflict::KeepLocal;
+            qDebug() << "conflict " << c << " --> local";
+            c->m_resolvePolicy = Conflict::KeepLocal;
         }
     }
     resolveConflicts();
@@ -112,11 +115,12 @@ void ConflictEditor::resolveAllMine()
 
 void ConflictEditor::resolveAllTheirs()
 {
-    for (ConflictFile& file : m_files)
+    for (ConflictFile* file : m_files)
     {
-        for (Conflict c : file.conflicts())
+        for (Conflict* c : file->conflicts())
         {
-            c.m_resolvePolicy = Conflict::KeepRemote;
+            qDebug() << "conflict " << c << " --> remote";
+            c->m_resolvePolicy = Conflict::KeepRemote;
         }
     }
     resolveConflicts();

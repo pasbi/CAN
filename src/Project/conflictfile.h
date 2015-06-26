@@ -43,6 +43,7 @@ class ConflictFile
 {
 public:
     ConflictFile(const GitRepository *project, const QString & filename );
+    ~ConflictFile();
 
     QString content() const
     {
@@ -54,7 +55,7 @@ public:
         return m_filename;
     }
 
-    QList<Conflict>& conflicts()
+    QList<Conflict*> conflicts()
     {
         return m_conflicts;
     }
@@ -70,9 +71,9 @@ private:
 
     QStringList m_content;
     const QString m_filename;
-    QList<Conflict> m_conflicts;
+    QList<Conflict*> m_conflicts;
 
-    QList<Conflict> findConflicts();
+    QList<Conflict*> findConflicts();
     QString readFile( const QString & filename );
     QString determineType( int lineNumber );
 

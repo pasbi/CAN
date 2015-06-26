@@ -59,8 +59,13 @@ public:
      * @return whether there were changes made.
      */
     virtual bool handleConflicts() { return false; }
-    bool hasConflicts() const { return !conflictingFiles().isEmpty(); }
-    QList<ConflictFile> conflictingFiles() const;
+    bool hasConflicts() const;
+
+    /**
+     * @brief createConflictingFiles create a new list of conflicted files. Must be deleted once no more needed.
+     * @return
+     */
+    QList<ConflictFile *> createConflictingFiles() const;
 
 public:
     /**

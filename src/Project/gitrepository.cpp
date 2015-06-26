@@ -568,11 +568,9 @@ bool GitRepository::detachedTaskFinished() const
     }
 }
 
-
-QList<ConflictFile> GitRepository::conflictingFiles( ) const
+bool GitRepository::hasConflicts() const
 {
     QStringList filenames = dir().entryList( QDir::Files );
-    QList<ConflictFile> conflictFiles;
     for ( const QString & filename : filenames )
     {
         QString absoluteFilename = dir().absoluteFilePath( filename );
@@ -581,8 +579,28 @@ QList<ConflictFile> GitRepository::conflictingFiles( ) const
             continue;
         }
 
-        ConflictFile file( this, absoluteFilename );
-        if ( !file.conflicts().isEmpty() )
+        if ( !ConflictFile(this, absoluteFilename).conflicts().isEmpty() )
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+QList<ConflictFile*> GitRepository::createConflictingFiles( ) const
+{
+    QStringList filenames = dir().entryList( QDir::Files );
+    QList<ConflictFile*> conflictFiles;
+    for ( const QString & filename : filenames )
+    {
+        QString absoluteFilename = dir().absoluteFilePath( filename );
+        if (filename == ".git")
+        {
+            continue;
+        }
+
+        ConflictFile* file = new ConflictFile( this, absoluteFilename );
+        if ( !file->conflicts().isEmpty() )
         {
             qDebug() << "file " << absoluteFilename << "has CONFLICTS";
             conflictFiles << file;

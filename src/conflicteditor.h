@@ -15,7 +15,7 @@ class ConflictEditor : public QDialog
     Q_OBJECT
 
 public:
-    explicit ConflictEditor(const QList<ConflictFile> & conflictingFiles, QWidget *parent = 0);
+    explicit ConflictEditor(const QList<ConflictFile *> &conflictingFiles, QWidget *parent = 0);
     ~ConflictEditor();
     bool hasConflicts() const
     {
@@ -27,21 +27,21 @@ public slots:
     void resolveConflicts();
     void resolveAllTheirs();
     void resolveAllMine();
-    QList<ConflictFile> files() const { return m_files; }
+    QList<ConflictFile*> files() const { return m_files; }
 
 private:
     Ui::ConflictEditor *ui;
-    QList<ConflictFile> m_files;
+    QList<ConflictFile*> m_files;
 
     class Item: public QListWidgetItem
     {
     public:
-        Item(QListWidget* parent, Conflict& conflict, int type = Type) :
+        Item(QListWidget* parent, Conflict* conflict, int type = Type) :
             QListWidgetItem(parent, type),
             m_conflict(conflict)
         {
         }
-        Conflict& conflict()
+        Conflict* conflict()
         {
             return m_conflict;
         }
@@ -49,7 +49,7 @@ private:
         {
             if (role == Qt::DisplayRole)
             {
-                return m_conflict.m_type;
+                return m_conflict->m_type;
             }
             else
             {
@@ -58,12 +58,12 @@ private:
         }
 
     private:
-        Conflict& m_conflict;
+        Conflict* m_conflict;
     };
 
     QList<Item*> m_items;
 
-    Conflict &currentConflict() const;
+    Conflict *currentConflict() const;
     QString m_defaultStyle;
 
 

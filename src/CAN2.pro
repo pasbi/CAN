@@ -300,7 +300,9 @@ FORMS    += mainwindow.ui \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui \
     Dialogs/tagdialog.ui \
     Dialogs/chordpatternviewer.ui \
-    Dialogs/addfilestoindexdialog.ui
+    Dialogs/addfilestoindexdialog.ui \
+    conflicteditor.ui
+
 
 RESOURCES += \
     ressources.qrc
