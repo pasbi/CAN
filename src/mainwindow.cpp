@@ -874,7 +874,6 @@ void MainWindow::on_actionClone_triggered()
 
 }
 
-
 void MainWindow::on_actionSync_triggered()
 {
 
@@ -973,39 +972,42 @@ void MainWindow::on_actionSync_triggered()
 
     // resolve conflicts
     QList<ConflictFile> files = m_project.conflictingFiles();
-    while (!files.isEmpty())
+    if (!files.isEmpty())
     {
-        ConflictEditor editor( files, this );
-        if ( editor.exec() == QDialog::Rejected )
+        while (!files.isEmpty())
         {
-            QMessageBox box( this );
-            box.setWindowTitle( tr("Pending conflicts not allowed.") );
-            box.setText( tr("There must not be conficts.") );
-            box.addButton( QMessageBox::Yes );
-            box.addButton( QMessageBox::No );
-            box.addButton( QMessageBox::Abort );
-            box.setButtonText( QMessageBox::Yes, tr("Keep theirs") );
-            box.setButtonText( QMessageBox::No, tr("Keep mine") );
-            switch (box.exec())
+            ConflictEditor editor( files, this );
+            if ( editor.exec() == QDialog::Rejected )
             {
-            case QMessageBox::Yes:
-                editor.resolveAllTheirs();
-                goto resolved;
-            case QMessageBox::No:
-                editor.resolveAllTheirs();
-                goto resolved;
-            case QMessageBox::Abort:
-            default:
-                ;   // next iteration
+                QMessageBox box( this );
+                box.setWindowTitle( tr("Pending conflicts not allowed.") );
+                box.setText( tr("There must not be conficts.") );
+                box.addButton( QMessageBox::Yes );
+                box.addButton( QMessageBox::No );
+                box.addButton( QMessageBox::Abort );
+                box.setButtonText( QMessageBox::Yes, tr("Keep theirs") );
+                box.setButtonText( QMessageBox::No, tr("Keep mine") );
+                switch (box.exec())
+                {
+                case QMessageBox::Yes:
+                    editor.resolveAllTheirs();
+                    goto resolved;
+                case QMessageBox::No:
+                    editor.resolveAllTheirs();
+                    goto resolved;
+                case QMessageBox::Abort:
+                default:
+                    ;   // next iteration
+                }
             }
+            files = m_project.conflictingFiles();
         }
-        files = m_project.conflictingFiles();
+        resolved:
+
+        m_project.addAllFiles();
+        m_project.commit( tr("Resolved Conflicts"), m_identityManager.currentIdentity() );
     }
 
-    resolved:
-
-//    m_project.addAllFiles();
-//    m_project.commit( "Merge", m_identityManager.currentIdentity() );
     m_project.mergeCommits( "Merge commits", m_identityManager.currentIdentity() );
 
     // wait until polish is finished

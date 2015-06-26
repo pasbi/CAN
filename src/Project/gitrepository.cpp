@@ -252,7 +252,7 @@ void GitRepository::commit( const QString& message, const Identity& identity )
     git_tree* tree = 0;
     git_oid tree_id;
 
-    assert( CHECK_GIT( git_index_write_tree(&tree_id, index()) ) );
+    assert( CHECK_GIT( git_index_write_tree(&tree_id, m_index) ) );
     assert( CHECK_GIT( git_tree_lookup(&tree, m_repository, &tree_id) ) );
 
     git_signature *sig = identity.signatureNow();
@@ -333,7 +333,7 @@ bool GitRepository::initialize(const Identity &identity)
 //    beginIndex();
     git_oid tree_id, commit_id;
     git_tree* tree;
-    assert( CHECK_GIT( git_index_write_tree(&tree_id, index()) ) );
+    assert( CHECK_GIT( git_index_write_tree(&tree_id, m_index) ) );
 
     assert( CHECK_GIT( git_tree_lookup( &tree, m_repository, &tree_id )) );
 
@@ -376,7 +376,7 @@ void GitRepository::mergeCommits(const QString &message, const Identity &identit
     git_tree* tree = 0;
     git_oid tree_id;
 
-    assert( CHECK_GIT( git_index_write_tree(&tree_id, index()) ) );
+    assert( CHECK_GIT( git_index_write_tree(&tree_id, m_index) ) );
     assert( CHECK_GIT( git_tree_lookup(&tree, m_repository, &tree_id) ) );
 
     git_signature *sig = identity.signatureNow();
@@ -394,7 +394,7 @@ void GitRepository::mergeCommits(const QString &message, const Identity &identit
                                             tree,                        /* root tree */
                                             2,                           /* parent count */
                                             parents                      /* parents */      ) ) );
-    assert( CHECK_GIT( git_index_write(index()) ) );
+    assert( CHECK_GIT( git_index_write(m_index) ) );
 
     git_signature_free(sig);
     git_commit_free(parentLocal);
@@ -411,24 +411,12 @@ void GitRepository::mergeCommits(const QString &message, const Identity &identit
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-git_index* GitRepository::index() const
-{
-    assert( m_repository );
-    if (!m_index)
-    {
-        qDebug() << "create index...";
-        git_repository_index(&m_index, m_repository);
-        qDebug() << "fresh index count = " << git_index_entrycount( index() );
-    }
-    return m_index;
-}
-
 void GitRepository::onAddFile(const QString & absoluteFilename) const
 {
     QString relativeFilename = QDir(path()).relativeFilePath( absoluteFilename );
     if (isGitRepository())
     {
-        git_index_add_bypath(index(), CSTR(relativeFilename));
+        git_index_add_bypath( m_index, CSTR(relativeFilename));
         qDebug() << "add file " << absoluteFilename;
 
     }
@@ -439,7 +427,7 @@ void GitRepository::onRemoveFile(const QString & absoluteFilename) const
     QString relativeFilename = QDir(path()).relativeFilePath( absoluteFilename );
     if (isGitRepository())
     {
-        git_index_remove_bypath(index(), CSTR(relativeFilename));
+        git_index_remove_bypath( m_index, CSTR(relativeFilename));
         qDebug() << "rm file " << absoluteFilename;
     }
     QFile(absoluteFilename).remove();
@@ -593,7 +581,7 @@ QList<ConflictFile> GitRepository::conflictingFiles( ) const
             continue;
         }
 
-        ConflictFile file( absoluteFilename );
+        ConflictFile file( this, absoluteFilename );
         if ( !file.conflicts().isEmpty() )
         {
             qDebug() << "file " << absoluteFilename << "has CONFLICTS";
@@ -617,12 +605,12 @@ void GitRepository::addAllFiles() const
     }
 }
 
-void GitRepository::beginIndex()
+void GitRepository::beginIndex() const
 {
     git_repository_index( &m_index, m_repository );
 }
 
-void GitRepository::endIndex()
+void GitRepository::endIndex() const
 {
     if (m_index)
     {

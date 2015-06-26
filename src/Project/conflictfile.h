@@ -5,6 +5,8 @@
 #include <QList>
 #include <QFile>
 
+class GitRepository;
+
 struct Conflict
 {
     Conflict( const QString & type,     // e.g. "Song", "Song/Attachment", ...
@@ -40,7 +42,7 @@ struct Conflict
 class ConflictFile
 {
 public:
-    ConflictFile( const QString & filename );
+    ConflictFile(const GitRepository *project, const QString & filename );
 
     QString content() const
     {
@@ -73,6 +75,11 @@ private:
     QList<Conflict> findConflicts();
     QString readFile( const QString & filename );
     QString determineType( int lineNumber );
+
+    /**
+     * @brief m_project store the associated project to be able to git-add resolved conflicts.
+     */
+    const GitRepository* m_project = NULL;
 
 
 };

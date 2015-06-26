@@ -4,15 +4,17 @@
 #include <QStack>
 #include <QFileInfo>
 #include "global.h"
+#include "gitrepository.h"
 
 const QRegExp BEGIN_CONFLICT        = QRegExp("^<<<<<<< .+$");
 const QRegExp END_CONFLICT          = QRegExp("^>>>>>>> .+$");
 const QRegExp SEPARATE_CONFLICT     = QRegExp("^=======$");
 
-ConflictFile::ConflictFile( const QString & filename ) :
+ConflictFile::ConflictFile( const GitRepository* project, const QString & filename ) :
     m_content( readFile(filename).split("\n") ),
     m_filename( filename ),
-    m_conflicts( findConflicts() )
+    m_conflicts( findConflicts() ),
+    m_project( project )
 {
 }
 
@@ -277,26 +279,26 @@ void ConflictFile::resolveConflicts()
             newContent = c.m_remote.split("\n");
             break;
         case Conflict::Undefined:
-            goto SkipResolveConflict;
+            goto SkipResolving;
         }
 
-        // remove conflict
+        // remove conflicting content
         for (int lineNumber = c.m_lineNumberEnd; lineNumber >= c.m_lineNumberBegin; --lineNumber)
         {
             m_content.removeAt( lineNumber );
         }
 
-        // insert resolve
+        // insert resolved content
         for (int lineNumber = newContent.length() - 1; lineNumber >= 0; --lineNumber)
         {
             m_content.insert( c.m_lineNumberBegin, newContent[lineNumber] );
         }
+
+        SkipResolving:
+        ;
     }
 
-    // finally save file
+    // finally save file and add the new version to the index.
     assert( save() );
-
-    SkipResolveConflict:
-    ;
 }
 

@@ -85,16 +85,6 @@ public:
     void mergeCommits( const QString& message, const Identity& identity );
 
 
-    /**
-     * @brief commit commits all pending changes. I.e.
-     *  1. removeAllFiles from index (but .git)
-     *  2. saveToTempDir()
-     *  3. addAllFiles to index (but .git)
-     *  5. create the actual commit
-     * @param message commit message
-     * @param identity commit identity
-     * @return true on success, false otherwise. @see lastError()
-     */
     void commit( const QString& message, const Identity& identity );
 
     /**
@@ -105,14 +95,13 @@ public:
     ErrorSender* errorSender() const { return &m_errorSender; }
 
 
-    void beginIndex();
-    void endIndex();
+    void beginIndex() const;
+    void endIndex() const;
     void addAllFiles() const;
 
 private:
     mutable ErrorSender m_errorSender;
     git_repository* m_repository;
-    git_index* index() const;
     mutable git_index* m_index;
 
     /**
