@@ -234,9 +234,9 @@ void Song::insertAttachment(Attachment *attachment, int index)
 
 void Song::connectAttachment(Attachment *attachment)
 {
-    connect( attachment, &Attachment::attachmentRenamed, [this](QString name)
+    connect( attachment, &Attachment::attachmentRenamed, [this, attachment](QString name)
     {
-        emit attachmentRenamed( m_songDatabase->songs().indexOf(this), name );
+        emit attachmentRenamed( attachments().indexOf(attachment), name );
     });
 }
 
