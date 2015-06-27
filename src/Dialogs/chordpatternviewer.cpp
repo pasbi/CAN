@@ -6,11 +6,12 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 
-DEFN_CONFIG( ChordPatternViewer, "ChordPatternViewer" );
+DEFN_CONFIG( ChordPatternViewer, tr("ChordPatternViewer") );
+
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, zoom, 1.0 );
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, line, true );
 
-ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidget *parent) :
+ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachment, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChordPatternViewer),
     m_attachment( attachment ),
@@ -62,9 +63,7 @@ ChordPatternViewer::ChordPatternViewer(ChordPatternAttachment* attachment, QWidg
     applySpeed();
     m_hud->hide();
 
-    ui->label->installEventFilter( this );
-    ui->scrollArea->installEventFilter( this );
-    ui->scrollAreaWidgetContents->installEventFilter( this );
+    ui->label->installEventFilter( this );  // catch paintEvent of label and draw the line.
 
     m_playTimer->setInterval( 50 );
     connect( m_playTimer, SIGNAL(timeout()), this, SLOT(on_playTimerTimeout()) );
@@ -85,7 +84,7 @@ ChordPatternViewer::~ChordPatternViewer()
     delete ui;
 }
 
-void ChordPatternViewer::displayChordPatternAttachment(ChordPatternAttachment *attachment, QWidget* parent)
+void ChordPatternViewer::displayChordPatternAttachment(AbstractChordPatternAttachment *attachment, QWidget* parent)
 {
     ChordPatternViewer cpv( attachment, parent );
     cpv.exec();
@@ -118,6 +117,28 @@ int ChordPatternViewer::pdfWidth()
     return ui->scrollArea->viewport()->width() * m_zoom;
 }
 
+QPixmap twoPageView( const QPixmap& pixmap, int height )
+{
+    QImage image = pixmap.toImage();
+
+    QSize size = QSize( image.size().width() * 2, image.size().height() );
+    QImage doubleImage( size, image.format() );
+    doubleImage.fill( Qt::lightGray );
+
+    QPainter painter;
+    painter.begin(&doubleImage);
+    painter.drawImage( 0,             0,       image );
+    painter.drawImage( image.width(), -height, image );
+    painter.end();
+
+    QPen pen;
+    pen.setWidthF( 3 );
+    painter.setPen( pen );
+    painter.drawLine( image.width(), 0, image.width(), doubleImage.height() );
+
+    return QPixmap::fromImage(doubleImage);
+}
+
 void ChordPatternViewer::applyZoom()
 {
     if (m_zoom <= 0.05)
@@ -141,6 +162,10 @@ void ChordPatternViewer::applyZoom()
     }
 
     QPixmap pixmap = m_pixmap.scaledToWidth( pdfWidth(), Qt::SmoothTransformation );
+    if ( m_zoom < 0.5 )
+    {
+        pixmap = twoPageView(pixmap, ui->scrollArea->viewport()->height());
+    }
     ui->label->setPixmap( pixmap  );
 }
 
@@ -215,33 +240,51 @@ bool ChordPatternViewer::eventFilter(QObject *o, QEvent *e)
         label->update();
         return true;
     }
-    // catch the events before QWidget::keyEvent has chance.
-    else if ( e->type() == QEvent::KeyPress )
-    {
-        QKeyEvent* ke = (QKeyEvent*) e;
-        if (ke->key() == Qt::Key_Space)
-        {
-            ui->pushButtonPlay->toggle();
-        }
-        else if (ke->key() == Qt::Key_Up)
-        {
-            m_pos = qMax(0.0, m_pos - 10 * m_zoom );
-            update();
-            return true;
-        }
-        else if (ke->key() == Qt::Key_Down)
-        {
-            m_pos = qMin( (double) ui->label->height(), m_pos + 20 * m_zoom );
-            update();
-            return true;
-        }
-        else
-        {
-            return QDialog::eventFilter(o, e);
-        }
-    }
     return QDialog::eventFilter(o, e);
 
+}
+
+void ChordPatternViewer::keyPressEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Space)
+    {
+        ui->pushButtonPlay->toggle();
+    }
+    else if (e->key() == Qt::Key_Up)
+    {
+        scrollUp();
+    }
+    else if (e->key() == Qt::Key_Down)
+    {
+        scrollDown();
+    }
+    else if (e->key() == Qt::Key_Plus)
+    {
+        if (!e->isAutoRepeat())
+        {
+            on_buttonZoomIn_clicked();
+        }
+    }
+    else if (e->key() == Qt::Key_Minus)
+    {
+        if (!e->isAutoRepeat())
+        {
+            on_buttonZoomOut_clicked();
+        }
+    }
+}
+
+
+void ChordPatternViewer::scrollDown()
+{
+    m_pos = qMin( (double) ui->label->height(), m_pos + 10 * m_zoom );
+    update();
+}
+
+void ChordPatternViewer::scrollUp()
+{
+    m_pos = qMax(0.0, m_pos - 10 * m_zoom );
+    update();
 }
 
 
@@ -287,5 +330,17 @@ void ChordPatternViewer::on_pushButtonPlay_toggled(bool checked)
     else
     {
         m_playTimer->stop();
+    }
+}
+
+void ChordPatternViewer::wheelEvent(QWheelEvent *e)
+{
+    if (e->delta() > 0)
+    {
+        scrollUp();
+    }
+    else
+    {
+        scrollDown();
     }
 }

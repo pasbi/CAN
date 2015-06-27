@@ -53,7 +53,7 @@ public:
      */
 public:
     virtual bool loadFromTempDir() = 0;
-    virtual bool saveToTempDir() const;
+    virtual bool saveToTempDir();
     /**
      * @brief onRemoveFile is called when a file is removed.
      * @param filename the absolute filename of the removed file.

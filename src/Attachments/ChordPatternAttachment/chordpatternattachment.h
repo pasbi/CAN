@@ -1,14 +1,16 @@
 #ifndef CHORDPATTERNATTACHMENT_H
 #define CHORDPATTERNATTACHMENT_H
 
-#include "../attachment.h"
+#include "abstractchordpatternattachment.h"
 #include "chord.h"
+#include "configurable.h"
 
 
-class ChordPatternAttachment : public Attachment
+class ChordPatternAttachment : public AbstractChordPatternAttachment
 {
     Q_OBJECT
     DECL_CREATABLE(ChordPatternAttachment)
+    DECL_CONFIG( ChordPatternAttachment )
 public:
     ChordPatternAttachment();
     ChordPatternAttachment(const Attachment & attachment);
@@ -24,21 +26,16 @@ public:
 
     double scrollDownTempo() const { return m_scrollDownTempo; }
     void setScrollDownTempo( double tempo );
+    static QString process(QString text, int transpose = 0);
 
 public slots:
-    void process( int transposing = 0 );
+    void transpose( int transposing = 0 );
 
 
 private:
     QString m_pattern;
-    Chord::EnharmonicPolicy m_enharmonicPolicy = Chord::Natural;
-    Chord::MinorPolicy      m_minorPolicy      = Chord::LowerCase;
 
-    QString process(QString text, int transpose = 0);
     double m_scrollDownTempo;
-
-signals:
-    void changed();
 
 };
 

@@ -43,8 +43,8 @@ QString Chord::baseString( EnharmonicPolicy epolicy ) const
         switch (epolicy)
         {
         case Sharp:
-        case Natural:
             return sharp("C");
+        case Natural:
         case Flat:
             return flat("D");
         }

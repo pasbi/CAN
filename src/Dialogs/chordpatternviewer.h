@@ -18,11 +18,11 @@ class ChordPatternViewer : public QDialog
     DECL_CONFIG( ChordPatternViewer )
 
 private: // you should use the static method `displayChordPatternAttachment()`
-    explicit ChordPatternViewer(ChordPatternAttachment *attachment, QWidget *parent = 0);
+    explicit ChordPatternViewer(AbstractChordPatternAttachment *attachment, QWidget *parent = 0);
     ~ChordPatternViewer();
 
 public:
-    static void displayChordPatternAttachment(ChordPatternAttachment* attachment , QWidget *parent = 0);
+    static void displayChordPatternAttachment(AbstractChordPatternAttachment *attachment , QWidget *parent = 0);
     double scrollDownTempo() { return m_speed; }
     int pdfWidth();
 
@@ -32,7 +32,7 @@ public slots:
 
 private:
     Ui::ChordPatternViewer *ui;
-    ChordPatternAttachment* m_attachment;
+    AbstractChordPatternAttachment* m_attachment;
     QTemporaryFile m_pdfFile;
     QPixmap m_pixmap;
     double m_zoom;
@@ -42,6 +42,9 @@ private:
     double m_pos;
     bool m_atEnd = false;
     QTimer* m_playTimer;
+
+    void scrollDown();
+    void scrollUp();
 
 
 private slots:
@@ -62,6 +65,8 @@ private slots:
 protected:
     void resizeEvent(QResizeEvent *e);
     bool eventFilter(QObject *o, QEvent *e);
+    void wheelEvent(QWheelEvent *e);
+    void keyPressEvent(QKeyEvent *e);
 };
 
 

@@ -8,7 +8,7 @@ class Chord
 {
 public:
 
-    enum EnharmonicPolicy { Sharp, Flat, Natural };
+    enum EnharmonicPolicy { Sharp, Natural, Flat };
     enum MinorPolicy { LowerCase, FollowingM };
 
     Chord( const QString token );

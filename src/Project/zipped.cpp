@@ -319,7 +319,7 @@ QStringList Zipped::find() const
 }
 
 
-bool Zipped::saveToTempDir() const
+bool Zipped::saveToTempDir()
 {
     QList<File> files = getFiles();
 

@@ -8,6 +8,8 @@
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include "Attachments/pdfattachment.h"
 #include "orphantsetlist.h"
+#include "Dialogs/exportpdfdialog.h"
+
 
 class PDFCreator : public QThread
 {
@@ -65,7 +67,7 @@ public:
 
     const Page* currentPage() const;
 
-    static void paintChordPatternAttachment(ChordPatternAttachment *attachment, const QString& path);
+    static void paintChordPatternAttachment(AbstractChordPatternAttachment *attachment, const QString& path);
 
 
 private:
@@ -125,7 +127,7 @@ private:
     bool paintSong(const Song *song);
     void paintAttachment(Attachment *attachment );
     void paintPDFAttachment(PDFAttachment *attachment );
-    void paintChordPatternAttachment(ChordPatternAttachment *attachment );
+    void paintChordPatternAttachment(AbstractChordPatternAttachment *attachment );
     void insertTableOfContentsStub();
     void paintSetlist();
     void paintTableOfContents();
@@ -136,6 +138,13 @@ private:
     void paintAndSaveDocument(const Document& document, const QString &title, const QString& dirname );
     int lengthOfSong( int start );
 
+    /**
+     * @brief printAttachment returns wheter the @code attachment shall be printed.
+     * @param attachment
+     * @return
+     */
+    bool printAttachment( const Attachment* attachment );
+
     double m_additionalTopMargin = 0;
     int m_tableOfContentsPage = -1;
     QStringList m_tableOfContents;
@@ -145,6 +154,8 @@ private:
     double rightMargin() const { return 10; }
     double topMargin() const { return 15 + m_additionalTopMargin; }
     double bottomMargin() const { return 15 + 25; } // bottom line is 15 below the end of the page
+
+    ExportPDFDialog* m_exportPDFDialog = NULL; // is required from so many member functions
 
 public:
     static const int ALIGN_SONGS__SEPARATE_PAGES;

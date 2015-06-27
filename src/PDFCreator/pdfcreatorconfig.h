@@ -1,8 +1,8 @@
 #ifndef PDFCONFIG_H
 #define PDFCONFIG_H
 
-#include "pdfcreator.h"
 #include <QPagedPaintDevice>
+#include "pdfcreator.h"
 
 QList<QPagedPaintDevice::PageSize> pageSizes()
 {

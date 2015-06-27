@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 
-DEFN_CONFIG( PDFCreator, "PDF Export" );
+DEFN_CONFIG( PDFCreator, tr("PDF Export") );
 
 #include "pdfcreatorconfig.h"
 
@@ -117,7 +117,7 @@ void PDFCreator::run()
         alignSongs( 1 );
         break;
     case 3: // duplex
-        optimizeForDuplex();    //TODO distinguish duplex even/odd
+        optimizeForDuplex();
         break;
     case 4: // endless, songs will not be aligned either.
     case 5: // separate songs, will not be aligned.
@@ -248,39 +248,34 @@ void PDFCreator::insertTableOfContentsStub()
 
 bool PDFCreator::paintSong(const Song* song)
 {
-    newPage( Page::SongStartsHere, labelSong(song) );
-    QString headline = labelSong( song );
-    m_tableOfContents.append( headline );
-    paintHeadline( headline );
-
-    int i = 0;
-    for ( Attachment* attachment : song->attachments() )
+    if (m_exportPDFDialog->test( song ))
     {
-        if (isInterruptionRequested()) return false;
-        notifyCurrentTaskChanged( QString(tr("Draw attachment %1 of song %2"))
-                                      .arg(song->title())
-                                      .arg(attachment->name())                  );
+        newPage( Page::SongStartsHere, labelSong(song) );
+        QString headline = labelSong( song );
+        m_tableOfContents.append( headline );
+        paintHeadline( headline );
 
-        if (i++ != 0)
+        int i = 0;
+        for ( Attachment* attachment : song->attachments() )
         {
-            newPage( Page::NothingSpecial );
+            if (isInterruptionRequested()) return false;
+            notifyCurrentTaskChanged( QString(tr("Draw attachment %1 of song %2"))
+                                          .arg(song->title())
+                                          .arg(attachment->name())                  );
+
+            if (i++ != 0)
+            {
+                newPage( Page::NothingSpecial );
+            }
+            paintAttachment( attachment );
         }
-        paintAttachment( attachment );
     }
-    return true;
-}
-
-bool printAttachment( const Attachment* attachment )
-{
-    Q_UNUSED( attachment );
-    //TODO filter tags, etc
-
     return true;
 }
 
 void PDFCreator::paintAttachment(Attachment *attachment)
 {
-    if (printAttachment( attachment ))
+    if (m_exportPDFDialog->test( attachment ))
     {
         if (attachment->type() == PDFAttachment::TYPE)
         {
@@ -394,7 +389,7 @@ void PDFCreator::drawContinueOnNextPageMark()
     currentPainter().restore();
 }
 
-void PDFCreator::paintChordPatternAttachment(ChordPatternAttachment *attachment)
+void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *attachment)
 {
     currentPainter().save();
     configurePainter( currentPainter() );
@@ -943,44 +938,53 @@ QString PDFCreator::setlistFilename( QWidget* parent, Setlist* setlist, bool sep
 
 void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
 {
-    bool askForDirectory = (config["AlignSongs"].toInt() == ALIGN_SONGS__SEPARATE_PAGES);
-    QString filename = setlistFilename( widgetParent, setlist, askForDirectory );
+    ExportPDFDialog* exportPDFDialog = new ExportPDFDialog( widgetParent );
 
-    if (!filename.isEmpty())
+    if (exportPDFDialog->exec() == QDialog::Accepted)
     {
-        QFileInfo fi(filename);
+        bool askForDirectory = (config["AlignSongs"].toInt() == ALIGN_SONGS__SEPARATE_PAGES);
+        QString filename = setlistFilename( widgetParent, setlist, askForDirectory );
 
-        if (fi.exists() && !fi.isReadable())
+        if (!filename.isEmpty())
         {
-            QMessageBox::warning( widgetParent,
-                                  tr("Cannot write"),
-                                  QString(tr("File %1 is not writable.").arg(filename)),
-                                  QMessageBox::Ok,
-                                  QMessageBox::NoButton );
-        }
-        else
-        {
-            config.set( "DefaultPDFSavePath", QFileInfo( filename ).path() );
-            PDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), setlist, filename );
+            QFileInfo fi(filename);
 
-            QProgressDialog dialog;
-            dialog.setRange(0, setlist->items().length());
-            connect( &pdfCreator, SIGNAL(progress(int)), &dialog, SLOT(setValue(int)) );
-            connect( &pdfCreator, SIGNAL(currentTaskChanged(QString)), &dialog, SLOT(setLabelText(QString)) );
-            connect( &pdfCreator, SIGNAL(finished()), &dialog, SLOT(close()) );
-            connect( &dialog, &QProgressDialog::canceled, [&pdfCreator]()
+            if (fi.exists() && !fi.isReadable())
             {
-                pdfCreator.requestInterruption();
-            });
-            pdfCreator.start();
+                QMessageBox::warning( widgetParent,
+                                      tr("Cannot write"),
+                                      QString(tr("File %1 is not writable.").arg(filename)),
+                                      QMessageBox::Ok,
+                                      QMessageBox::NoButton );
+            }
+            else
+            {
+                config.set( "DefaultPDFSavePath", QFileInfo( filename ).path() );
+                PDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), setlist, filename );
+                pdfCreator.m_exportPDFDialog = exportPDFDialog;
 
-            dialog.exec();
-            pdfCreator.wait();
+                QProgressDialog dialog;
+                dialog.setRange(0, setlist->items().length());
+                connect( &pdfCreator, SIGNAL(progress(int)), &dialog, SLOT(setValue(int)) );
+                connect( &pdfCreator, SIGNAL(currentTaskChanged(QString)), &dialog, SLOT(setLabelText(QString)) );
+                connect( &pdfCreator, SIGNAL(finished()), &dialog, SLOT(close()) );
+                connect( &dialog, &QProgressDialog::canceled, [&pdfCreator]()
+                {
+                    pdfCreator.requestInterruption();
+                });
+                pdfCreator.start();
+
+                dialog.exec();
+                pdfCreator.wait();
+            }
         }
     }
+
+    delete exportPDFDialog;
+    exportPDFDialog = NULL;
 }
 
-void PDFCreator::paintChordPatternAttachment(ChordPatternAttachment *attachment, const QString &path)
+void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *attachment, const QString &path)
 {
     // save config and replace it at the end.
     Configurable savedConfigs = config;

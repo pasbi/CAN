@@ -39,6 +39,7 @@ signals:
 
 public:
     bool loadFromTempDir();
+    bool saveToTempDir();
     QList<File> getFiles() const;
 
 private:

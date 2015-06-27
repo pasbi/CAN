@@ -7,7 +7,7 @@
 class ChordPatternAttachmentEditPatternCommand : public AttachmentCommand
 {
 public:
-    ChordPatternAttachmentEditPatternCommand(ChordPatternAttachment *attachment, const QString &pattern);
+    ChordPatternAttachmentEditPatternCommand( ChordPatternAttachment *attachment, const QString &pattern);
 
     void undo();
     void redo();

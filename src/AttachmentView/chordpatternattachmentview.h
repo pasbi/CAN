@@ -6,6 +6,7 @@
 #include "Attachments/ChordPatternAttachment/chord.h"
 #include "configurable.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
+#include "chordpatternedit.h"
 
 
 namespace Ui {
@@ -24,19 +25,22 @@ public:
     void restoreOptions(const QByteArray &options) { Q_UNUSED(options); }
     QByteArray options() const { return QByteArray(); }
 
+    static void highlightTextEdit(ChordPatternEdit *edit , const QString &text);
+
 protected:
     void polish();
 
 private:
     Ui::ChordPatternAttachmentView *ui;
     QToolBar* m_toolBar;
-    Chord::MinorPolicy m_minorPolicy;
-    Chord::EnharmonicPolicy m_enharmonicPolicy;
 
 private slots:
     void updateText();
     void textEdited();
 
+    void on_buttonUp_clicked();
+    void on_buttonDown_clicked();
+    void on_buttonView_clicked();
 };
 
 #endif // CHORDPATTERNATTACHMENTVIEW_H

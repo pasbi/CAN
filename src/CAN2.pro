@@ -7,6 +7,15 @@
 
 #//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
+# Proxy chord pattern does not work ( no text and focus-origin-button )
+# what if
+#   1. user clones into A
+#   2. user makes changes
+#   3. user saves and closes project
+#   4. user re-opens project
+#   5. user synchronizes
+#   ? will the changes be applied ?
+# implement credentials
 
 QT       += core gui multimedia
 
@@ -90,7 +99,7 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/attachmentrenamecommand.cpp \
     Attachments/ChordPatternAttachment/chord.cpp \
     Dialogs/clonedialog.cpp \
-    Commands/AttachmentCommands/chordpatternattachmenttransposecommand.cpp \
+    Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.cpp \
     Dialogs/stringdialog.cpp \
     Commands/SongCommands/songduplicateattachmentcommand.cpp \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp \
@@ -153,7 +162,14 @@ SOURCES += main.cpp\
     Project/gitrepository.cpp \
     Project/identity.cpp \
     Project/gitutil.cpp \
-    Project/file.cpp
+    Project/file.cpp \
+    AttachmentView/chordpatternproxyattachmentview.cpp \
+    Attachments/chordpatternproxyattachment.cpp \
+    Attachments/ChordPatternAttachment/abstractchordpatternattachment.cpp \
+    Dialogs/exportpdfdialog.cpp \
+    Dialogs/tageditor.cpp \
+    Dialogs/chordpatternviewerscrollarea.cpp
+
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -205,7 +221,7 @@ HEADERS  += mainwindow.h \
     Commands/AttachmentCommands/attachmentcommand.h \
     Attachments/ChordPatternAttachment/chord.h \
     Dialogs/clonedialog.h \
-    Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h \
+    Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.cpp \
     Dialogs/stringdialog.h \
     Commands/SongCommands/songduplicateattachmentcommand.h \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h \
@@ -276,7 +292,15 @@ HEADERS  += mainwindow.h \
     Project/identity.h \
     Project/gitutil.h \
     git.h \
-    Project/file.h
+    Project/file.h \
+    AttachmentView/chordpatternproxyattachmentview.h \
+    Attachments/chordpatternproxyattachment.h \
+    Attachments/ChordPatternAttachment/abstractchordpatternattachment.h \
+    Dialogs/exportpdfdialog.h \
+    Dialogs/tageditor.h \
+    Dialogs/chordpatternviewerscrollarea.h
+
+
 
 FORMS    += mainwindow.ui \
     DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
@@ -301,7 +325,10 @@ FORMS    += mainwindow.ui \
     Dialogs/tagdialog.ui \
     Dialogs/chordpatternviewer.ui \
     Dialogs/addfilestoindexdialog.ui \
-    conflicteditor.ui
+    conflicteditor.ui \
+    AttachmentView/chordpatternproxyattachmentview.ui \
+    Dialogs/exportpdfdialog.ui \
+    Dialogs/tageditor.ui
 
 
 RESOURCES += \

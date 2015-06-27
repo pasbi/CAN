@@ -15,6 +15,8 @@ class ConfigurationDialog : public QDialog
 public:
     explicit ConfigurationDialog(QWidget *parent = 0);
     ~ConfigurationDialog();
+    void focusPage( const QString& key );
+    QStringList pageKeys() const { return m_pageKeys; }
 
 public slots:
     void accept();
@@ -24,6 +26,7 @@ private:
     Ui::ConfigurationDialog *ui;
     void buildPage(const QString & key);
     QList<Configurable*> m_configurables;
+    QList<QString> m_pageKeys;
 };
 
 #endif // CONFIGURATIONDIALOG_H

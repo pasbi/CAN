@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <item>
-    <widget class="QScrollArea" name="scrollArea">
+    <widget class="ChordPatternViewerScrollArea" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -74,6 +74,9 @@
          <height>32</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -117,32 +120,6 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonZoomOut">
-       <property name="minimumSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../ressources.qrc">
-         <normaloff>:/icons/icons/minus38.png</normaloff>:/icons/icons/minus38.png</iconset>
-       </property>
-       <property name="autoRepeat">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="buttonZoomIn">
        <property name="minimumSize">
         <size>
@@ -156,12 +133,44 @@
          <height>32</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
-         <normaloff>:/icons/icons/plus44.png</normaloff>:/icons/icons/plus44.png</iconset>
+         <normaloff>:/icons/icons/plus47.png</normaloff>:/icons/icons/plus47.png</iconset>
+       </property>
+       <property name="autoRepeat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonZoomOut">
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/icons/less2.png</normaloff>:/icons/icons/less2.png</iconset>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -215,6 +224,9 @@
          <height>32</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -240,6 +252,9 @@
          <width>32</width>
          <height>32</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
         <string/>
@@ -269,6 +284,9 @@
          <width>32</width>
          <height>32</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
         <string/>
@@ -306,6 +324,9 @@
          <height>32</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -336,6 +357,9 @@
          <height>32</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -356,6 +380,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ChordPatternViewerScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header>Dialogs/chordpatternviewerscrollarea.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../ressources.qrc"/>
  </resources>

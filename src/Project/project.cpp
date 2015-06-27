@@ -36,6 +36,7 @@ void Project::setCanClose(bool b)
     }
 }
 
+
 bool Project::loadFromTempDir()
 {
     bool success = true;
@@ -54,8 +55,6 @@ bool Project::loadFromTempDir()
         success = false;
     }
 
-
-
     QUndoStack::clear();
     emit undoStackCleared();
     setCanClose(true);
@@ -63,12 +62,17 @@ bool Project::loadFromTempDir()
     return success;
 }
 
+bool Project::saveToTempDir()
+{
+    setCanClose(true);
+    return GitRepository::saveToTempDir();
+}
+
 QList<File> Project::getFiles() const
 {
     QList<File> files;
     files << m_eventDatabase->getFiles();
     files << m_songDatabase->getFiles();
-    //TODO setCanClose(true);
     return files;
 }
 

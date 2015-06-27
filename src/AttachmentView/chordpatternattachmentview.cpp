@@ -6,7 +6,7 @@
 #include "Database/SongDatabase/song.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Project/project.h"
-#include "Commands/AttachmentCommands/chordpatternattachmenttransposecommand.h"
+#include "Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h"
 #include "application.h"
 #include "Dialogs/chordpatternviewer.h"
 
@@ -16,44 +16,9 @@ DEFN_CONFIG( ChordPatternAttachmentView, "Chord Pattern Attachment" );
 
 ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     AttachmentView(parent),
-    ui(new Ui::ChordPatternAttachmentView),
-    m_minorPolicy( Chord::LowerCase ),
-    m_enharmonicPolicy( Chord::Natural )
+    ui(new Ui::ChordPatternAttachmentView)
 {
     ui->setupUi(this);
-    m_toolBar = new QToolBar( this );
-
-
-    QAction* transposeUpAction = new QAction( QIcon(":/icons/icons/up51.png"), tr("Transpose up"), this);
-    addAction( transposeUpAction );
-    connect( transposeUpAction, &QAction::triggered, [this]()
-    {
-        app().pushCommand( new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), 1 ) );
-    });
-    m_toolBar->addAction( transposeUpAction );
-
-    QAction* transposeDownAction = new QAction( QIcon(":/icons/icons/down27.png"), tr("Transpose down"), this );
-    addAction( transposeDownAction );
-    connect( transposeDownAction, &QAction::triggered, [this]()
-    {
-        app().pushCommand( new ChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), -1 ) );
-    });
-    m_toolBar->addAction( transposeDownAction );
-
-    QWidget* empty = new QWidget( this );
-    empty->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    m_toolBar->addWidget(empty);
-
-    QAction* showInViewerAction = new QAction( QIcon(":/icons/icons/war4.png"), tr("Show in viewer"), this );
-    addAction( showInViewerAction );
-    connect( showInViewerAction, &QAction::triggered, [this]()
-    {
-        ChordPatternViewer::displayChordPatternAttachment( attachment<ChordPatternAttachment>(), this );
-    });
-    m_toolBar->addAction( showInViewerAction );
-
-    ui->verticalLayout->insertWidget(0, m_toolBar);
-
 }
 
 ChordPatternAttachmentView::~ChordPatternAttachmentView()
@@ -61,26 +26,26 @@ ChordPatternAttachmentView::~ChordPatternAttachmentView()
     delete ui;
 }
 
-void ChordPatternAttachmentView::updateText()
+void ChordPatternAttachmentView::highlightTextEdit(ChordPatternEdit *edit, const QString& text)
 {
-    ui->textEdit->blockSignals(true);
-    int cursorPosition = ui->textEdit->textCursor().position();
-    int scrollbarPosition = ui->textEdit->verticalScrollBar()->value();
-    ui->textEdit->setText(attachment<ChordPatternAttachment>()->chordPattern());
-    QTextCursor cursor(ui->textEdit->document());
+    edit->blockSignals(true);
+    int cursorPosition = edit->textCursor().position();
+    int scrollbarPosition = edit->verticalScrollBar()->value();
+    edit->setText( text );
+    QTextCursor cursor(edit->document());
     cursor.setPosition(cursorPosition);
-    ui->textEdit->setTextCursor(cursor);
-    ui->textEdit->verticalScrollBar()->setValue(scrollbarPosition);
+    edit->setTextCursor(cursor);
+    edit->verticalScrollBar()->setValue(scrollbarPosition);
 
     QList<QTextEdit::ExtraSelection> highlights;
     int i = 0;
-    for (QString line : ui->textEdit->toPlainText().split("\n")) {
+    for (QString line : text.split("\n")) {
         QStringList chords, tokens;
         bool isChordLine = Chord::parseLine( line, chords, tokens );
         for ( const QString & token : tokens )
         {
             if (Chord(token).isValid() && isChordLine) {
-                QTextCursor cursor(ui->textEdit->document());
+                QTextCursor cursor(edit->document());
                 cursor.setPosition(i);
                 cursor.setPosition(i + token.length(), QTextCursor::KeepAnchor);
                 QTextEdit::ExtraSelection highlight;
@@ -92,8 +57,13 @@ void ChordPatternAttachmentView::updateText()
             i += token.length() + 1;
         }
     }
-    ui->textEdit->setExternalExtraSelections(highlights);
-    ui->textEdit->blockSignals(false);
+    edit->setExternalExtraSelections(highlights);
+    edit->blockSignals(false);
+}
+
+void ChordPatternAttachmentView::updateText()
+{
+    highlightTextEdit( ui->textEdit, attachment<ChordPatternAttachment>()->chordPattern() );
 }
 
 #include "Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h"
@@ -102,12 +72,26 @@ void ChordPatternAttachmentView::textEdited()
     app().pushCommand( new ChordPatternAttachmentEditPatternCommand( attachment<ChordPatternAttachment>(), ui->textEdit->toPlainText() ) );
 }
 
-
 void ChordPatternAttachmentView::polish()
 {
     updateText();
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(textEdited()));
     connect(attachment<ChordPatternAttachment>(), SIGNAL(changed()), this, SLOT(updateText()));
-    connect( ui->textEdit, SIGNAL(pasted()), attachment<ChordPatternAttachment>(), SLOT(process()) );
+    connect( ui->textEdit, SIGNAL(pasted()), attachment<ChordPatternAttachment>(), SLOT(transpose()) );
 
+}
+
+void ChordPatternAttachmentView::on_buttonUp_clicked()
+{
+    app().pushCommand( new AbstractChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), 1 ) );
+}
+
+void ChordPatternAttachmentView::on_buttonDown_clicked()
+{
+    app().pushCommand( new AbstractChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), -1 ) );
+}
+
+void ChordPatternAttachmentView::on_buttonView_clicked()
+{
+    ChordPatternViewer::displayChordPatternAttachment( attachment<AbstractChordPatternAttachment>(), this );
 }

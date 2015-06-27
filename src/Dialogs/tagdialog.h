@@ -15,20 +15,16 @@ class TagDialog : public QDialog
 public:
     explicit TagDialog(const QStringList &tags, QWidget *parent = 0);
     ~TagDialog();
-    QStringList tags() const { return m_tags; }
+    QStringList tags() const;
+
+    static bool setTags(QWidget *parent, Taggable *taggable);
+
+    void accept();
 
 private:
-    Ui::TagDialog *ui;
+    Ui::TagDialog* ui;
     QStringList m_tags;
-    void updateTextEdit();
-    void addTag( const QString& tag );
 
-private slots:
-    void on_pushButton_clicked();
-    void removeTag( QString tag );
-
-public:
-    static bool setTags( QWidget* parent, Taggable* taggable );
 };
 
 #endif // TAGDIALOG_H

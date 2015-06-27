@@ -27,7 +27,7 @@ public:
     void makeNameUnique();
 
     QJsonObject toJsonObject() const;
-    static bool create(const QJsonObject & object, Attachment* &attachment);
+    static bool create(const QJsonObject & object, Attachment* &attachment, Song *song);
 
     virtual QString type() const = 0;
 

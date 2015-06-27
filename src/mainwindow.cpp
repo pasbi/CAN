@@ -19,6 +19,7 @@
 #include <QProgressDialog>
 #include <QScrollArea>
 #include <QLabel>
+#include "Attachments/ChordPatternAttachment/chordpatternproxyattachment.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -266,6 +267,10 @@ void MainWindow::createAttachmentActions()
         {
             action->setIcon(QIcon(":/icons/icons/song1.png"));
         }
+        else if (classname == "ChordPatternProxyAttachment")
+        {
+            action->setIcon( QIcon(":/icons/icons/link67.png") );
+        }
         else
         {
             qWarning() << QString("action <create %1> has no icon.").arg( classname );
@@ -276,9 +281,17 @@ void MainWindow::createAttachmentActions()
             Song* song = currentSong();
             if (song)
             {
+                Attachment* lastAttachment = currentAttachment();
                 SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, classname );
                 app().pushCommand( command );
                 updateWhichWidgetsAreEnabled();
+
+                if (lastAttachment && lastAttachment->inherits( "ChordPatternAttachment" )
+                 && command->attachment()->inherits( "ChordPatternProxyAttachment" ) )
+                {
+                    qobject_assert_cast<ChordPatternProxyAttachment*>( command->attachment() )->setChordPatternAttachment(
+                                qobject_assert_cast<ChordPatternAttachment*>(lastAttachment) );
+                }
             }
         });
         m_newAttachmentActions.insert( classname, action );
@@ -524,6 +537,13 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     for (QObject* o : songObects )          ::setEnabled( o, !!cSong        );
     for (QObject* o : attachmentObjects)    ::setEnabled( o, !!cAttachment  );
     for (QObject* o : gitObjects)           ::setEnabled( o, !!cGit         );
+
+    bool chordPatternProxyAttachmentEnabled = false;
+    if (cAttachment && cAttachment->inherits( "ChordPatternAttachment" ))
+    {
+        chordPatternProxyAttachmentEnabled = true;
+    }
+    m_newAttachmentActions["ChordPatternProxyAttachment"]->setEnabled( chordPatternProxyAttachmentEnabled );
 }
 
 MainWindow::Page MainWindow::currentPage() const
@@ -871,9 +891,6 @@ void MainWindow::on_actionClone_triggered()
 void MainWindow::on_actionSync_triggered()
 {
 
-//    m_project.synchronize( "message", m_identityManager.currentIdentity() );
-//    return;
-
     //////////////////////////////////////////////////////////////////////////
     /// retrieve message and Identity.
     /// abort if one of them is invalid.
@@ -1206,6 +1223,7 @@ void MainWindow::open(const QString &filename)
             setCurrentPath("");
             newProject();
         }
+
         updateWindowTitle();
         updateWhichWidgetsAreEnabled();
     }

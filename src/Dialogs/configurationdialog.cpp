@@ -91,6 +91,7 @@ void ConfigurationDialog::buildPage(const QString &key)
     {
         ui->tabWidget->addTab( scrollArea, config->caption() );
         m_configurables << config;
+        m_pageKeys << key;
     }
     else
     {
@@ -117,3 +118,13 @@ void ConfigurationDialog::reject()
         c->reset();
     }
 }
+
+void ConfigurationDialog::focusPage( const QString& name )
+{
+    int i = m_pageKeys.indexOf( name );
+    if (i >= 0)
+    {
+        ui->tabWidget->setCurrentIndex( i );
+    }
+}
+

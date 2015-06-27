@@ -6,6 +6,24 @@
 
 
 DEFN_CREATABLE_NAME(ChordPatternAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Attachment"))
+DEFN_CONFIG( ChordPatternAttachment, tr("ChordPatternAttachment") );
+
+CONFIGURABLE_ADD_ITEM( ChordPatternAttachment,
+                       EnharmonicPolicy,
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Enharmonic ambiguation: "),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/ChordPatternAttachment/EnharmonicPolicy"),
+                       1,
+                       ConfigurableItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "Always Sharp")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Natural")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Always Flat") )   );
+
+CONFIGURABLE_ADD_ITEM( ChordPatternAttachment,
+                       MinorPolicy,
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Minor: "),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/ChordPatternAttachment/MinorPolicy"),
+                       0,
+                       ConfigurableItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "Lower case")
+                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Following m") ) );
 
 const int TAB_WIDTH = 8;
 
@@ -69,15 +87,15 @@ bool ChordPatternAttachment::restoreFromJsonObject(const QJsonObject &object)
     }
     if (checkJsonObject( object, "scrollDownTempo", QJsonValue::Double ))
     {
-        m_scrollDownTempo = object["scrollDownTempo"].toDouble();
+        setScrollDownTempo( object["scrollDownTempo"].toDouble() );
     }
     else
     {
-        m_scrollDownTempo = 0;
+        setScrollDownTempo( 0 );
         // scrollDownTempo is not as important. keep success.
     }
 
-    return success;
+    return success && Attachment::restoreFromJsonObject( object );
 }
 
 void ChordPatternAttachment::setPattern(const QString &pattern)
@@ -89,7 +107,7 @@ void ChordPatternAttachment::setPattern(const QString &pattern)
     }
 }
 
-void ChordPatternAttachment::process(int transposing)
+void ChordPatternAttachment::transpose(int transposing)
 {
     setPattern( process(m_pattern, transposing) );
 }
@@ -108,7 +126,7 @@ QString ChordPatternAttachment::process(QString text, int transpose)
             if (chord.isValid() && isChordLine)
             {
                 chord.transpose(transpose);
-                QString c = chord.toString(m_minorPolicy, m_enharmonicPolicy);
+                QString c = chord.toString( (Chord::MinorPolicy) config["MinorPolicy"].toInt(), (Chord::EnharmonicPolicy) config["EnharmonicPolicy"].toInt() );
                 text = text.replace(i, token.length(), c);
                 additional = c.length() - token.length();
             }
