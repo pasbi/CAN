@@ -36,6 +36,7 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
     ui->toolButton->setDefaultAction( ui->toolButton->actions()[1] );
 
     connect( ui->toolButton, SIGNAL(triggered(QAction*)), ui->toolButton, SLOT(setDefaultAction(QAction*)) );
+    connect( ui->attachmentEditor, SIGNAL(focusAttachment(const Attachment*)), this, SLOT(focusAttachment(const Attachment*)) );
 
     setSong( NULL );
 
@@ -106,6 +107,7 @@ void AttachmentChooser::setAttachment( int index )
     }
     m_editTagAction->setEnabled( song() && currentAttachment() );
 
+
 }
 
 int AttachmentChooser::currentAttachmentIndex() const
@@ -131,6 +133,30 @@ void AttachmentChooser::editTags()
         if (dialog.exec() == QDialog::Accepted)
         {
             app().pushCommand( new EditTagsCommand(currentAttachment(), dialog.tags() ));
+        }
+    }
+}
+
+void AttachmentChooser::focusAttachment(const Attachment *a)
+{
+    if (song())
+    {
+        int index = -1;
+        for (int i = 0; i < song()->attachments().length(); ++i)
+        {
+            if (song()->attachment(i) == a)
+            {
+                index = i;
+                break;
+            }
+        }
+        if (index < -1)
+        {
+            qWarning() << "song " << song() << " has no attachment " << a << ".";
+        }
+        else
+        {
+            setAttachment( index );
         }
     }
 }

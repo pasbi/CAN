@@ -49,6 +49,8 @@ void AttachmentEditor::setAttachment(Attachment *attachment)
         m_currentView->setParent( m_scrollArea );
         layout->addWidget( m_currentView );
 
+        connect( m_currentView, SIGNAL(focusAttachment(const Attachment*)), this, SIGNAL( focusAttachment( const Attachment* )));
+
         delete m_scrollArea->widget();
     }
     else

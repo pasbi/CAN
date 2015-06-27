@@ -21,6 +21,9 @@ private:
     QScrollArea* m_scrollArea = 0;
     QMap<Attachment*, QByteArray> m_attachmentViewOptions;
 
+signals:
+    void focusAttachment( const Attachment* );
+
 };
 
 #endif // ATTACHMENTEDITOR_H

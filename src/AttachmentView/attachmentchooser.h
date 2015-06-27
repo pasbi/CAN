@@ -26,6 +26,7 @@ public slots:
 
 private slots:
     void editTags();
+    void focusAttachment( const Attachment* a );
 
 private:
     Ui::AttachmentChooser *ui;

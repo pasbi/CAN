@@ -7,7 +7,6 @@
 
 #//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
-# Proxy chord pattern does not work ( no text and focus-origin-button )
 # what if
 #   1. user clones into A
 #   2. user makes changes

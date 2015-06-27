@@ -35,6 +35,9 @@ protected:
 private:
     Attachment* m_attachment;
 
+signals:
+    void focusAttachment( const Attachment* );
+
 };
 
 #endif // ATTACHMENTVIEW_H
