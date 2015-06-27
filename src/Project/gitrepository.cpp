@@ -414,7 +414,7 @@ void GitRepository::mergeCommits(const QString &message, const Identity &identit
 void GitRepository::onAddFile(const QString & absoluteFilename) const
 {
     QString relativeFilename = QDir(path()).relativeFilePath( absoluteFilename );
-    if (isGitRepository())
+    if (isGitRepository() && m_index)
     {
         git_index_add_bypath( m_index, CSTR(relativeFilename));
     }
@@ -423,7 +423,7 @@ void GitRepository::onAddFile(const QString & absoluteFilename) const
 void GitRepository::onRemoveFile(const QString & absoluteFilename) const
 {
     QString relativeFilename = QDir(path()).relativeFilePath( absoluteFilename );
-    if (isGitRepository())
+    if (isGitRepository() && m_index)
     {
         git_index_remove_bypath( m_index, CSTR(relativeFilename));
     }
