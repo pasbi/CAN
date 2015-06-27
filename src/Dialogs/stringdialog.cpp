@@ -9,6 +9,7 @@ StringDialog::StringDialog(const QString& title, const QString & text, const QSt
     ui->setupUi(this);
     ui->lineEdit->setPlaceholderText( placeHolderText );
     ui->lineEdit->setText( text );
+    ui->lineEdit->selectAll();
 
     setWindowTitle( title );
 

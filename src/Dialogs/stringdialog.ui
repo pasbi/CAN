@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>414</width>
-    <height>76</height>
+    <height>81</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,12 +77,18 @@
        <property name="text">
         <string>&amp;Cancel</string>
        </property>
+       <property name="shortcut">
+        <string>Esc</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="buttonOk">
        <property name="text">
         <string>&amp;Ok</string>
+       </property>
+       <property name="shortcut">
+        <string>Return</string>
        </property>
       </widget>
      </item>
