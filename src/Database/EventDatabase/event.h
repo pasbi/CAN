@@ -11,6 +11,7 @@
 class EventDatabase;
 class Event : public QObject, public Taggable
 {
+    Q_OBJECT
 public:
     enum Type { Rehearsal, Gig, Other };
     Event( EventDatabase*   database,

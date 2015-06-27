@@ -2,17 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
-    <name>AddFileIndexSourceDialog</name>
-    <message>
-        <source>all files</source>
-        <translation type="vanished">Alle Dateien</translation>
-    </message>
-    <message>
-        <source>&lt; No files &gt;</source>
-        <translation type="vanished">&lt; Keine Dataien &gt;</translation>
-    </message>
-</context>
-<context>
     <name>AddFilesToIndexDialog</name>
     <message>
         <location filename="Dialogs/addfilestoindexdialog.ui" line="14"/>
@@ -51,10 +40,6 @@
         <location filename="AttachmentView/attachmentchooser.ui" line="19"/>
         <source>Choose an attachment.</source>
         <translation>Wähle Anlage.</translation>
-    </message>
-    <message>
-        <source>Edit tags of the current attachment.</source>
-        <translation type="vanished">Bearbeite die Tags der aktuellen Anlage.</translation>
     </message>
     <message>
         <location filename="AttachmentView/attachmentchooser.cpp" line="24"/>
@@ -490,10 +475,6 @@ Dabei wird {EventTitle} z.B. durch den Namen des Events ersetzt, oder {Begin} du
         <translation>Song Titel</translation>
     </message>
     <message>
-        <source>ConfigurableItem/PDFCreator/SongTitle</source>
-        <translation type="vanished">Titel des Songs zeichnen</translation>
-    </message>
-    <message>
         <location filename="PDFCreator/pdfcreatorconfig.h" line="77"/>
         <source>ConfigurableItem/PDFCreator/SongTitlePattern</source>
         <translation>Muster für den Song titel.
@@ -503,22 +484,6 @@ Dabei wird {EventTitle} z.B. durch den Namen des Events ersetzt, oder {Begin} du
         <location filename="PDFCreator/pdfcreatorconfig.h" line="78"/>
         <source>{Title} -- {Artist}</source>
         <translation>{Titel} -- {Interpret}</translation>
-    </message>
-    <message>
-        <source>Line spacing</source>
-        <translation type="vanished">Zeilenabstand</translation>
-    </message>
-    <message>
-        <source>ConfigurableItem/PDFCreator/LineSpacing</source>
-        <translation type="vanished">Zeilenabstand nach einer normalen Zeilen</translation>
-    </message>
-    <message>
-        <source>Chord Line spacing</source>
-        <translation type="vanished">Zeilenabstand in Akkordzeile</translation>
-    </message>
-    <message>
-        <source>ConfigurableItem/PDFCreator/ChordLineSpacing</source>
-        <translation type="vanished">Zeilen Abstand nach einer Akkord Zeile </translation>
     </message>
     <message>
         <location filename="PDFCreator/pdfcreatorconfig.h" line="86"/>
@@ -544,10 +509,6 @@ Dabei wird {EventTitle} z.B. durch den Namen des Events ersetzt, oder {Begin} du
         <location filename="PDFCreator/pdfcreatorconfig.h" line="91"/>
         <source>A2</source>
         <translation>A2</translation>
-    </message>
-    <message>
-        <source>A3</source>
-        <translation type="vanished">A3</translation>
     </message>
     <message>
         <location filename="PDFCreator/pdfcreatorconfig.h" line="93"/>
@@ -1204,10 +1165,6 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <source>Debug</source>
-        <translation type="vanished">[Debug]</translation>
-    </message>
-    <message>
         <location filename="mainwindow.ui" line="236"/>
         <source>File index related stuff.</source>
         <translation>Dateiindex.</translation>
@@ -1404,8 +1361,8 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
         <location filename="mainwindow.ui" line="476"/>
         <location filename="mainwindow.cpp" line="906"/>
         <location filename="mainwindow.cpp" line="913"/>
-        <location filename="mainwindow.cpp" line="1037"/>
-        <location filename="mainwindow.cpp" line="1046"/>
+        <location filename="mainwindow.cpp" line="1050"/>
+        <location filename="mainwindow.cpp" line="1059"/>
         <source>Sync</source>
         <translation>Synchronisieren</translation>
     </message>
@@ -1619,37 +1576,49 @@ Stelle sicher dass Du das richtige Repository geklont hast.</translation>
         <translation>Synchronisiere.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="976"/>
+        <location filename="mainwindow.cpp" line="970"/>
+        <source>Failed to pull from remote.</source>
+        <translation>Pull fehlgeschlagen.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="971"/>
+        <source>Cannot get changes from the repository.
+Check that you have access to the remote (e.g. a connection to the internet)</source>
+        <translation>Kann Änderungen nicht aus dem Repoistory laden.
+Überprüfe, ob du Zugang zum Repository hast (z.B. eine Internetverbindung)</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="989"/>
         <source>Pending conflicts not allowed.</source>
         <translation>Nicht aufgelöste Konflikte sind nicht erlaubt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="977"/>
+        <location filename="mainwindow.cpp" line="990"/>
         <source>There must not be conficts.</source>
         <translation>Bitte alle Konflikte auflösen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="981"/>
+        <location filename="mainwindow.cpp" line="994"/>
         <source>Use &amp;local version</source>
         <translation>&amp;Lokale Version benutzen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="982"/>
+        <location filename="mainwindow.cpp" line="995"/>
         <source>Use &amp;remote version</source>
         <translation>&amp;Remote Version benutzen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1003"/>
+        <location filename="mainwindow.cpp" line="1016"/>
         <source>Resolved Conflicts</source>
         <translation>Aufgelöste Konflikte</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1026"/>
+        <location filename="mainwindow.cpp" line="1039"/>
         <source>Failed to load project.</source>
         <translation>Konnte das Projekt nicht laden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1027"/>
+        <location filename="mainwindow.cpp" line="1040"/>
         <source>Cannot open merged project.
 Probably merging went wrong or the remote version was currupted.
 Fix the error by hand and commit it over the current version, then clone the fixed repository.</source>
@@ -1658,7 +1627,7 @@ Wahrscheinlich ist das Zusammenführen schiefgegangen oder die Remote-Version wa
 Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1038"/>
+        <location filename="mainwindow.cpp" line="1051"/>
         <source>Sync failed.
 Make sure your username/password is correct and the remote repository is reachable</source>
         <translation>Synchronisieren fehlgeschlagen.
@@ -1666,17 +1635,17 @@ Versichere dich, dass Benutzername und Passwort stimmen
 und dass du Zugang zum Repository hast.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1239"/>
+        <location filename="mainwindow.cpp" line="1252"/>
         <source>All songs</source>
         <translation>Alle Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1279"/>
+        <location filename="mainwindow.cpp" line="1292"/>
         <source>Synchronize?</source>
         <translation>Synchronisieren?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1280"/>
+        <location filename="mainwindow.cpp" line="1293"/>
         <source>The project may not be synchronized with the remote.
 Do you want to synchronize them now?
 You can always do this later, but it is recommended to do it now.</source>
@@ -1685,47 +1654,43 @@ Möchtest du es jetzt synchronisieren?
 Das kannst du auch später tun, aber tue es besser jetzt.</translation>
     </message>
     <message>
-        <source>Sync failed.</source>
-        <translation type="vanished">Synchronisieren fehlgeschlagen.</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1047"/>
+        <location filename="mainwindow.cpp" line="1060"/>
         <source>Sync succeeded</source>
         <translation>Synchronisieren erfolgreich</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1071"/>
+        <location filename="mainwindow.cpp" line="1084"/>
         <source>File index information</source>
         <translation>Informationen über Dateiindex</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1072"/>
+        <location filename="mainwindow.cpp" line="1085"/>
         <source>Files: %1</source>
         <translation>Dateien: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1177"/>
-        <location filename="mainwindow.cpp" line="1188"/>
+        <location filename="mainwindow.cpp" line="1190"/>
+        <location filename="mainwindow.cpp" line="1201"/>
         <source>Opening %1</source>
         <translation>Öffne %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1178"/>
+        <location filename="mainwindow.cpp" line="1191"/>
         <source>Cannot open %1. Unknown file format.</source>
         <translation>Kann %1 nicht öffnen. Unbekanntes Format</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1189"/>
+        <location filename="mainwindow.cpp" line="1202"/>
         <source>File %1 not found.</source>
         <translation>Datei %1 nicht gefunden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1219"/>
+        <location filename="mainwindow.cpp" line="1232"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1220"/>
+        <location filename="mainwindow.cpp" line="1233"/>
         <source>Language changes will apply on next start.</source>
         <translation>Sprache ändert sich beim nächsten Start.</translation>
     </message>
@@ -1819,10 +1784,6 @@ Das kannst du auch später tun, aber tue es besser jetzt.</translation>
         <translation>Verschiedenes</translation>
     </message>
     <message>
-        <source>Table of Content</source>
-        <translation type="vanished">Inhaltsverzeichnis</translation>
-    </message>
-    <message>
         <location filename="PDFCreator/pdfcreator.cpp" line="889"/>
         <location filename="PDFCreator/pdfcreator.cpp" line="896"/>
         <source>Export PDF ...</source>
@@ -1857,21 +1818,6 @@ Do you want to replace it?</source>
         <location filename="Database/EventDatabase/setlist.h" line="19"/>
         <source>Unnamed</source>
         <translation>Unbenannt</translation>
-    </message>
-    <message>
-        <source>Table of Content</source>
-        <translation type="vanished">Inhaltsverzeichnis</translation>
-    </message>
-    <message>
-        <source>Cannot find translation files</source>
-        <translation type="vanished">Cannot find translation files.</translation>
-    </message>
-    <message>
-        <source>Translation file &quot;%1&quot; not found.
-Using fallback-english which is not recommended.</source>
-        <translation type="vanished">Sprachdatei &quot;%1&quot; nicht gefunden.
-Benutze Notfall-English (nicht empfohlen).
-</translation>
     </message>
 </context>
 <context>
@@ -2014,23 +1960,6 @@ Benutze Notfall-English (nicht empfohlen).
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="129"/>
         <source>Remove Setlist Items</source>
         <translation>Setlistelemente löschen.</translation>
-    </message>
-    <message>
-        <source>Export PDF ...</source>
-        <translation type="vanished">Exportiere in PDF ...</translation>
-    </message>
-    <message>
-        <source>%1 already exists.
-Do you want to replace it?</source>
-        <translation type="vanished">%1 existiert bereits. Möchtest du es überschreiben?</translation>
-    </message>
-    <message>
-        <source>Cannot write</source>
-        <translation type="vanished">Kann nicht schreiben.</translation>
-    </message>
-    <message>
-        <source>File %1 is not writable.</source>
-        <translation type="vanished">%1 ist nicht schreibbar.</translation>
     </message>
 </context>
 <context>
