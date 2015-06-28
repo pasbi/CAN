@@ -133,7 +133,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /// Splitter
     //////////////////////////////////////////
     connect( ui->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeSplitter()));
-    QTimer::singleShot(0, this, SLOT(resizeSplitter()));
+    QTimer::singleShot(10, this, SLOT(resizeSplitter()));
 
 
     //////////////////////////////////////////
