@@ -149,27 +149,17 @@
 <context>
     <name>ChordPatternAttachment</name>
     <message>
-        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="15"/>
+        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="31"/>
         <source>Chord Pattern</source>
         <translation>Akkord Schema</translation>
     </message>
 </context>
 <context>
-    <name>ChordPatternAttachmentView</name>
+    <name>ChordPatternProxyAttachment</name>
     <message>
-        <location filename="AttachmentView/chordpatternattachmentview.cpp" line="27"/>
-        <source>Transpose up</source>
-        <translation>Nach oben transponieren</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/chordpatternattachmentview.cpp" line="35"/>
-        <source>Transpose down</source>
-        <translation>Nach unten transponieren</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/chordpatternattachmentview.cpp" line="47"/>
-        <source>Show in viewer</source>
-        <translation>In Viewer anzeigen</translation>
+        <location filename="Attachments/chordpatternproxyattachment.cpp" line="10"/>
+        <source>Proxy Pattern</source>
+        <translation>Proxy Pattern</translation>
     </message>
 </context>
 <context>
@@ -180,24 +170,24 @@
         <translation>Viewer</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="75"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="74"/>
         <source>Poppler is not available</source>
         <translation>Poppler ist nicht verfügbar.</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="76"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="75"/>
         <source>It seems this application was build without poppler.
 Thus, this feature is not available.</source>
         <translation>Scheinbar wurde die Anwendung ohne Poppler gebaut.
 Deshalb ist dieses Feature nicht verfügbar.</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="97"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="96"/>
         <source>Apply new tempo?</source>
         <translation>Neues Tempo übernehmen?</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="98"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="97"/>
         <source>You changed the tempo of this chord pattern.
 Do you want to keep it?</source>
         <translation>Du hast das Tempo geändert. Übernehmen?</translation>
@@ -235,148 +225,166 @@ Do you want to keep it?</source>
     <name>CommandTranslator</name>
     <message>
         <location filename="Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp" line="7"/>
-        <source>Delete Section [%1 - %2]</source>
-        <translation>Section löschen [%1 - %2]</translation>
+        <source>delete section</source>
+        <oldsource>Delete Section [%1 - %2]</oldsource>
+        <translation>Section löschen</translation>
     </message>
     <message>
         <location filename="Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.cpp" line="10"/>
-        <source>Edit section %1 -&gt; %2</source>
-        <translation>Section editieren %1 -&gt; %2</translation>
+        <source>edit section</source>
+        <oldsource>Edit section %1 -&gt; %2</oldsource>
+        <translation>Section editieren</translation>
     </message>
     <message>
         <location filename="Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.cpp" line="9"/>
-        <source>New Section [%1 - %2]</source>
-        <translation>Neue Section [%1 -%2]</translation>
+        <source>new section</source>
+        <oldsource>New Section [%1 - %2]</oldsource>
+        <translation>Neue Section erzeugen</translation>
     </message>
     <message>
         <location filename="Commands/AttachmentCommands/attachmentrenamecommand.cpp" line="9"/>
-        <source>Rename attachment %1 -&gt; %2</source>
-        <translation>Anhang umbennenen %1 -&gt; %2</translation>
-    </message>
-    <message>
-        <location filename="Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp" line="54"/>
-        <source>Edit chord pattern %1 -&gt; %2</source>
-        <translation>Akkord schema ändern %1 -&gt; %2</translation>
-    </message>
-    <message>
-        <location filename="Commands/AttachmentCommands/chordpatternattachmenttransposecommand.cpp" line="7"/>
-        <source>Transpose chord pattern %1</source>
-        <translation>Akkord Schema transponieren (%1)</translation>
-    </message>
-    <message>
-        <location filename="Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp" line="13"/>
-        <source>Set file %1 -&gt; %2</source>
-        <translation>Datei ändern %1 -&gt; %2</translation>
+        <source>rename attachment</source>
+        <oldsource>Rename attachment %1 -&gt; %2</oldsource>
+        <translation>Anhang umbennenen</translation>
     </message>
     <message>
         <location filename="Commands/EventDatabaseCommands/eventdatabaseediteventcommand.cpp" line="13"/>
-        <source>Edit event %1 -&gt; %2</source>
-        <translation>Event ändern %1 -&gt; %2</translation>
+        <source>edit event</source>
+        <oldsource>Edit event %1 -&gt; %2</oldsource>
+        <translation>Event bearbeiten</translation>
     </message>
     <message>
         <location filename="Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.cpp" line="8"/>
-        <source>Move event %1 -&gt; %2</source>
-        <translation>Event verschieben %1 -&gt; %2</translation>
+        <source>move event</source>
+        <oldsource>Move event %1 -&gt; %2</oldsource>
+        <translation>Event verschieben</translation>
     </message>
     <message>
         <location filename="Commands/EventDatabaseCommands/eventdatabaseneweventcommand.cpp" line="17"/>
-        <source>New event</source>
-        <translation>Neues Event</translation>
+        <source>new event</source>
+        <oldsource>New event</oldsource>
+        <translation>Neues Event erzeugen</translation>
     </message>
     <message>
         <location filename="Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.cpp" line="9"/>
-        <source>Delete event %1</source>
-        <translation>Event löschen %1</translation>
+        <source>delete event</source>
+        <oldsource>Delete event %1</oldsource>
+        <translation>Event löschen</translation>
     </message>
     <message>
         <location filename="Commands/SetlistCommands/setlistadditemcommand.cpp" line="7"/>
-        <source>Add item to setlist %1</source>
-        <translation>Element zu Setlist hinzufügen (%1)</translation>
+        <source>add item to setlist</source>
+        <oldsource>Add item to setlist %1</oldsource>
+        <translation>Element zu Setlist hinzufügen</translation>
     </message>
     <message>
         <location filename="Commands/SetlistCommands/setlisteditdatacommand.cpp" line="10"/>
-        <source>Edit setlist %1 -&gt; %2</source>
-        <translation>Setlist bearbeiten %1 -&gt; %2</translation>
+        <source>edit setlist</source>
+        <oldsource>Edit setlist %1 -&gt; %2</oldsource>
+        <translation>Setlist bearbeiten</translation>
     </message>
     <message>
         <location filename="Commands/SetlistCommands/setlistinsertitemcommand.cpp" line="8"/>
-        <source>Insert item to setlist %1</source>
-        <translation>Element in Setlist einfügen %1</translation>
+        <source>insert item to setlist</source>
+        <oldsource>Insert item to setlist %1</oldsource>
+        <translation>Element in Setlist einfügen</translation>
     </message>
     <message>
         <location filename="Commands/SetlistCommands/setlistmoverowscommand.cpp" line="8"/>
-        <source>Move items in setlist</source>
-        <translation>Elemente in setlist verschieben</translation>
+        <source>move items in setlist</source>
+        <oldsource>Move items in setlist</oldsource>
+        <translation>Elemente in Setlist verschieben</translation>
     </message>
     <message>
         <location filename="Commands/SetlistCommands/setlistremoveitemcommand.cpp" line="7"/>
-        <source>Remove item from setlist %1</source>
-        <translation>Element aus setlist löschen %1</translation>
+        <source>remove item from setlist</source>
+        <oldsource>Remove item from setlist %1</oldsource>
+        <translation>Element aus Setlist löschen</translation>
     </message>
     <message>
         <location filename="Commands/SongCommands/songaddattachmentcommand.cpp" line="8"/>
-        <source>Add song %1</source>
-        <translation>Song hinzufügen %1</translation>
+        <source>add song</source>
+        <oldsource>Add song %1</oldsource>
+        <translation>Song hinzufügen</translation>
     </message>
     <message>
         <location filename="Commands/SongCommands/songduplicateattachmentcommand.cpp" line="8"/>
-        <source>Duplicate attachment %1</source>
-        <translation>Anhang duplizieren (%1)</translation>
+        <source>duplicate attachment</source>
+        <oldsource>Duplicate attachment %1</oldsource>
+        <translation>Anhang duplizieren</translation>
     </message>
     <message>
         <location filename="Commands/SongCommands/songremoveattachmentcommand.cpp" line="8"/>
-        <source>Remove attachment %1</source>
-        <translation>Anhang entfernen (%1)</translation>
+        <source>remove attachment</source>
+        <oldsource>Remove attachment %1</oldsource>
+        <translation>Anhang entfernen</translation>
     </message>
     <message>
         <location filename="Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp" line="13"/>
-        <source>Edit song %1 -&gt; %2</source>
-        <translation>Song editieren %1 -&gt; %2</translation>
+        <source>edit song</source>
+        <oldsource>Edit song %1 -&gt; %2</oldsource>
+        <translation>Song editieren</translation>
     </message>
     <message>
         <location filename="Commands/SongDatabaseCommands/songdatabasemovesongcommand.cpp" line="8"/>
-        <source>Move song %1 -&gt; %2</source>
-        <translation>Song verschieben %1 -&gt; %2</translation>
+        <source>move song</source>
+        <oldsource>Move song %1 -&gt; %2</oldsource>
+        <translation>Song verschieben</translation>
     </message>
     <message>
         <location filename="Commands/SongDatabaseCommands/songdatabasenewattributecommand.cpp" line="7"/>
-        <source>New attribute %1</source>
-        <translation>Neues Attribut (%1)</translation>
+        <source>new attribute</source>
+        <oldsource>New attribute %1</oldsource>
+        <translation>Neues Attribut hinzufügen</translation>
     </message>
     <message>
         <location filename="Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp" line="14"/>
-        <source>New song</source>
-        <translation>Neuer Song</translation>
+        <source>new song</source>
+        <oldsource>New song</oldsource>
+        <translation>Neuen Song hinzufügen</translation>
     </message>
     <message>
         <location filename="Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.cpp" line="7"/>
-        <source>Remove column %1</source>
-        <translation>Spalte entfernen (%1)</translation>
+        <source>remove column %1</source>
+        <oldsource>Remove column %1</oldsource>
+        <translation>Spalte entfernen</translation>
     </message>
     <message>
         <location filename="Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp" line="9"/>
-        <source>Delete song %1</source>
-        <translation>Song löschen (%1)</translation>
+        <source>delete song</source>
+        <oldsource>Delete song %1</oldsource>
+        <translation>Song löschen</translation>
     </message>
     <message>
         <location filename="Commands/SongDatabaseCommands/songdatabaserenameheadercommand.cpp" line="16"/>
-        <source>Rename attribute %1 -&gt; %2</source>
-        <translation>Attribut umbenennen (%1 -&gt; %2)</translation>
+        <source>rename attribute</source>
+        <oldsource>Rename attribute %1 -&gt; %2</oldsource>
+        <translation>Attribut umbenennen</translation>
+    </message>
+    <message>
+        <location filename="Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.cpp" line="7"/>
+        <source>transpose chord pattern</source>
+        <translation>Akkordschema transponieren</translation>
+    </message>
+    <message>
+        <location filename="Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp" line="9"/>
+        <source>edit chord pattern</source>
+        <translation>Akkordschema bearbeiten</translation>
+    </message>
+    <message>
+        <location filename="Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp" line="11"/>
+        <source>set file</source>
+        <translation>Datei ändern</translation>
     </message>
     <message>
         <location filename="Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp" line="9"/>
-        <source>Make %1 %2</source>
-        <translation>Mache %1 %2</translation>
+        <source>toggle column visibility</source>
+        <translation>Spaltensichtbarkeit ändern</translation>
     </message>
     <message>
-        <location filename="Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp" line="11"/>
-        <source>visible</source>
-        <translation>sichtbar</translation>
-    </message>
-    <message>
-        <location filename="Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp" line="11"/>
-        <source>invisible</source>
-        <translation>unsichtbar</translation>
+        <location filename="Commands/edittagscommand.cpp" line="8"/>
+        <source>edit tags</source>
+        <translation>Tags bearbeiten</translation>
     </message>
 </context>
 <context>
@@ -726,58 +734,58 @@ Dabei wird {EventTitle} z.B. durch den Namen des Events ersetzt, oder {Begin} du
         <translation>Zeichne hinweis, wenn Song auf der nächsten Seite weitergeht.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="39"/>
+        <location filename="mainwindow.cpp" line="40"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="40"/>
+        <location filename="mainwindow.cpp" line="41"/>
         <source>ConfigurableItem/MainWindow/Style</source>
         <translation>Stylesheet um das Aussehen der Anwendung zu beeinflussen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="42"/>
+        <location filename="mainwindow.cpp" line="43"/>
         <source>Stylesheet</source>
         <translation>Formatvorlage</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="46"/>
+        <location filename="mainwindow.cpp" line="47"/>
         <source>Ask for commit message</source>
         <translation>Nach Kommentar beim
 Synchronisieren fragen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="47"/>
+        <location filename="mainwindow.cpp" line="48"/>
         <source>ConfigurableItem/MainWindow/AskForCommitMessage</source>
         <translation>Beim Synchronisieren nach einem Kommentar fragen (empfohlen).</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="53"/>
+        <location filename="mainwindow.cpp" line="54"/>
         <source>Commit message</source>
         <translation>Kommentar</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="54"/>
+        <location filename="mainwindow.cpp" line="55"/>
         <source>ConfigurableItem/MainWindow/CommitMessage</source>
         <translation>Standard Kommentar beim Synchronisieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="55"/>
+        <location filename="mainwindow.cpp" line="56"/>
         <source>Synchronizing</source>
         <translation>Synchronisiere</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="56"/>
+        <location filename="mainwindow.cpp" line="57"/>
         <source>commit message</source>
         <translation>Kommentar</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="60"/>
+        <location filename="mainwindow.cpp" line="61"/>
         <source>Remind synchronizing</source>
         <translation>Erinnere mich ans Synchronisieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="61"/>
+        <location filename="mainwindow.cpp" line="62"/>
         <source>ConfigurableItem/MainWindow/AskForSynchronizing</source>
         <translation>Fragt beim Schließen und Öffnen, ob synchronisiert werden soll.</translation>
     </message>
@@ -861,17 +869,22 @@ Synchronisieren fragen</translation>
     <message>
         <location filename="Attachments/AudioAttachment/audioattachment.cpp" line="3"/>
         <source>Audio Attachment</source>
-        <translation>Audioanlage</translation>
+        <translation>Audioanhang</translation>
     </message>
     <message>
         <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="8"/>
         <source>Chord Attachment</source>
-        <translation>Akkord Anlage</translation>
+        <translation>Akkord Anhang</translation>
     </message>
     <message>
         <location filename="Attachments/pdfattachment.cpp" line="4"/>
         <source>PDF Attachment</source>
-        <translation>PDF Anlage</translation>
+        <translation>PDF Anhang</translation>
+    </message>
+    <message>
+        <location filename="Attachments/chordpatternproxyattachment.cpp" line="5"/>
+        <source>Chord Proxy Attachment</source>
+        <translation>Akkord Proxy Anhang</translation>
     </message>
 </context>
 <context>
@@ -923,7 +936,7 @@ Synchronisieren fragen</translation>
 <context>
     <name>ErrorSender</name>
     <message>
-        <location filename="Project/gitrepository.cpp" line="298"/>
+        <location filename="Project/gitrepository.cpp" line="328"/>
         <source>Invalid Error</source>
         <translation>Ungültiger Fehler</translation>
     </message>
@@ -952,6 +965,33 @@ Synchronisieren fragen</translation>
         <location filename="DatabaseView/EventDatabaseView/eventtableview.cpp" line="262"/>
         <source>Paste events</source>
         <translation>Events einfügen</translation>
+    </message>
+</context>
+<context>
+    <name>ExportPDFDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="vanished">PDF exportieren ...</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/exportpdfdialog.ui" line="14"/>
+        <source>Export PDF ...</source>
+        <translation>Exportiere in PDF ...</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/exportpdfdialog.ui" line="20"/>
+        <source>Include &amp;only</source>
+        <translation>Nur</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/exportpdfdialog.ui" line="32"/>
+        <source>Exclude</source>
+        <translation>Aber nicht</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/exportpdfdialog.ui" line="56"/>
+        <source>  Edit Preferences</source>
+        <translation>Einstellungen bearbeiten ...</translation>
     </message>
 </context>
 <context>
@@ -1289,8 +1329,7 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
         <translation>Lösche ausgewählte Anlage.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="112"/>
-        <location filename="mainwindow.cpp" line="131"/>
+        <location filename="mainwindow.cpp" line="123"/>
         <source>&amp;Undo</source>
         <oldsource>Undo</oldsource>
         <translation>&amp;Rückgängig</translation>
@@ -1301,8 +1340,7 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
         <translation>Letze Änderung rückgängig machen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="113"/>
-        <location filename="mainwindow.cpp" line="132"/>
+        <location filename="mainwindow.cpp" line="124"/>
         <source>&amp;Redo</source>
         <oldsource>Redo</oldsource>
         <translation>&amp;Wiederholen</translation>
@@ -1338,7 +1376,7 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
         <translation>&amp;Exportiere alle Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="733"/>
+        <location filename="mainwindow.cpp" line="744"/>
         <source>Rename Attachment</source>
         <translation>Anlage umbennen</translation>
     </message>
@@ -1359,10 +1397,10 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
     </message>
     <message>
         <location filename="mainwindow.ui" line="476"/>
-        <location filename="mainwindow.cpp" line="906"/>
-        <location filename="mainwindow.cpp" line="913"/>
-        <location filename="mainwindow.cpp" line="1050"/>
-        <location filename="mainwindow.cpp" line="1059"/>
+        <location filename="mainwindow.cpp" line="914"/>
+        <location filename="mainwindow.cpp" line="921"/>
+        <location filename="mainwindow.cpp" line="1058"/>
+        <location filename="mainwindow.cpp" line="1067"/>
         <source>Sync</source>
         <translation>Synchronisieren</translation>
     </message>
@@ -1392,233 +1430,243 @@ Du musst die Datei zuerst zum Index hinzufügen bevor Du sie benutzen kannst.</t
         <translation>Einstellungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="187"/>
+        <location filename="mainwindow.cpp" line="179"/>
         <source>&amp;New Song</source>
         <translation>&amp;Neuer Song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="187"/>
+        <location filename="mainwindow.cpp" line="179"/>
         <source>Add a new song.</source>
         <translation>Neuen Song hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="188"/>
+        <location filename="mainwindow.cpp" line="180"/>
         <source>&amp;Remove Song</source>
         <translation>Song &amp;löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="188"/>
+        <location filename="mainwindow.cpp" line="180"/>
         <source>Remove selected song.</source>
         <translation>Lösche ausgewählten Song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="189"/>
+        <location filename="mainwindow.cpp" line="181"/>
         <source>&amp;Copy Song</source>
         <translation>Song &amp;kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="189"/>
+        <location filename="mainwindow.cpp" line="181"/>
         <source>Copy selected song.</source>
         <translation>Ausgewählten Song kopieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="190"/>
+        <location filename="mainwindow.cpp" line="182"/>
         <source>&amp;Paste Song</source>
         <translation>Song &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="190"/>
+        <location filename="mainwindow.cpp" line="182"/>
         <source>Paste song.</source>
         <translation>Song einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="192"/>
+        <location filename="mainwindow.cpp" line="184"/>
         <source>&amp;New Event</source>
         <translation>&amp;Neues Event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="192"/>
+        <location filename="mainwindow.cpp" line="184"/>
         <source>Add a new event.</source>
         <translation>Neues Event hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="193"/>
+        <location filename="mainwindow.cpp" line="185"/>
         <source>&amp;Remove Event</source>
         <translation>Event &amp;Löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="193"/>
+        <location filename="mainwindow.cpp" line="185"/>
         <source>Remove selected event.</source>
         <translation>Ausgewähltes Event löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="194"/>
+        <location filename="mainwindow.cpp" line="186"/>
         <source>&amp;Copy Event</source>
         <translation>Event &amp;Kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="194"/>
+        <location filename="mainwindow.cpp" line="186"/>
         <source>Copy selected event.</source>
         <translation>Kopiere selektiertes Event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="195"/>
+        <location filename="mainwindow.cpp" line="187"/>
         <source>&amp;Paste Event</source>
         <translation>Event &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="195"/>
+        <location filename="mainwindow.cpp" line="187"/>
         <source>Paste event.</source>
         <translation>Event einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="255"/>
+        <location filename="mainwindow.cpp" line="247"/>
         <source>New %1</source>
         <translation>Neues %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="319"/>
+        <location filename="mainwindow.cpp" line="323"/>
         <source>Unnamed</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="380"/>
+        <location filename="mainwindow.cpp" line="384"/>
         <source>Save As ...</source>
         <translation>Speichern unter ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="423"/>
+        <location filename="mainwindow.cpp" line="427"/>
         <source>Really close %1</source>
         <translation>%1 wirklich schließen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="424"/>
+        <location filename="mainwindow.cpp" line="428"/>
         <source>There are unsaved changes.</source>
         <translation>Es gibt ungespeicherte Änderungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="630"/>
+        <location filename="mainwindow.cpp" line="641"/>
         <source>Open ...</source>
         <translation>Öffnen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="671"/>
+        <location filename="mainwindow.cpp" line="682"/>
         <source>Song cannot be removed</source>
         <translation>Song kann nicht entfernt werden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="672"/>
+        <location filename="mainwindow.cpp" line="683"/>
         <source>This song is currently in use and can thus not be removed.</source>
         <translation>Diese Song wird momentan benutzt und kann deshalb nicht entfernt werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="733"/>
+        <location filename="mainwindow.cpp" line="744"/>
         <source>New Name for %1</source>
         <translation>Neuer Name für %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="801"/>
-        <location filename="mainwindow.cpp" line="819"/>
+        <location filename="mainwindow.cpp" line="812"/>
+        <location filename="mainwindow.cpp" line="830"/>
         <source>Cloning.</source>
         <translation>Am Klonen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="831"/>
+        <location filename="mainwindow.cpp" line="842"/>
         <source>Initializing failed</source>
         <translation>Initialisierung fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="845"/>
+        <location filename="mainwindow.cpp" line="856"/>
         <source>Cloning failed</source>
         <translation>Klonen fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="832"/>
-        <location filename="mainwindow.cpp" line="846"/>
+        <location filename="mainwindow.cpp" line="843"/>
+        <location filename="mainwindow.cpp" line="857"/>
         <source>Failed to clone %1.</source>
         <translation>Fehlgeschlagener Klonversuch (%1).</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="858"/>
+        <location filename="mainwindow.cpp" line="113"/>
+        <source>&amp;Undo %1</source>
+        <translation>%1 &amp;rückgängig machen</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="114"/>
+        <source>&amp;Redo %1</source>
+        <translation>%1 &amp;wiederholen</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="869"/>
         <source>Cannot load project</source>
         <translation>Kann diese Projekt nicht laden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="859"/>
+        <location filename="mainwindow.cpp" line="870"/>
         <source>Failed to load cloned project.
 Make sure you cloned the correct repository and the repository is valid.</source>
         <translation>Kann geklontes Projekt nicht öffnen.
 Stelle sicher dass Du das richtige Repository geklont hast.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="907"/>
+        <location filename="mainwindow.cpp" line="915"/>
         <source>You must provide a valid identity to sync. Abort.</source>
         <translation>Du musst eine gültige Identität zum Synchronisieren angeben. Abbruch.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="914"/>
+        <location filename="mainwindow.cpp" line="922"/>
         <source>Commit message may not be empty. Abort.</source>
         <translation>Commit nachricht darf nicht leer sein. Abbruch.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="924"/>
+        <location filename="mainwindow.cpp" line="932"/>
         <source>Password for %1</source>
         <translation>Passwort für %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="924"/>
+        <location filename="mainwindow.cpp" line="932"/>
         <source>Password</source>
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="944"/>
+        <location filename="mainwindow.cpp" line="952"/>
         <source>Syncing.</source>
         <translation>Synchronisiere.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="970"/>
+        <location filename="mainwindow.cpp" line="978"/>
         <source>Failed to pull from remote.</source>
         <translation>Pull fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="971"/>
+        <location filename="mainwindow.cpp" line="979"/>
         <source>Cannot get changes from the repository.
 Check that you have access to the remote (e.g. a connection to the internet)</source>
         <translation>Kann Änderungen nicht aus dem Repoistory laden.
 Überprüfe, ob du Zugang zum Repository hast (z.B. eine Internetverbindung)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="989"/>
+        <location filename="mainwindow.cpp" line="997"/>
         <source>Pending conflicts not allowed.</source>
         <translation>Nicht aufgelöste Konflikte sind nicht erlaubt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="990"/>
+        <location filename="mainwindow.cpp" line="998"/>
         <source>There must not be conficts.</source>
         <translation>Bitte alle Konflikte auflösen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="994"/>
+        <location filename="mainwindow.cpp" line="1002"/>
         <source>Use &amp;local version</source>
         <translation>&amp;Lokale Version benutzen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="995"/>
+        <location filename="mainwindow.cpp" line="1003"/>
         <source>Use &amp;remote version</source>
         <translation>&amp;Remote Version benutzen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1016"/>
+        <location filename="mainwindow.cpp" line="1024"/>
         <source>Resolved Conflicts</source>
         <translation>Aufgelöste Konflikte</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1039"/>
+        <location filename="mainwindow.cpp" line="1047"/>
         <source>Failed to load project.</source>
         <translation>Konnte das Projekt nicht laden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1040"/>
+        <location filename="mainwindow.cpp" line="1048"/>
         <source>Cannot open merged project.
 Probably merging went wrong or the remote version was currupted.
 Fix the error by hand and commit it over the current version, then clone the fixed repository.</source>
@@ -1627,7 +1675,7 @@ Wahrscheinlich ist das Zusammenführen schiefgegangen oder die Remote-Version wa
 Du musst den Fehler von Hand beheben und dann das reparierte Repository klonen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1051"/>
+        <location filename="mainwindow.cpp" line="1059"/>
         <source>Sync failed.
 Make sure your username/password is correct and the remote repository is reachable</source>
         <translation>Synchronisieren fehlgeschlagen.
@@ -1635,17 +1683,17 @@ Versichere dich, dass Benutzername und Passwort stimmen
 und dass du Zugang zum Repository hast.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1252"/>
+        <location filename="mainwindow.cpp" line="1261"/>
         <source>All songs</source>
         <translation>Alle Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1292"/>
+        <location filename="mainwindow.cpp" line="1301"/>
         <source>Synchronize?</source>
         <translation>Synchronisieren?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1293"/>
+        <location filename="mainwindow.cpp" line="1302"/>
         <source>The project may not be synchronized with the remote.
 Do you want to synchronize them now?
 You can always do this later, but it is recommended to do it now.</source>
@@ -1654,43 +1702,43 @@ Möchtest du es jetzt synchronisieren?
 Das kannst du auch später tun, aber tue es besser jetzt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1060"/>
+        <location filename="mainwindow.cpp" line="1068"/>
         <source>Sync succeeded</source>
         <translation>Synchronisieren erfolgreich</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1084"/>
+        <location filename="mainwindow.cpp" line="1092"/>
         <source>File index information</source>
         <translation>Informationen über Dateiindex</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1085"/>
+        <location filename="mainwindow.cpp" line="1093"/>
         <source>Files: %1</source>
         <translation>Dateien: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1190"/>
-        <location filename="mainwindow.cpp" line="1201"/>
+        <location filename="mainwindow.cpp" line="1198"/>
+        <location filename="mainwindow.cpp" line="1209"/>
         <source>Opening %1</source>
         <translation>Öffne %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1191"/>
+        <location filename="mainwindow.cpp" line="1199"/>
         <source>Cannot open %1. Unknown file format.</source>
         <translation>Kann %1 nicht öffnen. Unbekanntes Format</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1202"/>
+        <location filename="mainwindow.cpp" line="1210"/>
         <source>File %1 not found.</source>
         <translation>Datei %1 nicht gefunden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1232"/>
+        <location filename="mainwindow.cpp" line="1241"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1233"/>
+        <location filename="mainwindow.cpp" line="1242"/>
         <source>Language changes will apply on next start.</source>
         <translation>Sprache ändert sich beim nächsten Start.</translation>
     </message>
@@ -1764,49 +1812,49 @@ Das kannst du auch später tun, aber tue es besser jetzt.</translation>
         <translation>Speichere PDF</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="260"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="262"/>
         <source>Draw attachment %1 of song %2</source>
         <translation>Zeichne Anlage %1 von Song %2 ...</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="847"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="842"/>
         <source>Gig</source>
         <translation>Auftritt</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="850"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="845"/>
         <source>Rehearsal</source>
         <translation>Probe</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="853"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="848"/>
         <source>Misc</source>
         <translation>Verschiedenes</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="889"/>
-        <location filename="PDFCreator/pdfcreator.cpp" line="896"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="884"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="891"/>
         <source>Export PDF ...</source>
         <translation>Exportiere in PDF ...</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="920"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="915"/>
         <source>Confirm overwrite</source>
         <translation>Überschreiben bestätigen</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="921"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="916"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 existiert bereits. Möchtest du es überschreiben?</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="956"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="955"/>
         <source>Cannot write</source>
         <translation>Kann nicht schreiben.</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="957"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="956"/>
         <source>File %1 is not writable.</source>
         <translation>%1 ist nicht schreibbar.</translation>
     </message>
@@ -1993,7 +2041,7 @@ Do you want to replace it?</source>
         <translation>&amp;Abbrechen</translation>
     </message>
     <message>
-        <location filename="Dialogs/stringdialog.ui" line="85"/>
+        <location filename="Dialogs/stringdialog.ui" line="88"/>
         <source>&amp;Ok</source>
         <translation>&amp;Ok</translation>
     </message>
@@ -2005,18 +2053,21 @@ Do you want to replace it?</source>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>
+</context>
+<context>
+    <name>TagEditor</name>
     <message>
-        <location filename="Dialogs/tagdialog.ui" line="25"/>
+        <location filename="Dialogs/tageditor.ui" line="22"/>
         <source>Tags in use.</source>
         <translation>Bereits benutzte Tags.</translation>
     </message>
     <message>
-        <location filename="Dialogs/tagdialog.ui" line="35"/>
+        <location filename="Dialogs/tageditor.ui" line="32"/>
         <source>Add tag.</source>
         <translation>Tag hinzufügen.</translation>
     </message>
     <message>
-        <location filename="Dialogs/tagdialog.ui" line="81"/>
+        <location filename="Dialogs/tageditor.ui" line="78"/>
         <source>Click on tag to remove it.</source>
         <translation>Klicke auf ein Tag um es zu entfernen.</translation>
     </message>

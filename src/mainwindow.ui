@@ -188,6 +188,9 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <property name="toolTipsVisible">
+     <bool>true</bool>
+    </property>
     <addaction name="actionNew_Project"/>
     <addaction name="separator"/>
     <addaction name="actionOpen"/>
@@ -215,6 +218,9 @@
     <property name="title">
      <string>&amp;Attachments</string>
     </property>
+    <property name="toolTipsVisible">
+     <bool>true</bool>
+    </property>
     <addaction name="separator"/>
     <addaction name="actionDelete_Attachment"/>
     <addaction name="actionRename_Attachment"/>
@@ -226,6 +232,9 @@
     </property>
     <property name="title">
      <string>&amp;Edit</string>
+    </property>
+    <property name="toolTipsVisible">
+     <bool>true</bool>
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -250,6 +259,9 @@
     <property name="title">
      <string>E&amp;vents</string>
     </property>
+    <property name="toolTipsVisible">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QMenu" name="menuSongs">
     <property name="toolTip">
@@ -257,6 +269,9 @@
     </property>
     <property name="title">
      <string>&amp;Songs</string>
+    </property>
+    <property name="toolTipsVisible">
+     <bool>true</bool>
     </property>
     <widget class="QMenu" name="menuVisible_attributes">
      <property name="title">

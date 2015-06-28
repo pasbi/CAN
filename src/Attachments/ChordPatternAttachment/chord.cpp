@@ -11,7 +11,7 @@ const QString Chord::IGNORE_BEFORE_PATTERN = "(" + (QStringList() << QRegExp::es
                                                << QRegExp::escape("{")  << QRegExp::escape("<")).join("|") + ")*";
 
 const QString Chord::IGNORE_AFTER_PATTERN = "(" + (QStringList() << QRegExp::escape(")") << QRegExp::escape("]")
-                                               << QRegExp::escape("}")  << QRegExp::escape(">")
+                                               << QRegExp::escape("}")  << QRegExp::escape(">") << QRegExp::escape("?")
                                                << QRegExp::escape(".") << "\\(\\w*\\)" << "\\[\\w*\\]").join("|") + ")*";
 
 

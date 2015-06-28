@@ -78,7 +78,7 @@
         <string>&amp;Cancel</string>
        </property>
        <property name="shortcut">
-        <string>Esc</string>
+        <string notr="true">Esc</string>
        </property>
       </widget>
      </item>
@@ -88,7 +88,7 @@
         <string>&amp;Ok</string>
        </property>
        <property name="shortcut">
-        <string>Return</string>
+        <string notr="true">Return</string>
        </property>
       </widget>
      </item>

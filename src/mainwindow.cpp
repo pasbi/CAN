@@ -120,11 +120,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( &m_project, &Project::commandPushed, action );
     connect( &m_project, &Project::undoStackCleared, [this]()
     {
-        QString undoText = tr("&Undo");
-        QString redoText = tr("&Redo");
-        undoAction()->setText( undoText );
-        redoAction()->setText( redoText );
+        undoAction()->setText( tr("&Undo") );
+        redoAction()->setText( tr("&Redo") );
     });
+    undoAction()->setText( tr("&Undo") );
+    redoAction()->setText( tr("&Redo") );
     ui->actionUndo->setEnabled( m_project.canUndo() );
     ui->actionRedo->setEnabled( m_project.canRedo() );
 
