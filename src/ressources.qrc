@@ -65,6 +65,8 @@
         <file>icons/calendaricons.png</file>
         <file>icons/snail.png</file>
         <file>icons/gazelle.png</file>
+        <file>icons/Git-Icon-Black.png</file>
+        <file>icons/git-compare.png</file>
     </qresource>
     <qresource prefix="/oldIcons">
         <file>oldIcons/tag-2.png</file>
