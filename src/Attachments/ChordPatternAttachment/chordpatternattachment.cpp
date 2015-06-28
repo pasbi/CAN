@@ -8,22 +8,20 @@
 DEFN_CREATABLE_NAME(ChordPatternAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Attachment"))
 DEFN_CONFIG( ChordPatternAttachment, tr("ChordPatternAttachment") );
 
-CONFIGURABLE_ADD_ITEM( ChordPatternAttachment,
-                       EnharmonicPolicy,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Enharmonic ambiguation: "),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/ChordPatternAttachment/EnharmonicPolicy"),
-                       1,
-                       ConfigurableItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "Always Sharp")
-                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Natural")
-                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Always Flat") )   );
+CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternAttachment, EnharmonicPolicy, 1 );
+//                       QT_TRANSLATE_NOOP("ConfigurableItem", "Enharmonic ambiguation: "),
+//                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/ChordPatternAttachment/EnharmonicPolicy"),
+//                       1,
+//                       ConfigurableItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "Always Sharp")
+//                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Natural")
+//                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Always Flat") )   );
 
-CONFIGURABLE_ADD_ITEM( ChordPatternAttachment,
-                       MinorPolicy,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Minor: "),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/ChordPatternAttachment/MinorPolicy"),
-                       0,
-                       ConfigurableItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "Lower case")
-                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Following m") ) );
+CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternAttachment, MinorPolicy, 0 );
+//                       QT_TRANSLATE_NOOP("ConfigurableItem", "Minor: "),
+//                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/ChordPatternAttachment/MinorPolicy"),
+//                       0,
+//                       ConfigurableItemOptions::ComboBoxOptions( QStringList() << QT_TRANSLATE_NOOP("ConfigurableItem", "Lower case")
+//                                                                               << QT_TRANSLATE_NOOP("ConfigurableItem", "Following m") ) );
 
 const int TAB_WIDTH = 8;
 
