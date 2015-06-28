@@ -159,7 +159,8 @@ SOURCES += main.cpp\
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.cpp \
     Dialogs/exportpdfdialog.cpp \
     Dialogs/tageditor.cpp \
-    Dialogs/chordpatternviewerscrollarea.cpp
+    Dialogs/chordpatternviewerscrollarea.cpp \
+    DatabaseView/SongDatabaseView/CellEditors/durationeditor.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -289,7 +290,8 @@ HEADERS  += mainwindow.h \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.h \
     Dialogs/exportpdfdialog.h \
     Dialogs/tageditor.h \
-    Dialogs/chordpatternviewerscrollarea.h
+    Dialogs/chordpatternviewerscrollarea.h \
+    DatabaseView/SongDatabaseView/CellEditors/durationeditor.h
 
 
 

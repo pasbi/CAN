@@ -51,6 +51,8 @@ private:
     QRect m_selectorGeometry;
     QPoint m_selectorPosition;
     SetlistItemSelector* const m_selector;
+    QPixmap m_attentionPixmap;
+    QPixmap m_emptyPixmap;
 };
 
 #endif // SETLISTWIDGET_H

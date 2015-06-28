@@ -23,6 +23,10 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
 
     connect(ui->listView, SIGNAL(clicked()), this, SLOT(updateButtonsEnabled()) );
     setSetlist( NULL );
+
+    m_attentionPixmap = QPixmap::fromImage(QImage(":/icons/icons/lightbulb20.png")).scaledToWidth( 32, Qt::SmoothTransformation );
+    ui->infoLabelIcon->setFixedSize( 32, 32 );
+
 }
 
 SetlistWidget::~SetlistWidget()
@@ -272,23 +276,30 @@ void SetlistWidget::updateInfoLabel()
             minutes -= 60;
             hours++;
         }
-    }
 
-    QString h = QString("%1").arg(hours);
-    QString m = QString("%1").arg(minutes);
-    if (m.length() < 2) m = "0" + m;
-    QString s = QString("%1").arg(seconds);
-    if (s.length() < 2) s = "0" + s;
+        QString h = QString("%1").arg(hours);
+        QString m = QString("%1").arg(minutes);
+        if (m.length() < 2) m = "0" + m;
+        QString s = QString("%1").arg(seconds);
+        if (s.length() < 2) s = "0" + s;
 
-    QString attention = "";
-    if (containsInvalid)
-    {
-        attention = " " + QString(QChar(0x26A0));
-        ui->infoLabel->setToolTip( tr("Attention: %1 songs have no information about their duration.").arg( allSongs - songsWithValidDuration ) );
+        QString toolTip = tr("Attention: %1 songs have no information about their duration.").arg( allSongs - songsWithValidDuration );
+        if (containsInvalid)
+        {
+            ui->infoLabelIcon->setPixmap( m_attentionPixmap );
+            ui->infoLabel->setToolTip( toolTip );
+            ui->infoLabelIcon->setToolTip( toolTip );
+        }
+        else
+        {
+            ui->infoLabelIcon->setPixmap( QPixmap() );
+            ui->infoLabelIcon->setToolTip( "" );
+            ui->infoLabelIcon->setToolTip( "" );
+        }
+        ui->infoLabel->setText( QString(tr("%1 songs, duration: %2:%3:%4")).arg( allSongs ).arg( h, m, s ) );
     }
     else
     {
-        ui->infoLabel->setToolTip( "" );
+        ui->infoLabel->setText( "" );
     }
-    ui->infoLabel->setText( QString(tr("%1 songs, duration: %2:%3:%4%5")).arg( allSongs ).arg( h, m, s ).arg( attention ) );
 }
