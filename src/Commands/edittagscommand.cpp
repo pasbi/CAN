@@ -5,6 +5,7 @@ EditTagsCommand::EditTagsCommand(Taggable *taggable, const QStringList &tags) :
     m_oldTags( taggable->tags() ),
     m_newTags( tags )
 {
+    setText( CommandTranslator::tr("edit tags") );
 }
 
 void EditTagsCommand::undo()

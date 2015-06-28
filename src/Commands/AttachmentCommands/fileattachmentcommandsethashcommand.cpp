@@ -8,9 +8,7 @@ FileAttachmentCommandSetHashCommand::FileAttachmentCommandSetHashCommand(Indexed
 {
     m_oldHash = attachment->hash();
 
-    QString oldFilename = app().fileIndex().filename( m_oldHash );
-    QString newFilename = app().fileIndex().filename( m_newHash );
-    setText( QString(CommandTranslator::tr("Set file %1 -> %2").arg( oldFilename, newFilename )) );
+    setText( CommandTranslator::tr("set file") );
 }
 
 void FileAttachmentCommandSetHashCommand::undo()

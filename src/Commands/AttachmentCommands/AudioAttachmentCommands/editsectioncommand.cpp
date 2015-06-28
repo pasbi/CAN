@@ -7,7 +7,7 @@ EditSectionCommand::EditSectionCommand(SectionsModel *model, const QVariant &new
     m_index( index ),
     m_role( role )
 {
-    setText(QString(CommandTranslator::tr("Edit section %1 -> %2")).arg( m_oldValue.toString() ).arg( m_newValue.toString() ));
+    setText( CommandTranslator::tr("edit section") );
 }
 
 void EditSectionCommand::undo()

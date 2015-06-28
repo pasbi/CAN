@@ -4,7 +4,7 @@ SetlistAddItemCommand::SetlistAddItemCommand(Setlist *setlist, SetlistItem *newI
     SetlistCommand( setlist ),
     m_newItem( newItem )
 {
-    setText( QString(CommandTranslator::tr("Add item to setlist %1").arg( newItem->description())) );
+    setText( CommandTranslator::tr("add item to setlist") );
 }
 
 SetlistAddItemCommand::~SetlistAddItemCommand()

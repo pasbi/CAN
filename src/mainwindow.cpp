@@ -110,17 +110,8 @@ MainWindow::MainWindow(QWidget *parent) :
         const QUndoCommand* nextUndoCommand = m_project.command( m_project.QUndoStack::index() - 1);
         const QUndoCommand* nextRedoCommand = m_project.command( m_project.QUndoStack::index() );
 
-        QString undoText = tr("&Undo");
-        QString redoText = tr("&Redo");
-        if (nextUndoCommand)
-        {
-            undoText += " \"" + nextUndoCommand->actionText() + "\"";
-        }
-
-        if (nextRedoCommand)
-        {
-            redoText += " \"" + nextRedoCommand->actionText() + "\"";
-        }
+        QString undoText = tr("&Undo %1").arg( nextUndoCommand ? nextUndoCommand->actionText() : "" );
+        QString redoText = tr("&Redo %1").arg( nextRedoCommand ? nextRedoCommand->actionText() : "" );
 
         undoAction()->setText( undoText );
         redoAction()->setText( redoText );

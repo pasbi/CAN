@@ -1,10 +1,10 @@
 #include "abstractchordpatternattachmenttransposecommand.h"
 
-AbstractChordPatternAttachmentTransposeCommand::AbstractChordPatternAttachmentTransposeCommand(AbstractChordPatternAttachment* attachment , int transpose) :
+AbstractChordPatternAttachmentTransposeCommand::AbstractChordPatternAttachmentTransposeCommand(AbstractChordPatternAttachment* attachment, int transpose) :
     AttachmentCommand(attachment),
     m_transpose( transpose )
 {
-    setText( QString(CommandTranslator::tr("Transpose chord pattern %1").arg(m_transpose)) );
+    setText( QString(CommandTranslator::tr("transpose chord pattern")) );
 }
 
 void AbstractChordPatternAttachmentTransposeCommand::undo()

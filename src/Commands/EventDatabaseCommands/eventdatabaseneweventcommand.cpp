@@ -14,7 +14,7 @@ EventDatabaseNewEventCommand::EventDatabaseNewEventCommand( EventDatabase *datab
                              "" );
     }
 
-    setText( QString(CommandTranslator::tr("New event")));
+    setText( CommandTranslator::tr("new event") );
 }
 
 EventDatabaseNewEventCommand::~EventDatabaseNewEventCommand()

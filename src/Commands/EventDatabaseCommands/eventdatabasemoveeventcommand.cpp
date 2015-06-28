@@ -5,7 +5,7 @@ EventDatabaseMoveEventCommand::EventDatabaseMoveEventCommand(EventDatabase *mode
     m_sourceRow( sourceRow ),
     m_targetRow( targetRow )
 {
-    setText( QString(CommandTranslator::tr("Move event %1 -> %2").arg( m_sourceRow, m_targetRow )) );
+    setText( CommandTranslator::tr("move event") );
 }
 
 void EventDatabaseMoveEventCommand::undo()

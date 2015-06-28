@@ -6,7 +6,7 @@ InsertSectionCommand::InsertSectionCommand(SectionsModel *model, const Section &
     m_section( section ),
     m_index( index )
 {
-    setText( QString(CommandTranslator::tr("New Section [%1 - %2]")).arg(m_section.begin()).arg(m_section.end()) );
+    setText( CommandTranslator::tr("new section") );
 }
 
 void InsertSectionCommand::undo()

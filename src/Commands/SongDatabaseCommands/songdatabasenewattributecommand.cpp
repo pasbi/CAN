@@ -4,7 +4,7 @@ SongDatabaseNewAttributeCommand::SongDatabaseNewAttributeCommand(SongDatabase *s
     SongDatabaseCommand( songDatabase ),
     m_key(attributeKey)
 {
-    setText(QString(CommandTranslator::tr("New attribute %1")).arg( m_key ));
+    setText( CommandTranslator::tr("new attribute") );
 }
 
 void SongDatabaseNewAttributeCommand::redo()

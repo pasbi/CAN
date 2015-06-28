@@ -4,7 +4,7 @@ DeleteSectionCommand::DeleteSectionCommand(SectionsModel *model, const int row) 
     SectionsModelCommand( model ),
     m_row( row )
 {
-    setText( QString(CommandTranslator::tr("Delete Section [%1 - %2]")).arg(m_section.begin()).arg(m_section.end()) );
+    setText( CommandTranslator::tr("delete section") );
 }
 
 void DeleteSectionCommand::redo()

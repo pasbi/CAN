@@ -10,7 +10,7 @@ SongDatabaseEditSongCommand::SongDatabaseEditSongCommand(SongDatabase *         
     m_oldData( songDatabase->data( index, role ) ),
     m_role(role)
 {
-    setText(QString(CommandTranslator::tr("Edit song %1 -> %2")).arg( m_oldData.toString() ).arg( m_newData.toString() ));
+    setText( CommandTranslator::tr("edit song") );
 }
 
 

@@ -13,7 +13,7 @@ SongDatabaseRenameHeaderCommand::SongDatabaseRenameHeaderCommand(SongDatabaseSor
 {
     m_oldName = m_songDatabase->headerData( m_section, m_orientation, Qt::DisplayRole ).toString();
 
-    setText(QString(CommandTranslator::tr("Rename attribute %1 -> %2")).arg( m_oldName ).arg( m_newName ));
+    setText( CommandTranslator::tr("rename attribute") );
 }
 
 void SongDatabaseRenameHeaderCommand::redo()

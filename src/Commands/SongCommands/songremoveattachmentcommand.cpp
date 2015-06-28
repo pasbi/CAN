@@ -5,7 +5,7 @@ SongRemoveAttachmentCommand::SongRemoveAttachmentCommand(Song* song, int i) :
     m_index(i)
 {
     m_attachment = song->attachment( m_index );
-    setText( QString(CommandTranslator::tr("Remove attachment %1").arg( m_attachment->description())) );
+    setText( CommandTranslator::tr("remove attachment") );
 }
 
 SongRemoveAttachmentCommand::~SongRemoveAttachmentCommand()

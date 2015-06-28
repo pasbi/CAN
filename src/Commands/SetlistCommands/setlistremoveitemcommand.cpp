@@ -4,7 +4,7 @@ SetlistRemoveItemCommand::SetlistRemoveItemCommand(Setlist *setlist, SetlistItem
     SetlistCommand(setlist),
     m_item(item)
 {
-    setText( QString(CommandTranslator::tr("Remove item from setlist %1").arg( item->description())) );
+    setText( CommandTranslator::tr("remove item from setlist") );
 }
 
 SetlistRemoveItemCommand::~SetlistRemoveItemCommand()

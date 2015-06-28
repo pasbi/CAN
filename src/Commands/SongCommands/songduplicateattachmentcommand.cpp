@@ -5,7 +5,7 @@ SongDuplicateAttachmentCommand::SongDuplicateAttachmentCommand(Attachment* sourc
     m_source( source )
 {
     assert( source->song() );
-    setText( QString(CommandTranslator::tr("Duplicate attachment %1").arg( source->description())) );
+    setText( CommandTranslator::tr("duplicate attachment") );
 }
 
 SongDuplicateAttachmentCommand::~SongDuplicateAttachmentCommand()

@@ -5,7 +5,7 @@ SongAddAttachmentCommand::SongAddAttachmentCommand(Song *song, const QString &cl
     m_classname(classname)
 {
     assert( Creatable::category(m_classname) == "Attachment" );
-    setText( QString(CommandTranslator::tr("Add song %1").arg( song->description())) );
+    setText( CommandTranslator::tr("add song") );
 }
 
 SongAddAttachmentCommand::~SongAddAttachmentCommand()
