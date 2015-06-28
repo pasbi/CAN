@@ -102,24 +102,54 @@ bool GitRepository::isGitRepository() const
     return !!m_repository;
 }
 
+
+int credential_cb( git_cred **out,
+                   const char *url,
+                   const char *username_from_url,
+                   unsigned int allowed_types,
+                   void *payload                    )
+{
+    Q_UNUSED( url );
+    Q_UNUSED( username_from_url );
+    Q_UNUSED( allowed_types );
+
+    QString loginName =  ((GitRepository::RemotePayload*) payload)->username;
+    QString password  =  ((GitRepository::RemotePayload*) payload)->password;
+
+    int errorCode = git_cred_userpass_plaintext_new( out, CSTR(loginName), CSTR(password) );
+
+    if (!CHECK_GIT( errorCode ))
+    {
+        qWarning() << "cannot set username and password.";
+    }
+    return errorCode;
+}
+
+void GitRepository::setCredentials( const Identity & identity )
+{
+    m_payload.username = identity.loginName();
+    m_payload.password = identity.password();
+}
+
+
 bool GitRepository::pushOriginMaster( const Identity& identity )
 {
     CHECK_IS_REPOSITORY();
 
     Q_UNUSED( identity );
-//    setCredentials( identity );
-//    git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
-//    callbacks.credentials = credential_cb;
-//    callbacks.payload = &m_payload;
+    setCredentials( identity );
+    git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
+    callbacks.credentials = credential_cb;
+    callbacks.payload = &m_payload;
 
     git_remote* remote = NULL;
     git_remote_lookup( &remote, m_repository, "origin" );
 
 
-//    if (!CHECK_GIT( git_remote_set_callbacks( remote, &callbacks )))
-//    {
-//        qWarning() << "setting callbacks failed.";
-//    }
+    if (!CHECK_GIT( git_remote_set_callbacks( remote, &callbacks )))
+    {
+        qWarning() << "setting callbacks failed.";
+    }
 
     if (!checkGitCall( git_remote_connect( remote, GIT_DIRECTION_PUSH ) ))
     {

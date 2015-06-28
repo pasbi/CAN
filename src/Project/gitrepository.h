@@ -104,6 +104,16 @@ public:
     void endIndex() const;
     void addAllFiles() const;
 
+public:
+    void setCredentials(const Identity &identity);
+    typedef struct RemotePayload
+    {
+        QString username;
+        QString password;
+    } RemotePayload;
+private:
+    RemotePayload m_payload;
+
 private:
     mutable ErrorSender m_errorSender;
     git_repository* m_repository;

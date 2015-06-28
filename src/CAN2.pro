@@ -7,14 +7,6 @@
 
 #//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
-# what if
-#   1. user clones into A
-#   2. user makes changes
-#   3. user saves and closes project
-#   4. user re-opens project
-#   5. user synchronizes
-#   ? will the changes be applied ?
-# implement credentials
 
 QT       += core gui multimedia
 
