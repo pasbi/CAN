@@ -1,11 +1,11 @@
 #ifndef IDENTITYMANAGER_H
 #define IDENTITYMANAGER_H
 
-#include "../../ZipGit/src/identity.h"
 #include <QList>
 #include "configurable.h"
 #include <QUndoCommand>
 #include <QUndoStack>
+#include "Project/identity.h"
 
 class IdentityManager
 {

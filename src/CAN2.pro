@@ -21,7 +21,6 @@ QMAKE_CXXFLAGS += -std=c++0x
 QMAKE_LFLAGS += -static-libgcc
 
 unix {
-#you must have libgit2, poppler, libav, libsoundtouch installed.
 LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
 LIBS += -lavformat -lavcodec -lavutil -lpthread
@@ -30,7 +29,7 @@ LIBS += -lSoundTouch
 
 win32 {
 INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
-#link against libgit2
+LIBS += -L../../bin -lgit2
 LIBS += -L../../lib -lpoppler-qt5
 LIBS += -L../../bin -lavformat -lavcodec -lavutil
 LIBS += -L../../bin -lsoundtouch
