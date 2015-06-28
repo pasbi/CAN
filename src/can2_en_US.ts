@@ -2005,19 +2005,23 @@ Do you want to replace it?</source>
         <translation>Export to PDF.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="141"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="145"/>
         <source>Remove Setlist Items</source>
         <translation>Remove setlist items</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="287"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="286"/>
         <source>Attention: %1 songs have no information about their duration.</source>
         <translation>Attention: %1 songs have no information about their duration.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="293"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="299"/>
+        <source>%1 songs, duration: %2:%3:%4</source>
+        <translation>%1 songs, duration: %2:%3:%4</translation>
+    </message>
+    <message>
         <source>%1 songs, duration: %2:%3:%4%5</source>
-        <translation>%1 songs, duration: %2:%3:%4%5</translation>
+        <translation type="vanished">%1 songs, duration: %2:%3:%4%5</translation>
     </message>
 </context>
 <context>
