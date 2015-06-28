@@ -55,6 +55,7 @@ public:
     void removeAttribute(int index);
     QString title() const;
     QString artist() const;
+    QTime duration() const;
     QString description() const { return title(); }
     QDateTime creationTime() const;
 

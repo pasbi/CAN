@@ -15,7 +15,8 @@ QList<SongDatabase::InitialColumn> initColumns()
     QList<SongDatabase::InitialColumn> cs;
     cs << COLUMN( "Title", false )
        << COLUMN( "Combo:Artist", false )
-       << COLUMN( "Date:Date Added", true );
+       << COLUMN( "Date:Date Added", true )
+       << COLUMN( "Duration:Duration", true );
 
     return cs;
 #undef COLUMN

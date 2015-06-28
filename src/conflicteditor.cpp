@@ -21,7 +21,7 @@ ConflictEditor::ConflictEditor(const QList<ConflictFile*>& conflictingFiles, QWi
     }
 
     ui->plainTextEditRemote->setTextInteractionFlags( Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse );
-    connect( ui->listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(selectConflict()) );
+    connect( ui->listWidget,   SIGNAL(clicked(QModelIndex)), this, SLOT(selectConflict()) );
     connect( ui->buttonOk,     SIGNAL(clicked()), this, SLOT(accept()));
     connect( ui->buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
 
@@ -33,7 +33,7 @@ ConflictEditor::~ConflictEditor()
     qDeleteAll( m_items );
 }
 
- Conflict *ConflictEditor::currentConflict() const
+Conflict *ConflictEditor::currentConflict() const
 {
     return ((Item*) ui->listWidget->currentItem())->conflict();
 }

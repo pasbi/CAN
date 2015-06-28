@@ -98,7 +98,6 @@ QJsonObject ChordPatternProxyAttachment::toJsonObject() const
 
 bool ChordPatternProxyAttachment::restoreFromJsonObject(const QJsonObject &object)
 {
-    bool success = true;
     if (checkJsonObject( object, "transpose", QJsonValue::Double ))
     {
         m_transpose = object["transpose"].toInt();
@@ -106,7 +105,6 @@ bool ChordPatternProxyAttachment::restoreFromJsonObject(const QJsonObject &objec
     else
     {
         m_transpose = 0;
-        success = false;
     }
     if (checkJsonObject( object, "source", QJsonValue::Double ))
     {

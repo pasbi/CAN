@@ -144,7 +144,7 @@ QJsonObject Song::toJsonObject() const
 
 QString Song::title() const
 {
-    assert( m_attributes.size() >= 1 );
+    assert( m_attributes.size() >= 0 );
     return attribute(0).toString();
 }
 
@@ -156,8 +156,14 @@ QString Song::artist() const
 
 QDateTime Song::creationTime() const
 {
-    assert( m_attributes.size() >= 1 );
+    assert( m_attributes.size() >= 2 );
     return attribute(2).toDateTime();
+}
+
+QTime Song::duration() const
+{
+    assert( m_attributes.size() >= 3 );
+    return attribute(3).toTime();
 }
 
 void Song::setAttribute(int index, const QVariant &data)

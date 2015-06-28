@@ -21,7 +21,6 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
     connect(ui->listView, SIGNAL(clicked()), this, SLOT(updateButtonsEnabled()) );
     setSetlist( NULL );
 }
@@ -68,8 +67,21 @@ void SetlistWidget::updateButtonsEnabled()
 
 void SetlistWidget::setSetlist(Setlist *setlist)
 {
-    ui->listView->setModel( setlist );
+    if (ui->listView->model())
+    {
+        disconnect( ui->listView->model(), SIGNAL(rowsInserted(QModelIndex,int,int)) );
+        disconnect( ui->listView->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)) );
+        disconnect( ui->listView->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)) );
+    }
 
+    ui->listView->setModel( setlist );
+    if (setlist)
+    {
+        connect( ui->listView->model(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateInfoLabel()) );
+        connect( ui->listView->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateInfoLabel()) );
+        connect( ui->listView->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateInfoLabel()) );
+    }
+    updateInfoLabel();
     updateButtonsEnabled();
 }
 
@@ -180,6 +192,7 @@ void SetlistWidget::showEvent(QShowEvent *e)
         m_selector->setGeometry( m_selectorGeometry );
         m_selector->move( m_selectorPosition );
     }
+    updateInfoLabel();
     QWidget::showEvent(e);
 }
 
@@ -214,4 +227,68 @@ void SetlistWidget::on_listView_doubleClicked(const QModelIndex &index)
     }
 
     app().selectSong( song );
+}
+
+void SetlistWidget::updateInfoLabel()
+{
+    int hours = 0;
+    int minutes = 0;
+    int seconds = 0;
+    int songsWithValidDuration = 0;
+    int allSongs = 0;
+    Setlist*  sl = ui->listView->model();
+
+    bool containsInvalid = false;
+    if (sl)
+    {
+        for (const SetlistItem* i : sl->items())
+        {
+            if (i->type() == SetlistItem::SongType)
+            {
+                if (i->song()->duration().isValid())
+                {
+                    seconds += i->song()->duration().second();
+                    minutes += i->song()->duration().minute();
+                    hours   += i->song()->duration().hour();
+                    songsWithValidDuration++;
+                }
+                else
+                {
+                    containsInvalid = true;
+                }
+                allSongs++;
+            }
+        }
+
+
+        while (seconds >= 60)
+        {
+            seconds -= 60;
+            minutes++;
+        }
+
+        while (minutes >= 60)
+        {
+            minutes -= 60;
+            hours++;
+        }
+    }
+
+    QString h = QString("%1").arg(hours);
+    QString m = QString("%1").arg(minutes);
+    if (m.length() < 2) m = "0" + m;
+    QString s = QString("%1").arg(seconds);
+    if (s.length() < 2) s = "0" + s;
+
+    QString attention = "";
+    if (containsInvalid)
+    {
+        attention = " " + QString(QChar(0x26A0));
+        ui->infoLabel->setToolTip( tr("Attention: %1 songs have no information about their duration.").arg( allSongs - songsWithValidDuration ) );
+    }
+    else
+    {
+        ui->infoLabel->setToolTip( "" );
+    }
+    ui->infoLabel->setText( QString(tr("%1 songs, duration: %2:%3:%4%5")).arg( allSongs ).arg( h, m, s ).arg( attention ) );
 }
