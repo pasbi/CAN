@@ -1174,203 +1174,205 @@ Add it to the index before you can use it.</translation>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="202"/>
+        <location filename="mainwindow.ui" line="205"/>
         <source>Tools.</source>
         <translation>Tools.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="205"/>
+        <location filename="mainwindow.ui" line="208"/>
         <source>&amp;Tools</source>
         <translation>&amp;Tools</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="213"/>
+        <location filename="mainwindow.ui" line="216"/>
         <source>Attachment related stuff.</source>
         <translation>Attachment related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="216"/>
+        <location filename="mainwindow.ui" line="219"/>
         <source>&amp;Attachments</source>
         <translation>&amp;Attachments</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="225"/>
+        <location filename="mainwindow.ui" line="231"/>
         <source>Edit.</source>
         <translation>Edit.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="228"/>
+        <location filename="mainwindow.ui" line="234"/>
         <source>&amp;Edit</source>
         <translation>&amp;Edit</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="236"/>
+        <location filename="mainwindow.ui" line="245"/>
         <source>File index related stuff.</source>
         <translation>File index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="239"/>
+        <location filename="mainwindow.ui" line="248"/>
         <source>F&amp;ile Index</source>
         <translation>File&amp;index</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="248"/>
+        <location filename="mainwindow.ui" line="257"/>
         <source>Event related stuff.</source>
         <translation>Event related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="251"/>
+        <location filename="mainwindow.ui" line="260"/>
         <source>E&amp;vents</source>
         <translation>E&amp;vents</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="256"/>
+        <location filename="mainwindow.ui" line="268"/>
         <source>Song related stuff.</source>
         <translation>Song related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="259"/>
+        <location filename="mainwindow.ui" line="271"/>
         <source>&amp;Songs</source>
         <translation>&amp;Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="263"/>
+        <location filename="mainwindow.ui" line="278"/>
         <source>Visible attributes ...</source>
         <translation>Visible attributes ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="271"/>
+        <location filename="mainwindow.ui" line="286"/>
         <source>&amp;Language</source>
         <translation>&amp;Language</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="285"/>
+        <location filename="mainwindow.ui" line="300"/>
         <source>&amp;New Project</source>
         <translation>&amp;New project</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="288"/>
+        <location filename="mainwindow.ui" line="303"/>
         <source>Create a new empty project.</source>
         <translation>Create a new empty project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="300"/>
+        <location filename="mainwindow.ui" line="315"/>
         <source>&amp;Save</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="303"/>
+        <location filename="mainwindow.ui" line="318"/>
         <source>Save the current project.</source>
         <translation>Save the current project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="315"/>
+        <location filename="mainwindow.ui" line="330"/>
         <source>Save As</source>
         <translation>Save as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="318"/>
+        <location filename="mainwindow.ui" line="333"/>
         <source>Save the current project as.</source>
         <translation>Save the current project as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="330"/>
+        <location filename="mainwindow.ui" line="345"/>
         <source>Open</source>
         <translation>Open ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="333"/>
+        <location filename="mainwindow.ui" line="348"/>
         <source>Open an existing project.</source>
         <translation>Open an existing project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="341"/>
+        <location filename="mainwindow.ui" line="356"/>
         <source>Index Info ...</source>
         <oldsource>Index Info</oldsource>
         <translation>Index info ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="344"/>
+        <location filename="mainwindow.ui" line="359"/>
         <source>Information about the file index.</source>
         <translation>Show informations about the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="352"/>
+        <location filename="mainwindow.ui" line="367"/>
         <source>Add Folder ...</source>
         <oldsource>Add Folder</oldsource>
         <translation>Add folder ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="355"/>
+        <location filename="mainwindow.ui" line="370"/>
         <source>Add Folder to the file index.</source>
         <translation>Add folder to the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="363"/>
+        <location filename="mainwindow.ui" line="378"/>
         <source>Clear Index</source>
         <translation>Clear index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="366"/>
+        <location filename="mainwindow.ui" line="381"/>
         <source>Remove all files from file index.</source>
         <translation>Remove all files from file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="378"/>
+        <location filename="mainwindow.ui" line="393"/>
         <source>Delete Attachment</source>
         <oldsource>New Attachment </oldsource>
         <translation>Delete attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="381"/>
+        <location filename="mainwindow.ui" line="396"/>
         <source>Delete Attachment selected attachment.</source>
         <oldsource>Add new attachment to a song.</oldsource>
         <translation>Delete selected attachment.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="123"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>&amp;Undo</source>
         <oldsource>Undo</oldsource>
         <translation>&amp;Undo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="396"/>
+        <location filename="mainwindow.ui" line="411"/>
         <source>Undo the last action.</source>
         <translation>Undo the last action.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="124"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>&amp;Redo</source>
         <oldsource>Redo</oldsource>
         <translation>&amp;Redo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="411"/>
+        <location filename="mainwindow.ui" line="426"/>
         <source>Redo the last undone action.</source>
         <translation>Redo the last undone action.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="423"/>
+        <location filename="mainwindow.ui" line="438"/>
         <source>Clone ...</source>
         <translation>Clone ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="426"/>
+        <location filename="mainwindow.ui" line="441"/>
         <source>Clone a repository.</source>
         <translation>Klone a repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="434"/>
+        <location filename="mainwindow.ui" line="449"/>
         <source>Open terminal</source>
         <translation>Open terminal</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="446"/>
+        <location filename="mainwindow.ui" line="461"/>
         <source>Rename Attachment ...</source>
         <translation>Rename attachment ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="509"/>
+        <location filename="mainwindow.ui" line="524"/>
         <source>&amp;Export all songs</source>
         <translation>&amp;Export all songs</translation>
     </message>
@@ -1380,22 +1382,22 @@ Add it to the index before you can use it.</translation>
         <translation>Rename Attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="449"/>
+        <location filename="mainwindow.ui" line="464"/>
         <source>Rename selected attachment.</source>
         <translation>Rename selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="461"/>
+        <location filename="mainwindow.ui" line="476"/>
         <source>Duplicate Attachment</source>
         <translation>Duplicate attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="464"/>
+        <location filename="mainwindow.ui" line="479"/>
         <source>Duplicate selected attachment.</source>
         <translation>Duplicate selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="476"/>
+        <location filename="mainwindow.ui" line="491"/>
         <location filename="mainwindow.cpp" line="914"/>
         <location filename="mainwindow.cpp" line="921"/>
         <location filename="mainwindow.cpp" line="1058"/>
@@ -1404,27 +1406,27 @@ Add it to the index before you can use it.</translation>
         <translation>Synchronisieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="479"/>
+        <location filename="mainwindow.ui" line="494"/>
         <source>Synchronizes local project with remote repository.</source>
         <translation>Synchronize local repository with remote repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="487"/>
+        <location filename="mainwindow.ui" line="502"/>
         <source>Identites ...</source>
         <translation>Identities ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="490"/>
+        <location filename="mainwindow.ui" line="505"/>
         <source>Manage identities.</source>
         <translation>Manage identities.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="498"/>
+        <location filename="mainwindow.ui" line="513"/>
         <source>Preferences ...</source>
         <translation>Preferences ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="501"/>
+        <location filename="mainwindow.ui" line="516"/>
         <source>Settings.</source>
         <translation>Preferences.</translation>
     </message>
@@ -1973,39 +1975,53 @@ Do you want to replace it?</source>
 <context>
     <name>SetlistWidget</name>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="38"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="52"/>
         <source>Move selected items up.</source>
         <translation>Move selected items up.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="64"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="78"/>
         <source>Move selected items down.</source>
         <translation>Move selected items down.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="97"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="111"/>
         <source>Remove selected items.</source>
         <translation>Remove selected items.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="123"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="137"/>
         <source>Add a label item.</source>
         <translation>Add label item.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="149"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="163"/>
         <source>Add song items.</source>
         <translation>Add song item.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="182"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="196"/>
         <source>Export to PDF.</source>
         <translation>Export to PDF.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="129"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="145"/>
         <source>Remove Setlist Items</source>
         <translation>Remove setlist items</translation>
+    </message>
+    <message>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="286"/>
+        <source>Attention: %1 songs have no information about their duration.</source>
+        <translation>Attention: %1 songs have no information about their duration.</translation>
+    </message>
+    <message>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="299"/>
+        <source>%1 songs, duration: %2:%3:%4</source>
+        <translation>%1 songs, duration: %2:%3:%4</translation>
+    </message>
+    <message>
+        <source>%1 songs, duration: %2:%3:%4%5</source>
+        <translation type="vanished">%1 songs, duration: %2:%3:%4%5</translation>
     </message>
 </context>
 <context>
