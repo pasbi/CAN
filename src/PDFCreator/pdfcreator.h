@@ -164,6 +164,9 @@ public:
     static QString setlistFilename(QWidget* parent, Setlist* setlist , bool separatePages);
     static void exportSetlist(Setlist *setlist, QWidget *widgetParent);
 
+public:
+    static const QString HYPHEN;
+
 
 
 };

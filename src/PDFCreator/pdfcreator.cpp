@@ -12,6 +12,8 @@ DEFN_CONFIG( PDFCreator, tr("PDF Export") );
 
 #include "pdfcreatorconfig.h"
 
+const QString PDFCreator::HYPHEN = QChar(0x2014);
+
 PDFCreator::PDFCreator(QSizeF baseSizeMM, Setlist* setlist, const QString &filename) :
     m_baseSizeMM( baseSizeMM ),
     m_setlist( setlist ),
@@ -169,26 +171,13 @@ bool PDFCreator::isEndlessPage() const
 //
 /////////////////////////////////////////////
 
-QMap<QString, QString> PDFCreator::dictionary()
-{
-    // define nice replacements, e.g. replace -- with a real hyphen.
-    QMap<QString, QString> dict;
-    dict.insert( "--", QChar(0x2014) );
-    return dict;
-}
-
 QString labelSetlist(Setlist *setlist)
 {
-    QString title = PDFCreator::config["TitlePagePattern"].toString();
-    title.replace( "{EventTitle}", setlist->event()->label());
-    title.replace( "{Begin}", QLocale().toString( setlist->event()->beginning(), QLocale().dateTimeFormat( QLocale::ShortFormat ) ) );
-    title.replace( "{End}",   QLocale().toString( setlist->event()->ending(),    QLocale().dateTimeFormat( QLocale::ShortFormat ) ) );
+    QString title = QString("Setlist\n\n%1 %2 %1\n\n%3")
+            .arg( QChar(0x2014) )
+            .arg( setlist->event()->label() )
+            .arg( QLocale().toString( setlist->event()->beginning(), QLocale().dateTimeFormat( QLocale::ShortFormat ) ) );
 
-
-    for (const QString & key : PDFCreator::dictionary().keys())
-    {
-        title.replace(key, PDFCreator::dictionary()[key]);
-    }
     return title;
 }
 
@@ -210,24 +199,11 @@ void PDFCreator::paintHeadline(const QString& label)
 
 QString labelSong( const Song* song )
 {
-    QString pattern = PDFCreator::config["SongTitlePattern"].toString();
+    QString pattern = QString("%2 %1 %3")
+            .arg( PDFCreator::HYPHEN )
+            .arg( song->title() )
+            .arg( song->artist() );
 
-    // replace some standard keys to prevent translation issues
-    pattern = pattern.replace( "{Title}", song->title() );
-    pattern = pattern.replace( "{Artist}", song->artist() );
-
-    // other (mostly user defined attribute) may cause issues when translated.
-    for (int i = 0; i < song->database()->attributeKeys().length(); ++i)
-    {
-        QString attribute = song->attribute(i).toString();
-        QString key = song->database()->attributeKeys()[i];
-        key = SongDatabase::extractHeaderLabel( key );
-        pattern = pattern.replace( QString("{%1}").arg(key), attribute );
-    }
-    for (const QString & key : PDFCreator::dictionary().keys())
-    {
-        pattern.replace(key, PDFCreator::dictionary()[key]);
-    }
     return pattern;
 }
 
@@ -501,7 +477,7 @@ void PDFCreator::paintSetlist()
 
 QString labelTableOfContents()
 {
-    return PDFCreator::config["TableOfContentsPattern"].toString();
+    return QObject::tr("Setlist");
 }
 
 

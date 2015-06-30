@@ -224,13 +224,14 @@ void SetlistWidget::on_listView_doubleClicked(const QModelIndex &index)
         return;
     }
 
+#ifdef EDIT_SONG_ON_DOUBLE_CLICK
     const Song* song = item->song();
-    if (!song)
+    if (song)
     {
-        return;
+        app().selectSong( song );
     }
+#endif
 
-    app().selectSong( song );
 }
 
 void SetlistWidget::updateInfoLabel()
