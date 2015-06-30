@@ -32,8 +32,10 @@ SongTableView::SongTableView(QWidget *parent) :
     verticalHeader()->hide();
 
     setDragDropMode( QAbstractItemView::DragDrop );
-    setDragEnabled( true );
-    setDropIndicatorShown( true );
+    setSortingEnabled( true );
+
+    horizontalHeader()->setSortIndicatorShown( true );
+    horizontalHeader()->setSectionsClickable( true );
 }
 
 void SongTableView::setModel(SongDatabaseSortProxy *model)
