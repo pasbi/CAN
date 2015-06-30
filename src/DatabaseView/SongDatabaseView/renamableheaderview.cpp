@@ -46,7 +46,7 @@ void RenamableHeaderView::editHeader(int section, bool endMacroOnFinish)
     lineEdit->setFixedSize(width, height() );
     lineEdit->move( x, 0 );
     lineEdit->setFocus();
-    QString oldText = parent()->proxyModel()->headerData( section, orientation(), Qt::EditRole ).toString();
+    const QString oldText = parent()->proxyModel()->headerData( section, orientation(), Qt::EditRole ).toString();
     lineEdit->setText( oldText );
     lineEdit->show();
 
@@ -70,11 +70,10 @@ void RenamableHeaderView::editHeader(int section, bool endMacroOnFinish)
             newText = QString("%1:%2").arg(newEditor, newLabel);
         }
 
-        if (newText != oldText)
+        if (oldLabel != newLabel || oldEditor != newEditor)
         {
-            app().pushCommand( new SongDatabaseRenameHeaderCommand( parent()->proxyModel(), lineEdit->text(), section, orientation() ) );
+            app().pushCommand( new SongDatabaseRenameHeaderCommand( parent()->proxyModel(), newText, section, orientation() ) );
         }
-
 
         if (endMacroOnFinish)
         {
