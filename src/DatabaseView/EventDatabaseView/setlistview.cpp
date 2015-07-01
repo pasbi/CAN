@@ -326,7 +326,10 @@ void SetlistView::updateCellWidgets()
 
             connect( button, &QToolButton::clicked, [this, menu]()
             {
-                menu->actions().first()->trigger();
+                if (!menu->actions.isEmpty())
+                {
+                    menu->actions().first()->trigger();
+                }
             });
 
         }
