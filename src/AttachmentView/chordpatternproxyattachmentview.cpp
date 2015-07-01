@@ -31,11 +31,21 @@ void ChordPatternProxyAttachmentView::polish()
 void ChordPatternProxyAttachmentView::on_buttonUp_clicked()
 {
     app().pushCommand( new AbstractChordPatternAttachmentTransposeCommand( attachment<ChordPatternProxyAttachment>(),  1 ) );
+    if (attachment<ChordPatternProxyAttachment>())
+    {
+        attachment<ChordPatternProxyAttachment>()->updateCache();
+        updateText();
+    }
 }
 
 void ChordPatternProxyAttachmentView::on_buttonDown_clicked()
 {
     app().pushCommand( new AbstractChordPatternAttachmentTransposeCommand( attachment<ChordPatternProxyAttachment>(), -1 ) );
+    if (attachment<ChordPatternProxyAttachment>())
+    {
+        attachment<ChordPatternProxyAttachment>()->updateCache();
+        updateText();
+    }
 }
 
 void ChordPatternProxyAttachmentView::on_buttonView_clicked()

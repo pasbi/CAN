@@ -28,7 +28,7 @@ public:
 
 private:
     const ChordPatternAttachment* m_source;
-    int m_transpose;
+    int m_transpose = 4;
     QString m_patternCache;
     void setChordPatternAttachment(const ChordPatternAttachment *source );
 
