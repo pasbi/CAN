@@ -19,7 +19,6 @@
 #include <QProgressDialog>
 #include <QScrollArea>
 #include <QLabel>
-#include "Attachments/ChordPatternAttachment/chordpatternproxyattachment.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -272,17 +271,9 @@ void MainWindow::createAttachmentActions()
             Song* song = currentSong();
             if (song)
             {
-                Attachment* lastAttachment = currentAttachment();
                 SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, classname );
                 app().pushCommand( command );
                 updateWhichWidgetsAreEnabled();
-
-                if (lastAttachment && lastAttachment->inherits( "ChordPatternAttachment" )
-                 && command->attachment()->inherits( "ChordPatternProxyAttachment" ) )
-                {
-                    qobject_assert_cast<ChordPatternProxyAttachment*>( command->attachment() )->setChordPatternAttachment(
-                                qobject_assert_cast<ChordPatternAttachment*>(lastAttachment) );
-                }
             }
         });
         m_newAttachmentActions.insert( classname, action );

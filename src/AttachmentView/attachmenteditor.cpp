@@ -41,7 +41,7 @@ void AttachmentEditor::setAttachment(Attachment *attachment)
     if (attachment)
     {
         m_currentView = createAttachmentView( attachment );
-        if (m_attachmentViewOptions.contains(attachment))
+        if (m_attachmentViewOptions.contains( attachment ))
         {
             m_currentView->restoreOptions(m_attachmentViewOptions[attachment]);
         }

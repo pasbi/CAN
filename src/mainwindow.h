@@ -131,6 +131,10 @@ private:
 
     void askForSync();
 
+
+
+    friend class Application;   // application handles some quasi-global functions
+
 };
 
 #endif // MAINWINDOW_H

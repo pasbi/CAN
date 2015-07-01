@@ -11,6 +11,7 @@ class MainWindow;
 class Project;
 class Command;
 class Song;
+class Attachment;
 class Application : public QApplication
 {
     Q_OBJECT
@@ -32,7 +33,9 @@ public:
     void redo() const;
 
     void selectSong(const Song *song );
-    MainWindow* mainWindow() { return m_mainWindow; }
+    MainWindow* mainWindow() const { return m_mainWindow; }
+
+    Attachment *currentAttachment() const;
 
 private:
     FileIndex m_fileIndex;

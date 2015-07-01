@@ -74,3 +74,8 @@ void Application::selectSong(const Song *song)
     m_mainWindow->songTableView()->selectRow( index.row() );
 }
 
+Attachment* Application::currentAttachment() const
+{
+    return mainWindow()->currentAttachment();
+}
+
