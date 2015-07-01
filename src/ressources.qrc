@@ -67,6 +67,7 @@
         <file>icons/gazelle.png</file>
         <file>icons/Git-Icon-Black.png</file>
         <file>icons/git-compare.png</file>
+        <file>icons/eye106.png</file>
     </qresource>
     <qresource prefix="/oldIcons">
         <file>oldIcons/tag-2.png</file>

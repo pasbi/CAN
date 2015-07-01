@@ -288,7 +288,7 @@ void SetlistView::updateCellWidgets()
         // menu is deleted when hidden. So do not delete the buttons.
         QToolButton* button = new QToolButton();
 
-        button->setIcon( QIcon(":/icons/icons/war4.png") );
+        button->setIcon( QIcon(":/icons/icons/eye106.png") );
 
         setIndexWidget( index, button );
 
