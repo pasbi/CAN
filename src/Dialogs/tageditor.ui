@@ -36,7 +36,7 @@
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
-         <normaloff>:/oldIcons/oldIcons/add-tag.png</normaloff>:/oldIcons/oldIcons/add-tag.png</iconset>
+         <normaloff>:/icons/icons/add-tag.png</normaloff>:/icons/icons/add-tag.png</iconset>
        </property>
        <property name="default">
         <bool>true</bool>

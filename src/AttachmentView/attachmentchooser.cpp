@@ -25,7 +25,7 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
 
 
     m_editTagAction = new QAction( this );
-    m_editTagAction->setIcon( QIcon(":/oldIcons/oldIcons/tag-2.png") );
+    m_editTagAction->setIcon( QIcon(":/icons/icons/tag-2.png") );
     connect( m_editTagAction, SIGNAL(triggered()), this, SLOT(editTags()) );
     m_editTagAction->setText( tr("Edit tags ...") );
 

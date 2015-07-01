@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
 
-    setWindowIcon( QIcon(":/oldIcons/oldIcons/01-elephant-icon.png") );
+    setWindowIcon( QIcon(":/icons/icons/01-elephant-icon.png") );
     app().setMainWindow( this );
     app().setProject( &m_project );
     createAttachmentActions();

@@ -3,64 +3,27 @@
         <file>styles/stylesheet.qss</file>
     </qresource>
     <qresource prefix="/icons">
-        <file>icons/tag59.png</file>
         <file>icons/write13.png</file>
         <file>icons/open127.png</file>
         <file>icons/check40.png</file>
-        <file>icons/rewind28.png</file>
-        <file>icons/star116.png</file>
         <file>icons/cross56.png</file>
-        <file>icons/advance3.png</file>
-        <file>icons/duplicate2.png</file>
-        <file>icons/attachment10.png</file>
-        <file>icons/connection17.png</file>
-        <file>icons/tag53.png</file>
-        <file>icons/speaker53.png</file>
-        <file>icons/fast22.png</file>
         <file>icons/minus38.png</file>
-        <file>icons/war4.png</file>
         <file>icons/anchor25.png</file>
         <file>icons/right53.png</file>
-        <file>icons/exclamation15.png</file>
-        <file>icons/github19.png</file>
-        <file>icons/cloud219.png</file>
         <file>icons/down27.png</file>
-        <file>icons/drop25.png</file>
         <file>icons/floppy16.png</file>
-        <file>icons/plus47.png</file>
-        <file>icons/left49.png</file>
         <file>icons/three91.png</file>
-        <file>icons/clock53.png</file>
-        <file>icons/document6.png</file>
         <file>icons/less2.png</file>
-        <file>icons/right60.png</file>
-        <file>icons/back19.png</file>
         <file>icons/download73.png</file>
-        <file>icons/link64.png</file>
         <file>icons/up51.png</file>
         <file>icons/clapper3.png</file>
-        <file>icons/star113.png</file>
-        <file>icons/star114.png</file>
         <file>icons/song1.png</file>
         <file>icons/pdf24.png</file>
         <file>icons/rubbish7.png</file>
-        <file>icons/opposite2.png</file>
-        <file>icons/speaker51.png</file>
         <file>icons/plus44.png</file>
         <file>icons/link67.png</file>
-        <file>icons/key70.png</file>
-        <file>icons/artistic6.png</file>
-        <file>icons/speaker52.png</file>
-        <file>icons/black221.png</file>
-        <file>icons/tag61.png</file>
         <file>icons/left64.png</file>
-        <file>icons/circle65.png</file>
-        <file>icons/github18.png</file>
-        <file>icons/fast24.png</file>
-        <file>icons/download72.png</file>
         <file>icons/wrench52.png</file>
-        <file>icons/pause20.png</file>
-        <file>icons/rewind27.png</file>
         <file>icons/lightbulb20.png</file>
         <file>icons/calendaricons.png</file>
         <file>icons/snail.png</file>
@@ -68,57 +31,23 @@
         <file>icons/Git-Icon-Black.png</file>
         <file>icons/git-compare.png</file>
         <file>icons/eye106.png</file>
-    </qresource>
-    <qresource prefix="/oldIcons">
-        <file>oldIcons/tag-2.png</file>
-        <file>oldIcons/1415484109_12_Zoom_in-128.png</file>
-        <file>oldIcons/Icojam-Animals-01-elephant.ico</file>
-        <file>oldIcons/1411737152_icon-arrow-up-b-128.png</file>
-        <file>oldIcons/cloudadd.png</file>
-        <file>oldIcons/1415483886_icon-arrow-left-b-128.png</file>
-        <file>oldIcons/1411698427_TRASH - EMPTY.png</file>
-        <file>oldIcons/minus.png</file>
-        <file>oldIcons/1411738803_file-download-128.png</file>
-        <file>oldIcons/1411736049_12.File-128.png</file>
-        <file>oldIcons/1411734805_rename.png</file>
-        <file>oldIcons/1411735358_link-128.png</file>
-        <file>oldIcons/1411739286_black_1_speaker_off-128.png</file>
-        <file>oldIcons/1411738584_editor_floopy-dish_save_-128.png</file>
-        <file>oldIcons/1411734789_Add_Link.png</file>
-        <file>oldIcons/1411737168_POWER - RESTART.png</file>
-        <file>oldIcons/pdf-512.png</file>
-        <file>oldIcons/turnright.png</file>
-        <file>oldIcons/turnleft.png</file>
-        <file>oldIcons/1411698394_attachment_add-128.png</file>
-        <file>oldIcons/1411700289_attachment-128_copy.png</file>
-        <file>oldIcons/1411738429_icon-stop-128.png</file>
-        <file>oldIcons/01-elephant-icon.png</file>
-        <file>oldIcons/1411735338_519586-083_Music-128.png</file>
-        <file>oldIcons/1411735211_Music File.png</file>
-        <file>oldIcons/1411735188_Guitar_Pro.png</file>
-        <file>oldIcons/plus.png</file>
-        <file>oldIcons/1411698488_document-add-128.png</file>
-        <file>oldIcons/1411734789_Add_Column.png</file>
-        <file>oldIcons/add-key.png</file>
-        <file>oldIcons/turnleft.svg</file>
-        <file>oldIcons/1415484117_13_Zoom_out-128.png</file>
-        <file>oldIcons/1418506260_519660-164_QuestionMark-128.png</file>
-        <file>oldIcons/cloudconfig.png</file>
-        <file>oldIcons/1411735082_arrow_sans_down-128.png</file>
-        <file>oldIcons/add-tag.png</file>
-        <file>oldIcons/remove-tag.png</file>
-        <file>oldIcons/1411735101_arrow_sans_up-128.png</file>
-        <file>oldIcons/1411737152_icon-arrow-right-b-128.png</file>
-        <file>oldIcons/1411738411_519570-066_Play-128.png</file>
-        <file>oldIcons/1411738327_cross-24-128.png</file>
-        <file>oldIcons/group.png</file>
-        <file>oldIcons/1411737159_icon-arrow-down-b-128.png</file>
-        <file>oldIcons/1411700289_attachment-128.png</file>
-        <file>oldIcons/1411738419_519571-067_Pause-128.png</file>
-        <file>oldIcons/1411739303_icon-volume-medium-128.png</file>
-        <file>oldIcons/remove-key.png</file>
-        <file>oldIcons/1411698394_attachment_remove-128.png</file>
-        <file>oldIcons/1411698488_document-delete-128.png</file>
+        <file>icons/turnright.png</file>
+        <file>icons/turnleft.png</file>
+        <file>icons/tag-2.png</file>
+        <file>icons/pdf-512.png</file>
+        <file>icons/minus.png</file>
+        <file>icons/duplicate2.png</file>
+        <file>icons/add-tag.png</file>
+        <file>icons/1411738429_icon-stop-128.png</file>
+        <file>icons/1411738419_519571-067_Pause-128.png</file>
+        <file>icons/1411738411_519570-066_Play-128.png</file>
+        <file>icons/1411735338_519586-083_Music-128.png</file>
+        <file>icons/1411698488_document-delete-128.png</file>
+        <file>icons/1411698488_document-add-128.png</file>
+        <file>icons/1411698394_attachment_remove-128.png</file>
+        <file>icons/plus47.png</file>
+        <file>icons/1411737168_POWER - RESTART.png</file>
+        <file>icons/1411734805_rename.png</file>
     </qresource>
     <qresource prefix="/translations">
         <file>can2_de_DE.qm</file>

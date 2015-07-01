@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>764</width>
+    <width>502</width>
     <height>454</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>702</width>
+        <width>440</width>
         <height>432</height>
        </rect>
       </property>
@@ -140,8 +140,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../ressources.qrc">
-         <normaloff>:/icons/icons/plus47.png</normaloff>:/icons/icons/plus47.png</iconset>
+        <iconset>
+         <normaloff>../icons/plus47.png</normaloff>../icons/plus47.png</iconset>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -232,7 +232,7 @@
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
-         <normaloff>:/oldIcons/oldIcons/minus.png</normaloff>:/oldIcons/oldIcons/minus.png</iconset>
+         <normaloff>:/icons/icons/minus.png</normaloff>:/icons/icons/minus.png</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -365,8 +365,7 @@
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
-         <normaloff>:/oldIcons/oldIcons/1411738411_519570-066_Play-128.png</normaloff>
-         <normalon>:/oldIcons/oldIcons/1411738419_519571-067_Pause-128.png</normalon>:/oldIcons/oldIcons/1411738411_519570-066_Play-128.png</iconset>
+         <normaloff>:/icons/icons/1411738411_519570-066_Play-128.png</normaloff>:/icons/icons/1411738411_519570-066_Play-128.png</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>

@@ -37,7 +37,7 @@ QWidget* createWidget( QWidget* parent, ConfigurableItem* item )
 
     QPushButton* defaultButton = new QPushButton( widget );
     defaultButton->setMaximumSize( 20, 20 );
-    defaultButton->setIcon( QIcon(":/oldIcons/oldIcons/1411737168_POWER - RESTART.png") );
+    defaultButton->setIcon( QIcon(":/icons/icons/1411737168_POWER - RESTART.png") );
     defaultButton->setToolTip( ConfigurationDialog::tr("Reset value to default.") );
     QObject::connect( defaultButton, &QPushButton::clicked, [item, configWidget, defaultButton]()
     {

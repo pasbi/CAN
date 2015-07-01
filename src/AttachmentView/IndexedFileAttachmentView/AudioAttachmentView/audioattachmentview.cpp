@@ -1,8 +1,8 @@
 #include "audioattachmentview.h"
 #include "ui_audioattachmentview.h"
 
-const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/oldIcons/oldIcons/turnleft.png";
-const QString AudioAttachmentView::RECORD_RIGHT_POSITION_ICON_PATH = ":/oldIcons/oldIcons/turnright.png";
+const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/icons/icons/turnleft.png";
+const QString AudioAttachmentView::RECORD_RIGHT_POSITION_ICON_PATH = ":/icons/icons/turnright.png";
 
 DEFN_CREATABLE( AudioAttachmentView, AttachmentView );
 
