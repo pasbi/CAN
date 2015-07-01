@@ -154,7 +154,7 @@ SOURCES += main.cpp\
     Project/gitutil.cpp \
     Project/file.cpp \
     AttachmentView/chordpatternproxyattachmentview.cpp \
-    Attachments/chordpatternproxyattachment.cpp \
+    Attachments/ChordPatternAttachment/chordpatternproxyattachment.cpp \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.cpp \
     Dialogs/exportpdfdialog.cpp \
     Dialogs/tageditor.cpp \
@@ -285,7 +285,7 @@ HEADERS  += mainwindow.h \
     git.h \
     Project/file.h \
     AttachmentView/chordpatternproxyattachmentview.h \
-    Attachments/chordpatternproxyattachment.h \
+    Attachments/ChordPatternAttachment/chordpatternproxyattachment.h \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.h \
     Dialogs/exportpdfdialog.h \
     Dialogs/tageditor.h \

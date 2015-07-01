@@ -1,6 +1,7 @@
 #include "chordpatternproxyattachment.h"
 #include "chordpatternattachment.h"
 #include "Database/SongDatabase/song.h"
+#include "application.h"
 
 DEFN_CREATABLE_NAME(ChordPatternProxyAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Proxy Attachment"))
 
@@ -8,6 +9,16 @@ ChordPatternProxyAttachment::ChordPatternProxyAttachment() :
     m_source( NULL )
 {
     setName( tr("Proxy Pattern") );
+
+    const Attachment* a = app().currentAttachment();
+    if (a && a->inherits( "ChordPatternAttachment" ))
+    {
+        setChordPatternAttachment( qobject_assert_cast<const ChordPatternAttachment*>( a ) );
+    }
+    else
+    {
+        setChordPatternAttachment( NULL );
+    }
 }
 
 void ChordPatternProxyAttachment::copy(Attachment *&copied) const
@@ -98,7 +109,6 @@ QJsonObject ChordPatternProxyAttachment::toJsonObject() const
 
 bool ChordPatternProxyAttachment::restoreFromJsonObject(const QJsonObject &object)
 {
-    bool success = true;
     if (checkJsonObject( object, "transpose", QJsonValue::Double ))
     {
         m_transpose = object["transpose"].toInt();
@@ -106,7 +116,6 @@ bool ChordPatternProxyAttachment::restoreFromJsonObject(const QJsonObject &objec
     else
     {
         m_transpose = 0;
-        success = false;
     }
     if (checkJsonObject( object, "source", QJsonValue::Double ))
     {
