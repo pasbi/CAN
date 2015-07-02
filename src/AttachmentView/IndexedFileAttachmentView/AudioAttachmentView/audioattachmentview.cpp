@@ -124,7 +124,7 @@ void AudioAttachmentView::seek(double pos)
 void AudioAttachmentView::setPitchTempo()
 {
 #ifdef HAVE_SOUNDTOUCH
-    player().seek( ui->doubleSpinBoxPitch->value(), ui->doubleSpinBoxTempo->value(), player().position() );
+    player().seek( ui->doubleSpinBoxPitch->value(), ui->doubleSpinBoxTempo->value(), ui->slider->value() );
     ui->slider->setTempo( ui->doubleSpinBoxTempo->value() );
 #endif
 }
