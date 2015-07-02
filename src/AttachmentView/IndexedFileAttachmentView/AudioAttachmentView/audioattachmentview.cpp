@@ -72,9 +72,6 @@ void AudioAttachmentView::polish()
     open();
 
     ui->slider->setMaximum( a->player().duration() );
-    ui->slider->setSection( a->player().currentSection() );
-
-    ui->slider->setMaximum( a->player().duration() );
     ui->doubleSpinBoxPitch->setValue( player().pitch() );
     ui->doubleSpinBoxTempo->setValue( player().tempo() );
 

@@ -33,7 +33,6 @@ void AudioAttachment::appendSection(const Section &section)
 void AudioAttachment::setSection(const Section *section)
 {
     m_currentSection = section;
-    player().setSection( m_currentSection );
     emit currentSectionChanged( m_currentSection );
 }
 

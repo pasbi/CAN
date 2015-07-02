@@ -41,6 +41,10 @@ private:
     double m_leftIndicator = -1;
     const Section* m_section = NULL;
 
+    QTimer* m_checkTurnTimer;
+private slots:
+    void checkTurns();
+
 };
 
 #endif // SLIDER_H

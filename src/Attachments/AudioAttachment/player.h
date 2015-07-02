@@ -26,9 +26,6 @@ public:
     double pitch() const { return m_pitch; }
     double tempo() const { return m_tempo; }
 
-    void setSection( const Section* section = NULL ) { m_section = section; }
-    const Section* currentSection() const { return m_section; }
-
 public slots:
     void play();
     void pause();
@@ -42,13 +39,11 @@ private:
     QAudioOutput* m_audioOutput = NULL;
     void seek();
 
-    const Section* m_section = NULL;
-
     double m_currentPosition = 0;
 
+
 private slots:
-    double checkSectionAndGetPosition();
-    void sync();
+    void setCurrentPosition();
 };
 
 #endif // PLAYER_H

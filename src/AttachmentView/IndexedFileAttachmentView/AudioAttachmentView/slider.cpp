@@ -2,6 +2,7 @@
 #include "global.h"
 
 #include <QPainter>
+#include <QTimer>
 
 const double Slider::SLIDER_MULTIPLIER = 1000;
 
@@ -13,6 +14,9 @@ Slider::Slider(QWidget *parent) :
         double value_d = value / SLIDER_MULTIPLIER;
         emit valueChanged( value_d );
     });
+    m_checkTurnTimer = new QTimer( this );
+    connect( m_checkTurnTimer, SIGNAL(timeout()), this, SLOT(checkTurns()) );
+    m_checkTurnTimer->start( 10 );
 }
 
 double Slider::value() const
@@ -97,4 +101,16 @@ void Slider::setSection(const Section *section)
 {
     m_section = section;
     update();
+}
+
+void Slider::checkTurns()
+{
+    if (m_section)
+    {
+        if (value() > m_section->end())
+        {
+            setValue( m_section->begin() );
+            emit valueChanged( m_section->begin() );
+        }
+    }
 }

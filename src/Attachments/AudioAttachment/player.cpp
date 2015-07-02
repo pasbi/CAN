@@ -37,7 +37,7 @@ void Player::open( const QString &filename )
     m_audioOutput = new QAudioOutput( QAudioDeviceInfo::defaultOutputDevice(), m_buffer.audioFormat() );
     m_audioOutput->setNotifyInterval( 200 );    // sync
 
-    connect( m_audioOutput, SIGNAL(notify()), this, SLOT(sync()) );
+    connect( m_audioOutput, SIGNAL(notify()), this, SLOT(setCurrentPosition()) );
 }
 
 void Player::play()
@@ -73,7 +73,7 @@ void Player::seek()
         m_buffer.decode( m_pitch, m_tempo, m_offset );
         m_audioOutput->start( &m_buffer.buffer() );
         blockSignals(false);
-        sync();
+        setCurrentPosition();
     }
     else
     {
@@ -104,23 +104,11 @@ double Player::position() const
     return m_currentPosition * m_tempo;
 }
 
-double Player::checkSectionAndGetPosition()
+void Player::setCurrentPosition()
 {
-    double pos = position();
-    if (  m_section && (pos < m_section->begin() || pos > m_section->end()) )
-    {
-        pos = m_section->begin();
-        seek( pos);
-    }
-    return pos;
-}
-
-
-void Player::sync()
-{
-    // sync
     m_currentPosition = m_buffer.position();
 }
+
 
 
 
