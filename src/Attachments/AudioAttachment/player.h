@@ -21,7 +21,7 @@ public:
     void seek( double second );
 
     // position and duration are independend from tempo.
-    double position() const;
+//    double position() const;
     double duration() const;
     double pitch() const { return m_pitch; }
     double tempo() const { return m_tempo; }
@@ -39,11 +39,5 @@ private:
     QAudioOutput* m_audioOutput = NULL;
     void seek();
 
-    double m_currentPosition = 0;
-
-
-private slots:
-    void setCurrentPosition();
 };
-
 #endif // PLAYER_H

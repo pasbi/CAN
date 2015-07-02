@@ -95,7 +95,7 @@ void AudioAttachmentView::on_pushButtonPlayPause_toggled(bool checked)
 #ifdef HAVE_SOUNDTOUCH
     if (checked)
     {
-        player().seek( player().position() );
+//        player().seek( /*player().position()*/ );
         player().play();
         ui->slider->play();
     }
@@ -143,7 +143,7 @@ void AudioAttachmentView::recordSection(bool abort)
     }
     else
     {
-        double pos = player().position();
+        double pos = ui->slider->value();
         if (state == Idle)
         {
             ui->slider->clearIndicators();

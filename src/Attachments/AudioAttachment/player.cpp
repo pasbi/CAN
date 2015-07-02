@@ -73,7 +73,6 @@ void Player::seek()
         m_buffer.decode( m_pitch, m_tempo, m_offset );
         m_audioOutput->start( &m_buffer.buffer() );
         blockSignals(false);
-        setCurrentPosition();
     }
     else
     {
@@ -97,16 +96,6 @@ void Player::seek(double second)
 double Player::duration() const
 {
     return m_buffer.duration();
-}
-
-double Player::position() const
-{
-    return m_currentPosition * m_tempo;
-}
-
-void Player::setCurrentPosition()
-{
-    m_currentPosition = m_buffer.position();
 }
 
 
