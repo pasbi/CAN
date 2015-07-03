@@ -274,6 +274,36 @@ QList<SetlistItem*> SetlistView::selectedItems() const
     }
 }
 
+bool SetlistView::includeAttachment( const Attachment* attachment )
+{
+    // if attachment is of wrong type, do not include it.
+    if ( attachment->type() != ChordPatternAttachment::TYPE )
+    {
+        return false;
+    }
+
+    // if attachment has no tags, include it.
+    else if ( attachment->tags().isEmpty() )
+    {
+        return true;
+    }
+
+    // if no filter tag is set, return true.
+    else if ( m_filterTag.isEmpty() )
+    {
+        return true;
+    }
+
+    // if attachment has filter tag, include it.
+    else if ( attachment->tags().contains( m_filterTag ) )
+    {
+        return true;
+    }
+
+    // otherwise, return false
+    return false;
+}
+
 void SetlistView::updateCellWidgets()
 {
     if (!model())
@@ -287,9 +317,7 @@ void SetlistView::updateCellWidgets()
 
         // menu is deleted when hidden. So do not delete the buttons.
         QToolButton* button = new QToolButton();
-
         button->setIcon( QIcon(":/icons/icons/eye106.png") );
-
         setIndexWidget( index, button );
 
         SetlistItem* item = model()->itemAt( index );
@@ -306,7 +334,7 @@ void SetlistView::updateCellWidgets()
 
             for (Attachment* attachment : song->attachments())
             {
-                if (attachment->type() == ChordPatternAttachment::TYPE )
+                if ( includeAttachment( attachment ) )
                 {
                     ChordPatternAttachment* cpa = qobject_assert_cast<ChordPatternAttachment*>( attachment );
                     QAction* action = new QAction(menu);
@@ -334,4 +362,10 @@ void SetlistView::updateCellWidgets()
 
         }
     }
+}
+
+void SetlistView::setFilterTag( const QString& tag )
+{
+    m_filterTag = tag;
+    updateCellWidgets();
 }

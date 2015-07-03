@@ -53,9 +53,9 @@ public:
     bool isSynchronized() const;
     void setIsSynchronized();
     void markFileRemoved( const QString& filename );
+    void setCanClose( bool b );
 
 private:
-    void setCanClose( bool b );
     bool m_canClose = true;
     bool m_isSynchronized = false;
     void resetUndoStack();

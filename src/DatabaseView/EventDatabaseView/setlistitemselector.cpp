@@ -20,7 +20,6 @@ SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
     layout->addWidget( buttonBox );
     this->setLayout( layout );
     connect(buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(hide()));
-
 }
 
 SetlistItemSelector::~SetlistItemSelector()

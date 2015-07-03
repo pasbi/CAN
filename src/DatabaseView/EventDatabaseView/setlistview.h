@@ -23,6 +23,9 @@ public:
 
     QList<SetlistItem*> selectedItems() const;
 
+public slots:
+    void setFilterTag( const QString& tag );
+
 
 signals:
     void clicked();
@@ -49,8 +52,13 @@ private:
     QAction* m_actionCopySetlistItem;
     QAction* m_actionPasteSetlistItem;
 
+    bool includeAttachment( const Attachment* attachment );
+    QString m_filterTag;
+
+
 public:
     static const QString ITEMS_MIMEDATA_FORMAT;
+
 
 
 };

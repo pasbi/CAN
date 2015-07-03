@@ -27,6 +27,8 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
     m_attentionPixmap = QPixmap::fromImage(QImage(":/icons/icons/lightbulb20.png")).scaledToWidth( 32, Qt::SmoothTransformation );
     ui->infoLabelIcon->setFixedSize( 32, 32 );
 
+    connect( ui->comboBox, SIGNAL(currentTextChanged(QString)), ui->listView, SLOT(setFilterTag(QString)) );
+
 }
 
 SetlistWidget::~SetlistWidget()
@@ -181,8 +183,6 @@ void SetlistWidget::on_buttonShowSongs_clicked()
 void SetlistWidget::hideEvent(QHideEvent *e)
 {
     m_selectorIsVisible = m_selector->isVisible();
-    m_selectorGeometry = m_selector->geometry();
-    m_selectorPosition = m_selector->pos();
 
     m_selector->hide();
     QWidget::hideEvent(e);
@@ -193,10 +193,9 @@ void SetlistWidget::showEvent(QShowEvent *e)
     if (m_selectorIsVisible)
     {
         m_selector->show();
-        m_selector->setGeometry( m_selectorGeometry );
-        m_selector->move( m_selectorPosition );
     }
     updateInfoLabel();
+    updateTagComboBox();
     QWidget::showEvent(e);
 }
 
@@ -302,5 +301,21 @@ void SetlistWidget::updateInfoLabel()
     else
     {
         ui->infoLabel->setText( "" );
+    }
+}
+
+void SetlistWidget::updateTagComboBox()
+{
+    QString currentTag = ui->comboBox->currentText();
+    ui->comboBox->clear();
+    ui->comboBox->addItem("");
+    ui->comboBox->addItems( Taggable::allTags() );
+    if (Taggable::allTags().contains( currentTag ))
+    {
+        ui->comboBox->setCurrentText( currentTag );
+    }
+    else
+    {
+        ui->comboBox->setCurrentText( "" );
     }
 }

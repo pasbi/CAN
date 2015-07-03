@@ -39,6 +39,7 @@ private slots:
 
     void on_listView_doubleClicked(const QModelIndex &index);
     void updateInfoLabel();
+    void updateTagComboBox();
 
 protected:
     void hideEvent(QHideEvent *e);
