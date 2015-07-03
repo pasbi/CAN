@@ -25,6 +25,9 @@ private:
 
 private slots:
     void spawnFileDialog();
+
+protected:
+    bool eventFilter(QObject *o, QEvent *e);
 };
 
 #endif // STRINGDIALOG_H

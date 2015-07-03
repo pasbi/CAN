@@ -1,6 +1,8 @@
 #include "stringdialog.h"
 #include "ui_stringdialog.h"
 #include <QFileDialog>
+#include <QKeyEvent>
+#include "global.h"
 
 StringDialog::StringDialog(const QString& title, const QString & text, const QString & placeHolderText, QWidget *parent) :
     QDialog(parent),
@@ -14,6 +16,8 @@ StringDialog::StringDialog(const QString& title, const QString & text, const QSt
     setWindowTitle( title );
 
     connect( ui->buttonFileDialog, SIGNAL(pressed()), this, SLOT(spawnFileDialog()) );
+
+    ui->lineEdit->installEventFilter( this );
 }
 
 StringDialog::~StringDialog()
@@ -93,7 +97,26 @@ void StringDialog::spawnFileDialog()
     {
         // on reject, do nothing.
     }
+}
 
+bool StringDialog::eventFilter(QObject *o, QEvent *e)
+{
+    if (o == ui->lineEdit && e->type() == QEvent::KeyPress )
+    {
+        QKeyEvent* ke = (QKeyEvent*) e;
+        if (ke->key() == Qt::Key_Return)
+        {
+            accept();
+            return true;
+        }
+        else if (ke->key() == Qt::Key_Escape)
+        {
+            reject();
+            return true;
+        }
+    }
+
+    return QDialog::eventFilter( o, e );
 }
 
 
