@@ -4,6 +4,7 @@
 #include "Project/project.h"
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
+#include <QSettings>
 
 SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
     QDialog(parent)
@@ -19,8 +20,21 @@ SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
     layout->addWidget( buttonBox );
     this->setLayout( layout );
     connect(buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(hide()));
+
 }
 
 SetlistItemSelector::~SetlistItemSelector()
 {
+}
+
+void SetlistItemSelector::showEvent(QShowEvent *e)
+{
+    restoreGeometry( QSettings().value("SetlistItemSelector_Geometry").toByteArray() );
+    QDialog::showEvent(e);
+}
+
+void SetlistItemSelector::hideEvent(QHideEvent *e)
+{
+    QSettings().setValue( "SetlistItemSelector_Geometry", saveGeometry() );
+    QDialog::hideEvent(e);
 }
