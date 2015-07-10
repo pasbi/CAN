@@ -18,18 +18,23 @@ ProgramDialog::~ProgramDialog()
 void ProgramDialog::setProgram(const Program &program)
 {
     m_program = program;
-    ui->buttonBankA->setChecked( program.bank == 0 );
-    ui->buttonBankB->setChecked( program.bank == 1 );
-    ui->buttonBankC->setChecked( program.bank == 2 );
-    ui->buttonBankD->setChecked( program.bank == 3 );
+    if (!m_program.valid)
+    {
+        m_program.bank = -1;
+        m_program.program = -1;
+    }
+    ui->buttonBankA->setChecked( m_program.bank == 0 );
+    ui->buttonBankB->setChecked( m_program.bank == 1 );
+    ui->buttonBankC->setChecked( m_program.bank == 2 );
+    ui->buttonBankD->setChecked( m_program.bank == 3 );
 
-    ui->buttonProgram1->setChecked( program.program % NUM_PROGRAM_BUTTONS == 0 );
-    ui->buttonProgram2->setChecked( program.program % NUM_PROGRAM_BUTTONS == 1 );
-    ui->buttonProgram3->setChecked( program.program % NUM_PROGRAM_BUTTONS == 2 );
-    ui->buttonProgram4->setChecked( program.program % NUM_PROGRAM_BUTTONS == 3 );
-    ui->buttonProgram5->setChecked( program.program % NUM_PROGRAM_BUTTONS == 4 );
+    ui->buttonProgram1->setChecked( m_program.program % NUM_PROGRAM_BUTTONS == 0 );
+    ui->buttonProgram2->setChecked( m_program.program % NUM_PROGRAM_BUTTONS == 1 );
+    ui->buttonProgram3->setChecked( m_program.program % NUM_PROGRAM_BUTTONS == 2 );
+    ui->buttonProgram4->setChecked( m_program.program % NUM_PROGRAM_BUTTONS == 3 );
+    ui->buttonProgram5->setChecked( m_program.program % NUM_PROGRAM_BUTTONS == 4 );
 
-    ui->spinBoxPage->setValue( program.program / NUM_PROGRAM_BUTTONS + 1 );
+    ui->spinBoxPage->setValue( m_program.program / NUM_PROGRAM_BUTTONS + 1 );
 
     ui->buttonNoProgram->setChecked( !m_program.valid );
 }
