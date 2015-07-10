@@ -6,6 +6,7 @@
 #include "Attachments/attachment.h"
 #include <QVariantMap>
 #include <QDateTime>
+#include "program.h"
 
 class SongDatabase;
 class Song : public QObject, public Taggable
@@ -23,6 +24,7 @@ public:
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
     SongDatabase* database() const { return m_songDatabase; }
+    Song* copy() const;
 
 
     /////////////////////////////////////////////////
@@ -81,15 +83,24 @@ public:
     void insertAttachment(Attachment* attachment, int index);
 
 
-    Song* copy() const;
-
-
-
-
 signals:
     void attachmentAdded(int i);
     void attachmentRemoved(int i);
     void attachmentRenamed(int i, QString);
+
+    /////////////////////////////////////////////////
+    ////
+    ///  Programs
+    //
+    /////////////////////////////////////////////////
+    //TODO currently, only one progam per song is supported. change that!
+public:
+    Program program() const { return m_program; }
+    void setProgram( const Program& program ) { m_program = program; }
+private:
+    Program m_program = Program();
+
+
 
 };
 

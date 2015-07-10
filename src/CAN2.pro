@@ -159,7 +159,11 @@ SOURCES += main.cpp\
     Dialogs/exportpdfdialog.cpp \
     Dialogs/tageditor.cpp \
     Dialogs/chordpatternviewerscrollarea.cpp \
-    DatabaseView/SongDatabaseView/CellEditors/durationeditor.cpp
+    DatabaseView/SongDatabaseView/CellEditors/durationeditor.cpp \
+    programdialog.cpp \
+    program.cpp \
+    Commands/SongCommands/songeditprogramcommand.cpp \
+    midicontroller.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -290,7 +294,11 @@ HEADERS  += mainwindow.h \
     Dialogs/exportpdfdialog.h \
     Dialogs/tageditor.h \
     Dialogs/chordpatternviewerscrollarea.h \
-    DatabaseView/SongDatabaseView/CellEditors/durationeditor.h
+    DatabaseView/SongDatabaseView/CellEditors/durationeditor.h \
+    programdialog.h \
+    program.h \
+    Commands/SongCommands/songeditprogramcommand.h \
+    midicontroller.h
 
 
 
@@ -320,7 +328,8 @@ FORMS    += mainwindow.ui \
     conflicteditor.ui \
     AttachmentView/chordpatternproxyattachmentview.ui \
     Dialogs/exportpdfdialog.ui \
-    Dialogs/tageditor.ui
+    Dialogs/tageditor.ui \
+    programdialog.ui
 
 
 RESOURCES += \

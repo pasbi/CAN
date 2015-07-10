@@ -92,6 +92,21 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
         m_randomID = json["id"].toString();
     }
 
+    // get program
+    if (json.contains("program") && json["program"].isObject())
+    {
+        QJsonObject program = json["program"].toObject();
+        if (        checkJsonObject( program, "bank",    QJsonValue::Double )
+                &&  checkJsonObject( program, "valid",   QJsonValue::Bool )
+                &&  checkJsonObject( program, "program", QJsonValue::Double )
+                    )
+        {
+            m_program.bank =    program["bank"].toInt();
+            m_program.program = program["program"].toInt();
+            m_program.valid =   program["valid"].toBool();
+        }
+    }
+
     QJsonArray attributes = json["attributes"].toArray();
     m_attributes.clear();
     m_attributes.reserve(attributes.size());
@@ -120,6 +135,7 @@ QJsonObject Song::toJsonObject() const
 {
     QJsonObject json = Taggable::toJsonObject();
 
+    // attributes
     QJsonArray attributes;
     for (const QVariant & v : m_attributes)
     {
@@ -127,6 +143,7 @@ QJsonObject Song::toJsonObject() const
     }
     json.insert("attributes", attributes);
 
+    // attachments
     QJsonArray attachments;
     for (const Attachment* a : m_attachments)
     {
@@ -134,7 +151,16 @@ QJsonObject Song::toJsonObject() const
         attachments.append( o );
     }
     json.insert("attachments", attachments);
+
+    // id
     json["id"] = randomID();
+
+    // program
+    QJsonObject program;
+    program["bank"] =       m_program.bank;
+    program["program"] =    m_program.program;
+    program["valid"] =      m_program.valid;
+    json["program"] = program;
 
 
 

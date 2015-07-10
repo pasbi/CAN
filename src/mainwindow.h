@@ -32,7 +32,6 @@ public:
 
     SongTableView* songTableView();
 
-
 private slots:
     void resizeSplitter();  // left column should be as small as possible.
     void on_actionUndo_triggered();
@@ -93,6 +92,7 @@ private slots:
     void my_on_actionDelete_Song_triggered();
     void my_on_actionCopy_Song_triggered();
     void my_on_actionPaste_Song_triggered();
+    void my_on_actionEditProgram_triggered();
 
     void my_on_actionNew_Event_triggered();
     void my_on_actionDelete_Event_triggered();
@@ -123,6 +123,7 @@ private:
     QAction* m_actionDelete_Song;
     QAction* m_actionCopy_Song;
     QAction* m_actionPaste_Song;
+    QAction* m_actionEditProgram;
 
     QAction* m_actionNew_Event;
     QAction* m_actionDelete_Event;
@@ -131,10 +132,7 @@ private:
 
     void askForSync();
 
-
-
     friend class Application;   // application handles some quasi-global functions
-
 };
 
 #endif // MAINWINDOW_H

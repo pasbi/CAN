@@ -19,6 +19,7 @@
 #include <QProgressDialog>
 #include <QScrollArea>
 #include <QLabel>
+#include "programdialog.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -179,6 +180,7 @@ MainWindow::MainWindow(QWidget *parent) :
     initAction( actionDelete_Song,   ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
     initAction( actionCopy_Song,     ui->songDatabaseWidget->songTableView(),    tr("&Copy Song"),      tr("Copy selected song."),    "Ctrl+C",   ui->menuSongs,  "" )
     initAction( actionPaste_Song,    ui->songDatabaseWidget->songTableView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
+    initAction( actionEditProgram,   ui->songDatabaseWidget->songTableView(),    tr("&Edit Program"),   tr("Edit program."),          "",         ui->menuSongs,  "" )
 
     initAction( actionNew_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
     initAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
@@ -503,6 +505,7 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     for (QAction* action : m_newAttachmentActions)
     {
         songObects << action;
+        //TODO delete song, rename song, ...
     }
 
     attachmentObjects   << ui->actionDelete_Attachment;
@@ -1145,6 +1148,22 @@ void MainWindow::my_on_actionCopy_Event_triggered()
 void MainWindow::my_on_actionPaste_Event_triggered()
 {
     ui->eventDatabaseWidget->eventTableView()->pasteEvents( app().clipboard()->mimeData(), m_project.eventDatabase()->rowCount(), Qt::CopyAction );
+}
+
+#include "Commands/SongCommands/songeditprogramcommand.h"
+void MainWindow::my_on_actionEditProgram_triggered()
+{
+    if (!currentSong())
+    {
+        return;
+    }
+
+    ProgramDialog pd(this);
+    pd.setProgram( currentSong()->program() );
+    if (pd.exec() == QDialog::Accepted)
+    {
+        app().pushCommand( new SongEditProgramCommand( currentSong(), pd.program() ) );
+    }
 }
 
 #include "Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h"

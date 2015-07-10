@@ -67,6 +67,8 @@ protected:
     bool eventFilter(QObject *o, QEvent *e);
     void wheelEvent(QWheelEvent *e);
     void keyPressEvent(QKeyEvent *e);
+
+
 };
 
 

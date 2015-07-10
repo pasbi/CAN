@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include "midicontroller.h"
 
 DEFN_CONFIG( ChordPatternViewer, tr("ChordPatternViewer") );
 
@@ -76,6 +77,16 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
                                  "Thus, this feature is not available."));
     QTimer::singleShot( 1, this, SLOT(reject()) );
 #endif
+
+    if (MidiController::config["enable_Channel"].toBool())
+    {
+        MidiCommand::defaultChannel = (MidiCommand::Channel) (MidiController::config["Channel"].toInt() - 1);
+        const Program& program = attachment->song()->program();
+        if (program.valid)
+        {
+            MidiController::singleton()->send( program );
+        }
+    }
 }
 
 ChordPatternViewer::~ChordPatternViewer()
