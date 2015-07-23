@@ -360,6 +360,10 @@ void SetlistView::updateCellWidgets()
                 }
             });
 
+            if (song->program().valid)
+            {
+                button->setIcon( QIcon(":/icons/icons/eye_midi.png") );
+            }
         }
     }
 }

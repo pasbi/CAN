@@ -25,6 +25,7 @@ void ChordPatternProxyAttachmentView::polish()
     attachment<ChordPatternProxyAttachment>()->updateCache();
     connect(attachment<ChordPatternProxyAttachment>()->source(), SIGNAL(changed()), this, SLOT(updateText()));
     updateText();
+    updateViewIcon();
 }
 
 #include "Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h"
@@ -81,4 +82,12 @@ void ChordPatternProxyAttachmentView::updateText()
 void ChordPatternProxyAttachmentView::on_buttonOriginal_clicked()
 {
     emit focusAttachment( attachment<ChordPatternProxyAttachment>()->source() );
+}
+
+void ChordPatternProxyAttachmentView::updateViewIcon()
+{
+    if (attachment<Attachment>()->song()->program().valid)
+    {
+        ui->buttonView->setIcon( QIcon(":/icons/icons/eye_midi.png") );
+    }
 }

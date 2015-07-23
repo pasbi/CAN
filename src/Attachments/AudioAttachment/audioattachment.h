@@ -11,7 +11,7 @@ class AudioAttachment : public IndexedFileAttachment
     DECL_CREATABLE( AudioAttachment )
 public:
     AudioAttachment();
-    QStringList acceptedEndings() const { return QStringList() << "mp3" << "ogg"; }
+    QStringList acceptedEndings() const { return QStringList() << "mp3" << "ogg" << "aif"; }
     void copy(Attachment *&copied) const;
 
     SectionsModel* sectionsModel() const { return m_sectionsModel; }

@@ -56,6 +56,10 @@ bool AddFilesToIndexDialog::includeOgg() const
 {
     return ui->checkBoxOgg->isChecked();
 }
+bool AddFilesToIndexDialog::includeAif() const
+{
+    return ui->checkBoxAif->isChecked();
+}
 
 QString AddFilesToIndexDialog::path() const
 {

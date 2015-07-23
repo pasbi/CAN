@@ -26,6 +26,7 @@ public:
     QByteArray options() const { return QByteArray(); }
 
     static void highlightTextEdit(ChordPatternEdit *edit , const QString &text);
+    void updateViewIcon();
 
 protected:
     void polish();

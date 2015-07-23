@@ -70,6 +70,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="checkBoxAif">
+     <property name="text">
+      <string>*.aif</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>

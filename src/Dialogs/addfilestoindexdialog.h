@@ -26,6 +26,7 @@ public:
     bool includePDF() const;
     bool includeMP3() const;
     bool includeOgg() const;
+    bool includeAif() const;
 
 private:
     Ui::AddFilesToIndexDialog *ui;

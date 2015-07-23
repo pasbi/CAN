@@ -27,7 +27,7 @@ public:
     void save() const;
     void restore();
 
-    void addSource(const QString & path, bool pdf, bool mp3, bool ogg);
+    void addSource(const QString & path, bool pdf, bool mp3, bool ogg, bool aif);
     QString currentFilename() const;
     bool operationIsFinished() const;
 

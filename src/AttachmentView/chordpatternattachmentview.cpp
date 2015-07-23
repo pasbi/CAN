@@ -59,6 +59,7 @@ void ChordPatternAttachmentView::highlightTextEdit(ChordPatternEdit *edit, const
     }
     edit->setExternalExtraSelections(highlights);
     edit->blockSignals(false);
+
 }
 
 void ChordPatternAttachmentView::updateText()
@@ -78,7 +79,7 @@ void ChordPatternAttachmentView::polish()
     connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(textEdited()));
     connect(attachment<ChordPatternAttachment>(), SIGNAL(changed()), this, SLOT(updateText()));
     connect( ui->textEdit, SIGNAL(pasted()), attachment<ChordPatternAttachment>(), SLOT(transpose()) );
-
+    updateViewIcon();
 }
 
 void ChordPatternAttachmentView::on_buttonUp_clicked()
@@ -94,4 +95,12 @@ void ChordPatternAttachmentView::on_buttonDown_clicked()
 void ChordPatternAttachmentView::on_buttonView_clicked()
 {
     ChordPatternViewer::displayChordPatternAttachment( attachment<AbstractChordPatternAttachment>(), this );
+}
+
+void ChordPatternAttachmentView::updateViewIcon()
+{
+    if (attachment<Attachment>()->song()->program().valid)
+    {
+        ui->buttonView->setIcon( QIcon(":/icons/icons/eye_midi.png") );
+    }
 }

@@ -697,7 +697,8 @@ void MainWindow::on_actionAdd_Folder_triggered()
     app().fileIndex().addSource( dialog.path(),
                                  dialog.includePDF(),
                                  dialog.includeMP3(),
-                                 dialog.includeOgg() );
+                                 dialog.includeOgg(),
+                                 dialog.includeAif() );
 
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);

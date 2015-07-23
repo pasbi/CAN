@@ -17,7 +17,7 @@ class ChordPatternProxyAttachmentView : public AttachmentView
 public:
     explicit ChordPatternProxyAttachmentView(QWidget *parent = 0);
     ~ChordPatternProxyAttachmentView();
-
+    void updateViewIcon();
     void polish();
 
 private slots:

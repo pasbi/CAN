@@ -47,6 +47,7 @@
         <file>icons/plus47.png</file>
         <file>icons/1411737168_POWER - RESTART.png</file>
         <file>icons/1411734805_rename.png</file>
+        <file>icons/eye_midi.png</file>
     </qresource>
     <qresource prefix="/translations">
         <file>can2_de_DE.qm</file>

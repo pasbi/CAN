@@ -14,6 +14,7 @@ public:
                      bool pdf,
                      bool mp3,
                      bool ogg,
+                     bool aif,
                      Mode mode, FileIndex* fileIndex, QObject *parent = 0);
 
     void abort();
@@ -25,7 +26,7 @@ protected:
 private:
 
     const QString m_path;
-    const bool m_pdf, m_mp3, m_ogg;
+    const bool m_pdf, m_mp3, m_ogg, m_aif;
     FileIndex* const m_fileIndex;
     const Mode m_mode;
 
