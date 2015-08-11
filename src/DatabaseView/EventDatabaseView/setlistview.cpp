@@ -115,11 +115,12 @@ void SetlistView::dropEvent(QDropEvent *e)
         {
             QList<SetlistItem*> newItems;
             app().project()->beginMacro(tr("Drop Songs"));
+            int i = 0;
             for (qintptr ptr : ptrs)
             {
                 Song* song = (Song*)( ptr );
                 newItems << new SetlistItem( song );
-                app().project()->pushCommand( new SetlistInsertItemCommand( model(), position, newItems.last() ) );
+                app().project()->pushCommand( new SetlistInsertItemCommand( model(), position + i++, newItems.last() ) );
             }
 
             model()->notifyDataChanged( model()->index(model()->indexOf(newItems.first()), 0),
