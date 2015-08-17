@@ -44,7 +44,7 @@ SetlistView::~SetlistView()
 bool acceptMimeData( const QMimeData* data )
 {
     // CAN/song from SongDatabase, CAN/Setlist/Item from internal move/copy
-    return data->hasFormat("CAN/songs") || data->hasFormat("CAN/Setlist/Item");
+    return data->hasFormat(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT) || data->hasFormat(SetlistView::ITEMS_MIMEDATA_FORMAT);
 }
 
 void SetlistView::dragEnterEvent(QDragEnterEvent *event)
@@ -105,11 +105,11 @@ void SetlistView::dropEvent(QDropEvent *e)
 
     Qt::DropAction dropaction = e->proposedAction();
 
-    if (e->mimeData()->hasFormat("CAN/songs"))
+    if (e->mimeData()->hasFormat(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT))
     {
         // always copy this mimetype
         QList<qintptr> ptrs;
-        QDataStream stream( e->mimeData()->data("CAN/songs") );
+        QDataStream stream( e->mimeData()->data(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT) );
         stream >> ptrs;
         if (!ptrs.isEmpty())
         {
@@ -129,7 +129,7 @@ void SetlistView::dropEvent(QDropEvent *e)
         }
         e->accept();
     }
-    else if (e->mimeData()->hasFormat("CAN/Setlist/Item"))
+    else if (e->mimeData()->hasFormat(SetlistView::ITEMS_MIMEDATA_FORMAT))
     {
         if ( dropaction == Qt::MoveAction )
         {
@@ -140,7 +140,7 @@ void SetlistView::dropEvent(QDropEvent *e)
             app().project()->beginMacro(tr("Copy setlist items"));
         }
 
-        QDataStream stream( e->mimeData()->data("CAN/Setlist/Item"));
+        QDataStream stream( e->mimeData()->data(SetlistView::ITEMS_MIMEDATA_FORMAT));
 
         QList<SetlistItem*> items;
         stream >> items;

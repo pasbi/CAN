@@ -350,7 +350,7 @@ QMimeData* Setlist::mimeData(const QModelIndexList &indexes) const
     }
     stream << m_draggedItems;
 
-    mime->setData("CAN/Setlist/Item", data);
+    mime->setData(SetlistView::ITEMS_MIMEDATA_FORMAT, data);
     return mime;
 }
 
