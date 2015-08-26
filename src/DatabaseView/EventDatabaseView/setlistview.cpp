@@ -81,6 +81,7 @@ void SetlistView::showContextMenu(QPoint pos)
     connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
 }
 
+#include "Database/databasemimedata.h"
 void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
 {
     Q_UNUSED( pos );
@@ -88,10 +89,11 @@ void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
 
     //TODO refactor this stuff. Think about outsoursing this with EventDatabaseView and SongDatabaseView in a common super class
     menu->addActions( actions() );
-//    actions()[0]->setEnabled( !!model() );                           // new item
-//    actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
-//    actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
-//    actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( Setlist::ITEMS_MIMEDATA_FORMAT ) );     // paste items
+    actions()[0]->setEnabled( !!model() );                           // new item
+    actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
+    actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
+    qDebug() << app().clipboard()->mimeData()->formats() << DatabaseMimeData<SetlistItem>::mimeType();
+    actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( DatabaseMimeData<SetlistItem>::mimeType() ) );     // paste items
 }
 
 #include "Commands/SetlistCommands/setlistadditemcommand.h"
@@ -130,7 +132,15 @@ void SetlistView::my_on_actionCopySetlistItem_triggered()
 
 void SetlistView::my_on_actionPasteSetlistItem_triggered()
 {
-//    paste( app().clipboard()->mimeData() );
+    if (model())
+    {
+        int row = model()->rowCount();
+        if (!selectedIndexes().isEmpty())
+        {
+            row = selectedIndexes().last().row() + 1;
+        }
+        model()->dropMimeData(app().clipboard()->mimeData(), Qt::CopyAction, row, 0, QModelIndex());
+    }
 }
 
 QList<SetlistItem*> SetlistView::selectedItems() const

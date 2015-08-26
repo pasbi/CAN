@@ -1,6 +1,5 @@
 #include "songtableview.h"
 #include "QHeaderView"
-#include <QAction>
 #include "global.h"
 #include "Project/project.h"
 #include "renamableheaderview.h"
@@ -32,7 +31,6 @@ SongTableView::SongTableView(QWidget *parent) :
     setSortingEnabled( true );
 
     setDragEnabled(true);
-
 }
 
 void SongTableView::setModel(SongDatabaseSortProxy *model)
@@ -40,7 +38,6 @@ void SongTableView::setModel(SongDatabaseSortProxy *model)
     DatabaseView::setModel(model);
     connect( model, SIGNAL(modelReset()), this, SLOT(resizeColumnsToContents()) );
 }
-
 
 void SongTableView::fakeFocusOutEvent()
 {
@@ -80,7 +77,6 @@ Qt::DropAction SongTableView::dropAction( QDropEvent* event )
         return Qt::MoveAction;
     }
 }
-
 
 void SongTableView::keyPressEvent(QKeyEvent *event)
 {
