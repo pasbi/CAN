@@ -1,10 +1,10 @@
 #ifndef SONGDATABASESORTPROXY_H
 #define SONGDATABASESORTPROXY_H
 
-#include <QSortFilterProxyModel>
+#include "Database/databasesortproxy.h"
 #include "songdatabase.h"
 
-class SongDatabaseSortProxy : public QSortFilterProxyModel
+class SongDatabaseSortProxy : public DatabaseSortProxy<Song>
 {
     Q_OBJECT
 public:

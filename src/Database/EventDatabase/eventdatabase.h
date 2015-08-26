@@ -4,7 +4,7 @@
 #include "Database/database.h"
 #include "event.h"
 
-class EventDatabase : public Database
+class EventDatabase : public Database<Event>
 {
     Q_OBJECT
 public:
@@ -26,10 +26,8 @@ public:
     void notifyDataChanged(const QModelIndex &index);
     void notifyDataChanged(const QModelIndex & start, const QModelIndex & end);
     void notifyDataChanged( const Event *event );
-    Event* eventAtIndex(const QModelIndex & index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant data( const int row, const int column, const int role);
-    QMimeData* mimeData(const QModelIndexList &indexes) const;
 
     void insertEvent( Event* event, const int index);
     void appendEvent( Event* event );
@@ -37,16 +35,18 @@ public:
     int  removeEvent( Event* event );
     bool removeRows(int row, int count, const QModelIndex &parent);
 
-    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild);
-    void moveRow(int sourceRow, int targetRow);
-
     QModelIndex indexOfEvent( const Event* event ) const;
+
+
+    //Drag'n'Drop. Do not support any drag/drop operation.
     Qt::DropActions supportedDragActions() const;
+    Qt::DropActions supportedDropActions() const;
+    // we need mimeData and dropMimeData for copy/paste
+    QMimeData* mimeData(const QModelIndexList &indexes) const;
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 
 
-
-
-    /////////////////////////////////////////////////
+   /////////////////////////////////////////////////
     ////
     ///  Converting to and from JsonObject
     //
@@ -57,19 +57,10 @@ public:
 
     QList<File> getFiles() const;
 
-
-    QList<Event*> events() const { return m_events; }
-
-
-
-
-    static const QString EVENT_POINTERS_MIME_DATA_FORMAT;
-
 public slots:
     void reset();
 
 private:
-    QList<Event*> m_events;
     QList<Event*> m_tmpEventBuffer;
 
 signals:

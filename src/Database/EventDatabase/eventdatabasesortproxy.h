@@ -1,10 +1,10 @@
 #ifndef EVENTDATABASESORTPROXY_H
 #define EVENTDATABASESORTPROXY_H
 
-#include <QSortFilterProxyModel>
+#include "Database/databasesortproxy.h"
 #include "eventdatabase.h"
 
-class EventDatabaseSortProxy : public QSortFilterProxyModel
+class EventDatabaseSortProxy : public DatabaseSortProxy<Event>
 {
     Q_OBJECT
 public:

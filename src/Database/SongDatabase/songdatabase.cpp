@@ -7,8 +7,6 @@
 #include "commontypes.h"
 #include <QJsonDocument>
 
-const QString SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT = "CAN/songs";
-
 QList<SongDatabase::InitialColumn> initColumns()
 {
 #define COLUMN( CAPTION, FIX_EDITOR ) SongDatabase::InitialColumn({ SongDatabase::tr(CAPTION), FIX_EDITOR })
@@ -71,7 +69,7 @@ int SongDatabase::columnCount(const QModelIndex &parent) const
 int SongDatabase::rowCount(const QModelIndex &parent) const
 {
     assert(!parent.isValid());
-    return m_songs.length();
+    return m_items.length();
 }
 
 void SongDatabase::editorTypeAndHeaderLabel( const QString & encoding, QString & editorType, QString & attributeValue )
@@ -115,7 +113,7 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
     {
     case Qt::DisplayRole:
     case Qt::EditRole:
-        return m_songs[index.row()]->attribute(index.column());
+        return m_items[index.row()]->attribute(index.column());
     default:
         return QVariant();
     }
@@ -170,7 +168,7 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
 
     if (role == Qt::EditRole)
     {
-        m_songs[index.row()]->setAttribute(index.column(), value);
+        m_items[index.row()]->setAttribute(index.column(), value);
         emit dataChanged( index, index );
         return true;
     }
@@ -190,7 +188,7 @@ void SongDatabase::notifyDataChanged(const QModelIndex & start, const QModelInde
 
 void SongDatabase::notifyDataChanged( const Song* song )
 {
-    int row = m_songs.indexOf((Song*) song);
+    int row = m_items.indexOf((Song*) song);
     if (row < 0)
     {
         return;
@@ -212,14 +210,14 @@ bool SongDatabase::insertColumns(int column, int count, const QModelIndex &paren
     for (int i = 0; i < count; ++i)
     {
         m_attributeKeys.insert( column + i,  m_tmpColumnNameBuffer[i]);
-        for (int j = 0; j < m_songs.length(); ++j)
+        for (int j = 0; j < m_items.length(); ++j)
         {
             QVariant attribute;
             if (!m_tmpColumnContentBuffer.isEmpty())
             {
                 attribute = m_tmpColumnContentBuffer[i][j];
             }
-            m_songs[j]->insertAttribute(column + i, attribute);
+            m_items[j]->insertAttribute(column + i, attribute);
         }
     }
     endInsertColumns();
@@ -237,7 +235,7 @@ bool SongDatabase::insertRows(int row, int count, const QModelIndex &parent)
     beginInsertRows(parent, row, row + count - 1);
     for (int i = 0; i < count; ++i)
     {
-        m_songs.insert( row + i, m_tmpSongBuffer[i] );
+        m_items.insert( row + i, m_tmpSongBuffer[i] );
         emit songAdded( row + i, m_tmpSongBuffer[i] );
     }
     m_tmpSongBuffer.clear();
@@ -253,7 +251,7 @@ bool SongDatabase::removeColumns(int column, int count, const QModelIndex &paren
     for (int i = 0; i < count; ++i)
     {
         m_attributeKeys.removeAt(column + i);
-        for (Song* s : songs())
+        for (Song* s : items())
         {
             s->removeAttribute(column + i);
         }
@@ -270,7 +268,7 @@ bool SongDatabase::removeRows(int row, int count, const QModelIndex &parent)
     beginRemoveRows(parent, row, row + count - 1);
     for (int i = 0; i < count; ++i)
     {
-        m_songs.removeAt(row + i);
+        m_items.removeAt(row + i);
         emit songRemoved(row + i );
     }
     endRemoveRows();
@@ -295,7 +293,7 @@ void SongDatabase::insertSong(Song* song, const int index)
 int SongDatabase::removeSong(Song* song)
 {
     int index;
-    if ( (index = m_songs.indexOf(song)) < 0 )
+    if ( (index = m_items.indexOf(song)) < 0 )
     {
         WARNING << "SongDatabase does not contain song " << song;
     }
@@ -304,18 +302,6 @@ int SongDatabase::removeSong(Song* song)
         assert( removeRows(index, 1, QModelIndex()) );
     }
     return index;
-}
-
-Song* SongDatabase::songAtIndex(const QModelIndex &index) const
-{
-    if (index.isValid() && index.row() < rowCount())
-    {
-        return songs().at(index.row());
-    }
-    else
-    {
-        return NULL;
-    }
 }
 
 void SongDatabase::insertColumn(const int section, const AttributeKey &label)
@@ -402,10 +388,10 @@ QList<File> SongDatabase::getFiles() const
     QList<File> files;
     files << File( "songDatabase", QJsonDocument(toJsonObject()).toJson() );
 
-    for (int i = 0; i < m_songs.size(); ++i)
+    for (int i = 0; i < m_items.size(); ++i)
     {
-        files << File( QString("song%1").arg( m_songs[i]->randomID() ),
-                       QJsonDocument(m_songs[i]->toJsonObject()).toJson() );
+        files << File( QString("song%1").arg( m_items[i]->randomID() ),
+                       QJsonDocument(m_items[i]->toJsonObject()).toJson() );
     }
 
     return files;
@@ -455,7 +441,7 @@ bool SongDatabase::loadFrom(const QString &path)
 void SongDatabase::reset(bool initialize)
 {
     beginResetModel();
-    m_songs.clear();
+    m_items.clear();
     m_attributeKeys.clear();
     endResetModel();
 
@@ -469,7 +455,7 @@ void SongDatabase::reset(bool initialize)
 
 Song* SongDatabase::song( const QString& id ) const
 {
-    for (Song* song : m_songs)
+    for (Song* song : m_items)
     {
         if (song->randomID() == id)
         {
@@ -477,35 +463,6 @@ Song* SongDatabase::song( const QString& id ) const
         }
     }
     return NULL;
-}
-
-Qt::DropActions SongDatabase::supportedDragActions() const
-{
-    return Qt::CopyAction | Qt::MoveAction;
-}
-
-QMimeData* SongDatabase::mimeData(const QModelIndexList &indexes) const
-{
-    QMimeData* mime = new QMimeData();
-
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-
-    QList<qintptr> ptrs;
-    for (const QModelIndex& index : indexes)
-    {
-        if (index.column() != 0)
-        {
-            // we want only one index per row.
-            continue;
-        }
-        Song* song = songAtIndex(index);
-        ptrs << qintptr(song);
-    }
-    stream << ptrs;
-
-    mime->setData( SONG_POINTERS_MIME_DATA_FORMAT, data);
-    return mime;
 }
 
 void SongDatabase::moveRow(int sourceRow, int targetRow)
@@ -518,7 +475,7 @@ bool SongDatabase::moveRows(const QModelIndex &sourceParent, int sourceRow, int 
     assert( !sourceParent.isValid() );
     assert( !destinationParent.isValid() );
 
-    destinationChild = qBound( 0, destinationChild, m_songs.length() - count );
+    destinationChild = qBound( 0, destinationChild, m_items.length() - count );
 
     int diff = destinationChild - sourceRow;
     if (diff > 0)
@@ -526,29 +483,33 @@ bool SongDatabase::moveRows(const QModelIndex &sourceParent, int sourceRow, int 
         assert( beginMoveRows( sourceParent, sourceRow, sourceRow + count - 1, destinationParent, destinationChild + 1 ) );
         for (int i = sourceRow + count - 1; i >= sourceRow; --i)
         {
-            m_songs.insert(i + diff, m_songs.takeAt(i));
+            m_items.insert(i + diff, m_items.takeAt(i));
         }
         endMoveRows();
+        return true;
     }
     else if (diff < 0)
     {
         assert( beginMoveRows( sourceParent, sourceRow, sourceRow + count - 1, destinationParent, destinationChild ) );
         for (int i = sourceRow; i <= sourceRow + count - 1; ++i)
         {
-            m_songs.insert(i + diff, m_songs.takeAt(i));
+            m_items.insert(i + diff, m_items.takeAt(i));
         }
         endMoveRows();
+        return true;
     }
-
-    return true;
+    else
+    {
+        return false;
+    }
 }
 
 QModelIndex SongDatabase::indexOfSong(const Song *song) const
 {
     int row = -1;
-    for (int i = 0; i < m_songs.length() && row < 0; ++i)
+    for (int i = 0; i < m_items.length() && row < 0; ++i)
     {
-        if (song == m_songs[i])
+        if (song == m_items[i])
         {
             row = i;
         }
@@ -580,3 +541,74 @@ void SongDatabase::setAttributeVisible(int i, bool visible)
     endResetModel();
 }
 
+#include "Database/databasemimedata.h"
+QMimeData* SongDatabase::mimeData(const QModelIndexList &indexes) const
+{
+    DatabaseMimeData<Song>* mime = new DatabaseMimeData<Song>();
+    for (const QModelIndex& index : indexes)
+    {
+        qDebug() << "request mimedata from row " << index.row();
+        if (index.column() != 0)
+        {
+            // we want only one index per row.
+            continue;
+        }
+        mime->append(itemAtIndex(index), index.row());
+    }
+    return mime;
+}
+
+#include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
+bool SongDatabase::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+    if (action == Qt::IgnoreAction)
+    {
+        return true;
+    }
+
+    if (parent.isValid())
+    {
+        // no support for drag onto items
+        return false;
+    }
+
+    // drag'n'drop only whole rows, so column is arbitrary
+    Q_UNUSED(column);
+    // since
+    Q_UNUSED(row);
+
+    // check if data is in right format
+    const DatabaseMimeData<Song>* songData = DatabaseMimeData<Song>::cast(data);
+    if (!songData)
+    {
+        return false;
+    }
+
+    // copy paste
+    if (action == Qt::CopyAction)
+    {
+        app().beginMacro( tr("Copy songs") );
+        int i = 0;
+        for (DatabaseMimeData<Song>::IndexedItem item : songData->indexedItems())
+        {
+            app().pushCommand( new SongDatabaseNewSongCommand( this, item.item->copy(), row + i ) );
+            i++;
+        }
+        app().endMacro();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+Qt::DropActions SongDatabase::supportedDragActions() const
+{
+    return Qt::LinkAction;
+}
+
+Qt::DropActions SongDatabase::supportedDropActions() const
+{
+    return Qt::IgnoreAction;
+}

@@ -13,36 +13,32 @@ SongTableView::SongTableView(QWidget *parent) :
     DatabaseView(parent),
     m_delegate( new SongAttributeDelegate(this) )
 {
+    verticalHeader()->hide();
+
     delete horizontalHeader();
     setHorizontalHeader(new RenamableHeaderView( Qt::Horizontal, this ));
     horizontalHeader()->show();
+    horizontalHeader()->setSectionsMovable(true);
+    horizontalHeader()->setDragEnabled(true);
+    horizontalHeader()->setSortIndicatorShown( true );
+    horizontalHeader()->setSectionsClickable( true );
 
     setItemDelegate( m_delegate );
 
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);
 
-    horizontalHeader()->setSectionsMovable(true);
-    horizontalHeader()->setDragEnabled(true);
-    horizontalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
-
     connect(horizontalHeader(), SIGNAL(sectionMoved(int,int,int)), this, SLOT(fakeFocusOutEvent()));
-
-
-    verticalHeader()->hide();
-
-    setDragDropMode( QAbstractItemView::DragDrop );
     setSortingEnabled( true );
 
-    horizontalHeader()->setSortIndicatorShown( true );
-    horizontalHeader()->setSectionsClickable( true );
+    setDragEnabled(true);
+
 }
 
 void SongTableView::setModel(SongDatabaseSortProxy *model)
 {
     DatabaseView::setModel(model);
     connect( model, SIGNAL(modelReset()), this, SLOT(resizeColumnsToContents()) );
-
 }
 
 
@@ -85,76 +81,6 @@ Qt::DropAction SongTableView::dropAction( QDropEvent* event )
     }
 }
 
-void SongTableView::dragEnterEvent(QDragEnterEvent *event)
-{
-    if (event->mimeData()->hasFormat(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT) )
-    {
-        event->setDropAction( dropAction( event ) );
-        event->accept();
-    }
-}
-
-void SongTableView::dragMoveEvent(QDragMoveEvent *event)
-{
-    if (event->mimeData()->hasFormat(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT) )
-    {
-        event->setDropAction( dropAction( event ) );
-        event->accept();
-    }
-}
-
-#include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
-void SongTableView::dropEvent(QDropEvent *event)
-{
-    int row;
-    QModelIndex index = indexAt( event->pos() );
-    if (index.isValid())
-    {
-        row = proxyModel()->mapToSource( index ).row();
-    }
-    else
-    {
-        row = model()->rowCount();
-    }
-
-    pasteSongs( event->mimeData(), row, dropAction( event ) );
-}
-
-#include "Commands/SongDatabaseCommands/songdatabasemovesongcommand.h"
-#include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
-void SongTableView::pasteSongs(const QMimeData *mimeData, int row, Qt::DropAction action)
-{
-    QByteArray data = mimeData->data( SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT );
-    if (data.isEmpty())
-    {
-        return;
-    }
-
-    QList<qintptr> originalSongs;
-    QDataStream stream( data );
-    stream >> originalSongs;
-
-    app().beginMacro( tr("Paste songs") );
-    if (action == Qt::MoveAction)
-    {
-        for (qintptr song : originalSongs)
-        {
-            QModelIndex index = model()->indexOfSong((Song*) song);
-            index = proxyModel()->mapFromSource( index );
-            int sourceRow = proxyModel()->mapToSource( index ).row();
-
-            app().pushCommand( new SongDatabaseMoveSongCommand( model(), sourceRow, row ) );
-        }
-    }
-    else if (action == Qt::CopyAction)
-    {
-        for (qintptr song : originalSongs)
-        {
-            app().pushCommand( new SongDatabaseNewSongCommand( model(), ((Song*) song)->copy() ) );
-        }
-    }
-    app().endMacro();
-}
 
 void SongTableView::keyPressEvent(QKeyEvent *event)
 {
@@ -169,9 +95,3 @@ void SongTableView::keyPressEvent(QKeyEvent *event)
     }
     QTableView::keyPressEvent( event );
 }
-
-Taggable* SongTableView::objectAt(const QModelIndex &index)
-{
-    return model()->songAtIndex( proxyModel()->mapToSource(index) );
-}
-

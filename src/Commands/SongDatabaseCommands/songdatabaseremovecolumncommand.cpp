@@ -17,7 +17,7 @@ void SongDatabaseRemoveColumnCommand::redo()
 {
     m_attributes.clear();
     m_label = database()->attributeKeys()[m_section];
-    for (Song* s : database()->songs())
+    for (Song* s : database()->items())
     {
         m_attributes.append(s->attribute( m_section ));
     }

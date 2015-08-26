@@ -19,7 +19,6 @@ public:
 
     Setlist* model() const;
     void setModel(Setlist* setlist);
-    void paste(const QMimeData* mime);
 
     QList<SetlistItem*> selectedItems() const;
 
@@ -31,9 +30,6 @@ signals:
     void clicked();
 
 protected:
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dragMoveEvent(QDragMoveEvent *e);
-    void dropEvent(QDropEvent *e);
     void mousePressEvent(QMouseEvent *event);
 
 private slots:
@@ -54,13 +50,6 @@ private:
 
     bool includeAttachment( const Attachment* attachment );
     QString m_filterTag;
-
-
-public:
-    static const QString ITEMS_MIMEDATA_FORMAT;
-
-
-
 };
 
 #endif // SETLISTVIEW_H

@@ -1,7 +1,7 @@
 #include "songdatabasesortproxy.h"
 
 SongDatabaseSortProxy::SongDatabaseSortProxy(QObject *parent) :
-    QSortFilterProxyModel( parent)
+    DatabaseSortProxy<Song>(parent)
 {
     // filter all columns
     setFilterKeyColumn(-1);

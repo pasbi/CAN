@@ -53,7 +53,6 @@ SOURCES += main.cpp\
     Project/project.cpp \
     Database/SongDatabase/songdatabase.cpp \
     Database/EventDatabase/eventdatabase.cpp \
-    Database/database.cpp \
     taggable.cpp \
     Database/SongDatabase/song.cpp \
     Attachments/attachment.cpp \
@@ -130,7 +129,6 @@ SOURCES += main.cpp\
     Commands/SetlistCommands/setlisteditdatacommand.cpp \
     Commands/SetlistCommands/setlistinsertitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistview.cpp \
-    Commands/SetlistCommands/setlistmoverowscommand.cpp \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp \
     Attachments/AudioAttachment/sectionsmodel.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.cpp \
@@ -141,10 +139,8 @@ SOURCES += main.cpp\
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.cpp \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
-    DatabaseView/databaseview.cpp \
     combobox.cpp \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp \
-    Commands/SongDatabaseCommands/songdatabasemovesongcommand.cpp \
     Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp \
     Dialogs/tagdialog.cpp \
@@ -172,7 +168,9 @@ SOURCES += main.cpp\
     programdialog.cpp \
     program.cpp \
     Commands/SongCommands/songeditprogramcommand.cpp \
-    midicontroller.cpp
+    midicontroller.cpp \
+    Database/EventDatabase/setlistitem.cpp \
+    Commands/SetlistCommands/setlistmoverowscommand.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -259,7 +257,6 @@ HEADERS  += mainwindow.h \
     Commands/SetlistCommands/setlisteditdatacommand.h \
     Commands/SetlistCommands/setlistinsertitemcommand.h \
     DatabaseView/EventDatabaseView/setlistview.h \
-    Commands/SetlistCommands/setlistmoverowscommand.h \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h \
     Attachments/AudioAttachment/sectionsmodel.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.h \
@@ -273,7 +270,6 @@ HEADERS  += mainwindow.h \
     DatabaseView/databaseview.h \
     combobox.h \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.h \
-    Commands/SongDatabaseCommands/songdatabasemovesongcommand.h \
     Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.h \
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h \
     Dialogs/tagdialog.h \
@@ -307,7 +303,11 @@ HEADERS  += mainwindow.h \
     programdialog.h \
     program.h \
     Commands/SongCommands/songeditprogramcommand.h \
-    midicontroller.h
+    midicontroller.h \
+    Database/databasemimedata.h \
+    Database/databasesortproxy.h \
+    Database/EventDatabase/setlistitem.h \
+    Commands/SetlistCommands/setlistmoverowscommand.h
 
 
 

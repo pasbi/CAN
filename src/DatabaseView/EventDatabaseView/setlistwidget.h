@@ -27,8 +27,6 @@ public:
 
 
 private slots:
-    void on_buttonSortUp_clicked();
-    void on_buttonSortDown_clicked();
     void on_buttonDelete_clicked();
     void on_buttonAdd_clicked();
 

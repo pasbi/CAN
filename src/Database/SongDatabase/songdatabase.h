@@ -9,7 +9,7 @@
 typedef qint64 SongID;
 class SongDatabaseSortProxy;
 class CellEditor;
-class SongDatabase : public Database
+class SongDatabase : public Database<Song>
 {
 
 public:
@@ -42,8 +42,6 @@ public:
     Q_OBJECT
 public:
     SongDatabase(Project* project);
-
-    QList<Song*> songs() const { return m_songs; }
     QStringList attributeKeys() const ;
 
     /////////////////////////////////////////////////
@@ -62,12 +60,10 @@ public:
     void notifyDataChanged(const QModelIndex &index);
     void notifyDataChanged(const QModelIndex & start, const QModelIndex & end);
     void notifyDataChanged(const Song *song);
-    Song* songAtIndex(const QModelIndex & index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant data( const int row, const int column, const int role);
-    Qt::DropActions supportedDragActions() const;
-    QMimeData* mimeData(const QModelIndexList &indexes) const;
     void moveRow( int sourceRow, int targetRow );
+
 
     static QString extractEditorType(const QString & key);
     static QString extractHeaderLabel(const QString & key);
@@ -76,6 +72,13 @@ public:
     Song* song(const QString &id ) const;
 
     QModelIndex indexOfSong( const Song* song ) const;
+
+    // Drag'n'Drop
+    // we only allow songs to be dragged (LinkAction). No redordering.
+    Qt::DropActions supportedDragActions() const;
+    Qt::DropActions supportedDropActions() const;
+    QMimeData* mimeData(const QModelIndexList &indexes) const;
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 
 
 private:
@@ -119,11 +122,6 @@ private:
 
 
 
-
-private:
-    QList<Song*> m_songs;
-
-
     /////////////////////////////////////////////////
     ////
     ///  Attribute Keys, like title, artist, year, etc.
@@ -165,10 +163,7 @@ private:
 
 
 
-
-
 public:
-    static const QString SONG_POINTERS_MIME_DATA_FORMAT;
     static void editorTypeAndHeaderLabel( const QString & encoding, QString & editorType, QString & attributeValue );
 
 

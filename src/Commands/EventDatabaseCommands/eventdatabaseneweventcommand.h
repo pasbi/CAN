@@ -7,7 +7,7 @@
 class EventDatabaseNewEventCommand : public EventDatabaseCommand
 {
 public:
-    EventDatabaseNewEventCommand( EventDatabase* database , Event *event = NULL );
+    EventDatabaseNewEventCommand(EventDatabase* database, Event *event, int row = -1);
     ~EventDatabaseNewEventCommand();
     void undo();
     void redo();
@@ -15,6 +15,7 @@ public:
 private:
     Event* m_event;
     bool m_ownsEvent = false;
+    const int m_row;
 };
 
 #endif // EVENTDATABASENEWEVENTCOMMAND_H

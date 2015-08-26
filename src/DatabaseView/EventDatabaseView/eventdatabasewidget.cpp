@@ -30,7 +30,7 @@ Event* EventDatabaseWidget::currentEvent() const
     }
     else
     {
-        return ui->eventTableViewContainer->eventTableView()->model()->eventAtIndex( rows.first() );
+        return ui->eventTableViewContainer->eventTableView()->model()->itemAtIndex( rows.first() );
     }
 }
 

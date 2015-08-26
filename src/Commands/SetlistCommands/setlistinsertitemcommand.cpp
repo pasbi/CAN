@@ -6,7 +6,6 @@ SetlistInsertItemCommand::SetlistInsertItemCommand(Setlist *setlist, int positio
     m_item(item)
 {
     setText( CommandTranslator::tr("insert item to setlist") );
-
 }
 
 SetlistInsertItemCommand::~SetlistInsertItemCommand()

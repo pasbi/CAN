@@ -7,7 +7,7 @@
 #include "Database/SongDatabase/songdatabasesortproxy.h"
 
 
-class SongTableView : public DatabaseView
+class SongTableView : public DatabaseView<Song>
 {
     Q_OBJECT
 public:
@@ -16,18 +16,10 @@ public:
     void setModel(SongDatabaseSortProxy* model);
     SongDatabase* model() const;
     SongDatabaseSortProxy* proxyModel() const;
-
-
-    void setReadOnly( );
-
-    void pasteSongs(const QMimeData* mimeData, int row , Qt::DropAction action);
+    void setReadOnly();
 
 protected:
-    void dropEvent(QDropEvent *event);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dragMoveEvent(QDragMoveEvent *event);
     void keyPressEvent(QKeyEvent *event);
-    Taggable* objectAt(const QModelIndex &index);
 
 public slots:
     void fakeFocusOutEvent();

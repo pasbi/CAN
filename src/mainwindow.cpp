@@ -646,7 +646,7 @@ void MainWindow::on_actionOpen_triggered()
 bool MainWindow::canRemoveSong(Song *song)
 {
     // check if song is used in setlist
-    for (Event* event: m_project.eventDatabase()->events())
+    for (Event* event: m_project.eventDatabase()->items())
     {
         for (SetlistItem* item : event->setlist()->items())
         {
@@ -1091,7 +1091,7 @@ void MainWindow::on_action_Index_Info_triggered()
 #include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
 void MainWindow::my_on_actionNew_Event_triggered()
 {
-    app().pushCommand( new EventDatabaseNewEventCommand( m_project.eventDatabase()) );
+    app().pushCommand( new EventDatabaseNewEventCommand( m_project.eventDatabase(), new Event(m_project.eventDatabase())) );
 }
 
 #include "Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h"
@@ -1137,7 +1137,7 @@ void MainWindow::my_on_actionCopy_Song_triggered()
 
 void MainWindow::my_on_actionPaste_Song_triggered()
 {
-    ui->songDatabaseWidget->songTableView()->pasteSongs( app().clipboard()->mimeData(), m_project.songDatabase()->rowCount(), Qt::CopyAction );
+    app().project()->songDatabase()->dropMimeData(app().clipboard()->mimeData(), Qt::CopyAction, m_project.songDatabase()->rowCount(), 0, QModelIndex());
 }
 
 void MainWindow::my_on_actionCopy_Event_triggered()
@@ -1148,7 +1148,7 @@ void MainWindow::my_on_actionCopy_Event_triggered()
 
 void MainWindow::my_on_actionPaste_Event_triggered()
 {
-    ui->eventDatabaseWidget->eventTableView()->pasteEvents( app().clipboard()->mimeData(), m_project.eventDatabase()->rowCount(), Qt::CopyAction );
+    app().project()->eventDatabase()->dropMimeData(app().clipboard()->mimeData(), Qt::CopyAction, m_project.eventDatabase()->rowCount(), 0, QModelIndex());
 }
 
 #include "Commands/SongCommands/songeditprogramcommand.h"
@@ -1271,7 +1271,7 @@ void MainWindow::on_action_Export_all_songs_triggered()
 {
     OrphantSetlist setlist( tr("All songs"));
 
-    for( Song* song : m_project.songDatabase()->songs() )
+    for( Song* song : m_project.songDatabase()->items() )
     {
         setlist.appendItem( new SetlistItem( song ) );
     }

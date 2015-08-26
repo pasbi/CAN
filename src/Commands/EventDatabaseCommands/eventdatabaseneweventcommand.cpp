@@ -1,19 +1,11 @@
 #include "eventdatabaseneweventcommand.h"
 #include "global.h"
 
-EventDatabaseNewEventCommand::EventDatabaseNewEventCommand( EventDatabase *database, Event* event ) :
+EventDatabaseNewEventCommand::EventDatabaseNewEventCommand( EventDatabase *database, Event* event, int row ) :
     EventDatabaseCommand( database ),
-    m_event( event )
+    m_event( event ),
+    m_row(row)
 {
-    if ( m_event == NULL )
-    {
-        m_event = new Event( database,
-                             QDateTime::currentDateTime(),
-                             QDateTime::currentDateTime(),
-                             Event::Rehearsal,
-                             "" );
-    }
-
     setText( CommandTranslator::tr("new event") );
 }
 
@@ -27,7 +19,14 @@ EventDatabaseNewEventCommand::~EventDatabaseNewEventCommand()
 
 void EventDatabaseNewEventCommand::redo()
 {
-    eventDatabase()->appendEvent( m_event );
+    if (m_row < 0)
+    {
+        eventDatabase()->appendEvent( m_event );
+    }
+    else
+    {
+        eventDatabase()->insertEvent( m_event, m_row );
+    }
     m_ownsEvent = false;
 }
 

@@ -3,11 +3,10 @@
 #include "Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h"
 #include "application.h"
 #include <QJsonDocument>
-
-const QString EventDatabase::EVENT_POINTERS_MIME_DATA_FORMAT = "can/events";
+#include "Database/databasemimedata.h"
 
 EventDatabase::EventDatabase(Project *project) :
-    Database(project)
+    Database<Event>(project)
 {
     Event::seedRandomID();
 }
@@ -17,10 +16,10 @@ QList<File> EventDatabase::getFiles() const
     QList<File> files;
     files << File( "eventDatabase", QJsonDocument(toJsonObject()).toJson() );
 
-    for (int i = 0; i < m_events.size(); ++i)
+    for (int i = 0; i < m_items.size(); ++i)
     {
-        files << File( QString("event%1").arg( m_events[i]->randomID() ),
-                       QJsonDocument(m_events[i]->toJsonObject()).toJson() );
+        files << File( QString("event%1").arg( m_items[i]->randomID() ),
+                       QJsonDocument(m_items[i]->toJsonObject()).toJson() );
     }
 
     return files;
@@ -33,7 +32,12 @@ QJsonObject EventDatabase::toJsonObject() const
 
 Qt::DropActions EventDatabase::supportedDragActions() const
 {
-    return Qt::CopyAction | Qt::MoveAction;
+    return Qt::IgnoreAction;
+}
+
+Qt::DropActions EventDatabase::supportedDropActions() const
+{
+    return Qt::IgnoreAction;
 }
 
 bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
@@ -43,7 +47,7 @@ bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
     beginResetModel();
     bool success = true;
 
-    m_events.clear();
+    m_items.clear();
     QStringList filenames = QDir( project()->path() ).entryList( QStringList() << "event*" );
     filenames.removeOne( "eventDatabase" );
 
@@ -51,7 +55,7 @@ bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
     {
         Event* e = new Event( this );
         success &= e->loadFrom( project()->makeAbsolute( filename ) );
-        m_events << e;
+        m_items << e;
     }
 
     endResetModel();
@@ -61,15 +65,15 @@ bool EventDatabase::restoreFromJsonObject(const QJsonObject &object)
 void EventDatabase::reset()
 {
     beginResetModel();
-    qDeleteAll( m_events );
-    m_events.clear();
+    qDeleteAll( m_items );
+    m_items.clear();
     endResetModel();
 }
 
 int EventDatabase::rowCount(const QModelIndex &parent) const
 {
     assert( !parent.isValid() );
-    return m_events.length();
+    return m_items.length();
 }
 
 int EventDatabase::columnCount(const QModelIndex &parent) const
@@ -89,9 +93,9 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case Qt::DisplayRole:
-            return Event::typeString( m_events[row]->type(), true );
+            return Event::typeString( m_items[row]->type(), true );
         case Qt::EditRole:
-            return (int) m_events[row]->type();
+            return (int) m_items[row]->type();
         default:
             return QVariant();
         }
@@ -100,9 +104,9 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case Qt::DisplayRole:
-            return m_events[row]->beginning();
+            return m_items[row]->beginning();
         case Qt::EditRole:
-            return QVariant::fromValue( TimeSpan( m_events[row]->timeSpan() ));
+            return QVariant::fromValue( TimeSpan( m_items[row]->timeSpan() ));
         default:
             return QVariant();
         }
@@ -112,7 +116,7 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         {
         case Qt::DisplayRole:
         case Qt::EditRole:
-            return m_events[row]->label();
+            return m_items[row]->label();
         default:
             return QVariant();
         }
@@ -133,7 +137,7 @@ QVariant EventDatabase::headerData(int section, Qt::Orientation orientation, int
 Qt::ItemFlags EventDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
-    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
+    return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable;
 }
 
 void EventDatabase::notifyDataChanged(const QModelIndex &index)
@@ -148,7 +152,7 @@ void EventDatabase::notifyDataChanged(const QModelIndex & start, const QModelInd
 
 void EventDatabase::notifyDataChanged( const Event *event )
 {
-    int row = m_events.indexOf((Event*) event);
+    int row = m_items.indexOf((Event*) event);
     if (row < 0)
     {
         return;
@@ -158,18 +162,6 @@ void EventDatabase::notifyDataChanged( const Event *event )
     QModelIndex end   = index( row, columnCount() - 1, QModelIndex() );
 
     notifyDataChanged( start, end );
-}
-
-Event* EventDatabase::eventAtIndex(const QModelIndex & index) const
-{
-    if (index.isValid() && index.row() < rowCount())
-    {
-        return m_events.at(index.row());
-    }
-    else
-    {
-        return NULL;
-    }
 }
 
 bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -185,7 +177,7 @@ bool EventDatabase::setData_(const QModelIndex &index, const QVariant &value, in
 {
     assert(!index.parent().isValid());
 
-    Event* event = eventAtIndex(index);
+    Event* event = itemAtIndex(index);
     assert( event );
     if (role == Qt::EditRole)
     {
@@ -249,7 +241,7 @@ bool EventDatabase::insertRows(int row, int count, const QModelIndex &parent)
     beginInsertRows(parent, row, row + count - 1);
     for (int i = 0; i < count; ++i)
     {
-        m_events.insert( row + i, m_tmpEventBuffer[i] );
+        m_items.insert( row + i, m_tmpEventBuffer[i] );
         emit eventAdded( row + i, m_tmpEventBuffer[i] );
     }
     m_tmpEventBuffer.clear();
@@ -261,7 +253,7 @@ bool EventDatabase::insertRows(int row, int count, const QModelIndex &parent)
 int EventDatabase::removeEvent(Event* event)
 {
     int index;
-    if ( (index = m_events.indexOf(event)) < 0 )
+    if ( (index = m_items.indexOf(event)) < 0 )
     {
         WARNING << "EventDatabase does not contain event " << event;
     }
@@ -280,7 +272,7 @@ bool EventDatabase::removeRows(int row, int count, const QModelIndex &parent)
     beginRemoveRows(parent, row, row + count - 1);
     for (int i = 0; i < count; ++i)
     {
-        m_events.removeAt(row + i);
+        m_items.removeAt(row + i);
         emit eventRemoved(row + i );
     }
     endRemoveRows();
@@ -288,47 +280,12 @@ bool EventDatabase::removeRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-bool EventDatabase::moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild)
-{
-    assert( !sourceParent.isValid() );
-    assert( !destinationParent.isValid() );
-
-    destinationChild = qBound( 0, destinationChild, m_events.length() - count );
-
-    int diff = destinationChild - sourceRow;
-    if (diff > 0)
-    {
-        assert( beginMoveRows( sourceParent, sourceRow, sourceRow + count - 1, destinationParent, destinationChild + 1 ) );
-        for (int i = sourceRow + count - 1; i >= sourceRow; --i)
-        {
-            m_events.insert(i + diff, m_events.takeAt(i));
-        }
-        endMoveRows();
-    }
-    else if (diff < 0)
-    {
-        assert( beginMoveRows( sourceParent, sourceRow, sourceRow + count - 1, destinationParent, destinationChild ) );
-        for (int i = sourceRow; i <= sourceRow + count - 1; ++i)
-        {
-            m_events.insert(i + diff, m_events.takeAt(i));
-        }
-        endMoveRows();
-    }
-
-    return true;
-}
-
-void EventDatabase::moveRow(int sourceRow, int targetRow)
-{
-    assert( moveRows( QModelIndex(), sourceRow, 1, QModelIndex(), targetRow ) );
-}
-
 QModelIndex EventDatabase::indexOfEvent(const Event *event) const
 {
     int row = -1;
-    for (int i = 0; i < m_events.length() && row < 0; ++i)
+    for (int i = 0; i < m_items.length() && row < 0; ++i)
     {
-        if (event == m_events[i])
+        if (event == m_items[i])
         {
             row = i;
         }
@@ -340,12 +297,7 @@ QModelIndex EventDatabase::indexOfEvent(const Event *event) const
 
 QMimeData* EventDatabase::mimeData(const QModelIndexList &indexes) const
 {
-    QMimeData* mime = new QMimeData();
-
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-
-    QList<qintptr> ptrs;
+    DatabaseMimeData<Event>* mime = new DatabaseMimeData<Event>();
     for (const QModelIndex& index : indexes)
     {
         if (index.column() != 0)
@@ -353,13 +305,54 @@ QMimeData* EventDatabase::mimeData(const QModelIndexList &indexes) const
             // we want only one index per row.
             continue;
         }
-        Event* event = eventAtIndex(index);
-        ptrs << qintptr(event);
+        mime->append(itemAtIndex(index), index.row());
     }
-    stream << ptrs;
-
-    mime->setData( EVENT_POINTERS_MIME_DATA_FORMAT, data);
     return mime;
+}
+
+#include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
+bool EventDatabase::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+    if (action == Qt::IgnoreAction)
+    {
+        return true;
+    }
+
+    if (parent.isValid())
+    {
+        // no support for drag onto items
+        return false;
+    }
+
+    // drag'n'drop only whole rows, so column is arbitrary
+    Q_UNUSED(column);
+    // since
+    Q_UNUSED(row);
+
+    // check if data is in right format
+    const DatabaseMimeData<Event>* eventData = DatabaseMimeData<Event>::cast(data);
+    if (!eventData)
+    {
+        return false;
+    }
+
+    // copy paste
+    if (action == Qt::CopyAction)
+    {
+        app().beginMacro( tr("Copy events") );
+        int i = 0;
+        for (DatabaseMimeData<Event>::IndexedItem item : eventData->indexedItems())
+        {
+            app().pushCommand( new EventDatabaseNewEventCommand( this, item.item->copy(), row + i ) );
+            i++;
+        }
+        app().endMacro();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 

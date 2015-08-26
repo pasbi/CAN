@@ -15,9 +15,9 @@ class Event : public QObject, public Taggable
 public:
     enum Type { Rehearsal, Gig, Other };
     Event( EventDatabase*   database,
-           const QDateTime& beginning = QDateTime(),
-           const QDateTime& ending    = QDateTime(),
-           Type             type      = Other,
+           const QDateTime& beginning = QDateTime::currentDateTime(),
+           const QDateTime& ending    = QDateTime::currentDateTime(),
+           Type             type      = Rehearsal,
            const QString &  label = "");
 
     Type type() const { return m_type; }

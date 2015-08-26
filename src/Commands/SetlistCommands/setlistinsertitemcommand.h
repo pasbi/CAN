@@ -3,6 +3,7 @@
 
 #include "setlistcommand.h"
 
+//TODO write templated abstraction for all insert-item-commands with m_ownsItem-flag
 class SetlistInsertItemCommand : public SetlistCommand
 {
 public:

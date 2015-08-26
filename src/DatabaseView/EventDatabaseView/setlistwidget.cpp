@@ -40,34 +40,10 @@ void SetlistWidget::updateButtonsEnabled()
 {
     bool buttonsEnabled = !!ui->listView->model();
     bool itemButtonsEnabled = !ui->listView->selectedItems().isEmpty();
-    bool upperLimit = false;
-    bool lowerLimit = false;
-
-    if (!ui->listView->selectionModel() || ui->listView->selectionModel()->selectedRows().isEmpty())
-    {
-        upperLimit = true;
-        lowerLimit = true;
-    }
-    else
-    {
-        for (const QModelIndex & index : ui->listView->selectionModel()->selectedRows())
-        {
-            if (index.row() == 0)
-            {
-                lowerLimit = true;
-            }
-            if (index.row() == setlist()->rowCount() - 1)
-            {
-                upperLimit = true;
-            }
-        }
-    }
 
     ui->buttonAdd->setEnabled( buttonsEnabled );
     ui->buttonShowSongs->setEnabled( buttonsEnabled );
     ui->buttonDelete->setEnabled( itemButtonsEnabled );
-    ui->buttonSortDown->setEnabled( !upperLimit );
-    ui->buttonSortUp->setEnabled( !lowerLimit );
     ui->buttonExportPDF->setEnabled( buttonsEnabled );
 }
 
@@ -100,42 +76,6 @@ bool ascending(const QModelIndex& a, const QModelIndex& b)
 bool descending(const QModelIndex& a, const QModelIndex& b)
 {
     return !ascending(a, b);
-}
-
-#include "Commands/SetlistCommands/setlistmoverowscommand.h"
-void SetlistWidget::on_buttonSortUp_clicked()
-{
-    if (setlist() && ui->listView->selectionModel())
-    {
-        QModelIndexList indices = ui->listView->selectionModel()->selectedRows();
-        if (!indices.isEmpty())
-        {
-            qSort( indices.begin(), indices.end(), ascending);
-            for (const QModelIndex& index : indices)
-            {
-                app().pushCommand( new SetlistMoveRowsCommand( setlist(), index, -1 ) );
-            }
-        }
-    }
-    updateButtonsEnabled();
-}
-
-
-void SetlistWidget::on_buttonSortDown_clicked()
-{
-    if (setlist() && ui->listView->selectionModel())
-    {
-        QModelIndexList indices = ui->listView->selectionModel()->selectedRows();
-        if (!indices.isEmpty())
-        {
-            qSort( indices.begin(), indices.end(), descending);
-            for (const QModelIndex& index : indices)
-            {
-                app().pushCommand( new SetlistMoveRowsCommand( setlist(), index, 1 ) );
-            }
-        }
-    }
-    updateButtonsEnabled();
 }
 
 #include "Commands/SetlistCommands/setlistremoveitemcommand.h"

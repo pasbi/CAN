@@ -11,8 +11,6 @@
 #include "Dialogs/chordpatternviewer.h"
 
 
-const QString SetlistView::ITEMS_MIMEDATA_FORMAT = "CAN/Setlist/Item";
-
 SetlistView::SetlistView(QWidget *parent) :
     QTableView(parent)
 {
@@ -39,132 +37,6 @@ SetlistView::SetlistView(QWidget *parent) :
 
 SetlistView::~SetlistView()
 {
-}
-
-bool acceptMimeData( const QMimeData* data )
-{
-    // CAN/song from SongDatabase, CAN/Setlist/Item from internal move/copy
-    return data->hasFormat(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT) || data->hasFormat(SetlistView::ITEMS_MIMEDATA_FORMAT);
-}
-
-void SetlistView::dragEnterEvent(QDragEnterEvent *event)
-{
-    if ( model() && acceptMimeData(event->mimeData()) )
-    {
-        event->acceptProposedAction();
-    }
-}
-
-void SetlistView::dragMoveEvent(QDragMoveEvent *e)
-{
-    if (model() && acceptMimeData(e->mimeData()))
-    {
-        e->acceptProposedAction();
-    }
-}
-
-void SetlistView::paste( const QMimeData* mime )
-{
-    if (mime->hasFormat( ITEMS_MIMEDATA_FORMAT ))
-    {
-        app().project()->beginMacro(tr("Paste setlist items"));
-
-        QDataStream stream( mime->data( ITEMS_MIMEDATA_FORMAT ));
-
-        QList<SetlistItem*> items;
-        stream >> items;
-        for (SetlistItem* item : items)
-        {
-            app().project()->pushCommand( new SetlistInsertItemCommand( model(), model()->rowCount(), item ));
-        }
-        model()->notifyDataChanged( model()->index(model()->indexOf(items.first()), 0),
-                                    model()->index(model()->indexOf(items.last()),  0) );
-
-        app().project()->endMacro();
-    }
-}
-
-void SetlistView::dropEvent(QDropEvent *e)
-{
-    if (!model())
-    {
-        return;
-    }
-
-    int position = 0;
-    int n = model()->rowCount(QModelIndex());
-    QModelIndex i = indexAt(e->pos());
-    if (i.isValid())
-    {
-        position = i.row();
-    }
-    else
-    {
-        position = n;
-    }
-
-    Qt::DropAction dropaction = e->proposedAction();
-
-    if (e->mimeData()->hasFormat(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT))
-    {
-        // always copy this mimetype
-        QList<qintptr> ptrs;
-        QDataStream stream( e->mimeData()->data(SongDatabase::SONG_POINTERS_MIME_DATA_FORMAT) );
-        stream >> ptrs;
-        if (!ptrs.isEmpty())
-        {
-            QList<SetlistItem*> newItems;
-            app().project()->beginMacro(tr("Drop Songs"));
-            int i = 0;
-            for (qintptr ptr : ptrs)
-            {
-                Song* song = (Song*)( ptr );
-                newItems << new SetlistItem( song );
-                app().project()->pushCommand( new SetlistInsertItemCommand( model(), position + i++, newItems.last() ) );
-            }
-
-            model()->notifyDataChanged( model()->index(model()->indexOf(newItems.first()), 0),
-                                        model()->index(model()->indexOf(newItems.last()),  0) );
-            app().project()->endMacro();
-        }
-        e->accept();
-    }
-    else if (e->mimeData()->hasFormat(SetlistView::ITEMS_MIMEDATA_FORMAT))
-    {
-        if ( dropaction == Qt::MoveAction )
-        {
-            app().project()->beginMacro(tr("Move setlist items"));
-        }
-        else
-        {
-            app().project()->beginMacro(tr("Copy setlist items"));
-        }
-
-        QDataStream stream( e->mimeData()->data(SetlistView::ITEMS_MIMEDATA_FORMAT));
-
-        QList<SetlistItem*> items;
-        stream >> items;
-        for (SetlistItem* item : items)
-        {
-            app().project()->pushCommand( new SetlistInsertItemCommand( model(), position, item ));
-        }
-        model()->notifyDataChanged( model()->index(model()->indexOf(items.first()), 0),
-                                    model()->index(model()->indexOf(items.last()),  0) );
-        if ( dropaction == Qt::CopyAction )
-        {
-            // copy
-            e->accept();
-        }
-        else
-        {
-            // move, remove source items
-            model()->removeDraggedItems();
-            // e->accept() must not be called here since this makes the view to delete the dragged item
-            // (which is exactly what we want. But the view deletes it without involving the remove-item-command)
-        }
-
-        app().project()->endMacro();
-    }
 }
 
 void SetlistView::mousePressEvent(QMouseEvent *event)
@@ -212,11 +84,12 @@ void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
     Q_UNUSED( pos );
     bool selectionIsEmpty = selectionModel()->selectedRows().isEmpty();
 
+    //TODO refactor this stuff. Think about outsoursing this with EventDatabaseView and SongDatabaseView in a common super class
     menu->addActions( actions() );
-    actions()[0]->setEnabled( !!model() );                           // new item
-    actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
-    actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
-    actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( SetlistView::ITEMS_MIMEDATA_FORMAT ) );     // paste items
+//    actions()[0]->setEnabled( !!model() );                           // new item
+//    actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
+//    actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
+//    actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( Setlist::ITEMS_MIMEDATA_FORMAT ) );     // paste items
 }
 
 #include "Commands/SetlistCommands/setlistadditemcommand.h"
@@ -255,7 +128,7 @@ void SetlistView::my_on_actionCopySetlistItem_triggered()
 
 void SetlistView::my_on_actionPasteSetlistItem_triggered()
 {
-    paste( app().clipboard()->mimeData() );
+//    paste( app().clipboard()->mimeData() );
 }
 
 QList<SetlistItem*> SetlistView::selectedItems() const
@@ -307,6 +180,7 @@ bool SetlistView::includeAttachment( const Attachment* attachment )
 
 void SetlistView::updateCellWidgets()
 {
+    //TODO double click seems not to work (edit trigger)
     if (!model())
     {
         return;

@@ -5,7 +5,7 @@
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
 
-class EventTableView : public DatabaseView
+class EventTableView : public DatabaseView<Event>
 {
     Q_OBJECT
 
@@ -18,15 +18,8 @@ public:
     EventDatabase* model() const;
     EventDatabaseSortProxy* proxyModel() const;
 
-    void pasteEvents(const QMimeData *mimeData, int row, Qt::DropAction action);
-
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dragMoveEvent(QDragMoveEvent *event);
-    void dropEvent(QDropEvent *event);
-    Taggable* objectAt(const QModelIndex &index);
-
 
 private:
     bool showDialog(QModelIndex index);
@@ -34,8 +27,6 @@ private:
 
     QAction* m_actionNew_Event;
     QAction* m_actionDelete_Event;
-
-    static Qt::DropAction dropAction( QDropEvent* event );
 
 
 };
