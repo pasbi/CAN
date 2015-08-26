@@ -52,6 +52,7 @@ void SetlistView::setModel(Setlist *setlist)
         disconnect( model(), SIGNAL(rowsInserted(QModelIndex,int,int)),                this, SLOT(updateCellWidgets()) );
         disconnect( model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
         disconnect( model(), SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
+        disconnect( model(), SIGNAL(modelReset()),                                     this, SLOT(updateCellWidgets()) );
     }
     QTableView::setModel( setlist );
     if (setlist)
@@ -59,6 +60,7 @@ void SetlistView::setModel(Setlist *setlist)
         connect( setlist, SIGNAL(rowsInserted(QModelIndex,int,int)),                this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
+        connect( setlist, SIGNAL(modelReset()),                                     this, SLOT(updateCellWidgets()) );
         updateCellWidgets();
         horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );
         horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Fixed );

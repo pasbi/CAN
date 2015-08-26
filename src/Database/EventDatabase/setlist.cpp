@@ -346,40 +346,6 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
             if (setlistData->indexedItems().count() > 0)
             {
                 app().pushCommand( new SetlistMoveRowsCommand(this, setlistData->indexedItemsSorted(), row) );
-//                beginResetModel();
-//                QList<SetlistItem*> items;
-//                int n = setlistData->indexedItems().length();
-//                int insertPos = row;
-//                for (int i = n-1; i >= 0; --i)
-//                {
-//                    int index = setlistData->indexedItemsSorted()[i].index;
-//                    items.prepend( m_items.takeAt( index ) );
-//                    if (index < insertPos)
-//                    {
-//                        insertPos--;
-//                    }
-//                }
-
-//                for (int i = 0; i < n; ++i)
-//                {
-//                    m_items.insert(insertPos + i, items[i]);
-//                }
-//                endResetModel();
-
-//                app().beginMacro(tr("Move Items"));
-                // this works for redo, but undo does not work :(
-//                int firstItemIndex = setlistData->sortedItems().first().index;
-//                int n = setlistData->sortedItems().length();
-//                for (int i = n-1; i >= 1; --i)
-//                {
-//                    int sourceRow = setlistData->sortedItems()[i].index;
-//                    if (sourceRow != firstItemIndex + i)
-//                    {
-//                        app().pushCommand( new SetlistMoveRowsCommand(this, sourceRow, firstItemIndex));
-//                    }
-//                }
-////                app().pushCommand( new SetlistMoveRowsCommand( this, firstItemIndex, setlistData->indexedItems().count(), row ));
-//                app().endMacro();
             }
             return true;
         }
