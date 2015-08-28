@@ -24,7 +24,7 @@ SetlistView::SetlistView(QWidget *parent) :
     horizontalHeader()->hide();
     setHorizontalScrollMode( QTableView::ScrollPerPixel );
 
-    setEditTriggers( QAbstractItemView::SelectedClicked );
+    setEditTriggers( QAbstractItemView::SelectedClicked | QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed );
 
     setContextMenuPolicy( Qt::CustomContextMenu );
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
@@ -193,7 +193,6 @@ bool SetlistView::includeAttachment( const Attachment* attachment )
 
 void SetlistView::updateCellWidgets()
 {
-    //TODO double click seems not to work (edit trigger)
     if (!model())
     {
         return;
