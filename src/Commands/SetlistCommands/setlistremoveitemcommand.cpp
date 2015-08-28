@@ -17,7 +17,7 @@ SetlistRemoveItemCommand::~SetlistRemoveItemCommand()
 
 void SetlistRemoveItemCommand::redo()
 {
-    m_index = setlist()->indexOf( m_item );
+    m_index = setlist()->indexOf( m_item ).row();
     setlist()->removeItem( m_item );
     m_ownsItem = true;
 }

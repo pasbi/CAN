@@ -19,6 +19,7 @@ SetlistView::SetlistView(QWidget *parent) :
     setDragDropMode( DragDrop );
     setSelectionMode( QAbstractItemView::ExtendedSelection );
     setDefaultDropAction( Qt::MoveAction );
+    setDropIndicatorShown(true);
     setAlternatingRowColors( true );
     horizontalHeader()->hide();
     setHorizontalScrollMode( QTableView::ScrollPerPixel );
@@ -32,7 +33,6 @@ SetlistView::SetlistView(QWidget *parent) :
     initAction( actionDeleteSetlistItem, this, tr("&Remove Item"),    tr("Delete selected items"),  "Del",      NULL, "" )
     initAction( actionCopySetlistItem,   this, tr("&Copy Items"),     tr("Copy selected items"),    "Ctrl+C",   NULL, "" )
     initAction( actionPasteSetlistItem,  this, tr("&Paste Items"),    tr("Paste items"),            "Ctrl+V",   NULL, "" )
-
 }
 
 SetlistView::~SetlistView()
@@ -42,7 +42,7 @@ SetlistView::~SetlistView()
 void SetlistView::mousePressEvent(QMouseEvent *event)
 {
     QTableView::mousePressEvent( event );
-    emit clicked();
+    emit mousePress();
 }
 
 void SetlistView::setModel(Setlist *setlist)
@@ -53,6 +53,7 @@ void SetlistView::setModel(Setlist *setlist)
         disconnect( model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
         disconnect( model(), SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
         disconnect( model(), SIGNAL(modelReset()),                                     this, SLOT(updateCellWidgets()) );
+        disconnect( model(), SIGNAL(selectionRequest(QModelIndexList)),                this, SLOT(select(QModelIndexList)) );
     }
     QTableView::setModel( setlist );
     if (setlist)
@@ -61,6 +62,7 @@ void SetlistView::setModel(Setlist *setlist)
         connect( setlist, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(modelReset()),                                     this, SLOT(updateCellWidgets()) );
+        connect( model(), SIGNAL(selectionRequest(QModelIndexList)),                this, SLOT(select(QModelIndexList)) );
         updateCellWidgets();
         horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );
         horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Fixed );
@@ -92,7 +94,6 @@ void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
     actions()[0]->setEnabled( !!model() );                           // new item
     actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
     actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
-    qDebug() << app().clipboard()->mimeData()->formats() << DatabaseMimeData<SetlistItem>::mimeType();
     actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( DatabaseMimeData<SetlistItem>::mimeType() ) );     // paste items
 }
 
@@ -259,4 +260,17 @@ void SetlistView::setFilterTag( const QString& tag )
 {
     m_filterTag = tag;
     updateCellWidgets();
+}
+
+void SetlistView::select(QModelIndexList indexes)
+{
+    if (model())
+    {
+        clearSelection();
+
+        for (const QModelIndex& index : indexes)
+        {
+            selectRow(index.row());
+        }
+    }
 }

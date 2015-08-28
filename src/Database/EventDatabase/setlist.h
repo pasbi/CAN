@@ -17,13 +17,12 @@ public:
     void insertItem( int position, SetlistItem* item );
     void appendItem( SetlistItem* item );
     void removeItem( SetlistItem* item );
-//    void moveItem( int from, int to );
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount( const QModelIndex& parent = QModelIndex() ) const { assert( !parent.isValid()); return 2; }
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     SetlistItem* itemAt(const QModelIndex &index ) const;
-    int indexOf(const SetlistItem *item ) const;
+    QModelIndex indexOf(const SetlistItem *item ) const;
     QList<SetlistItem*> items() const { return m_items; }
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -33,11 +32,18 @@ public:
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
     QStringList mimeTypes() const;
 
+    void saveState();
+    void restore();
+    void acceptDrop();
+
     QJsonArray toJson() const;
     bool fromJson(const QJsonArray & array );
 
     QList<const Song *> songs() const;
     Event const* event() const;
+
+signals:
+    void selectionRequest(QModelIndexList);
 
 
 private:
@@ -48,13 +54,14 @@ private:
     friend class SetlistEditDataCommand;
     friend class SetlistMoveRowsCommand;
     bool setData_(const QModelIndex &index, const QVariant &value, int role);
-
-    QList<SetlistItem*> m_items;
     mutable QList<SetlistItem*> m_tmpItemBuffer;    // temp buffer for inserting items
 
     QList<void*> viewableAttachments( const QModelIndex& index ) const;    // returns a list of viewable attachments
 
     Event* m_event = NULL;
+
+    QList<SetlistItem*> m_items;
+    QList<SetlistItem*> m_savedState;
 };
 
 #endif // SETLIST_H

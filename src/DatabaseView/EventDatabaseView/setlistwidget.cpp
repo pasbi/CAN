@@ -21,7 +21,7 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->listView, SIGNAL(clicked()), this, SLOT(updateButtonsEnabled()) );
+    connect(ui->listView, SIGNAL(mousePress()), this, SLOT(updateButtonsEnabled()) );
     setSetlist( NULL );
 
     m_attentionPixmap = QPixmap::fromImage(QImage(":/icons/icons/lightbulb20.png")).scaledToWidth( 32, Qt::SmoothTransformation );
@@ -49,19 +49,20 @@ void SetlistWidget::updateButtonsEnabled()
 
 void SetlistWidget::setSetlist(Setlist *setlist)
 {
-    if (ui->listView->model())
+    Setlist* oldSetlist = ui->listView->model();
+    if (oldSetlist)
     {
-        disconnect( ui->listView->model(), SIGNAL(rowsInserted(QModelIndex,int,int)) );
-        disconnect( ui->listView->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)) );
-        disconnect( ui->listView->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)) );
+        disconnect( oldSetlist, SIGNAL(rowsInserted(QModelIndex,int,int)) );
+        disconnect( oldSetlist, SIGNAL(rowsRemoved(QModelIndex,int,int)) );
+        disconnect( oldSetlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)) );
     }
 
     ui->listView->setModel( setlist );
     if (setlist)
     {
-        connect( ui->listView->model(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateInfoLabel()) );
-        connect( ui->listView->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateInfoLabel()) );
-        connect( ui->listView->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateInfoLabel()) );
+        connect( setlist, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateInfoLabel()) );
+        connect( setlist, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateInfoLabel()) );
+        connect( setlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateInfoLabel()) );
     }
     updateInfoLabel();
     updateButtonsEnabled();

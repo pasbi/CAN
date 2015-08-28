@@ -176,20 +176,20 @@ void Setlist::appendItem(SetlistItem *item)
     insertItem( m_items.length(), item );
 }
 
-int Setlist::indexOf(const SetlistItem *item) const
+QModelIndex Setlist::indexOf(const SetlistItem *item) const
 {
     // QList::indexOf forbids item to be const
 
-    int index = 0;
+    int row = 0;
     for (const SetlistItem* i : m_items)
     {
         if (i == item)
         {
-            return index;
+            return index(row, 0, QModelIndex());
         }
-        index++;
+        row++;
     }
-    return -1;
+    return QModelIndex();
 }
 
 SetlistItem* Setlist::itemAt(const QModelIndex &index) const
@@ -313,7 +313,10 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
         row = rowCount();
     }
 
+    bool success = false;
     const DatabaseMimeData<Song>* songData = DatabaseMimeData<Song>::cast(data);
+    const DatabaseMimeData<SetlistItem>* setlistData = DatabaseMimeData<SetlistItem>::cast(data);
+    QList<QModelIndex> indexes;
     if (songData)
     {
         if (action == Qt::LinkAction)
@@ -325,29 +328,32 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
                 for (DatabaseMimeData<Song>::IndexedItem item : songData->indexedItems())
                 {
                     // create a new setlist item and link `song` with it
-                    app().pushCommand( new SetlistInsertItemCommand( this, row + i, new SetlistItem(item.item->copy()) ) );
+                    SetlistItem* newItem = new SetlistItem(item.item->copy());
+                    app().pushCommand( new SetlistInsertItemCommand( this, row + i, newItem ) );
+                    indexes << indexOf(newItem);
                     i++;
                 }
                 app().endMacro();
             }
-            return true;
+            success = true;
         }
         else
         {
-            return false;
+            success = false;
         }
-    }
-
-    const DatabaseMimeData<SetlistItem>* setlistData = DatabaseMimeData<SetlistItem>::cast(data);
-    if (setlistData)
+    } else if (setlistData)
     {
         if (action == Qt::MoveAction)
         {
             if (setlistData->indexedItems().count() > 0)
             {
                 app().pushCommand( new SetlistMoveRowsCommand(this, setlistData->indexedItemsSorted(), row) );
+                for (const DatabaseMimeData<SetlistItem>::IndexedItem& item : setlistData->indexedItems())
+                {
+                    indexes << indexOf(item.item);
+                }
             }
-            return true;
+            success = true;
         }
         else if (action == Qt::CopyAction)
         {
@@ -358,25 +364,46 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
                 for (DatabaseMimeData<SetlistItem>::IndexedItem item : setlistData->indexedItems())
                 {
                     // create a new setlist item and link `song` with it
-                    app().pushCommand( new SetlistInsertItemCommand( this, row + i, item.item->copy() ) );
+                    SetlistItem* newItem = item.item->copy();
+                    app().pushCommand( new SetlistInsertItemCommand( this, row + i, newItem ));
+                    indexes << indexOf(newItem);
                     i++;
                 }
                 app().endMacro();
             }
-            return true;
+            success = true;
         }
         else
         {
-            return false;
+            success = false;
         }
     }
 
-    return false;
+    emit selectionRequest(indexes);
+    return success;
 }
+
 
 QStringList Setlist::mimeTypes() const
 {
     return QStringList() << DatabaseMimeData<Song>::mimeType() << DatabaseMimeData<SetlistItem>::mimeType();
+}
+
+void Setlist::saveState()
+{
+    acceptDrop();
+}
+
+void Setlist::restore()
+{
+    beginResetModel();
+    m_items = m_savedState;
+    endResetModel();
+}
+
+void Setlist::acceptDrop()
+{
+    m_savedState = m_items;
 }
 
 

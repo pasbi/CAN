@@ -23,11 +23,12 @@ public:
     QList<SetlistItem*> selectedItems() const;
 
 public slots:
+    void select(QModelIndexList indexes);
     void setFilterTag( const QString& tag );
 
 
 signals:
-    void clicked();
+    void mousePress();
 
 protected:
     void mousePressEvent(QMouseEvent *event);
