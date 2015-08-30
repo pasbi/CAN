@@ -21,9 +21,41 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
         return false;
     }
 
-    if (!checkJsonObject(json, "attributes", QJsonValue::Array))
+
+    if (json.contains("attributes")) // load legacy file format
     {
-        return false;
+        const QJsonArray& array = json["attributes"].toArray();
+        if (array.count() > 0)
+        {
+            m_title = array[0].toString();
+        }
+        if (array.count() > 1)
+        {
+            m_artist = array[1].toString();
+        }
+        if (array.count() > 2)
+        {
+            m_creationDateTime = QDateTime::fromString(array[2].toString(), DATE_TIME_FORMAT);
+        }
+        if (array.count() > 3)
+        {
+            m_duration = QTime::fromString(array[3].toString(), DATE_TIME_FORMAT);
+        }
+    }
+    else    // load up-to-date file format
+    {
+        if (        !checkJsonObject(json, "title", QJsonValue::String)
+                ||  !checkJsonObject(json, "artist", QJsonValue::String)
+                ||  !checkJsonObject(json, "creationDateTime", QJsonValue::String)
+                ||  !checkJsonObject(json, "duration", QJsonValue::String) )
+        {
+            return false;
+        }
+
+        m_title = json["title"].toString();
+        m_artist = json["artist"].toString();
+        m_creationDateTime = QDateTime::fromString(json["creationDateTime"].toString(), DATE_TIME_FORMAT);
+        m_duration = QTime::fromString(json["duration"].toString(), DATE_TIME_FORMAT);
     }
 
     if (!checkJsonObject( json, "id", QJsonValue::String))
@@ -36,11 +68,6 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
     }
 
     m_program.restoreFromJsonObject(json["program"].toObject());
-
-    m_title = json["title"].toString();
-    m_artist = json["artist"].toString();
-    m_creationDateTime = QDateTime::fromString(json["creationDateTime"].toString(), DATE_TIME_FORMAT);
-    m_duration = QTime::fromString(json["duration"].toString(), DATE_TIME_FORMAT);
 
     QJsonArray attachments = json["attachments"].toArray();
     m_attachments.clear();
