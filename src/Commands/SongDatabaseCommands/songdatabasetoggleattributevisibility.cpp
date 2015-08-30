@@ -11,10 +11,10 @@ SongDatabaseToggleAttributeVisibility::SongDatabaseToggleAttributeVisibility(Son
 
 void SongDatabaseToggleAttributeVisibility::undo()
 {
-    database()->setAttributeVisible( m_index, !m_newState );
+    database()->setColumnVisible( m_index, !m_newState );
 }
 
 void SongDatabaseToggleAttributeVisibility::redo()
 {
-    database()->setAttributeVisible( m_index, m_newState );
+    database()->setColumnVisible( m_index, m_newState );
 }

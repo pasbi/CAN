@@ -19,7 +19,7 @@ bool SongDatabaseSortProxy::filterAcceptsColumn(int source_column, const QModelI
     assert(!source_parent.isValid());
     if (sourceModel())
     {
-        return sourceModel()->attributeVisible( source_column );
+        return sourceModel()->columnIsVisible( source_column );
     }
     else
     {

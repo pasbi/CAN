@@ -6,7 +6,7 @@ DurationEditor::DurationEditor(QWidget *parent) :
     CellEditor(parent),
     m_timeEdit( new QTimeEdit(this) )
 {
-    m_timeEdit->setDisplayFormat( "hh:mm:ss" );
+    m_timeEdit->setDisplayFormat( "mm:ss" );
     setSolitaryWidget(m_timeEdit);
 }
 

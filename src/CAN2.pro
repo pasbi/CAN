@@ -67,7 +67,6 @@ SOURCES += main.cpp\
     Commands/SongDatabaseCommands/songdatabasecommand.cpp \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasenewattributecommand.cpp \
-    DatabaseView/SongDatabaseView/renamableheaderview.cpp \
     Commands/SongDatabaseCommands/songdatabaserenameheadercommand.cpp \
     Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.cpp \
     util.cpp \
@@ -141,7 +140,6 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
     combobox.cpp \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp \
-    Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp \
     Dialogs/tagdialog.cpp \
     Commands/edittagscommand.cpp \
@@ -193,7 +191,6 @@ HEADERS  += mainwindow.h \
     Commands/SongDatabaseCommands/songdatabasecommand.h \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h \
     Commands/SongDatabaseCommands/songdatabasenewattributecommand.h \
-    DatabaseView/SongDatabaseView/renamableheaderview.h \
     Commands/SongDatabaseCommands/songdatabaserenameheadercommand.h \
     Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h \
     util.h \
@@ -270,7 +267,6 @@ HEADERS  += mainwindow.h \
     DatabaseView/databaseview.h \
     combobox.h \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.h \
-    Commands/EventDatabaseCommands/eventdatabasemoveeventcommand.h \
     Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h \
     Dialogs/tagdialog.h \
     Commands/edittagscommand.h \

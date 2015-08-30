@@ -4,71 +4,14 @@
 #include <QJsonDocument>
 
 Song::Song(SongDatabase* database) :
-    m_songDatabase(database)
+    m_songDatabase(database),
+    m_creationDateTime(QDateTime::currentDateTime())
 {
-    int n = m_songDatabase->columnCount();
-    m_attributes.reserve(n);
-    for (int i = 0; i < n; ++i)
-    {
-        m_attributes.append(QString());
-    }
-
-    setAttribute(2, QDateTime::currentDateTime());
 }
 
 Song::~Song()
 {
     qDeleteAll( m_attachments );
-}
-
-
-// QVariant can not be saved as QJsonValue without losing its type.
-// codec QVariant as string to prevent this.
-QString encodeAttribute( const QVariant& variant )
-{
-    return QString("%1,%2").arg(variant.type()).arg(variant.toString());
-}
-
-QVariant decodeAttribute( const QString& string )
-{
-    QStringList tokens = string.split( "," );
-    if (tokens.isEmpty() )
-    {
-        return QVariant();
-    }
-    else
-    {
-        QVariant::Type type = (QVariant::Type) tokens.first().toInt();
-        QString value = string.mid( tokens.first().length() + 1 );
-
-        switch (type)
-        {
-        case QVariant::String:
-            return QVariant::fromValue( QString(value) );
-        case QVariant::DateTime:
-            return QVariant::fromValue( QDateTime::fromString(value, Qt::ISODate) );
-        case QVariant::Int:
-            return QVariant::fromValue( value.toInt() );
-        default:
-            qWarning() << "Type " << type << " is currently not supported.";
-            return QVariant::fromValue( value );
-        }
-    }
-}
-
-QMap<QString, QString> Song::stringAttributes() const
-{
-    QMap<QString, QString> map;
-    assert( m_attributes.length() <= database()->attributeKeys().length() );
-    for (int i = 0; i < m_attributes.size(); ++i)
-    {
-        QString s = m_attributes[i].toString();
-        if (!s.isEmpty())
-        {
-            map.insert( database()->attributeKeys()[i], s );
-        }
-    }
-    return map;
 }
 
 bool Song::restoreFromJsonObject(const QJsonObject &json)
@@ -108,12 +51,10 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
     }
 
     QJsonArray attributes = json["attributes"].toArray();
-    m_attributes.clear();
-    m_attributes.reserve(attributes.size());
-    for (const QJsonValue & val : attributes)
-    {
-        m_attributes.append( decodeAttribute( val.toString() ) );
-    }
+    m_title = attributes[0].toString();
+    m_artist = attributes[1].toString();
+    m_creationDateTime = QDateTime::fromString(attributes[2].toString(), Qt::ISODate);
+    m_duration = QTime::fromString(attributes[3].toString(), Qt::ISODate);
 
     QJsonArray attachments = json["attachments"].toArray();
     m_attachments.clear();
@@ -136,11 +77,12 @@ QJsonObject Song::toJsonObject() const
     QJsonObject json = Taggable::toJsonObject();
 
     // attributes
+    //TODO simplify format
     QJsonArray attributes;
-    for (const QVariant & v : m_attributes)
-    {
-        attributes.append( encodeAttribute( v ));
-    }
+    attributes.append(m_title);
+    attributes.append(m_artist);
+    attributes.append(m_creationDateTime.toString(Qt::ISODate));
+    attributes.append(m_duration.toString(Qt::ISODate));
     json.insert("attributes", attributes);
 
     // attachments
@@ -165,70 +107,6 @@ QJsonObject Song::toJsonObject() const
 
 
     return json;
-}
-
-
-QString Song::title() const
-{
-    assert( m_attributes.size() >= 0 );
-    return attribute(0).toString();
-}
-
-QString Song::artist() const
-{
-    assert( m_attributes.size() >= 1 );
-    return attribute(1).toString();
-}
-
-QDateTime Song::creationTime() const
-{
-    assert( m_attributes.size() >= 2 );
-    return attribute(2).toDateTime();
-}
-
-QTime Song::duration() const
-{
-    assert( m_attributes.size() >= 3 );
-    return attribute(3).toTime();
-}
-
-void Song::setAttribute(int index, const QVariant &data)
-{
-    assert(index >= 0 && index < m_attributes.length());
-    if (m_attributes[index] != data)
-    {
-        m_attributes[index] = data;
-    }
-}
-
-void Song::insertAttribute(int index, const QVariant &data)
-{
-    m_attributes.insert(index, data);
-}
-
-QVariant Song::attribute(int index) const
-{
-    assert(index >= 0 && index < m_attributes.length());
-    return m_attributes[index];
-}
-
-QVariant& Song::attribute(int index)
-{
-    // copied songs may have inapropriate attribute length.
-
-    while ( index >= attributes().length() )
-    {
-        qWarning() << "Attribute " << index << " of " << title() << " does not exist. Create one.";
-        m_attributes.append( QVariant() );
-    }
-
-    assert(index >= 0 && index < m_attributes.length());
-    return m_attributes[index];
-}
-
-void Song::removeAttribute(int index)
-{
-    m_attributes.removeAt(index);
 }
 
 QStringList Song::attachmentNames() const

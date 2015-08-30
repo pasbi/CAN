@@ -18,19 +18,28 @@ SongAttributeDelegate::SongAttributeDelegate(SongTableView *parent) :
 QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     CellEditor* editor = NULL;
-    QString classname = QString("%1Editor").arg(editorType(index));
 
-    if (Creatable::category(classname) != "CellEditor")
+    QString editorClassname;
+    switch (index.column())
     {
-        if (classname != "Editor")
-        {
-            // default to StringEditor without 	warning
-            WARNING << "Unknown editor widget \"" << classname << "\".";
-        }
-        classname = "StringEditor";
+    case 0:
+        editorClassname = "StringEditor";
+        break;
+    case 1:
+        editorClassname = "ComboEditor";
+        break;
+    case 2:
+        qWarning() << "Request editor for read-only data";
+        editorClassname = "";
+        break;
+    case 3:
+        editorClassname = "DurationEditor";
+        break;
     }
 
-    editor = static_cast<CellEditor*>( Creatable::create( classname ) );
+    editor = static_cast<CellEditor*>( Creatable::create( editorClassname ) );
+    assert(editor);
+
     editor->setParent(parent);
     editor->setStyleOption(option);
     editor->setIndex(index);
@@ -50,11 +59,6 @@ SongDatabase* SongAttributeDelegate::model() const
 SongDatabaseSortProxy* SongAttributeDelegate::proxyModel() const
 {
     return parent()->proxyModel();
-}
-
-QString SongAttributeDelegate::editorType(const QModelIndex & index) const
-{
-    return parent()->model()->editorType(parent()->proxyModel()->mapToSource( index ));
 }
 
 SongTableView* SongAttributeDelegate::parent() const

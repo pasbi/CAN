@@ -16,7 +16,6 @@ public:
     void setModel(SongDatabaseSortProxy* model);
     SongDatabase* model() const;
     SongDatabaseSortProxy* proxyModel() const;
-    void setReadOnly();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

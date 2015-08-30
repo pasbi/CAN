@@ -21,7 +21,7 @@ public:
 
     QString classname() const { return metaObject()->className(); }
 
-    // copy must be given by argument due to inheritance structure.
+    // copy must be returned by argument due to inheritance structure.
     virtual void copy(Attachment* &copied) const = 0;
 
     void makeNameUnique();

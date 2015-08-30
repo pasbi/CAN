@@ -10,7 +10,6 @@ SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
     QDialog(parent)
 {
     SongTableViewContainer* stc = new SongTableViewContainer( this );
-    stc->songTableView()->setReadOnly();
     stc->songTableView()->setSelectionMode( QAbstractItemView::ExtendedSelection );
     stc->setModel( app().project()->songDatabaseProxy() );
     QDialogButtonBox* buttonBox = new QDialogButtonBox( this );

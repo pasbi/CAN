@@ -3,6 +3,7 @@
 
 #include "songdatabasecommand.h"
 
+//TODO rename to SongDatabaseSetColumnVisibilityCommand
 class SongDatabaseToggleAttributeVisibility : public SongDatabaseCommand
 {
 public:

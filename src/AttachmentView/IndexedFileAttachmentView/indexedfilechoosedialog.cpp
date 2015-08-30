@@ -68,8 +68,9 @@ QString normalizeString( QString s )
 }
 
 
-double rank( const QString & candidate, const QMap<QString, QString> & attributes, const QStringList& endings )
+double rank( const QString & candidate, const QString& title, const QString& artist, const QStringList& endings )
 {
+    //TODO restore functionality
     QFileInfo fileInfo( candidate );
     if (!endings.contains(fileInfo.suffix()))
     {
@@ -88,11 +89,11 @@ double rank( const QString & candidate, const QMap<QString, QString> & attribute
     }
 
 
-    QStringList attributeString;
-    for (const QString & attribute : attributes.values())
-    {
-        attributeString << normalizeString(attribute).split(" ", QString::SkipEmptyParts);
-    }
+//    QStringList attributeString;
+//    for (const QString & attribute : attributes.values())
+//    {
+//        attributeString << normalizeString(attribute).split(" ", QString::SkipEmptyParts);
+//    }
 
     double rank = 0;
     for (int i = 0; i < levelss.length(); ++i)
@@ -101,25 +102,25 @@ double rank( const QString & candidate, const QMap<QString, QString> & attribute
         double count = 0;
         for (const QString& token : levelss[i])
         {
-            if (attributeString.contains( token ))
-            {
-                if (token.length() == 1)
-                {
-                    count += 0.1;
-                }
-                else if (token.length() == 2)
-                {
-                    count += 0.2;
-                }
-                else if (token.length() == 3)
-                {
-                    count += 0.8;
-                }
-                else
-                {
-                    count += 1;
-                }
-            }
+//            if (attributeString.contains( token ))
+//            {
+//                if (token.length() == 1)
+//                {
+//                    count += 0.1;
+//                }
+//                else if (token.length() == 2)
+//                {
+//                    count += 0.2;
+//                }
+//                else if (token.length() == 3)
+//                {
+//                    count += 0.8;
+//                }
+//                else
+//                {
+//                    count += 1;
+//                }
+//            }
         }
         rank += factor * count;
     }
@@ -127,13 +128,14 @@ double rank( const QString & candidate, const QMap<QString, QString> & attribute
 }
 
 QStringList filter( const QStringList &             candidates,
-                    const QMap<QString, QString> &  attributes,
+                    const QString&                  title,
+                    const QString&                  artist,
                     const QStringList &             endings )
 {
     QList<QPair<QString, double>> ranking;
     for ( const QString & candidate : candidates )
     {
-        double score = rank(candidate, attributes, endings);
+        double score = rank(candidate, title, artist, endings);
         if (score > 0)
         {
             ranking.append( qMakePair(candidate, score) );
@@ -154,7 +156,8 @@ QStringList filter( const QStringList &             candidates,
 QStringList IndexedFileChooseDialog::gatherFiles()
 {
     return filter( app().fileIndex().filenames(),
-                   m_song->stringAttributes(),
+                   m_song->title(),
+                   m_song->artist(),
                    m_acceptedEndings );
 }
 

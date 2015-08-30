@@ -24,8 +24,6 @@ protected:
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
 
 private:
-    QString editorType(const QModelIndex &index) const;
-    QVariant editorOptions(const QModelIndex & index) const;
     mutable bool m_isEditing = false;
 
 

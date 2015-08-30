@@ -33,37 +33,19 @@ public:
     //
     /////////////////////////////////////////////////
 private:
-    QVariantList m_attributes;      // Title, Artist, CreationDateTime, [User data ...]
+    QString m_title;
+    QString m_artist;
+    QDateTime m_creationDateTime;
+    QTime m_duration;
 public:
-    /**
-     * @brief attribute return attribute at index or QVariant if index does not exist.
-     * @param index
-     * @return
-     */
-    QVariant attribute(int index) const;
-
-    /**
-     * @brief attribute return reference to attribute at index.
-     *  creates the attribute if it does not exist.
-     * @param index
-     * @return
-     */
-    QVariant& attribute(int index);
-    QVariantList attributes() const { return m_attributes; }
-    QMap<QString, QString> stringAttributes() const;
-
-    void setAttribute(int index, const QVariant &data);
-    void insertAttribute(int index, const QVariant &data);
-    void removeAttribute(int index);
-    QString title() const;
-    QString artist() const;
-    QTime duration() const;
+    void setTitle(const QString& title) { m_title = title; }
+    void setArtist(const QString& artist) { m_artist = artist; }
+    void setDuration(const QTime& duration) { m_duration = duration; }
+    QString title() const { return m_title; }
+    QString artist() const { return m_artist; }
+    QTime duration() const { return m_duration; }
     QString description() const { return title(); }
-    QDateTime creationTime() const;
-
-signals:
-    void attributesEdited();
-
+    QDateTime creationTime() const { return m_creationDateTime; }
 
 
     /////////////////////////////////////////////////

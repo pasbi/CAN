@@ -1172,14 +1172,12 @@ void MainWindow::createAttributeVisibilityMenu()
 {
     QMenu* menu = ui->menuVisible_attributes;
 
-    for (int i = 0; i < m_project.songDatabase()->attributeKeys().length(); ++i )
+    for (int i = 0; i < m_project.songDatabase()->columnCount(); ++i )
     {
-        QString name = m_project.songDatabase()->attributeKeys()[i];
-        QString editorType;
-        SongDatabase::editorTypeAndHeaderLabel( name, editorType, name );
+        QString name = m_project.songDatabase()->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
         QAction* action = menu->addAction( name );
         action->setCheckable( true );
-        action->setChecked( m_project.songDatabase()->attributeVisible(i) );
+        action->setChecked( m_project.songDatabase()->columnIsVisible(i) );
 
         connect( action, &QAction::triggered, [this, i](bool visible)
         {

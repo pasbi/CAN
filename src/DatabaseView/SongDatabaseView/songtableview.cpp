@@ -2,7 +2,6 @@
 #include "QHeaderView"
 #include "global.h"
 #include "Project/project.h"
-#include "renamableheaderview.h"
 #include "util.h"
 #include <QFocusEvent>
 #include "application.h"
@@ -14,11 +13,7 @@ SongTableView::SongTableView(QWidget *parent) :
 {
     verticalHeader()->hide();
 
-    delete horizontalHeader();
-    setHorizontalHeader(new RenamableHeaderView( Qt::Horizontal, this ));
     horizontalHeader()->show();
-    horizontalHeader()->setSectionsMovable(true);
-    horizontalHeader()->setDragEnabled(true);
     horizontalHeader()->setSortIndicatorShown( true );
     horizontalHeader()->setSectionsClickable( true );
 
@@ -59,12 +54,6 @@ SongDatabaseSortProxy* SongTableView::proxyModel() const
     SongDatabaseSortProxy* pm = qobject_assert_cast<SongDatabaseSortProxy*>( QTableView::model() );
     assert( pm == QTableView::model() );
     return pm;
-}
-
-void SongTableView::setReadOnly()
-{
-    qobject_assert_cast<RenamableHeaderView*>( horizontalHeader() )->setReadOnly();
-    setEditTriggers( QAbstractItemView::NoEditTriggers );
 }
 
 Qt::DropAction SongTableView::dropAction( QDropEvent* event )

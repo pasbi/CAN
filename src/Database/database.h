@@ -25,28 +25,35 @@ public:
 
     T* itemAtIndex(QModelIndex index) const
     {
-        // index may be pointing to an underlying proxy model
-        const QAbstractItemModel* model = index.model();
-        const QAbstractProxyModel* proxyModel;
-
-        while (model && (proxyModel = qobject_cast<const QAbstractProxyModel*>(model)))
-        {
-            model = proxyModel->sourceModel();
-            index = proxyModel->mapToSource(index);
-        }
-
-        if (!model)
+        if (!index.isValid())
         {
             return nullptr;
         }
-
-        if (model != this)
+        else
         {
-            qWarning() << "Trying to retrieve item from wrong model " << model;
-            return nullptr;
-        }
+            // index may be pointing to an underlying proxy model
+            const QAbstractItemModel* model = index.model();
+            const QAbstractProxyModel* proxyModel;
 
-        return m_items[index.row()];
+            while (model && (proxyModel = qobject_cast<const QAbstractProxyModel*>(model)))
+            {
+                model = proxyModel->sourceModel();
+                index = proxyModel->mapToSource(index);
+            }
+
+            if (!model || !index.isValid())
+            {
+                return nullptr;
+            }
+
+            if (model != this)
+            {
+                qWarning() << "Trying to retrieve item from wrong model " << model;
+                return nullptr;
+            }
+
+            return m_items[index.row()];
+        }
     }
 
 public:
