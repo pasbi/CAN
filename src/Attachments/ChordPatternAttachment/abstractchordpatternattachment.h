@@ -8,7 +8,6 @@ class AbstractChordPatternAttachment : public Attachment
     Q_OBJECT
 public:
     AbstractChordPatternAttachment();
-
     virtual QString chordPattern() const = 0;
     virtual void transpose( int i ) = 0;
     virtual double scrollDownTempo() const = 0;

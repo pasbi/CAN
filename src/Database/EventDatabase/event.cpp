@@ -1,7 +1,5 @@
 #include "event.h"
 
-const Qt::DateFormat Event::DATE_TIME_FORMAT = Qt::ISODate;
-
 Event::Event( EventDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
     m_database( database ),
     m_timeSpan( TimeSpan(beginning, ending)),

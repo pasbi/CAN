@@ -273,7 +273,7 @@ void MainWindow::createAttachmentActions()
             Song* song = currentSong();
             if (song)
             {
-                SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, classname );
+                SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, Creatable::create<Attachment>(classname) );
                 app().pushCommand( command );
                 updateWhichWidgetsAreEnabled();
             }
@@ -758,7 +758,7 @@ void MainWindow::on_actionDuplicate_Attachment_triggered()
     Attachment* attachment = cs->attachments()[index];
     assert( attachment );
 
-    app().pushCommand( new SongDuplicateAttachmentCommand( attachment ) );
+    app().pushCommand( new SongAddAttachmentCommand( cs, attachment->copy() ) );
     updateWhichWidgetsAreEnabled();
 }
 
@@ -1271,7 +1271,7 @@ void MainWindow::on_action_Export_all_songs_triggered()
 
     for( Song* song : m_project.songDatabase()->items() )
     {
-        setlist.appendItem( new SetlistItem( song ) );
+        setlist.insertItem( new SetlistItem( song ) );
     }
 
     PDFCreator::exportSetlist( &setlist, this );

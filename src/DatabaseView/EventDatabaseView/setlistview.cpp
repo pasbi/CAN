@@ -97,12 +97,11 @@ void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
     actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( DatabaseMimeData<SetlistItem>::mimeType() ) );     // paste items
 }
 
-#include "Commands/SetlistCommands/setlistadditemcommand.h"
 void SetlistView::my_on_actionNewSetlistItem_triggered()
 {
     if (model())
     {
-        app().pushCommand( new SetlistAddItemCommand( model(), new SetlistItem() ) );
+        app().pushCommand( new SetlistInsertItemCommand( model(), new SetlistItem() ) );
     }
 }
 

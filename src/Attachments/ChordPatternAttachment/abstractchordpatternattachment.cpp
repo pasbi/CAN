@@ -1,5 +1,7 @@
 #include "abstractchordpatternattachment.h"
 
-AbstractChordPatternAttachment::AbstractChordPatternAttachment()
+AbstractChordPatternAttachment::AbstractChordPatternAttachment() :
+    Attachment()
 {
+
 }

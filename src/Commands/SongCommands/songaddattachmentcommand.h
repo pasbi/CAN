@@ -6,16 +6,13 @@
 class SongAddAttachmentCommand : public SongCommand
 {
 public:
-    SongAddAttachmentCommand(Song* song, const QString & classname);
+    SongAddAttachmentCommand(Song* song, Attachment* attachment);
     ~SongAddAttachmentCommand();
-
-    Attachment* attachment() const { return m_attachment; }
 
     void undo();
     void redo();
 
 private:
-    QString m_classname;
     Attachment* m_attachment = 0;
     bool m_ownsAttachment = false;
 };

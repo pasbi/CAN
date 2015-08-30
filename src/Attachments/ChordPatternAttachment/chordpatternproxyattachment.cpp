@@ -6,6 +6,7 @@
 DEFN_CREATABLE_NAME(ChordPatternProxyAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Proxy Attachment"))
 
 ChordPatternProxyAttachment::ChordPatternProxyAttachment() :
+    AbstractChordPatternAttachment(),
     m_source( NULL )
 {
     setName( tr("Proxy Pattern") );
@@ -19,15 +20,6 @@ ChordPatternProxyAttachment::ChordPatternProxyAttachment() :
     {
         setChordPatternAttachment( NULL );
     }
-}
-
-void ChordPatternProxyAttachment::copy(Attachment *&copied) const
-{
-    copied = new ChordPatternProxyAttachment();
-    ChordPatternProxyAttachment* cpa = dynamic_cast<ChordPatternProxyAttachment*>(copied);
-    cpa->m_source = m_source;
-    cpa->m_transpose = m_transpose;
-    cpa->updateCache();
 }
 
 void ChordPatternProxyAttachment::transpose(int t)

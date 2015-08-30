@@ -1,11 +1,11 @@
 #include "setlistinsertitemcommand.h"
 
-SetlistInsertItemCommand::SetlistInsertItemCommand(Setlist *setlist, int position, SetlistItem *item) :
+SetlistInsertItemCommand::SetlistInsertItemCommand(Setlist *setlist, SetlistItem *item, int position) :
     SetlistCommand( setlist ),
-    m_position(position),
-    m_item(item)
+    m_item(item),
+    m_position(position)
 {
-    setText( CommandTranslator::tr("insert item to setlist") );
+    setText( CommandTranslator::tr("Insert Setlist item") );
 }
 
 SetlistInsertItemCommand::~SetlistInsertItemCommand()
@@ -24,6 +24,6 @@ void SetlistInsertItemCommand::undo()
 
 void SetlistInsertItemCommand::redo()
 {
-    setlist()->insertItem( m_position, m_item );
+    setlist()->insertItem( m_item, m_position );
     m_ownsItem = false;
 }

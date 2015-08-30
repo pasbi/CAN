@@ -70,7 +70,6 @@ QString normalizeString( QString s )
 
 double rank( const QString & candidate, const QString& title, const QString& artist, const QStringList& endings )
 {
-    //TODO restore functionality
     QFileInfo fileInfo( candidate );
     if (!endings.contains(fileInfo.suffix()))
     {
@@ -87,13 +86,7 @@ double rank( const QString & candidate, const QString& title, const QString& art
         levelss << normalizeString(level).split(" ", QString::SkipEmptyParts);
         i++;
     }
-
-
-//    QStringList attributeString;
-//    for (const QString & attribute : attributes.values())
-//    {
-//        attributeString << normalizeString(attribute).split(" ", QString::SkipEmptyParts);
-//    }
+    QStringList attributes = QStringList() << title << artist;
 
     double rank = 0;
     for (int i = 0; i < levelss.length(); ++i)
@@ -102,25 +95,25 @@ double rank( const QString & candidate, const QString& title, const QString& art
         double count = 0;
         for (const QString& token : levelss[i])
         {
-//            if (attributeString.contains( token ))
-//            {
-//                if (token.length() == 1)
-//                {
-//                    count += 0.1;
-//                }
-//                else if (token.length() == 2)
-//                {
-//                    count += 0.2;
-//                }
-//                else if (token.length() == 3)
-//                {
-//                    count += 0.8;
-//                }
-//                else
-//                {
-//                    count += 1;
-//                }
-//            }
+            if (attributes.contains( token ))
+            {
+                if (token.length() == 1)
+                {
+                    count += 0.1;
+                }
+                else if (token.length() == 2)
+                {
+                    count += 0.2;
+                }
+                else if (token.length() == 3)
+                {
+                    count += 0.8;
+                }
+                else
+                {
+                    count += 1;
+                }
+            }
         }
         rank += factor * count;
     }

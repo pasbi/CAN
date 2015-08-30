@@ -2,7 +2,6 @@
 #include "global.h"
 #include "persistentobject.h"
 
-// *?
 const QString Chord::SPLIT_PATTERN = (QStringList() << QRegExp::escape("|") << QRegExp::escape(",")
                                              << QRegExp::escape("-") << QRegExp::escape("/")
                                              << QRegExp::escape("`") << QRegExp::escape("*") << "\\s"   ).join("|");

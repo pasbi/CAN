@@ -4,6 +4,9 @@
 #include "global.h"
 #include <QDateTime>
 
+const Qt::DateFormat PersistentObject::DATE_TIME_FORMAT = Qt::ISODate;
+
+
 PersistentObject::PersistentObject()
 {
     m_randomID = createRandomID();

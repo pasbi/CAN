@@ -14,8 +14,7 @@ public:
     Setlist( Event* event );
     ~Setlist() {}
 
-    void insertItem( int position, SetlistItem* item );
-    void appendItem( SetlistItem* item );
+    void insertItem(SetlistItem* item , int position = -1);
     void removeItem( SetlistItem* item );
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount( const QModelIndex& parent = QModelIndex() ) const { assert( !parent.isValid()); return 2; }

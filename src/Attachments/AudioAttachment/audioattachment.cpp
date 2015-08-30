@@ -18,12 +18,6 @@ void AudioAttachment::open()
     }
 }
 
-void AudioAttachment::copy(Attachment *&copied) const
-{
-    copied = new AudioAttachment();
-    IndexedFileAttachment::copy( copied );
-}
-
 void AudioAttachment::appendSection(const Section &section)
 {
     sectionsModel()->appendSection( section );

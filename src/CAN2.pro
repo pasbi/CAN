@@ -66,9 +66,6 @@ SOURCES += main.cpp\
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp \
     Commands/SongDatabaseCommands/songdatabasecommand.cpp \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp \
-    Commands/SongDatabaseCommands/songdatabasenewattributecommand.cpp \
-    Commands/SongDatabaseCommands/songdatabaserenameheadercommand.cpp \
-    Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.cpp \
     util.cpp \
     DatabaseView/SongDatabaseView/songattributedelegate.cpp \
     DatabaseView/SongDatabaseView/CellEditors/celleditor.cpp \
@@ -121,7 +118,6 @@ SOURCES += main.cpp\
     DatabaseView/EventDatabaseView/setlistwidget.cpp \
     Commands/EventDatabaseCommands/eventdatabaseediteventcommand.cpp \
     Database/EventDatabase/setlist.cpp \
-    Commands/SetlistCommands/setlistadditemcommand.cpp \
     Commands/SetlistCommands/setlistcommand.cpp \
     Commands/SetlistCommands/setlistremoveitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistitemselector.cpp \
@@ -190,9 +186,6 @@ HEADERS  += mainwindow.h \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h \
     Commands/SongDatabaseCommands/songdatabasecommand.h \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h \
-    Commands/SongDatabaseCommands/songdatabasenewattributecommand.h \
-    Commands/SongDatabaseCommands/songdatabaserenameheadercommand.h \
-    Commands/SongDatabaseCommands/songdatabaseremovecolumncommand.h \
     util.h \
     DatabaseView/SongDatabaseView/songattributedelegate.h \
     DatabaseView/SongDatabaseView/CellEditors/celleditor.h \
@@ -247,7 +240,6 @@ HEADERS  += mainwindow.h \
     Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h \
     commontypes.h \
     Database/EventDatabase/setlist.h \
-    Commands/SetlistCommands/setlistadditemcommand.h \
     Commands/SetlistCommands/setlistcommand.h \
     Commands/SetlistCommands/setlistremoveitemcommand.h \
     DatabaseView/EventDatabaseView/setlistitemselector.h \

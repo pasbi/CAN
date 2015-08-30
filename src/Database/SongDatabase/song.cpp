@@ -53,8 +53,8 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
     QJsonArray attributes = json["attributes"].toArray();
     m_title = attributes[0].toString();
     m_artist = attributes[1].toString();
-    m_creationDateTime = QDateTime::fromString(attributes[2].toString(), Qt::ISODate);
-    m_duration = QTime::fromString(attributes[3].toString(), Qt::ISODate);
+    m_creationDateTime = QDateTime::fromString(attributes[2].toString(), DATE_TIME_FORMAT);
+    m_duration = QTime::fromString(attributes[3].toString(), DATE_TIME_FORMAT);
 
     QJsonArray attachments = json["attachments"].toArray();
     m_attachments.clear();
@@ -81,8 +81,8 @@ QJsonObject Song::toJsonObject() const
     QJsonArray attributes;
     attributes.append(m_title);
     attributes.append(m_artist);
-    attributes.append(m_creationDateTime.toString(Qt::ISODate));
-    attributes.append(m_duration.toString(Qt::ISODate));
+    attributes.append(m_creationDateTime.toString(DATE_TIME_FORMAT));
+    attributes.append(m_duration.toString(DATE_TIME_FORMAT));
     json.insert("attributes", attributes);
 
     // attachments

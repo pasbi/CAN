@@ -37,7 +37,7 @@ QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOption
         break;
     }
 
-    editor = static_cast<CellEditor*>( Creatable::create( editorClassname ) );
+    editor = Creatable::create<CellEditor>( editorClassname );
     assert(editor);
 
     editor->setParent(parent);

@@ -34,6 +34,8 @@ public:
     QString randomID() const { return m_randomID; }
     static void seedRandomID();
 
+    static const Qt::DateFormat DATE_TIME_FORMAT;
+
 };
 
 #endif // PERSISTENTOBJECT_H

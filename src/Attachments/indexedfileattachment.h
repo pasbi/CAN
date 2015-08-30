@@ -26,17 +26,13 @@
 class IndexedFileAttachment : public Attachment
 {
     Q_OBJECT
-public:
+protected:
     IndexedFileAttachment();
-    IndexedFileAttachment(const Attachment& attachment);
 
+public:
     bool fileExists() const;
     QString filename() const;
     QByteArray hash() const { return m_hash; }
-
-protected:
-    // copy function of virtual class should not be used outside final-class-implementation.
-    virtual void copy(Attachment *&copied) const;
 
 public:
     virtual QStringList acceptedEndings() const = 0;

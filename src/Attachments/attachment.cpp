@@ -1,7 +1,8 @@
 #include "attachment.h"
 #include "Database/SongDatabase/song.h"
 
-Attachment::Attachment()
+Attachment::Attachment() :
+    m_song(nullptr)
 {
 }
 
@@ -11,6 +12,7 @@ void Attachment::setSong(Song *song)
     assert( !m_song );
 
     m_song = song;
+    makeNameUnique();
 }
 
 void Attachment::setName(const QString &name)
@@ -50,7 +52,7 @@ bool Attachment::create(const QJsonObject &object, Attachment *&attachment, Song
         return false;
     }
 
-    attachment = static_cast<Attachment*>( Creatable::create( classname ) );
+    attachment = Creatable::create<Attachment>( classname );
 
     attachment->setSong( song );
     attachment->restoreFromJsonObject( object );
@@ -73,6 +75,13 @@ QJsonObject Attachment::toJsonObject() const
 QString Attachment::description() const
 {
     return name();
+}
+
+Attachment* Attachment::copy() const
+{
+    Attachment* copy;
+    assert(Attachment::create(toJsonObject(), copy, song()));
+    return copy;
 }
 
 

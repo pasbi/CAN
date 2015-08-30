@@ -77,12 +77,12 @@ bool descending(const QModelIndex& a, const QModelIndex& b)
     return !ascending(a, b);
 }
 
-#include "Commands/SetlistCommands/setlistadditemcommand.h"
+#include "Commands/SetlistCommands/setlistinsertitemcommand.h"
 void SetlistWidget::on_buttonAdd_clicked()
 {
     if (setlist())
     {
-        app().pushCommand( new SetlistAddItemCommand( setlist(), new SetlistItem() ) );
+        app().pushCommand( new SetlistInsertItemCommand( setlist(), new SetlistItem() ) );
     }
     else
     {

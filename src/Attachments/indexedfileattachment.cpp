@@ -1,15 +1,10 @@
 #include "indexedfileattachment.h"
 #include "application.h"
 
-IndexedFileAttachment::IndexedFileAttachment()
+IndexedFileAttachment::IndexedFileAttachment() :
+    Attachment()
 {
-}
 
-void IndexedFileAttachment::copy(Attachment* &copied) const
-{
-    IndexedFileAttachment* ifa = dynamic_cast<IndexedFileAttachment*>(copied);
-    assert( ifa );
-    ifa->m_hash = m_hash;
 }
 
 bool IndexedFileAttachment::fileExists() const

@@ -28,7 +28,18 @@ public:
      * @param object
      * @return success
      */
-    static Creatable* create(const QString & classname);
+    template<typename T>
+    static T* create(const QString & classname)
+    {
+        if (!m_constructorMap->contains(classname))
+        {
+            return NULL;
+        }
+        else
+        {
+            return static_cast<T*>(m_constructorMap->value(classname)());
+        }
+    }
     static QString category(const QString & classname);
     static QStringList classnamesInCategory( const QString & category );
     static QString name(const QString &classname );

@@ -24,6 +24,6 @@ void SetlistRemoveItemCommand::redo()
 
 void SetlistRemoveItemCommand::undo()
 {
-    setlist()->insertItem( m_index, m_item );
+    setlist()->insertItem( m_item, m_index );
     m_ownsItem = false;
 }

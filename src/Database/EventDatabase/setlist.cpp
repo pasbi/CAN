@@ -9,10 +9,14 @@ Setlist::Setlist(Event *event) :
 
 }
 
-void Setlist::insertItem( int position, SetlistItem* item )
+void Setlist::insertItem( SetlistItem* item, int position )
 {
     assert(m_tmpItemBuffer.isEmpty());
     m_tmpItemBuffer << item;
+    if (position < 0)
+    {
+        position = rowCount();
+    }
     insertRow( position );
 }
 
@@ -171,11 +175,6 @@ bool Setlist::moveRows(const QModelIndex &sourceParent, int sourceRow, int count
     return true;
 }
 
-void Setlist::appendItem(SetlistItem *item)
-{
-    insertItem( m_items.length(), item );
-}
-
 QModelIndex Setlist::indexOf(const SetlistItem *item) const
 {
     // QList::indexOf forbids item to be const
@@ -329,7 +328,7 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
                 {
                     // create a new setlist item and link `song` with it
                     SetlistItem* newItem = new SetlistItem(item.item->copy());
-                    app().pushCommand( new SetlistInsertItemCommand( this, row + i, newItem ) );
+                    app().pushCommand( new SetlistInsertItemCommand( this, newItem, row + i ) );
                     indexes << indexOf(newItem);
                     i++;
                 }
@@ -365,7 +364,7 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
                 {
                     // create a new setlist item and link `song` with it
                     SetlistItem* newItem = item.item->copy();
-                    app().pushCommand( new SetlistInsertItemCommand( this, row + i, newItem ));
+                    app().pushCommand( new SetlistInsertItemCommand( this, newItem, row + i ));
                     indexes << indexOf(newItem);
                     i++;
                 }

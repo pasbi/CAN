@@ -7,16 +7,15 @@
 class SetlistInsertItemCommand : public SetlistCommand
 {
 public:
-    SetlistInsertItemCommand(Setlist* setlist, int position, SetlistItem* item);
+    SetlistInsertItemCommand(Setlist* setlist, SetlistItem* item, int position = -1);
     ~SetlistInsertItemCommand();
     void undo();
     void redo();
 
 private:
-    const int m_position;
-    SetlistItem* const m_item;
     bool m_ownsItem = false;
-
+    SetlistItem* const m_item;
+    const int m_position;
 
 };
 

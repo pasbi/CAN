@@ -13,7 +13,6 @@ class ChordPatternAttachment : public AbstractChordPatternAttachment
     DECL_CONFIG( ChordPatternAttachment )
 public:
     ChordPatternAttachment();
-    ChordPatternAttachment(const Attachment & attachment);
 
     QString chordPattern() const { return m_pattern; }
 

@@ -1,11 +1,11 @@
 #include "songaddattachmentcommand.h"
 
-SongAddAttachmentCommand::SongAddAttachmentCommand(Song *song, const QString &classname) :
+SongAddAttachmentCommand::SongAddAttachmentCommand(Song *song, Attachment *attachment) :
     SongCommand(song),
-    m_classname(classname)
+    m_attachment(attachment)
 {
-    assert( Creatable::category(m_classname) == "Attachment" );
     setText( CommandTranslator::tr("add song") );
+    m_attachment->setSong(song);
 }
 
 SongAddAttachmentCommand::~SongAddAttachmentCommand()
@@ -19,13 +19,6 @@ SongAddAttachmentCommand::~SongAddAttachmentCommand()
 
 void SongAddAttachmentCommand::redo()
 {
-    if (!m_attachment)
-    {
-        m_attachment = static_cast<Attachment*>( Creatable::create(m_classname) );
-        m_attachment->setSong( song() );
-        m_attachment->makeNameUnique();
-    }
-
     song()->addAttachment( m_attachment );
     m_ownsAttachment = false;
 }

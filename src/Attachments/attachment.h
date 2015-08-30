@@ -11,7 +11,6 @@ class Attachment : public QObject, public Taggable, public Creatable
 public:
 
     Attachment();
-    Attachment(const Attachment &) : QObject() {}
 
     void setName( const QString & name );
     QString name() const { return m_name; }
@@ -21,9 +20,6 @@ public:
 
     QString classname() const { return metaObject()->className(); }
 
-    // copy must be returned by argument due to inheritance structure.
-    virtual void copy(Attachment* &copied) const = 0;
-
     void makeNameUnique();
 
     QJsonObject toJsonObject() const;
@@ -32,6 +28,8 @@ public:
     virtual QString type() const = 0;
 
     QString description() const;
+
+    Attachment* copy() const;
 
 signals:
     void attachmentRenamed(QString);

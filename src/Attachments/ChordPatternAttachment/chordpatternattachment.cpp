@@ -26,16 +26,10 @@ CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternAttachment, MinorPolicy, 0 );
 const int TAB_WIDTH = 8;
 
 ChordPatternAttachment::ChordPatternAttachment() :
+    AbstractChordPatternAttachment(),
     m_pattern( "" )
 {
     setName( tr("Chord Pattern") );
-}
-
-void ChordPatternAttachment::copy(Attachment *&copied) const
-{
-    copied = new ChordPatternAttachment();
-    ChordPatternAttachment* cpa = dynamic_cast<ChordPatternAttachment*>(copied);
-    cpa->m_pattern = m_pattern;
 }
 
 QString white(int n)

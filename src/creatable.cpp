@@ -9,18 +9,6 @@ Creatable::Creatable()
 {
 }
 
-Creatable* Creatable::create(const QString & classname)
-{
-    if (!m_constructorMap->contains(classname))
-    {
-        return NULL;
-    }
-    else
-    {
-        return m_constructorMap->value(classname)();
-    }
-}
-
 QString Creatable::category(const QString &classname)
 {
     if (!m_categoryMap->contains(classname))

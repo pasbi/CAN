@@ -16,8 +16,6 @@ public:
     Poppler::Document* document() const { return m_document; }
 #endif
 
-    void copy(Attachment *&copied) const;
-
 public slots:
     void open();
 

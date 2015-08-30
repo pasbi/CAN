@@ -3,7 +3,8 @@
 
 DEFN_CREATABLE_NAME(PDFAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "PDF Attachment"))
 
-PDFAttachment::PDFAttachment()
+PDFAttachment::PDFAttachment() :
+    IndexedFileAttachment()
 {
     setName( tr("PDF Attachment") );
 }
@@ -28,11 +29,4 @@ void PDFAttachment::open()
 
     }
 #endif
-
-}
-
-void PDFAttachment::copy(Attachment *&copied) const
-{
-    copied = new PDFAttachment();
-    IndexedFileAttachment::copy( copied );
 }

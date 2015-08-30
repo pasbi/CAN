@@ -11,8 +11,6 @@ public:
     explicit ChordPatternEdit(QWidget *parent = 0);
 
 public slots:
-//    void myCopy();
-//    void myPaste();
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);

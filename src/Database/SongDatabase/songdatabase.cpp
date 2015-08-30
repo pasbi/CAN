@@ -1,6 +1,5 @@
 #include "songdatabase.h"
 #include "Project/project.h"
-#include "Commands/SongDatabaseCommands/songdatabasenewattributecommand.h"
 #include "songdatabasesortproxy.h"
 #include <QSize>
 #include "application.h"
@@ -304,7 +303,6 @@ QMimeData* SongDatabase::mimeData(const QModelIndexList &indexes) const
     DatabaseMimeData<Song>* mime = new DatabaseMimeData<Song>();
     for (const QModelIndex& index : indexes)
     {
-        qDebug() << "request mimedata from row " << index.row();
         if (index.column() != 0)
         {
             // we want only one index per row.

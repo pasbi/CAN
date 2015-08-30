@@ -8,8 +8,6 @@
 #include "Project/project.h"
 #include "indexedfilechoosedialog.h"
 
-QList<Ui::IndexedFileAttachmentView*> IndexedFileAttachmentView::initializedUis;
-QList<Ui::IndexedFileAttachmentView*> IndexedFileAttachmentView::deletedUis;
 
 IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
     AttachmentView(parent),
@@ -17,14 +15,12 @@ IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    initializedUis << ui;
     connect(ui->buttonChooseFile, SIGNAL(clicked()), this, SLOT(chooseFile()) );
     connect(ui->buttonChooseFileBig, SIGNAL(clicked()), this, SLOT(chooseFile()) );
 }
 
 IndexedFileAttachmentView::~IndexedFileAttachmentView()
 {
-    deletedUis << ui;
     delete ui;
 }
 
@@ -42,11 +38,6 @@ void IndexedFileAttachmentView::polish()
         open();
     });
     updateStackedWidget();
-}
-
-void IndexedFileAttachmentView::updateAttachmentView()
-{
-//    ui->advancedFileChooser->updateComboBox();
 }
 
 void IndexedFileAttachmentView::updateStackedWidget()
