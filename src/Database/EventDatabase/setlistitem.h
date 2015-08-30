@@ -36,13 +36,6 @@ private:
     Type m_type;
     const Song* m_song = NULL;
     QString m_label;
-
-    friend QDataStream& operator << (QDataStream& out, const SetlistItem* item );
-    friend QDataStream& operator >> (QDataStream& in,  SetlistItem* &item );
 };
-
-//TODO I think stream operators are not longer required
-QDataStream& operator << (QDataStream& out, const SetlistItem* item );
-QDataStream& operator >> (QDataStream& in,  SetlistItem* &item );
 
 #endif // SETLISTITEM_H

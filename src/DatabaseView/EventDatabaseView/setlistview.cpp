@@ -232,7 +232,7 @@ QWidget* SetlistView::createSongCellWidget(const Song* song)
         }
     });
 
-    if (song->program().valid)
+    if (song->program().isValid())
     {
         button->setIcon( QIcon(":/icons/icons/eye_midi.png") );
     }

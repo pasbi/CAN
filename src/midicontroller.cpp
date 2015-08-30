@@ -50,17 +50,17 @@ bool MidiController::connected()
 void MidiController::send(const Program &program)
 {
     // first, select Bank
-    uchar bank = program.bank;
+    uchar bank = program.bank();
     send( MidiCommand( MidiCommand::ControlChange, 32, bank ) );
 
     // then, select program
-    if (program.program > 99)
+    if (program.program() > 99)
     {
         qWarning() << "Program number out of supported range (1..100)";
     }
     else
     {
-        uchar progNum = program.program;
+        uchar progNum = program.program();
         send( MidiCommand( MidiCommand::ProgramChange, 0, progNum ));
     }
 }

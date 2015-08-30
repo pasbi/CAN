@@ -86,7 +86,7 @@ void ChordPatternProxyAttachmentView::on_buttonOriginal_clicked()
 
 void ChordPatternProxyAttachmentView::updateViewIcon()
 {
-    if (attachment<Attachment>()->song()->program().valid)
+    if (attachment<Attachment>()->song()->program().isValid())
     {
         ui->buttonView->setIcon( QIcon(":/icons/icons/eye_midi.png") );
     }

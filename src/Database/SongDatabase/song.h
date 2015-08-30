@@ -75,7 +75,6 @@ signals:
     ///  Programs
     //
     /////////////////////////////////////////////////
-    //TODO currently, only one progam per song is supported. change that!
 public:
     Program program() const { return m_program; }
     void setProgram( const Program& program ) { m_program = program; }

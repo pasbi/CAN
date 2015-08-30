@@ -82,7 +82,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     {
         MidiCommand::defaultChannel = (MidiCommand::Channel) (MidiController::config["Channel"].toInt() - 1);
         const Program& program = attachment->song()->program();
-        if (program.valid)
+        if (program.isValid())
         {
             MidiController::singleton()->send( program );
         }

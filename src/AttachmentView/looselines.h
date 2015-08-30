@@ -14,6 +14,7 @@ public:
 
 QDataStream& operator<<( QDataStream& stream, const Line& line);
 QDataStream& operator>>( QDataStream& stream, Line& line);
+
 /**
  * @brief The LooseLines class number of lines with arbitrary lines in between.
  */

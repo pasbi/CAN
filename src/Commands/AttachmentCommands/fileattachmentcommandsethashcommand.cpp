@@ -4,8 +4,8 @@
 
 FileAttachmentCommandSetHashCommand::FileAttachmentCommandSetHashCommand(IndexedFileAttachment *attachment, const QByteArray &newHash) :
     AttachmentCommand( attachment ),
-    m_newHash( newHash ),
-    m_oldHash( attachment->hash() )
+    m_oldHash( attachment->hash() ),
+    m_newHash( newHash )
 {
     setText( CommandTranslator::tr("Set File") );
 }

@@ -35,26 +35,12 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
         m_randomID = json["id"].toString();
     }
 
-    // get program
-    if (json.contains("program") && json["program"].isObject())
-    {
-        QJsonObject program = json["program"].toObject();
-        if (        checkJsonObject( program, "bank",    QJsonValue::Double )
-                &&  checkJsonObject( program, "valid",   QJsonValue::Bool )
-                &&  checkJsonObject( program, "program", QJsonValue::Double )
-                    )
-        {
-            m_program.bank =    program["bank"].toInt();
-            m_program.program = program["program"].toInt();
-            m_program.valid =   program["valid"].toBool();
-        }
-    }
+    m_program.restoreFromJsonObject(json["program"].toObject());
 
-    QJsonArray attributes = json["attributes"].toArray();
-    m_title = attributes[0].toString();
-    m_artist = attributes[1].toString();
-    m_creationDateTime = QDateTime::fromString(attributes[2].toString(), DATE_TIME_FORMAT);
-    m_duration = QTime::fromString(attributes[3].toString(), DATE_TIME_FORMAT);
+    m_title = json["title"].toString();
+    m_artist = json["artist"].toString();
+    m_creationDateTime = QDateTime::fromString(json["creationDateTime"].toString(), DATE_TIME_FORMAT);
+    m_duration = QTime::fromString(json["duration"].toString(), DATE_TIME_FORMAT);
 
     QJsonArray attachments = json["attachments"].toArray();
     m_attachments.clear();
@@ -76,14 +62,10 @@ QJsonObject Song::toJsonObject() const
 {
     QJsonObject json = Taggable::toJsonObject();
 
-    // attributes
-    //TODO simplify format
-    QJsonArray attributes;
-    attributes.append(m_title);
-    attributes.append(m_artist);
-    attributes.append(m_creationDateTime.toString(DATE_TIME_FORMAT));
-    attributes.append(m_duration.toString(DATE_TIME_FORMAT));
-    json.insert("attributes", attributes);
+    json.insert("title", m_title);
+    json.insert("artist", m_artist);
+    json.insert("creationDateTime", m_creationDateTime.toString(DATE_TIME_FORMAT));
+    json.insert("duration", m_duration.toString(DATE_TIME_FORMAT));
 
     // attachments
     QJsonArray attachments;
@@ -97,14 +79,7 @@ QJsonObject Song::toJsonObject() const
     // id
     json["id"] = randomID();
 
-    // program
-    QJsonObject program;
-    program["bank"] =       m_program.bank;
-    program["program"] =    m_program.program;
-    program["valid"] =      m_program.valid;
-    json["program"] = program;
-
-
+    json["program"] = m_program.toJsonObject();
 
     return json;
 }

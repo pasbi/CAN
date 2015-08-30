@@ -57,7 +57,6 @@ QString PersistentObject::createRandomID()
 {
     QString s;
 
-
     for (int i = 0; i < 32; ++i)
     {
         char c = qrand() % 36;

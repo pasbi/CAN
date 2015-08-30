@@ -4,8 +4,8 @@
 SetlistMoveRowsCommand::SetlistMoveRowsCommand(Setlist *setlist, QList<DatabaseMimeData<SetlistItem>::IndexedItem> sortedSource, int row) :
     ModelCommand(setlist),
     m_sortedSource(sortedSource),
-    m_row(row),
-    m_recentStatus(model()->m_items)
+    m_recentStatus(model()->m_items),
+    m_row(row)
 {
     setText(CommandTranslator::tr("Move Items"));
 }
