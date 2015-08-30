@@ -27,17 +27,13 @@ public:
 
 
 private slots:
-    void on_buttonDelete_clicked();
     void on_buttonAdd_clicked();
-
     void on_buttonShowSongs_clicked();
-    void updateButtonsEnabled();
-
     void on_buttonExportPDF_clicked();
-
     void on_listView_doubleClicked(const QModelIndex &index);
     void updateInfoLabel();
     void updateTagComboBox();
+    void updateButtonsEnabled();
 
 protected:
     void hideEvent(QHideEvent *e);

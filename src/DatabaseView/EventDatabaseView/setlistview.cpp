@@ -24,7 +24,7 @@ SetlistView::SetlistView(QWidget *parent) :
     horizontalHeader()->hide();
     setHorizontalScrollMode( QTableView::ScrollPerPixel );
 
-    setEditTriggers( QAbstractItemView::SelectedClicked | QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed );
+    setEditTriggers( QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed );
 
     setContextMenuPolicy( Qt::CustomContextMenu );
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
@@ -66,7 +66,7 @@ void SetlistView::setModel(Setlist *setlist)
         updateCellWidgets();
         horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );
         horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Fixed );
-        horizontalHeader()->resizeSection( 1, 45 );
+        horizontalHeader()->resizeSection( 1, 60 );
     }
 }
 
@@ -161,34 +161,81 @@ QList<SetlistItem*> SetlistView::selectedItems() const
     }
 }
 
-bool SetlistView::includeAttachment( const Attachment* attachment )
+bool SetlistView::attachmentIsIgnored( const Attachment* attachment ) const
 {
     // if attachment is of wrong type, do not include it.
     if ( attachment->type() != ChordPatternAttachment::TYPE )
     {
-        return false;
+        return true;
     }
 
     // if attachment has no tags, include it.
     else if ( attachment->tags().isEmpty() )
     {
-        return true;
+        return false;
     }
 
     // if no filter tag is set, return true.
     else if ( m_filterTag.isEmpty() )
     {
-        return true;
+        return false;
     }
 
     // if attachment has filter tag, include it.
     else if ( attachment->tags().contains( m_filterTag ) )
     {
-        return true;
+        return false;
     }
 
-    // otherwise, return false
-    return false;
+    // otherwise, ignore attachment
+    return true;
+}
+
+QWidget* SetlistView::createSongCellWidget(const Song* song)
+{
+    QToolButton* button = new QToolButton();
+    button->setIcon( QIcon(":/icons/icons/eye106.png") );
+    QMenu* menu = new QMenu( button );
+    button->setMenu( menu );
+    button->setPopupMode( QToolButton::MenuButtonPopup );
+
+    for (Attachment* attachment : song->attachments())
+    {
+        if ( !attachmentIsIgnored( attachment ) )
+        {
+            ChordPatternAttachment* cpa = qobject_assert_cast<ChordPatternAttachment*>( attachment );
+            QAction* action = new QAction(menu);
+            action->setText( cpa->name() );
+            menu->addAction( action );
+
+            connect( action, &QAction::triggered, [this, cpa]()
+            {
+                ChordPatternViewer::displayChordPatternAttachment( cpa, this );
+            });
+        }
+    }
+    if (!menu->actions().isEmpty())
+    {
+        menu->setDefaultAction( menu->actions().first() );
+    }
+    else
+    {
+        button->setEnabled(false);
+    }
+
+    connect( button, &QToolButton::clicked, [this, menu]()
+    {
+        if (!menu->actions().isEmpty())
+        {
+            menu->actions().first()->trigger();
+        }
+    });
+
+    if (song->program().valid)
+    {
+        button->setIcon( QIcon(":/icons/icons/eye_midi.png") );
+    }
+    return button;
 }
 
 void SetlistView::updateCellWidgets()
@@ -203,54 +250,13 @@ void SetlistView::updateCellWidgets()
         QModelIndex index = model()->index( i, 1 );
 
         // menu is deleted when hidden. So do not delete the buttons.
-        QToolButton* button = new QToolButton();
-        button->setIcon( QIcon(":/icons/icons/eye106.png") );
-        setIndexWidget( index, button );
 
         SetlistItem* item = model()->itemAt( index );
         const Song* song = NULL;
-        if (!item || !(song = item->song()))
+
+        if (item && (song = item->song()))
         {
-            button->setEnabled( false );
-        }
-        else
-        {
-            QMenu* menu = new QMenu( button );
-            button->setMenu( menu );
-            button->setPopupMode( QToolButton::MenuButtonPopup );
-
-            for (Attachment* attachment : song->attachments())
-            {
-                if ( includeAttachment( attachment ) )
-                {
-                    ChordPatternAttachment* cpa = qobject_assert_cast<ChordPatternAttachment*>( attachment );
-                    QAction* action = new QAction(menu);
-                    action->setText( cpa->name() );
-                    menu->addAction( action );
-
-                    connect( action, &QAction::triggered, [this, cpa]()
-                    {
-                        ChordPatternViewer::displayChordPatternAttachment( cpa, this );
-                    });
-                }
-            }
-            if (!menu->actions().isEmpty())
-            {
-                menu->setDefaultAction( menu->actions().first() );
-            }
-
-            connect( button, &QToolButton::clicked, [this, menu]()
-            {
-                if (!menu->actions().isEmpty())
-                {
-                    menu->actions().first()->trigger();
-                }
-            });
-
-            if (song->program().valid)
-            {
-                button->setIcon( QIcon(":/icons/icons/eye_midi.png") );
-            }
+            setIndexWidget( index, createSongCellWidget(song) );
         }
     }
 }

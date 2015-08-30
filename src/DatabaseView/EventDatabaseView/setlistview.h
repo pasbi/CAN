@@ -49,8 +49,11 @@ private:
     QAction* m_actionCopySetlistItem;
     QAction* m_actionPasteSetlistItem;
 
-    bool includeAttachment( const Attachment* attachment );
     QString m_filterTag;
+
+    bool attachmentIsIgnored( const Attachment* attachment ) const;
+    QWidget* createSongCellWidget(const Song *song);
+
 };
 
 #endif // SETLISTVIEW_H

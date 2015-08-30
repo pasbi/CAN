@@ -38,32 +38,6 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="buttonDelete">
-         <property name="minimumSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Remove selected items.</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../ressources.qrc">
-           <normaloff>:/icons/icons/minus38.png</normaloff>:/icons/icons/minus38.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="buttonAdd">
          <property name="minimumSize">
           <size>
@@ -85,7 +59,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../ressources.qrc">
-           <normaloff>:/icons/icons/plus44.png</normaloff>:/icons/icons/plus44.png</iconset>
+           <normaloff>:/icons/icons/1411734805_rename.png</normaloff>:/icons/icons/1411734805_rename.png</iconset>
          </property>
         </widget>
        </item>

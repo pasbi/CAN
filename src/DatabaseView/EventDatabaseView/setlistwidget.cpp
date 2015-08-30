@@ -39,11 +39,9 @@ SetlistWidget::~SetlistWidget()
 void SetlistWidget::updateButtonsEnabled()
 {
     bool buttonsEnabled = !!ui->listView->model();
-    bool itemButtonsEnabled = !ui->listView->selectedItems().isEmpty();
 
     ui->buttonAdd->setEnabled( buttonsEnabled );
     ui->buttonShowSongs->setEnabled( buttonsEnabled );
-    ui->buttonDelete->setEnabled( itemButtonsEnabled );
     ui->buttonExportPDF->setEnabled( buttonsEnabled );
 }
 
@@ -77,25 +75,6 @@ bool ascending(const QModelIndex& a, const QModelIndex& b)
 bool descending(const QModelIndex& a, const QModelIndex& b)
 {
     return !ascending(a, b);
-}
-
-#include "Commands/SetlistCommands/setlistremoveitemcommand.h"
-void SetlistWidget::on_buttonDelete_clicked()
-{
-    QList<SetlistItem*> selectedSetlistItems = ui->listView->selectedItems();
-    if (setlist() && !selectedSetlistItems.isEmpty())
-    {
-        app().project()->beginMacro( tr("Remove Setlist Items") );
-        for (SetlistItem* si : selectedSetlistItems)
-        {
-            app().pushCommand( new SetlistRemoveItemCommand( setlist(), si ) );
-        }
-        app().project()->endMacro();
-    }
-    else
-    {
-        qWarning() << "Cannot add Item to no set list.";
-    }
 }
 
 #include "Commands/SetlistCommands/setlistadditemcommand.h"
