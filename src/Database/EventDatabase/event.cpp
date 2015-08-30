@@ -5,7 +5,7 @@ Event::Event( EventDatabase* database, const QDateTime& beginning, const QDateTi
     m_timeSpan( TimeSpan(beginning, ending)),
     m_type(type),
     m_label(label),
-    m_setlist( this )   // destroyed via ~QObject
+    m_setlist( this )
 {
 
 }

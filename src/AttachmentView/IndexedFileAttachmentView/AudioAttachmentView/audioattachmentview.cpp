@@ -74,8 +74,9 @@ void AudioAttachmentView::polish()
     ui->slider->setMaximum( a->player().duration() );
     ui->doubleSpinBoxPitch->setValue( player().pitch() );
     ui->doubleSpinBoxTempo->setValue( player().tempo() );
-
+    player().pause();
     ui->sectionView->setModel( a->sectionsModel() );
+
 #endif
 }
 
@@ -95,7 +96,7 @@ void AudioAttachmentView::on_pushButtonPlayPause_toggled(bool checked)
 #ifdef HAVE_SOUNDTOUCH
     if (checked)
     {
-//        player().seek( /*player().position()*/ );
+        player().seek( ui->doubleSpinBoxTempo->value() * ui->slider->value() );
         player().play();
         ui->slider->play();
     }
