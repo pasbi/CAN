@@ -1,9 +1,10 @@
 #ifndef INSERTSECTIONCOMMAND_H
 #define INSERTSECTIONCOMMAND_H
 
-#include "sectionsmodelcommand.h"
+#include "Commands/modelcommand.h"
+#include "Attachments/AudioAttachment/sectionsmodel.h"
 
-class InsertSectionCommand : public SectionsModelCommand
+class InsertSectionCommand : public ModelCommand<SectionsModel>
 {
 public:
     InsertSectionCommand( SectionsModel* model, const Section& section, int index );

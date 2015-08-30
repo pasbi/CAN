@@ -1,19 +1,19 @@
 #include "songeditprogramcommand.h"
 
 SongEditProgramCommand::SongEditProgramCommand(Song *song, const Program &program) :
-    SongCommand( song ),
-    m_newProgram( program )
+    ModelCommand<Song>( song ),
+    m_newProgram( program ),
+    m_oldProgram(song->program())
 {
-    m_oldProgram = song->program();
     setText( CommandTranslator::tr("set program") );
 }
 
 void SongEditProgramCommand::undo()
 {
-    song()->setProgram( m_oldProgram );
+    model()->setProgram( m_oldProgram );
 }
 
 void SongEditProgramCommand::redo()
 {
-    song()->setProgram( m_newProgram );
+    model()->setProgram( m_newProgram );
 }

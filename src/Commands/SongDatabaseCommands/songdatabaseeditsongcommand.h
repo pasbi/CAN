@@ -1,7 +1,8 @@
 #ifndef SONGDATABASEEDITSONGCOMMAND_H
 #define SONGDATABASEEDITSONGCOMMAND_H
 
-#include "songdatabasecommand.h"
+#include "Commands/modelcommand.h"
+#include "Database/SongDatabase/songdatabase.h"
 
 class SongDatabaseEditSongCommand : public SongDatabaseCommand
 {

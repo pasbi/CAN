@@ -1,14 +1,18 @@
 #include "setlistview.h"
+
 #include <QMimeData>
+#include <QToolButton>
+
 #include "application.h"
 #include "Project/project.h"
-#include "Commands/SetlistCommands/setlistinsertitemcommand.h"
+#include "Commands/SetlistCommands/setlistnewitemcommand.h"
 #include <QAction>
 #include <QHeaderView>
 #include <QClipboard>
 #include "util.h"
-#include <QToolButton>
 #include "Dialogs/chordpatternviewer.h"
+#include "Database/databasemimedata.h"
+#include "Commands/SetlistCommands/setlistremoveitemcommand.h"
 
 
 SetlistView::SetlistView(QWidget *parent) :
@@ -83,7 +87,6 @@ void SetlistView::showContextMenu(QPoint pos)
     connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
 }
 
-#include "Database/databasemimedata.h"
 void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
 {
     Q_UNUSED( pos );
@@ -101,11 +104,10 @@ void SetlistView::my_on_actionNewSetlistItem_triggered()
 {
     if (model())
     {
-        app().pushCommand( new SetlistInsertItemCommand( model(), new SetlistItem() ) );
+        app().pushCommand( new SetlistNewItemCommand( model(), new SetlistItem() ) );
     }
 }
 
-#include "Commands/SetlistCommands/setlistremoveitemcommand.h"
 void SetlistView::my_on_actionDeleteSetlistItem_triggered()
 {
     QList<SetlistItem*> si = selectedItems();

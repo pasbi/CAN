@@ -1,10 +1,10 @@
 #ifndef EDITTAGSCOMMAND_H
 #define EDITTAGSCOMMAND_H
 
-#include "command.h"
+#include "Commands/modelcommand.h"
 #include "taggable.h"
 
-class EditTagsCommand : public Command
+class EditTagsCommand : public ModelCommand<Taggable>
 {
 public:
     EditTagsCommand(Taggable* taggable, const QStringList& tags);
@@ -13,7 +13,6 @@ public:
     void redo();
 
 private:
-    Taggable* const m_taggable;
     const QStringList m_oldTags;
     const QStringList m_newTags;
 };

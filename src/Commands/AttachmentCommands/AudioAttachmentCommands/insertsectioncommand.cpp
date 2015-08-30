@@ -2,7 +2,7 @@
 #include "global.h"
 
 InsertSectionCommand::InsertSectionCommand(SectionsModel *model, const Section &section, int index) :
-    SectionsModelCommand( model ),
+    ModelCommand<SectionsModel>( model ),
     m_section( section ),
     m_index( index )
 {

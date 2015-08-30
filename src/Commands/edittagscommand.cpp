@@ -1,19 +1,19 @@
 #include "edittagscommand.h"
 
 EditTagsCommand::EditTagsCommand(Taggable *taggable, const QStringList &tags) :
-    m_taggable( taggable ),
+    ModelCommand(taggable),
     m_oldTags( taggable->tags() ),
     m_newTags( tags )
 {
-    setText( CommandTranslator::tr("edit tags") );
+    setText( CommandTranslator::tr("Edit Tags") );
 }
 
 void EditTagsCommand::undo()
 {
-    m_taggable->setTags( m_oldTags );
+    model()->setTags( m_oldTags );
 }
 
 void EditTagsCommand::redo()
 {
-    m_taggable->setTags( m_newTags );
+    model()->setTags( m_newTags );
 }

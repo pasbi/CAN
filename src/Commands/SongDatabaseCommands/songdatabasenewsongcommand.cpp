@@ -3,45 +3,21 @@
 
 SongDatabaseNewSongCommand::SongDatabaseNewSongCommand(SongDatabase *songDatabase, Song* song, int row) :
     SongDatabaseCommand(songDatabase),
-    m_song(song),
+    ItemOwnerCommandDecorator(song),
     m_row( row )
 {
-    if (m_song == NULL)
-    {
-        m_song = new Song( songDatabase );
-    }
-
-    setText( CommandTranslator::tr("new song") );
-}
-
-SongDatabaseNewSongCommand::~SongDatabaseNewSongCommand()
-{
-    if (m_ownsSong)
-        delete m_song;
+    setText( CommandTranslator::tr("Add Song") );
 }
 
 void SongDatabaseNewSongCommand::redo()
 {
-    // m_song ownership is transfered to m_songDatabase
-    if (!m_song)
-        m_song = new Song(database());
-
-    if (m_row < 0)
-    {
-        database()->appendSong( m_song );
-    }
-    else
-    {
-        database()->insertSong( m_song, m_row );
-    }
-    m_ownsSong = false;
+    model()->insertSong( item(), m_row );
+    releaseOwnershipOfItem();
 }
 
 void SongDatabaseNewSongCommand::undo()
 {
-    // transfer ownership to this
-    assert(m_song);
 
-    database()->removeSong( m_song );
-    m_ownsSong = true;
+    model()->removeSong( item() );
+    takeOwnershipOfItem();
 }

@@ -64,7 +64,6 @@ SOURCES += main.cpp\
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
     DatabaseView/SongDatabaseView/songtableview.cpp \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp \
-    Commands/SongDatabaseCommands/songdatabasecommand.cpp \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp \
     util.cpp \
     DatabaseView/SongDatabaseView/songattributedelegate.cpp \
@@ -79,8 +78,6 @@ SOURCES += main.cpp\
     FileIndex/indexer.cpp \
     Attachments/indexedfileattachment.cpp \
     application.cpp \
-    Commands/SongCommands/songaddattachmentcommand.cpp \
-    Commands/SongCommands/songcommand.cpp \
     Commands/SongCommands/songremoveattachmentcommand.cpp \
     AttachmentView/attachmenteditor.cpp \
     AttachmentView/attachmentview.cpp \
@@ -89,13 +86,11 @@ SOURCES += main.cpp\
     Attachments/pdfattachment.cpp \
     DatabaseView/SongDatabaseView/songdatabasewidget.cpp \
     AttachmentView/attachmentchooser.cpp \
-    Commands/AttachmentCommands/attachmentcommand.cpp \
     Commands/AttachmentCommands/attachmentrenamecommand.cpp \
     Attachments/ChordPatternAttachment/chord.cpp \
     Dialogs/clonedialog.cpp \
     Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.cpp \
     Dialogs/stringdialog.cpp \
-    Commands/SongCommands/songduplicateattachmentcommand.cpp \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp \
     Attachments/AudioAttachment/audioattachment.cpp \
@@ -111,18 +106,15 @@ SOURCES += main.cpp\
     DatabaseView/EventDatabaseView/eventdatabasewidget.cpp \
     Dialogs/datetimedialog.cpp \
     Commands/EventDatabaseCommands/eventdatabaseneweventcommand.cpp \
-    Commands/EventDatabaseCommands/eventdatabasecommand.cpp \
     Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.cpp \
     Database/EventDatabase/eventdatabasesortproxy.cpp \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.cpp \
     DatabaseView/EventDatabaseView/setlistwidget.cpp \
     Commands/EventDatabaseCommands/eventdatabaseediteventcommand.cpp \
     Database/EventDatabase/setlist.cpp \
-    Commands/SetlistCommands/setlistcommand.cpp \
     Commands/SetlistCommands/setlistremoveitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistitemselector.cpp \
     Commands/SetlistCommands/setlisteditdatacommand.cpp \
-    Commands/SetlistCommands/setlistinsertitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistview.cpp \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp \
     Attachments/AudioAttachment/sectionsmodel.cpp \
@@ -130,13 +122,11 @@ SOURCES += main.cpp\
     Attachments/AudioAttachment/buffer.cpp \
     Attachments/AudioAttachment/player.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.cpp \
-    Commands/AttachmentCommands/AudioAttachmentCommands/sectionsmodelcommand.cpp \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.cpp \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
     combobox.cpp \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp \
-    Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.cpp \
     Dialogs/tagdialog.cpp \
     Commands/edittagscommand.cpp \
     PDFCreator/page.cpp \
@@ -164,7 +154,10 @@ SOURCES += main.cpp\
     Commands/SongCommands/songeditprogramcommand.cpp \
     midicontroller.cpp \
     Database/EventDatabase/setlistitem.cpp \
-    Commands/SetlistCommands/setlistmoverowscommand.cpp
+    Commands/SetlistCommands/setlistmoverowscommand.cpp \
+    Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.cpp \
+    Commands/SongCommands/songnewattachmentcommand.cpp \
+    Commands/SetlistCommands/setlistnewitemcommand.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -184,7 +177,6 @@ HEADERS  += mainwindow.h \
     Commands/SongDatabaseCommands/songdatabasenewsongcommand.h \
     DatabaseView/SongDatabaseView/songtableview.h \
     Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h \
-    Commands/SongDatabaseCommands/songdatabasecommand.h \
     Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h \
     util.h \
     DatabaseView/SongDatabaseView/songattributedelegate.h \
@@ -199,8 +191,6 @@ HEADERS  += mainwindow.h \
     FileIndex/indexer.h \
     Attachments/indexedfileattachment.h \
     application.h \
-    Commands/SongCommands/songaddattachmentcommand.h \
-    Commands/SongCommands/songcommand.h \
     Commands/SongCommands/songremoveattachmentcommand.h \
     Commands/AttachmentCommands/attachmentrenamecommand.h \
     AttachmentView/attachmenteditor.h \
@@ -210,12 +200,10 @@ HEADERS  += mainwindow.h \
     Attachments/pdfattachment.h \
     DatabaseView/SongDatabaseView/songdatabasewidget.h \
     AttachmentView/attachmentchooser.h \
-    Commands/AttachmentCommands/attachmentcommand.h \
     Attachments/ChordPatternAttachment/chord.h \
     Dialogs/clonedialog.h \
-    Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.cpp \
+    Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h \
     Dialogs/stringdialog.h \
-    Commands/SongCommands/songduplicateattachmentcommand.h \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.h \
     Attachments/AudioAttachment/audioattachment.h \
@@ -232,7 +220,6 @@ HEADERS  += mainwindow.h \
     DatabaseView/EventDatabaseView/eventdatabasewidget.h \
     Dialogs/datetimedialog.h \
     Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h \
-    Commands/EventDatabaseCommands/eventdatabasecommand.h \
     Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h \
     Database/EventDatabase/eventdatabasesortproxy.h \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.h \
@@ -240,11 +227,9 @@ HEADERS  += mainwindow.h \
     Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h \
     commontypes.h \
     Database/EventDatabase/setlist.h \
-    Commands/SetlistCommands/setlistcommand.h \
     Commands/SetlistCommands/setlistremoveitemcommand.h \
     DatabaseView/EventDatabaseView/setlistitemselector.h \
     Commands/SetlistCommands/setlisteditdatacommand.h \
-    Commands/SetlistCommands/setlistinsertitemcommand.h \
     DatabaseView/EventDatabaseView/setlistview.h \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h \
     Attachments/AudioAttachment/sectionsmodel.h \
@@ -252,14 +237,12 @@ HEADERS  += mainwindow.h \
     Attachments/AudioAttachment/buffer.h \
     Attachments/AudioAttachment/player.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.h \
-    Commands/AttachmentCommands/AudioAttachmentCommands/sectionsmodelcommand.h \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.h \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h \
     DatabaseView/databaseview.h \
     combobox.h \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.h \
-    Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h \
     Dialogs/tagdialog.h \
     Commands/edittagscommand.h \
     PDFCreator/page.h \
@@ -295,7 +278,12 @@ HEADERS  += mainwindow.h \
     Database/databasemimedata.h \
     Database/databasesortproxy.h \
     Database/EventDatabase/setlistitem.h \
-    Commands/SetlistCommands/setlistmoverowscommand.h
+    Commands/SetlistCommands/setlistmoverowscommand.h \
+    Commands/itemownercommanddecorator.h \
+    Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.h \
+    Commands/SongCommands/songnewattachmentcommand.h \
+    Commands/SetlistCommands/setlistnewitemcommand.h \
+    Commands/modelcommand.h
 
 
 

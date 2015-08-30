@@ -2,48 +2,42 @@
 
 
 SetlistMoveRowsCommand::SetlistMoveRowsCommand(Setlist *setlist, QList<DatabaseMimeData<SetlistItem>::IndexedItem> sortedSource, int row) :
-    SetlistCommand(setlist),
+    ModelCommand(setlist),
     m_sortedSource(sortedSource),
-    m_row(row)
+    m_row(row),
+    m_recentStatus(model()->m_items)
 {
     setText(CommandTranslator::tr("Move Items"));
 }
 
 void SetlistMoveRowsCommand::undo()
 {
-    if (setlist())
-    {
-        setlist()->beginResetModel();
-        setlist()->m_items = m_recentStatus;
-        setlist()->endResetModel();
-    }
+    model()->beginResetModel();
+    model()->m_items = m_recentStatus;
+    model()->endResetModel();
 }
 
 void SetlistMoveRowsCommand::redo()
 {
-    if (setlist())
+    model()->beginResetModel();
+    QList<SetlistItem*> items;
+    int n = m_sortedSource.length();
+    int insertPos = m_row;
+    for (int i = n-1; i >= 0; --i)
     {
-        m_recentStatus = setlist()->m_items;
-        setlist()->beginResetModel();
-        QList<SetlistItem*> items;
-        int n = m_sortedSource.length();
-        int insertPos = m_row;
-        for (int i = n-1; i >= 0; --i)
+        int index = m_sortedSource[i].index;
+        items.prepend( model()->m_items.takeAt( index ) );
+        if (index < insertPos)
         {
-            int index = m_sortedSource[i].index;
-            items.prepend( setlist()->m_items.takeAt( index ) );
-            if (index < insertPos)
-            {
-                insertPos--;
-            }
+            insertPos--;
         }
-
-        for (int i = 0; i < n; ++i)
-        {
-            setlist()->m_items.insert(insertPos + i, items[i]);
-        }
-        setlist()->endResetModel();
     }
+
+    for (int i = 0; i < n; ++i)
+    {
+        model()->m_items.insert(insertPos + i, items[i]);
+    }
+    model()->endResetModel();
 }
 
 

@@ -1,10 +1,10 @@
 #ifndef CHORDPATTERNATTACHMENTEDITPATTERNCOMMAND_H
 #define CHORDPATTERNATTACHMENTEDITPATTERNCOMMAND_H
 
-#include "attachmentcommand.h"
+#include "Commands/modelcommand.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 
-class ChordPatternAttachmentEditPatternCommand : public AttachmentCommand
+class ChordPatternAttachmentEditPatternCommand : public AttachmentCommand<ChordPatternAttachment>
 {
 public:
     ChordPatternAttachmentEditPatternCommand( ChordPatternAttachment *attachment, const QString &pattern);

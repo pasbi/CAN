@@ -219,17 +219,16 @@ QVariant EventDatabase::data( const int row, const int column, const int role)
     return data( index(row, column, QModelIndex()), role );
 }
 
-void EventDatabase::appendEvent(Event *event)
-{
-    insertEvent(event, rowCount());
-}
-
-void EventDatabase::insertEvent(Event *event, const int index)
+void EventDatabase::insertEvent(Event *event, int index)
 {
     m_tmpEventBuffer.append(event);
 //    connect( song, SIGNAL(attachmentAdded(int)),   this, SIGNAL(attachmentAdded(int)  ));
 //    connect( song, SIGNAL(attachmentRemoved(int)), this, SIGNAL(attachmentRemoved(int)));
 //    connect( song, SIGNAL(attachmentRenamed(int, QString)), this, SIGNAL(attachmentRenamed(int,QString)));
+    if (index < 0)
+    {
+        index = rowCount();
+    }
     assert( insertRows( index, 1, QModelIndex() ));
 }
 
@@ -250,18 +249,10 @@ bool EventDatabase::insertRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-int EventDatabase::removeEvent(Event* event)
+void EventDatabase::removeEvent(Event* event)
 {
-    int index;
-    if ( (index = m_items.indexOf(event)) < 0 )
-    {
-        WARNING << "EventDatabase does not contain event " << event;
-    }
-    else
-    {
-        assert( removeRows(index, 1, QModelIndex()) );
-    }
-    return index;
+    int index = m_items.indexOf(event);
+    assert( removeRows(index, 1, QModelIndex()) );
 }
 
 bool EventDatabase::removeRows(int row, int count, const QModelIndex &parent)

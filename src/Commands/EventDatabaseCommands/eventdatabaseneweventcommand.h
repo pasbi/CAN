@@ -1,20 +1,18 @@
 #ifndef EVENTDATABASENEWEVENTCOMMAND_H
 #define EVENTDATABASENEWEVENTCOMMAND_H
 
-#include "eventdatabasecommand.h"
+#include "Commands/modelcommand.h"
 #include "Database/EventDatabase/event.h"
+#include "Commands/itemownercommanddecorator.h"
 
-class EventDatabaseNewEventCommand : public EventDatabaseCommand
+class EventDatabaseNewEventCommand : public EventDatabaseCommand, private ItemOwnerCommandDecorator<Event>
 {
 public:
     EventDatabaseNewEventCommand(EventDatabase* database, Event *event, int row = -1);
-    ~EventDatabaseNewEventCommand();
     void undo();
     void redo();
 
 private:
-    Event* m_event;
-    bool m_ownsEvent = false;
     const int m_row;
 };
 

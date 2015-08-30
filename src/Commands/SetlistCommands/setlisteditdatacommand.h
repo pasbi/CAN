@@ -1,9 +1,9 @@
 #ifndef SETLISTEDITDATACOMMAND_H
 #define SETLISTEDITDATACOMMAND_H
 
-#include "setlistcommand.h"
+#include "Commands/modelcommand.h"
 
-class SetlistEditDataCommand : public SetlistCommand
+class SetlistEditDataCommand : public ModelCommand<Setlist>
 {
 public:
     SetlistEditDataCommand(Setlist* setlist, const QModelIndex& index, const QVariant& newData, int role);
@@ -11,10 +11,10 @@ public:
     void redo();
 
 private:
-    QModelIndex m_index;
-    QVariant m_newData;
-    QVariant m_oldData;
-    int m_role;
+    const QModelIndex m_index;
+    const QVariant m_newData;
+    const QVariant m_oldData;
+    const int m_role;
 };
 
 #endif // SETLISTEDITDATACOMMAND_H

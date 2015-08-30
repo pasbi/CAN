@@ -29,10 +29,9 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant data( const int row, const int column, const int role);
 
-    void insertEvent( Event* event, const int index);
-    void appendEvent( Event* event );
+    void insertEvent(Event* event, int index);
     bool insertRows(int row, int count, const QModelIndex &parent);
-    int  removeEvent( Event* event );
+    void removeEvent( Event* event );
     bool removeRows(int row, int count, const QModelIndex &parent);
 
     QModelIndex indexOfEvent( const Event* event ) const;

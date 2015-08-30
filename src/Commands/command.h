@@ -10,15 +10,13 @@ class Command : public QUndoCommand
 {
 public:
     enum Type { SongDatabaseRelated, EventDatabaseRelated, Other };
-    explicit Command(QUndoCommand *parent = 0);
-
-public:
     Type type() const { return m_type; }
 
 protected:
-    Type m_type = Other;
+    explicit Command(Type type = Other);
 
-
+private:
+    const Type m_type = Other;
 };
 
 #endif // COMMAND_H

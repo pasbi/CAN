@@ -2,30 +2,21 @@
 
 EventDatabaseRemoveEventCommand::EventDatabaseRemoveEventCommand(EventDatabase *database, Event *event) :
     EventDatabaseCommand( database ),
-    m_ownsEvent( false ),
-    m_event( event )
+    ItemOwnerCommandDecorator(event),
+    m_index(database->indexOfEvent(event).row())
 {
     assert( event );
-    setText( CommandTranslator::tr("delete event") );
-}
-
-EventDatabaseRemoveEventCommand::~EventDatabaseRemoveEventCommand()
-{
-    if (m_ownsEvent)
-    {
-        delete m_event;
-        m_event = NULL;
-    }
+    setText( CommandTranslator::tr("Delete Event") );
 }
 
 void EventDatabaseRemoveEventCommand::undo()
 {
-    m_ownsEvent = false;
-    eventDatabase()->insertEvent( m_event, m_index );
+    takeOwnershipOfItem();
+    model()->insertEvent( item(), m_index );
 }
 
 void EventDatabaseRemoveEventCommand::redo()
 {
-    m_ownsEvent = true;
-    m_index = eventDatabase()->removeEvent( m_event );
+    releaseOwnershipOfItem();
+    model()->removeEvent( item() );
 }

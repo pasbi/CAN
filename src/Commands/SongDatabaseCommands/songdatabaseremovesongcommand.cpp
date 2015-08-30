@@ -2,31 +2,21 @@
 
 SongDatabaseRemoveSongCommand::SongDatabaseRemoveSongCommand(SongDatabase *songDatabase, Song *song) :
     SongDatabaseCommand( songDatabase ),
-    m_ownsSong(false),
-    m_song(song)
+    ItemOwnerCommandDecorator( song ),
+    m_index(songDatabase->indexOfSong(song).row())
 {
-    assert( song );
-    setText( CommandTranslator::tr("delete song") );
-}
-
-SongDatabaseRemoveSongCommand::~SongDatabaseRemoveSongCommand()
-{
-    if (m_ownsSong)
-    {
-        delete m_song;
-        m_song = 0;
-    }
+    setText( CommandTranslator::tr("Delete Song") );
 }
 
 void SongDatabaseRemoveSongCommand::undo()
 {
-    m_ownsSong = false;
-    database()->insertSong(m_song, m_index);
+    releaseOwnershipOfItem();
+    model()->insertSong(item(), m_index);
 }
 
 void SongDatabaseRemoveSongCommand::redo()
 {
-    m_ownsSong = true;
-    m_index = database()->removeSong(m_song);
+    takeOwnershipOfItem();
+    model()->removeSong(item());
 }
 

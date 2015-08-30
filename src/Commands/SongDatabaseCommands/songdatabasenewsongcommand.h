@@ -1,20 +1,19 @@
 #ifndef SONGDATABASENEWSONGCOMMAND_H
 #define SONGDATABASENEWSONGCOMMAND_H
 
-#include "songdatabasecommand.h"
+#include "Commands/modelcommand.h"
+#include "Commands/itemownercommanddecorator.h"
+#include "Database/SongDatabase/songdatabase.h"
 
-class SongDatabaseNewSongCommand : public SongDatabaseCommand
+class SongDatabaseNewSongCommand : public SongDatabaseCommand, private ItemOwnerCommandDecorator<Song>
 {
 public:
-    SongDatabaseNewSongCommand(SongDatabase* songDatabase, Song *song = 0, int row = -1);
-    ~SongDatabaseNewSongCommand();
+    SongDatabaseNewSongCommand(SongDatabase* songDatabase, Song *song, int row = -1);
 
     void undo();
     void redo();
 
 private:
-    Song* m_song = 0;
-    bool m_ownsSong = false;
     const int m_row;
 
 

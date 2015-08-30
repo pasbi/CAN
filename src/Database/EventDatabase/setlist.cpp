@@ -291,7 +291,7 @@ QMimeData* Setlist::mimeData(const QModelIndexList &indexes) const
     return mime;
 }
 
-#include "Commands/SetlistCommands/setlistinsertitemcommand.h"
+#include "Commands/SetlistCommands/setlistnewitemcommand.h"
 #include "Commands/SetlistCommands/setlistmoverowscommand.h"
 bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
@@ -328,7 +328,7 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
                 {
                     // create a new setlist item and link `song` with it
                     SetlistItem* newItem = new SetlistItem(item.item->copy());
-                    app().pushCommand( new SetlistInsertItemCommand( this, newItem, row + i ) );
+                    app().pushCommand( new SetlistNewItemCommand( this, newItem, row + i ) );
                     indexes << indexOf(newItem);
                     i++;
                 }
@@ -364,7 +364,7 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
                 {
                     // create a new setlist item and link `song` with it
                     SetlistItem* newItem = item.item->copy();
-                    app().pushCommand( new SetlistInsertItemCommand( this, newItem, row + i ));
+                    app().pushCommand( new SetlistNewItemCommand( this, newItem, row + i ));
                     indexes << indexOf(newItem);
                     i++;
                 }

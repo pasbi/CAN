@@ -1,6 +1,7 @@
 #include "command.h"
 
-Command::Command(QUndoCommand *parent) :
-    QUndoCommand(parent)
+Command::Command(Type type) :
+    QUndoCommand(),
+    m_type(type)
 {
 }

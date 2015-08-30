@@ -10,17 +10,15 @@ SongDatabaseEditSongCommand::SongDatabaseEditSongCommand(SongDatabase *         
     m_oldData( songDatabase->data( index, role ) ),
     m_role(role)
 {
-    setText( CommandTranslator::tr("edit song") );
+    setText( CommandTranslator::tr("Edit Song") );
 }
-
-
 
 void SongDatabaseEditSongCommand::redo()
 {
-    database()->setData( m_index, m_newData, m_role );
+    model()->setData( m_index, m_newData, m_role );
 }
 
 void SongDatabaseEditSongCommand::undo()
 {
-    database()->setData( m_index, m_oldData, m_role );
+    model()->setData( m_index, m_oldData, m_role );
 }

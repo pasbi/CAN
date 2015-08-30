@@ -4,19 +4,18 @@
 
 FileAttachmentCommandSetHashCommand::FileAttachmentCommandSetHashCommand(IndexedFileAttachment *attachment, const QByteArray &newHash) :
     AttachmentCommand( attachment ),
-    m_newHash( newHash )
+    m_newHash( newHash ),
+    m_oldHash( attachment->hash() )
 {
-    m_oldHash = attachment->hash();
-
-    setText( CommandTranslator::tr("set file") );
+    setText( CommandTranslator::tr("Set File") );
 }
 
 void FileAttachmentCommandSetHashCommand::undo()
 {
-    attachment<IndexedFileAttachment>()->setHash( m_oldHash );
+    model()->setHash( m_oldHash );
 }
 
 void FileAttachmentCommandSetHashCommand::redo()
 {
-    attachment<IndexedFileAttachment>()->setHash( m_newHash );
+    model()->setHash( m_newHash );
 }

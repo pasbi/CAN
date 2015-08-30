@@ -1,7 +1,7 @@
 #ifndef EVENTDATABASEEDITEVENTCOMMAND_H
 #define EVENTDATABASEEDITEVENTCOMMAND_H
 
-#include "eventdatabasecommand.h"
+#include "Commands/modelcommand.h"
 
 class EventDatabaseEditEventCommand : public EventDatabaseCommand
 {

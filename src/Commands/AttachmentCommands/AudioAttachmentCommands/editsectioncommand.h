@@ -1,13 +1,13 @@
 #ifndef EDITSECTIONCOMMAND_H
 #define EDITSECTIONCOMMAND_H
 
-#include "sectionsmodelcommand.h"
-#include "Attachments/AudioAttachment/audioattachment.h"
+#include "Commands/modelcommand.h"
+#include "Attachments/AudioAttachment/sectionsmodel.h"
 
-class EditSectionCommand : public SectionsModelCommand
+class EditSectionCommand : public ModelCommand<SectionsModel>
 {
 public:
-    EditSectionCommand( SectionsModel* model, const QVariant& newValue, const QModelIndex &index, const int role );
+    EditSectionCommand(SectionsModel* model, const QVariant& newValue, const QModelIndex &index, int role );
     void undo();
     void redo();
 

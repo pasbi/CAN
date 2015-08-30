@@ -1,15 +1,18 @@
 #include "setlistwidget.h"
+
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QProgressDialog>
+
+#include "PDFCreator/pdfcreator.h"
+#include "Commands/SetlistCommands/setlistnewitemcommand.h"
 #include "ui_setlistwidget.h"
 #include "application.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Project/project.h"
 #include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
-#include <QDialog>
-#include <QDialogButtonBox>
-#include <QFileDialog>
-#include "PDFCreator/pdfcreator.h"
-#include <QMessageBox>
-#include <QProgressDialog>
 #include "util.h"
 
 DEFN_CONFIG( SetlistWidget, "SetlistWidget" );
@@ -77,12 +80,11 @@ bool descending(const QModelIndex& a, const QModelIndex& b)
     return !ascending(a, b);
 }
 
-#include "Commands/SetlistCommands/setlistinsertitemcommand.h"
 void SetlistWidget::on_buttonAdd_clicked()
 {
     if (setlist())
     {
-        app().pushCommand( new SetlistInsertItemCommand( setlist(), new SetlistItem() ) );
+        app().pushCommand( new SetlistNewItemCommand( setlist(), new SetlistItem() ) );
     }
     else
     {

@@ -1,7 +1,7 @@
 #include "deletesectioncommand.h"
 
-DeleteSectionCommand::DeleteSectionCommand(SectionsModel *model, const int row) :
-    SectionsModelCommand( model ),
+DeleteSectionCommand::DeleteSectionCommand(SectionsModel *model, int row) :
+    ModelCommand<SectionsModel>( model ),
     m_row( row )
 {
     setText( CommandTranslator::tr("delete section") );

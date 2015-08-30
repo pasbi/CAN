@@ -2,19 +2,18 @@
 
 AttachmentRenameCommand::AttachmentRenameCommand(Attachment *attachment, const QString &newName) :
     AttachmentCommand( attachment ),
-    m_attachment( attachment ),
-    m_newName( newName )
+    m_newName( newName ),
+    m_oldName( attachment->name() )
 {
-    m_oldName = m_attachment->name();
     setText( CommandTranslator::tr("rename attachment") );
 }
 
 void AttachmentRenameCommand::redo()
 {
-    m_attachment->setName( m_newName );
+    model()->setName( m_newName );
 }
 
 void AttachmentRenameCommand::undo()
 {
-    m_attachment->setName( m_oldName );
+    model()->setName( m_oldName );
 }

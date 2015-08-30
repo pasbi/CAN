@@ -1,10 +1,10 @@
 #ifndef ATTACHMENTRENAMECOMMAND_H
 #define ATTACHMENTRENAMECOMMAND_H
 
-#include "attachmentcommand.h"
+#include "Commands/modelcommand.h"
 #include "Attachments/attachment.h"
 
-class AttachmentRenameCommand : public AttachmentCommand
+class AttachmentRenameCommand : public AttachmentCommand<Attachment>
 {
 public:
     AttachmentRenameCommand(Attachment* attachment, const QString & newName);
@@ -13,9 +13,8 @@ public:
     void undo();
 
 private:
-    Attachment* m_attachment;
-    QString m_newName;
-    QString m_oldName;
+    const QString m_newName;
+    const QString m_oldName;
 };
 
 #endif // ATTACHMENTRENAMECOMMAND_H

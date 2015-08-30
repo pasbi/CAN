@@ -237,7 +237,7 @@ Event* MainWindow::currentEvent() const
     return ui->eventDatabaseWidget->currentEvent();
 }
 
-#include "Commands/SongCommands/songaddattachmentcommand.h"
+#include "Commands/SongCommands/songnewattachmentcommand.h"
 
 void MainWindow::createAttachmentActions()
 {
@@ -273,7 +273,7 @@ void MainWindow::createAttachmentActions()
             Song* song = currentSong();
             if (song)
             {
-                SongAddAttachmentCommand* command = new SongAddAttachmentCommand( song, Creatable::create<Attachment>(classname) );
+                SongNewAttachmentCommand* command = new SongNewAttachmentCommand( song, Creatable::create<Attachment>(classname) );
                 app().pushCommand( command );
                 updateWhichWidgetsAreEnabled();
             }
@@ -576,7 +576,7 @@ void MainWindow::gotoEventView()
 #include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
 void MainWindow::my_on_actionNew_Song_triggered()
 {
-    app().pushCommand( new SongDatabaseNewSongCommand( m_project.songDatabase() ) );
+    app().pushCommand( new SongDatabaseNewSongCommand( m_project.songDatabase(), new Song(m_project.songDatabase()) ) );
     updateWhichWidgetsAreEnabled();
 }
 
@@ -746,7 +746,6 @@ void MainWindow::on_actionRename_Attachment_triggered()
     updateWhichWidgetsAreEnabled();
 }
 
-#include "Commands/SongCommands/songduplicateattachmentcommand.h"
 void MainWindow::on_actionDuplicate_Attachment_triggered()
 {
     Song* cs = currentSong();
@@ -758,7 +757,7 @@ void MainWindow::on_actionDuplicate_Attachment_triggered()
     Attachment* attachment = cs->attachments()[index];
     assert( attachment );
 
-    app().pushCommand( new SongAddAttachmentCommand( cs, attachment->copy() ) );
+    app().pushCommand( new SongNewAttachmentCommand( cs, attachment->copy() ) );
     updateWhichWidgetsAreEnabled();
 }
 
@@ -1167,7 +1166,7 @@ void MainWindow::my_on_actionEditProgram_triggered()
     }
 }
 
-#include "Commands/SongDatabaseCommands/songdatabasetoggleattributevisibility.h"
+#include "Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.h"
 void MainWindow::createAttributeVisibilityMenu()
 {
     QMenu* menu = ui->menuVisible_attributes;
@@ -1181,7 +1180,7 @@ void MainWindow::createAttributeVisibilityMenu()
 
         connect( action, &QAction::triggered, [this, i](bool visible)
         {
-            app().pushCommand( new SongDatabaseToggleAttributeVisibility( m_project.songDatabase(), i, visible ) );
+            app().pushCommand( new SongDatabaseSetColumnVisibilityCommand( m_project.songDatabase(), i, visible ) );
         });
 
         connect( menu, SIGNAL(aboutToHide()), action, SLOT(deleteLater()) );

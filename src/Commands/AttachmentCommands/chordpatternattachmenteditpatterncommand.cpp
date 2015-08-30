@@ -6,15 +6,15 @@ ChordPatternAttachmentEditPatternCommand::ChordPatternAttachmentEditPatternComma
     m_oldPattern( attachment->chordPattern() ),
     m_newPattern( pattern )
 {
-    setText( CommandTranslator::tr("edit chord pattern") );
+    setText( CommandTranslator::tr("Edit Chord Pattern") );
 }
 
 void ChordPatternAttachmentEditPatternCommand::undo()
 {
-    attachment<ChordPatternAttachment>()->setPattern( m_oldPattern );
+    model()->setPattern( m_oldPattern );
 }
 
 void ChordPatternAttachmentEditPatternCommand::redo()
 {
-    attachment<ChordPatternAttachment>()->setPattern( m_newPattern );
+    model()->setPattern( m_newPattern );
 }

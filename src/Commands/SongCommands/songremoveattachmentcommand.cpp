@@ -1,30 +1,21 @@
 #include "songremoveattachmentcommand.h"
 
 SongRemoveAttachmentCommand::SongRemoveAttachmentCommand(Song* song, int i) :
-    SongCommand(song),
+    ModelCommand<Song>(song),
+    ItemOwnerCommandDecorator(song->attachment( i )),
     m_index(i)
 {
-    m_attachment = song->attachment( m_index );
-    setText( CommandTranslator::tr("remove attachment") );
-}
-
-SongRemoveAttachmentCommand::~SongRemoveAttachmentCommand()
-{
-    if (m_ownsAttachment)
-    {
-        delete m_attachment;
-        m_attachment = 0;
-    }
+    setText( CommandTranslator::tr("Remove Attachment") );
 }
 
 void SongRemoveAttachmentCommand::undo()
 {
-    m_ownsAttachment = false;
-    song()->insertAttachment( m_attachment, m_index );
+    releaseOwnershipOfItem();
+    model()->insertAttachment( item(), m_index );
 }
 
 void SongRemoveAttachmentCommand::redo()
 {
-    m_ownsAttachment = true;
-    m_index = song()->removeAttachment( m_attachment );
+    takeOwnershipOfItem();
+    model()->removeAttachment( item() );
 }

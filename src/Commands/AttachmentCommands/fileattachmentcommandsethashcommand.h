@@ -1,10 +1,10 @@
 #ifndef FILEATTACHMENTCOMMANDSETHASHCOMMAND_H
 #define FILEATTACHMENTCOMMANDSETHASHCOMMAND_H
 
-#include "attachmentcommand.h"
+#include "Commands/modelcommand.h"
 #include "Attachments/indexedfileattachment.h"
 
-class FileAttachmentCommandSetHashCommand : public AttachmentCommand
+class FileAttachmentCommandSetHashCommand : public AttachmentCommand<IndexedFileAttachment>
 {
 public:
     FileAttachmentCommandSetHashCommand( IndexedFileAttachment* attachment, const QByteArray & newHash );
@@ -13,8 +13,8 @@ public:
     void redo();
 
 private:
-    QByteArray m_oldHash;
-    QByteArray m_newHash;
+    const QByteArray m_oldHash;
+    const QByteArray m_newHash;
 };
 
 #endif // FILEATTACHMENTCOMMANDSETHASHCOMMAND_H

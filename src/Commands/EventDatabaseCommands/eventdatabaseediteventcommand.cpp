@@ -15,10 +15,10 @@ EventDatabaseEditEventCommand::EventDatabaseEditEventCommand(EventDatabase*     
 
 void EventDatabaseEditEventCommand::redo()
 {
-    eventDatabase()->setData_( m_index, m_newData, m_role );
+    model()->setData_( m_index, m_newData, m_role );
 }
 
 void EventDatabaseEditEventCommand::undo()
 {
-    eventDatabase()->setData_( m_index, m_oldData, m_role );
+    model()->setData_( m_index, m_oldData, m_role );
 }

@@ -9,11 +9,10 @@ AbstractChordPatternAttachmentTransposeCommand::AbstractChordPatternAttachmentTr
 
 void AbstractChordPatternAttachmentTransposeCommand::undo()
 {
-    attachment<AbstractChordPatternAttachment>()->transpose( -m_transpose );
+    model()->transpose( -m_transpose );
 }
 
 void AbstractChordPatternAttachmentTransposeCommand::redo()
 {
-
-    attachment<AbstractChordPatternAttachment>()->transpose( m_transpose );
+    model()->transpose( m_transpose );
 }

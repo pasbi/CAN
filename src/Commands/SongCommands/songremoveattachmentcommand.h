@@ -1,21 +1,19 @@
 #ifndef SONGREMOVEATTACHMENTCOMMAND_H
 #define SONGREMOVEATTACHMENTCOMMAND_H
 
-#include "songcommand.h"
+#include "Commands/modelcommand.h"
+#include "Commands/itemownercommanddecorator.h"
 
-class SongRemoveAttachmentCommand : public SongCommand
+class SongRemoveAttachmentCommand : public ModelCommand<Song>, private ItemOwnerCommandDecorator<Attachment>
 {
 public:
     SongRemoveAttachmentCommand(Song *song, int i);
-    ~SongRemoveAttachmentCommand();
 
     void undo();
     void redo();
 
 private:
-    bool m_ownsAttachment = false;
-    Attachment* m_attachment;
-    int m_index;
+    const int m_index;
 };
 
 #endif // SONGREMOVEATTACHMENTCOMMAND_H

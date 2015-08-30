@@ -1,17 +1,19 @@
 #ifndef SONGEDITPROGRAMCOMMAND_H
 #define SONGEDITPROGRAMCOMMAND_H
 
-#include "songcommand.h"
+#include "Commands/modelcommand.h"
 
-class SongEditProgramCommand : public SongCommand
+class SongEditProgramCommand : public ModelCommand<Song>
 {
 public:
     SongEditProgramCommand(Song* song, const Program& program);
+
     void undo();
     void redo();
 
 private:
-    Program m_newProgram, m_oldProgram;
+    const Program m_newProgram;
+    const Program m_oldProgram;
 };
 
 #endif // SONGEDITPROGRAMCOMMAND_H

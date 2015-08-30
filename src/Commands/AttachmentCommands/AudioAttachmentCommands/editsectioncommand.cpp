@@ -1,7 +1,7 @@
 #include "editsectioncommand.h"
 
-EditSectionCommand::EditSectionCommand(SectionsModel *model, const QVariant &newValue, const QModelIndex & index, const int role) :
-    SectionsModelCommand( model ),
+EditSectionCommand::EditSectionCommand(SectionsModel *model, const QVariant &newValue, const QModelIndex & index, int role) :
+    ModelCommand<SectionsModel>( model ),
     m_newValue( newValue ),
     m_oldValue( model->data(index, role) ),
     m_index( index ),
