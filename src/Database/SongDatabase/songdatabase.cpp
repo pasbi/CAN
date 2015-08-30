@@ -126,6 +126,7 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
             song->setDuration(value.toTime());
             break;
         }
+        emit dataChanged(index, index);
         return true;
     }
 
