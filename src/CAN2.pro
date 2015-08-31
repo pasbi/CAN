@@ -157,7 +157,8 @@ SOURCES += main.cpp\
     Commands/SetlistCommands/setlistmoverowscommand.cpp \
     Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.cpp \
     Commands/SongCommands/songnewattachmentcommand.cpp \
-    Commands/SetlistCommands/setlistnewitemcommand.cpp
+    Commands/SetlistCommands/setlistnewitemcommand.cpp \
+    Commands/timerdecorator.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -283,7 +284,8 @@ HEADERS  += mainwindow.h \
     Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.h \
     Commands/SongCommands/songnewattachmentcommand.h \
     Commands/SetlistCommands/setlistnewitemcommand.h \
-    Commands/modelcommand.h
+    Commands/modelcommand.h \
+    Commands/timerdecorator.h
 
 
 
