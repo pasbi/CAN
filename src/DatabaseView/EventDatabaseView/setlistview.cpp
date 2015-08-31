@@ -250,14 +250,18 @@ void SetlistView::updateCellWidgets()
     {
         QModelIndex index = model()->index( i, 1 );
 
-        // menu is deleted when hidden. So do not delete the buttons.
-
         SetlistItem* item = model()->itemAt( index );
-        const Song* song = NULL;
-
-        if (item && (song = item->song()))
+        if (item)
         {
-            setIndexWidget( index, createSongCellWidget(song) );
+            switch (item->type())
+            {
+            case SetlistItem::LabelType:
+                setSpan(i, 0, 1, colorCount()); // there is no widget, so we don't need this column here.
+                break;
+            case SetlistItem::SongType:
+                setIndexWidget( index, createSongCellWidget(item->song()) );
+                break;
+            }
         }
     }
 }
