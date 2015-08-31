@@ -23,6 +23,7 @@ public slots:
     Song* song() const { return m_song; }
     void setAttachment(int index );
     void updateAttachmentView();
+    void renameCurrentAttachment();
 
 private slots:
     void editTags();
@@ -34,6 +35,9 @@ private:
     Attachment* m_currentAttachment = NULL;
     QMap<Song*, int> m_lastOpenedIndex;
     QAction* m_editTagAction;
+
+protected:
+    bool eventFilter(QObject *o, QEvent *e);
 
 };
 

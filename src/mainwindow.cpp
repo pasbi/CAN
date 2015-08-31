@@ -728,22 +728,7 @@ void MainWindow::on_actionClear_Index_triggered()
 #include "Commands/AttachmentCommands/attachmentrenamecommand.h"
 void MainWindow::on_actionRename_Attachment_triggered()
 {
-    Song* cs = currentSong();
-    assert( cs );
-
-    int index = ui->songDatabaseWidget->attachmentChooser()->currentAttachmentIndex();
-    assert( index >= 0 );
-
-    Attachment* attachment = cs->attachments()[index];
-    QString name = attachment->name();
-    QString newName = StringDialog::getString( tr("Rename Attachment"), name, QString(tr("New Name for %1")).arg(name) );
-    if (newName.isEmpty())
-    {
-        return;
-    }
-
-    app().pushCommand( new AttachmentRenameCommand( attachment, newName ) );
-    updateWhichWidgetsAreEnabled();
+    ui->songDatabaseWidget->attachmentChooser()->renameCurrentAttachment();
 }
 
 void MainWindow::on_actionDuplicate_Attachment_triggered()
