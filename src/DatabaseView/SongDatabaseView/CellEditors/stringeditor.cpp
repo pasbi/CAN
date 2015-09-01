@@ -1,4 +1,5 @@
 #include "stringeditor.h"
+#include <QLineEdit>
 
 DEFN_CREATABLE(StringEditor, CellEditor);
 

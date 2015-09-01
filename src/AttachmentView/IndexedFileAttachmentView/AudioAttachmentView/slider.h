@@ -2,8 +2,8 @@
 #define SLIDER_H
 
 #include <QSlider>
-#include "Attachments/AudioAttachment/sectionsmodel.h"
 
+class Section;
 class Slider : public QSlider
 {
     Q_OBJECT

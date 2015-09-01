@@ -2,7 +2,6 @@
 #define PROJECT_H
 
 #include "gitrepository.h"
-#include "Commands/command.h"
 #include <QUndoStack>
 #include "configurable.h"
 
@@ -11,6 +10,7 @@ class SongDatabase;
 class EventDatabase;
 class SongDatabaseSortProxy;
 class EventDatabaseSortProxy;
+class Command;
 class Project : public QUndoStack, public GitRepository
 {
     DECL_CONFIG(Project)
@@ -35,6 +35,8 @@ signals:
     void songDatabaseCommandPushed();
     void eventDatabaseCommandPushed();
     void commandPushed();
+    void canCloseChanged( bool );
+    void undoStackCleared();
 
 public:
     bool loadFromTempDir();
@@ -57,12 +59,7 @@ public:
 private:
     bool m_canClose = true;
     bool m_isSynchronized = false;
-    void resetUndoStack();
-    void emitCommandPushedSignal(Command::Type type);
 
-signals:
-    void canCloseChanged( bool );
-    void undoStackCleared();
 
 };
 

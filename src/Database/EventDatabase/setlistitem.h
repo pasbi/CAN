@@ -2,26 +2,16 @@
 #define SETLISTITEM_H
 
 #include <QJsonObject>
-#include "Database/SongDatabase/song.h"
+#include <QObject>
 
+class Song;
 class SetlistItem
 {
 public:
     enum Type { SongType, LabelType };
-    SetlistItem( const QString & label ) :
-        m_type( LabelType ),
-        m_label( label )
-    {    }
-
-    SetlistItem( ) :
-        m_type( LabelType ),
-        m_label( QObject::tr("Unnamed") )
-    {    }
-
-    SetlistItem( const Song* song ) :
-        m_type( SongType ),
-        m_song( song )
-    {    }
+    SetlistItem( const QString & label );
+    SetlistItem( );
+    SetlistItem( const Song* song );
 
     QString label() const;
     QString description() const { return label(); }

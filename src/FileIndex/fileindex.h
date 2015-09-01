@@ -4,10 +4,9 @@
 #include <QMap>
 #include <QCryptographicHash>
 #include <QStringList>
-#include <QSettings>
-#include "indexer.h"
 #include "configurable.h"
 
+class Indexer;
 class FileIndex : public QObject
 {
     Q_OBJECT

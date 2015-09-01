@@ -2,12 +2,12 @@
 #define TAGEDITOR_H
 
 #include <QWidget>
-#include "taggable.h"
 
 namespace Ui {
 class TagEditor;
 }
 
+class Taggable;
 class TagEditor : public QWidget
 {
     Q_OBJECT

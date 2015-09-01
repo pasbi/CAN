@@ -2,17 +2,15 @@
 #define DATEDATABASEWIDGET_H
 
 #include <QWidget>
-#include "Database/EventDatabase/eventdatabase.h"
-#include "Database/EventDatabase/eventdatabasesortproxy.h"
-#include <QListView>
-#include "eventtableview.h"
-#include "setlistview.h"
-
 
 namespace Ui {
 class EventDatabaseWidget;
 }
 
+class Event;
+class SetlistView;
+class EventTableView;
+class Setlist;
 class EventDatabaseWidget : public QWidget
 {
     Q_OBJECT

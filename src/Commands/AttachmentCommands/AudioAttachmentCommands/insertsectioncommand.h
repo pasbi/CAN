@@ -2,8 +2,9 @@
 #define INSERTSECTIONCOMMAND_H
 
 #include "Commands/modelcommand.h"
-#include "Attachments/AudioAttachment/sectionsmodel.h"
 
+class SectionsModel;
+class Section;
 class InsertSectionCommand : public ModelCommand<SectionsModel>
 {
 public:

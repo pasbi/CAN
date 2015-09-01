@@ -4,7 +4,8 @@
 #include <QItemDelegate>
 
 class SongDatabaseSortProxy;
-class SongDatabase;
+template<typename T> class Database;
+class Song;
 class SongTableView;
 class SongAttributeDelegate : public QItemDelegate
 {
@@ -14,7 +15,7 @@ public:
 
     SongTableView* parent() const;
     SongDatabaseSortProxy *proxyModel() const;
-    SongDatabase* model() const;
+    Database<Song>* model() const;
 
     bool isEditing() const { return m_isEditing; }
 

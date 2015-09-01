@@ -2,9 +2,9 @@
 #define FILEATTACHMENTCOMMANDSETHASHCOMMAND_H
 
 #include "Commands/modelcommand.h"
-#include "Attachments/indexedfileattachment.h"
 
-class FileAttachmentCommandSetHashCommand : public AttachmentCommand<IndexedFileAttachment>
+class IndexedFileAttachment;
+class FileAttachmentCommandSetHashCommand : public ModelCommand<IndexedFileAttachment>
 {
 public:
     FileAttachmentCommandSetHashCommand( IndexedFileAttachment* attachment, const QByteArray & newHash );

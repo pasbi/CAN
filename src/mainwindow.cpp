@@ -10,6 +10,7 @@
 #include <QProgressDialog>
 #include <QScrollArea>
 #include <QLabel>
+#include <QThread>
 
 #include "ui_mainwindow.h"
 #include "util.h"
@@ -21,10 +22,19 @@
 #include "Dialogs/clonedialog.h"
 #include "Dialogs/identitydialog.h"
 #include "Dialogs/configurationdialog.h"
-#include "programdialog.h"
+#include "Dialogs/programdialog.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 #include "Commands/DatabaseCommands/databaseedititemcommand.h"
 #include "Commands/DatabaseCommands/databaseremoveitemcommand.h"
+#include "Database/EventDatabase/setlistitem.h"
+#include "creatable.h"
+#include "Attachments/attachment.h"
+#include "DatabaseView/EventDatabaseView/eventtableview.h"
+#include "Database/EventDatabase/eventdatabase.h"
+#include "AttachmentView/attachmentchooser.h"
+#include "Database/SongDatabase/songdatabase.h"
+#include "Project/identity.h"
+#include "DatabaseView/SongDatabaseView/songtableview.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 

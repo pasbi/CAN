@@ -2,7 +2,6 @@
 #define IDENTITY_H
 
 #include <QString>
-#include "git.h"
 
 class git_signature;
 class Identity

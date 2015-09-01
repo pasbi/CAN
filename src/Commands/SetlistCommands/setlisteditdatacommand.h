@@ -4,6 +4,7 @@
 #include "Commands/modelcommand.h"
 #include <QModelIndex>
 
+class Setlist;
 class SetlistEditDataCommand : public ModelCommand<Setlist>
 {
 public:

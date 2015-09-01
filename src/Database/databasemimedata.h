@@ -5,8 +5,6 @@
 #include <typeinfo>
 #include "global.h"
 
-
-
 template<typename T>
 class DatabaseMimeData : public QMimeData
 {

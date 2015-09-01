@@ -4,12 +4,13 @@
 #include <QDialog>
 #include "global.h"
 #include <QListWidgetItem>
-#include "Project/conflictfile.h"
 
 namespace Ui {
 class ConflictEditor;
 }
 
+class ConflictFile;
+class Conflict;
 class ConflictEditor : public QDialog
 {
     Q_OBJECT
@@ -36,26 +37,9 @@ private:
     class Item: public QListWidgetItem
     {
     public:
-        Item(QListWidget* parent, Conflict* conflict, int type = Type) :
-            QListWidgetItem(parent, type),
-            m_conflict(conflict)
-        {
-        }
-        Conflict* conflict()
-        {
-            return m_conflict;
-        }
-        QVariant data(int role) const
-        {
-            if (role == Qt::DisplayRole)
-            {
-                return m_conflict->m_type;
-            }
-            else
-            {
-                return QVariant();
-            }
-        }
+        Item(QListWidget* parent, Conflict* conflict, int type = Type);
+        Conflict* conflict();
+        QVariant data(int role) const;
 
     private:
         Conflict* m_conflict;

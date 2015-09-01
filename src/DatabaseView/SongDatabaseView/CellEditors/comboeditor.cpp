@@ -3,6 +3,7 @@
 #include "global.h"
 #include <QLineEdit>
 #include <QCompleter>
+#include "Database/SongDatabase/songdatabasesortproxy.h"
 
 
 DEFN_CREATABLE(ComboEditor, CellEditor);

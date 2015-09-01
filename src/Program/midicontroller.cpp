@@ -1,5 +1,7 @@
 #include "midicontroller.h"
 #include "global.h"
+#include "program.h"
+#include "midicommand.h"
 
 DEFN_CONFIG( MidiController, "Midi" );
 
@@ -13,8 +15,6 @@ CONFIGURABLE_ADD_DEFEATABLE_ITEM(  MidiController,
                         ConfigurableItemOptions::SpinBoxOptions( 1, 8, 1 ) );
 
 
-
-MidiCommand::Channel MidiCommand::defaultChannel = MidiCommand::C_00;
 MidiController* MidiController::m_singleton = NULL;
 
 MidiController::MidiController()

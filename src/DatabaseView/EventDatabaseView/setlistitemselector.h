@@ -2,7 +2,6 @@
 #define SETLISTITEMSELECTOR_H
 
 #include <QDialog>
-#include "Database/SongDatabase/songdatabase.h"
 
 /**
  * @brief The SetlistItemSelector class is a widget to drag and drop the songs into a setlist.

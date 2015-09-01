@@ -1,8 +1,9 @@
 #ifndef COMBOEDITOR_H
 #define COMBOEDITOR_H
 
-#include "celleditor.h"
 #include <QComboBox>
+
+#include "celleditor.h"
 
 class ComboEditor : public CellEditor
 {

@@ -2,6 +2,9 @@
 #include "ui_eventdatabasewidget.h"
 #include "application.h"
 #include "Project/project.h"
+#include "eventtableview.h"
+#include "Database/EventDatabase/eventdatabase.h"
+#include "setlistview.h"
 
 EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     QWidget(parent),

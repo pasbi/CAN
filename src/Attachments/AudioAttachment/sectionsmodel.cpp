@@ -1,30 +1,11 @@
 #include "sectionsmodel.h"
 #include "application.h"
 #include "persistentobject.h"
+#include "section.h"
 
 SectionsModel::SectionsModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
-}
-
-Section::Section( const QString & caption, const double begin, const double end ) :
-    m_caption( caption ),
-    m_begin( begin ),
-    m_end( end )
-{
-    if (m_begin > m_end)
-    {
-        qSwap( m_begin, m_end );
-        qWarning() << "Beginning is after ending. Swapped them.";
-    }
-}
-
-Section::Section() :
-    m_caption( QString() ),
-    m_begin( -1 ),
-    m_end( -1 )
-{
-
 }
 
 int SectionsModel::columnCount(const QModelIndex &parent) const
@@ -166,26 +147,6 @@ QJsonArray SectionsModel::toJson() const
         array.append(section.toJson());
     }
     return array;
-}
-
-QJsonObject Section::toJson() const
-{
-    QJsonObject object;
-    object["caption"] = m_caption;
-    object["begin"] = m_begin;
-    object["end"] = m_end;
-    return object;
-}
-
-Section::Section(const QJsonObject &object)
-{
-    checkJsonObject( object, "caption", QJsonValue::String );
-    checkJsonObject( object, "begin", QJsonValue::Double );
-    checkJsonObject( object, "end", QJsonValue::Double );
-
-    m_caption = object["caption"].toString();
-    m_begin = object["begin"].toDouble();
-    m_end = object["end"].toDouble();
 }
 
 int SectionsModel::indexOf(const Section *section) const

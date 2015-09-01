@@ -1,16 +1,18 @@
 #ifndef PDFCREATOR_H
 #define PDFCREATOR_H
 
-#include "page.h"
+
 #include <QThread>
+#include <QPainter>
 #include "configurable.h"
-#include "Database/EventDatabase/setlist.h"
-#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
-#include "Attachments/pdfattachment.h"
-#include "orphantsetlist.h"
-#include "Dialogs/exportpdfdialog.h"
+#include "page.h"
 
-
+class Setlist;
+class AbstractChordPatternAttachment;
+class PDFAttachment;
+class ExportPDFDialog;
+class Song;
+class Attachment;
 class PDFCreator : public QThread
 {
     DECL_CONFIG( PDFCreator )

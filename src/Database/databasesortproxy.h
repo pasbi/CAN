@@ -2,8 +2,8 @@
 #define DATABASESORTPROXY_H
 
 #include <QSortFilterProxyModel>
-#include "database.h"
 
+template<typename T> class Database;
 template<typename T>
 class DatabaseSortProxy : public QSortFilterProxyModel
 {
@@ -14,7 +14,7 @@ public:
 
     }
 
-    Database<T>* sourceModel()
+    Database<T>* sourceModel() const
     {
         return static_cast<Database<T>*>(QSortFilterProxyModel::sourceModel());
     }

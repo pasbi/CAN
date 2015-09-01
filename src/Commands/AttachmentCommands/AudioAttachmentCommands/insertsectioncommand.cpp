@@ -1,5 +1,6 @@
 #include "insertsectioncommand.h"
 #include "global.h"
+#include "Attachments/AudioAttachment/sectionsmodel.h"
 
 InsertSectionCommand::InsertSectionCommand(SectionsModel *model, const Section &section, int index) :
     ModelCommand<SectionsModel>( model ),

@@ -2,9 +2,9 @@
 #define ATTACHMENTRENAMECOMMAND_H
 
 #include "Commands/modelcommand.h"
-#include "Attachments/attachment.h"
 
-class AttachmentRenameCommand : public AttachmentCommand<Attachment>
+class Attachment;
+class AttachmentRenameCommand : public ModelCommand<Attachment>
 {
 public:
     AttachmentRenameCommand(Attachment* attachment, const QString & newName);

@@ -2,10 +2,11 @@
 #define CELLEDITOR_H
 
 #include <QWidget>
-#include "Database/SongDatabase/songdatabasesortproxy.h"
 #include <QStyleOption>
+
 #include "creatable.h"
 
+class SongDatabaseSortProxy;
 class CellEditor : public QWidget, public Creatable
 {
     Q_OBJECT

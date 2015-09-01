@@ -2,8 +2,10 @@
 #define EDITSECTIONCOMMAND_H
 
 #include "Commands/modelcommand.h"
-#include "Attachments/AudioAttachment/sectionsmodel.h"
+#include <QVariant>
+#include <QModelIndex>
 
+class SectionsModel;
 class EditSectionCommand : public ModelCommand<SectionsModel>
 {
 public:

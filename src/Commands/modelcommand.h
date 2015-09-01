@@ -1,11 +1,10 @@
 #ifndef MODELCOMMAND_H
 #define MODELCOMMAND_H
 
-#include "command.h"
 #include <typeinfo>
-#include "Database/EventDatabase/setlist.h"
+#include <QStringList>
 
-
+#include "command.h"
 
 template<typename T>
 class ModelCommand : public Command
@@ -40,28 +39,6 @@ private:
         {
             return Command::Other;
         }
-
-    }
-};
-
-
-class SetlistCommand : public ModelCommand<Setlist>
-{
-protected:
-    SetlistCommand(Setlist* setlist) :
-        ModelCommand<Setlist>(setlist)
-    {
-
-    }
-};
-
-template<typename AttachmentT>
-class AttachmentCommand : public ModelCommand<AttachmentT>
-{
-protected:
-    AttachmentCommand(AttachmentT* setlist) :
-        ModelCommand<AttachmentT>(setlist)
-    {
 
     }
 };

@@ -2,8 +2,8 @@
 #define STRINGEDITOR_H
 
 #include "celleditor.h"
-#include "QLineEdit"
 
+class QLineEdit;
 class StringEditor : public CellEditor
 {
     Q_OBJECT

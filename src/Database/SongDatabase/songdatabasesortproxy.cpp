@@ -9,11 +9,6 @@ SongDatabaseSortProxy::SongDatabaseSortProxy(QObject *parent) :
     setFilterCaseSensitivity( Qt::CaseInsensitive );
 }
 
-void SongDatabaseSortProxy::setSourceModel(SongDatabase *sourceModel)
-{
-    QSortFilterProxyModel::setSourceModel(sourceModel);
-}
-
 bool SongDatabaseSortProxy::filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const
 {
     assert(!source_parent.isValid());
@@ -25,9 +20,4 @@ bool SongDatabaseSortProxy::filterAcceptsColumn(int source_column, const QModelI
     {
         return false;
     }
-}
-
-SongDatabase* SongDatabaseSortProxy::sourceModel() const
-{
-     return qobject_assert_cast<SongDatabase*>( QSortFilterProxyModel::sourceModel() );
 }

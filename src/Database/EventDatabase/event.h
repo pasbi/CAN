@@ -1,14 +1,15 @@
 #ifndef DATE_H
 #define DATE_H
 
-#include "taggable.h"
 #include <QJsonObject>
 #include <QDateTime>
 #include <QObject>
+
+#include "taggable.h"
 #include "commontypes.h"
 #include "setlist.h"
 
-class EventDatabase;
+template<typename T> class Database;
 class Event : public QObject, public Taggable
 {
     Q_OBJECT

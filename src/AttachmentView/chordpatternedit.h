@@ -2,8 +2,8 @@
 #define CHORDPATTERNEDIT_H
 
 #include <QTextEdit>
-#include "looselines.h"
 
+class LooseLines;
 class ChordPatternEdit : public QTextEdit
 {
     Q_OBJECT

@@ -2,13 +2,14 @@
 #define SONGTABLEVIEWCONTAINER_H
 
 #include <QWidget>
-#include "songtableview.h"
-#include "Database/SongDatabase/songdatabasesortproxy.h"
 
 namespace Ui {
 class SongTableViewContainer;
 }
 
+class SongDatabaseSortProxy;
+class SongTableView;
+class Song;
 class SongTableViewContainer : public QWidget
 {
     Q_OBJECT

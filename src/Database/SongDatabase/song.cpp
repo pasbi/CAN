@@ -2,6 +2,7 @@
 #include "songdatabase.h"
 #include "global.h"
 #include <QJsonDocument>
+#include "Attachments/attachment.h"
 
 Song::Song(Database<Song> * database) :
     m_songDatabase(database),

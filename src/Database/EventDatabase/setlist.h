@@ -1,11 +1,10 @@
 #ifndef SETLIST_H
 #define SETLIST_H
 
-#include <QAbstractListModel>
-#include "Database/SongDatabase/song.h"
-#include <QDataStream>
-#include "setlistitem.h"
+#include <QAbstractTableModel>
 
+class Song;
+class SetlistItem;
 class Event;
 class Setlist : public QAbstractTableModel
 {
@@ -17,7 +16,7 @@ public:
     void insertItem(SetlistItem* item , int position = -1);
     void removeItem( SetlistItem* item );
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount( const QModelIndex& parent = QModelIndex() ) const { assert( !parent.isValid()); return 2; }
+    int columnCount( const QModelIndex& parent = QModelIndex() ) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     SetlistItem* itemAt(const QModelIndex &index ) const;

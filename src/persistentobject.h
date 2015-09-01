@@ -4,7 +4,6 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "global.h"
-#include "Project/file.h"
 
 
 // check if object has a certain key of certain type. return false if not and print warning.
@@ -12,6 +11,7 @@
       (( OBJECT.contains(KEY)       || ((WARNING << "Expected key "   << KEY),  false) )    \
     && ( OBJECT[KEY].type() == TYPE || ((WARNING << "Expected type: " << TYPE), false) ) )
 
+class File;
 class PersistentObject
 {
 protected:

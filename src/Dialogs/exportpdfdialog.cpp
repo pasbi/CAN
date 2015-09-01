@@ -1,6 +1,8 @@
 #include "exportpdfdialog.h"
 #include "ui_exportpdfdialog.h"
 #include "configurationdialog.h"
+#include "Attachments/attachment.h"
+#include "Database/SongDatabase/song.h"
 
 DEFN_CONFIG( ExportPDFDialog, "ExportPDFDialog");
 

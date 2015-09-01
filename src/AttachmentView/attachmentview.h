@@ -2,9 +2,10 @@
 #define ATTACHMENTVIEW_H
 
 #include <QWidget>
-#include "Attachments/attachment.h"
-#include "configurable.h"
+#include "creatable.h"
+#include "global.h"
 
+class Attachment;
 class AttachmentView : public QWidget, public Creatable
 {
     Q_OBJECT

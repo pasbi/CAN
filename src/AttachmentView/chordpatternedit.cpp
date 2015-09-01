@@ -9,6 +9,8 @@
 #include <QMimeData>
 #include <QScrollBar>
 #include <QClipboard>
+#include "looselines.h"
+
 
 
 void insertSorted( QList<int>& list, int n )

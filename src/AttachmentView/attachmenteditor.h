@@ -2,10 +2,11 @@
 #define ATTACHMENTEDITOR_H
 
 #include <QWidget>
-#include "Attachments/attachment.h"
-#include "attachmentview.h"
-#include <QScrollArea>
+#include <QMap>
 
+class QScrollArea;
+class Attachment;
+class AttachmentView;
 class AttachmentEditor : public QWidget
 {
     Q_OBJECT

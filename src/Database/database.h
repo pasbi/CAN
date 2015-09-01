@@ -12,7 +12,6 @@
 #include "application.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 
-
 template<typename T>
 class Database : public PersistentObject, public QAbstractTableModel
 {
@@ -218,6 +217,11 @@ public:
             return false;
         }
         return false;
+    }
+
+    virtual bool columnIsVisible(int)
+    {
+        return true;
     }
 
 private:

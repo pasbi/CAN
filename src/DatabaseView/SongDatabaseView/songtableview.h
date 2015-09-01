@@ -2,11 +2,11 @@
 #define SONGTABLE_H
 
 #include "DatabaseView/databaseview.h"
-#include "Database/SongDatabase/songdatabase.h"
-#include "songattributedelegate.h"
-#include "Database/SongDatabase/songdatabasesortproxy.h"
 
-
+template<typename T> class Database;
+class SongDatabaseSortProxy;
+class SongAttributeDelegate;
+class Song;
 class SongTableView : public DatabaseView<Song>
 {
     Q_OBJECT
@@ -14,7 +14,7 @@ public:
     explicit SongTableView(QWidget *parent = 0);
 
     void setModel(SongDatabaseSortProxy* model);
-    SongDatabase* model() const;
+    Database<Song> *model() const;
     SongDatabaseSortProxy* proxyModel() const;
 
 protected:

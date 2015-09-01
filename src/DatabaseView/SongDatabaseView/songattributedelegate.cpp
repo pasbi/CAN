@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include "Project/project.h"
 #include "application.h"
+#include "Database/SongDatabase/songdatabasesortproxy.h"
 
 SongAttributeDelegate::SongAttributeDelegate(SongTableView *parent) :
     QItemDelegate(parent)
@@ -51,7 +52,7 @@ QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOption
     return editor;
 }
 
-SongDatabase* SongAttributeDelegate::model() const
+Database<Song>* SongAttributeDelegate::model() const
 {
     return parent()->model();
 }

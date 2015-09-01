@@ -2,8 +2,8 @@
 #define EDITTAGSCOMMAND_H
 
 #include "Commands/modelcommand.h"
-#include "taggable.h"
 
+class Taggable;
 class EditTagsCommand : public ModelCommand<Taggable>
 {
 public:

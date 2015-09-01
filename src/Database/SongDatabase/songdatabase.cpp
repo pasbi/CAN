@@ -130,11 +130,6 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
     return false;
 }
 
-QVariant SongDatabase::data(const int row, const int column, const int role)
-{
-    return data(index(row, column, QModelIndex()), role);
-}
-
 QJsonObject SongDatabase::toJsonObject() const
 {
     QJsonObject json = PersistentObject::toJsonObject();

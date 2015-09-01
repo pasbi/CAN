@@ -2,12 +2,12 @@
 #define COMMITDIALOG_H
 
 #include <QDialog>
-#include "identitymanager.h"
 
 namespace Ui {
 class CommitDialog;
 }
-
+class IdentityManager;
+class Identity;
 class CommitDialog : public QDialog
 {
     Q_OBJECT

@@ -5,6 +5,9 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "util.h"
+#include "Attachments/AudioAttachment/sectionsmodel.h"
+#include "Database/SongDatabase/song.h"
+
 
 IndexedFileChooseDialog::IndexedFileChooseDialog(const Song *song, const QByteArray &currentHash, const QStringList &endings, QWidget *parent) :
     QDialog(parent),

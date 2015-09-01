@@ -5,6 +5,8 @@
 #include "util.h"
 #include <QFocusEvent>
 #include "application.h"
+#include "songattributedelegate.h"
+#include "Database/SongDatabase/songdatabasesortproxy.h"
 
 
 SongTableView::SongTableView(QWidget *parent) :
@@ -44,10 +46,7 @@ void SongTableView::fakeFocusOutEvent()
     QApplication::sendEvent( this, &myFocusOutEvent );
 }
 
-SongDatabase* SongTableView::model() const
-{
-    return proxyModel() ? proxyModel()->sourceModel() : NULL;
-}
+
 
 SongDatabaseSortProxy* SongTableView::proxyModel() const
 {
@@ -79,4 +78,9 @@ void SongTableView::keyPressEvent(QKeyEvent *event)
         }
     }
     QTableView::keyPressEvent( event );
+}
+
+Database<Song>* SongTableView::model() const
+{
+    return proxyModel() ? proxyModel()->sourceModel() : NULL;
 }

@@ -1,4 +1,5 @@
 #include "eventdatabasesortproxy.h"
+#include "eventdatabase.h"
 
 EventDatabaseSortProxy::EventDatabaseSortProxy(QObject *parent) :
     DatabaseSortProxy<Event>( parent )

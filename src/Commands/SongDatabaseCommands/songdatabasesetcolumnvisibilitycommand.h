@@ -2,8 +2,8 @@
 #define SONGDATABASESETCOLUMNVISIBILITYCOMMAND_H
 
 #include "Commands/modelcommand.h"
-#include "Database/SongDatabase/songdatabase.h"
 
+class SongDatabase;
 class SongDatabaseSetColumnVisibilityCommand : public ModelCommand<SongDatabase>
 {
 public:

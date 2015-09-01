@@ -2,12 +2,12 @@
 #define TAGDIALOG_H
 
 #include <QDialog>
-#include "taggable.h"
 
 namespace Ui {
 class TagDialog;
 }
 
+class Taggable;
 class TagDialog : public QDialog
 {
     Q_OBJECT

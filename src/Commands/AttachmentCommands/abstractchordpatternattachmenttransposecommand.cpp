@@ -1,7 +1,8 @@
 #include "abstractchordpatternattachmenttransposecommand.h"
+#include "Attachments/ChordPatternAttachment/abstractchordpatternattachment.h"
 
 AbstractChordPatternAttachmentTransposeCommand::AbstractChordPatternAttachmentTransposeCommand(AbstractChordPatternAttachment* attachment, int transpose) :
-    AttachmentCommand(attachment),
+    ModelCommand(attachment),
     m_transpose( transpose )
 {
     setText( QString(CommandTranslator::tr("transpose chord pattern")) );

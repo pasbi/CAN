@@ -1,4 +1,5 @@
 #include "deletesectioncommand.h"
+#include "Attachments/AudioAttachment/sectionsmodel.h"
 
 DeleteSectionCommand::DeleteSectionCommand(SectionsModel *model, int row) :
     ModelCommand<SectionsModel>( model ),

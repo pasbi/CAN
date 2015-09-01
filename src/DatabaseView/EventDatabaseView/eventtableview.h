@@ -2,8 +2,10 @@
 #define DATETABLEVIEW_H
 
 #include "DatabaseView/databaseview.h"
-#include "Database/EventDatabase/eventdatabase.h"
-#include "Database/EventDatabase/eventdatabasesortproxy.h"
+
+class EventDatabaseSortProxy;
+template<typename T> class Database;
+class Event;
 
 class EventTableView : public DatabaseView<Event>
 {
@@ -15,7 +17,7 @@ public:
     int sizeHintForColumn(int column) const;
 
     void setModel(EventDatabaseSortProxy *model);
-    EventDatabase* model() const;
+    Database<Event>* model() const;
     EventDatabaseSortProxy* proxyModel() const;
 
 protected:

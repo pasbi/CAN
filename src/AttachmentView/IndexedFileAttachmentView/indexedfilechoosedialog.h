@@ -2,13 +2,13 @@
 #define INDEXEDFILECHOOSEDIALOG_H
 
 #include <QDialog>
-#include "Database/SongDatabase/song.h"
 #include <QItemSelection>
 
 namespace Ui {
 class IndexedFileChooseDialog;
 }
 
+class Song;
 class IndexedFileChooseDialog : public QDialog
 {
     Q_OBJECT

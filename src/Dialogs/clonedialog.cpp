@@ -2,6 +2,8 @@
 #include "ui_clonedialog.h"
 #include <QFileDialog>
 #include "identitydialog.h"
+#include "identitymanager.h"
+#include "Project/identity.h"
 
 CloneDialog::CloneDialog(IdentityManager &identityManager, const QUrl &defaultURL, QWidget *parent) :
     QDialog(parent),

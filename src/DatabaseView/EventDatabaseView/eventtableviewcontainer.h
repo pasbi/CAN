@@ -2,13 +2,14 @@
 #define EVENTTABLEVIEWCONTAINER_H
 
 #include <QWidget>
-#include "eventtableview.h"
-#include "Database/EventDatabase/eventdatabasesortproxy.h"
 
 namespace Ui {
 class EventTableViewContainer;
 }
 
+class EventTableView;
+class EventDatabaseSortProxy;
+class Event;
 class EventTableViewContainer : public QWidget
 {
     Q_OBJECT

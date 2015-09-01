@@ -1,7 +1,6 @@
 #ifndef TIMERDECORATOR_H
 #define TIMERDECORATOR_H
 
-
 class QTimer;
 class TimerDecorator
 {

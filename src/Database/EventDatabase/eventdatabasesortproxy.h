@@ -2,16 +2,14 @@
 #define EVENTDATABASESORTPROXY_H
 
 #include "Database/databasesortproxy.h"
-#include "eventdatabase.h"
 
+class EventDatabase;
+class Event;
 class EventDatabaseSortProxy : public DatabaseSortProxy<Event>
 {
     Q_OBJECT
 public:
     explicit EventDatabaseSortProxy(QObject* parent = 0);
-
-    void setSourceModel(EventDatabase *sourceModel) { QSortFilterProxyModel::setSourceModel(sourceModel); }
-    EventDatabase* sourceModel() const { return qobject_assert_cast<EventDatabase*>( QSortFilterProxyModel::sourceModel() ); }
 
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 };

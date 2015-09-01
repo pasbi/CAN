@@ -1,5 +1,6 @@
 #include "audioattachmentview.h"
 #include "ui_audioattachmentview.h"
+#include "Attachments/AudioAttachment/sectionsmodel.h"
 
 const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/icons/icons/turnleft.png";
 const QString AudioAttachmentView::RECORD_RIGHT_POSITION_ICON_PATH = ":/icons/icons/turnright.png";

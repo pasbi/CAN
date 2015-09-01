@@ -3,6 +3,10 @@
 #include <QMessageBox>
 #include <QSignalBlocker>
 
+#include "Project/identity.h"
+#include "identitymanager.h"
+
+
 IdentityDialog::IdentityDialog(IdentityManager* manager, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::IdentityDialog),

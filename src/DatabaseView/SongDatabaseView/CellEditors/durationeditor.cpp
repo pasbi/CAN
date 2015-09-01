@@ -1,4 +1,5 @@
 #include "durationeditor.h"
+#include <QTimeEdit>
 
 DEFN_CREATABLE(DurationEditor, CellEditor);
 

@@ -1,11 +1,12 @@
 #ifndef SETLISTMOVEROWSCOMMAND_H
 #define SETLISTMOVEROWSCOMMAND_H
 
-#include "Commands/modelcommand.h"
 #include <QList>
+#include "Commands/modelcommand.h"
 #include "Database/databasemimedata.h"
 
 class SetlistItem;
+class Setlist;
 class SetlistMoveRowsCommand : public ModelCommand<Setlist>
 {
 public:

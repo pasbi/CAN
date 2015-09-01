@@ -2,8 +2,8 @@
 #define DURATIONEDITOR_H
 
 #include "celleditor.h"
-#include "QTimeEdit"
 
+class QTimeEdit;
 class DurationEditor : public CellEditor
 {
     Q_OBJECT

@@ -1,5 +1,10 @@
 #include "attachmenteditor.h"
+
 #include <QHBoxLayout>
+#include <QScrollArea>
+
+#include "Attachments/attachment.h"
+#include "attachmentview.h"
 
 AttachmentEditor::AttachmentEditor(QWidget *parent) :
     QWidget(parent)

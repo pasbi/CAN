@@ -14,6 +14,9 @@
 #include "Project/project.h"
 #include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
 #include "util.h"
+#include "Database/EventDatabase/setlistitem.h"
+#include "Database/EventDatabase/setlist.h"
+#include "setlistitemselector.h"
 
 DEFN_CONFIG( SetlistWidget, "SetlistWidget" );
 

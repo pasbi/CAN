@@ -3,6 +3,8 @@
 #include "global.h"
 #include "mainwindow.h"
 #include "Database/SongDatabase/song.h"
+#include "Database/SongDatabase/songdatabasesortproxy.h"
+#include "DatabaseView/SongDatabaseView/songtableview.h"
 
 Application::Application(int &argc, char **argv) :
     QApplication( argc, argv)

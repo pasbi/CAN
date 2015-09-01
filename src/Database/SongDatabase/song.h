@@ -1,14 +1,13 @@
 #ifndef SONG_H
 #define SONG_H
 
-#include "taggable.h"
 #include <QList>
-#include "Attachments/attachment.h"
-#include <QVariantMap>
 #include <QDateTime>
-#include "program.h"
 
-//class SongDatabase;
+#include "taggable.h"
+#include "Program/program.h"
+
+class Attachment;
 template<typename T> class Database;
 class Song : public QObject, public Taggable
 {

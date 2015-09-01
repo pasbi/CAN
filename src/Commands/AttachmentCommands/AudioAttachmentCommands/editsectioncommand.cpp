@@ -1,4 +1,5 @@
 #include "editsectioncommand.h"
+#include "Attachments/AudioAttachment/sectionsmodel.h"
 
 EditSectionCommand::EditSectionCommand(SectionsModel *model, const QVariant &newValue, const QModelIndex & index, int role) :
     ModelCommand<SectionsModel>( model ),

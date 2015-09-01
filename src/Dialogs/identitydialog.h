@@ -2,12 +2,13 @@
 #define IDENTITYDIALOG_H
 
 #include <QDialog>
-#include "identitymanager.h"
 
 namespace Ui {
 class IdentityDialog;
 }
 
+class IdentityManager;
+class Identity;
 class IdentityDialog : public QDialog
 {
     Q_OBJECT

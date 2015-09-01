@@ -2,9 +2,8 @@
 #define DATEEDITOR_H
 
 #include "celleditor.h"
-#include <QDateTimeEdit>
 
-
+class QDateTimeEdit;
 class DateEditor : public CellEditor
 {
     Q_OBJECT

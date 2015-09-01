@@ -1,8 +1,11 @@
 #include "gitrepository.h"
-#include <QThread>
-#include "gitutil.h"
 
-// loadFromTemp, saveToTemp must never be inside clone or sync call since those calls might be performed by other thread.
+#include <QThread>
+
+#include "gitutil.h"
+#include "identity.h"
+#include "conflictfile.h"
+#include "git.h"
 
 GitRepository::GitRepository( const QString ending ) :
     Zipped( ending ),

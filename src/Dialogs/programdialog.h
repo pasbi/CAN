@@ -2,7 +2,7 @@
 #define PROGRAMDIALOG_H
 
 #include <QDialog>
-#include "program.h"
+#include "Program/program.h"
 
 namespace Ui {
 class ProgramDialog;

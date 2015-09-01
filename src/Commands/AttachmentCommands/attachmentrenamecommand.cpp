@@ -1,7 +1,9 @@
 #include "attachmentrenamecommand.h"
 
+#include "Attachments/attachment.h"
+
 AttachmentRenameCommand::AttachmentRenameCommand(Attachment *attachment, const QString &newName) :
-    AttachmentCommand( attachment ),
+    ModelCommand( attachment ),
     m_newName( newName ),
     m_oldName( attachment->name() )
 {

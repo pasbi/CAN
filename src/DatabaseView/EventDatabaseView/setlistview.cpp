@@ -2,17 +2,23 @@
 
 #include <QMimeData>
 #include <QToolButton>
+#include <QMenu>
+#include <QAction>
+#include <QHeaderView>
+#include <QClipboard>
 
 #include "application.h"
 #include "Project/project.h"
 #include "Commands/SetlistCommands/setlistnewitemcommand.h"
-#include <QAction>
-#include <QHeaderView>
-#include <QClipboard>
 #include "util.h"
 #include "Dialogs/chordpatternviewer.h"
 #include "Database/databasemimedata.h"
 #include "Commands/SetlistCommands/setlistremoveitemcommand.h"
+#include "Database/EventDatabase/setlistitem.h"
+#include "Database/SongDatabase/song.h"
+#include "Database/EventDatabase/setlist.h"
+#include "setlistitemselector.h"
+#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 
 
 SetlistView::SetlistView(QWidget *parent) :

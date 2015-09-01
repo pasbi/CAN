@@ -3,10 +3,8 @@
 
 #include <QList>
 #include "configurable.h"
-#include <QUndoCommand>
-#include <QUndoStack>
-#include "Project/identity.h"
 
+class Identity;
 class IdentityManager
 {
     DECL_CONFIG( FileIndex )
@@ -36,7 +34,7 @@ public slots:
 private:
     QList<Identity> m_identities;
     int m_currentIndex = -1;
-    static QString idToString( const Identity & i ) { return  QString("%1 [%2]").arg( i.name(), i.email() ); }
+    static QString idToString( const Identity & i );
 };
 
 #endif // IDENTITYMANAGER_H

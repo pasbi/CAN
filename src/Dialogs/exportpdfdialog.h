@@ -4,13 +4,13 @@
 #include <QDialog>
 #include "taggable.h"
 #include "configurable.h"
-#include "Database/SongDatabase/song.h"
 
 
 namespace Ui {
 class ExportPDFDialog;
 }
-
+class Song;
+class Attachment;
 class ExportPDFDialog : public QDialog
 {
     Q_OBJECT

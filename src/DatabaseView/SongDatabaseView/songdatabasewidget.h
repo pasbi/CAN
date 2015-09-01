@@ -2,16 +2,16 @@
 #define SONGDATABASEWIDGET_H
 
 #include <QWidget>
-#include "Database/SongDatabase/songdatabase.h"
-#include "Database/SongDatabase/songdatabasesortproxy.h"
-#include "AttachmentView/attachmentchooser.h"
-
+#include <QModelIndex>
 
 namespace Ui {
 class SongDatabaseWidget;
 }
 
 class SongTableView;
+class SongDatabase;
+class AttachmentChooser;
+class Song;
 class SongDatabaseWidget : public QWidget
 {
     Q_OBJECT

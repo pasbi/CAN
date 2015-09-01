@@ -1,6 +1,7 @@
 #include "attachmentchooser.h"
 
 #include <QLineEdit>
+#include <QKeyEvent>
 
 #include "ui_attachmentchooser.h"
 #include "Dialogs/tagdialog.h"
@@ -8,6 +9,8 @@
 #include "application.h"
 #include "mainwindow.h"
 #include "Commands/AttachmentCommands/attachmentrenamecommand.h"
+#include "Attachments/attachment.h"
+#include "Database/SongDatabase/song.h"
 
 AttachmentChooser::AttachmentChooser(QWidget *parent) :
     QWidget(parent),

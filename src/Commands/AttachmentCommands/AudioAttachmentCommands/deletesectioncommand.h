@@ -2,8 +2,9 @@
 #define DELETESECTIONCOMMAND_H
 
 #include "Commands/modelcommand.h"
-#include "Attachments/AudioAttachment/sectionsmodel.h"
+#include "Attachments/AudioAttachment/section.h"
 
+class SectionsModel;
 class DeleteSectionCommand : public ModelCommand<SectionsModel>
 {
 public:

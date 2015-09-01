@@ -1,6 +1,8 @@
 #include "commitdialog.h"
 #include "ui_commitdialog.h"
 #include "identitydialog.h"
+#include "identitymanager.h"
+#include "Project/identity.h"
 
 CommitDialog::CommitDialog(IdentityManager* identityManager, QWidget *parent) :
     QDialog(parent),

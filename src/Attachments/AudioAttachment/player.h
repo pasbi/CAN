@@ -1,12 +1,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <QString>
-#include "buffer.h"
-#include <QAudioOutput>
 #include <QObject>
-#include "sectionsmodel.h"
+#include <QString>
+#include <QAudioOutput>
 #include <QTimer>
+
+#include "buffer.h"
 
 class Player : public QObject
 {

@@ -1,5 +1,6 @@
 #include "identitymanager.h"
 #include <QStringList>
+#include "Project/identity.h"
 
 DEFN_CONFIG( IdentityManager, "Identities" );
 CONFIGURABLE_ADD_ITEM_HIDDEN( IdentityManager, Identities, QStringList() );
@@ -139,4 +140,9 @@ Identity IdentityManager::identity( const int i ) const
 {
     Identity id = m_identities[i];
     return id;
+}
+
+QString IdentityManager::idToString( const Identity & i )
+{
+    return  QString("%1 [%2]").arg( i.name(), i.email() );
 }

@@ -9,6 +9,7 @@
 #include "Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h"
 #include "application.h"
 #include "Dialogs/chordpatternviewer.h"
+#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 
 DEFN_CREATABLE(ChordPatternAttachmentView, AttachmentView);
 DEFN_CONFIG( ChordPatternAttachmentView, "Chord Pattern Attachment" );

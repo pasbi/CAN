@@ -1,9 +1,10 @@
 #include "fileattachmentcommandsethashcommand.h"
 #include "FileIndex/fileindex.h"
+#include "Attachments/indexedfileattachment.h"
 #include "application.h"
 
 FileAttachmentCommandSetHashCommand::FileAttachmentCommandSetHashCommand(IndexedFileAttachment *attachment, const QByteArray &newHash) :
-    AttachmentCommand( attachment ),
+    ModelCommand( attachment ),
     m_oldHash( attachment->hash() ),
     m_newHash( newHash )
 {

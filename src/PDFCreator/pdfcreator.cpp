@@ -1,12 +1,20 @@
 #include "pdfcreator.h"
+
 #include <QPdfWriter>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QProgressDialog>
+
+
+#include "Attachments/ChordPatternAttachment/abstractchordpatternattachment.h"
+#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
+#include "Attachments/pdfattachment.h"
+#include "Dialogs/exportpdfdialog.h"
 #include "global.h"
 #include "Database/EventDatabase/event.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "util.h"
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QProgressDialog>
+#include "Attachments/ChordPatternAttachment/chord.h"
 
 DEFN_CONFIG( PDFCreator, tr("PDF Export") );
 
@@ -257,6 +265,7 @@ void PDFCreator::paintAttachment(Attachment *attachment)
         {
             paintPDFAttachment( qobject_assert_cast<PDFAttachment*>(attachment) );
         }
+        //TODO do we support ProxyChordPatternAttachments?
         else if (attachment->type() == ChordPatternAttachment::TYPE)
         {
             paintChordPatternAttachment( qobject_assert_cast<ChordPatternAttachment*>(attachment) );

@@ -1,9 +1,10 @@
 #ifndef SONGDATABASE_H
 #define SONGDATABASE_H
 
+#include <QBitArray>
+
 #include "Database/database.h"
 #include "song.h"
-#include <QBitArray>
 
 // SongID is the position of a song in a song database.
 // it may change during runtime. Use SongID for saving and restoring and Song* otherwise.
@@ -28,7 +29,6 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
-    QVariant data( const int row, const int column, const int role);
 
     SongID songID( const Song* song ) const;
     Song* song(const QString &id ) const;

@@ -2,16 +2,15 @@
 #define CHORDPATTERNVIEWER_H
 
 #include <QDialog>
-#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include <QTemporaryFile>
-#include "poppler.h"
 #include "configurable.h"
-#include "hud.h"
 
 namespace Ui {
 class ChordPatternViewer;
 }
 
+class HUD;
+class AbstractChordPatternAttachment;
 class ChordPatternViewer : public QDialog
 {
     Q_OBJECT

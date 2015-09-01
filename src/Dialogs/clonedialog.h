@@ -3,12 +3,12 @@
 
 #include <QDialog>
 #include <QUrl>
-#include "identitymanager.h"
 
 namespace Ui {
 class CloneDialog;
 }
-
+class IdentityManager;
+class Identity;
 class CloneDialog : public QDialog
 {
     Q_OBJECT

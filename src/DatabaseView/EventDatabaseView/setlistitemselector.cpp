@@ -1,10 +1,14 @@
 #include "setlistitemselector.h"
-#include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
-#include "application.h"
+
 #include "Project/project.h"
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QSettings>
+
+#include "application.h"
+#include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
+#include "Database/SongDatabase/songdatabase.h"
+#include "DatabaseView/SongDatabaseView/songtableview.h"
 
 SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
     QDialog(parent)

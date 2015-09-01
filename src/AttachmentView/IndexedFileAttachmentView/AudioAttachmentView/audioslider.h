@@ -2,13 +2,13 @@
 #define AUDIOSLIDER_H
 
 #include <QWidget>
-#include "Attachments/AudioAttachment/sectionsmodel.h"
 #include <QTimer>
 
 namespace Ui {
 class AudioSlider;
 }
 
+class Section;
 class AudioSlider : public QWidget
 {
     Q_OBJECT

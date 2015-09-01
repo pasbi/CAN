@@ -2,16 +2,17 @@
 #define SETLISTWIDGET_H
 
 #include <QWidget>
-#include "Database/EventDatabase/setlist.h"
-#include <QListView>
-#include "setlistitemselector.h"
-#include "setlistview.h"
 #include "configurable.h"
 
 namespace Ui {
 class SetlistWidget;
 }
 
+
+class SetlistItemSelector;
+class SetlistItem;
+class SetlistView;
+class Setlist;
 class SetlistWidget : public QWidget
 {
     Q_OBJECT

@@ -2,12 +2,7 @@
 #define PDFATTACHMENTVIEW_H
 
 #include "indexedfileattachmentview.h"
-#include "AttachmentView/attachmentview.h"
-#include "poppler.h"
-#include <QSignalSpy>
-
-
-
+#include "configurable.h"
 
 namespace Ui {
 class PDFAttachmentView;

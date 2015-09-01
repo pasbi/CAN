@@ -2,10 +2,10 @@
 #define CHORDPATTERNATTACHMENTEDITPATTERNCOMMAND_H
 
 #include "Commands/modelcommand.h"
-#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include "Commands/timerdecorator.h"
 
-class ChordPatternAttachmentEditPatternCommand : public AttachmentCommand<ChordPatternAttachment>, private TimerDecorator
+class ChordPatternAttachment;
+class ChordPatternAttachmentEditPatternCommand : public ModelCommand<ChordPatternAttachment>, private TimerDecorator
 {
 public:
     ChordPatternAttachmentEditPatternCommand( ChordPatternAttachment *attachment, const QString &pattern);

@@ -1,8 +1,12 @@
 #include "songtableviewcontainer.h"
-#include "ui_songtableviewcontainer.h"
+
 #include <QLineEdit>
 #include <QPushButton>
+
+#include "ui_songtableviewcontainer.h"
 #include "global.h"
+#include "songtableview.h"
+#include "Database/SongDatabase/songdatabasesortproxy.h"
 
 SongTableViewContainer::SongTableViewContainer(QWidget *parent) :
     QWidget(parent),

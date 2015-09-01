@@ -2,14 +2,16 @@
 #define DATABASEVIEW_H
 
 #include <QTableView>
-#include "taggable.h"
+#include <QMenu>
+
 #include "Database/databasesortproxy.h"
 #include "databaseview.h"
-#include <QMenu>
-#include "Dialogs/tagdialog.h"
 #include "application.h"
+
+//TODO remove asap
+#include "taggable.h"
 #include "Commands/edittagscommand.h"
-#include "Database/database.h"
+#include "Dialogs/tagdialog.h"
 
 template<typename T>
 class DatabaseView : public QTableView
@@ -18,6 +20,7 @@ public:
     explicit DatabaseView(QWidget *parent = 0) :
         QTableView(parent)
     {
+        //TODO does this code belong here?
         setContextMenuPolicy(Qt::ActionsContextMenu);
         setAlternatingRowColors( true );
         setEditTriggers( QAbstractItemView::DoubleClicked

@@ -1,4 +1,5 @@
 #include "audioattachment.h"
+#include "sectionsmodel.h"
 
 DEFN_CREATABLE_NAME(AudioAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Audio Attachment"))
 

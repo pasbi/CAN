@@ -2,8 +2,6 @@
 #define GITREPOSITORY_H
 
 #include "zipped.h"
-#include "identity.h"
-#include "conflictfile.h"
 
 // do not derive GitRepository from QObject because each class
 // can be derived from OQbject once only and we want to keep this opportunity.
@@ -16,6 +14,11 @@ signals:
     void error( QString );
 };
 
+class Identity;
+class ConflictFile;
+class git_repository;
+class git_index;
+class git_commit;
 class GitRepository : public Zipped
 {
 public:

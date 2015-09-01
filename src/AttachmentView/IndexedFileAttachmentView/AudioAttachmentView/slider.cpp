@@ -1,5 +1,6 @@
 #include "slider.h"
 #include "global.h"
+#include "Attachments/AudioAttachment/sectionsmodel.h"
 
 #include <QPainter>
 #include <QTimer>

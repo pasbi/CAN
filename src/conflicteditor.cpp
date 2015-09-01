@@ -2,6 +2,7 @@
 #include "ui_conflicteditor.h"
 #include "util.h"
 #include <QScrollBar>
+#include "Project/conflictfile.h"
 
 ConflictEditor::ConflictEditor(const QList<ConflictFile*>& conflictingFiles, QWidget *parent) :
     QDialog(parent),
@@ -121,4 +122,28 @@ void ConflictEditor::resolveAllTheirs()
         }
     }
     resolveConflicts();
+}
+
+
+ConflictEditor::Item::Item(QListWidget* parent, Conflict* conflict, int type) :
+    QListWidgetItem(parent, type),
+    m_conflict(conflict)
+{
+}
+
+Conflict* ConflictEditor::Item::conflict()
+{
+    return m_conflict;
+}
+
+QVariant ConflictEditor::Item::data(int role) const
+{
+    if (role == Qt::DisplayRole)
+    {
+        return m_conflict->m_type;
+    }
+    else
+    {
+        return QVariant();
+    }
 }

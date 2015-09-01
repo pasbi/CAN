@@ -8,6 +8,7 @@
 #include <QMouseEvent>
 #include "util.h"
 #include "application.h"
+#include "Database/EventDatabase/eventdatabasesortproxy.h"
 
 class TypeComboBoxDelegate : public QItemDelegate
 {
@@ -184,7 +185,7 @@ void EventTableView::setModel(EventDatabaseSortProxy *model)
     DatabaseView::setModel( model );
 }
 
-EventDatabase* EventTableView::model() const
+Database<Event>* EventTableView::model() const
 {
     return proxyModel() ? proxyModel()->sourceModel() : NULL;
 }

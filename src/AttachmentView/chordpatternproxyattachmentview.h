@@ -3,8 +3,6 @@
 
 #include "attachmentview.h"
 
-#include <QWidget>
-
 namespace Ui {
 class ChordPatternProxyAttachmentView;
 }

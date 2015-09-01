@@ -1,9 +1,8 @@
 #ifndef CONFLICTFILE_H
 #define CONFLICTFILE_H
 
-#include <QStringList>
-#include <QList>
 #include <QFile>
+#include <QStringList>
 
 class GitRepository;
 

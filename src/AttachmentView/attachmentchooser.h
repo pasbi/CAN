@@ -2,12 +2,14 @@
 #define ATTACHMENTCHOOSER_H
 
 #include <QWidget>
-#include "Database/SongDatabase/song.h"
+#include <QMap>
 
 namespace Ui {
 class AttachmentChooser;
 }
 
+class Song;
+class Attachment;
 class AttachmentChooser : public QWidget
 {
     Q_OBJECT

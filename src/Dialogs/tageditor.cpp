@@ -1,6 +1,7 @@
 #include "tageditor.h"
 #include "ui_tageditor.h"
 #include <QMouseEvent>
+#include "taggable.h"
 
 TagEditor::TagEditor(QWidget *parent) :
     QWidget(parent),

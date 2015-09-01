@@ -1,6 +1,7 @@
 #include "project.h"
 #include <QThread>
 
+#include "Commands/command.h"
 #include "global.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/eventdatabase.h"
@@ -81,6 +82,22 @@ QList<File> Project::getFiles() const
     return files;
 }
 
+void emitCommandPushedSignal(Command::Type type, Project* project)
+{
+    switch (type)
+    {
+    case Command::SongDatabaseRelated:
+        emit project->songDatabaseCommandPushed();
+        break;
+    case Command::EventDatabaseRelated:
+        emit project->eventDatabaseCommandPushed();
+        break;
+    case Command::Other:
+        ;
+    }
+    emit project->commandPushed();
+}
+
 void Project::pushCommand(Command *command)
 {
     setCanClose(false);
@@ -88,25 +105,9 @@ void Project::pushCommand(Command *command)
     if (command)
     {
         QUndoStack::push(command);
-        emitCommandPushedSignal( command->type() );
+        emitCommandPushedSignal( command->type(), this );
     }
 
-}
-
-void Project::emitCommandPushedSignal(Command::Type type)
-{
-    switch (type)
-    {
-    case Command::SongDatabaseRelated:
-        emit songDatabaseCommandPushed();
-        break;
-    case Command::EventDatabaseRelated:
-        emit eventDatabaseCommandPushed();
-        break;
-    case Command::Other:
-        ;
-    }
-    emit commandPushed();
 }
 
 void Project::undo()
@@ -115,9 +116,9 @@ void Project::undo()
     const Command* c = dynamic_cast<const Command*>( uc );
     QUndoStack::undo();
 
-    if (c)  // cast may fail (e.g. command-macro)
+    if (c)  // cast may fail (e.g. macro command)
     {
-        emitCommandPushedSignal( c->type() );
+        emitCommandPushedSignal( c->type(), this );
     }
 
     setCanClose( false );
@@ -132,7 +133,7 @@ void Project::redo()
 
     if (c)  // cast may fail (e.g. command-macro)
     {
-        emitCommandPushedSignal( c->type() );
+        emitCommandPushedSignal( c->type(), this );
     }
 
     setCanClose( false );

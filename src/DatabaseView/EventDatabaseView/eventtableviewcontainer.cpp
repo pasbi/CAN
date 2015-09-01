@@ -1,5 +1,7 @@
 #include "eventtableviewcontainer.h"
 #include "ui_eventtableviewcontainer.h"
+#include "Database/EventDatabase/eventdatabasesortproxy.h"
+#include "Database/database.h"
 
 EventTableViewContainer::EventTableViewContainer(QWidget *parent) :
     QWidget(parent),

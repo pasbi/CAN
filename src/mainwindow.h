@@ -2,17 +2,20 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+
 #include "Project/project.h"
 #include "configurable.h"
 #include "identitymanager.h"
-#include "DatabaseView/SongDatabaseView/songtableview.h"
-#include "Database/EventDatabase/event.h"
 
 
 namespace Ui {
 class MainWindow;
 }
 
+class SongTableView;
+class Song;
+class Event;
+class Attachment;
 class MainWindow : public QMainWindow
 {
     enum Page { SongDatabasePage, EventDatabasePage };

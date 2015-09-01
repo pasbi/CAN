@@ -2,14 +2,11 @@
 #define SETLISTVIEW_H
 
 #include <QTableView>
-#include <QDropEvent>
-#include <QDragEnterEvent>
-#include <QDragMoveEvent>
-#include "Database/EventDatabase/setlist.h"
-#include <QMenu>
-#include <QItemDelegate>
 
-
+class Attachment;
+class Setlist;
+class SetlistItem;
+class Song;
 class SetlistView : public QTableView
 {
     Q_OBJECT

@@ -6,7 +6,6 @@
 #include <QAudioFormat>
 #include "soundtouch.h"
 
-
 class Buffer
 {
 public:

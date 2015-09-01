@@ -2,9 +2,9 @@
 #define ABSTRACTCHORDPATTERNATTACHMENTTRANSPOSECOMMAND_H
 
 #include "Commands/modelcommand.h"
-#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 
-class AbstractChordPatternAttachmentTransposeCommand : public AttachmentCommand<AbstractChordPatternAttachment>
+class AbstractChordPatternAttachment;
+class AbstractChordPatternAttachmentTransposeCommand : public ModelCommand<AbstractChordPatternAttachment>
 {
 public:
     AbstractChordPatternAttachmentTransposeCommand(AbstractChordPatternAttachment *attachment, int transpose);

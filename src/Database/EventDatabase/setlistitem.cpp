@@ -3,6 +3,25 @@
 #include "Project/project.h"
 #include "Database/SongDatabase/songdatabase.h"
 
+
+SetlistItem::SetlistItem( const QString & label ) :
+    m_type( LabelType ),
+    m_label( label )
+{
+}
+
+SetlistItem::SetlistItem( ) :
+    m_type( LabelType ),
+    m_label( QObject::tr("Unnamed") )
+{
+}
+
+SetlistItem::SetlistItem( const Song* song ) :
+    m_type( SongType ),
+    m_song( song )
+{
+}
+
 QString SetlistItem::label() const
 {
     switch (m_type)

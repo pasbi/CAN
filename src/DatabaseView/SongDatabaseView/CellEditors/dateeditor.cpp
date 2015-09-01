@@ -1,5 +1,7 @@
 #include "dateeditor.h"
 
+#include <QDateTimeEdit>
+
 DEFN_CREATABLE(DateEditor, CellEditor);
 
 DateEditor::DateEditor(QWidget *parent) :

@@ -1,8 +1,10 @@
 #include "chordpatternattachmenteditpatterncommand.h"
 #include "global.h"
+#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
+
 
 ChordPatternAttachmentEditPatternCommand::ChordPatternAttachmentEditPatternCommand( ChordPatternAttachment* attachment, const QString & pattern ) :
-    AttachmentCommand(attachment),
+    ModelCommand(attachment),
     TimerDecorator(),
     m_oldPattern( attachment->chordPattern() ),
     m_newPattern( pattern ),

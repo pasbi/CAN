@@ -3,6 +3,7 @@
 #include "Dialogs/chordpatternviewer.h"
 #include "application.h"
 #include "Attachments/ChordPatternAttachment/chordpatternproxyattachment.h"
+#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include "chordpatternattachmentview.h"
 #include "Database/SongDatabase/song.h"
 

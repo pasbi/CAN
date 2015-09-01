@@ -1,6 +1,9 @@
 #include "tagdialog.h"
-#include "ui_tagdialog.h"
+
 #include <QMouseEvent>
+
+#include "ui_tagdialog.h"
+#include "taggable.h"
 
 TagDialog::TagDialog(const QStringList & tags, QWidget *parent) :
     QDialog(parent),

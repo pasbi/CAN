@@ -2,8 +2,8 @@
 #define COMBOBOX_H
 
 #include <QComboBox>
-#include <QPaintEvent>
 
+class PaintEvent;
 class ComboBox : public QComboBox
 {
     Q_OBJECT

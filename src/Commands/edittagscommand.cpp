@@ -1,4 +1,5 @@
 #include "edittagscommand.h"
+#include "taggable.h"
 
 EditTagsCommand::EditTagsCommand(Taggable *taggable, const QStringList &tags) :
     ModelCommand(taggable),

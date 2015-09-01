@@ -5,6 +5,7 @@
 #include "player.h"
 
 class SectionsModel;
+class Section;
 class AudioAttachment : public IndexedFileAttachment
 {
     Q_OBJECT

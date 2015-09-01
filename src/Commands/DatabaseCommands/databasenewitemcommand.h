@@ -1,8 +1,8 @@
 #ifndef DATABASENEWITEMCOMMAND_H
 #define DATABASENEWITEMCOMMAND_H
 
+#include "databasecommand.h"
 #include "Commands/itemownercommanddecorator.h"
-#include "Commands/DatabaseCommands/databasecommand.h"
 
 template<typename T>
 class DatabaseNewItemCommand : public DatabaseCommand<T>, private ItemOwnerCommandDecorator<T>

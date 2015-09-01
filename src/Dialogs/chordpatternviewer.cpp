@@ -5,7 +5,12 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QKeyEvent>
-#include "midicontroller.h"
+#include "Program/midicontroller.h"
+#include "Attachments/ChordPatternAttachment/abstractchordpatternattachment.h"
+#include "hud.h"
+#include "poppler.h"
+#include "Database/SongDatabase/song.h"
+#include "Program/midicommand.h"
 
 DEFN_CONFIG( ChordPatternViewer, tr("ChordPatternViewer") );
 

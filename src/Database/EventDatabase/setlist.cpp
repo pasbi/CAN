@@ -4,6 +4,11 @@
 #include "Project/project.h"
 #include "event.h"
 
+#include "Database/SongDatabase/song.h"
+#include "setlistitem.h"
+#include "Attachments/attachment.h"
+
+
 Setlist::Setlist(Event *event) :
     QAbstractTableModel(event),
     m_event( event )
@@ -35,6 +40,12 @@ int Setlist::rowCount(const QModelIndex& parent) const
 {
     assert( !parent.isValid() );
     return m_items.length();
+}
+
+int Setlist::columnCount( const QModelIndex& parent ) const
+{
+    assert( !parent.isValid());
+    return 2;
 }
 
 QList<void*> Setlist::viewableAttachments(const QModelIndex &index) const

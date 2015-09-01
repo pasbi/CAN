@@ -3,7 +3,7 @@
 
 #include "AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h"
 #include "Attachments/AudioAttachment/audioattachment.h"
-#include <QMenu>
+#include "configurable.h"
 
 
 namespace Ui {

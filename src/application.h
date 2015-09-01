@@ -2,10 +2,11 @@
 #define APPLICATION_H
 
 #include <QApplication>
-#include "global.h"
-#include "FileIndex/fileindex.h"
 #include <QSettings>
 #include <QAction>
+
+#include "global.h"
+#include "FileIndex/fileindex.h"
 
 class MainWindow;
 class Project;

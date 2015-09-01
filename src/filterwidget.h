@@ -2,12 +2,12 @@
 #define FILTERWIDGET_H
 
 #include <QWidget>
-#include <QSortFilterProxyModel>
 
 namespace Ui {
 class FilterWidget;
 }
 
+class QSortFilterProxyModel;
 class FilterWidget : public QWidget
 {
     Q_OBJECT

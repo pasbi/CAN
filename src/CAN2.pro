@@ -143,17 +143,18 @@ SOURCES += main.cpp\
     Dialogs/tageditor.cpp \
     Dialogs/chordpatternviewerscrollarea.cpp \
     DatabaseView/SongDatabaseView/CellEditors/durationeditor.cpp \
-    programdialog.cpp \
-    program.cpp \
+    Dialogs/programdialog.cpp \
+    Program/program.cpp \
     Commands/SongCommands/songeditprogramcommand.cpp \
-    midicontroller.cpp \
+    Program/midicontroller.cpp \
     Database/EventDatabase/setlistitem.cpp \
     Commands/SetlistCommands/setlistmoverowscommand.cpp \
     Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.cpp \
     Commands/SongCommands/songnewattachmentcommand.cpp \
     Commands/SetlistCommands/setlistnewitemcommand.cpp \
     Commands/timerdecorator.cpp \
-    Commands/modelcommand.cpp
+    Attachments/AudioAttachment/section.cpp \
+    Program/midicommand.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -261,10 +262,10 @@ HEADERS  += mainwindow.h \
     Dialogs/tageditor.h \
     Dialogs/chordpatternviewerscrollarea.h \
     DatabaseView/SongDatabaseView/CellEditors/durationeditor.h \
-    programdialog.h \
-    program.h \
+    Dialogs/programdialog.h \
+    Program/program.h \
     Commands/SongCommands/songeditprogramcommand.h \
-    midicontroller.h \
+    Program/midicontroller.h \
     Database/databasemimedata.h \
     Database/databasesortproxy.h \
     Database/EventDatabase/setlistitem.h \
@@ -278,7 +279,9 @@ HEADERS  += mainwindow.h \
     Commands/DatabaseCommands/databasecommand.h \
     Commands/DatabaseCommands/databasenewitemcommand.h \
     Commands/DatabaseCommands/databaseedititemcommand.h \
-    Commands/DatabaseCommands/databaseremoveitemcommand.h
+    Commands/DatabaseCommands/databaseremoveitemcommand.h \
+    Attachments/AudioAttachment/section.h \
+    Program/midicommand.h
 
 
 
@@ -309,7 +312,7 @@ FORMS    += mainwindow.ui \
     AttachmentView/chordpatternproxyattachmentview.ui \
     Dialogs/exportpdfdialog.ui \
     Dialogs/tageditor.ui \
-    programdialog.ui
+    Dialogs/programdialog.ui
 
 
 RESOURCES += \

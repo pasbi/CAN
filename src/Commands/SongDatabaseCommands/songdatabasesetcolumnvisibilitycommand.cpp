@@ -1,4 +1,5 @@
 #include "songdatabasesetcolumnvisibilitycommand.h"
+#include "Database/SongDatabase/songdatabase.h"
 
 SongDatabaseSetColumnVisibilityCommand::SongDatabaseSetColumnVisibilityCommand(SongDatabase *database, int column, bool state) :
     ModelCommand( database ),

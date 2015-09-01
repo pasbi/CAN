@@ -2,17 +2,15 @@
 #define CHORDPATTERNATTACHMENTVIEW_H
 
 #include "attachmentview.h"
-#include <QToolBar>
-#include "Attachments/ChordPatternAttachment/chord.h"
 #include "configurable.h"
-#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
-#include "chordpatternedit.h"
 
 
 namespace Ui {
 class ChordPatternAttachmentView;
 }
 
+class QToolBar;
+class ChordPatternEdit;
 class ChordPatternAttachmentView : public AttachmentView
 {
     Q_OBJECT
