@@ -327,8 +327,6 @@ void MainWindow::setCurrentAttachment( int index )
 }
 
 
-
-
 //////////////////////////////////////////////////
 ////
 ///     Saving and loading stuff
@@ -531,8 +529,8 @@ void MainWindow::updateWhichWidgetsAreEnabled()
     gitObjects          << ui->actionSync;
     attachmentObjects   << ui->actionRename_Attachment;
     attachmentObjects   << ui->actionDuplicate_Attachment;
-    songObects << m_actionDelete_Song << m_actionCopy_Song;
-    eventObjects << m_actionDelete_Event << m_actionCopy_Event;
+    songObects << m_actionDelete_Song << m_actionCopy_Song << m_actionEdit_Program << m_actionEdit_Song_Tags;
+    eventObjects << m_actionDelete_Event << m_actionCopy_Event << m_actionEdit_Event_Tags;
 
     for (QObject* o : eventObjects )        ::setEnabled( o, event       );
     for (QObject* o : songObects )          ::setEnabled( o, song        );

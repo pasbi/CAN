@@ -34,12 +34,14 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     deleteSectionAction->setText(tr("Delete Section"));
     deleteSectionAction->setIcon(QIcon(":/icons/icons/rubbish7.png"));
     deleteSectionAction->setShortcut( QKeySequence("Del") );
+    deleteSectionAction->setShortcutContext(Qt::WidgetShortcut);
     ui->sectionView->addAction( deleteSectionAction );
     connect( deleteSectionAction, SIGNAL(triggered()), this, SLOT(deleteCurrentSection()) );
 
     QAction* restoreSectionAction = new QAction( ui->sectionView );
     restoreSectionAction->setText(tr("Restore Section"));
     restoreSectionAction->setIcon(QIcon(":/icons/icons/download73.png"));
+    restoreSectionAction->setShortcutContext(Qt::WidgetShortcut);
     ui->sectionView->addAction( restoreSectionAction );
     connect( restoreSectionAction, SIGNAL(triggered()), this, SLOT(restoreCurrentSection()) );
 
