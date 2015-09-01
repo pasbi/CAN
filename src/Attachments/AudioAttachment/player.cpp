@@ -10,7 +10,8 @@ Player::~Player()
     if (m_audioOutput)
     {
         m_audioOutput->stop();
-//        delete m_audioOutput;
+        delete m_audioOutput;
+        m_audioOutput = nullptr;
     }
 }
 
@@ -30,14 +31,13 @@ void Player::open( const QString &filename )
     if (m_audioOutput)
     {
         delete m_audioOutput;
+        m_audioOutput = nullptr;
     }
 
     m_buffer.open( filename );
 
     m_audioOutput = new QAudioOutput( QAudioDeviceInfo::defaultOutputDevice(), m_buffer.audioFormat() );
     m_audioOutput->setNotifyInterval( 200 );    // sync
-
-    connect( m_audioOutput, SIGNAL(notify()), this, SLOT(setCurrentPosition()) );
 }
 
 void Player::play()
