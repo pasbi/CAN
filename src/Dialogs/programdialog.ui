@@ -38,8 +38,14 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
-             <string>Bank A</string>
+             <string>Bank &amp;A</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+A</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -54,8 +60,14 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
-             <string>Bank B</string>
+             <string>Bank &amp;B</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+B</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -70,8 +82,14 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
-             <string>Bank C</string>
+             <string>Bank &amp;C</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+C</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -86,8 +104,14 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
-             <string>Bank D</string>
+             <string>Bank &amp;D</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+D</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -130,6 +154,9 @@
                 <height>130</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
               <property name="maximum">
                <number>20</number>
               </property>
@@ -137,6 +164,9 @@
             </item>
             <item>
              <widget class="QSpinBox" name="spinBoxPage">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="specialValueText">
                <string>No Page</string>
               </property>
@@ -184,8 +214,14 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::ClickFocus</enum>
+            </property>
             <property name="text">
-             <string>Program 1</string>
+             <string>Program &amp;1</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+1</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -200,8 +236,14 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::ClickFocus</enum>
+            </property>
             <property name="text">
-             <string>Program 2</string>
+             <string>Program &amp;2</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+2</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -216,8 +258,14 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::ClickFocus</enum>
+            </property>
             <property name="text">
-             <string>Program 3</string>
+             <string>Program &amp;3</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+3</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -232,8 +280,14 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::ClickFocus</enum>
+            </property>
             <property name="text">
-             <string>Program 4</string>
+             <string>Program &amp;4</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+4</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -248,8 +302,14 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::ClickFocus</enum>
+            </property>
             <property name="text">
-             <string>Program 5</string>
+             <string>Program &amp;5</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+5</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -299,6 +359,9 @@
        <widget class="QSpinBox" name="spinBoxDirectProgram">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="specialValueText">
          <string>No Program</string>

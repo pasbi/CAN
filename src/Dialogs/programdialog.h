@@ -36,6 +36,7 @@ private slots:
 
 protected:
     void hideEvent(QHideEvent *);
+    void keyPressEvent(QKeyEvent *e);
 
 
 private:

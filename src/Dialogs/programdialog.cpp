@@ -1,4 +1,5 @@
 #include "programdialog.h"
+#include <QKeyEvent>
 #include "ui_programdialog.h"
 
 const int NUM_PROGRAM_BUTTONS = 5;
@@ -208,4 +209,45 @@ void ProgramDialog::hideEvent(QHideEvent* e)
         m_program = Program::INVALID;
     }
     QDialog::hideEvent( e );
+}
+
+void ProgramDialog::keyPressEvent(QKeyEvent *e)
+{
+    switch (e->key())
+    {
+    case Qt::Key_Up:
+    case Qt::Key_Right:
+        ui->dial->setValue( ui->dial->value() + 1 );
+        break;
+    case Qt::Key_Down:
+    case Qt::Key_Left:
+        ui->dial->setValue( ui->dial->value() - 1 );
+        break;
+    case Qt::Key_0:
+    case Qt::Key_1:
+    case Qt::Key_2:
+    case Qt::Key_3:
+    case Qt::Key_4:
+    case Qt::Key_5:
+    case Qt::Key_6:
+    case Qt::Key_7:
+    case Qt::Key_8:
+    case Qt::Key_9:
+    {
+        int key = e->key() - Qt::Key_0;
+        int page = ui->dial->value();
+        // shift the page
+        page = page % 10;
+        page *= 10;
+        if (page + key > ui->dial->maximum())
+        {
+            ui->dial->setValue(key);
+        }
+        else
+        {
+            ui->dial->setValue(page + key);
+        }
+    }
+    }
+    QDialog::keyPressEvent(e);
 }
