@@ -61,50 +61,94 @@ void Slider::clearIndicators()
     setLeftIndicator( -1 );
 }
 
+void drawHandle(QPainter& painter, int pos)
+{
+    int width = 15;
+    int height = 15;
+    QPainterPath path;
+    path.addEllipse(QRectF(pos -width/2, -height/2, width, height-1));
+    painter.fillPath(path, QColor(255, 128, 0, 255));
+
+    QPen pen = painter.pen();
+    pen.setColor(QColor(255, 128, 0, 255).lighter());
+    painter.setPen(pen);
+    painter.drawEllipse(QRectF(pos-width/2+2,-height/2+2,width-5,height-5));
+}
+
+void drawRange(QPainter& painter, int start, int width, int pos)
+{
+    QPainterPath path;
+    int height = 8;
+    int r = 2;
+
+    path.addRoundedRect(QRectF(QPointF(start, -height/2), QSizeF(width, height)), r, r );
+    QLinearGradient gradient(QPointF(start, 0), QPointF(width+start, 0));
+    gradient.setColorAt(qMax((double) (pos -start - 1) / width, 0.0), QColor(255, 128, 0, 255));
+    gradient.setColorAt(qMin((double) (pos -start + 1) / width, 1.0), QColor(0, 0, 0, 0));
+    painter.fillPath(path, gradient);
+
+    QPen pen;
+    pen.setWidthF(1.5);
+    pen.setColor(QColor(80, 80, 80));
+    painter.setPen(pen);
+    painter.drawRoundedRect(QRectF(QPointF(start, -height/2), QSizeF(width, height)), r, r );
+}
+
+void drawOpenSection(QPainter& painter, int pos)
+{
+    int height = 10;
+    {
+        int gradientStart = pos - 2;
+        int gradientEnd   = pos + 2;
+        int gradientWidth = gradientEnd - gradientStart;
+        QLinearGradient gradient(QPointF(gradientStart, 0), QPointF(gradientEnd, 0));
+        gradient.setColorAt(0, QColor(0, 0, 0, 0));
+        gradient.setColorAt(0.5, Qt::darkGray);
+        gradient.setColorAt(1, QColor(0, 0, 0, 0));
+        painter.fillRect(QRectF(gradientStart,  4,        gradientWidth, height), gradient);
+        painter.fillRect(QRectF(gradientStart, -4-height, gradientWidth, height), gradient);
+    }
+}
+
+void drawCompleteSection(QPainter& painter, int start, int end)
+{
+    int height = 10;
+    {
+        int gradientStart = start;
+        int gradientEnd   = end;
+        int gradientWidth = gradientEnd - gradientStart;
+        QLinearGradient gradient(QPointF(gradientStart, 0), QPointF(gradientEnd, 0));
+        gradient.setColorAt(0, QColor(255, 128, 0));
+        gradient.setColorAt(0.5, QColor(255, 128, 0).lighter());
+        gradient.setColorAt(1, QColor(255, 128, 0));
+        painter.fillRect(QRectF(gradientStart,  4,        gradientWidth, height), gradient);
+        painter.fillRect(QRectF(gradientStart, -4-height, gradientWidth, height), gradient);
+    }
+}
+
 void Slider::paintEvent(QPaintEvent *ev)
 {
-    QSlider::paintEvent( ev );
+    Q_UNUSED(ev);
+
+//    QSlider::paintEvent( ev );
     QPainter painter(this);
+    painter.setRenderHint(QPainter::HighQualityAntialiasing);
+    painter.translate(0, height()/2);
 
     const int handleWidth = 26;
     const int lMargin = handleWidth / 2;
     const int rMargin = handleWidth / 2;
+    const int handlePos = lMargin + (width() - lMargin - rMargin) * (double) value() / maximum();
 
-//    painter.save();
-//    QPen pen = painter.pen();
-//    pen.setColor( Qt::blue );
-//    painter.setPen( pen );
-
-//    const double relPos = (m_leftIndicator - minimum()) / (maximum() - minimum());
-//    const int leftPos = relPos * (width() - lMargin - rMargin) + lMargin;
-//    const int rightPos = width() - rMargin;
-
-//    QLinearGradient gradient(QPointF(leftPos, 0), QPointF(rightPos, 0));
-//    gradient.setColorAt(0, Qt::blue);
-//    gradient.setColorAt(1, QColor(0, 0, 0, 0));
-
-//    painter.fillRect(QRectF(QPointF(leftPos, -3), QPointF(rightPos, 3)), gradient);
-
-////        painter.drawLine( pos, 0, pos, height() );
-
-//    painter.restore();
+    drawRange(painter, lMargin, width() - rMargin - lMargin, handlePos);
 
     if (m_leftIndicator >= 0)
     {
-        painter.save();
-        QPen pen = painter.pen();
-        pen.setColor( Qt::blue );
-        painter.setPen( pen );
-
         const double relPos = (m_leftIndicator - minimum()) / (maximum() - minimum());
         const int pos = relPos * (width() - lMargin - rMargin) + lMargin;
-
-        painter.drawLine( pos, 0, pos, height() );
-
-        painter.restore();
+        drawOpenSection(painter, pos);
     }
-
-    if (m_section)
+    else if  (m_section)
     {
         const double relPosL = (m_section->begin() - minimum()) / (maximum() - minimum());
         const double relPosR = (m_section->end()   - minimum()) / (maximum() - minimum());
@@ -112,9 +156,9 @@ void Slider::paintEvent(QPaintEvent *ev)
         const int posL = relPosL * (width() - lMargin - rMargin) + lMargin;
         const int posR = relPosR * (width() - lMargin - rMargin) + lMargin;
 
-        painter.drawLine( posL, 0, posL, height() );
-        painter.drawLine( posR, 0, posR, height() );
+        drawCompleteSection(painter, posL, posR);
     }
+    drawHandle(painter, handlePos);
 }
 
 void Slider::setSection(const Section *section)
