@@ -64,9 +64,10 @@ public:
             if (item == m_items[i])
             {
                 row = i;
+                break;
             }
         }
-        assert(row > 0);
+        assert(row >= 0);
         return row;
     }
 
