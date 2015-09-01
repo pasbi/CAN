@@ -1,6 +1,5 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "util.h"
+
 #include <QTimer>
 #include <QToolButton>
 #include <QMessageBox>
@@ -8,6 +7,12 @@
 #include <QCloseEvent>
 #include <QProcess>
 #include <QClipboard>
+#include <QProgressDialog>
+#include <QScrollArea>
+#include <QLabel>
+
+#include "ui_mainwindow.h"
+#include "util.h"
 #include "application.h"
 #include "Dialogs/addfilestoindexdialog.h"
 #include "Dialogs/stringdialog.h"
@@ -16,10 +21,10 @@
 #include "Dialogs/clonedialog.h"
 #include "Dialogs/identitydialog.h"
 #include "Dialogs/configurationdialog.h"
-#include <QProgressDialog>
-#include <QScrollArea>
-#include <QLabel>
 #include "programdialog.h"
+#include "Commands/DatabaseCommands/databasenewitemcommand.h"
+#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseremoveitemcommand.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -63,8 +68,6 @@ CONFIGURABLE_ADD_ITEM( MainWindow,
                        true,
                        ConfigurableItemOptions::CheckboxOptions()
                        );
-
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -128,6 +131,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionUndo->setEnabled( m_project.canUndo() );
     ui->actionRedo->setEnabled( m_project.canRedo() );
 
+    // very important to set associated widget. Else, shortcuts would be ambigous.
+    initAction( actionNew_Song,      ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
+    initAction( actionDelete_Song,   ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
+    initAction( actionCopy_Song,     ui->songDatabaseWidget->songTableView(),    tr("&Copy Song"),      tr("Copy selected song."),    "Ctrl+C",   ui->menuSongs,  "" )
+    initAction( actionPaste_Song,    ui->songDatabaseWidget->songTableView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
+    initAction( actionEditProgram,   ui->songDatabaseWidget->songTableView(),    tr("&Edit Program"),   tr("Edit program."),          "",         ui->menuSongs,  "" )
+
+    initAction( actionNew_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
+    initAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
+    initAction( actionCopy_Event,    ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
+    initAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
+
 
     //////////////////////////////////////////
     /// Splitter
@@ -166,6 +181,11 @@ MainWindow::MainWindow(QWidget *parent) :
              [this](){
         QTimer::singleShot(0, this, SLOT( updateWhichWidgetsAreEnabled() ));
     });
+    connect( ui->eventDatabaseWidget->eventTableView()->selectionModel(),
+             &QItemSelectionModel::currentRowChanged,
+             [this](){
+        QTimer::singleShot(0, this, SLOT( updateWhichWidgetsAreEnabled() ));
+    });
     updateWhichWidgetsAreEnabled();
 
     loadDefaultProject();
@@ -174,18 +194,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
-
-    // very important to set associated widget. Else, shortcuts would be ambigous.
-    initAction( actionNew_Song,      ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
-    initAction( actionDelete_Song,   ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
-    initAction( actionCopy_Song,     ui->songDatabaseWidget->songTableView(),    tr("&Copy Song"),      tr("Copy selected song."),    "Ctrl+C",   ui->menuSongs,  "" )
-    initAction( actionPaste_Song,    ui->songDatabaseWidget->songTableView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
-    initAction( actionEditProgram,   ui->songDatabaseWidget->songTableView(),    tr("&Edit Program"),   tr("Edit program."),          "",         ui->menuSongs,  "" )
-
-    initAction( actionNew_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
-    initAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
-    initAction( actionCopy_Event,    ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
-    initAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
 
     connect( ui->menuVisible_attributes, SIGNAL(aboutToShow()), this, SLOT(createAttributeVisibilityMenu() ));
 
@@ -487,44 +495,32 @@ void setEnabled( QObject* o, bool enable )
 
 void MainWindow::updateWhichWidgetsAreEnabled()
 {
-    Project* cProject = &m_project;
-    Song* cSong = currentSong();
-    Attachment* cAttachment = currentAttachment();
-    bool cGit = cProject ? cProject->isGitRepository() : false;
+    bool song = !!currentSong();
+    bool event = !!currentEvent();
+    bool attachment = !!currentAttachment();
+    bool git = app().project()->isGitRepository();
 
-    QObjectList attachmentObjects, songObects, projectObjects, gitObjects, alwaysObjects;
+    QObjectList attachmentObjects, songObects, gitObjects, eventObjects;
 
-//    projectObjects      << ui->actionNew_Song;
-    alwaysObjects       << ui->actionNew_Project;
-    projectObjects      << ui->actionSave;
-    projectObjects      << ui->actionSave_As;
-    // ui->actionOpen;
-    // ui->actionUpdate_Index;
-    // ui->actionAdd_Folder;
-    // ui->actionClear_Index;
     for (QAction* action : m_newAttachmentActions)
     {
         songObects << action;
-        //TODO delete song, rename song, ...
     }
 
     attachmentObjects   << ui->actionDelete_Attachment;
-    // ui->actionUndo;
-    // ui->actionRedo;
-//    songObects          << ui->actionDelete_Song;
     gitObjects          << ui->actionSync;
-    // ui->actionClone;
-    // ui->actionOpen_Terminal_here;
     attachmentObjects   << ui->actionRename_Attachment;
     attachmentObjects   << ui->actionDuplicate_Attachment;
+    songObects << m_actionDelete_Song << m_actionCopy_Song;
+    eventObjects << m_actionDelete_Event << m_actionCopy_Event;
 
-    for (QObject* o : projectObjects )      ::setEnabled( o, !!cProject     );
-    for (QObject* o : songObects )          ::setEnabled( o, !!cSong        );
-    for (QObject* o : attachmentObjects)    ::setEnabled( o, !!cAttachment  );
-    for (QObject* o : gitObjects)           ::setEnabled( o, !!cGit         );
+    for (QObject* o : eventObjects )        ::setEnabled( o, event       );
+    for (QObject* o : songObects )          ::setEnabled( o, song        );
+    for (QObject* o : attachmentObjects)    ::setEnabled( o, attachment  );
+    for (QObject* o : gitObjects)           ::setEnabled( o, git         );
 
     bool chordPatternProxyAttachmentEnabled = false;
-    if (cAttachment && cAttachment->inherits( "ChordPatternAttachment" ))
+    if (currentAttachment() && currentAttachment()->inherits( "ChordPatternAttachment" ))
     {
         chordPatternProxyAttachmentEnabled = true;
     }
@@ -573,10 +569,9 @@ void MainWindow::gotoEventView()
 ///////////////////////////////////////////////
 
 
-#include "Commands/SongDatabaseCommands/songdatabasenewsongcommand.h"
 void MainWindow::my_on_actionNew_Song_triggered()
 {
-    app().pushCommand( new SongDatabaseNewSongCommand( m_project.songDatabase(), new Song(m_project.songDatabase()) ) );
+    app().pushCommand( new DatabaseNewItemCommand<Song>( m_project.songDatabase(), new Song(m_project.songDatabase()) ) );
     updateWhichWidgetsAreEnabled();
 }
 
@@ -660,7 +655,6 @@ bool MainWindow::canRemoveSong(Song *song)
     return true;
 }
 
-#include "Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h"
 void MainWindow::my_on_actionDelete_Song_triggered()
 {
     Song* song = currentSong();
@@ -668,7 +662,7 @@ void MainWindow::my_on_actionDelete_Song_triggered()
     {
         if (canRemoveSong( song ))
         {
-            app().pushCommand( new SongDatabaseRemoveSongCommand( m_project.songDatabase(), song ) );
+            app().pushCommand( new DatabaseRemoveItemCommand<Song>( m_project.songDatabase(), song ) );
         }
         else
         {
@@ -1072,19 +1066,17 @@ void MainWindow::on_action_Index_Info_triggered()
                               QString(tr("Files: %1")).arg(app().fileIndex().size()) );
 }
 
-#include "Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h"
 void MainWindow::my_on_actionNew_Event_triggered()
 {
-    app().pushCommand( new EventDatabaseNewEventCommand( m_project.eventDatabase(), new Event(m_project.eventDatabase())) );
+    app().pushCommand( new DatabaseNewItemCommand<Event>( m_project.eventDatabase(), new Event(m_project.eventDatabase())) );
 }
 
-#include "Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h"
 void MainWindow::my_on_actionDelete_Event_triggered()
 {
     Event* event = currentEvent();
     if (event)
     {
-        app().pushCommand( new EventDatabaseRemoveEventCommand( m_project.eventDatabase(), event ));
+        app().pushCommand( new DatabaseRemoveItemCommand<Event>( m_project.eventDatabase(), event ));
         updateWhichWidgetsAreEnabled();
     }
 }

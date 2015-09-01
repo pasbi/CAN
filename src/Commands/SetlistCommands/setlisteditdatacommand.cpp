@@ -1,4 +1,5 @@
 #include "setlisteditdatacommand.h"
+#include "Database/EventDatabase/setlist.h"
 
 SetlistEditDataCommand::SetlistEditDataCommand(Setlist *setlist, const QModelIndex &index, const QVariant &newData, int role) :
     ModelCommand( setlist ),

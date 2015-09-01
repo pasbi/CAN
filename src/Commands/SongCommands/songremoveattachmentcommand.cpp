@@ -1,4 +1,6 @@
 #include "songremoveattachmentcommand.h"
+#include "Database/SongDatabase/song.h"
+#include "Attachments/attachment.h"
 
 SongRemoveAttachmentCommand::SongRemoveAttachmentCommand(Song* song, int i) :
     ModelCommand<Song>(song),

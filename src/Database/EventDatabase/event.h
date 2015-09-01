@@ -14,7 +14,7 @@ class Event : public QObject, public Taggable
     Q_OBJECT
 public:
     enum Type { Rehearsal, Gig, Other };
-    Event( EventDatabase*   database,
+    Event( Database<Event>*   database,
            const QDateTime& beginning = QDateTime::currentDateTime(),
            const QDateTime& ending    = QDateTime::currentDateTime(),
            Type             type      = Rehearsal,
@@ -27,7 +27,7 @@ public:
     QDateTime ending() const { return m_timeSpan.ending; }
     TimeSpan timeSpan() const { return m_timeSpan; }
     QString notices() const { return m_notices; }
-    EventDatabase* database() const { return m_database; }
+    Database<Event>* database() const { return m_database; }
 
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
@@ -48,7 +48,7 @@ public:
 
 
 private:
-    EventDatabase* m_database;
+    Database<Event>* m_database;
     TimeSpan m_timeSpan;
     Type m_type;
     QString m_label;

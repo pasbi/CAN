@@ -1,6 +1,8 @@
 #include "setlist.h"
+
 #include "application.h"
 #include "Project/project.h"
+#include "event.h"
 
 Setlist::Setlist(Event *event) :
     QAbstractTableModel(event),

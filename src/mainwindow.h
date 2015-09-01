@@ -6,6 +6,7 @@
 #include "configurable.h"
 #include "identitymanager.h"
 #include "DatabaseView/SongDatabaseView/songtableview.h"
+#include "Database/EventDatabase/event.h"
 
 
 namespace Ui {
@@ -58,9 +59,6 @@ private:
     bool newProject();
     void loadDefaultProject();
     void createDebugMenu();
-
-
-//    void updateToolBar();
 
 
 protected:

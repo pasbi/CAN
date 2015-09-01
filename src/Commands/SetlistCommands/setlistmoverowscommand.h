@@ -5,6 +5,7 @@
 #include <QList>
 #include "Database/databasemimedata.h"
 
+class SetlistItem;
 class SetlistMoveRowsCommand : public ModelCommand<Setlist>
 {
 public:

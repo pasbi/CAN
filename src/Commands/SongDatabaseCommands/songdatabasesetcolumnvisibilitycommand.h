@@ -4,7 +4,7 @@
 #include "Commands/modelcommand.h"
 #include "Database/SongDatabase/songdatabase.h"
 
-class SongDatabaseSetColumnVisibilityCommand : public SongDatabaseCommand
+class SongDatabaseSetColumnVisibilityCommand : public ModelCommand<SongDatabase>
 {
 public:
     SongDatabaseSetColumnVisibilityCommand( SongDatabase* database, int column, bool state );

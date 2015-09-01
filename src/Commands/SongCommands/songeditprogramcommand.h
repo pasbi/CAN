@@ -2,7 +2,9 @@
 #define SONGEDITPROGRAMCOMMAND_H
 
 #include "Commands/modelcommand.h"
+#include "program.h"
 
+class Song;
 class SongEditProgramCommand : public ModelCommand<Song>
 {
 public:

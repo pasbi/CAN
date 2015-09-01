@@ -3,7 +3,7 @@
 #include "CellEditors/celleditor.h"
 #include "global.h"
 #include "Database/SongDatabase/songdatabase.h"
-#include "Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h"
+#include "Commands/DatabaseCommands/databaseedititemcommand.h"
 #include <QLineEdit>
 #include "Project/project.h"
 #include "application.h"
@@ -80,7 +80,7 @@ void SongAttributeDelegate::setModelData(QWidget *editor, QAbstractItemModel *, 
 
     if ( model()->data( index, Qt::EditRole ) != newData  )
     {
-        app().pushCommand( new SongDatabaseEditSongCommand( model(), proxyModel()->mapToSource(index), newData, Qt::EditRole ) );
+        app().pushCommand( new DatabaseEditItemCommand<Song>( model(), proxyModel()->mapToSource(index), newData, Qt::EditRole ) );
     }
     m_isEditing = false;
 }

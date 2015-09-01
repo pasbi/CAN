@@ -2,7 +2,7 @@
 #define DATABASEMIMEDATA_H
 
 #include <QMimeData>
-#include "typeinfo"
+#include <typeinfo>
 #include "global.h"
 
 

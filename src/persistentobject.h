@@ -20,11 +20,11 @@ protected:
 
 protected:
     // For each class deriving from Persistent, an key equal to its classname is reservated.
-    virtual bool restoreFromJsonObject( const QJsonObject & object ) = 0;
-    virtual QJsonObject toJsonObject() const = 0;
+    virtual bool restoreFromJsonObject( const QJsonObject & object );
+    virtual QJsonObject toJsonObject() const;
 
 public:
-    virtual bool loadFrom(const QString & path);
+    bool loadFrom(const QString & path);
 
 private:
     static QString createRandomID();

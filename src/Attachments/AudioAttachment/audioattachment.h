@@ -2,9 +2,9 @@
 #define AUDIOATTACHMENT_H
 
 #include "Attachments/indexedfileattachment.h"
-#include "sectionsmodel.h"
 #include "player.h"
 
+class SectionsModel;
 class AudioAttachment : public IndexedFileAttachment
 {
     Q_OBJECT

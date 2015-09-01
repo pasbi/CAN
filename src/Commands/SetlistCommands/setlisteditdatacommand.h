@@ -2,6 +2,7 @@
 #define SETLISTEDITDATACOMMAND_H
 
 #include "Commands/modelcommand.h"
+#include <QModelIndex>
 
 class SetlistEditDataCommand : public ModelCommand<Setlist>
 {

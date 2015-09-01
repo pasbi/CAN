@@ -1,4 +1,5 @@
 #include "songnewattachmentcommand.h"
+#include "Database/SongDatabase/song.h"
 
 SongNewAttachmentCommand::SongNewAttachmentCommand(Song *song, Attachment *attachment) :
     ModelCommand<Song>(song),

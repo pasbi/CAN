@@ -4,6 +4,7 @@
 #include "application.h"
 #include "Attachments/ChordPatternAttachment/chordpatternproxyattachment.h"
 #include "chordpatternattachmentview.h"
+#include "Database/SongDatabase/song.h"
 
 
 DEFN_CREATABLE(ChordPatternProxyAttachmentView, AttachmentView);

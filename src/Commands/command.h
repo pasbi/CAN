@@ -15,6 +15,9 @@ public:
 protected:
     explicit Command(Type type = Other);
 
+    static const QStringList SONG_RELATED_TYPENAMES;
+    static const QStringList EVENT_RELATED_TYPENAMES;
+
 private:
     const Type m_type = Other;
 };

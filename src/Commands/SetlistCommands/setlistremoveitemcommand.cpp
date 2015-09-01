@@ -1,4 +1,6 @@
 #include "setlistremoveitemcommand.h"
+#include "Database/EventDatabase/setlistitem.h"
+#include "Database/EventDatabase/setlist.h"
 
 SetlistRemoveItemCommand::SetlistRemoveItemCommand(Setlist *setlist, SetlistItem *setlistItem) :
     ModelCommand(setlist),

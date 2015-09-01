@@ -1,5 +1,5 @@
 #include "setlistmoverowscommand.h"
-
+#include "Database/EventDatabase/setlist.h"
 
 SetlistMoveRowsCommand::SetlistMoveRowsCommand(Setlist *setlist, QList<DatabaseMimeData<SetlistItem>::IndexedItem> sortedSource, int row) :
     ModelCommand(setlist),

@@ -1,6 +1,11 @@
 #include "project.h"
-#include "global.h"
 #include <QThread>
+
+#include "global.h"
+#include "Database/SongDatabase/songdatabase.h"
+#include "Database/EventDatabase/eventdatabase.h"
+#include "Database/SongDatabase/songdatabasesortproxy.h"
+#include "Database/EventDatabase/eventdatabasesortproxy.h"
 
 DEFN_CONFIG(Project, "Project");
 

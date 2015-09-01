@@ -8,22 +8,23 @@
 #include <QDateTime>
 #include "program.h"
 
-class SongDatabase;
+//class SongDatabase;
+template<typename T> class Database;
 class Song : public QObject, public Taggable
 {
     Q_OBJECT
 public:
-    Song(SongDatabase *database);
+    Song(Database<Song> *database);
     ~Song();
 private:
-    SongDatabase* m_songDatabase;
+    Database<Song>* m_songDatabase;
 
 
 
 public:
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
-    SongDatabase* database() const { return m_songDatabase; }
+    Database<Song>* database() const { return m_songDatabase; }
     Song* copy() const;
 
 

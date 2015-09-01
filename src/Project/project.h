@@ -2,16 +2,15 @@
 #define PROJECT_H
 
 #include "gitrepository.h"
-#include "Database/SongDatabase/songdatabase.h"
-#include "Database/EventDatabase/eventdatabase.h"
-
 #include "Commands/command.h"
 #include <QUndoStack>
-#include "Database/SongDatabase/songdatabasesortproxy.h"
-#include "Database/EventDatabase/eventdatabasesortproxy.h"
 #include "configurable.h"
 
 
+class SongDatabase;
+class EventDatabase;
+class SongDatabaseSortProxy;
+class EventDatabaseSortProxy;
 class Project : public QUndoStack, public GitRepository
 {
     DECL_CONFIG(Project)

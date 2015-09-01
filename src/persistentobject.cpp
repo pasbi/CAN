@@ -72,3 +72,14 @@ QString PersistentObject::createRandomID()
     }
     return s;
 }
+
+bool PersistentObject::restoreFromJsonObject( const QJsonObject & object )
+{
+    Q_UNUSED(object);
+    return true;
+}
+
+QJsonObject PersistentObject::toJsonObject() const
+{
+    return QJsonObject();
+}

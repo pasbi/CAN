@@ -1,6 +1,7 @@
 #include "setlistitem.h"
 #include "application.h"
 #include "Project/project.h"
+#include "Database/SongDatabase/songdatabase.h"
 
 QString SetlistItem::label() const
 {

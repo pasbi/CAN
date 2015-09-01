@@ -1,6 +1,6 @@
 #include "event.h"
 
-Event::Event( EventDatabase* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
+Event::Event( Database<Event>* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
     m_database( database ),
     m_timeSpan( TimeSpan(beginning, ending)),
     m_type(type),

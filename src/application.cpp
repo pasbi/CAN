@@ -69,7 +69,8 @@ void Application::endMacro()
 void Application::selectSong(const Song *song)
 {
     m_mainWindow->gotoSongView();
-    QModelIndex index = m_mainWindow->songTableView()->model()->indexOfSong( song );
+    int row = m_mainWindow->songTableView()->model()->rowOf(song);
+    QModelIndex index = m_mainWindow->songTableView()->model()->index(row, 0, QModelIndex());
     index = m_mainWindow->songTableView()->proxyModel()->mapFromSource( index );
     m_mainWindow->songTableView()->selectRow( index.row() );
 }

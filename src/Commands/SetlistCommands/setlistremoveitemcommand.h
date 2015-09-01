@@ -4,6 +4,7 @@
 #include "Commands/modelcommand.h"
 #include "Commands/itemownercommanddecorator.h"
 
+class SetlistItem;
 class SetlistRemoveItemCommand : public ModelCommand<Setlist>, private ItemOwnerCommandDecorator<SetlistItem>
 {
 public:

@@ -61,10 +61,7 @@ SOURCES += main.cpp\
     Attachments/ChordPatternAttachment/chordpatternattachment.cpp \
     Database/EventDatabase/event.cpp \
     Commands/command.cpp \
-    Commands/SongDatabaseCommands/songdatabasenewsongcommand.cpp \
     DatabaseView/SongDatabaseView/songtableview.cpp \
-    Commands/SongDatabaseCommands/songdatabaseeditsongcommand.cpp \
-    Commands/SongDatabaseCommands/songdatabaseremovesongcommand.cpp \
     util.cpp \
     DatabaseView/SongDatabaseView/songattributedelegate.cpp \
     DatabaseView/SongDatabaseView/CellEditors/celleditor.cpp \
@@ -105,12 +102,9 @@ SOURCES += main.cpp\
     DatabaseView/EventDatabaseView/eventtableview.cpp \
     DatabaseView/EventDatabaseView/eventdatabasewidget.cpp \
     Dialogs/datetimedialog.cpp \
-    Commands/EventDatabaseCommands/eventdatabaseneweventcommand.cpp \
-    Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.cpp \
     Database/EventDatabase/eventdatabasesortproxy.cpp \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.cpp \
     DatabaseView/EventDatabaseView/setlistwidget.cpp \
-    Commands/EventDatabaseCommands/eventdatabaseediteventcommand.cpp \
     Database/EventDatabase/setlist.cpp \
     Commands/SetlistCommands/setlistremoveitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistitemselector.cpp \
@@ -158,7 +152,8 @@ SOURCES += main.cpp\
     Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.cpp \
     Commands/SongCommands/songnewattachmentcommand.cpp \
     Commands/SetlistCommands/setlistnewitemcommand.cpp \
-    Commands/timerdecorator.cpp
+    Commands/timerdecorator.cpp \
+    Commands/modelcommand.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -175,10 +170,7 @@ HEADERS  += mainwindow.h \
     Attachments/ChordPatternAttachment/chordpatternattachment.h \
     Database/EventDatabase/event.h \
     Commands/command.h \
-    Commands/SongDatabaseCommands/songdatabasenewsongcommand.h \
     DatabaseView/SongDatabaseView/songtableview.h \
-    Commands/SongDatabaseCommands/songdatabaseeditsongcommand.h \
-    Commands/SongDatabaseCommands/songdatabaseremovesongcommand.h \
     util.h \
     DatabaseView/SongDatabaseView/songattributedelegate.h \
     DatabaseView/SongDatabaseView/CellEditors/celleditor.h \
@@ -220,12 +212,9 @@ HEADERS  += mainwindow.h \
     DatabaseView/EventDatabaseView/eventtableview.h \
     DatabaseView/EventDatabaseView/eventdatabasewidget.h \
     Dialogs/datetimedialog.h \
-    Commands/EventDatabaseCommands/eventdatabaseneweventcommand.h \
-    Commands/EventDatabaseCommands/eventdatabaseremoveeventcommand.h \
     Database/EventDatabase/eventdatabasesortproxy.h \
     DatabaseView/EventDatabaseView/eventtableviewcontainer.h \
     DatabaseView/EventDatabaseView/setlistwidget.h \
-    Commands/EventDatabaseCommands/eventdatabaseediteventcommand.h \
     commontypes.h \
     Database/EventDatabase/setlist.h \
     Commands/SetlistCommands/setlistremoveitemcommand.h \
@@ -285,7 +274,11 @@ HEADERS  += mainwindow.h \
     Commands/SongCommands/songnewattachmentcommand.h \
     Commands/SetlistCommands/setlistnewitemcommand.h \
     Commands/modelcommand.h \
-    Commands/timerdecorator.h
+    Commands/timerdecorator.h \
+    Commands/DatabaseCommands/databasecommand.h \
+    Commands/DatabaseCommands/databasenewitemcommand.h \
+    Commands/DatabaseCommands/databaseedititemcommand.h \
+    Commands/DatabaseCommands/databaseremoveitemcommand.h
 
 
 

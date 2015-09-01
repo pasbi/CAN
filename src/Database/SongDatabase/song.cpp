@@ -3,10 +3,13 @@
 #include "global.h"
 #include <QJsonDocument>
 
-Song::Song(SongDatabase* database) :
+Song::Song(Database<Song> * database) :
     m_songDatabase(database),
     m_creationDateTime(QDateTime::currentDateTime())
 {
+    connect( this, SIGNAL(attachmentAdded(int)),   database, SIGNAL(attachmentAdded(int)  ));
+    connect( this, SIGNAL(attachmentRemoved(int)), database, SIGNAL(attachmentRemoved(int)));
+    connect( this, SIGNAL(attachmentRenamed(int, QString)), database, SIGNAL(attachmentRenamed(int,QString)));
 }
 
 Song::~Song()

@@ -23,7 +23,6 @@ public:
     //
     /////////////////////////////////////////////////
 public:
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
@@ -34,37 +33,18 @@ public:
     SongID songID( const Song* song ) const;
     Song* song(const QString &id ) const;
 
-    QModelIndex indexOfSong( const Song* song ) const;
-
     // Drag'n'Drop
     // we only allow songs to be dragged (LinkAction). No redordering.
     Qt::DropActions supportedDragActions() const;
-    Qt::DropActions supportedDropActions() const;
-    QMimeData* mimeData(const QModelIndexList &indexes) const;
-    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+    void reset();
+
+    QString fileNameBase() const { return "song"; }
 
 
 private:
-    mutable QList<Song*> m_tmpSongBuffer; // Songs that was just removed or are about to be inserted.
     friend class SongDatabaseNewSongCommand;
     friend class SongDatabaseRemoveSongCommand;
     friend class SongDatabaseMoveSongCommand;
-
-    /**
-     * @brief appendSong this takes ownership of song
-     * @param song
-     */
-    void appendSong(Song* song);
-    void insertSong(Song* song, const int index);
-    bool insertRows(int row, int count, const QModelIndex &parent);
-
-    /**
-     * @brief removeSong ownership is transfered to calling object
-     * @param song
-     * @return returns the index of the removed song.
-     */
-    int removeSong(Song *song);
-    bool removeRows(int row, int count, const QModelIndex &parent);
 
 
 public:
@@ -82,12 +62,8 @@ private:
     //
     /////////////////////////////////////////////////
 public:
-    bool restoreFromJsonObject(const QJsonObject & object);
     QJsonObject toJsonObject() const;
-    bool loadFrom(const QString &path);
-    QList<File> getFiles() const;
-public slots:
-    void reset();
+    bool restoreFromJsonObject(const QJsonObject &object);
 
 signals:
     void attachmentAdded(int);

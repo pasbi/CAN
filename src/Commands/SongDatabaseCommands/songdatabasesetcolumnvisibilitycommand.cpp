@@ -1,11 +1,10 @@
 #include "songdatabasesetcolumnvisibilitycommand.h"
 
 SongDatabaseSetColumnVisibilityCommand::SongDatabaseSetColumnVisibilityCommand(SongDatabase *database, int column, bool state) :
-    SongDatabaseCommand( database ),
+    ModelCommand( database ),
     m_index( column ),
     m_newState( state )
 {
-
     setText( CommandTranslator::tr("Set Column Visibility") );
 }
 

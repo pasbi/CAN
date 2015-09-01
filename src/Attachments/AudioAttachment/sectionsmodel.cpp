@@ -1,5 +1,6 @@
 #include "sectionsmodel.h"
 #include "application.h"
+#include "persistentobject.h"
 
 SectionsModel::SectionsModel(QObject *parent) :
     QAbstractTableModel(parent)

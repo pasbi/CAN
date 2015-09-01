@@ -10,7 +10,7 @@ Player::~Player()
     if (m_audioOutput)
     {
         m_audioOutput->stop();
-        delete m_audioOutput;
+//        delete m_audioOutput;
     }
 }
 

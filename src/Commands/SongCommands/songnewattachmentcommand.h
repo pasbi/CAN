@@ -4,6 +4,8 @@
 #include "Commands/modelcommand.h"
 #include "Commands/itemownercommanddecorator.h"
 
+class Song;
+class Attachment;
 class SongNewAttachmentCommand : public ModelCommand<Song>, private ItemOwnerCommandDecorator<Attachment>
 {
 public:

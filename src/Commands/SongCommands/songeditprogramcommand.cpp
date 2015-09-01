@@ -1,4 +1,5 @@
 #include "songeditprogramcommand.h"
+#include "Database/SongDatabase/song.h"
 
 SongEditProgramCommand::SongEditProgramCommand(Song *song, const Program &program) :
     ModelCommand<Song>( song ),
