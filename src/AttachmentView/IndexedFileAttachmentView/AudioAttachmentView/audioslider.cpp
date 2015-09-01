@@ -8,13 +8,11 @@ AudioSlider::AudioSlider(QWidget *parent) :
     ui(new Ui::AudioSlider)
 {
     ui->setupUi(this);
-
-    connect( ui->slider,                SIGNAL( valueChanged(double) ), this, SIGNAL( valueChanged(double) )    );
-    connect( ui->doubleSpinBoxLeft,     SIGNAL( valueChanged(double) ), this, SIGNAL( valueChanged(double) )    );
-    connect( ui->doubleSpinBoxRight,    SIGNAL( valueChanged(double) ), this, SIGNAL( valueChanged(double) )    );
-    connect( &m_timer, SIGNAL(timeout()), this, SLOT(onTimerTimeout()));
+    connect( ui->slider, SIGNAL( valueChanged(double) ), this,                   SIGNAL( valueChanged(double) ) );
+    connect( ui->slider, SIGNAL( valueChanged(double) ), ui->doubleSpinBoxLeft,  SLOT(   setValue(double)     ) );
+    connect( ui->slider, SIGNAL( valueChanged(double) ), ui->doubleSpinBoxRight, SLOT(   setValue(double)     ) );
+    connect( &m_timer,   SIGNAL(timeout()),              this,                   SLOT(   onTimerTimeout()     ) );
     m_timer.setInterval( 20 );
-
 }
 
 AudioSlider::~AudioSlider()

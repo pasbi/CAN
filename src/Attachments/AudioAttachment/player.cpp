@@ -69,9 +69,13 @@ void Player::seek()
     if (m_audioOutput)
     {
         blockSignals(true);
+        bool wasActive = (m_audioOutput->state() == QAudio::ActiveState);
         m_audioOutput->stop();
         m_buffer.decode( m_pitch, m_tempo, m_offset );
-        m_audioOutput->start( &m_buffer.buffer() );
+        if (wasActive)
+        {
+            m_audioOutput->start( &m_buffer.buffer() );
+        }
         blockSignals(false);
     }
     else

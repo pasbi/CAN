@@ -97,7 +97,6 @@ void AudioAttachmentView::on_pushButtonPlayPause_toggled(bool checked)
 #ifdef HAVE_SOUNDTOUCH
     if (checked)
     {
-        player().seek( ui->doubleSpinBoxTempo->value() * ui->slider->value() );
         player().play();
         ui->slider->play();
     }

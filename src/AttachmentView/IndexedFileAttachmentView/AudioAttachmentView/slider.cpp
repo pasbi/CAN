@@ -70,6 +70,25 @@ void Slider::paintEvent(QPaintEvent *ev)
     const int lMargin = handleWidth / 2;
     const int rMargin = handleWidth / 2;
 
+//    painter.save();
+//    QPen pen = painter.pen();
+//    pen.setColor( Qt::blue );
+//    painter.setPen( pen );
+
+//    const double relPos = (m_leftIndicator - minimum()) / (maximum() - minimum());
+//    const int leftPos = relPos * (width() - lMargin - rMargin) + lMargin;
+//    const int rightPos = width() - rMargin;
+
+//    QLinearGradient gradient(QPointF(leftPos, 0), QPointF(rightPos, 0));
+//    gradient.setColorAt(0, Qt::blue);
+//    gradient.setColorAt(1, QColor(0, 0, 0, 0));
+
+//    painter.fillRect(QRectF(QPointF(leftPos, -3), QPointF(rightPos, 3)), gradient);
+
+////        painter.drawLine( pos, 0, pos, height() );
+
+//    painter.restore();
+
     if (m_leftIndicator >= 0)
     {
         painter.save();
