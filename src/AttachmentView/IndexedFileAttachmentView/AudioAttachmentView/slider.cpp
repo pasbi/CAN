@@ -130,7 +130,6 @@ void Slider::paintEvent(QPaintEvent *ev)
 {
     Q_UNUSED(ev);
 
-//    QSlider::paintEvent( ev );
     QPainter painter(this);
     painter.setRenderHint(QPainter::HighQualityAntialiasing);
     painter.translate(0, height()/2);

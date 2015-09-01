@@ -84,7 +84,7 @@ bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int
 {
     assert(!index.parent().isValid());
 
-    Event* event = itemAtIndex(index);
+    Event* event = resolveItemAtIndex(index);
     assert( event );
     if (role == Qt::EditRole)
     {

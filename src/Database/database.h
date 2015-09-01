@@ -27,39 +27,6 @@ public:
         return m_project;
     }
 
-    T* itemAtIndex(QModelIndex index) const
-    {
-        if (!index.isValid())
-        {
-            return nullptr;
-        }
-        else
-        {
-            // index may be pointing to an underlying proxy model
-            const QAbstractItemModel* model = index.model();
-            const QAbstractProxyModel* proxyModel;
-
-            while (model && (proxyModel = qobject_cast<const QAbstractProxyModel*>(model)))
-            {
-                model = proxyModel->sourceModel();
-                index = proxyModel->mapToSource(index);
-            }
-
-            if (!model || !index.isValid())
-            {
-                return nullptr;
-            }
-
-            if (model != this)
-            {
-                qWarning() << "Trying to retrieve item from wrong model " << model;
-                return nullptr;
-            }
-
-            return m_items[index.row()];
-        }
-    }
-
 public:
     QList<T*> items() const { return m_items; }
     void insertItem(T* item, int row = -1)
@@ -168,7 +135,7 @@ public:
                 // we want only one index per row.
                 continue;
             }
-            mime->append(itemAtIndex(index), index.row());
+            mime->append(resolveItemAtIndex(index), index.row());
         }
         return mime;
     }
@@ -217,6 +184,56 @@ public:
             return false;
         }
         return false;
+    }
+
+    T* itemAtIndex(const QModelIndex& index) const
+    {
+        if (index.model() != this)
+        {
+            qWarning() << "Index points to an other model";
+            return nullptr;
+        }
+        else if (index.isValid())
+        {
+            return m_items[index.row()];
+        }
+        else
+        {
+            return nullptr;
+        }
+
+    }
+
+    /**
+     * @brief resolveItemAtIndex returns the item at index @code index.
+     * @param index may be an index of the model or an higher level proxy model.
+     * @return the index or nullptr if index is not valid or leads to an invalid index.
+     */
+    T* resolveItemAtIndex(QModelIndex index) const
+    {
+        if (!index.isValid())
+        {
+            return nullptr;
+        }
+        else
+        {
+            // index may be pointing to an underlying proxy model
+            const QAbstractItemModel* model = index.model();
+            const QAbstractProxyModel* proxyModel;
+
+            while (model && (proxyModel = qobject_cast<const QAbstractProxyModel*>(model)))
+            {
+                model = proxyModel->sourceModel();
+                index = proxyModel->mapToSource(index);
+            }
+
+            if (!model || !index.isValid())
+            {
+                return nullptr;
+            }
+
+            return itemAtIndex(index);
+        }
     }
 
     virtual bool columnIsVisible(int)

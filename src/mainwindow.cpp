@@ -17,24 +17,34 @@
 #include "application.h"
 #include "Dialogs/addfilestoindexdialog.h"
 #include "Dialogs/stringdialog.h"
-#include "conflicteditor.h"
 #include "Dialogs/commitdialog.h"
 #include "Dialogs/clonedialog.h"
 #include "Dialogs/identitydialog.h"
 #include "Dialogs/configurationdialog.h"
 #include "Dialogs/programdialog.h"
+#include "Dialogs/tagdialog.h"
+#include "conflicteditor.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 #include "Commands/DatabaseCommands/databaseedititemcommand.h"
 #include "Commands/DatabaseCommands/databaseremoveitemcommand.h"
-#include "Database/EventDatabase/setlistitem.h"
-#include "creatable.h"
-#include "Attachments/attachment.h"
-#include "DatabaseView/EventDatabaseView/eventtableview.h"
-#include "Database/EventDatabase/eventdatabase.h"
+#include "Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.h"
+#include "Commands/SongCommands/songremoveattachmentcommand.h"
+#include "Commands/SongCommands/songnewattachmentcommand.h"
+#include "Commands/edittagscommand.h"
+#include "Commands/AttachmentCommands/attachmentrenamecommand.h"
+#include "Commands/SongCommands/songeditprogramcommand.h"
 #include "AttachmentView/attachmentchooser.h"
+#include "Attachments/attachment.h"
+#include "Database/EventDatabase/setlistitem.h"
 #include "Database/SongDatabase/songdatabase.h"
-#include "Project/identity.h"
+#include "Database/EventDatabase/eventdatabase.h"
+#include "DatabaseView/EventDatabaseView/eventtableview.h"
 #include "DatabaseView/SongDatabaseView/songtableview.h"
+#include "creatable.h"
+#include "DatabaseView/SongDatabaseView/songtableview.h"
+#include "Project/identity.h"
+#include "PDFCreator/orphantsetlist.h"
+#include "PDFCreator/pdfcreator.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -142,16 +152,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionRedo->setEnabled( m_project.canRedo() );
 
     // very important to set associated widget. Else, shortcuts would be ambigous.
-    initAction( actionNew_Song,      ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
-    initAction( actionDelete_Song,   ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  "" )
-    initAction( actionCopy_Song,     ui->songDatabaseWidget->songTableView(),    tr("&Copy Song"),      tr("Copy selected song."),    "Ctrl+C",   ui->menuSongs,  "" )
-    initAction( actionPaste_Song,    ui->songDatabaseWidget->songTableView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
-    initAction( actionEditProgram,   ui->songDatabaseWidget->songTableView(),    tr("&Edit Program"),   tr("Edit program."),          "",         ui->menuSongs,  "" )
+    initAction( actionNew_Song,         ui->songDatabaseWidget->songTableView(),    tr("&New Song"),       tr("Add a new song."),        "Ctrl+N",   ui->menuSongs,  "" )
+    initAction( actionDelete_Song,      ui->songDatabaseWidget->songTableView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  ":/icons/icons/rubbish7.png" )
+    initAction( actionCopy_Song,        ui->songDatabaseWidget->songTableView(),    tr("&Copy Song"),      tr("Copy selected song."),    "Ctrl+C",   ui->menuSongs,  "" )
+    initAction( actionPaste_Song,       ui->songDatabaseWidget->songTableView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
+    initAction( actionEdit_Program,     ui->songDatabaseWidget->songTableView(),    tr("&Edit Program"),   tr("Edit program."),          "",         ui->menuSongs,  "" )
+    initAction( actionEdit_Song_Tags,   ui->songDatabaseWidget->songTableView(),    tr("&Edit Tags"),      tr("Edit tags of the song."), "",         ui->menuSongs,  ":/icons/icons/tag-2.png" )
 
-    initAction( actionNew_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
-    initAction( actionDelete_Event,  ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, "" )
-    initAction( actionCopy_Event,    ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
-    initAction( actionPaste_Event,   ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
+    initAction( actionNew_Event,        ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
+    initAction( actionDelete_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, ":/icons/icons/rubbish7.png" )
+    initAction( actionCopy_Event,       ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
+    initAction( actionPaste_Event,      ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
+    initAction( actionEdit_Event_Tags,  ui->eventDatabaseWidget->eventTableView(),  tr("&Edit Tags"),      tr("Edit tags of the event."),"",         ui->menuEvents, ":/icons/icons/tag-2.png" )
 
 
     //////////////////////////////////////////
@@ -254,8 +266,6 @@ Event* MainWindow::currentEvent() const
 {
     return ui->eventDatabaseWidget->currentEvent();
 }
-
-#include "Commands/SongCommands/songnewattachmentcommand.h"
 
 void MainWindow::createAttachmentActions()
 {
@@ -597,7 +607,6 @@ void MainWindow::on_actionRedo_triggered()
     updateWhichWidgetsAreEnabled();
 }
 
-#include "Commands/SongCommands/songremoveattachmentcommand.h"
 void MainWindow::on_actionDelete_Attachment_triggered()
 {
     Song* song = currentSong();
@@ -644,6 +653,7 @@ void MainWindow::on_actionOpen_triggered()
     {
         return; // user aborted opening
     }
+
 
     open(filename);
 }
@@ -729,7 +739,6 @@ void MainWindow::on_actionClear_Index_triggered()
     app().fileIndex().clear();
 }
 
-#include "Commands/AttachmentCommands/attachmentrenamecommand.h"
 void MainWindow::on_actionRename_Attachment_triggered()
 {
     ui->songDatabaseWidget->attachmentChooser()->renameCurrentAttachment();
@@ -1137,8 +1146,7 @@ void MainWindow::my_on_actionPaste_Event_triggered()
     app().project()->eventDatabase()->dropMimeData(app().clipboard()->mimeData(), Qt::CopyAction, m_project.eventDatabase()->rowCount(), 0, QModelIndex());
 }
 
-#include "Commands/SongCommands/songeditprogramcommand.h"
-void MainWindow::my_on_actionEditProgram_triggered()
+void MainWindow::my_on_actionEdit_Program_triggered()
 {
     if (!currentSong())
     {
@@ -1153,7 +1161,6 @@ void MainWindow::my_on_actionEditProgram_triggered()
     }
 }
 
-#include "Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.h"
 void MainWindow::createAttributeVisibilityMenu()
 {
     QMenu* menu = ui->menuVisible_attributes;
@@ -1173,6 +1180,43 @@ void MainWindow::createAttributeVisibilityMenu()
         connect( menu, SIGNAL(aboutToHide()), action, SLOT(deleteLater()) );
     }
 
+}
+
+
+void MainWindow::my_on_actionEdit_Song_Tags_triggered()
+{
+    SongTableView* songTableView = ui->songDatabaseWidget->songTableView();
+    QModelIndexList list = songTableView->selectionModel()->selectedIndexes();
+    if (!list.isEmpty())
+    {
+        Taggable* t = songTableView->model()->resolveItemAtIndex(list.first());
+        if (t != 0)
+        {
+            TagDialog d(t->tags(), this);
+            if (d.exec() == QDialog::Accepted)
+            {
+                app().pushCommand( new EditTagsCommand( t, d.tags() ) );
+            }
+        }
+    }
+}
+
+void MainWindow::my_on_actionEdit_Event_Tags_triggered()
+{
+    EventTableView* eventTableView = ui->eventDatabaseWidget->eventTableView();
+    QModelIndexList list = eventTableView->selectionModel()->selectedIndexes();
+    if (!list.isEmpty())
+    {
+        Taggable* t = eventTableView->model()->resolveItemAtIndex(list.first());
+        if (t != 0)
+        {
+            TagDialog d(t->tags(), this);
+            if (d.exec() == QDialog::Accepted)
+            {
+                app().pushCommand( new EditTagsCommand( t, d.tags() ) );
+            }
+        }
+    }
 }
 
 void MainWindow::open(const QString &filename)
@@ -1249,8 +1293,6 @@ SongTableView* MainWindow::songTableView()
 }
 
 
-#include "PDFCreator/pdfcreator.h"
-#include "PDFCreator/orphantsetlist.h"
 void MainWindow::on_action_Export_all_songs_triggered()
 {
     OrphantSetlist setlist( tr("All songs"));

@@ -40,6 +40,6 @@ Song* SongTableViewContainer::currentSong() const
     }
     else
     {
-        return ui->tableView->model()->itemAtIndex( rows.first() );
+        return ui->tableView->model()->resolveItemAtIndex( rows.first() );
     }
 }

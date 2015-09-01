@@ -41,7 +41,7 @@ void SongDatabaseWidget::updateAttachmentChooser()
         if (list.first() != m_currentIndex)
         {
             ui->attachmentChooser->setSong(
-                            ui->songTableViewContainer->songTableView()->model()->itemAtIndex( list.first() ) );
+                            ui->songTableViewContainer->songTableView()->model()->resolveItemAtIndex( list.first() ) );
         }
     }
 }

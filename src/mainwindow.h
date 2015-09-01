@@ -93,12 +93,14 @@ private slots:
     void my_on_actionDelete_Song_triggered();
     void my_on_actionCopy_Song_triggered();
     void my_on_actionPaste_Song_triggered();
-    void my_on_actionEditProgram_triggered();
+    void my_on_actionEdit_Program_triggered();
+    void my_on_actionEdit_Song_Tags_triggered();
 
     void my_on_actionNew_Event_triggered();
     void my_on_actionDelete_Event_triggered();
     void my_on_actionCopy_Event_triggered();
     void my_on_actionPaste_Event_triggered();
+    void my_on_actionEdit_Event_Tags_triggered();
 
     void createAttributeVisibilityMenu();
     void createLanguageMenu();
@@ -124,12 +126,14 @@ private:
     QAction* m_actionDelete_Song;
     QAction* m_actionCopy_Song;
     QAction* m_actionPaste_Song;
-    QAction* m_actionEditProgram;
+    QAction* m_actionEdit_Program;
+    QAction* m_actionEdit_Song_Tags;
 
     QAction* m_actionNew_Event;
     QAction* m_actionDelete_Event;
     QAction* m_actionCopy_Event;
     QAction* m_actionPaste_Event;
+    QAction* m_actionEdit_Event_Tags;
 
     void askForSync();
 

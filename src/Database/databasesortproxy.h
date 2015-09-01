@@ -11,7 +11,6 @@ public:
     explicit DatabaseSortProxy(QObject *parent = 0) :
         QSortFilterProxyModel(parent)
     {
-
     }
 
     Database<T>* sourceModel() const
