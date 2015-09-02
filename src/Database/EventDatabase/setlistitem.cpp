@@ -10,7 +10,6 @@ SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString & label )
     m_type( LabelType ),
     m_label( label )
 {
-    qDebug() << "ctor 1";
 }
 
 SetlistItem::SetlistItem( Database<SetlistItem>* setlist ) :
@@ -18,14 +17,12 @@ SetlistItem::SetlistItem( Database<SetlistItem>* setlist ) :
     m_type( LabelType ),
     m_label( QObject::tr("Unnamed") )
 {
-    qDebug() << "ctor 2";
 }
 
 SetlistItem::SetlistItem( Database<SetlistItem>* setlist, const Song* song ) :
     DatabaseItem(setlist),
     m_type( SongType )
 {
-    qDebug() << "ctor 3";
     setSong(song);
 }
 
@@ -104,7 +101,6 @@ bool SetlistItem::restoreFromJsonObject(const QJsonObject & object)
     switch (static_cast<Type>(object["type"].toInt()))
     {
     case SongType:
-        qDebug() << "song type";
         if (!checkJsonObject(object, "SongID", QJsonValue::String))
         {
             qWarning() << "Did not found SongID";
@@ -127,7 +123,6 @@ bool SetlistItem::restoreFromJsonObject(const QJsonObject & object)
         }
         break;
     case LabelType:
-        qDebug() << "restore LabelType";
         if (!checkJsonObject(object, "Label", QJsonValue::String))
         {
             qWarning() << "Did not found label";
