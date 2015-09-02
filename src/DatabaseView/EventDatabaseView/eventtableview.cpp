@@ -79,21 +79,3 @@ void EventTableView::mouseDoubleClickEvent(QMouseEvent *event)
         QTableView::mouseDoubleClickEvent( event );
     }
 }
-
-void EventTableView::setModel(EventDatabaseSortProxy *model)
-{
-    DatabaseView::setModel( model );
-}
-
-Database<Event>* EventTableView::model() const
-{
-    return proxyModel() ? proxyModel()->sourceModel() : NULL;
-}
-
-EventDatabaseSortProxy* EventTableView::proxyModel() const
-{
-    EventDatabaseSortProxy* pm = qobject_assert_cast<EventDatabaseSortProxy*>( QTableView::model() );
-    return pm;
-}
-
-

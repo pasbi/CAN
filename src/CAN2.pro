@@ -283,7 +283,8 @@ HEADERS  += mainwindow.h \
     Commands/DatabaseCommands/databasemoverowscommand.h \
     DatabaseView/ItemDelegates/typecomboboxdelegate.h \
     DatabaseView/ItemDelegates/lineeditdelegate.h \
-    DatabaseView/ItemDelegates/itemdelegate.h
+    DatabaseView/ItemDelegates/itemdelegate.h \
+    DatabaseView/databasewidget.h
 
 
 
@@ -292,7 +293,6 @@ FORMS    += mainwindow.ui \
     filterwidget.ui \
     AttachmentView/chordpatternattachmentview.ui \
     AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui \
-    DatabaseView/SongDatabaseView/songdatabasewidget.ui \
     AttachmentView/attachmentchooser.ui \
     Dialogs/clonedialog.ui \
     Dialogs/stringdialog.ui \

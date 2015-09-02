@@ -30,12 +30,6 @@ SongTableView::SongTableView(QWidget *parent) :
     setDragEnabled(true);
 }
 
-void SongTableView::setModel(SongDatabaseSortProxy *model)
-{
-    DatabaseView::setModel(model);
-    connect( model, SIGNAL(modelReset()), this, SLOT(resizeColumnsToContents()) );
-}
-
 void SongTableView::fakeFocusOutEvent()
 {
     // oddly, the columns in the table are not resized when the header is resized.
@@ -44,15 +38,6 @@ void SongTableView::fakeFocusOutEvent()
     // desired behaviour on the wrong track.
     QFocusEvent myFocusOutEvent(QEvent::FocusOut);
     QApplication::sendEvent( this, &myFocusOutEvent );
-}
-
-
-
-SongDatabaseSortProxy* SongTableView::proxyModel() const
-{
-    SongDatabaseSortProxy* pm = qobject_assert_cast<SongDatabaseSortProxy*>( QTableView::model() );
-    assert( pm == QTableView::model() );
-    return pm;
 }
 
 Qt::DropAction SongTableView::dropAction( QDropEvent* event )
@@ -78,9 +63,4 @@ void SongTableView::keyPressEvent(QKeyEvent *event)
         }
     }
     QTableView::keyPressEvent( event );
-}
-
-Database<Song>* SongTableView::model() const
-{
-    return proxyModel() ? proxyModel()->sourceModel() : NULL;
 }

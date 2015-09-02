@@ -4,14 +4,12 @@
 #include <QWidget>
 #include <QModelIndex>
 
-namespace Ui {
-class SongDatabaseWidget;
-}
-
 class SongTableView;
 class SongDatabase;
 class AttachmentChooser;
 class Song;
+class SongTableViewContainer;
+class AttachmentChooser;
 class SongDatabaseWidget : public QWidget
 {
     Q_OBJECT
@@ -24,12 +22,17 @@ public:
     AttachmentChooser* attachmentChooser() const;
     SongTableView* songTableView() const;
 
+protected:
+    void setupUi();
+
 public slots:
     void updateAttachmentChooser();
 
-private:
-    Ui::SongDatabaseWidget *ui;
+public:
     QModelIndex m_currentIndex;
+
+    SongTableViewContainer* m_tableViewContainer;
+    AttachmentChooser* m_attachmentChooser;
 
 
 };

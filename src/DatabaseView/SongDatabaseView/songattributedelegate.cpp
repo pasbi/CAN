@@ -12,8 +12,7 @@
 SongAttributeDelegate::SongAttributeDelegate(SongTableView *parent) :
     QItemDelegate(parent)
 {
-
-   }
+}
 
 #include "CellEditors/stringeditor.h"
 QWidget* SongAttributeDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -57,7 +56,7 @@ Database<Song>* SongAttributeDelegate::model() const
     return parent()->model();
 }
 
-SongDatabaseSortProxy* SongAttributeDelegate::proxyModel() const
+DatabaseSortProxy<Song>* SongAttributeDelegate::proxyModel() const
 {
     return parent()->proxyModel();
 }

@@ -33,6 +33,10 @@ void SongTableViewContainer::setModel(SongDatabaseSortProxy *model)
 
 Song* SongTableViewContainer::currentSong() const
 {
+    qDebug() << (void*) ui;
+    qDebug() << (void*) ui->tableView;
+    qDebug() << (void*) ui->tableView->selectionModel();
+
     QModelIndexList rows = ui->tableView->selectionModel()->selectedRows();
     if (rows.isEmpty())
     {

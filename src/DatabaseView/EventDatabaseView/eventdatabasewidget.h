@@ -9,8 +9,10 @@ class EventDatabaseWidget;
 
 class Event;
 class SetlistView;
-class EventTableView;
+class EventTableViewContainer;
+template<typename T> class DatabaseView;
 class Setlist;
+class SetlistWidget;
 class EventDatabaseWidget : public QWidget
 {
     Q_OBJECT
@@ -21,15 +23,20 @@ public:
 
     Event* currentEvent() const;
     SetlistView *setlistView() const;
-    EventTableView* eventTableView() const;
+    DatabaseView<Event>* databaseView() const;
     Setlist* currentSetlist() const;
 
+protected:
+    void setupUi();
 
 private slots:
     void updateSetlistView();
 
 private:
     Ui::EventDatabaseWidget *ui;
+
+    EventTableViewContainer* m_tableViewContainer;
+    SetlistWidget* m_setlistWidget;
 };
 
 #endif // DATEDATABASEWIDGET_H

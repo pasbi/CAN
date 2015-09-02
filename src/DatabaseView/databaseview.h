@@ -44,9 +44,20 @@ public:
         });
     }
 
-    DatabaseSortProxy<T>* model() const
+    DatabaseSortProxy<T>* proxyModel() const
     {
-        return static_cast<DatabaseSortProxy<T>*>(QTableView::model());
+        return static_cast<DatabaseSortProxy<T>*>(DatabaseViewBase::model());
+    }
+
+    Database<T>* model() const
+    {
+        QAbstractItemModel* model = DatabaseViewBase::model();
+        while (model && model->inherits("QAbstractProxyModel"))
+        {
+            model = qobject_assert_cast<QAbstractProxyModel*>(model)->sourceModel();
+        }
+
+        return static_cast<Database<T>*>(model);
     }
 };
 

@@ -4,19 +4,24 @@
 #include "Project/project.h"
 #include "eventtableview.h"
 #include "Database/EventDatabase/eventdatabase.h"
+#include "setlistwidget.h"
 #include "setlistview.h"
 
 EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EventDatabaseWidget)
 {
+
+
+    setupUi();
+
     ui->setupUi(this);
-    ui->eventTableViewContainer->setModel( app().project()->eventDatabaseProxy() );
-    connect( ui->eventTableViewContainer->eventTableView()->selectionModel(),
+    m_tableViewContainer->setModel( app().project()->eventDatabaseProxy() );
+    connect( m_tableViewContainer->eventTableView()->selectionModel(),
              SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
              this,
              SLOT(updateSetlistView()) );
-    connect( ui->eventTableViewContainer->eventTableView()->model(), SIGNAL(modelReset()), this, SLOT(updateSetlistView()) );
+    connect( m_tableViewContainer->eventTableView()->model(), SIGNAL(modelReset()), this, SLOT(updateSetlistView()) );
 }
 
 EventDatabaseWidget::~EventDatabaseWidget()
@@ -24,16 +29,28 @@ EventDatabaseWidget::~EventDatabaseWidget()
     delete ui;
 }
 
+void EventDatabaseWidget::setupUi()
+{
+    QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
+    m_tableViewContainer = new EventTableViewContainer(this);   //TODO TableViewContainer<Event>
+    m_setlistWidget = new SetlistWidget(splitter);
+    splitter->addWidget(m_tableViewContainer);
+    splitter->addWidget(m_setlistWidget);
+    QHBoxLayout* layout = new QHBoxLayout(this);
+    layout->addWidget(splitter);
+    setLayout(layout);
+}
+
 Event* EventDatabaseWidget::currentEvent() const
 {
-    QModelIndexList rows = ui->eventTableViewContainer->eventTableView()->selectionModel()->selectedRows();
+    QModelIndexList rows = m_tableViewContainer->eventTableView()->selectionModel()->selectedRows();
     if (rows.isEmpty())
     {
         return NULL;
     }
     else
     {
-        return ui->eventTableViewContainer->eventTableView()->model()->resolveItemAtIndex( rows.first() );
+        return m_tableViewContainer->eventTableView()->model()->resolveItemAtIndex( rows.first() );
     }
 }
 
@@ -42,26 +59,26 @@ void EventDatabaseWidget::updateSetlistView()
     Event* e = currentEvent();
     if (e)
     {
-        ui->setlistWidget->setSetlist( e->setlist() );
+        m_setlistWidget->setSetlist( e->setlist() );
     }
     else
     {
-        ui->setlistWidget->setSetlist( NULL );
+        m_setlistWidget->setSetlist( NULL );
     }
 }
 
 SetlistView* EventDatabaseWidget::setlistView() const
 {
-    return ui->setlistWidget->listView();
+    return m_setlistWidget->listView();
 }
 
-EventTableView* EventDatabaseWidget::eventTableView() const
+DatabaseView<Event>* EventDatabaseWidget::databaseView() const
 {
-    return ui->eventTableViewContainer->eventTableView();
+    return m_tableViewContainer->eventTableView();
 }
 
 Setlist* EventDatabaseWidget::currentSetlist() const
 {
-    return ui->setlistWidget->listView()->model();
+    return m_setlistWidget->listView()->model();
 }
 

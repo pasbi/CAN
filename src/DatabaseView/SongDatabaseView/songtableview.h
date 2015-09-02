@@ -13,10 +13,6 @@ class SongTableView : public DatabaseView<Song>
 public:
     explicit SongTableView(QWidget *parent = 0);
 
-    void setModel(SongDatabaseSortProxy* model);
-    Database<Song> *model() const;
-    SongDatabaseSortProxy* proxyModel() const;
-
 protected:
     void keyPressEvent(QKeyEvent *event);
 

@@ -160,11 +160,11 @@ MainWindow::MainWindow(QWidget *parent) :
     initAction( actionEdit_Program,     ui->songDatabaseWidget->songTableView(),    tr("&Edit Program"),   tr("Edit program."),          "",         ui->menuSongs,  "" )
     initAction( actionEdit_Song_Tags,   ui->songDatabaseWidget->songTableView(),    tr("&Edit Tags"),      tr("Edit tags of the song."), "",         ui->menuSongs,  ":/icons/icons/tag-2.png" )
 
-    initAction( actionNew_Event,        ui->eventDatabaseWidget->eventTableView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
-    initAction( actionDelete_Event,     ui->eventDatabaseWidget->eventTableView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, ":/icons/icons/rubbish7.png" )
-    initAction( actionCopy_Event,       ui->eventDatabaseWidget->eventTableView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
-    initAction( actionPaste_Event,      ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
-    initAction( actionEdit_Event_Tags,  ui->eventDatabaseWidget->eventTableView(),  tr("&Edit Tags"),      tr("Edit tags of the event."),"",         ui->menuEvents, ":/icons/icons/tag-2.png" )
+    initAction( actionNew_Event,        ui->eventDatabaseWidget->databaseView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
+    initAction( actionDelete_Event,     ui->eventDatabaseWidget->databaseView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, ":/icons/icons/rubbish7.png" )
+    initAction( actionCopy_Event,       ui->eventDatabaseWidget->databaseView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
+    initAction( actionPaste_Event,      ui->eventDatabaseWidget->databaseView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
+    initAction( actionEdit_Event_Tags,  ui->eventDatabaseWidget->databaseView(),  tr("&Edit Tags"),      tr("Edit tags of the event."),"",         ui->menuEvents, ":/icons/icons/tag-2.png" )
 
     initAction( actionNew_SetlistItem,    ui->eventDatabaseWidget->setlistView(),   tr("&New Item"),       tr("Insert new item"),        "Ctrl+N",   NULL, "" )
     initAction( actionDelete_SetlistItem, ui->eventDatabaseWidget->setlistView(),   tr("&Remove Item"),    tr("Delete selected items"),  "Del",      NULL, "" )
@@ -204,7 +204,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //////////////////////////////////////////
     connect( &m_project, SIGNAL(canCloseChanged(bool)), this, SLOT(updateWindowTitle()) );
     updateWindowTitle();
-    connect( ui->eventDatabaseWidget->eventTableView(), SIGNAL(clicked()), this, SLOT(updateActionsEnabled()) );
+    connect( ui->eventDatabaseWidget->databaseView(), SIGNAL(clicked()), this, SLOT(updateActionsEnabled()) );
     connect( ui->eventDatabaseWidget->setlistView(),    SIGNAL(clicked()), this, SLOT(updateActionsEnabled()) );
     connect( ui->songDatabaseWidget->songTableView(),   SIGNAL(clicked()), this, SLOT(updateActionsEnabled()) );
     updateActionsEnabled();
@@ -1142,7 +1142,7 @@ void MainWindow::my_on_actionPaste_Song_triggered()
 
 void MainWindow::my_on_actionCopy_Event_triggered()
 {
-    QModelIndexList selectedSongs = ui->eventDatabaseWidget->eventTableView()->selectionModel()->selectedIndexes();
+    QModelIndexList selectedSongs = ui->eventDatabaseWidget->databaseView()->selectionModel()->selectedIndexes();
     app().clipboard()->setMimeData( m_project.eventDatabase()->mimeData( selectedSongs ) );
 }
 
@@ -1208,7 +1208,7 @@ void MainWindow::my_on_actionEdit_Song_Tags_triggered()
 
 void MainWindow::my_on_actionEdit_Event_Tags_triggered()
 {
-    EventTableView* eventTableView = ui->eventDatabaseWidget->eventTableView();
+    DatabaseView<Event>* eventTableView = ui->eventDatabaseWidget->databaseView();
     QModelIndexList list = eventTableView->selectionModel()->selectedIndexes();
     if (!list.isEmpty())
     {

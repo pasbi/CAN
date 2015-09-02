@@ -6,7 +6,8 @@
 
 #include "creatable.h"
 
-class SongDatabaseSortProxy;
+template<typename T> class DatabaseSortProxy;
+class Song;
 class CellEditor : public QWidget, public Creatable
 {
     Q_OBJECT
@@ -15,7 +16,7 @@ public:
 
     void setStyleOption( QStyleOptionViewItem option );
     void setIndex(const QModelIndex & index);
-    void setModel( SongDatabaseSortProxy* songDatabase );
+    void setModel(DatabaseSortProxy<Song> *songDatabase );
     void setCurrentData( const QVariant & data );
     QVariant currentData() const { return m_currentData; }
     virtual void polish() = 0;
@@ -24,14 +25,14 @@ public:
 protected:
     QStyleOptionViewItem styleOption() const { return m_styleOption; }
     QModelIndex index() const { return m_index; }
-    SongDatabaseSortProxy* model() const { return m_model; }
+    DatabaseSortProxy<Song>* model() const { return m_model; }
     void setSolitaryWidget(QWidget* widget);
     bool eventFilter(QObject *, QEvent *);
 
 private:
     QStyleOptionViewItem m_styleOption;
     QModelIndex m_index;
-    SongDatabaseSortProxy* m_model;
+    DatabaseSortProxy<Song>* m_model;
     QVariant m_currentData;
     QWidget* m_solitaryWidget = 0;
 
