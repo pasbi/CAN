@@ -68,7 +68,7 @@ void SetlistView::setModel(Setlist *setlist)
         connect( setlist, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(modelReset()),                                     this, SLOT(updateCellWidgets()) );
-        connect( model(), SIGNAL(selectionRequest(QModelIndexList)),                this, SLOT(select(QModelIndexList)) );
+        connect( setlist, SIGNAL(selectionRequest(QModelIndexList)),                this, SLOT(select(QModelIndexList)) );
         updateCellWidgets();
         horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );
         horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Fixed );
@@ -214,7 +214,7 @@ void SetlistView::updateCellWidgets()
             switch (item->type())
             {
             case SetlistItem::LabelType:
-                setSpan(i, 0, 1, colorCount()); // there is no widget, so we don't need this column here.
+                setSpan(i, 0, 1, model()->columnCount()); // there is no widget, so we don't need this column here.
                 break;
             case SetlistItem::SongType:
                 setIndexWidget( index, createSongCellWidget(item->song()) );
