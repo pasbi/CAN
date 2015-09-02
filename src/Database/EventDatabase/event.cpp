@@ -113,8 +113,10 @@ QString Event::typeName(Type type)
     return TYPES[(int) type];
 }
 
-
-
+QStringList Event::textAttributes() const
+{
+    return QStringList( { label(), notices() } );
+}
 
 
 

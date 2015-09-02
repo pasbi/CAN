@@ -48,6 +48,8 @@ public:
     const Setlist* setlist() const { return m_setlist; }
     Setlist* setlist() { return m_setlist; }
 
+    QStringList textAttributes() const;
+
 private:
     TimeSpan m_timeSpan;
     Type m_type;

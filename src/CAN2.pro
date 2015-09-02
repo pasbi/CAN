@@ -153,7 +153,8 @@ SOURCES += main.cpp\
     Commands/timerdecorator.cpp \
     Attachments/AudioAttachment/section.cpp \
     Program/midicommand.cpp \
-    DatabaseView/databaseview.cpp
+    DatabaseView/databaseview.cpp \
+    Database/databasesortproxy.cpp
 
 
 HEADERS  += mainwindow.h \

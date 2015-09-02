@@ -29,6 +29,8 @@ public:
         return copy;
     }
 
+    virtual QStringList textAttributes() const = 0;
+
 private:
     Database<T>* m_database;
 };

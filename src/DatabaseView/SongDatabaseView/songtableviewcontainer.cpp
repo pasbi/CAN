@@ -28,7 +28,7 @@ SongTableView* SongTableViewContainer::songTableView() const
 void SongTableViewContainer::setModel(SongDatabaseSortProxy *model)
 {
     ui->tableView->setModel(model);
-    connect(ui->filterWidget, SIGNAL(filterChanged(QString)), model, SLOT(setFilterWildcard(QString)));
+    connect(ui->filterWidget, SIGNAL(filterChanged(QString)), model, SLOT(setFilter(QString)));
 }
 
 Song* SongTableViewContainer::currentSong() const

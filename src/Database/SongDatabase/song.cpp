@@ -182,6 +182,11 @@ void Song::setDuration(const QTime& duration)
     }
 }
 
+QStringList Song::textAttributes() const
+{
+    return QStringList( { artist(), title() } );
+}
+
 
 
 

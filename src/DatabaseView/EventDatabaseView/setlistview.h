@@ -24,19 +24,10 @@ public slots:
     void setFilterTag( const QString& tag );
 
 
-signals:
-    void mousePress();
-
-protected:
-    void mousePressEvent(QMouseEvent *event);
-
 private slots:
-    void showContextMenu(QPoint pos);
     void updateCellWidgets();
 
 private:
-    void setUpContextMenu(QMenu* menu, QPoint pos);
-
     QString m_filterTag;
 
     bool attachmentIsIgnored( const Attachment* attachment ) const;

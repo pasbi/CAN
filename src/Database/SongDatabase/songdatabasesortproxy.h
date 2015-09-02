@@ -10,7 +10,7 @@ class SongDatabaseSortProxy : public DatabaseSortProxy<Song>
 public:
     explicit SongDatabaseSortProxy(QObject* parent = 0);
 
-protected:
+private:
     bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const;
 
 };

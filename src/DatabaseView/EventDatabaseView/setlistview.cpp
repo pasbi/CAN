@@ -45,12 +45,6 @@ SetlistView::~SetlistView()
 {
 }
 
-void SetlistView::mousePressEvent(QMouseEvent *event)
-{
-    DatabaseView::mousePressEvent( event );
-    emit mousePress();
-}
-
 void SetlistView::setModel(Setlist *setlist)
 {
     if (model())
@@ -81,26 +75,6 @@ Setlist* SetlistView::model() const
     return qobject_assert_cast<Setlist*>( QTableView::model() );
 }
 
-void SetlistView::showContextMenu(QPoint pos)
-{
-    QMenu* menu = new QMenu( this );
-    setUpContextMenu(menu, pos);
-    menu->popup(viewport()->mapToGlobal(pos));
-    connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
-}
-
-void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
-{
-    Q_UNUSED( pos );
-    bool selectionIsEmpty = selectionModel()->selectedRows().isEmpty();
-
-    //TODO refactor this stuff. Think about outsoursing this with EventDatabaseView and SongDatabaseView in a common super class
-    menu->addActions( actions() );
-    actions()[0]->setEnabled( !!model() );                           // new item
-    actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
-    actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
-    actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( DatabaseMimeData<SetlistItem>::mimeType() ) );     // paste items
-}
 
 QList<SetlistItem*> SetlistView::selectedItems() const
 {
@@ -151,7 +125,7 @@ bool SetlistView::attachmentIsIgnored( const Attachment* attachment ) const
 
 QWidget* SetlistView::createSongCellWidget(const Song* song)
 {
-    QToolButton* button = new QToolButton();
+    QToolButton* button = new QToolButton();    // will be owned by calling method
     button->setIcon( QIcon(":/icons/icons/eye106.png") );
     QMenu* menu = new QMenu( button );
     button->setMenu( menu );

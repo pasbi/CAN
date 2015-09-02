@@ -1,5 +1,6 @@
 #include "songdatabasesortproxy.h"
 
+
 SongDatabaseSortProxy::SongDatabaseSortProxy(QObject *parent) :
     DatabaseSortProxy<Song>(parent)
 {

@@ -138,3 +138,8 @@ bool SetlistItem::restoreFromJsonObject(const QJsonObject & object)
     return false;
 }
 
+QStringList SetlistItem::textAttributes() const
+{
+    return QStringList( { label() } );
+}
+

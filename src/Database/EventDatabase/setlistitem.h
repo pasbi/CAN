@@ -24,6 +24,8 @@ public:
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject &object);
 
+    QStringList textAttributes() const;
+
 private:
     Type m_type;
     void setSong(const Song *song);

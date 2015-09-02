@@ -27,7 +27,7 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->listView, SIGNAL(mousePress()), this, SLOT(updateButtonsEnabled()) );
+    connect(ui->listView, SIGNAL(clicked()), this, SLOT(updateButtonsEnabled()) );
     setSetlist( NULL );
 
     m_attentionPixmap = QPixmap::fromImage(QImage(":/icons/icons/lightbulb20.png")).scaledToWidth( 32, Qt::SmoothTransformation );

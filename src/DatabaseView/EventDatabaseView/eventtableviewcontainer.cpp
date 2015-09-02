@@ -24,7 +24,7 @@ EventTableView* EventTableViewContainer::eventTableView() const
 void EventTableViewContainer::setModel(EventDatabaseSortProxy *model )
 {
     ui->tableView->setModel( model );
-    connect(ui->filterWidget, SIGNAL(filterChanged(QString)), model, SLOT(setFilterWildcard(QString)));
+    connect(ui->filterWidget, SIGNAL(filterChanged(QString)), model, SLOT(setFilter(QString)));
 }
 
 Event* EventTableViewContainer::currentEvent() const

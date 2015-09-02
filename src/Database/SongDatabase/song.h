@@ -41,6 +41,8 @@ public:
     QString description() const { return title(); }
     QDateTime creationTime() const { return m_creationDateTime; }
 
+    QStringList textAttributes() const;
+
 
     /////////////////////////////////////////////////
     ////
