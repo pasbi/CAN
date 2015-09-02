@@ -33,7 +33,7 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case Qt::DisplayRole:
-            return Event::typeName( m_items[row]->type()  );
+            return Event::typeName( m_items[row]->type() );
         case Qt::EditRole:
             return (int) m_items[row]->type();
         default:

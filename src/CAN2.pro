@@ -153,8 +153,7 @@ SOURCES += main.cpp\
     Commands/timerdecorator.cpp \
     Attachments/AudioAttachment/section.cpp \
     Program/midicommand.cpp \
-    DatabaseView/ItemDelegates/typecomboboxdelegate.cpp \
-    DatabaseView/ItemDelegates/lineeditdelegate.cpp
+    DatabaseView/databaseview.cpp
 
 
 HEADERS  += mainwindow.h \

@@ -32,11 +32,13 @@ SetlistItemSelector::~SetlistItemSelector()
 void SetlistItemSelector::showEvent(QShowEvent *e)
 {
     restoreGeometry( QSettings().value("SetlistItemSelector_Geometry").toByteArray() );
+    app().project()->setCommandFocalizesAffiliatedView( false );
     QDialog::showEvent(e);
 }
 
 void SetlistItemSelector::hideEvent(QHideEvent *e)
 {
     QSettings().setValue( "SetlistItemSelector_Geometry", saveGeometry() );
+    app().project()->setCommandFocalizesAffiliatedView( true );
     QDialog::hideEvent(e);
 }

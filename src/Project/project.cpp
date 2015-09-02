@@ -28,6 +28,11 @@ Project::~Project()
     delete m_eventDatabase;
 }
 
+void Project::setCommandFocalizesAffiliatedView(bool on)
+{
+    m_commandFocalizesAffiliatedView = on;
+}
+
 void Project::setCanClose(bool b)
 {
     if (m_canClose != b)
@@ -82,15 +87,21 @@ QList<File> Project::getFiles() const
     return files;
 }
 
-void emitCommandPushedSignal(Command::Type type, Project* project)
+void emitCommandPushedSignal(Command::Type type, Project* project, bool commandFocalizesAffiliatedView)
 {
     switch (type)
     {
     case Command::SongDatabaseRelated:
-        emit project->songDatabaseCommandPushed();
+        if (commandFocalizesAffiliatedView)
+        {
+            emit project->songDatabaseCommandPushed();
+        }
         break;
     case Command::EventDatabaseRelated:
-        emit project->eventDatabaseCommandPushed();
+        if (commandFocalizesAffiliatedView)
+        {
+            emit project->eventDatabaseCommandPushed();
+        }
         break;
     case Command::Other:
         ;
@@ -105,7 +116,7 @@ void Project::pushCommand(Command *command)
     if (command)
     {
         QUndoStack::push(command);
-        emitCommandPushedSignal( command->type(), this );
+        emitCommandPushedSignal( command->type(), this, m_commandFocalizesAffiliatedView );
     }
 
 }
@@ -118,7 +129,7 @@ void Project::undo()
 
     if (c)  // cast may fail (e.g. macro command)
     {
-        emitCommandPushedSignal( c->type(), this );
+        emitCommandPushedSignal( c->type(), this, true );
     }
 
     setCanClose( false );
@@ -133,7 +144,7 @@ void Project::redo()
 
     if (c)  // cast may fail (e.g. command-macro)
     {
-        emitCommandPushedSignal( c->type(), this );
+        emitCommandPushedSignal( c->type(), this, true );
     }
 
     setCanClose( false );

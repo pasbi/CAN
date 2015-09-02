@@ -7,12 +7,22 @@
 #include "Database/databasesortproxy.h"
 #include "global.h"
 
+class DatabaseViewBase : public QTableView
+{
+    Q_OBJECT
+protected:
+    DatabaseViewBase(QWidget* parent = 0);
+    void mousePressEvent(QMouseEvent *event);
+signals:
+    void clicked();
+};
+
 template<typename T>
-class DatabaseView : public QTableView
+class DatabaseView : public DatabaseViewBase
 {
 public:
     explicit DatabaseView(QWidget *parent = 0) :
-        QTableView(parent)
+        DatabaseViewBase(parent)
     {
         setContextMenuPolicy(Qt::ActionsContextMenu);
         setAlternatingRowColors( true );

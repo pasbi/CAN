@@ -91,6 +91,8 @@ private slots:
     void on_actionSettings_triggered();
     void on_action_Index_Info_triggered();
 
+
+    // my auto-connection slots
     void my_on_actionNew_Song_triggered();
     void my_on_actionDelete_Song_triggered();
     void my_on_actionCopy_Song_triggered();
@@ -103,6 +105,11 @@ private slots:
     void my_on_actionCopy_Event_triggered();
     void my_on_actionPaste_Event_triggered();
     void my_on_actionEdit_Event_Tags_triggered();
+
+    void my_on_actionNew_SetlistItem_triggered();
+    void my_on_actionDelete_SetlistItem_triggered();
+    void my_on_actionCopy_SetlistItem_triggered();
+    void my_on_actionPaste_SetlistItem_triggered();
 
     void createAttributeVisibilityMenu();
     void createLanguageMenu();
@@ -136,6 +143,11 @@ private:
     QAction* m_actionCopy_Event;
     QAction* m_actionPaste_Event;
     QAction* m_actionEdit_Event_Tags;
+
+    QAction* m_actionNew_SetlistItem;
+    QAction* m_actionDelete_SetlistItem;
+    QAction* m_actionCopy_SetlistItem;
+    QAction* m_actionPaste_SetlistItem;
 
     void askForSync();
 

@@ -23,7 +23,7 @@
 
 
 SetlistView::SetlistView(QWidget *parent) :
-    QTableView(parent)
+    DatabaseView<SetlistItem>(parent)
 {
     setAcceptDrops(true);
     setDropIndicatorShown( false );
@@ -38,13 +38,7 @@ SetlistView::SetlistView(QWidget *parent) :
     setEditTriggers( QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed );
     setItemDelegateForColumn( 0, new LineEditDelegate<SetlistItem>(this) );
 
-    setContextMenuPolicy( Qt::CustomContextMenu );
-    connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-
-    initAction( actionNewSetlistItem,    this, tr("&New Item"),       tr("Insert new item"),        "Ctrl+N",   NULL, "" )
-    initAction( actionDeleteSetlistItem, this, tr("&Remove Item"),    tr("Delete selected items"),  "Del",      NULL, "" )
-    initAction( actionCopySetlistItem,   this, tr("&Copy Items"),     tr("Copy selected items"),    "Ctrl+C",   NULL, "" )
-    initAction( actionPasteSetlistItem,  this, tr("&Paste Items"),    tr("Paste items"),            "Ctrl+V",   NULL, "" )
+    setContextMenuPolicy( Qt::ActionsContextMenu );
 }
 
 SetlistView::~SetlistView()
@@ -53,7 +47,7 @@ SetlistView::~SetlistView()
 
 void SetlistView::mousePressEvent(QMouseEvent *event)
 {
-    QTableView::mousePressEvent( event );
+    DatabaseView::mousePressEvent( event );
     emit mousePress();
 }
 
@@ -106,51 +100,6 @@ void SetlistView::setUpContextMenu(QMenu *menu, QPoint pos)
     actions()[1]->setEnabled( !!model() && !selectionIsEmpty );      // remove item
     actions()[2]->setEnabled( !!model() && !selectionIsEmpty );      // copy items
     actions()[3]->setEnabled( !!model() && app().clipboard()->mimeData()->formats().contains( DatabaseMimeData<SetlistItem>::mimeType() ) );     // paste items
-}
-
-void SetlistView::my_on_actionNewSetlistItem_triggered()
-{
-    if (model())
-    {
-        app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( model(), new SetlistItem(model()) ) );
-    }
-}
-
-void SetlistView::my_on_actionDeleteSetlistItem_triggered()
-{
-    QList<SetlistItem*> si = selectedItems();
-    if (model() && !si.isEmpty())
-    {
-        app().project()->beginMacro( tr("Remove Setlist Items"));
-        for (SetlistItem* i : si)
-        {
-            app().pushCommand( new DatabaseRemoveItemCommand<SetlistItem>( model(), i ) );
-        }
-        app().project()->endMacro();
-    }
-}
-
-void SetlistView::my_on_actionCopySetlistItem_triggered()
-{
-    QModelIndexList selection;
-    if (selectionModel())
-    {
-        selection = selectionModel()->selectedRows();
-    }
-    app().clipboard()->setMimeData( model()->mimeData( selection ) );
-}
-
-void SetlistView::my_on_actionPasteSetlistItem_triggered()
-{
-    if (model())
-    {
-        int row = model()->rowCount();
-        if (!selectedIndexes().isEmpty())
-        {
-            row = selectedIndexes().last().row() + 1;
-        }
-        model()->dropMimeData(app().clipboard()->mimeData(), Qt::CopyAction, row, 0, QModelIndex());
-    }
 }
 
 QList<SetlistItem*> SetlistView::selectedItems() const
@@ -254,6 +203,7 @@ void SetlistView::updateCellWidgets()
         return;
     }
 
+    clearSpans();
     for (int i = 0; i < model()->rowCount(); ++i)
     {
         QModelIndex index = model()->index( i, 1 );
@@ -267,7 +217,6 @@ void SetlistView::updateCellWidgets()
                 setSpan(i, 0, 1, colorCount()); // there is no widget, so we don't need this column here.
                 break;
             case SetlistItem::SongType:
-                setSpan(i, 0, 1, 1);
                 setIndexWidget( index, createSongCellWidget(item->song()) );
                 break;
             }

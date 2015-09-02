@@ -45,6 +45,7 @@
 #include "Project/identity.h"
 #include "PDFCreator/orphantsetlist.h"
 #include "PDFCreator/pdfcreator.h"
+#include "DatabaseView/EventDatabaseView/setlistview.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -165,6 +166,11 @@ MainWindow::MainWindow(QWidget *parent) :
     initAction( actionPaste_Event,      ui->eventDatabaseWidget->eventTableView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
     initAction( actionEdit_Event_Tags,  ui->eventDatabaseWidget->eventTableView(),  tr("&Edit Tags"),      tr("Edit tags of the event."),"",         ui->menuEvents, ":/icons/icons/tag-2.png" )
 
+    initAction( actionNew_SetlistItem,    ui->eventDatabaseWidget->setlistView(),   tr("&New Item"),       tr("Insert new item"),        "Ctrl+N",   NULL, "" )
+    initAction( actionDelete_SetlistItem, ui->eventDatabaseWidget->setlistView(),   tr("&Remove Item"),    tr("Delete selected items"),  "Del",      NULL, "" )
+    initAction( actionCopy_SetlistItem,   ui->eventDatabaseWidget->setlistView(),   tr("&Copy Items"),     tr("Copy selected items"),    "Ctrl+C",   NULL, "" )
+    initAction( actionPaste_SetlistItem,  ui->eventDatabaseWidget->setlistView(),   tr("&Paste Items"),    tr("Paste items"),            "Ctrl+V",   NULL, "" )
+
 
     //////////////////////////////////////////
     /// Splitter
@@ -198,16 +204,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //////////////////////////////////////////
     connect( &m_project, SIGNAL(canCloseChanged(bool)), this, SLOT(updateWindowTitle()) );
     updateWindowTitle();
-    connect( ui->songDatabaseWidget->songTableView()->selectionModel(),
-             &QItemSelectionModel::currentRowChanged,
-             [this](){
-        QTimer::singleShot(0, this, SLOT( updateActionsEnabled() ));
-    });
-    connect( ui->eventDatabaseWidget->eventTableView()->selectionModel(),
-             &QItemSelectionModel::currentRowChanged,
-             [this](){
-        QTimer::singleShot(0, this, SLOT( updateActionsEnabled() ));
-    });
+    connect( ui->eventDatabaseWidget->eventTableView(), SIGNAL(clicked()), this, SLOT(updateActionsEnabled()) );
+    connect( ui->eventDatabaseWidget->setlistView(),    SIGNAL(clicked()), this, SLOT(updateActionsEnabled()) );
+    connect( ui->songDatabaseWidget->songTableView(),   SIGNAL(clicked()), this, SLOT(updateActionsEnabled()) );
     updateActionsEnabled();
 
     loadDefaultProject();
@@ -216,13 +215,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
-
     connect( ui->menuVisible_attributes, SIGNAL(aboutToShow()), this, SLOT(createAttributeVisibilityMenu() ));
-
     connect( m_project.songDatabase(), SIGNAL(songRemoved(int)), ui->songDatabaseWidget, SLOT(updateAttachmentChooser()) );
-
     connect( ui->menu_Language, SIGNAL(aboutToShow()), this, SLOT( createLanguageMenu() ));
-
 
     //////////////////////////////////////////
     ///
@@ -517,23 +512,41 @@ void MainWindow::updateActionsEnabled()
     bool event = !!currentEvent();
     bool attachment = !!currentAttachment();
     bool git = app().project()->isGitRepository();
+    bool setlist = !ui->eventDatabaseWidget->setlistView()->selectionModel()->selectedRows().isEmpty();
 
-    QObjectList attachmentObjects, songObects, gitObjects, eventObjects;
+    QList<QAction*> attachmentActions, songActions, gitActions, eventActions, setlistActions;
 
     for (QAction* action : m_newAttachmentActions)
     {
-        songObects << action;
+        songActions << action;
     }
 
-    gitObjects          << ui->actionSync;
-    attachmentObjects   << ui->actionDuplicate_Attachment << ui->actionRename_Attachment << ui->actionDelete_Attachment;
-    songObects << m_actionDelete_Song << m_actionCopy_Song << m_actionEdit_Program << m_actionEdit_Song_Tags;
-    eventObjects << m_actionDelete_Event << m_actionCopy_Event << m_actionEdit_Event_Tags;
+    gitActions          << ui->actionSync;
+    attachmentActions   << ui->actionDuplicate_Attachment << ui->actionRename_Attachment << ui->actionDelete_Attachment;
+    songActions         << m_actionDelete_Song << m_actionCopy_Song << m_actionEdit_Program << m_actionEdit_Song_Tags;
+    eventActions        << m_actionDelete_Event << m_actionCopy_Event << m_actionEdit_Event_Tags;
+    setlistActions      << m_actionDelete_SetlistItem << m_actionCopy_SetlistItem;
 
-    for (QObject* o : eventObjects )        ::setEnabled( o, event       );
-    for (QObject* o : songObects )          ::setEnabled( o, song        );
-    for (QObject* o : attachmentObjects)    ::setEnabled( o, attachment  );
-    for (QObject* o : gitObjects)           ::setEnabled( o, git         );
+    for (QAction* o : eventActions )
+    {
+        o->setEnabled(event);
+    }
+    for (QAction* o : songActions )
+    {
+        o->setEnabled(song);
+    }
+    for (QAction* o : attachmentActions )
+    {
+        o->setEnabled(attachment);
+    }
+    for (QAction* o : gitActions )
+    {
+        o->setEnabled(git);
+    }
+    for (QAction* o : setlistActions )
+    {
+        o->setEnabled(setlist);
+    }
 
     bool chordPatternProxyAttachmentEnabled = false;
     if (currentAttachment() && currentAttachment()->inherits( "ChordPatternAttachment" ))
@@ -541,6 +554,13 @@ void MainWindow::updateActionsEnabled()
         chordPatternProxyAttachmentEnabled = true;
     }
     m_newAttachmentActions["ChordPatternProxyAttachment"]->setEnabled( chordPatternProxyAttachmentEnabled );
+
+    {
+        const QMimeData* clipboard = app().clipboard()->mimeData();
+        m_actionPaste_Event->setEnabled( clipboard->hasFormat(DatabaseMimeData<Event>::mimeType()) );
+        m_actionPaste_SetlistItem->setEnabled( clipboard->hasFormat(DatabaseMimeData<SetlistItem>::mimeType())) ;
+        m_actionPaste_Song->setEnabled( clipboard->hasFormat(DatabaseMimeData<Song>::mimeType()) );
+    }
 }
 
 MainWindow::Page MainWindow::currentPage() const
@@ -566,17 +586,6 @@ void MainWindow::gotoEventView()
 {
     selectPage( EventDatabasePage );
 }
-
-
-
-
-
-
-
-
-
-
-
 
 ////////////////////////////////////////////////
 ////
@@ -1358,6 +1367,54 @@ void MainWindow::createDebugMenu()
         QProcess::startDetached( "gnome-terminal", QStringList(), m_project.path() );
     });
 #endif
+}
+
+void MainWindow::my_on_actionNew_SetlistItem_triggered()
+{
+    if (currentEvent())
+    {
+        Setlist* setlist = currentEvent()->setlist();
+        app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( setlist, new SetlistItem(setlist) ) );
+    }
+}
+
+void MainWindow::my_on_actionDelete_SetlistItem_triggered()
+{
+    QList<SetlistItem*> si = ui->eventDatabaseWidget->setlistView()->selectedItems();
+    if (currentEvent() && !si.isEmpty())
+    {
+        Setlist* setlist = currentEvent()->setlist();
+        app().project()->beginMacro( tr("Remove Setlist Items"));
+        for (SetlistItem* i : si)
+        {
+            app().pushCommand( new DatabaseRemoveItemCommand<SetlistItem>( setlist, i ) );
+        }
+        app().project()->endMacro();
+    }
+}
+
+void MainWindow::my_on_actionCopy_SetlistItem_triggered()
+{
+    if (currentEvent())
+    {
+        QModelIndexList selection = ui->eventDatabaseWidget->setlistView()->selectionModel()->selectedRows();
+        app().clipboard()->setMimeData( currentEvent()->setlist()->mimeData( selection ) );
+    }
+}
+
+void MainWindow::my_on_actionPaste_SetlistItem_triggered()
+{
+    if (currentEvent())
+    {
+        Setlist* setlist = currentEvent()->setlist();
+        int row = setlist->rowCount();
+        QModelIndexList selection = ui->eventDatabaseWidget->setlistView()->selectionModel()->selectedRows();
+        if (!selection.isEmpty())
+        {
+            row = selection.last().row() + 1;
+        }
+        setlist->dropMimeData(app().clipboard()->mimeData(), Qt::CopyAction, row, 0, QModelIndex());
+    }
 }
 
 

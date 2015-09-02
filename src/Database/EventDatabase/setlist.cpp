@@ -192,6 +192,7 @@ QMimeData* Setlist::mimeData(const QModelIndexList &indexes) const
     return mime;
 }
 
+//TODO can we copy paste items between setlist?
 bool Setlist::dropSongs(const DatabaseMimeData<Song>* songData, int targetRow, QModelIndexList& indexes)
 {
     if (songData->indexedItems().count() > 0)
@@ -201,7 +202,7 @@ bool Setlist::dropSongs(const DatabaseMimeData<Song>* songData, int targetRow, Q
         for (DatabaseMimeData<Song>::IndexedItem item : songData->indexedItems())
         {
             // create a new setlist item and link `song` with it
-            SetlistItem* newItem = new SetlistItem( this, item.item->copy());
+            SetlistItem* newItem = new SetlistItem( this, item.item );
             app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ) );
             indexes << index(rowOf(newItem), 0);
             i++;

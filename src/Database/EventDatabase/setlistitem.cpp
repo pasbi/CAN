@@ -10,6 +10,7 @@ SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString & label )
     m_type( LabelType ),
     m_label( label )
 {
+    qDebug() << "ctor 1";
 }
 
 SetlistItem::SetlistItem( Database<SetlistItem>* setlist ) :
@@ -17,19 +18,15 @@ SetlistItem::SetlistItem( Database<SetlistItem>* setlist ) :
     m_type( LabelType ),
     m_label( QObject::tr("Unnamed") )
 {
+    qDebug() << "ctor 2";
 }
 
 SetlistItem::SetlistItem( Database<SetlistItem>* setlist, const Song* song ) :
     DatabaseItem(setlist),
-    m_type( SongType ),
-    m_song( song )
+    m_type( SongType )
 {
-    QObject::connect(song, &Song::attributeChanged, [song, this]()
-    {
-        int row = database()->rowOf(this);
-        QModelIndex index = database()->index(row, 0);
-        emit database()->dataChanged(index, index);
-    });
+    qDebug() << "ctor 3";
+    setSong(song);
 }
 
 SetlistItem::~SetlistItem()
@@ -38,6 +35,19 @@ SetlistItem::~SetlistItem()
     {
         m_song->disconnect(database());
     }
+}
+
+void SetlistItem::setSong(const Song *song)
+{
+    assert(!m_song);
+    m_song = song;
+
+    QObject::connect(song, &Song::attributeChanged, [song, this]()
+    {
+        int row = database()->rowOf(this);
+        QModelIndex index = database()->index(row, 0);
+        emit database()->dataChanged(index, index);
+    });
 }
 
 QString SetlistItem::label() const
@@ -91,11 +101,13 @@ bool SetlistItem::restoreFromJsonObject(const QJsonObject & object)
     {
         return false;
     }
-    switch ((Type) object["type"].toInt())
+    switch (static_cast<Type>(object["type"].toInt()))
     {
     case SongType:
+        qDebug() << "song type";
         if (!checkJsonObject(object, "SongID", QJsonValue::String))
         {
+            qWarning() << "Did not found SongID";
             return false;
         }
         else
@@ -103,21 +115,29 @@ bool SetlistItem::restoreFromJsonObject(const QJsonObject & object)
             Song* song = app().project()->songDatabase()->song( object["SongID"].toString() );
             if (song)
             {
-                m_song = song;
+                m_type = SongType;
+                setSong(song);
+                return true;
             }
             else
             {
+                qWarning() << "Failed to resolve song";
                 return false;
             }
         }
+        break;
     case LabelType:
+        qDebug() << "restore LabelType";
         if (!checkJsonObject(object, "Label", QJsonValue::String))
         {
+            qWarning() << "Did not found label";
             return false;
         }
         else
         {
+            m_type = LabelType;
             m_label = object["Label"].toString();
+            return true;
         }
     }
     return false;

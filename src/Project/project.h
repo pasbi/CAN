@@ -24,6 +24,7 @@ public:
     SongDatabaseSortProxy* songDatabaseProxy() const { return m_songDatabaseProxy; }
     EventDatabase* eventDatabase() const { return m_eventDatabase; }
     EventDatabaseSortProxy* eventDatabaseProxy() const { return m_eventDatabaseProxy; }
+    void setCommandFocalizesAffiliatedView(bool on);
 
 public slots:
     void pushCommand(Command* command);
@@ -48,6 +49,9 @@ private:
     EventDatabase* m_eventDatabase;
     SongDatabaseSortProxy* m_songDatabaseProxy;
     EventDatabaseSortProxy* m_eventDatabaseProxy;
+    bool m_canClose = true;
+    bool m_isSynchronized = false;
+    bool m_commandFocalizesAffiliatedView;
 
 public:
     bool canClose() const;
@@ -55,12 +59,6 @@ public:
     void setIsSynchronized();
     void markFileRemoved( const QString& filename );
     void setCanClose( bool b );
-
-private:
-    bool m_canClose = true;
-    bool m_isSynchronized = false;
-
-
 };
 
 #endif // PROJECT_H

@@ -26,6 +26,7 @@ public:
 
 private:
     Type m_type;
+    void setSong(const Song *song);
     const Song* m_song = NULL;
     QString m_label;
 };

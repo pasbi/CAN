@@ -1,13 +1,13 @@
 #ifndef SETLISTVIEW_H
 #define SETLISTVIEW_H
 
-#include <QTableView>
+#include "DatabaseView/databaseview.h"
 
 class Attachment;
 class Setlist;
 class SetlistItem;
 class Song;
-class SetlistView : public QTableView
+class SetlistView : public DatabaseView<SetlistItem>
 {
     Q_OBJECT
 public:
@@ -32,19 +32,10 @@ protected:
 
 private slots:
     void showContextMenu(QPoint pos);
-
-    void my_on_actionNewSetlistItem_triggered();
-    void my_on_actionDeleteSetlistItem_triggered();
-    void my_on_actionCopySetlistItem_triggered();
-    void my_on_actionPasteSetlistItem_triggered();
     void updateCellWidgets();
 
 private:
     void setUpContextMenu(QMenu* menu, QPoint pos);
-    QAction* m_actionNewSetlistItem;
-    QAction* m_actionDeleteSetlistItem;
-    QAction* m_actionCopySetlistItem;
-    QAction* m_actionPasteSetlistItem;
 
     QString m_filterTag;
 
