@@ -36,6 +36,9 @@ public:
 
     SongTableView* songTableView();
 
+public slots:
+    void updateActionsEnabled();
+
 private slots:
     void resizeSplitter();  // left column should be as small as possible.
     void on_actionUndo_triggered();
@@ -81,7 +84,6 @@ private slots:
     void on_actionClear_Index_triggered();
     void on_actionRename_Attachment_triggered();
     void on_actionDuplicate_Attachment_triggered();
-    void updateWhichWidgetsAreEnabled();
     void on_actionOpen_Terminal_here_triggered();
     void on_actionClone_triggered();
     void on_actionSync_triggered();

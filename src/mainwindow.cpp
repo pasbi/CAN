@@ -201,14 +201,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( ui->songDatabaseWidget->songTableView()->selectionModel(),
              &QItemSelectionModel::currentRowChanged,
              [this](){
-        QTimer::singleShot(0, this, SLOT( updateWhichWidgetsAreEnabled() ));
+        QTimer::singleShot(0, this, SLOT( updateActionsEnabled() ));
     });
     connect( ui->eventDatabaseWidget->eventTableView()->selectionModel(),
              &QItemSelectionModel::currentRowChanged,
              [this](){
-        QTimer::singleShot(0, this, SLOT( updateWhichWidgetsAreEnabled() ));
+        QTimer::singleShot(0, this, SLOT( updateActionsEnabled() ));
     });
-    updateWhichWidgetsAreEnabled();
+    updateActionsEnabled();
 
     loadDefaultProject();
 
@@ -303,7 +303,7 @@ void MainWindow::createAttachmentActions()
             {
                 SongNewAttachmentCommand* command = new SongNewAttachmentCommand( song, Creatable::create<Attachment>(classname) );
                 app().pushCommand( command );
-                updateWhichWidgetsAreEnabled();
+                updateActionsEnabled();
             }
         });
         m_newAttachmentActions.insert( classname, action );
@@ -511,7 +511,7 @@ void setEnabled( QObject* o, bool enable )
     if (w) w->setEnabled(enable);
 }
 
-void MainWindow::updateWhichWidgetsAreEnabled()
+void MainWindow::updateActionsEnabled()
 {
     bool song = !!currentSong();
     bool event = !!currentEvent();
@@ -520,15 +520,14 @@ void MainWindow::updateWhichWidgetsAreEnabled()
 
     QObjectList attachmentObjects, songObects, gitObjects, eventObjects;
 
+    qDebug() << (song?"enable":"disable") << "actions";
     for (QAction* action : m_newAttachmentActions)
     {
         songObects << action;
     }
 
-    attachmentObjects   << ui->actionDelete_Attachment;
     gitObjects          << ui->actionSync;
-    attachmentObjects   << ui->actionRename_Attachment;
-    attachmentObjects   << ui->actionDuplicate_Attachment;
+    attachmentObjects   << ui->actionDuplicate_Attachment << ui->actionRename_Attachment << ui->actionDelete_Attachment;
     songObects << m_actionDelete_Song << m_actionCopy_Song << m_actionEdit_Program << m_actionEdit_Song_Tags;
     eventObjects << m_actionDelete_Event << m_actionCopy_Event << m_actionEdit_Event_Tags;
 
@@ -590,19 +589,19 @@ void MainWindow::gotoEventView()
 void MainWindow::my_on_actionNew_Song_triggered()
 {
     app().pushCommand( new DatabaseNewItemCommand<Song>( m_project.songDatabase(), new Song(m_project.songDatabase()) ) );
-    updateWhichWidgetsAreEnabled();
+    updateActionsEnabled();
 }
 
 void MainWindow::on_actionUndo_triggered()
 {
     m_project.undo();
-    updateWhichWidgetsAreEnabled();
+    updateActionsEnabled();
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
     m_project.redo();
-    updateWhichWidgetsAreEnabled();
+    updateActionsEnabled();
 }
 
 void MainWindow::on_actionDelete_Attachment_triggered()
@@ -613,26 +612,26 @@ void MainWindow::on_actionDelete_Attachment_triggered()
     if (song && index >= 0)
     {
         app().pushCommand( new SongRemoveAttachmentCommand( song, index ) );
-        updateWhichWidgetsAreEnabled();
+        updateActionsEnabled();
     }
 }
 
 void MainWindow::on_actionNew_Project_triggered()
 {
     newProject();
-    updateWhichWidgetsAreEnabled();
+    updateActionsEnabled();
 }
 
 void MainWindow::on_actionSave_triggered()
 {
     saveProject();
-    updateWhichWidgetsAreEnabled();
+    updateActionsEnabled();
 }
 
 void MainWindow::on_actionSave_As_triggered()
 {
     saveProjectAs();
-    updateWhichWidgetsAreEnabled();
+    updateActionsEnabled();
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -690,7 +689,7 @@ void MainWindow::my_on_actionDelete_Song_triggered()
                                   QMessageBox::Ok,
                                   QMessageBox::NoButton );
         }
-        updateWhichWidgetsAreEnabled();
+        updateActionsEnabled();
     }
 }
 
@@ -754,7 +753,7 @@ void MainWindow::on_actionDuplicate_Attachment_triggered()
     assert( attachment );
 
     app().pushCommand( new SongNewAttachmentCommand( cs, attachment->copy() ) );
-    updateWhichWidgetsAreEnabled();
+    updateActionsEnabled();
 }
 
 void MainWindow::on_actionOpen_Terminal_here_triggered()
@@ -835,7 +834,7 @@ void MainWindow::on_actionClone_triggered()
                                       QMessageBox::NoButton );
                 newProject();
                 updateWindowTitle();
-                updateWhichWidgetsAreEnabled();
+                updateActionsEnabled();
                 return;
             }
         }
@@ -849,7 +848,7 @@ void MainWindow::on_actionClone_triggered()
                               QMessageBox::NoButton );
         newProject();
         updateWindowTitle();
-        updateWhichWidgetsAreEnabled();
+        updateActionsEnabled();
         return;
     }
 
@@ -865,7 +864,7 @@ void MainWindow::on_actionClone_triggered()
     }
 
     updateWindowTitle();
-    updateWhichWidgetsAreEnabled();
+    updateActionsEnabled();
 
 }
 
@@ -1094,7 +1093,7 @@ void MainWindow::my_on_actionDelete_Event_triggered()
     if (event)
     {
         app().pushCommand( new DatabaseRemoveItemCommand<Event>( m_project.eventDatabase(), event ));
-        updateWhichWidgetsAreEnabled();
+        updateActionsEnabled();
     }
 }
 
@@ -1227,7 +1226,7 @@ void MainWindow::open(const QString &filename)
             {
                 setCurrentPath( filename );
                 updateWindowTitle();
-                updateWhichWidgetsAreEnabled();
+                updateActionsEnabled();
             }
             else
             {
@@ -1253,7 +1252,7 @@ void MainWindow::open(const QString &filename)
         }
 
         updateWindowTitle();
-        updateWhichWidgetsAreEnabled();
+        updateActionsEnabled();
     }
 }
 

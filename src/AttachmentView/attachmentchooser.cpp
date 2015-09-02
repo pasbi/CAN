@@ -27,6 +27,7 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
         {
             setAttachment( -1 );
         }
+        app().mainWindow()->updateActionsEnabled();
     });
     ui->comboBox->setInvalidText( tr("No Attachment") );
     ui->comboBox->installEventFilter(this);
@@ -39,11 +40,12 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
 
     ui->toolButton->addAction( m_editTagAction );
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "ChordPatternAttachment" ) );
+    ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "ChordPatternProxyAttachment" ) );
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "AudioAttachment" ) );
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "PDFAttachment" ) );
     ui->toolButton->setDefaultAction( ui->toolButton->actions()[1] );
 
-    connect( ui->toolButton, SIGNAL(triggered(QAction*)), ui->toolButton, SLOT(setDefaultAction(QAction*)) );
+    connect( ui->toolButton, SIGNAL(triggered(QAction*)), this, SLOT( setDefaultAction(QAction*)) );
     connect( ui->attachmentEditor, SIGNAL(focusAttachment(const Attachment*)), this, SLOT(focusAttachment(const Attachment*)) );
 
     setSong( NULL );
@@ -166,6 +168,8 @@ void AttachmentChooser::focusAttachment(const Attachment *a)
             setAttachment( index );
         }
     }
+
+    app().mainWindow()->updateActionsEnabled();
 }
 
 bool AttachmentChooser::eventFilter(QObject *o, QEvent *e)
@@ -210,6 +214,13 @@ void AttachmentChooser::renameCurrentAttachment()
     }
 }
 
+void AttachmentChooser::setDefaultAction(QAction *hint)
+{
+    if (hint && hint->isEnabled())
+    {
+        ui->toolButton->setDefaultAction(hint);
+    }
+}
 
 
 

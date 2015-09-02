@@ -265,10 +265,9 @@ void PDFCreator::paintAttachment(Attachment *attachment)
         {
             paintPDFAttachment( qobject_assert_cast<PDFAttachment*>(attachment) );
         }
-        //TODO do we support ProxyChordPatternAttachments?
-        else if (attachment->type() == ChordPatternAttachment::TYPE)
+        else if (attachment->inherits(AbstractChordPatternAttachment::staticMetaObject.className()))
         {
-            paintChordPatternAttachment( qobject_assert_cast<ChordPatternAttachment*>(attachment) );
+            paintChordPatternAttachment( qobject_assert_cast<AbstractChordPatternAttachment*>(attachment) );
         }
     }
 }

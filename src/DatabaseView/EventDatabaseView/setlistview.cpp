@@ -171,7 +171,7 @@ QList<SetlistItem*> SetlistView::selectedItems() const
 bool SetlistView::attachmentIsIgnored( const Attachment* attachment ) const
 {
     // if attachment is of wrong type, do not include it.
-    if ( attachment->type() != ChordPatternAttachment::TYPE )
+    if ( !attachment->inherits(AbstractChordPatternAttachment::staticMetaObject.className()))
     {
         return true;
     }
@@ -210,7 +210,7 @@ QWidget* SetlistView::createSongCellWidget(const Song* song)
     {
         if ( !attachmentIsIgnored( attachment ) )
         {
-            ChordPatternAttachment* cpa = qobject_assert_cast<ChordPatternAttachment*>( attachment );
+            AbstractChordPatternAttachment* cpa = qobject_assert_cast<AbstractChordPatternAttachment*>( attachment );
             QAction* action = new QAction(menu);
             action->setText( cpa->name() );
             menu->addAction( action );
