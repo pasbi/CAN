@@ -192,108 +192,106 @@ QMimeData* Setlist::mimeData(const QModelIndexList &indexes) const
     return mime;
 }
 
+bool Setlist::dropSongs(const DatabaseMimeData<Song>* songData, int targetRow, QModelIndexList& indexes)
+{
+    if (songData->indexedItems().count() > 0)
+    {
+        app().beginMacro(tr("New Setlist Item"));
+        int i = 0;
+        for (DatabaseMimeData<Song>::IndexedItem item : songData->indexedItems())
+        {
+            // create a new setlist item and link `song` with it
+            SetlistItem* newItem = new SetlistItem( this, item.item->copy());
+            app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ) );
+            indexes << index(rowOf(newItem), 0);
+            i++;
+        }
+        app().endMacro();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void Setlist::moveItems(const DatabaseMimeData<SetlistItem>* setlistData, int targetRow, QModelIndexList& indexes)
+{
+    if (setlistData->indexedItems().count() > 0)
+    {
+        app().pushCommand( new DatabaseMoveRowsCommand<SetlistItem>(this, setlistData->indexedItemsSorted(), targetRow) );
+        for (const DatabaseMimeData<SetlistItem>::IndexedItem& item : setlistData->indexedItems())
+        {
+            indexes << index(rowOf(item.item), 0);
+        }
+    }
+}
+
+void Setlist::copyItems(const DatabaseMimeData<SetlistItem>* setlistData, int targetRow, QModelIndexList& indexes)
+{
+    if (setlistData->indexedItems().count() > 0)
+    {
+        app().beginMacro(tr("Copy Items"));
+        int i = 0;
+        for (DatabaseMimeData<SetlistItem>::IndexedItem item : setlistData->indexedItems())
+        {
+            // create a new setlist item and link `song` with it
+            SetlistItem* newItem = item.item->copy();
+            app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ));
+            indexes << index(rowOf(newItem), 0);
+            i++;
+        }
+        app().endMacro();
+    }
+}
+
 bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-    // base can handle CopyAction and IgnoreAction
-    if (Database<SetlistItem>::dropMimeData(data, action, row, column, parent))
+    if (action == Qt::IgnoreAction)
     {
-        qDebug() << "success";
         return true;
     }
 
-    // we have to implement LinkAction and MoveAction
-    else
+    if (parent.isValid())
     {
-        qDebug() << "fail";
         return false;
     }
 
-//    if (action == Qt::IgnoreAction)
-//    {
-//        return true;
-//    }
+    Q_UNUSED(column);
 
-//    if (parent.isValid())
-//    {
-//        return false;
-//    }
+    if (row < 0)
+    {
+        row = rowCount();
+    }
 
-//    Q_UNUSED(column);
+    bool success = false;
+    const DatabaseMimeData<Song>* songData = DatabaseMimeData<Song>::cast(data);
+    const DatabaseMimeData<SetlistItem>* setlistData = DatabaseMimeData<SetlistItem>::cast(data);
+    QList<QModelIndex> indexes;
+    if (songData)
+    {
+        success = dropSongs(songData, row, indexes);
+    }
+    else if (setlistData)
+    {
+        if (action == Qt::MoveAction)
+        {
+            moveItems(setlistData, row, indexes);
+            success = true;
+        }
+        else if (action == Qt::CopyAction)
+        {
+            copyItems(setlistData, row, indexes);
+            success = true;
+        }
+        else
+        {
+            success = false;
+        }
+    }
 
-//    if (row < 0)
-//    {
-//        row = rowCount();
-//    }
-
-//    bool success = false;
-//    const DatabaseMimeData<Song>* songData = DatabaseMimeData<Song>::cast(data);
-//    const DatabaseMimeData<SetlistItem>* setlistData = DatabaseMimeData<SetlistItem>::cast(data);
-//    QList<QModelIndex> indexes;
-//    if (songData)
-//    {
-//        if (action == Qt::LinkAction)
-//        {
-//            if (songData->indexedItems().count() > 0)
-//            {
-//                app().beginMacro(tr("New Setlist Item"));
-//                int i = 0;
-//                for (DatabaseMimeData<Song>::IndexedItem item : songData->indexedItems())
-//                {
-//                    // create a new setlist item and link `song` with it
-//                    SetlistItem* newItem = new SetlistItem( this, item.item->copy());
-//                    app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, row + i ) );
-//                    indexes << index(rowOf(newItem), 0);
-//                    i++;
-//                }
-//                app().endMacro();
-//            }
-//            success = true;
-//        }
-//        else
-//        {
-//            success = false;
-//        }
-//    }
-//    else if (setlistData)
-//    {
-//        if (action == Qt::MoveAction)
-//        {
-//            if (setlistData->indexedItems().count() > 0)
-//            {
-//                app().pushCommand( new DatabaseMoveRowsCommand<SetlistItem>(this, setlistData->indexedItemsSorted(), row) );
-//                for (const DatabaseMimeData<SetlistItem>::IndexedItem& item : setlistData->indexedItems())
-//                {
-//                    indexes << index(rowOf(item.item), 0);
-//                }
-//            }
-//            success = true;
-//        }
-//        else if (action == Qt::CopyAction)
-//        {
-//            if (setlistData->indexedItems().count() > 0)
-//            {
-//                app().beginMacro(tr("Copy Items"));
-//                int i = 0;
-//                for (DatabaseMimeData<SetlistItem>::IndexedItem item : setlistData->indexedItems())
-//                {
-//                    // create a new setlist item and link `song` with it
-//                    SetlistItem* newItem = item.item->copy();
-//                    app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, row + i ));
-//                    indexes << index(rowOf(newItem), 0);
-//                    i++;
-//                }
-//                app().endMacro();
-//            }
-//            success = true;
-//        }
-//        else
-//        {
-//            success = false;
-//        }
-//    }
-
-//    emit selectionRequest(indexes);
-//    return success;
+    emit selectionRequest(indexes);
+    return success;
 }
 
 

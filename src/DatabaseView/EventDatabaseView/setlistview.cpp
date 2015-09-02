@@ -267,6 +267,7 @@ void SetlistView::updateCellWidgets()
                 setSpan(i, 0, 1, colorCount()); // there is no widget, so we don't need this column here.
                 break;
             case SetlistItem::SongType:
+                setSpan(i, 0, 1, 1);
                 setIndexWidget( index, createSongCellWidget(item->song()) );
                 break;
             }
