@@ -153,7 +153,8 @@ SOURCES += main.cpp\
     Commands/timerdecorator.cpp \
     Attachments/AudioAttachment/section.cpp \
     Program/midicommand.cpp \
-    DatabaseView/EventDatabaseView/ItemDelegates/typecomboboxdelegate.cpp
+    DatabaseView/ItemDelegates/typecomboboxdelegate.cpp \
+    DatabaseView/ItemDelegates/lineeditdelegate.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -279,9 +280,10 @@ HEADERS  += mainwindow.h \
     Attachments/AudioAttachment/section.h \
     Program/midicommand.h \
     Database/databaseitem.h \
-    test.h \
     Commands/DatabaseCommands/databasemoverowscommand.h \
-    DatabaseView/EventDatabaseView/ItemDelegates/typecomboboxdelegate.h
+    DatabaseView/ItemDelegates/typecomboboxdelegate.h \
+    DatabaseView/ItemDelegates/lineeditdelegate.h \
+    DatabaseView/ItemDelegates/itemdelegate.h
 
 
 

@@ -16,6 +16,10 @@ class Event : public DatabaseItem<Event>
     Q_OBJECT
 public:
     enum Type { Rehearsal, Gig, Other };
+    static const QStringList TYPES;
+    static QString typeName(Type type);
+
+
     Event( Database<Event>*   database,
            const QDateTime& beginning = QDateTime::currentDateTime(),
            const QDateTime& ending    = QDateTime::currentDateTime(),
@@ -33,8 +37,6 @@ public:
 
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
-
-    static QString typeString(Type type, bool translated = false);
 
     void setLabel( const QString & label ) { m_label = label; }
     void setBeginning( const QDateTime & beginning ) { m_timeSpan.beginning = beginning; }

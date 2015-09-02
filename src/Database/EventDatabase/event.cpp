@@ -1,6 +1,8 @@
 #include "event.h"
 #include "setlist.h"
 
+const QStringList Event::TYPES = QStringList({ Event::tr("Rehearsal"), Event::tr("Gig"), Event::tr("Other") });
+
 Event::Event( Database<Event>* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
     DatabaseItem( database ),
     m_timeSpan( TimeSpan(beginning, ending)),
@@ -17,28 +19,11 @@ Event::~Event()
     m_setlist = nullptr;
 }
 
-QString Event::typeString(Type type, bool translated)
-{
-    switch (type)
-    {
-    case Rehearsal:
-        return translated ? tr("Rehearsal") : "Rehearsal";
-    case Gig:
-        return translated ? tr("Gig") : "Gig";
-    case Other:
-        return translated ? tr("Other") : "Other";
-    default:
-        assert(false);
-        return "";
-    }
-}
-
 bool Event::restoreFromJsonObject(const QJsonObject &json)
 {
     bool success = true;
     if (    checkJsonObject( json, "beginning", QJsonValue::String )
          && checkJsonObject( json, "ending",    QJsonValue::String )
-         && checkJsonObject( json, "type",      QJsonValue::String )
          && checkJsonObject( json, "label",     QJsonValue::String )
          && checkJsonObject( json, "notices",   QJsonValue::String )
          && checkJsonObject( json, "setlist",   QJsonValue::Array ) )
@@ -49,6 +34,20 @@ bool Event::restoreFromJsonObject(const QJsonObject &json)
         m_notices   = json["notices"].toString();
         m_setlist->fromJson( json["setlist"].toArray() );
 
+    }
+    else
+    {
+        return false;
+    }
+
+    if ( checkJsonObject( json, "type", QJsonValue::Double ))
+    {
+        // Load the new format where Event::type is encoded as int
+        m_type = static_cast<Type>(json["type"].toDouble());
+    }
+    else if checkJsonObject( json, "type", QJsonValue::String)
+    {
+        qWarning() << "load deprecated Event-format.";
         QString type = json["type"].toString();
         if (type == "Rehearsal")
         {
@@ -60,18 +59,10 @@ bool Event::restoreFromJsonObject(const QJsonObject &json)
         }
         else
         {
-            if (type != "Other")
-            {
-                success = false;
-                qWarning() << "Did not expected value " << type;
-            }
             m_type = Other;
         }
     }
-    else
-    {
-        success = false;
-    }
+
 
     if (!checkJsonObject( json, "id", QJsonValue::String))
     {
@@ -91,7 +82,7 @@ QJsonObject Event::toJsonObject() const
 
     json["ending"]    = m_timeSpan.ending.toString( DATE_TIME_FORMAT );
     json["beginning"] = m_timeSpan.beginning.toString( DATE_TIME_FORMAT );
-    json["type"]      = typeString(m_type);
+    json["type"]      = static_cast<int>(m_type);
     json["label"]     = m_label;
     json["notices"]   = m_notices;
     json["setlist"]   = m_setlist->toJson();
@@ -109,7 +100,7 @@ QString Event::description() const
 {
     if (label().isEmpty())
     {
-        return typeString( type(), true );
+        return typeName( type() );
     }
     else
     {
@@ -117,10 +108,10 @@ QString Event::description() const
     }
 }
 
-
-
-
-
+QString Event::typeName(Type type)
+{
+    return TYPES[(int) type];
+}
 
 
 

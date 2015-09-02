@@ -19,6 +19,7 @@
 #include "Database/EventDatabase/setlist.h"
 #include "setlistitemselector.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
+#include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 
 
 SetlistView::SetlistView(QWidget *parent) :
@@ -35,6 +36,7 @@ SetlistView::SetlistView(QWidget *parent) :
     setHorizontalScrollMode( QTableView::ScrollPerPixel );
 
     setEditTriggers( QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed );
+    setItemDelegateForColumn( 0, new LineEditDelegate<SetlistItem>(this) );
 
     setContextMenuPolicy( Qt::CustomContextMenu );
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));

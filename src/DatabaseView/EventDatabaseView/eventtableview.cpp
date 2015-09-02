@@ -9,8 +9,9 @@
 #include "util.h"
 #include "application.h"
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
-#include "ItemDelegates/datetimedelegate.h"
-#include "ItemDelegates/typecomboboxdelegate.h"
+#include "DatabaseView/ItemDelegates/typecomboboxdelegate.h"
+#include "DatabaseView/ItemDelegates/lineeditdelegate.h"
+#include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "Commands/DatabaseCommands/databaseedititemcommand.h"
 
 
@@ -21,8 +22,8 @@ EventTableView::EventTableView(QWidget *parent) :
     horizontalHeader()->setResizeContentsPrecision( -1 ); // look at all rows.
     horizontalHeader()->hide();
 
-    setItemDelegateForColumn( 0, new TypeComboBoxDelegate( this ) );
-    setItemDelegateForColumn( 1, new DateTimeDelegate( this ) );
+    setItemDelegateForColumn( 0, new TypeComboBoxDelegate<Event>( Event::TYPES, this ) );
+    setItemDelegateForColumn( 2, new LineEditDelegate<Event>( this ));
 
     setSelectionBehavior( QAbstractItemView::SelectRows );
     setSelectionMode( QAbstractItemView::SingleSelection );
