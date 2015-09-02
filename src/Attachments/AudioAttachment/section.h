@@ -8,7 +8,6 @@ class Section
 {
 public:
     Section( const QString & caption, const double begin, const double end );
-    Section( const QJsonObject& object );
     Section();
 
     QString caption() const { return m_caption; }
@@ -19,7 +18,8 @@ public:
 
     bool valid() const { return m_begin < m_end && m_begin >= 0 && m_end >= 0 && !m_caption.isNull(); }
 
-    QJsonObject toJson() const;
+    QJsonObject toJsonObject() const;
+    bool restoreFromJsonObject(const QJsonObject& object );
 
 
 

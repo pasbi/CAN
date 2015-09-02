@@ -20,7 +20,7 @@ Section::Section() :
 {
 }
 
-QJsonObject Section::toJson() const
+QJsonObject Section::toJsonObject() const
 {
     QJsonObject object;
     object["caption"] = m_caption;
@@ -29,13 +29,19 @@ QJsonObject Section::toJson() const
     return object;
 }
 
-Section::Section(const QJsonObject &object)
+bool Section::restoreFromJsonObject(const QJsonObject &object)
 {
-    checkJsonObject( object, "caption", QJsonValue::String );
-    checkJsonObject( object, "begin", QJsonValue::Double );
-    checkJsonObject( object, "end", QJsonValue::Double );
-
-    m_caption = object["caption"].toString();
-    m_begin = object["begin"].toDouble();
-    m_end = object["end"].toDouble();
+    if (    checkJsonObject( object, "caption", QJsonValue::String )
+         && checkJsonObject( object, "begin", QJsonValue::Double )
+         && checkJsonObject( object, "end", QJsonValue::Double )    )
+    {
+        m_caption = object["caption"].toString();
+        m_begin = object["begin"].toDouble();
+        m_end = object["end"].toDouble();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

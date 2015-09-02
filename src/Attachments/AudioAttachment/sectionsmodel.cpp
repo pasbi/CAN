@@ -2,6 +2,7 @@
 #include "application.h"
 #include "persistentobject.h"
 #include "section.h"
+#include "Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h"
 
 SectionsModel::SectionsModel(QObject *parent) :
     QAbstractTableModel(parent)
@@ -131,20 +132,22 @@ const Section* SectionsModel::section(int index) const
     return &m_sections[index];
 }
 
-void SectionsModel::restore( const QJsonArray& array )
+void SectionsModel::restoreFromJsonArray(const QJsonArray& array )
 {
     for ( const QJsonValue& val : array )
     {
-        m_sections.append( Section(val.toObject()) );
+        Section section;
+        section.restoreFromJsonObject(val.toObject());
+        m_sections.append( section );
     }
 }
 
-QJsonArray SectionsModel::toJson() const
+QJsonArray SectionsModel::toJsonArray() const
 {
     QJsonArray array;
     for (const Section& section : m_sections)
     {
-        array.append(section.toJson());
+        array.append(section.toJsonObject());
     }
     return array;
 }
@@ -179,7 +182,6 @@ void SectionsModel::removeSection(const Section *section)
 }
 
 
-#include "Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h"
 void SectionsModel::removeSection(int i)
 {
     app().pushCommand( new DeleteSectionCommand( this, i ) );

@@ -11,7 +11,7 @@
 #include "Database/databasemimedata.h"
 #include "application.h"
 #include "EventDatabase/setlistitem.h"
-//#include "Commands/DatabaseCommands/databasenewitemcommand.h"
+#include "Commands/DatabaseCommands/databasenewitemcommand.h"
 
 template<typename T>
 class Database : public PersistentObject, public QAbstractTableModel
@@ -184,7 +184,7 @@ public:
             typedef typename DatabaseMimeData<T>::IndexedItem IndexedItem;
             for (IndexedItem item : itemData->indexedItems())
             {
-//                app().pushCommand( new DatabaseNewItemCommand<T>( this, item.item->copy(), row + i ) );
+                app().pushCommand( new DatabaseNewItemCommand<T>( this, item.item->copy(), row + i ) );
                 i++;
             }
             app().endMacro();

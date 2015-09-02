@@ -25,35 +25,22 @@ public:
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
     QStringList mimeTypes() const;
 
-    void saveState();
-    void restore();
-    void acceptDrop();
-
-    QJsonArray toJson() const;
-    bool fromJson(const QJsonArray & array );
-
     QList<const Song *> songs() const;
     Event const* event() const;
 
     QString fileNameBase() const { UNIMPLEMENTED(""); }
+
+    QJsonObject toJsonObject() const;
+    bool restoreFromJsonObject(const QJsonObject& object );
+
 
 signals:
     void selectionRequest(QModelIndexList);
 
 
 private:
-    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild);
-
-    friend class SetlistEditDataCommand;
-    friend class SetlistMoveRowsCommand;
-//    bool setData_(const QModelIndex &index, const QVariant &value, int role);
-    mutable QList<SetlistItem*> m_tmpItemBuffer;    // temp buffer for inserting items
-
     QList<void*> viewableAttachments( const QModelIndex& index ) const;    // returns a list of viewable attachments
-
     Event* m_event = NULL;
-
-    QList<SetlistItem*> m_savedState;
 };
 
 #endif // SETLIST_H

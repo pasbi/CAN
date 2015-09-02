@@ -67,7 +67,7 @@ bool SetlistItem::setLabel(const QString label)
     }
 }
 
-QJsonObject SetlistItem::toJson() const
+QJsonObject SetlistItem::toJsonObject() const
 {
     QJsonObject object;
 

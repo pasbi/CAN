@@ -32,7 +32,7 @@ bool Event::restoreFromJsonObject(const QJsonObject &json)
                                 QDateTime::fromString( json["ending"].toString(),    DATE_TIME_FORMAT ) );
         m_label     = json["label"].toString();
         m_notices   = json["notices"].toString();
-        m_setlist->fromJson( json["setlist"].toArray() );
+        m_setlist->restoreFromJsonObject( json );
 
     }
     else
@@ -85,7 +85,7 @@ QJsonObject Event::toJsonObject() const
     json["type"]      = static_cast<int>(m_type);
     json["label"]     = m_label;
     json["notices"]   = m_notices;
-    json["setlist"]   = m_setlist->toJson();
+    json["setlist"]   = m_setlist->toJsonObject()["setlist"];
     json["id"]        = randomID();
 
     return json;

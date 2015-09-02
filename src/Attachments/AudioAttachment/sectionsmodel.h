@@ -28,8 +28,8 @@ public:
 
     const Section* section( int index ) const;
 
-    void restore( const QJsonArray& array );
-    QJsonArray toJson() const;
+    void restoreFromJsonArray( const QJsonArray& array );
+    QJsonArray toJsonArray() const;
 
     int indexOf( const Section* section ) const;
 private:

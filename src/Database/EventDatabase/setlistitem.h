@@ -21,7 +21,7 @@ public:
     bool setLabel( const QString label );
     const Song* song() const { return m_song; }
     Type type() const { return m_type; }
-    QJsonObject toJson() const;
+    QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject &object);
 
 private:

@@ -35,7 +35,7 @@ QJsonObject AudioAttachment::toJsonObject() const
 {
     QJsonObject object = IndexedFileAttachment::toJsonObject();
 
-    QJsonArray sections = sectionsModel()->toJson();
+    QJsonArray sections = sectionsModel()->toJsonArray();
 
     object["sections"] = sections;
     object["currentSection"] = sectionsModel()->indexOf(m_currentSection);
@@ -46,7 +46,7 @@ QJsonObject AudioAttachment::toJsonObject() const
 bool AudioAttachment::restoreFromJsonObject(const QJsonObject &object)
 {
     IndexedFileAttachment::restoreFromJsonObject( object );
-    sectionsModel()->restore( object["sections"].toArray() );
+    sectionsModel()->restoreFromJsonArray( object["sections"].toArray() );
     int i = object["currentSection"].toDouble();
     if (i >= 0)
     {
