@@ -22,9 +22,9 @@ public:
 
     Database<T>* database() const { return m_database; }
 
-    T* copy() const
+    T* copy(Database<T>* database) const
     {
-        T* copy = new T(database());
+        T* copy = new T(database);
         copy->restoreFromJsonObject(this->toJsonObject());
         return copy;
     }

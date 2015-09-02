@@ -16,3 +16,7 @@ Command::Command(Type type) :
     m_type(type)
 {
 }
+
+Command::~Command()
+{
+}

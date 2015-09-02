@@ -17,17 +17,20 @@ public:
         this->setText( CommandTranslator::tr("Delete Event") );
     }
 
+    ~DatabaseRemoveItemCommand()
+    {
+    }
+
     void undo()
     {
-        this->takeOwnershipOfItem();
+        this->releaseOwnershipOfItem();
         this->model()->insertItem( this->item(), m_index );
     }
 
     void redo()
     {
-        this->releaseOwnershipOfItem();
+        this->takeOwnershipOfItem();
         this->model()->removeItem( this->item() );
-
     }
 
 private:

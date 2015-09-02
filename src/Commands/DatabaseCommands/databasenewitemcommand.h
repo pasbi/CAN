@@ -16,6 +16,10 @@ public:
         this->setText( CommandTranslator::tr("Add Song") );
     }
 
+    ~DatabaseNewItemCommand()
+    {
+    }
+
     void redo()
     {
         this->model()->insertItem( this->item(), m_row );

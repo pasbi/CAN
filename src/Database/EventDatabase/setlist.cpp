@@ -19,6 +19,10 @@ Setlist::Setlist(Event *event) :
 {
 }
 
+Setlist::~Setlist()
+{
+}
+
 int Setlist::columnCount( const QModelIndex& parent ) const
 {
     assert( !parent.isValid());
@@ -237,7 +241,7 @@ void Setlist::copyItems(const DatabaseMimeData<SetlistItem>* setlistData, int ta
         for (DatabaseMimeData<SetlistItem>::IndexedItem item : setlistData->indexedItems())
         {
             // create a new setlist item and link `song` with it
-            SetlistItem* newItem = item.item->copy();
+            SetlistItem* newItem = item.item->copy(this);
             app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ));
             indexes << index(rowOf(newItem), 0);
             i++;

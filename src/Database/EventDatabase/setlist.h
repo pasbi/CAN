@@ -12,7 +12,7 @@ class Setlist : public Database<SetlistItem>
     Q_OBJECT
 public:
     Setlist( Event* event );
-    virtual ~Setlist() {}
+    virtual ~Setlist();
 
     int columnCount( const QModelIndex& parent = QModelIndex() ) const;
     QVariant data(const QModelIndex &index, int role) const;
