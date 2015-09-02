@@ -9,11 +9,11 @@
 
 #include "application.h"
 #include "Project/project.h"
-#include "Commands/SetlistCommands/setlistnewitemcommand.h"
+#include "Commands/DatabaseCommands/databasenewitemcommand.h"
+#include "Commands/DatabaseCommands/databaseremoveitemcommand.h"
 #include "util.h"
 #include "Dialogs/chordpatternviewer.h"
 #include "Database/databasemimedata.h"
-#include "Commands/SetlistCommands/setlistremoveitemcommand.h"
 #include "Database/EventDatabase/setlistitem.h"
 #include "Database/SongDatabase/song.h"
 #include "Database/EventDatabase/setlist.h"
@@ -110,7 +110,7 @@ void SetlistView::my_on_actionNewSetlistItem_triggered()
 {
     if (model())
     {
-        app().pushCommand( new SetlistNewItemCommand( model(), new SetlistItem(model()) ) );
+        app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( model(), new SetlistItem(model()) ) );
     }
 }
 
@@ -122,7 +122,7 @@ void SetlistView::my_on_actionDeleteSetlistItem_triggered()
         app().project()->beginMacro( tr("Remove Setlist Items"));
         for (SetlistItem* i : si)
         {
-            app().pushCommand( new SetlistRemoveItemCommand( model(), i ) );
+            app().pushCommand( new DatabaseRemoveItemCommand<SetlistItem>( model(), i ) );
         }
         app().project()->endMacro();
     }
@@ -158,7 +158,7 @@ QList<SetlistItem*> SetlistView::selectedItems() const
     {
         for (const QModelIndex& index : selectionModel()->selectedRows())
         {
-            items << model()->itemAt( index );
+            items << model()->itemAtIndex( index );
         }
         return items;
     }
@@ -256,7 +256,7 @@ void SetlistView::updateCellWidgets()
     {
         QModelIndex index = model()->index( i, 1 );
 
-        SetlistItem* item = model()->itemAt( index );
+        SetlistItem* item = model()->itemAtIndex( index );
         if (item)
         {
             switch (item->type())

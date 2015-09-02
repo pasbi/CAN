@@ -62,6 +62,6 @@ EventTableView* EventDatabaseWidget::eventTableView() const
 
 Setlist* EventDatabaseWidget::currentSetlist() const
 {
-    return qobject_assert_cast<Setlist*>( ui->setlistWidget->listView()->model() );
+    return ui->setlistWidget->listView()->model();
 }
 

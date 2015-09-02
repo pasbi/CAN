@@ -2,31 +2,33 @@
 #include "application.h"
 #include "Project/project.h"
 #include "Database/SongDatabase/songdatabase.h"
-#include "setlist.h"
+#include "Database/EventDatabase/setlist.h"
 
-SetlistItem::SetlistItem( Setlist* setlist, const QString & label ) :
+
+SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString & label ) :
+    DatabaseItem(setlist),
     m_type( LabelType ),
-    m_label( label ),
-    m_setlist(setlist)
+    m_label( label )
 {
 }
 
-SetlistItem::SetlistItem( Setlist* setlist ) :
+SetlistItem::SetlistItem( Database<SetlistItem>* setlist ) :
+    DatabaseItem(setlist),
     m_type( LabelType ),
-    m_label( QObject::tr("Unnamed") ),
-    m_setlist(setlist)
+    m_label( QObject::tr("Unnamed") )
 {
 }
 
-SetlistItem::SetlistItem( Setlist* setlist, const Song* song ) :
+SetlistItem::SetlistItem( Database<SetlistItem>* setlist, const Song* song ) :
+    DatabaseItem(setlist),
     m_type( SongType ),
-    m_song( song ),
-    m_setlist(setlist)
+    m_song( song )
 {
     QObject::connect(song, &Song::attributeChanged, [song, this]()
     {
-        QModelIndex index = m_setlist->indexOf(this);
-        emit m_setlist->dataChanged(index, index);
+        int row = database()->rowOf(this);
+        QModelIndex index = database()->index(row, 0);
+        emit database()->dataChanged(index, index);
     });
 }
 
@@ -34,7 +36,7 @@ SetlistItem::~SetlistItem()
 {
     if (m_song)
     {
-        m_song->disconnect(m_setlist);
+        m_song->disconnect(database());
     }
 }
 
@@ -83,46 +85,41 @@ QJsonObject SetlistItem::toJson() const
     return object;
 }
 
-SetlistItem* SetlistItem::fromJson( const QJsonObject & object, Setlist* setlist )
+bool SetlistItem::restoreFromJsonObject(const QJsonObject & object)
 {
     if (!checkJsonObject( object, "type", QJsonValue::Double ))
     {
-        return NULL;
+        return false;
     }
     switch ((Type) object["type"].toInt())
     {
     case SongType:
         if (!checkJsonObject(object, "SongID", QJsonValue::String))
         {
-            return NULL;
+            return false;
         }
         else
         {
             Song* song = app().project()->songDatabase()->song( object["SongID"].toString() );
             if (song)
             {
-                return new SetlistItem( setlist, song );
+                m_song = song;
             }
             else
             {
-                return NULL;
+                return false;
             }
         }
     case LabelType:
         if (!checkJsonObject(object, "Label", QJsonValue::String))
         {
-            return NULL;
+            return false;
         }
         else
         {
-            return new SetlistItem( setlist, object["Label"].toString() );
+            m_label = object["Label"].toString();
         }
     }
-    return NULL;
-}
-
-SetlistItem* SetlistItem::copy() const
-{
-    return fromJson(toJson(), m_setlist);
+    return false;
 }
 

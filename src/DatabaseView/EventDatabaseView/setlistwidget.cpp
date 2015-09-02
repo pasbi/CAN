@@ -7,7 +7,7 @@
 #include <QProgressDialog>
 
 #include "PDFCreator/pdfcreator.h"
-#include "Commands/SetlistCommands/setlistnewitemcommand.h"
+#include "Commands/DatabaseCommands/databasenewitemcommand.h"
 #include "ui_setlistwidget.h"
 #include "application.h"
 #include "Database/SongDatabase/songdatabase.h"
@@ -87,7 +87,7 @@ void SetlistWidget::on_buttonAdd_clicked()
 {
     if (setlist())
     {
-        app().pushCommand( new SetlistNewItemCommand( setlist(), new SetlistItem(setlist()) ) );
+        app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( setlist(), new SetlistItem(setlist()) ) );
     }
     else
     {
@@ -142,7 +142,7 @@ void SetlistWidget::on_buttonExportPDF_clicked()
 
 void SetlistWidget::on_listView_doubleClicked(const QModelIndex &index)
 {
-    SetlistItem* item = ui->listView->model()->itemAt( index );
+    SetlistItem* item = ui->listView->model()->itemAtIndex( index );
     if (!item)
     {
         return;

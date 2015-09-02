@@ -7,39 +7,15 @@
 #include "Database/SongDatabase/song.h"
 #include "setlistitem.h"
 #include "Attachments/attachment.h"
+#include "Commands/DatabaseCommands/databasenewitemcommand.h"
+#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databasemoverowscommand.h"
 
 
 Setlist::Setlist(Event *event) :
-    QAbstractTableModel(event),
-    m_event( event )
+    Database(event->database()->project()),
+    m_event(event)
 {
-
-}
-
-void Setlist::insertItem( SetlistItem* item, int position )
-{
-    assert(m_tmpItemBuffer.isEmpty());
-    m_tmpItemBuffer << item;
-    if (position < 0)
-    {
-        position = rowCount();
-    }
-    insertRow( position );
-}
-
-void Setlist::removeItem( SetlistItem* item )
-{
-    int pos = m_items.indexOf( item );
-    if (pos >= 0)
-    {
-        removeRow( pos );
-    }
-}
-
-int Setlist::rowCount(const QModelIndex& parent) const
-{
-    assert( !parent.isValid() );
-    return m_items.length();
 }
 
 int Setlist::columnCount( const QModelIndex& parent ) const
@@ -51,7 +27,7 @@ int Setlist::columnCount( const QModelIndex& parent ) const
 QList<void*> Setlist::viewableAttachments(const QModelIndex &index) const
 {
     QList<void*> list;
-    SetlistItem* item = itemAt( index );
+    SetlistItem* item = itemAtIndex( index );
     if (item && item->song())
     {
         for (Attachment* attachment : item->song()->attachments())
@@ -98,12 +74,12 @@ QVariant Setlist::data(const QModelIndex &index, int role) const
 
 }
 
-bool Setlist::setData_(const QModelIndex &index, const QVariant &value, int role)
+bool Setlist::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     bool success = true;
     if (role == Qt::EditRole)
     {
-        success &= itemAt( index )->setLabel( value.toString() );
+        success &= itemAtIndex( index )->setLabel( value.toString() );
         emit dataChanged( index, index );
     }
     else
@@ -113,45 +89,21 @@ bool Setlist::setData_(const QModelIndex &index, const QVariant &value, int role
     return success;
 }
 
-#include "Commands/SetlistCommands/setlisteditdatacommand.h"
-bool Setlist::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (role != Qt::EditRole)
-    {
-        return false;
-    }
+//bool Setlist::setData(const QModelIndex &index, const QVariant &value, int role)
+//{
+//    if (role != Qt::EditRole)
+//    {
+//        return false;
+//    }
 
-    // push a command only when it is required
-    if (data(index, role) != value)
-    {
-        app().project()->pushCommand( new SetlistEditDataCommand( this, index, value, role ) );
-    }
-    return true;
-}
+//    // push a command only when it is required
+//    if (data(index, role) != value)
+//    {
+//        app().project()->pushCommand( new DatabaseEditItemCommand<SetlistItem>( this, index, value, role ) );
+//    }
+//    return true;
+//}
 
-bool Setlist::insertRows(int row, int count, const QModelIndex &parent)
-{
-    assert(count == m_tmpItemBuffer.length());
-    beginInsertRows(parent, row, row + count - 1);
-    for (int i = 0; i < count; ++i)
-    {
-        m_items.insert(row + i, m_tmpItemBuffer[i]);
-    }
-    m_tmpItemBuffer.clear();
-    endInsertRows();
-    return true;
-}
-
-bool Setlist::removeRows(int row, int count, const QModelIndex &parent)
-{
-    beginRemoveRows(parent, row, row + count - 1);
-    for (int i = row + count - 1; i >= row; --i)
-    {
-        m_items.removeAt(i);
-    }
-    endRemoveRows();
-    return true;
-}
 
 bool Setlist::moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild)
 {
@@ -188,27 +140,6 @@ bool Setlist::moveRows(const QModelIndex &sourceParent, int sourceRow, int count
     return true;
 }
 
-QModelIndex Setlist::indexOf(const SetlistItem *item) const
-{
-    // QList::indexOf forbids item to be const
-
-    int row = 0;
-    for (const SetlistItem* i : m_items)
-    {
-        if (i == item)
-        {
-            return index(row, 0, QModelIndex());
-        }
-        row++;
-    }
-    return QModelIndex();
-}
-
-SetlistItem* Setlist::itemAt(const QModelIndex &index) const
-{
-    return m_items[index.row()];
-}
-
 QJsonArray Setlist::toJson() const
 {
     QJsonArray array;
@@ -226,7 +157,8 @@ bool Setlist::fromJson(const QJsonArray & array )
     m_items.clear();
     for (const QJsonValue & val : array)
     {
-        SetlistItem* item = SetlistItem::fromJson(val.toObject(), this);
+        SetlistItem* item = new SetlistItem(this);
+        item->restoreFromJsonObject(val.toObject());
         if (item)
         {
             m_items << item;
@@ -263,7 +195,7 @@ Qt::ItemFlags Setlist::flags(const QModelIndex &index) const
     {
         Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled;
 
-        if (itemAt(index)->type() == SetlistItem::LabelType && index.column() == 0)
+        if (itemAtIndex(index)->type() == SetlistItem::LabelType && index.column() == 0)
         {
             flags |= Qt::ItemIsEditable;
         }
@@ -304,8 +236,6 @@ QMimeData* Setlist::mimeData(const QModelIndexList &indexes) const
     return mime;
 }
 
-#include "Commands/SetlistCommands/setlistnewitemcommand.h"
-#include "Commands/SetlistCommands/setlistmoverowscommand.h"
 bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
     if (action == Qt::IgnoreAction)
@@ -341,8 +271,8 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
                 {
                     // create a new setlist item and link `song` with it
                     SetlistItem* newItem = new SetlistItem( this, item.item->copy());
-                    app().pushCommand( new SetlistNewItemCommand( this, newItem, row + i ) );
-                    indexes << indexOf(newItem);
+                    app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, row + i ) );
+                    indexes << index(rowOf(newItem), 0);
                     i++;
                 }
                 app().endMacro();
@@ -353,16 +283,17 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
         {
             success = false;
         }
-    } else if (setlistData)
+    }
+    else if (setlistData)
     {
         if (action == Qt::MoveAction)
         {
             if (setlistData->indexedItems().count() > 0)
             {
-                app().pushCommand( new SetlistMoveRowsCommand(this, setlistData->indexedItemsSorted(), row) );
+                app().pushCommand( new DatabaseMoveRowsCommand<SetlistItem>(this, setlistData->indexedItemsSorted(), row) );
                 for (const DatabaseMimeData<SetlistItem>::IndexedItem& item : setlistData->indexedItems())
                 {
-                    indexes << indexOf(item.item);
+                    indexes << index(rowOf(item.item), 0);
                 }
             }
             success = true;
@@ -377,8 +308,8 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
                 {
                     // create a new setlist item and link `song` with it
                     SetlistItem* newItem = item.item->copy();
-                    app().pushCommand( new SetlistNewItemCommand( this, newItem, row + i ));
-                    indexes << indexOf(newItem);
+                    app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, row + i ));
+                    indexes << index(rowOf(newItem), 0);
                     i++;
                 }
                 app().endMacro();

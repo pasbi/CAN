@@ -1,15 +1,21 @@
 #include "event.h"
+#include "setlist.h"
 
 Event::Event( Database<Event>* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
-    m_database( database ),
+    DatabaseItem( database ),
     m_timeSpan( TimeSpan(beginning, ending)),
     m_type(type),
     m_label(label),
-    m_setlist( this )
+    m_setlist( new Setlist(this) )
 {
 
 }
 
+Event::~Event()
+{
+    delete m_setlist;
+    m_setlist = nullptr;
+}
 
 QString Event::typeString(Type type, bool translated)
 {
@@ -41,7 +47,7 @@ bool Event::restoreFromJsonObject(const QJsonObject &json)
                                 QDateTime::fromString( json["ending"].toString(),    DATE_TIME_FORMAT ) );
         m_label     = json["label"].toString();
         m_notices   = json["notices"].toString();
-        m_setlist.fromJson( json["setlist"].toArray() );
+        m_setlist->fromJson( json["setlist"].toArray() );
 
         QString type = json["type"].toString();
         if (type == "Rehearsal")
@@ -88,7 +94,7 @@ QJsonObject Event::toJsonObject() const
     json["type"]      = typeString(m_type);
     json["label"]     = m_label;
     json["notices"]   = m_notices;
-    json["setlist"]   = m_setlist.toJson();
+    json["setlist"]   = m_setlist->toJson();
     json["id"]        = randomID();
 
     return json;
@@ -97,14 +103,6 @@ QJsonObject Event::toJsonObject() const
 void Event::setNotice(const QString &notice)
 {
     m_notices = notice;
-}
-
-Event* Event::copy() const
-{
-    QJsonObject json = toJsonObject();
-    Event* event = new Event( database() );
-    event->restoreFromJsonObject( json );
-    return event;
 }
 
 QString Event::description() const

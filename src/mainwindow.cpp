@@ -520,7 +520,6 @@ void MainWindow::updateActionsEnabled()
 
     QObjectList attachmentObjects, songObects, gitObjects, eventObjects;
 
-    qDebug() << (song?"enable":"disable") << "actions";
     for (QAction* action : m_newAttachmentActions)
     {
         songObects << action;

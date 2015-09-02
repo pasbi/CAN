@@ -5,7 +5,7 @@
 #include "Attachments/attachment.h"
 
 Song::Song(Database<Song> * database) :
-    m_songDatabase(database),
+    DatabaseItem<Song>(database),
     m_creationDateTime(QDateTime::currentDateTime())
 {
     connect( this, SIGNAL(attachmentAdded(int)),   database, SIGNAL(attachmentAdded(int)  ));
@@ -24,7 +24,6 @@ bool Song::restoreFromJsonObject(const QJsonObject &json)
     {
         return false;
     }
-
 
     if (json.contains("attributes")) // load legacy file format
     {
@@ -154,14 +153,6 @@ void Song::connectAttachment(Attachment *attachment)
     {
         emit attachmentRenamed( attachments().indexOf(attachment), name );
     });
-}
-
-Song* Song::copy() const
-{
-    QJsonObject json = toJsonObject();
-    Song* song = new Song( database() );
-    song->restoreFromJsonObject( json );
-    return song;
 }
 
 void Song::setTitle(const QString& title)

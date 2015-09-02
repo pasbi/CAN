@@ -107,9 +107,7 @@ SOURCES += main.cpp\
     DatabaseView/EventDatabaseView/eventtableviewcontainer.cpp \
     DatabaseView/EventDatabaseView/setlistwidget.cpp \
     Database/EventDatabase/setlist.cpp \
-    Commands/SetlistCommands/setlistremoveitemcommand.cpp \
     DatabaseView/EventDatabaseView/setlistitemselector.cpp \
-    Commands/SetlistCommands/setlisteditdatacommand.cpp \
     DatabaseView/EventDatabaseView/setlistview.cpp \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp \
     Attachments/AudioAttachment/sectionsmodel.cpp \
@@ -152,10 +150,10 @@ SOURCES += main.cpp\
     Commands/SetlistCommands/setlistmoverowscommand.cpp \
     Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.cpp \
     Commands/SongCommands/songnewattachmentcommand.cpp \
-    Commands/SetlistCommands/setlistnewitemcommand.cpp \
     Commands/timerdecorator.cpp \
     Attachments/AudioAttachment/section.cpp \
-    Program/midicommand.cpp
+    Program/midicommand.cpp \
+    DatabaseView/EventDatabaseView/ItemDelegates/typecomboboxdelegate.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -219,9 +217,7 @@ HEADERS  += mainwindow.h \
     DatabaseView/EventDatabaseView/setlistwidget.h \
     commontypes.h \
     Database/EventDatabase/setlist.h \
-    Commands/SetlistCommands/setlistremoveitemcommand.h \
     DatabaseView/EventDatabaseView/setlistitemselector.h \
-    Commands/SetlistCommands/setlisteditdatacommand.h \
     DatabaseView/EventDatabaseView/setlistview.h \
     Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h \
     Attachments/AudioAttachment/sectionsmodel.h \
@@ -274,7 +270,6 @@ HEADERS  += mainwindow.h \
     Commands/itemownercommanddecorator.h \
     Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.h \
     Commands/SongCommands/songnewattachmentcommand.h \
-    Commands/SetlistCommands/setlistnewitemcommand.h \
     Commands/modelcommand.h \
     Commands/timerdecorator.h \
     Commands/DatabaseCommands/databasecommand.h \
@@ -282,7 +277,11 @@ HEADERS  += mainwindow.h \
     Commands/DatabaseCommands/databaseedititemcommand.h \
     Commands/DatabaseCommands/databaseremoveitemcommand.h \
     Attachments/AudioAttachment/section.h \
-    Program/midicommand.h
+    Program/midicommand.h \
+    Database/databaseitem.h \
+    test.h \
+    Commands/DatabaseCommands/databasemoverowscommand.h \
+    DatabaseView/EventDatabaseView/ItemDelegates/typecomboboxdelegate.h
 
 
 

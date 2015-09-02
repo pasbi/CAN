@@ -41,12 +41,6 @@ public:
     QString fileNameBase() const { return "song"; }
 
 
-private:
-    friend class SongDatabaseNewSongCommand;
-    friend class SongDatabaseRemoveSongCommand;
-    friend class SongDatabaseMoveSongCommand;
-
-
 public:
     bool columnIsVisible(int i) const { return m_columnIsVisible[i]; }
     void setColumnVisible(int i, bool visible) { m_columnIsVisible[i] = visible; }

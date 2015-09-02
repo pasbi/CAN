@@ -34,9 +34,6 @@ private:
 signals:
     void eventAdded(int, Event*);
     void eventRemoved(int);
-
-private:
-    friend class EventDatabaseEditEventCommand;
 };
 
 #endif // DATEDATABASE_H

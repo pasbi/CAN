@@ -10,7 +10,8 @@
 #include "Project/project.h"
 #include "Database/databasemimedata.h"
 #include "application.h"
-#include "Commands/DatabaseCommands/databasenewitemcommand.h"
+#include "EventDatabase/setlistitem.h"
+//#include "Commands/DatabaseCommands/databasenewitemcommand.h"
 
 template<typename T>
 class Database : public PersistentObject, public QAbstractTableModel
@@ -22,13 +23,22 @@ public:
 
     }
 
+    virtual ~Database()
+    {
+
+    }
+
     Project* project() const
     {
         return m_project;
     }
 
 public:
-    QList<T*> items() const { return m_items; }
+    QList<T*> items() const
+    {
+        return m_items;
+    }
+
     void insertItem(T* item, int row = -1)
     {
         if (row < 0)
@@ -174,7 +184,7 @@ public:
             typedef typename DatabaseMimeData<T>::IndexedItem IndexedItem;
             for (IndexedItem item : itemData->indexedItems())
             {
-                app().pushCommand( new DatabaseNewItemCommand<T>( this, item.item->copy(), row + i ) );
+//                app().pushCommand( new DatabaseNewItemCommand<T>( this, item.item->copy(), row + i ) );
                 i++;
             }
             app().endMacro();
@@ -246,6 +256,10 @@ private:
     Project* m_project;
 protected:
     QList<T*> m_items;
+
+    // moving rows is a quite complicated task which is done completely in the comand.
+    // thus it needs low level access to this.
+    template<typename S> friend class DatabaseMoveRowsCommand;
 };
 
 #endif // DATABASE_H

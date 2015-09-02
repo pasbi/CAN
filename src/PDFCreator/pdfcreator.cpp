@@ -15,6 +15,7 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "util.h"
 #include "Attachments/ChordPatternAttachment/chord.h"
+#include "Database/EventDatabase/setlist.h"
 
 DEFN_CONFIG( PDFCreator, tr("PDF Export") );
 

@@ -6,26 +6,20 @@
 
 #include "taggable.h"
 #include "Program/program.h"
+#include "Database/databaseitem.h"
 
 class Attachment;
 template<typename T> class Database;
-class Song : public QObject, public Taggable
+class Song : public DatabaseItem<Song>
 {
     Q_OBJECT
 public:
     Song(Database<Song> *database);
     ~Song();
-private:
-    Database<Song>* m_songDatabase;
-
-
 
 public:
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
-    Database<Song>* database() const { return m_songDatabase; }
-    Song* copy() const;
-
 
     /////////////////////////////////////////////////
     ////

@@ -7,10 +7,11 @@
 
 #include "taggable.h"
 #include "commontypes.h"
-#include "setlist.h"
+#include "Database/databaseitem.h"
 
+class Setlist;
 template<typename T> class Database;
-class Event : public QObject, public Taggable
+class Event : public DatabaseItem<Event>
 {
     Q_OBJECT
 public:
@@ -20,6 +21,7 @@ public:
            const QDateTime& ending    = QDateTime::currentDateTime(),
            Type             type      = Rehearsal,
            const QString &  label = "");
+    ~Event();
 
     Type type() const { return m_type; }
     QString label() const { return m_label; }
@@ -28,7 +30,6 @@ public:
     QDateTime ending() const { return m_timeSpan.ending; }
     TimeSpan timeSpan() const { return m_timeSpan; }
     QString notices() const { return m_notices; }
-    Database<Event>* database() const { return m_database; }
 
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
@@ -42,20 +43,16 @@ public:
     void setType( Type type ) { m_type = type; }
     void setNotice( const QString & notice );
 
-    const Setlist* setlist() const { return &m_setlist; }
-    Setlist* setlist() { return &m_setlist; }
-
-    Event* copy() const;
-
+    const Setlist* setlist() const { return m_setlist; }
+    Setlist* setlist() { return m_setlist; }
 
 private:
-    Database<Event>* m_database;
     TimeSpan m_timeSpan;
     Type m_type;
     QString m_label;
     QString m_notices;
 
-    Setlist m_setlist;
+    Setlist* m_setlist;
 };
 
 

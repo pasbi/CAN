@@ -2,16 +2,18 @@
 #define SETLISTITEM_H
 
 #include <QJsonObject>
+#include "Database/databaseitem.h"
 
 class Song;
 class Setlist;
-class SetlistItem
+template<typename T> class Database;
+class SetlistItem : public DatabaseItem<SetlistItem>
 {
 public:
     enum Type { SongType, LabelType };
-    SetlistItem( Setlist* setlist, const QString & label );
-    SetlistItem( Setlist* setlist );
-    SetlistItem( Setlist* setlist, const Song* song );
+    SetlistItem( Database<SetlistItem>* setlist, const QString & label );
+    SetlistItem( Database<SetlistItem>* setlist );
+    SetlistItem( Database<SetlistItem>* setlist, const Song* song );
     ~SetlistItem();
 
     QString label() const;
@@ -20,14 +22,12 @@ public:
     const Song* song() const { return m_song; }
     Type type() const { return m_type; }
     QJsonObject toJson() const;
-    static SetlistItem* fromJson(const QJsonObject & object , Setlist *setlist);
-    SetlistItem* copy() const;
+    bool restoreFromJsonObject(const QJsonObject &object);
 
 private:
     Type m_type;
     const Song* m_song = NULL;
     QString m_label;
-    Setlist* m_setlist;
 };
 
 #endif // SETLISTITEM_H
