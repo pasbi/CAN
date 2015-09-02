@@ -87,7 +87,7 @@ void SetlistWidget::on_buttonAdd_clicked()
 {
     if (setlist())
     {
-        app().pushCommand( new SetlistNewItemCommand( setlist(), new SetlistItem() ) );
+        app().pushCommand( new SetlistNewItemCommand( setlist(), new SetlistItem(setlist()) ) );
     }
     else
     {

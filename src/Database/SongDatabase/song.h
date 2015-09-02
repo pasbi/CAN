@@ -38,9 +38,9 @@ private:
     QDateTime m_creationDateTime;
     QTime m_duration;
 public:
-    void setTitle(const QString& title) { m_title = title; }
-    void setArtist(const QString& artist) { m_artist = artist; }
-    void setDuration(const QTime& duration) { m_duration = duration; }
+    void setTitle(const QString& title);
+    void setArtist(const QString& artist);
+    void setDuration(const QTime& duration);
     QString title() const { return m_title; }
     QString artist() const { return m_artist; }
     QTime duration() const { return m_duration; }
@@ -69,6 +69,7 @@ signals:
     void attachmentAdded(int i);
     void attachmentRemoved(int i);
     void attachmentRenamed(int i, QString);
+    void attributeChanged();
 
     /////////////////////////////////////////////////
     ////

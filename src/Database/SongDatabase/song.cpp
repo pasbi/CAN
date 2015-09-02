@@ -164,6 +164,33 @@ Song* Song::copy() const
     return song;
 }
 
+void Song::setTitle(const QString& title)
+{
+    if (title != m_title)
+    {
+        m_title = title;
+        emit attributeChanged();
+    }
+}
+
+void Song::setArtist(const QString& artist)
+{
+    if (artist != m_artist)
+    {
+        m_artist = artist;
+        emit attributeChanged();
+    }
+}
+
+void Song::setDuration(const QTime& duration)
+{
+    if (duration != m_duration)
+    {
+        m_duration = duration;
+        emit attributeChanged();
+    }
+}
+
 
 
 

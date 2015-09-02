@@ -110,7 +110,7 @@ void SetlistView::my_on_actionNewSetlistItem_triggered()
 {
     if (model())
     {
-        app().pushCommand( new SetlistNewItemCommand( model(), new SetlistItem() ) );
+        app().pushCommand( new SetlistNewItemCommand( model(), new SetlistItem(model()) ) );
     }
 }
 

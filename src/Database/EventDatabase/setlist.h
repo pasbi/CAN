@@ -11,7 +11,7 @@ class Setlist : public QAbstractTableModel
     Q_OBJECT
 public:
     Setlist( Event* event );
-    ~Setlist() {}
+    virtual ~Setlist() {}
 
     void insertItem(SetlistItem* item , int position = -1);
     void removeItem( SetlistItem* item );

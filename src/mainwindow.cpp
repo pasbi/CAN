@@ -1296,7 +1296,7 @@ void MainWindow::on_action_Export_all_songs_triggered()
 
     for( Song* song : m_project.songDatabase()->items() )
     {
-        setlist.insertItem( new SetlistItem( song ) );
+        setlist.insertItem( new SetlistItem( &setlist, song ) );
     }
 
     PDFCreator::exportSetlist( &setlist, this );

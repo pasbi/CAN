@@ -2,24 +2,40 @@
 #include "application.h"
 #include "Project/project.h"
 #include "Database/SongDatabase/songdatabase.h"
+#include "setlist.h"
 
-
-SetlistItem::SetlistItem( const QString & label ) :
+SetlistItem::SetlistItem( Setlist* setlist, const QString & label ) :
     m_type( LabelType ),
-    m_label( label )
+    m_label( label ),
+    m_setlist(setlist)
 {
 }
 
-SetlistItem::SetlistItem( ) :
+SetlistItem::SetlistItem( Setlist* setlist ) :
     m_type( LabelType ),
-    m_label( QObject::tr("Unnamed") )
+    m_label( QObject::tr("Unnamed") ),
+    m_setlist(setlist)
 {
 }
 
-SetlistItem::SetlistItem( const Song* song ) :
+SetlistItem::SetlistItem( Setlist* setlist, const Song* song ) :
     m_type( SongType ),
-    m_song( song )
+    m_song( song ),
+    m_setlist(setlist)
 {
+    QObject::connect(song, &Song::attributeChanged, [song, this]()
+    {
+        QModelIndex index = m_setlist->indexOf(this);
+        emit m_setlist->dataChanged(index, index);
+    });
+}
+
+SetlistItem::~SetlistItem()
+{
+    if (m_song)
+    {
+        m_song->disconnect(m_setlist);
+    }
 }
 
 QString SetlistItem::label() const
@@ -67,7 +83,7 @@ QJsonObject SetlistItem::toJson() const
     return object;
 }
 
-SetlistItem* SetlistItem::fromJson( const QJsonObject & object )
+SetlistItem* SetlistItem::fromJson( const QJsonObject & object, Setlist* setlist )
 {
     if (!checkJsonObject( object, "type", QJsonValue::Double ))
     {
@@ -85,7 +101,7 @@ SetlistItem* SetlistItem::fromJson( const QJsonObject & object )
             Song* song = app().project()->songDatabase()->song( object["SongID"].toString() );
             if (song)
             {
-                return new SetlistItem( song );
+                return new SetlistItem( setlist, song );
             }
             else
             {
@@ -99,7 +115,7 @@ SetlistItem* SetlistItem::fromJson( const QJsonObject & object )
         }
         else
         {
-            return new SetlistItem( object["Label"].toString() );
+            return new SetlistItem( setlist, object["Label"].toString() );
         }
     }
     return NULL;
@@ -107,6 +123,6 @@ SetlistItem* SetlistItem::fromJson( const QJsonObject & object )
 
 SetlistItem* SetlistItem::copy() const
 {
-    return fromJson(toJson());
+    return fromJson(toJson(), m_setlist);
 }
 

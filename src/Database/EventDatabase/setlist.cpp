@@ -226,7 +226,7 @@ bool Setlist::fromJson(const QJsonArray & array )
     m_items.clear();
     for (const QJsonValue & val : array)
     {
-        SetlistItem* item = SetlistItem::fromJson(val.toObject());
+        SetlistItem* item = SetlistItem::fromJson(val.toObject(), this);
         if (item)
         {
             m_items << item;
@@ -340,7 +340,7 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
                 for (DatabaseMimeData<Song>::IndexedItem item : songData->indexedItems())
                 {
                     // create a new setlist item and link `song` with it
-                    SetlistItem* newItem = new SetlistItem(item.item->copy());
+                    SetlistItem* newItem = new SetlistItem( this, item.item->copy());
                     app().pushCommand( new SetlistNewItemCommand( this, newItem, row + i ) );
                     indexes << indexOf(newItem);
                     i++;
