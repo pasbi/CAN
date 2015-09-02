@@ -290,7 +290,6 @@ HEADERS  += mainwindow.h \
 
 
 FORMS    += mainwindow.ui \
-    DatabaseView/SongDatabaseView/songtableviewcontainer.ui \
     filterwidget.ui \
     AttachmentView/chordpatternattachmentview.ui \
     AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui \
@@ -302,10 +301,7 @@ FORMS    += mainwindow.ui \
     Dialogs/commitdialog.ui \
     Dialogs/identitydialog.ui \
     Dialogs/configurationdialog.ui \
-    DatabaseView/EventDatabaseView/eventdatabasewidget.ui \
     Dialogs/datetimedialog.ui \
-    DatabaseView/EventDatabaseView/eventtableviewcontainer.ui \
-    DatabaseView/EventDatabaseView/setlistwidget.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
     AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui \
     Dialogs/tagdialog.ui \
