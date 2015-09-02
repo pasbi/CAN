@@ -6,57 +6,36 @@
 #include "Database/EventDatabase/eventdatabase.h"
 #include "setlistwidget.h"
 #include "setlistview.h"
+#include "Database/EventDatabase/eventdatabasesortproxy.h"
 
 EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::EventDatabaseWidget)
+    DatabaseWidget(parent)
 {
-
-
     setupUi();
 
-    ui->setupUi(this);
-    m_tableViewContainer->setModel( app().project()->eventDatabaseProxy() );
-    connect( m_tableViewContainer->eventTableView()->selectionModel(),
+    m_databaseViewContainer->setDatabase( app().project()->eventDatabaseProxy() );
+    connect( m_databaseViewContainer->databaseView()->selectionModel(),
              SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
              this,
              SLOT(updateSetlistView()) );
-    connect( m_tableViewContainer->eventTableView()->model(), SIGNAL(modelReset()), this, SLOT(updateSetlistView()) );
-}
-
-EventDatabaseWidget::~EventDatabaseWidget()
-{
-    delete ui;
+    connect( m_databaseViewContainer->databaseView()->model(), SIGNAL(modelReset()), this, SLOT(updateSetlistView()) );
 }
 
 void EventDatabaseWidget::setupUi()
 {
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
-    m_tableViewContainer = new EventTableViewContainer(this);   //TODO TableViewContainer<Event>
+    m_databaseViewContainer = new EventTableViewContainer(this);   //TODO TableViewContainer<Event>
     m_setlistWidget = new SetlistWidget(splitter);
-    splitter->addWidget(m_tableViewContainer);
+    splitter->addWidget(m_databaseViewContainer);
     splitter->addWidget(m_setlistWidget);
     QHBoxLayout* layout = new QHBoxLayout(this);
     layout->addWidget(splitter);
     setLayout(layout);
 }
 
-Event* EventDatabaseWidget::currentEvent() const
-{
-    QModelIndexList rows = m_tableViewContainer->eventTableView()->selectionModel()->selectedRows();
-    if (rows.isEmpty())
-    {
-        return NULL;
-    }
-    else
-    {
-        return m_tableViewContainer->eventTableView()->model()->resolveItemAtIndex( rows.first() );
-    }
-}
-
 void EventDatabaseWidget::updateSetlistView()
 {
-    Event* e = currentEvent();
+    Event* e = currentItem();
     if (e)
     {
         m_setlistWidget->setSetlist( e->setlist() );
@@ -70,11 +49,6 @@ void EventDatabaseWidget::updateSetlistView()
 SetlistView* EventDatabaseWidget::setlistView() const
 {
     return m_setlistWidget->listView();
-}
-
-DatabaseView<Event>* EventDatabaseWidget::databaseView() const
-{
-    return m_tableViewContainer->eventTableView();
 }
 
 Setlist* EventDatabaseWidget::currentSetlist() const

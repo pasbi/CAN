@@ -3,6 +3,7 @@
 
 #include "DatabaseView/databaseview.h"
 
+//TODO SetlistView may be merged with DatabaseView<T>
 class Attachment;
 class Setlist;
 class SetlistItem;
@@ -12,7 +13,6 @@ class SetlistView : public DatabaseView<SetlistItem>
     Q_OBJECT
 public:
     explicit SetlistView(QWidget *parent = 0);
-    ~SetlistView();
 
     Setlist* model() const;
     void setModel(Setlist* setlist);

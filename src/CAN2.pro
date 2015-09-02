@@ -284,7 +284,8 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/typecomboboxdelegate.h \
     DatabaseView/ItemDelegates/lineeditdelegate.h \
     DatabaseView/ItemDelegates/itemdelegate.h \
-    DatabaseView/databasewidget.h
+    DatabaseView/databasewidget.h \
+    DatabaseView/databaseviewcontainer.h
 
 
 

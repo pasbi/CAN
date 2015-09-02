@@ -35,10 +35,6 @@ EventTableView::EventTableView(QWidget *parent) :
     horizontalHeader()->setDragDropMode( QAbstractItemView::InternalMove );
 }
 
-EventTableView::~EventTableView()
-{
-}
-
 int EventTableView::sizeHintForColumn(int column) const
 {
     int additional = 0;

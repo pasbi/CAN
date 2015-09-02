@@ -38,7 +38,7 @@ public:
 
     void setModel(DatabaseSortProxy<T> *model)
     {
-        QTableView::setModel( model );
+        DatabaseViewBase::setModel( model );
         connect( model->sourceModel(), &QAbstractTableModel::rowsInserted, [this](QModelIndex, int last) {
             selectRow( last );
         });

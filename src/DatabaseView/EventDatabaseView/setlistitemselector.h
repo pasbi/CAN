@@ -12,7 +12,6 @@ class SetlistItemSelector : public QDialog
 
 public:
     explicit SetlistItemSelector(QWidget *parent = 0);
-    ~SetlistItemSelector();
 
 protected:
     void showEvent(QShowEvent *e);

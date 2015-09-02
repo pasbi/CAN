@@ -3,10 +3,8 @@
 
 #include "DatabaseView/databaseview.h"
 
-template<typename T> class Database;
-class SongDatabaseSortProxy;
-class SongAttributeDelegate;
 class Song;
+class SongAttributeDelegate;
 class SongTableView : public DatabaseView<Song>
 {
     Q_OBJECT

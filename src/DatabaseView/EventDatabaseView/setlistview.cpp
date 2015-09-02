@@ -41,9 +41,6 @@ SetlistView::SetlistView(QWidget *parent) :
     setContextMenuPolicy( Qt::ActionsContextMenu );
 }
 
-SetlistView::~SetlistView()
-{
-}
 
 void SetlistView::setModel(Setlist *setlist)
 {

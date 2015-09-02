@@ -1,49 +1,12 @@
 #include "songtableviewcontainer.h"
 
-#include <QLineEdit>
-#include <QPushButton>
-
-#include "ui_songtableviewcontainer.h"
-#include "global.h"
-#include "songtableview.h"
-#include "Database/SongDatabase/songdatabasesortproxy.h"
+#include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
+#include "DatabaseView/SongDatabaseView/songtableview.h"
+#include "Database/SongDatabase/songdatabase.h"
 
 SongTableViewContainer::SongTableViewContainer(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::SongTableViewContainer)
+    DatabaseViewContainer(parent)
 {
-    ui->setupUi(this);
-}
-
-SongTableViewContainer::~SongTableViewContainer()
-{
-    delete ui;
-}
-
-SongTableView* SongTableViewContainer::songTableView() const
-{
-    return ui->tableView;
-}
-
-void SongTableViewContainer::setModel(SongDatabaseSortProxy *model)
-{
-    ui->tableView->setModel(model);
-    connect(ui->filterWidget, SIGNAL(filterChanged(QString)), model, SLOT(setFilter(QString)));
-}
-
-Song* SongTableViewContainer::currentSong() const
-{
-    qDebug() << (void*) ui;
-    qDebug() << (void*) ui->tableView;
-    qDebug() << (void*) ui->tableView->selectionModel();
-
-    QModelIndexList rows = ui->tableView->selectionModel()->selectedRows();
-    if (rows.isEmpty())
-    {
-        return NULL;
-    }
-    else
-    {
-        return ui->tableView->model()->resolveItemAtIndex( rows.first() );
-    }
+    m_databaseView = new SongTableView(this);
+    setupUi();
 }

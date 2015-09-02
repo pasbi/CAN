@@ -1,29 +1,20 @@
 #ifndef DATEDATABASEWIDGET_H
 #define DATEDATABASEWIDGET_H
 
-#include <QWidget>
+#include "DatabaseView/databasewidget.h"
 
-namespace Ui {
-class EventDatabaseWidget;
-}
-
-class Event;
 class SetlistView;
-class EventTableViewContainer;
-template<typename T> class DatabaseView;
 class Setlist;
 class SetlistWidget;
-class EventDatabaseWidget : public QWidget
+class Event;
+class EventDatabaseWidget : public DatabaseWidget<Event>
 {
     Q_OBJECT
 
 public:
     explicit EventDatabaseWidget(QWidget *parent = 0);
-    ~EventDatabaseWidget();
 
-    Event* currentEvent() const;
     SetlistView *setlistView() const;
-    DatabaseView<Event>* databaseView() const;
     Setlist* currentSetlist() const;
 
 protected:
@@ -33,9 +24,6 @@ private slots:
     void updateSetlistView();
 
 private:
-    Ui::EventDatabaseWidget *ui;
-
-    EventTableViewContainer* m_tableViewContainer;
     SetlistWidget* m_setlistWidget;
 };
 

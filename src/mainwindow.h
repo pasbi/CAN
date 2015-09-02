@@ -12,7 +12,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class SongTableView;
+template<typename T> class DatabaseView;
 class Song;
 class Event;
 class Attachment;
@@ -34,7 +34,7 @@ public:
      */
     QAction* newAttachment_Action(const QString &classname);
 
-    SongTableView* songTableView();
+    DatabaseView<Song> *songTableView();
 
 public slots:
     void updateActionsEnabled();

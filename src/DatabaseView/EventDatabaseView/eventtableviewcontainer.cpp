@@ -1,38 +1,12 @@
 #include "eventtableviewcontainer.h"
-#include "ui_eventtableviewcontainer.h"
-#include "Database/EventDatabase/eventdatabasesortproxy.h"
-#include "Database/database.h"
+
+#include "DatabaseView/EventDatabaseView/eventtableviewcontainer.h"
+#include "DatabaseView/EventDatabaseView/eventtableview.h"
+#include "Database/EventDatabase/eventdatabase.h"
 
 EventTableViewContainer::EventTableViewContainer(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::EventTableViewContainer)
+    DatabaseViewContainer(parent)
 {
-    ui->setupUi(this);
-
-}
-
-EventTableViewContainer::~EventTableViewContainer()
-{
-    delete ui;
-}
-
-EventTableView* EventTableViewContainer::eventTableView() const
-{
-    return ui->tableView;
-}
-
-void EventTableViewContainer::setModel(EventDatabaseSortProxy *model )
-{
-    ui->tableView->setModel( model );
-    connect(ui->filterWidget, SIGNAL(filterChanged(QString)), model, SLOT(setFilter(QString)));
-}
-
-Event* EventTableViewContainer::currentEvent() const
-{
-    QModelIndexList rows = ui->tableView->selectionModel()->selectedRows();
-    if (rows.isEmpty())
-    {
-        return NULL;
-    }
-    return ui->tableView->model()->resolveItemAtIndex( rows.first() );
+    m_databaseView = new EventTableView(this);
+    setupUi();
 }
