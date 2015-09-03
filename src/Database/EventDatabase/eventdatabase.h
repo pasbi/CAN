@@ -24,16 +24,9 @@ public:
 
     //Drag'n'Drop. Do not support any drag/drop operation.
     Qt::DropActions supportedDragActions() const;
+
     // we need mimeData and dropMimeData for copy/paste
     QString fileNameBase() const { return "event"; }
-
-
-private:
-    QList<Event*> m_tmpEventBuffer;
-
-signals:
-    void eventAdded(int, Event*);
-    void eventRemoved(int);
 };
 
 #endif // DATEDATABASE_H

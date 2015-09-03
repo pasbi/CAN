@@ -216,7 +216,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
     connect( ui->menuVisible_attributes, SIGNAL(aboutToShow()), this, SLOT(createAttributeVisibilityMenu() ));
-    connect( m_project.songDatabase(), SIGNAL(songRemoved(int)), ui->songDatabaseWidget, SLOT(updateAttachmentChooser()) );
+    connect( m_project.songDatabase(), SIGNAL(itemRemoved(int)), ui->songDatabaseWidget, SLOT(updateAttachmentChooser()) );
     connect( ui->menu_Language, SIGNAL(aboutToShow()), this, SLOT( createLanguageMenu() ));
 
     //////////////////////////////////////////
