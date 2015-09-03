@@ -28,14 +28,7 @@ Application & app()
 
 void Application::pushCommand(Command *command)
 {
-    if (m_project)
-    {
-        m_project->pushCommand( command );
-    }
-    else
-    {
-        qWarning() << "No project set. Cannot push command.";
-    }
+    m_project->pushCommand( command );
 }
 
 void Application::setProject(Project *project)

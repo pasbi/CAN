@@ -28,7 +28,6 @@ SetlistView::SetlistView(QWidget *parent) :
     setAcceptDrops(true);
     setDropIndicatorShown( false );
     setDragDropMode( DragDrop );
-    setSelectionMode( QAbstractItemView::ExtendedSelection );
     setDefaultDropAction( Qt::MoveAction );
     setDropIndicatorShown(true);
     setAlternatingRowColors( true );
@@ -205,11 +204,22 @@ void SetlistView::select(QModelIndexList indexes)
 {
     if (model())
     {
+        QList<int> rows;
+        for (const QModelIndex& index : indexes)
+        {
+            if (!rows.contains(index.row()))
+            {
+                rows << index.row();
+            }
+        }
+
         clearSelection();
 
         for (const QModelIndex& index : indexes)
         {
+            setSelectionMode( QAbstractItemView::MultiSelection );
             selectRow(index.row());
+            setSelectionMode( QAbstractItemView::ExtendedSelection );
         }
     }
 }

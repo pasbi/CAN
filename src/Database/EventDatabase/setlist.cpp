@@ -268,34 +268,43 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
         row = rowCount();
     }
 
-    bool success = false;
     const DatabaseMimeData<Song>* songData = DatabaseMimeData<Song>::cast(data);
     const DatabaseMimeData<SetlistItem>* setlistData = DatabaseMimeData<SetlistItem>::cast(data);
     QList<QModelIndex> indexes;
     if (songData)
     {
-        success = dropSongs(songData, row, indexes);
+        if (!dropSongs(songData, row, indexes))
+        {
+            return false;
+        }
     }
     else if (setlistData)
     {
         if (action == Qt::MoveAction)
         {
             moveItems(setlistData, row, indexes);
-            success = true;
         }
         else if (action == Qt::CopyAction)
         {
             copyItems(setlistData, row, indexes);
-            success = true;
         }
         else
         {
-            success = false;
+            return false;
         }
     }
 
+    QList<int> rows;
+    for (const QModelIndex& index : indexes)
+    {
+        if (!rows.contains(index.row()))
+        {
+            rows << index.row();
+        }
+    }
+    qDebug() << "select " << rows;
     emit selectionRequest(indexes);
-    return success;
+    return true;
 }
 
 
