@@ -12,9 +12,8 @@
 
 
 SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
-    DatabaseWidget<Song>(parent)
+    DatabaseWidget(new SongTableViewContainer(), new AttachmentChooser(), parent)
 {
-    setupUi();
     m_databaseViewContainer->setDatabase( app().project()->songDatabaseProxy() );
 
     connect( m_databaseViewContainer->databaseView()->selectionModel(),
@@ -23,33 +22,20 @@ SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
              SLOT(updateAttachmentChooser()) );
 }
 
-
-void SongDatabaseWidget::setupUi()
-{
-    QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
-    m_databaseViewContainer = new SongTableViewContainer(this);
-    m_attachmentChooser = new AttachmentChooser(splitter);
-    splitter->addWidget(m_databaseViewContainer);
-    splitter->addWidget(m_attachmentChooser);
-    QHBoxLayout* layout = new QHBoxLayout(this);
-    layout->addWidget(splitter);
-    setLayout(layout);
-}
-
 void SongDatabaseWidget::updateAttachmentChooser()
 {
     QModelIndexList list = m_databaseViewContainer->databaseView()->selectionModel()->selectedRows();
 
     if (list.isEmpty())
     {
-        m_attachmentChooser->setSong( NULL );
+        attachmentChooser()->setSong( NULL );
     }
     else
     {
         // todo m_currentIndex seems to be never written
         if (list.first() != m_currentIndex)
         {
-            m_attachmentChooser->setSong(
+            attachmentChooser()->setSong(
                             m_databaseViewContainer->databaseView()->model()->resolveItemAtIndex( list.first() ) );
         }
     }
@@ -57,5 +43,5 @@ void SongDatabaseWidget::updateAttachmentChooser()
 
 AttachmentChooser* SongDatabaseWidget::attachmentChooser() const
 {
-    return m_attachmentChooser;
+    return m_secondWidget;
 }

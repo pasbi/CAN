@@ -3,7 +3,6 @@
 
 #include "DatabaseView/databaseview.h"
 
-//TODO SetlistView may be merged with DatabaseView<T>
 class Attachment;
 class Setlist;
 class SetlistItem;

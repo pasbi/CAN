@@ -154,7 +154,9 @@ SOURCES += main.cpp\
     Attachments/AudioAttachment/section.cpp \
     Program/midicommand.cpp \
     DatabaseView/databaseview.cpp \
-    Database/databasesortproxy.cpp
+    Database/databasesortproxy.cpp \
+    DatabaseView/databaseviewcontainer.cpp \
+    DatabaseView/databasewidget.cpp
 
 
 HEADERS  += mainwindow.h \

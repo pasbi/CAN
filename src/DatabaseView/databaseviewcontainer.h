@@ -6,27 +6,28 @@
 #include <QModelIndex>
 #include <QVBoxLayout>
 
+class DatabaseViewContainerBase : public QWidget
+{
+protected:
+    explicit DatabaseViewContainerBase(QWidget* databaseView, QWidget *parent);
+    FilterWidget* m_filterWidget;
+};
 
 template<typename T> class DatabaseView;
 template<typename T> class DatabaseSortProxy;
-
 template<typename T>
-class DatabaseViewContainer : public QWidget
+class DatabaseViewContainer : public DatabaseViewContainerBase
 {
 protected:
-    explicit DatabaseViewContainer(QWidget* parent = 0) :
-        QWidget(parent)
+    /**
+     * @brief DatabaseViewContainer
+     * @param databaseView DatabaseViewContainer takes the ownership of datbaseView
+     * @param parent
+     */
+    explicit DatabaseViewContainer(DatabaseView<T>* databaseView, QWidget* parent = 0) :
+        DatabaseViewContainerBase(databaseView, parent),
+        m_databaseView(databaseView)
     {
-    }
-
-    //TODO this code is without templates, consider to put it somewhere else
-    void setupUi()
-    {
-        m_filterWidget = new FilterWidget(this);
-        QVBoxLayout* layout = new QVBoxLayout(this);
-        layout->addWidget(m_databaseView);
-        layout->addWidget(m_filterWidget);
-        setLayout(layout);
     }
 
 public:
@@ -43,8 +44,6 @@ public:
 
     T* currentItem() const
     {
-        qDebug() << (void*) m_databaseView;
-        qDebug() << m_databaseView;
         QModelIndexList rows = m_databaseView->selectionModel()->selectedRows();
         if (rows.isEmpty())
         {
@@ -58,8 +57,7 @@ public:
 
 protected:
     DatabaseView<T>* m_databaseView;
-private:
-    FilterWidget* m_filterWidget;
+
 };
 
 #endif // DATABASEVIEWCONTAINER_H

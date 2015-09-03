@@ -13,6 +13,8 @@ class SetlistItemSelector;
 class SetlistItem;
 class SetlistView;
 class Setlist;
+
+// SetlistWidget does not inherit DatabaseWidget because it is too different.
 class SetlistWidget : public QWidget
 {
     Q_OBJECT
@@ -44,8 +46,6 @@ private:
     Ui::SetlistWidget *ui;
 
     bool m_selectorIsVisible = false;
-    QRect m_selectorGeometry;
-    QPoint m_selectorPosition;
     SetlistItemSelector* const m_selector;
     QPixmap m_attentionPixmap;
     QPixmap m_emptyPixmap;

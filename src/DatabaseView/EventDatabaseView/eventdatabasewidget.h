@@ -7,7 +7,7 @@ class SetlistView;
 class Setlist;
 class SetlistWidget;
 class Event;
-class EventDatabaseWidget : public DatabaseWidget<Event>
+class EventDatabaseWidget : public DatabaseWidget<Event, SetlistWidget>
 {
     Q_OBJECT
 
@@ -17,14 +17,12 @@ public:
     SetlistView *setlistView() const;
     Setlist* currentSetlist() const;
 
-protected:
-    void setupUi();
-
 private slots:
     void updateSetlistView();
 
 private:
-    SetlistWidget* m_setlistWidget;
+    SetlistWidget* setlistWidget() const;
+
 };
 
 #endif // DATEDATABASEWIDGET_H

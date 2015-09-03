@@ -6,7 +6,7 @@
 
 class Song;
 class AttachmentChooser;
-class SongDatabaseWidget : public DatabaseWidget<Song>
+class SongDatabaseWidget : public DatabaseWidget<Song, AttachmentChooser>
 {
     Q_OBJECT
 
@@ -14,16 +14,11 @@ public:
     explicit SongDatabaseWidget(QWidget *parent = 0);
     AttachmentChooser* attachmentChooser() const;
 
-protected:
-    void setupUi();
-
 public slots:
     void updateAttachmentChooser();
 
-public:
+private:
     QModelIndex m_currentIndex;
-    AttachmentChooser* m_attachmentChooser;
-
 
 };
 #endif // SONGDATABASEWIDGET_H

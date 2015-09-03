@@ -1,12 +1,7 @@
 #include "eventtableviewcontainer.h"
-
-#include "DatabaseView/EventDatabaseView/eventtableviewcontainer.h"
-#include "DatabaseView/EventDatabaseView/eventtableview.h"
-#include "Database/EventDatabase/eventdatabase.h"
+#include "eventtableview.h"
 
 EventTableViewContainer::EventTableViewContainer(QWidget *parent) :
-    DatabaseViewContainer(parent)
+    DatabaseViewContainer(new EventTableView(), parent)
 {
-    m_databaseView = new EventTableView(this);
-    setupUi();
 }
