@@ -24,6 +24,7 @@ public:
     explicit DatabaseView(QWidget *parent = 0) :
         DatabaseViewBase(parent)
     {
+        setAutoScroll(true);
         setContextMenuPolicy(Qt::ActionsContextMenu);
         setAlternatingRowColors( true );
         setEditTriggers( QAbstractItemView::DoubleClicked

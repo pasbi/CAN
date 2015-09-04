@@ -147,7 +147,6 @@ SOURCES += main.cpp\
     Commands/SongCommands/songeditprogramcommand.cpp \
     Program/midicontroller.cpp \
     Database/EventDatabase/setlistitem.cpp \
-    Commands/SetlistCommands/setlistmoverowscommand.cpp \
     Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.cpp \
     Commands/SongCommands/songnewattachmentcommand.cpp \
     Commands/timerdecorator.cpp \
@@ -271,7 +270,6 @@ HEADERS  += mainwindow.h \
     Database/databasemimedata.h \
     Database/databasesortproxy.h \
     Database/EventDatabase/setlistitem.h \
-    Commands/SetlistCommands/setlistmoverowscommand.h \
     Commands/itemownercommanddecorator.h \
     Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.h \
     Commands/SongCommands/songnewattachmentcommand.h \
