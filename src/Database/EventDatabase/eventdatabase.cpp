@@ -6,7 +6,7 @@
 #include "Database/databasemimedata.h"
 
 EventDatabase::EventDatabase(Project *project) :
-    Database<Event>(project)
+    Database(project)
 {
     Event::seedRandomID();
 }

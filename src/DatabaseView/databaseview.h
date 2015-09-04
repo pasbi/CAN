@@ -46,7 +46,8 @@ public:
 
     DatabaseSortProxy<T>* proxyModel() const
     {
-        return static_cast<DatabaseSortProxy<T>*>(DatabaseViewBase::model());
+        // cast may fail, e.g. if model was set via QTableView::setModel
+        return dynamic_cast<DatabaseSortProxy<T>*>(DatabaseViewBase::model());
     }
 
     Database<T>* model() const

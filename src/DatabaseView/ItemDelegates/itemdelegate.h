@@ -19,7 +19,8 @@ protected:
     {
         Q_UNUSED(index);
         Q_UNUSED(option);
-        return new EditorType(parent);
+        QWidget* editor = new EditorType(parent);
+        return editor;
     }
 
     void setEditorData(QWidget *editor, const QModelIndex &index) const

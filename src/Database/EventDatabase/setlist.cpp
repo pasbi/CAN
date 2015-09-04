@@ -154,14 +154,7 @@ Qt::ItemFlags Setlist::flags(const QModelIndex &index) const
     }
     else
     {
-        Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled;
-
-        if (itemAtIndex(index)->type() == SetlistItem::LabelType && index.column() == 0)
-        {
-            flags |= Qt::ItemIsEditable;
-        }
-
-        return flags;
+        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable;
     }
 }
 
@@ -302,7 +295,6 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
             rows << index.row();
         }
     }
-    qDebug() << "select " << rows;
     emit selectionRequest(indexes);
     return true;
 }
@@ -312,4 +304,3 @@ QStringList Setlist::mimeTypes() const
 {
     return QStringList() << DatabaseMimeData<Song>::mimeType() << DatabaseMimeData<SetlistItem>::mimeType();
 }
-

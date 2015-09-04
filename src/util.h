@@ -47,5 +47,17 @@ QString replaceDiacritics(QString string );
 
 }
 
+template<typename T>
+int indexOfConstInList(const QList<T*>& list, const T* item)
+{
+    // return list.indexOf(item);   // does not work since item has "wrong" type
+    for (int i = 0; i < list.length(); ++i)
+    {
+        if (item == list[i])
+            return i;
+    }
+    return -1;
+}
+
 
 #endif // UTIL_H

@@ -13,10 +13,12 @@
 #include "EventDatabase/setlistitem.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 
+#include "util.h"
+
 template<typename T>
 class Database : public PersistentObject, public QAbstractTableModel
 {
-public:
+private:
     Database(Project* project) :
         m_project(project)
     {
@@ -28,12 +30,12 @@ public:
 
     }
 
+public:
     Project* project() const
     {
         return m_project;
     }
 
-public:
     QList<T*> items() const
     {
         return m_items;
@@ -68,17 +70,7 @@ public:
 
     int rowOf(const T* item) const
     {
-        int row = -1;
-        for (int i = 0; i < m_items.length() && row < 0; ++i)
-        {
-            if (item == m_items[i])
-            {
-                row = i;
-                break;
-            }
-        }
-        assert(row >= 0);
-        return row;
+        return indexOfConstInList( m_items, item );
     }
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const
@@ -247,10 +239,18 @@ public:
         }
     }
 
+    // this field may be interpreted by a proxy model. This model itself does not support filtering.
     virtual bool columnIsVisible(int)
     {
         return true;
     }
+
+    void notifiyDataChange(const T *item)
+    {
+        int row = rowOf(item);
+        emit dataChanged( index(row, 0), index(row, columnCount() - 1) );
+    }
+
 
 private:
     Project* m_project;
@@ -260,6 +260,13 @@ protected:
     // moving rows is a quite complicated task which is done completely in the comand.
     // thus it needs low level access to this.
     template<typename S> friend class DatabaseMoveRowsCommand;
+
+    // Each template instanciation should be subclassed by _exactly_one_ class.
+    // with this assumption, we can  static_cast  e.g. a  Database<Song>  safely to a  SongDatabase.
+    // for this reason, constructors and destructors are private. All classes which are allowed to derive this template are listed below.
+    friend class SongDatabase;
+    friend class EventDatabase;
+    friend class Setlist;
 };
 
 #endif // DATABASE_H

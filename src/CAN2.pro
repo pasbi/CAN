@@ -156,7 +156,9 @@ SOURCES += main.cpp\
     DatabaseView/databaseview.cpp \
     Database/databasesortproxy.cpp \
     DatabaseView/databaseviewcontainer.cpp \
-    DatabaseView/databasewidget.cpp
+    DatabaseView/databasewidget.cpp \
+    DatabaseView/ItemDelegates/setlistviewitemdelegate.cpp \
+    Commands/SetlistCommands/setlistitemchangesongcommand.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -287,7 +289,9 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/lineeditdelegate.h \
     DatabaseView/ItemDelegates/itemdelegate.h \
     DatabaseView/databasewidget.h \
-    DatabaseView/databaseviewcontainer.h
+    DatabaseView/databaseviewcontainer.h \
+    DatabaseView/ItemDelegates/setlistviewitemdelegate.h \
+    Commands/SetlistCommands/setlistitemchangesongcommand.h
 
 
 

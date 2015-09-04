@@ -32,7 +32,7 @@ void SongDatabaseWidget::updateAttachmentChooser()
     }
     else
     {
-        // todo m_currentIndex seems to be never written
+        //TODO m_currentIndex seems to be never written
         if (list.first() != m_currentIndex)
         {
             attachmentChooser()->setSong(

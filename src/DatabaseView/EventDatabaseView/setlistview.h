@@ -32,6 +32,10 @@ private:
     bool attachmentIsIgnored( const Attachment* attachment ) const;
     QWidget* createSongCellWidget(const Song *song);
 
+protected:
+    QAbstractItemDelegate* itemDelegate(const QModelIndex &index) const;
+
+
 };
 
 #endif // SETLISTVIEW_H

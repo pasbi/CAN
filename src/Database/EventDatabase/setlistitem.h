@@ -14,7 +14,7 @@ public:
     SetlistItem( Database<SetlistItem>* setlist, const QString & label );
     SetlistItem( Database<SetlistItem>* setlist );
     SetlistItem( Database<SetlistItem>* setlist, const Song* song );
-    ~SetlistItem();
+    virtual ~SetlistItem();
 
     QString label() const;
     QString description() const { return label(); }
@@ -23,14 +23,17 @@ public:
     Type type() const { return m_type; }
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject &object);
-
     QStringList textAttributes() const;
+
+    static QString labelSong(const Song* song);
+    void setSong(const Song *song);
 
 private:
     Type m_type;
-    void setSong(const Song *song);
     const Song* m_song = NULL;
     QString m_label;
+
+    QMetaObject::Connection m_updateSongLabelConnection;
 };
 
 #endif // SETLISTITEM_H

@@ -3,6 +3,7 @@
 
 #include "Commands/modelcommand.h"
 
+//TODO remove this class
 template<typename T> class Database;
 template<typename T>
 class DatabaseCommand : public ModelCommand<Database<T>>

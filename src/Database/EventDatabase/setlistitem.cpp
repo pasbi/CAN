@@ -30,21 +30,33 @@ SetlistItem::~SetlistItem()
 {
     if (m_song)
     {
-        m_song->disconnect(database());
+        QObject::disconnect(m_updateSongLabelConnection);
     }
 }
 
 void SetlistItem::setSong(const Song *song)
 {
-    assert(!m_song);
+    if (m_song)
+    {
+        QObject::disconnect(m_updateSongLabelConnection);
+    }
+
     m_song = song;
 
-    QObject::connect(song, &Song::attributeChanged, [song, this]()
+    m_updateSongLabelConnection = QObject::connect(song, &Song::attributeChanged, [song, this]()
     {
         int row = database()->rowOf(this);
-        QModelIndex index = database()->index(row, 0);
-        emit database()->dataChanged(index, index);
+        if (row >= 0)
+        {
+            QModelIndex index = database()->index(row, 0);
+            emit database()->dataChanged(index, index);
+        }
     });
+}
+
+QString SetlistItem::labelSong(const Song *song)
+{
+    return QString("%1 - %2").arg(song->title(), song->artist());
 }
 
 QString SetlistItem::label() const
@@ -52,7 +64,7 @@ QString SetlistItem::label() const
     switch (m_type)
     {
     case SongType:
-        return QString("%1 - %2").arg(m_song->title(), m_song->artist());
+        return labelSong(m_song);
     case LabelType:
         return m_label;
     default:

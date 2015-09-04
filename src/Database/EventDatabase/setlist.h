@@ -2,11 +2,11 @@
 #define SETLIST_H
 
 #include "Database/database.h"
-#include "setlistitem.h"
 #include "global.h"
 
 class Song;
 class Event;
+class SetlistItem;
 class Setlist : public Database<SetlistItem>
 {
     Q_OBJECT
@@ -32,7 +32,6 @@ public:
 
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject& object );
-
 
 signals:
     void selectionRequest(QModelIndexList);

@@ -20,10 +20,11 @@
 #include "setlistitemselector.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
+#include "DatabaseView/ItemDelegates/setlistviewitemdelegate.h"
 
 
 SetlistView::SetlistView(QWidget *parent) :
-    DatabaseView<SetlistItem>(parent)
+    DatabaseView(parent)
 {
     setAcceptDrops(true);
     setDropIndicatorShown( false );
@@ -35,11 +36,10 @@ SetlistView::SetlistView(QWidget *parent) :
     setHorizontalScrollMode( QTableView::ScrollPerPixel );
 
     setEditTriggers( QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed );
-    setItemDelegateForColumn( 0, new LineEditDelegate<SetlistItem>(this) );
 
     setContextMenuPolicy( Qt::ActionsContextMenu );
+    setItemDelegate(new SetlistViewItemDelegate(this));
 }
-
 
 void SetlistView::setModel(Setlist *setlist)
 {
@@ -49,15 +49,18 @@ void SetlistView::setModel(Setlist *setlist)
         disconnect( model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
         disconnect( model(), SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
         disconnect( model(), SIGNAL(modelReset()),                                     this, SLOT(updateCellWidgets()) );
+        disconnect( model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),             this, SLOT(updateCellWidgets()) );
         disconnect( model(), SIGNAL(selectionRequest(QModelIndexList)),                this, SLOT(select(QModelIndexList)) );
     }
-    QTableView::setModel( setlist );
+    // Database<SetlistItem>::setModel() expects a DatabaseSortProxyModel<SetlistItem>, but setlist does not have a proxy.
+    DatabaseViewBase::setModel( setlist );
     if (setlist)
     {
         connect( setlist, SIGNAL(rowsInserted(QModelIndex,int,int)),                this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(modelReset()),                                     this, SLOT(updateCellWidgets()) );
+        connect( setlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)),             this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(selectionRequest(QModelIndexList)),                this, SLOT(select(QModelIndexList)) );
         updateCellWidgets();
         horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );
