@@ -5,18 +5,17 @@
 #include "DatabaseView/SongDatabaseView/songtableview.h"
 #include "Database/database.h"
 #include <QSplitter>
-#include "songtableviewcontainer.h"
 #include "AttachmentView/attachmentchooser.h"
 #include <QHBoxLayout>
 #include "Database/SongDatabase/songdatabasesortproxy.h"
 
 
 SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
-    DatabaseWidget(new SongTableViewContainer(), new AttachmentChooser(), parent)
+    DatabaseWidget(new SongTableView(), new AttachmentChooser(), parent)
 {
-    m_databaseViewContainer->setDatabase( app().project()->songDatabaseProxy() );
+    databaseView()->setModel( app().project()->songDatabaseProxy() );
 
-    connect( m_databaseViewContainer->databaseView()->selectionModel(),
+    connect( databaseView()->selectionModel(),
              SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
              this,
              SLOT(updateAttachmentChooser()) );
@@ -24,7 +23,7 @@ SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
 
 void SongDatabaseWidget::updateAttachmentChooser()
 {
-    QModelIndexList list = m_databaseViewContainer->databaseView()->selectionModel()->selectedRows();
+    QModelIndexList list = databaseView()->selectionModel()->selectedRows();
 
     if (list.isEmpty())
     {
@@ -32,7 +31,7 @@ void SongDatabaseWidget::updateAttachmentChooser()
     }
     else
     {
-        Song* song = m_databaseViewContainer->databaseView()->model()->resolveItemAtIndex( list.first() );
+        Song* song = databaseView()->model()->resolveItemAtIndex( list.first() );
         attachmentChooser()->setSong( song );
     }
 }

@@ -6,17 +6,16 @@
 #include "setlistwidget.h"
 #include "setlistview.h"
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
-#include "eventtableviewcontainer.h"
 
 EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
-    DatabaseWidget(new EventTableViewContainer(), new SetlistWidget(), parent)
+    DatabaseWidget(new EventTableView(), new SetlistWidget(), parent)
 {
-    m_databaseViewContainer->setDatabase( app().project()->eventDatabaseProxy() );
-    connect( m_databaseViewContainer->databaseView()->selectionModel(),
+    databaseView()->setModel( app().project()->eventDatabaseProxy() );
+    connect( databaseView()->selectionModel(),
              SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
              this,
              SLOT(updateSetlistView()) );
-    connect( m_databaseViewContainer->databaseView()->model(), SIGNAL(modelReset()), this, SLOT(updateSetlistView()) );
+    connect( databaseView()->model(), SIGNAL(modelReset()), this, SLOT(updateSetlistView()) );
 }
 
 SetlistWidget* EventDatabaseWidget::setlistWidget() const

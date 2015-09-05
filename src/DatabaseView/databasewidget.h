@@ -2,7 +2,7 @@
 #define DATABASEWIDGET_H
 
 #include <QWidget>
-#include "databaseviewcontainer.h"
+#include "databaseview.h"
 
 class DatabaseWidgetBase : public QWidget
 {
@@ -13,7 +13,7 @@ protected:
 
 template<typename T> class DatabaseView;
 
-template<typename DatabaseViewContainerType, typename SecondWidgetType>
+template<typename T, typename SecondWidgetType>
 class DatabaseWidget : public DatabaseWidgetBase
 {
 protected:
@@ -23,27 +23,27 @@ protected:
      * @param secondWidget DatabaseWidget takes ownership
      * @param parent
      */
-    DatabaseWidget(DatabaseViewContainer<DatabaseViewContainerType>* databaseViewContainer, SecondWidgetType* secondWidget, QWidget* parent = 0) :
-        DatabaseWidgetBase(databaseViewContainer, secondWidget, parent),
-        m_databaseViewContainer(databaseViewContainer),
+    DatabaseWidget(DatabaseView<T>* databaseView, SecondWidgetType* secondWidget, QWidget* parent = 0) :
+        DatabaseWidgetBase(databaseView, secondWidget, parent),
+        m_databaseView(databaseView),
         m_secondWidget(secondWidget)
     {
     }
 
 public:
-    DatabaseViewContainerType* currentItem() const
+    T* currentItem() const
     {
-        return m_databaseViewContainer->currentItem();
+        return databaseView()->currentItem();
     }
 
-    DatabaseView<DatabaseViewContainerType>* databaseView() const
+    DatabaseView<T>* databaseView() const
     {
-        return m_databaseViewContainer->databaseView();
+        return m_databaseView;
     }
 
-
+private:
 protected:
-    DatabaseViewContainer<DatabaseViewContainerType>* m_databaseViewContainer;
+    DatabaseView<T>* m_databaseView;
     SecondWidgetType* m_secondWidget;
 };
 

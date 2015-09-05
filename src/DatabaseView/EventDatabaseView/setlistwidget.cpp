@@ -12,7 +12,6 @@
 #include "application.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Project/project.h"
-#include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
 #include "util.h"
 #include "Database/EventDatabase/setlistitem.h"
 #include "Database/EventDatabase/setlist.h"

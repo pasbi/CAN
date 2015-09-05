@@ -64,13 +64,7 @@ SOURCES += main.cpp\
     Commands/command.cpp \
     DatabaseView/SongDatabaseView/songtableview.cpp \
     util.cpp \
-    DatabaseView/SongDatabaseView/songattributedelegate.cpp \
-    DatabaseView/SongDatabaseView/CellEditors/celleditor.cpp \
-    DatabaseView/SongDatabaseView/CellEditors/stringeditor.cpp \
-    DatabaseView/SongDatabaseView/CellEditors/comboeditor.cpp \
-    DatabaseView/SongDatabaseView/CellEditors/dateeditor.cpp \
     Database/SongDatabase/songdatabasesortproxy.cpp \
-    DatabaseView/SongDatabaseView/songtableviewcontainer.cpp \
     filterwidget.cpp \
     FileIndex/fileindex.cpp \
     FileIndex/indexer.cpp \
@@ -104,7 +98,6 @@ SOURCES += main.cpp\
     DatabaseView/EventDatabaseView/eventdatabasewidget.cpp \
     Dialogs/datetimedialog.cpp \
     Database/EventDatabase/eventdatabasesortproxy.cpp \
-    DatabaseView/EventDatabaseView/eventtableviewcontainer.cpp \
     DatabaseView/EventDatabaseView/setlistwidget.cpp \
     Database/EventDatabase/setlist.cpp \
     DatabaseView/EventDatabaseView/setlistitemselector.cpp \
@@ -141,7 +134,6 @@ SOURCES += main.cpp\
     Dialogs/exportpdfdialog.cpp \
     Dialogs/tageditor.cpp \
     Dialogs/chordpatternviewerscrollarea.cpp \
-    DatabaseView/SongDatabaseView/CellEditors/durationeditor.cpp \
     Dialogs/programdialog.cpp \
     Program/program.cpp \
     Commands/SongCommands/songeditprogramcommand.cpp \
@@ -154,7 +146,6 @@ SOURCES += main.cpp\
     Program/midicommand.cpp \
     DatabaseView/databaseview.cpp \
     Database/databasesortproxy.cpp \
-    DatabaseView/databaseviewcontainer.cpp \
     DatabaseView/databasewidget.cpp \
     DatabaseView/ItemDelegates/setlistviewitemdelegate.cpp \
     Commands/SetlistCommands/setlistitemchangesongcommand.cpp \
@@ -177,13 +168,7 @@ HEADERS  += mainwindow.h \
     Commands/command.h \
     DatabaseView/SongDatabaseView/songtableview.h \
     util.h \
-    DatabaseView/SongDatabaseView/songattributedelegate.h \
-    DatabaseView/SongDatabaseView/CellEditors/celleditor.h \
-    DatabaseView/SongDatabaseView/CellEditors/stringeditor.h \
-    DatabaseView/SongDatabaseView/CellEditors/comboeditor.h \
-    DatabaseView/SongDatabaseView/CellEditors/dateeditor.h \
     Database/SongDatabase/songdatabasesortproxy.h \
-    DatabaseView/SongDatabaseView/songtableviewcontainer.h \
     filterwidget.h \
     FileIndex/fileindex.h \
     FileIndex/indexer.h \
@@ -218,7 +203,6 @@ HEADERS  += mainwindow.h \
     DatabaseView/EventDatabaseView/eventdatabasewidget.h \
     Dialogs/datetimedialog.h \
     Database/EventDatabase/eventdatabasesortproxy.h \
-    DatabaseView/EventDatabaseView/eventtableviewcontainer.h \
     DatabaseView/EventDatabaseView/setlistwidget.h \
     commontypes.h \
     Database/EventDatabase/setlist.h \
@@ -263,7 +247,6 @@ HEADERS  += mainwindow.h \
     Dialogs/exportpdfdialog.h \
     Dialogs/tageditor.h \
     Dialogs/chordpatternviewerscrollarea.h \
-    DatabaseView/SongDatabaseView/CellEditors/durationeditor.h \
     Dialogs/programdialog.h \
     Program/program.h \
     Commands/SongCommands/songeditprogramcommand.h \
@@ -287,7 +270,6 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/lineeditdelegate.h \
     DatabaseView/ItemDelegates/itemdelegate.h \
     DatabaseView/databasewidget.h \
-    DatabaseView/databaseviewcontainer.h \
     DatabaseView/ItemDelegates/setlistviewitemdelegate.h \
     Commands/SetlistCommands/setlistitemchangesongcommand.h \
     huddecorator.h \

@@ -322,7 +322,6 @@ QStringList Setlist::mimeTypes() const
 void Setlist::setFilter(QString filter)
 {
     m_filter = filter;
-    qDebug() << "set filter " << m_filter;
     QModelIndex topLeft = index(0, 0);
     QModelIndex bottomRight = index(rowCount() - 1, columnCount() - 1);
 

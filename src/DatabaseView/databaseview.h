@@ -95,6 +95,19 @@ public:
         }
         DatabaseViewBase::setFilter(filter);
     }
+
+    T* currentItem() const
+    {
+        QModelIndexList rows = selectionModel()->selectedRows();
+        if (rows.isEmpty())
+        {
+            return nullptr;
+        }
+        else
+        {
+            return model()->resolveItemAtIndex( rows.first() );
+        }
+    }
 };
 
 #endif // DATABASEVIEW_H

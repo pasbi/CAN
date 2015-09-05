@@ -1,5 +1,6 @@
 #include "databasewidget.h"
 #include <QSplitter>
+#include <QHBoxLayout>
 
 DatabaseWidgetBase::DatabaseWidgetBase(QWidget* databaseViewContainer, QWidget* secondWidget, QWidget *parent) :
     QWidget(parent)

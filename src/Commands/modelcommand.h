@@ -3,7 +3,6 @@
 
 #include "command.h"
 #include <QString>
-#include <QDebug>
 #include <typeinfo>
 #include "global.h"
 

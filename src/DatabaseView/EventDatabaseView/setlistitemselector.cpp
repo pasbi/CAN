@@ -6,7 +6,6 @@
 #include <QSettings>
 
 #include "application.h"
-#include "DatabaseView/SongDatabaseView/songtableviewcontainer.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "DatabaseView/SongDatabaseView/songtableview.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"
@@ -14,13 +13,13 @@
 SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
     QDialog(parent)
 {
-    SongTableViewContainer* stc = new SongTableViewContainer( this );
-    stc->databaseView()->setSelectionMode( QAbstractItemView::ExtendedSelection );
-    stc->setDatabase( app().project()->songDatabaseProxy() );
+    SongTableView* songTableView = new SongTableView( this );
+    songTableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
+    songTableView->setModel( app().project()->songDatabaseProxy() );
     QDialogButtonBox* buttonBox = new QDialogButtonBox( this );
     buttonBox->setStandardButtons( QDialogButtonBox::Close );
     QVBoxLayout* layout = new QVBoxLayout( this );
-    layout->addWidget( stc );
+    layout->addWidget( songTableView );
     layout->addWidget( buttonBox );
     this->setLayout( layout );
     connect(buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(hide()));
@@ -28,6 +27,7 @@ SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
 
 void SetlistItemSelector::showEvent(QShowEvent *e)
 {
+    //TODO we have an abstraction of QSettings!
     restoreGeometry( QSettings().value("SetlistItemSelector_Geometry").toByteArray() );
     app().project()->setCommandFocalizesAffiliatedView( false );
     QDialog::showEvent(e);

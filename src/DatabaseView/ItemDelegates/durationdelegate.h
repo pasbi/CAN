@@ -4,7 +4,6 @@
 #include "itemdelegate.h"
 #include "Commands/DatabaseCommands/databaseedititemcommand.h"
 #include <QLineEdit>
-#include <QDebug>
 #include <QTime>
 #include <QValidator>
 
