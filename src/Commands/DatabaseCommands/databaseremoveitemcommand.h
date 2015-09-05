@@ -1,20 +1,21 @@
 #ifndef DATABASEREMOVEITEMCOMMAND_H
 #define DATABASEREMOVEITEMCOMMAND_H
 
-#include "databasecommand.h"
 #include "Commands/itemownercommanddecorator.h"
+#include "Commands/modelcommand.h"
 
+template<typename T> class Database;
 template<typename T>
-class DatabaseRemoveItemCommand : public DatabaseCommand<T>, private ItemOwnerCommandDecorator<T>
+class DatabaseRemoveItemCommand : public ModelCommand<Database<T>>, private ItemOwnerCommandDecorator<T>
 {
 public:
     DatabaseRemoveItemCommand( Database<T>* database, T* item ) :
-        DatabaseCommand<T>( database ),
+        ModelCommand<Database<T>>( database ),
         ItemOwnerCommandDecorator<T>(item),
         m_index(database->rowOf(item))
     {
         assert( item );
-        this->setText( CommandTranslator::tr("Delete Event") );
+        this->setText( CommandTranslator::tr("Remove %1").arg(this->itemName()) );
     }
 
     ~DatabaseRemoveItemCommand()

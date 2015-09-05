@@ -1,19 +1,20 @@
 #ifndef DATABASENEWITEMCOMMAND_H
 #define DATABASENEWITEMCOMMAND_H
 
-#include "databasecommand.h"
 #include "Commands/itemownercommanddecorator.h"
+#include "Commands/modelcommand.h"
 
+template<typename T> class Database;
 template<typename T>
-class DatabaseNewItemCommand : public DatabaseCommand<T>, private ItemOwnerCommandDecorator<T>
+class DatabaseNewItemCommand : public ModelCommand<Database<T>>, private ItemOwnerCommandDecorator<T>
 {
 public:
     DatabaseNewItemCommand(Database<T> *database, T* item, int row = -1) :
-        DatabaseCommand<T>(database),
+        ModelCommand<Database<T>>(database),
         ItemOwnerCommandDecorator<T>(item),
         m_row( row )
     {
-        this->setText( CommandTranslator::tr("Add Song") );
+        this->setText( CommandTranslator::tr("New %1").arg(this->itemName()) );
     }
 
     ~DatabaseNewItemCommand()

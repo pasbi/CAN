@@ -15,6 +15,7 @@ Event::Event( Database<Event>* database, const QDateTime& beginning, const QDate
 
 Event::~Event()
 {
+    qDebug() << "delete event";
     delete m_setlist;
     m_setlist = nullptr;
 }

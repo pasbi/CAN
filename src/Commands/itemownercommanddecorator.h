@@ -4,7 +4,7 @@
 template<typename T>
 class ItemOwnerCommandDecorator
 {
-protected:
+public:
     ItemOwnerCommandDecorator(T* item) :
         m_item(item)
     {
@@ -13,6 +13,8 @@ protected:
 
     ~ItemOwnerCommandDecorator()
     {
+        // assert that the type of T is known, thus the correct destructor is called
+        static_assert( sizeof(T) > 0, "Invalid use of incomplete type" );
         if (m_ownsItem)
         {
             delete m_item;

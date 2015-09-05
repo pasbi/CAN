@@ -20,7 +20,6 @@ Project::Project() :
     reset();
     m_songDatabaseProxy->setSourceModel( m_songDatabase );
     m_eventDatabaseProxy->setSourceModel( m_eventDatabase );
-    setUndoLimit(3);
 }
 
 Project::~Project()

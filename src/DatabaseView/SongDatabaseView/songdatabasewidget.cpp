@@ -32,12 +32,8 @@ void SongDatabaseWidget::updateAttachmentChooser()
     }
     else
     {
-        //TODO m_currentIndex seems to be never written
-        if (list.first() != m_currentIndex)
-        {
-            attachmentChooser()->setSong(
-                            m_databaseViewContainer->databaseView()->model()->resolveItemAtIndex( list.first() ) );
-        }
+        Song* song = m_databaseViewContainer->databaseView()->model()->resolveItemAtIndex( list.first() );
+        attachmentChooser()->setSong( song );
     }
 }
 

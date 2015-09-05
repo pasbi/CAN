@@ -2,24 +2,24 @@
 #define DATABASEMOVEROWSCOMMAND_H
 
 #include <QList>
-#include "databasecommand.h"
+#include "Commands/modelcommand.h"
 #include "Database/databasemimedata.h"
 
-
+template<typename T> class Database;
 template<typename T>
-class DatabaseMoveRowsCommand : public DatabaseCommand<T>
+class DatabaseMoveRowsCommand : public ModelCommand<Database<T>>
 {
     typedef typename DatabaseMimeData<T>::IndexedItem IndexedItem;
 public:
     DatabaseMoveRowsCommand( Database<T>* database,
                              QList<IndexedItem> sortedSource,
                              int targetRow ) :
-        DatabaseCommand<T>(database),
+        ModelCommand<Database<T>>(database),
         m_sortedSource(sortedSource),
         m_recentStatus(this->model()->items()),
         m_targetRow(targetRow)
     {
-        this->setText(CommandTranslator::tr("Move Items"));
+        this->setText( CommandTranslator::tr("Move %1").arg(this->itemName()) );
     }
 
     void undo()

@@ -17,8 +17,5 @@ public:
 public slots:
     void updateAttachmentChooser();
 
-private:
-    QModelIndex m_currentIndex;
-
 };
 #endif // SONGDATABASEWIDGET_H

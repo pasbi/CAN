@@ -275,7 +275,6 @@ HEADERS  += mainwindow.h \
     Commands/SongCommands/songnewattachmentcommand.h \
     Commands/modelcommand.h \
     Commands/timerdecorator.h \
-    Commands/DatabaseCommands/databasecommand.h \
     Commands/DatabaseCommands/databasenewitemcommand.h \
     Commands/DatabaseCommands/databaseedititemcommand.h \
     Commands/DatabaseCommands/databaseremoveitemcommand.h \

@@ -1,23 +1,24 @@
 #ifndef DATABASEEDITITEMCOMMAND_H
 #define DATABASEEDITITEMCOMMAND_H
 
-#include "databasecommand.h"
+#include "Commands/modelcommand.h"
 
+template<typename T> class Database;
 template<typename T>
-class DatabaseEditItemCommand : public DatabaseCommand<T>
+class DatabaseEditItemCommand : public ModelCommand<Database<T>>
 {
 public:
     DatabaseEditItemCommand(  Database<T>*          database,
                               const QModelIndex &   index,
                               const QVariant &      newData,
                               const int             role    ) :
-        DatabaseCommand<T>(database),
+        ModelCommand<Database<T>>(database),
         m_index(index),
         m_newData(newData),
         m_oldData( database->data( index, role ) ),
         m_role(role)
     {
-        this->setText( CommandTranslator::tr("edit event") );
+        this->setText( CommandTranslator::tr("Edit %1").arg(this->itemName()) );
     }
 
     void undo()

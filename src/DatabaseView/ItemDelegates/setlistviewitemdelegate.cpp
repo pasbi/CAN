@@ -9,6 +9,7 @@
 
 #include "util.h"
 #include "Commands/SetlistCommands/setlistitemchangesongcommand.h"
+#include "Commands/DatabaseCommands/databaseedititemcommand.h"
 
 SetlistViewItemDelegate::SetlistViewItemDelegate(QObject *parent) :
     QItemDelegate(parent)
@@ -68,14 +69,12 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
         {
             const Song* song = availableSongs[comboBoxIndex];
             app().pushCommand( new SetlistItemChangeSongCommand(item(index), song));
-//            item(index)->setSong(song);
         }
     }
     else // SetlistItem::LabelType
     {
         QLineEdit* lineEdit = qobject_assert_cast<QLineEdit*>(editor);
-            //TODO COMMAND
-        lineEdit->setText(item(index)->label());
+        app().pushCommand( new DatabaseEditItemCommand<SetlistItem>(item(index)->database(), index, lineEdit->text(), Qt::EditRole) );
     }
 }
 
