@@ -72,8 +72,14 @@ void DatabaseViewBase::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void DatabaseViewBase::mouseMoveEvent(QMouseEvent *event)
+void DatabaseViewBase::leaveEvent(QEvent *event)
+{
+    setFilter("");
+    QTableView::leaveEvent(event);
+}
+
+void DatabaseViewBase::enterEvent(QEvent *event)
 {
     setFocus();
-    QTableView::mouseMoveEvent(event);
+    QTableView::enterEvent(event);
 }

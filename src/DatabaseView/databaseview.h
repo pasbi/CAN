@@ -20,7 +20,8 @@ protected:
     virtual QString filter() const = 0;
     void focusOutEvent(QFocusEvent *event);
     void keyPressEvent(QKeyEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
+    void leaveEvent(QEvent *event);
+    void enterEvent(QEvent *event);
 
 private:
     HudDecorator* m_hud;
@@ -41,7 +42,6 @@ public:
         setAlternatingRowColors( true );
         setEditTriggers( QAbstractItemView::DoubleClicked
                        | QAbstractItemView::EditKeyPressed );
-        setMouseTracking(true);
     }
 
     QModelIndex indexUnderCursor() const

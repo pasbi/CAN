@@ -39,7 +39,6 @@ SetlistView::SetlistView(QWidget *parent) :
 
     setContextMenuPolicy( Qt::ActionsContextMenu );
     setItemDelegate(new SetlistViewItemDelegate(this));
-    setMouseTracking(true);
 }
 
 void SetlistView::setModel(Setlist *setlist)
