@@ -41,7 +41,14 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
         case 2:
             return song->creationTime();
         case 3:
-            return song->duration();
+            if (role == Qt::DisplayRole)
+            {
+                return song->duration().toString("mm:ss");
+            }
+            else
+            {
+                return song->duration();
+            }
         }
     }
     default:

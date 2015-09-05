@@ -10,32 +10,29 @@ class DatabaseEditItemCommand : public ModelCommand<Database<T>>
 public:
     DatabaseEditItemCommand(  Database<T>*          database,
                               const QModelIndex &   index,
-                              const QVariant &      newData,
-                              const int             role    ) :
+                              const QVariant &      newData ) :
         ModelCommand<Database<T>>(database),
         m_index(index),
         m_newData(newData),
-        m_oldData( database->data( index, role ) ),
-        m_role(role)
+        m_oldData( database->data( index, Qt::EditRole ) )
     {
         this->setText( CommandTranslator::tr("Edit %1").arg(this->itemName()) );
     }
 
     void undo()
     {
-        this->model()->setData( m_index, m_oldData, m_role );
+        this->model()->setData( m_index, m_oldData, Qt::EditRole );
     }
 
     void redo()
     {
-        this->model()->setData( m_index, m_newData, m_role );
+        this->model()->setData( m_index, m_newData, Qt::EditRole );
     }
 
 private:
     const QModelIndex   m_index;
     const QVariant      m_newData;
     const QVariant      m_oldData;
-    const int           m_role;
 };
 
 #endif // DATABASEEDITITEMCOMMAND_H

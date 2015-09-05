@@ -1,24 +1,24 @@
-#ifndef DATEEDITOR_H
-#define DATEEDITOR_H
+//#ifndef DATEEDITOR_H
+//#define DATEEDITOR_H
 
-#include "celleditor.h"
+//#include "celleditor.h"
 
-class QDateTimeEdit;
-class DateEditor : public CellEditor
-{
-    Q_OBJECT
-    DECL_CREATABLE(DateEditor)
-public:
-    explicit DateEditor(QWidget *parent = 0);
+//class QDateTimeEdit;
+//class DateEditor : public CellEditor
+//{
+//    Q_OBJECT
+//    DECL_CREATABLE(DateEditor)
+//public:
+//    explicit DateEditor(QWidget *parent = 0);
 
-    void polish();
-    QVariant editedData() const;
+//    void polish();
+//    QVariant editedData() const;
 
-private:
-    QDateTimeEdit* m_dateTimeEdit;
+//private:
+//    QDateTimeEdit* m_dateTimeEdit;
 
 
 
-};
+//};
 
-#endif // DATEEDITOR_H
+//#endif // DATEEDITOR_H

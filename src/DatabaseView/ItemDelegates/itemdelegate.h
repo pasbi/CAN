@@ -3,6 +3,7 @@
 
 #include <QItemDelegate>
 #include "global.h"
+#include <QAbstractProxyModel>
 
 template<typename T> class Database;
 template<typename T, typename EditorType>
@@ -23,6 +24,7 @@ protected:
         return editor;
     }
 
+private:
     void setEditorData(QWidget *editor, const QModelIndex &index) const
     {
         EditorType* specificEditor = qobject_assert_cast<EditorType*>(editor);
@@ -32,10 +34,15 @@ protected:
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
         EditorType* specificEditor = qobject_assert_cast<EditorType*>(editor);
+        while (model->inherits("QAbstractProxyModel"))
+        {
+            model = static_cast<QAbstractProxyModel*>(model)->sourceModel();
+        }
         Database<T>* database = static_cast<Database<T>*>(model);
         setModelData(specificEditor, database, index);
     }
 
+protected:
     virtual void setEditorData(EditorType* editor, const QModelIndex& index) const = 0;
     virtual void setModelData(EditorType* editor, Database<T>* database, const QModelIndex& index) const = 0;
 };

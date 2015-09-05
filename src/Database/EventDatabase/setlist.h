@@ -33,6 +33,7 @@ public:
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject& object );
 
+
 signals:
     void selectionRequest(QModelIndexList);
 
@@ -45,6 +46,14 @@ private:
     bool dropSongs(const DatabaseMimeData<Song>*        songData,    int targetRow, QModelIndexList& indexes);
     void moveItems(const DatabaseMimeData<SetlistItem>* setlistData, int targetRow, QModelIndexList &indexes);
     void copyItems(const DatabaseMimeData<SetlistItem>* setlistData, int targetRow, QModelIndexList &indexes);
+
+
+public slots:
+    void setFilter(QString filter);
+public:
+    QString filter() const { return m_filter; }
+private:
+    QString m_filter = "";
 };
 
 #endif // SETLIST_H

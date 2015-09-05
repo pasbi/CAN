@@ -6,6 +6,7 @@
 #include <QAction>
 #include <QHeaderView>
 #include <QClipboard>
+#include <QKeyEvent>
 
 #include "application.h"
 #include "Project/project.h"
@@ -33,12 +34,12 @@ SetlistView::SetlistView(QWidget *parent) :
     setDropIndicatorShown(true);
     setAlternatingRowColors( true );
     horizontalHeader()->hide();
-    setHorizontalScrollMode( QTableView::ScrollPerPixel );
 
     setEditTriggers( QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed );
 
     setContextMenuPolicy( Qt::ActionsContextMenu );
     setItemDelegate(new SetlistViewItemDelegate(this));
+    setMouseTracking(true);
 }
 
 void SetlistView::setModel(Setlist *setlist)

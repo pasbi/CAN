@@ -6,6 +6,8 @@
 
 #include "Database/databasesortproxy.h"
 #include "global.h"
+#include <QKeyEvent>
+#include "huddecorator.h"
 
 class DatabaseViewBase : public QTableView
 {
@@ -13,6 +15,16 @@ class DatabaseViewBase : public QTableView
 protected:
     DatabaseViewBase(QWidget* parent = 0);
     void mousePressEvent(QMouseEvent *event);
+    void paintEvent(QPaintEvent *e);
+    virtual void setFilter(const QString& filter);
+    virtual QString filter() const = 0;
+    void focusOutEvent(QFocusEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+
+private:
+    HudDecorator* m_hud;
+
 signals:
     void clicked();
 };
@@ -29,6 +41,7 @@ public:
         setAlternatingRowColors( true );
         setEditTriggers( QAbstractItemView::DoubleClicked
                        | QAbstractItemView::EditKeyPressed );
+        setMouseTracking(true);
     }
 
     QModelIndex indexUnderCursor() const
@@ -60,6 +73,27 @@ public:
         }
 
         return static_cast<Database<T>*>(model);
+    }
+
+    QString filter() const
+    {
+        if (proxyModel())
+        {
+            return proxyModel()->filter();
+        }
+        else
+        {
+            return QString();
+        }
+    }
+
+    void setFilter(const QString &filter)
+    {
+        if (proxyModel())
+        {
+            proxyModel()->setFilter(filter);
+        }
+        DatabaseViewBase::setFilter(filter);
     }
 };
 

@@ -32,7 +32,7 @@ public:
 
     void setModelData(QComboBox *editor, Database<T> *database, const QModelIndex &index) const
     {
-        app().pushCommand( new DatabaseEditItemCommand<T>( database, index, editor->currentIndex(), Qt::EditRole) );
+        app().pushCommand( new DatabaseEditItemCommand<T>( database, index, editor->currentIndex()) );
     }
 
 

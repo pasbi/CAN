@@ -9,10 +9,11 @@ class DatabaseSortProxyBase : public QSortFilterProxyModel
     Q_OBJECT
 protected:
     DatabaseSortProxyBase(QObject *parent);
-    QString filter() const;
 
 public slots:
     void setFilter(const QString& filter);
+public:
+    QString filter() const;
 
 private:
     QString m_filter;
@@ -37,7 +38,6 @@ public:
     {
         QSortFilterProxyModel::setSourceModel(sourceModel);
     }
-
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const

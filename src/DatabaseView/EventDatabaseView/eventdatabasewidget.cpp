@@ -1,5 +1,4 @@
 #include "eventdatabasewidget.h"
-#include "ui_eventdatabasewidget.h"
 #include "application.h"
 #include "Project/project.h"
 #include "eventtableview.h"
@@ -7,6 +6,7 @@
 #include "setlistwidget.h"
 #include "setlistview.h"
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
+#include "eventtableviewcontainer.h"
 
 EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     DatabaseWidget(new EventTableViewContainer(), new SetlistWidget(), parent)

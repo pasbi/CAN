@@ -52,6 +52,21 @@ QList<void*> Setlist::viewableAttachments(const QModelIndex &index) const
 
 QVariant Setlist::data(const QModelIndex &index, int role) const
 {
+    if (role == Qt::BackgroundRole)
+    {
+        if (!m_filter.isEmpty())
+        {
+            assert(!index.parent().isValid());
+            SetlistItem* item = items()[index.row()];
+            for (const QString& token : item->textAttributes())
+            {
+                if (token.contains(m_filter, Qt::CaseInsensitive))
+                {
+                    return QColor(Qt::red);
+                }
+            }
+        }
+    }
     switch ( index.column() )
     {
     case 0:
@@ -299,8 +314,17 @@ bool Setlist::dropMimeData(const QMimeData *data, Qt::DropAction action, int row
     return true;
 }
 
-
 QStringList Setlist::mimeTypes() const
 {
     return QStringList() << DatabaseMimeData<Song>::mimeType() << DatabaseMimeData<SetlistItem>::mimeType();
+}
+
+void Setlist::setFilter(QString filter)
+{
+    m_filter = filter;
+    qDebug() << "set filter " << m_filter;
+    QModelIndex topLeft = index(0, 0);
+    QModelIndex bottomRight = index(rowCount() - 1, columnCount() - 1);
+
+    emit dataChanged( topLeft, bottomRight, QVector<int>({Qt::BackgroundRole})  );
 }

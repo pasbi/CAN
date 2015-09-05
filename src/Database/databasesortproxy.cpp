@@ -7,6 +7,7 @@ DatabaseSortProxyBase::DatabaseSortProxyBase(QObject *parent) :
 
 void DatabaseSortProxyBase::setFilter(const QString &filter)
 {
+    qDebug() << "DatabaseSortProxyBase::setfilter" << filter;
     m_filter = filter;
     invalidate();
 }

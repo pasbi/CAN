@@ -25,7 +25,7 @@ protected:
 
     void setModelData(QLineEdit *editor, Database<T> *database, const QModelIndex &index) const
     {
-        app().pushCommand( new DatabaseEditItemCommand<T>(database, index, editor->text(), Qt::EditRole ) );
+        app().pushCommand( new DatabaseEditItemCommand<T>(database, index, editor->text() ) );
     }
 };
 

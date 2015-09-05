@@ -74,7 +74,7 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
     else // SetlistItem::LabelType
     {
         QLineEdit* lineEdit = qobject_assert_cast<QLineEdit*>(editor);
-        app().pushCommand( new DatabaseEditItemCommand<SetlistItem>(item(index)->database(), index, lineEdit->text(), Qt::EditRole) );
+        app().pushCommand( new DatabaseEditItemCommand<SetlistItem>(item(index)->database(), index, lineEdit->text()) );
     }
 }
 

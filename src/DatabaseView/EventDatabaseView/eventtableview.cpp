@@ -18,21 +18,12 @@
 EventTableView::EventTableView(QWidget *parent) :
     DatabaseView(parent)
 {
-    horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeContentsPrecision( -1 ); // look at all rows.
-    horizontalHeader()->hide();
-
     setItemDelegateForColumn( 0, new TypeComboBoxDelegate<Event>( Event::TYPES, this ) );
     setItemDelegateForColumn( 2, new LineEditDelegate<Event>( this ));
 
-    setSelectionBehavior( QAbstractItemView::SelectRows );
-    setSelectionMode( QAbstractItemView::SingleSelection );
+    horizontalHeader()->setResizeContentsPrecision( -1 ); // look at all rows.
+    horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
 
-    verticalHeader()->hide();
-
-    horizontalHeader()->setSectionsMovable( true );
-    horizontalHeader()->setDragEnabled( true );
-    horizontalHeader()->setDragDropMode( QAbstractItemView::InternalMove );
 }
 
 int EventTableView::sizeHintForColumn(int column) const
@@ -61,7 +52,7 @@ bool EventTableView::showDialog(QModelIndex index)
 
         if (dialog.exec() == QDialog::Accepted)
         {
-            app().pushCommand( new DatabaseEditItemCommand<Event>(model(), index, QVariant::fromValue(dialog.timeSpan()), Qt::EditRole));
+            app().pushCommand( new DatabaseEditItemCommand<Event>(model(), index, QVariant::fromValue(dialog.timeSpan())));
         }
         return true;
     }

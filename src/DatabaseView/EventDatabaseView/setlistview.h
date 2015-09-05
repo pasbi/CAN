@@ -35,7 +35,6 @@ private:
 protected:
     QAbstractItemDelegate* itemDelegate(const QModelIndex &index) const;
 
-
 };
 
 #endif // SETLISTVIEW_H

@@ -157,7 +157,8 @@ SOURCES += main.cpp\
     DatabaseView/databaseviewcontainer.cpp \
     DatabaseView/databasewidget.cpp \
     DatabaseView/ItemDelegates/setlistviewitemdelegate.cpp \
-    Commands/SetlistCommands/setlistitemchangesongcommand.cpp
+    Commands/SetlistCommands/setlistitemchangesongcommand.cpp \
+    huddecorator.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -288,7 +289,10 @@ HEADERS  += mainwindow.h \
     DatabaseView/databasewidget.h \
     DatabaseView/databaseviewcontainer.h \
     DatabaseView/ItemDelegates/setlistviewitemdelegate.h \
-    Commands/SetlistCommands/setlistitemchangesongcommand.h
+    Commands/SetlistCommands/setlistitemchangesongcommand.h \
+    huddecorator.h \
+    DatabaseView/ItemDelegates/editablecomboboxdelegate.h \
+    DatabaseView/ItemDelegates/durationdelegate.h
 
 
 
@@ -314,7 +318,8 @@ FORMS    += mainwindow.ui \
     AttachmentView/chordpatternproxyattachmentview.ui \
     Dialogs/exportpdfdialog.ui \
     Dialogs/tageditor.ui \
-    Dialogs/programdialog.ui
+    Dialogs/programdialog.ui \
+    DatabaseView/EventDatabaseView/setlistwidget.ui
 
 
 RESOURCES += \

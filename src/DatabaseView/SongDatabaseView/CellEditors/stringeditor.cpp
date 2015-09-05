@@ -1,23 +1,23 @@
-#include "stringeditor.h"
-#include <QLineEdit>
+//#include "stringeditor.h"
+//#include <QLineEdit>
 
-DEFN_CREATABLE(StringEditor, CellEditor);
+//DEFN_CREATABLE(StringEditor, CellEditor);
 
-StringEditor::StringEditor(QWidget *parent) :
-    CellEditor(parent),
-    m_lineEdit( new QLineEdit(this) )
-{
-    setSolitaryWidget(m_lineEdit);
-}
+//StringEditor::StringEditor(QWidget *parent) :
+//    CellEditor(parent),
+//    m_lineEdit( new QLineEdit(this) )
+//{
+//    setSolitaryWidget(m_lineEdit);
+//}
 
-void StringEditor::polish()
-{
-    m_lineEdit->setText( currentData().toString() );
-    m_lineEdit->selectAll();
-    m_lineEdit->setCursorPosition( currentData().toString().length() );
-}
+//void StringEditor::polish()
+//{
+//    m_lineEdit->setText( currentData().toString() );
+//    m_lineEdit->selectAll();
+//    m_lineEdit->setCursorPosition( currentData().toString().length() );
+//}
 
-QVariant StringEditor::editedData() const
-{
-    return m_lineEdit->text();
-}
+//QVariant StringEditor::editedData() const
+//{
+//    return m_lineEdit->text();
+//}
