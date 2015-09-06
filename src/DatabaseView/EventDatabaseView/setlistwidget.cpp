@@ -26,13 +26,13 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->listView, SIGNAL(clicked()), this, SLOT(updateButtonsEnabled()) );
-    setSetlist( NULL );
+    connect(ui->setlistView, SIGNAL(clicked()), this, SLOT(updateButtonsEnabled()) );
+    setSetlist( nullptr );
 
     m_attentionPixmap = QPixmap::fromImage(QImage(":/icons/icons/lightbulb20.png")).scaledToWidth( 32, Qt::SmoothTransformation );
     ui->infoLabelIcon->setFixedSize( 32, 32 );
 
-    connect( ui->comboBox, SIGNAL(currentTextChanged(QString)), ui->listView, SLOT(setFilterTag(QString)) );
+    connect( ui->comboBox, SIGNAL(currentTextChanged(QString)), ui->setlistView, SLOT(setFilterTag(QString)) );
 
 }
 
@@ -43,24 +43,23 @@ SetlistWidget::~SetlistWidget()
 
 void SetlistWidget::updateButtonsEnabled()
 {
-    bool buttonsEnabled = !!ui->listView->model();
+    bool buttonsEnabled = !!setlistView()->model();
 
     ui->buttonAdd->setEnabled( buttonsEnabled );
     ui->buttonShowSongs->setEnabled( buttonsEnabled );
     ui->buttonExportPDF->setEnabled( buttonsEnabled );
 }
 
-void SetlistWidget::setSetlist(Setlist *setlist)
+void SetlistWidget::setSetlist(Database<SetlistItem> *setlist)
 {
-    Setlist* oldSetlist = ui->listView->model();
-    if (oldSetlist)
+    if (setlistView()->model())
     {
-        disconnect( oldSetlist, SIGNAL(rowsInserted(QModelIndex,int,int)) );
-        disconnect( oldSetlist, SIGNAL(rowsRemoved(QModelIndex,int,int)) );
-        disconnect( oldSetlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)) );
+        disconnect( setlistView()->model(), SIGNAL(rowsInserted(QModelIndex,int,int)) );
+        disconnect( setlistView()->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)) );
+        disconnect( setlistView()->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)) );
     }
 
-    ui->listView->setModel( setlist );
+    ui->setlistView->setModel( setlist );
     if (setlist)
     {
         connect( setlist, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateInfoLabel()) );
@@ -94,9 +93,9 @@ void SetlistWidget::on_buttonAdd_clicked()
     }
 }
 
-SetlistView* SetlistWidget::listView() const
+SetlistView* SetlistWidget::setlistView() const
 {
-    return ui->listView;
+    return ui->setlistView;
 }
 
 void SetlistWidget::on_buttonShowSongs_clicked()
@@ -125,7 +124,7 @@ void SetlistWidget::showEvent(QShowEvent *e)
 
 Setlist* SetlistWidget::setlist() const
 {
-    return ui->listView->model();
+    return static_cast<Setlist*>(setlistView()->sourceModel());
 }
 
 
@@ -138,25 +137,6 @@ void SetlistWidget::on_buttonExportPDF_clicked()
     }
 }
 
-
-void SetlistWidget::on_listView_doubleClicked(const QModelIndex &index)
-{
-    SetlistItem* item = ui->listView->model()->itemAtIndex( index );
-    if (!item)
-    {
-        return;
-    }
-
-#ifdef EDIT_SONG_ON_DOUBLE_CLICK
-    const Song* song = item->song();
-    if (song)
-    {
-        app().selectSong( song );
-    }
-#endif
-
-}
-
 void SetlistWidget::updateInfoLabel()
 {
     int hours = 0;
@@ -164,7 +144,7 @@ void SetlistWidget::updateInfoLabel()
     int seconds = 0;
     int songsWithValidDuration = 0;
     int allSongs = 0;
-    Setlist*  sl = ui->listView->model();
+    Database<SetlistItem>* sl = setlist();
 
     bool containsInvalid = false;
     if (sl)

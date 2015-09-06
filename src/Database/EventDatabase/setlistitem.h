@@ -9,6 +9,7 @@ class Setlist;
 template<typename T> class Database;
 class SetlistItem : public DatabaseItem<SetlistItem>
 {
+    Q_OBJECT
 public:
     enum Type { SongType, LabelType };
     SetlistItem( Database<SetlistItem>* setlist, const QString & label );
@@ -35,5 +36,7 @@ private:
 
     QMetaObject::Connection m_updateSongLabelConnection;
 };
+
+Q_DECLARE_METATYPE(SetlistItem*)
 
 #endif // SETLISTITEM_H

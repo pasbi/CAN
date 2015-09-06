@@ -2,28 +2,27 @@
 #define DURATIONDELEGATE_H
 
 #include "itemdelegate.h"
-#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include <QLineEdit>
 #include <QTime>
 #include <QValidator>
 
-template<typename T>
-class DurationDelegate : public ItemDelegate<T, QLineEdit>
+class DurationDelegate : public ItemDelegate<QLineEdit>
 {
 public:
     DurationDelegate(QObject* parent = 0) :
-        ItemDelegate<T, QLineEdit>(parent)
+        ItemDelegate<QLineEdit>(parent)
     {
     }
 
 private:
-    void setModelData(QLineEdit *editor, Database<T> *database, const QModelIndex &index) const
+    void setModelData(QLineEdit *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
         QTime time = fromString(editor->text().replace("-", ""));
         QTime currentTime = index.model()->data(index, Qt::EditRole).toTime();
         if (time != currentTime)
         {
-            app().pushCommand( new DatabaseEditItemCommand<T>(database, index, time) );
+            app().pushCommand( new DatabaseEditCommand(model, index, time) );
         }
     }
 

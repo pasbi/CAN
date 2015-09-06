@@ -15,12 +15,29 @@
 
 #include "util.h"
 
+class DatabaseBase : public QAbstractTableModel, public PersistentObject
+{
+    Q_OBJECT
+protected:
+    DatabaseBase(Project *project, QObject *parent = nullptr);
+    virtual ~DatabaseBase();
+public:
+    Project* project() const;
+    virtual QString fileNameBase() const = 0;
+
+    Qt::DropActions supportedDropActions() const;
+
+private:
+    Project* m_project;
+
+};
+
 template<typename T>
-class Database : public PersistentObject, public QAbstractTableModel
+class Database : public DatabaseBase
 {
 private:
     Database(Project* project) :
-        m_project(project)
+        DatabaseBase(project)
     {
 
     }
@@ -31,11 +48,6 @@ private:
     }
 
 public:
-    Project* project() const
-    {
-        return m_project;
-    }
-
     QList<T*> items() const
     {
         return m_items;
@@ -55,17 +67,11 @@ public:
 
     void removeItem(T* item)
     {
-        int row;
-        if ( (row = m_items.indexOf(item)) < 0 )
-        {
-            WARNING << "Database does not contain the item " << item;
-        }
-        else
-        {
-            beginRemoveRows(QModelIndex(), row, row);
-            m_items.removeAt(row);
-            endRemoveRows();
-        }
+        int row = m_items.indexOf(item);
+        assert(row >= 0);
+        beginRemoveRows(QModelIndex(), row, row);
+        m_items.removeAt(row);
+        endRemoveRows();
     }
 
     int rowOf(const T* item) const
@@ -87,21 +93,19 @@ public:
         endResetModel();
     }
 
-    virtual QString fileNameBase() const = 0;
-
     bool restoreFromJsonObject(const QJsonObject &object)
     {
         beginResetModel();
         bool success = PersistentObject::restoreFromJsonObject(object);
 
         m_items.clear();
-        QStringList filenames = QDir( project()->path() ).entryList( QStringList() << QString("%1*").arg(fileNameBase()) );
-        filenames.removeOne(QString("%1Database").arg(fileNameBase()));
+        QStringList filenames = QDir( this->project()->path() ).entryList( QStringList() << QString("%1*").arg(this->fileNameBase()) );
+        filenames.removeOne(QString("%1Database").arg(this->fileNameBase()));
 
         for (const QString& filename : filenames)
         {
             T* s = new T(this);
-            success &= s->loadFrom( project()->makeAbsolute(filename ));
+            success &= s->loadFrom( this->project()->makeAbsolute(filename ));
             m_items << s;
         }
 
@@ -112,20 +116,15 @@ public:
     QList<File> getFiles() const
     {
         QList<File> files;
-        files << File( QString("%1Database").arg(fileNameBase()), QJsonDocument(toJsonObject()).toJson() );
+        files << File( QString("%1Database").arg(this->fileNameBase()), QJsonDocument(toJsonObject()).toJson() );
 
         for (int i = 0; i < m_items.size(); ++i)
         {
-            files << File( QString("%1%2").arg(fileNameBase()).arg( m_items[i]->randomID() ),
+            files << File( QString("%1%2").arg(this->fileNameBase()).arg( m_items[i]->randomID() ),
                            QJsonDocument(m_items[i]->toJsonObject()).toJson() );
         }
 
         return files;
-    }
-
-    Qt::DropActions supportedDropActions() const
-    {
-        return Qt::IgnoreAction;
     }
 
     QMimeData* mimeData(const QModelIndexList &indexes) const
@@ -138,7 +137,7 @@ public:
                 // we want only one index per row.
                 continue;
             }
-            mime->append(resolveItemAtIndex(index), index.row());
+            mime->append(itemAtIndex(index), index.row());
         }
         return mime;
     }
@@ -191,12 +190,9 @@ public:
 
     T* itemAtIndex(const QModelIndex& index) const
     {
-        if (index.model() != this)
-        {
-            qWarning() << "Index points to an other model";
-            return nullptr;
-        }
-        else if (index.isValid())
+        assert( index.model() == this );
+
+        if (index.isValid())
         {
             return m_items[index.row()];
         }
@@ -207,44 +203,6 @@ public:
 
     }
 
-    /**
-     * @brief resolveItemAtIndex returns the item at index @code index.
-     * @param index may be an index of the model or an higher level proxy model.
-     * @return the index or nullptr if index is not valid or leads to an invalid index.
-     */
-    T* resolveItemAtIndex(QModelIndex index) const
-    {
-        if (!index.isValid())
-        {
-            return nullptr;
-        }
-        else
-        {
-            // index may be pointing to an underlying proxy model
-            const QAbstractItemModel* model = index.model();
-            const QAbstractProxyModel* proxyModel;
-
-            while (model && (proxyModel = qobject_cast<const QAbstractProxyModel*>(model)))
-            {
-                model = proxyModel->sourceModel();
-                index = proxyModel->mapToSource(index);
-            }
-
-            if (!model || !index.isValid())
-            {
-                return nullptr;
-            }
-
-            return itemAtIndex(index);
-        }
-    }
-
-    // this field may be interpreted by a proxy model. This model itself does not support filtering.
-    virtual bool columnIsVisible(int)
-    {
-        return true;
-    }
-
     void notifiyDataChange(const T *item)
     {
         int row = rowOf(item);
@@ -252,8 +210,6 @@ public:
     }
 
 
-private:
-    Project* m_project;
 protected:
     QList<T*> m_items;
 

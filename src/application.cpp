@@ -61,15 +61,6 @@ void Application::endMacro()
     m_project->endMacro();
 }
 
-void Application::selectSong(const Song *song)
-{
-    m_mainWindow->gotoSongView();
-    int row = m_mainWindow->songTableView()->model()->rowOf(song);
-    QModelIndex index = m_mainWindow->songTableView()->model()->index(row, 0, QModelIndex());
-    index = m_mainWindow->songTableView()->proxyModel()->mapFromSource( index );
-    m_mainWindow->songTableView()->selectRow( index.row() );
-}
-
 Attachment* Application::currentAttachment() const
 {
     return mainWindow()->currentAttachment();

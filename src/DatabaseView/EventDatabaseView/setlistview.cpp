@@ -22,10 +22,12 @@
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "DatabaseView/ItemDelegates/setlistviewitemdelegate.h"
+#include "Database/EventDatabase/setlistproxy.h"
 
 
+#include <QPushButton>
 SetlistView::SetlistView(QWidget *parent) :
-    DatabaseView(parent)
+    DatabaseView( new SetlistProxy(), parent)
 {
     setAcceptDrops(true);
     setDropIndicatorShown( false );
@@ -38,42 +40,30 @@ SetlistView::SetlistView(QWidget *parent) :
     setEditTriggers( QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed );
 
     setContextMenuPolicy( Qt::ActionsContextMenu );
-    setItemDelegate(new SetlistViewItemDelegate(this));
+    setItemDelegateForColumn(0, new SetlistViewItemDelegate(this));
+
+    setSelectionMode( QAbstractItemView::ExtendedSelection );
+
+    connect(this, SIGNAL(changed()), this, SLOT(updateCellWidgets()));
 }
 
-void SetlistView::setModel(Setlist *setlist)
+void SetlistView::setModel(Database<SetlistItem> *setlist)
 {
-    if (model())
+    if (sourceModel())
     {
-        disconnect( model(), SIGNAL(rowsInserted(QModelIndex,int,int)),                this, SLOT(updateCellWidgets()) );
-        disconnect( model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
-        disconnect( model(), SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
-        disconnect( model(), SIGNAL(modelReset()),                                     this, SLOT(updateCellWidgets()) );
-        disconnect( model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),             this, SLOT(updateCellWidgets()) );
-        disconnect( model(), SIGNAL(selectionRequest(QModelIndexList)),                this, SLOT(select(QModelIndexList)) );
+        disconnect( sourceModel(), SIGNAL(selectionRequest(QModelIndexList)),          this, SLOT(select(QModelIndexList)) );
     }
-    // Database<SetlistItem>::setModel() expects a DatabaseSortProxyModel<SetlistItem>, but setlist does not have a proxy.
-    DatabaseViewBase::setModel( setlist );
+    DatabaseView<SetlistItem>::setModel( setlist );
     if (setlist)
     {
-        connect( setlist, SIGNAL(rowsInserted(QModelIndex,int,int)),                this, SLOT(updateCellWidgets()) );
-        connect( setlist, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),   this, SLOT(updateCellWidgets()) );
-        connect( setlist, SIGNAL(rowsRemoved(QModelIndex,int,int)),                 this, SLOT(updateCellWidgets()) );
-        connect( setlist, SIGNAL(modelReset()),                                     this, SLOT(updateCellWidgets()) );
-        connect( setlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)),             this, SLOT(updateCellWidgets()) );
         connect( setlist, SIGNAL(selectionRequest(QModelIndexList)),                this, SLOT(select(QModelIndexList)) );
         updateCellWidgets();
+
         horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );
         horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Fixed );
         horizontalHeader()->resizeSection( 1, 60 );
     }
 }
-
-Setlist* SetlistView::model() const
-{
-    return qobject_assert_cast<Setlist*>( QTableView::model() );
-}
-
 
 QList<SetlistItem*> SetlistView::selectedItems() const
 {
@@ -82,7 +72,7 @@ QList<SetlistItem*> SetlistView::selectedItems() const
     {
         for (const QModelIndex& index : selectionModel()->selectedRows())
         {
-            items << model()->itemAtIndex( index );
+            items << itemAtIndex( index );
         }
         return items;
     }
@@ -128,7 +118,7 @@ QWidget* SetlistView::createSongCellWidget(const Song* song)
     button->setIcon( QIcon(":/icons/icons/eye106.png") );
     QMenu* menu = new QMenu( button );
     button->setMenu( menu );
-    button->setPopupMode( QToolButton::MenuButtonPopup );
+    button->setPopupMode( QToolButton::InstantPopup );
 
     for (Attachment* attachment : song->attachments())
     {
@@ -181,7 +171,7 @@ void SetlistView::updateCellWidgets()
     {
         QModelIndex index = model()->index( i, 1 );
 
-        SetlistItem* item = model()->itemAtIndex( index );
+        SetlistItem* item = itemAtIndex( index );
         if (item)
         {
             switch (item->type())

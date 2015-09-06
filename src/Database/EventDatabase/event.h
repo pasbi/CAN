@@ -38,11 +38,11 @@ public:
     bool restoreFromJsonObject(const QJsonObject &json);
     QJsonObject toJsonObject() const;
 
-    void setLabel( const QString & label ) { m_label = label; }
-    void setBeginning( const QDateTime & beginning ) { m_timeSpan.beginning = beginning; }
-    void setEnding( const QDateTime & ending ) { m_timeSpan.ending = ending; }
-    void setTimeSpan( const TimeSpan& timeSpan) { m_timeSpan = timeSpan; }
-    void setType( Type type ) { m_type = type; }
+    void setLabel( const QString & label );
+    void setBeginning( const QDateTime & beginning );
+    void setEnding( const QDateTime & ending );
+    void setTimeSpan( const TimeSpan& timeSpan);
+    void setType( Type type );
     void setNotice( const QString & notice );
 
     const Setlist* setlist() const { return m_setlist; }

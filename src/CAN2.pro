@@ -13,8 +13,8 @@
 
 #3//TODO decode aiff-audio-files.
 #4//TODO increase the number of endings that can be indexed and played. Probably, this issue is gone when #2 is solved.
-#5//TODO improve the overall gui.
 #//TODO  replace app()  with qApp wherever possible
+#//TODO  indexed-files proposed list by name, ordering is crappy
 
 
 
@@ -139,7 +139,6 @@ SOURCES += main.cpp\
     Commands/SongCommands/songeditprogramcommand.cpp \
     Program/midicontroller.cpp \
     Database/EventDatabase/setlistitem.cpp \
-    Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.cpp \
     Commands/SongCommands/songnewattachmentcommand.cpp \
     Commands/timerdecorator.cpp \
     Attachments/AudioAttachment/section.cpp \
@@ -149,7 +148,10 @@ SOURCES += main.cpp\
     DatabaseView/databasewidget.cpp \
     DatabaseView/ItemDelegates/setlistviewitemdelegate.cpp \
     Commands/SetlistCommands/setlistitemchangesongcommand.cpp \
-    huddecorator.cpp
+    huddecorator.cpp \
+    Database/EventDatabase/setlistproxy.cpp \
+    Commands/DatabaseCommands/databaseeditcommand.cpp \
+    Database/database.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -255,12 +257,10 @@ HEADERS  += mainwindow.h \
     Database/databasesortproxy.h \
     Database/EventDatabase/setlistitem.h \
     Commands/itemownercommanddecorator.h \
-    Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.h \
     Commands/SongCommands/songnewattachmentcommand.h \
     Commands/modelcommand.h \
     Commands/timerdecorator.h \
     Commands/DatabaseCommands/databasenewitemcommand.h \
-    Commands/DatabaseCommands/databaseedititemcommand.h \
     Commands/DatabaseCommands/databaseremoveitemcommand.h \
     Attachments/AudioAttachment/section.h \
     Program/midicommand.h \
@@ -274,7 +274,9 @@ HEADERS  += mainwindow.h \
     Commands/SetlistCommands/setlistitemchangesongcommand.h \
     huddecorator.h \
     DatabaseView/ItemDelegates/editablecomboboxdelegate.h \
-    DatabaseView/ItemDelegates/durationdelegate.h
+    DatabaseView/ItemDelegates/durationdelegate.h \
+    Database/EventDatabase/setlistproxy.h \
+    Commands/DatabaseCommands/databaseeditcommand.h
 
 
 

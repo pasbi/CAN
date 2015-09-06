@@ -5,12 +5,12 @@
 #include "Database/EventDatabase/eventdatabase.h"
 #include "setlistwidget.h"
 #include "setlistview.h"
+#include "Database/EventDatabase/setlist.h"
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
 
 EventDatabaseWidget::EventDatabaseWidget(QWidget *parent) :
     DatabaseWidget(new EventTableView(), new SetlistWidget(), parent)
 {
-    databaseView()->setModel( app().project()->eventDatabaseProxy() );
     connect( databaseView()->selectionModel(),
              SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
              this,
@@ -38,11 +38,5 @@ void EventDatabaseWidget::updateSetlistView()
 
 SetlistView* EventDatabaseWidget::setlistView() const
 {
-    return setlistWidget()->listView();
+    return setlistWidget()->setlistView();
 }
-
-Setlist* EventDatabaseWidget::currentSetlist() const
-{
-    return setlistWidget()->listView()->model();
-}
-

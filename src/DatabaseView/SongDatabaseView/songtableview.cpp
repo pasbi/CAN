@@ -12,11 +12,13 @@
 
 
 SongTableView::SongTableView(QWidget *parent) :
-    DatabaseView(parent)
+    DatabaseView(new SongDatabaseSortProxy(), parent)
 {
+    setModel( app().project()->songDatabase() );
+
     setDragEnabled(true);
 
-    setItemDelegateForColumn(0, new LineEditDelegate<Song>(this));
-    setItemDelegateForColumn(1, new EditableComboBoxDelegate<Song>(this));
-    setItemDelegateForColumn(3, new DurationDelegate<Song>(this));
+    setItemDelegateForColumn(0, new LineEditDelegate(this));
+    setItemDelegateForColumn(1, new EditableComboBoxDelegate(this));
+    setItemDelegateForColumn(2, new DurationDelegate(this));
 }

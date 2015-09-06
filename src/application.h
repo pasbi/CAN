@@ -33,7 +33,6 @@ public:
     void undo() const;
     void redo() const;
 
-    void selectSong(const Song *song );
     MainWindow* mainWindow() const { return m_mainWindow; }
 
     Attachment *currentAttachment() const;

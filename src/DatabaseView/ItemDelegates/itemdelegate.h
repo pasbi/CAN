@@ -5,8 +5,7 @@
 #include "global.h"
 #include <QAbstractProxyModel>
 
-template<typename T> class Database;
-template<typename T, typename EditorType>
+template<typename EditorType>
 class ItemDelegate : public QItemDelegate
 {
 protected:
@@ -34,17 +33,12 @@ private:
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
         EditorType* specificEditor = qobject_assert_cast<EditorType*>(editor);
-        while (model->inherits("QAbstractProxyModel"))
-        {
-            model = static_cast<QAbstractProxyModel*>(model)->sourceModel();
-        }
-        Database<T>* database = static_cast<Database<T>*>(model);
-        setModelData(specificEditor, database, index);
+        setModelData(specificEditor, model, index);
     }
 
 protected:
     virtual void setEditorData(EditorType* editor, const QModelIndex& index) const = 0;
-    virtual void setModelData(EditorType* editor, Database<T>* database, const QModelIndex& index) const = 0;
+    virtual void setModelData(EditorType* editor, QAbstractItemModel* database, const QModelIndex& index) const = 0;
 };
 
 #endif // ITEMDELEGATE_H

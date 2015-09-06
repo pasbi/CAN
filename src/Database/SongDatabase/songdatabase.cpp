@@ -10,8 +10,7 @@
 #include "commontypes.h"
 
 SongDatabase::SongDatabase(Project *project) :
-    Database(project),
-    m_columnIsVisible(columnCount(), true)  // all columns are visible by default.
+    Database(project)
 {
     Song::seedRandomID();
 }
@@ -19,7 +18,7 @@ SongDatabase::SongDatabase(Project *project) :
 int SongDatabase::columnCount(const QModelIndex &parent) const
 {
     assert(!parent.isValid());
-    return 4;
+    return 3;
 }
 
 QVariant SongDatabase::data(const QModelIndex &index, int role) const
@@ -39,8 +38,6 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
         case 1:
             return song->artist();
         case 2:
-            return song->creationTime();
-        case 3:
             if (role == Qt::DisplayRole)
             {
                 return song->duration().toString("mm:ss");
@@ -71,8 +68,6 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
             case 1:
                 return tr("Artist");
             case 2:
-                return tr("Creation Date");
-            case 3:
                 return tr("Duration");
             }
 

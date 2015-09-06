@@ -2,7 +2,7 @@
 #include "eventdatabase.h"
 
 EventDatabaseSortProxy::EventDatabaseSortProxy(QObject *parent) :
-    DatabaseSortProxy<Event>( parent )
+    DatabaseSortProxy( parent )
 {
     // filter all columns
     setFilterKeyColumn(-1);

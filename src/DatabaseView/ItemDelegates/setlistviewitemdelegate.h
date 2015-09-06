@@ -15,9 +15,8 @@ public:
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 
-private:
-    static SetlistItem* item(const QModelIndex& index);
-    static const Setlist *setlist(const QModelIndex& index);
+protected:
+    static SetlistItem* itemFromIndex(const QModelIndex &index);
 
 };
 

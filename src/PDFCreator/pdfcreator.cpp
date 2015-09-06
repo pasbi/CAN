@@ -820,19 +820,7 @@ void PDFCreator::save(QString filename)
 QString defaultFilename( Setlist* setlist )
 {
     QString label = setlist->event()->label();
-    QString type;
-    switch (setlist->event()->type())
-    {
-    case Event::Gig:
-        type = PDFCreator::tr("Gig");
-        break;
-    case Event::Rehearsal:
-        type = PDFCreator::tr("Rehearsal");
-        break;
-    case Event::Other:
-        type = PDFCreator::tr("Misc");
-        break;
-    }
+    QString type = Event::typeName(setlist->event()->type());
 
     QString date = QLocale().toString( setlist->event()->beginning().date(), QLocale().dateFormat( QLocale::ShortFormat ) ).replace(".", "_");
 

@@ -8,8 +8,6 @@
 
 class SongDatabase;
 class EventDatabase;
-class SongDatabaseSortProxy;
-class EventDatabaseSortProxy;
 class Command;
 class Project : public QUndoStack, public GitRepository
 {
@@ -21,9 +19,7 @@ public:
 
 
     SongDatabase* songDatabase() const { return m_songDatabase; }
-    SongDatabaseSortProxy* songDatabaseProxy() const { return m_songDatabaseProxy; }
     EventDatabase* eventDatabase() const { return m_eventDatabase; }
-    EventDatabaseSortProxy* eventDatabaseProxy() const { return m_eventDatabaseProxy; }
     void setCommandFocalizesAffiliatedView(bool on);
 
 public slots:
@@ -47,8 +43,6 @@ public:
 private:
     SongDatabase* m_songDatabase;
     EventDatabase* m_eventDatabase;
-    SongDatabaseSortProxy* m_songDatabaseProxy;
-    EventDatabaseSortProxy* m_eventDatabaseProxy;
     bool m_canClose = true;
     bool m_isSynchronized = false;
     bool m_commandFocalizesAffiliatedView;

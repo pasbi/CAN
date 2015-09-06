@@ -12,14 +12,16 @@
 #include "DatabaseView/ItemDelegates/typecomboboxdelegate.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
-#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 
 
 EventTableView::EventTableView(QWidget *parent) :
-    DatabaseView(parent)
+    DatabaseView( new EventDatabaseSortProxy(), parent )
 {
-    setItemDelegateForColumn( 0, new TypeComboBoxDelegate<Event>( Event::TYPES, this ) );
-    setItemDelegateForColumn( 2, new LineEditDelegate<Event>( this ));
+    setModel( app().project()->eventDatabase() );
+
+    setItemDelegateForColumn( 0, new TypeComboBoxDelegate( Event::TYPES, this ) );
+    setItemDelegateForColumn( 2, new LineEditDelegate( this ));
 
     horizontalHeader()->setResizeContentsPrecision( -1 ); // look at all rows.
     horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
@@ -52,7 +54,7 @@ bool EventTableView::showDialog(QModelIndex index)
 
         if (dialog.exec() == QDialog::Accepted)
         {
-            app().pushCommand( new DatabaseEditItemCommand<Event>(model(), index, QVariant::fromValue(dialog.timeSpan())));
+            app().pushCommand( new DatabaseEditCommand(model(), index, QVariant::fromValue(dialog.timeSpan())));
         }
         return true;
     }

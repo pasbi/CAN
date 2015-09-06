@@ -5,21 +5,15 @@
 #include "global.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/eventdatabase.h"
-#include "Database/SongDatabase/songdatabasesortproxy.h"
-#include "Database/EventDatabase/eventdatabasesortproxy.h"
 
 DEFN_CONFIG(Project, "Project");
 
 Project::Project() :
     GitRepository("can"),
     m_songDatabase( new SongDatabase(this) ),
-    m_eventDatabase( new EventDatabase(this) ),
-    m_songDatabaseProxy( new SongDatabaseSortProxy(this) ),
-    m_eventDatabaseProxy( new EventDatabaseSortProxy(this) )
+    m_eventDatabase( new EventDatabase(this) )
 {
     reset();
-    m_songDatabaseProxy->setSourceModel( m_songDatabase );
-    m_eventDatabaseProxy->setSourceModel( m_eventDatabase );
 }
 
 Project::~Project()

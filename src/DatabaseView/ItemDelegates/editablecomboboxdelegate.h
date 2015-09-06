@@ -3,24 +3,23 @@
 
 #include "itemdelegate.h"
 #include <QComboBox>
-#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include "application.h"
 #include <QLineEdit>
 
-template<typename T>
-class EditableComboBoxDelegate : public ItemDelegate<T, QComboBox>
+class EditableComboBoxDelegate : public ItemDelegate<QComboBox>
 {
 public:
     EditableComboBoxDelegate(QObject* parent = 0) :
-        ItemDelegate<T, QComboBox>(parent)
+        ItemDelegate<QComboBox>(parent)
     {
 
     }
 
 private:
-    void setModelData(QComboBox *editor, Database<T> *database, const QModelIndex &index) const
+    void setModelData(QComboBox *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
-        app().pushCommand( new DatabaseEditItemCommand<T>(database, index, editor->currentText()) );
+        app().pushCommand( new DatabaseEditCommand(model, index, editor->currentText()) );
     }
 
     void setEditorData(QComboBox *editor, const QModelIndex &index) const

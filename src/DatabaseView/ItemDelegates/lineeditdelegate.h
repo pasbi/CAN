@@ -5,14 +5,13 @@
 
 #include "itemdelegate.h"
 #include "application.h"
-#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 
-template<typename T>
-class LineEditDelegate : public ItemDelegate<T, QLineEdit>
+class LineEditDelegate : public ItemDelegate<QLineEdit>
 {
 public:
     explicit LineEditDelegate(QObject *parent = 0) :
-        ItemDelegate<T, QLineEdit>(parent)
+        ItemDelegate<QLineEdit>(parent)
     {
 
     }
@@ -23,9 +22,9 @@ protected:
         editor->setText( index.model()->data(index, Qt::EditRole).toString() );
     }
 
-    void setModelData(QLineEdit *editor, Database<T> *database, const QModelIndex &index) const
+    void setModelData(QLineEdit *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
-        app().pushCommand( new DatabaseEditItemCommand<T>(database, index, editor->text() ) );
+        app().pushCommand( new DatabaseEditCommand(model, index, editor->text() ) );
     }
 };
 

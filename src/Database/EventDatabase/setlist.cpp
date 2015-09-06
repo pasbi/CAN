@@ -9,7 +9,7 @@
 #include "Attachments/attachment.h"
 #include "Database/databasemimedata.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
-#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include "Commands/DatabaseCommands/databasemoverowscommand.h"
 
 
@@ -66,7 +66,16 @@ QVariant Setlist::data(const QModelIndex &index, int role) const
                 }
             }
         }
+        else
+        {
+            return QVariant();
+        }
     }
+    else if (role == Qt::UserRole)
+    {
+        return QVariant::fromValue<SetlistItem*>(items()[index.row()]);
+    }
+
     switch ( index.column() )
     {
     case 0:

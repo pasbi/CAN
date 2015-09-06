@@ -1,6 +1,6 @@
 #include "eventdatabase.h"
 #include "Project/project.h"
-#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include "application.h"
 #include <QJsonDocument>
 #include "Database/databasemimedata.h"
@@ -84,7 +84,7 @@ bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int
 {
     assert(!index.parent().isValid());
 
-    Event* event = resolveItemAtIndex(index);
+    Event* event = itemAtIndex(index);
     assert( event );
     if (role == Qt::EditRole)
     {

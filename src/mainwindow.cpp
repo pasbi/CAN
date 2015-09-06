@@ -25,9 +25,8 @@
 #include "Dialogs/tagdialog.h"
 #include "conflicteditor.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
-#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include "Commands/DatabaseCommands/databaseremoveitemcommand.h"
-#include "Commands/SongDatabaseCommands/songdatabasesetcolumnvisibilitycommand.h"
 #include "Commands/SongCommands/songremoveattachmentcommand.h"
 #include "Commands/SongCommands/songnewattachmentcommand.h"
 #include "Commands/edittagscommand.h"
@@ -102,6 +101,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
     createDebugMenu();
+    createLanguageMenu();
 
     QSettings settings;
     restoreGeometry( settings.value("Geometry").toByteArray() );
@@ -215,9 +215,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
-    connect( ui->menuVisible_attributes, SIGNAL(aboutToShow()), this, SLOT(createAttributeVisibilityMenu() ));
     connect( m_project.songDatabase(), SIGNAL(songRemoved(int)), ui->songDatabaseWidget, SLOT(updateAttachmentChooser()) );
-    connect( ui->menu_Language, SIGNAL(aboutToShow()), this, SLOT( createLanguageMenu() ));
 
     //////////////////////////////////////////
     ///
@@ -1166,27 +1164,6 @@ void MainWindow::my_on_actionEdit_Program_triggered()
     }
 }
 
-void MainWindow::createAttributeVisibilityMenu()
-{
-    QMenu* menu = ui->menuVisible_attributes;
-
-    for (int i = 0; i < m_project.songDatabase()->columnCount(); ++i )
-    {
-        QString name = m_project.songDatabase()->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
-        QAction* action = menu->addAction( name );
-        action->setCheckable( true );
-        action->setChecked( m_project.songDatabase()->columnIsVisible(i) );
-
-        connect( action, &QAction::triggered, [this, i](bool visible)
-        {
-            app().pushCommand( new SongDatabaseSetColumnVisibilityCommand( m_project.songDatabase(), i, visible ) );
-        });
-
-        connect( menu, SIGNAL(aboutToHide()), action, SLOT(deleteLater()) );
-    }
-
-}
-
 
 void MainWindow::my_on_actionEdit_Song_Tags_triggered()
 {
@@ -1194,7 +1171,7 @@ void MainWindow::my_on_actionEdit_Song_Tags_triggered()
     QModelIndexList list = songTableView->selectionModel()->selectedIndexes();
     if (!list.isEmpty())
     {
-        Taggable* t = songTableView->model()->resolveItemAtIndex(list.first());
+        Taggable* t = songTableView->itemAtIndex(list.first());
         if (t != 0)
         {
             TagDialog d(t->tags(), this);
@@ -1212,7 +1189,7 @@ void MainWindow::my_on_actionEdit_Event_Tags_triggered()
     QModelIndexList list = eventTableView->selectionModel()->selectedIndexes();
     if (!list.isEmpty())
     {
-        Taggable* t = eventTableView->model()->resolveItemAtIndex(list.first());
+        Taggable* t = eventTableView->itemAtIndex(list.first());
         if (t != 0)
         {
             TagDialog d(t->tags(), this);

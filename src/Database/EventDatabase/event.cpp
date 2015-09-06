@@ -91,6 +91,31 @@ QJsonObject Event::toJsonObject() const
     return json;
 }
 
+void Event::setLabel( const QString & label )
+{
+    m_label = label;
+}
+
+void Event::setBeginning( const QDateTime & beginning )
+{
+    m_timeSpan.beginning = beginning;
+}
+
+void Event::setEnding( const QDateTime & ending )
+{
+    m_timeSpan.ending = ending;
+}
+
+void Event::setTimeSpan( const TimeSpan& timeSpan)
+{
+    m_timeSpan = timeSpan;
+}
+
+void Event::setType( Type type )
+{
+    m_type = type;
+}
+
 void Event::setNotice(const QString &notice)
 {
     m_notices = notice;
@@ -115,7 +140,7 @@ QString Event::typeName(Type type)
 
 QStringList Event::textAttributes() const
 {
-    return QStringList( { label(), notices() } );
+    return QStringList( { typeName(type()), label(), notices() } );
 }
 
 

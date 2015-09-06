@@ -90,6 +90,7 @@ private slots:
     void on_actionIdentites_triggered();
     void on_actionSettings_triggered();
     void on_action_Index_Info_triggered();
+    void on_action_Export_all_songs_triggered();
 
 
     // my auto-connection slots
@@ -111,12 +112,10 @@ private slots:
     void my_on_actionCopy_SetlistItem_triggered();
     void my_on_actionPaste_SetlistItem_triggered();
 
-    void createAttributeVisibilityMenu();
-    void createLanguageMenu();
 
-    void on_action_Export_all_songs_triggered();
 
 private:
+    void createLanguageMenu();
     void createAttachmentActions();
     void setupAttachmentMenu();
     QMap<QString, QAction*> m_newAttachmentActions;

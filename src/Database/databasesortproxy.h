@@ -4,14 +4,16 @@
 #include <QSortFilterProxyModel>
 #include "global.h"
 
+class DatabaseBase;
 class DatabaseSortProxyBase : public QSortFilterProxyModel
 {
     Q_OBJECT
 protected:
     DatabaseSortProxyBase(QObject *parent);
 
+
 public slots:
-    void setFilter(const QString& filter);
+    virtual void setFilter(const QString& filter);
 public:
     QString filter() const;
 
@@ -31,12 +33,25 @@ public:
 
     Database<T>* sourceModel() const
     {
-        return static_cast<Database<T>*>(QSortFilterProxyModel::sourceModel());
+        return static_cast<Database<T>*>(DatabaseSortProxyBase::sourceModel());
     }
 
     void setSourceModel(Database<T> *sourceModel)
     {
-        QSortFilterProxyModel::setSourceModel(sourceModel);
+        DatabaseSortProxyBase::setSourceModel(sourceModel);
+    }
+
+    T* itemAtIndex(const QModelIndex& index) const
+    {
+        assert(index.model() == this);
+        if (sourceModel())
+        {
+            return sourceModel()->itemAtIndex( mapToSource(index) );
+        }
+        else
+        {
+            return nullptr;
+        }
     }
 
 protected:

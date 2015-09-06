@@ -9,7 +9,7 @@
 
 #include "util.h"
 #include "Commands/SetlistCommands/setlistitemchangesongcommand.h"
-#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 
 SetlistViewItemDelegate::SetlistViewItemDelegate(QObject *parent) :
     QItemDelegate(parent)
@@ -19,22 +19,26 @@ SetlistViewItemDelegate::SetlistViewItemDelegate(QObject *parent) :
 QWidget* SetlistViewItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(option);
-    if (item(index)->type() == SetlistItem::SongType)
+    switch (itemFromIndex(index)->type())
     {
+    case SetlistItem::SongType:
         return new QComboBox(parent);
-    }
-    else
-    {
+    case SetlistItem::LabelType:
         return new QLineEdit(parent);
+    default:
+        assert(false);
     }
 }
 
 void SetlistViewItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-    if (item(index)->type() == SetlistItem::SongType)
+    SetlistItem* item = itemFromIndex(index);
+    switch (item->type())
+    {
+    case SetlistItem::SongType:
     {
         QComboBox* comboBox = qobject_assert_cast<QComboBox*>(editor);
-        QList<Song*> availableSongs = setlist(index)->event()->database()->project()->songDatabase()->items();
+        QList<Song*> availableSongs = app().project()->songDatabase()->items();
         QStringList songLabels;
         for (const Song* song : availableSongs)
         {
@@ -44,47 +48,50 @@ void SetlistViewItemDelegate::setEditorData(QWidget *editor, const QModelIndex &
         comboBox->setEditable(true);
         comboBox->setInsertPolicy(QComboBox::NoInsert);
 
-        const Song* song = item(index)->song();
+        const Song* song = item->song();
         int index = indexOfConstInList<Song>( availableSongs, song );
         comboBox->setCurrentIndex(index);
         comboBox->lineEdit()->selectAll();
     }
-    else // SetlistItem::LabelType
+        break;
+    case SetlistItem::LabelType:
     {
         QLineEdit* lineEdit = qobject_assert_cast<QLineEdit*>(editor);
-        lineEdit->setText(item(index)->label());
+        lineEdit->setText(item->label());
+    }
+        break;
     }
 }
 
 void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
     Q_UNUSED(model);
-    if (item(index)->type() == SetlistItem::SongType)
+    SetlistItem* item = itemFromIndex(index);
+    switch (item->type())
+    {
+    case SetlistItem::SongType:
     {
         QComboBox* comboBox = qobject_assert_cast<QComboBox*>(editor);
-        QList<Song*> availableSongs = setlist(index)->event()->database()->project()->songDatabase()->items();
+        QList<Song*> availableSongs = app().project()->songDatabase()->items();
 
         int comboBoxIndex = comboBox->currentIndex();
         if (comboBoxIndex >= 0)
         {
             const Song* song = availableSongs[comboBoxIndex];
-            app().pushCommand( new SetlistItemChangeSongCommand(item(index), song));
+            app().pushCommand( new SetlistItemChangeSongCommand(item, song));
         }
     }
-    else // SetlistItem::LabelType
+        break;
+    case SetlistItem::LabelType:
     {
         QLineEdit* lineEdit = qobject_assert_cast<QLineEdit*>(editor);
-        app().pushCommand( new DatabaseEditItemCommand<SetlistItem>(item(index)->database(), index, lineEdit->text()) );
+        app().pushCommand( new DatabaseEditCommand(model, index, lineEdit->text()) );
+    }
+        break;
     }
 }
 
-const Setlist* SetlistViewItemDelegate::setlist(const QModelIndex &index)
+SetlistItem* SetlistViewItemDelegate::itemFromIndex(const QModelIndex &index)
 {
-    return qobject_assert_cast<const Setlist*>(index.model());
-
-}
-
-SetlistItem* SetlistViewItemDelegate::item(const QModelIndex &index)
-{
-    return setlist(index)->itemAtIndex(index);
+    return index.model()->data(index, Qt::UserRole).value<SetlistItem*>();
 }

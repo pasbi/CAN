@@ -83,3 +83,31 @@ void DatabaseViewBase::enterEvent(QEvent *event)
     setFocus();
     QTableView::enterEvent(event);
 }
+
+void DatabaseViewBase::setModel(QAbstractItemModel *model)
+{
+    QAbstractItemModel* oldModel = QTableView::model();
+    if (oldModel)
+    {
+        disconnect(oldModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),              this, SIGNAL(changed()));
+        disconnect(oldModel, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),    this, SIGNAL(changed()));
+        disconnect(oldModel, SIGNAL(rowsRemoved(QModelIndex,int,int)),                  this, SIGNAL(changed()));
+        disconnect(oldModel, SIGNAL(rowsInserted(QModelIndex,int,int)),                 this, SIGNAL(changed()));
+        disconnect(oldModel, SIGNAL(columnsMoved(QModelIndex,int,int,QModelIndex,int)), this, SIGNAL(changed()));
+        disconnect(oldModel, SIGNAL(columnsRemoved(QModelIndex,int,int)),               this, SIGNAL(changed()));
+        disconnect(oldModel, SIGNAL(columnsInserted(QModelIndex,int,int)),              this, SIGNAL(changed()));
+        disconnect(oldModel, SIGNAL(modelReset()), this, SIGNAL(changed()));
+    }
+    QTableView::setModel(model);
+    if (model)
+    {
+        connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),                    this, SIGNAL(changed()));
+        connect(model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),          this, SIGNAL(changed()));
+        connect(model, SIGNAL(rowsRemoved(QModelIndex,int,int)),                        this, SIGNAL(changed()));
+        connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)),                       this, SIGNAL(changed()));
+        connect(model, SIGNAL(columnsMoved(QModelIndex,int,int,QModelIndex,int)),       this, SIGNAL(changed()));
+        connect(model, SIGNAL(columnsRemoved(QModelIndex,int,int)),                     this, SIGNAL(changed()));
+        connect(model, SIGNAL(columnsInserted(QModelIndex,int,int)),                    this, SIGNAL(changed()));
+        connect(model, SIGNAL(modelReset()),                                            this, SIGNAL(changed()));
+    }
+}

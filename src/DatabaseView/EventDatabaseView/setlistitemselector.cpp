@@ -15,7 +15,6 @@ SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
 {
     SongTableView* songTableView = new SongTableView( this );
     songTableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
-    songTableView->setModel( app().project()->songDatabaseProxy() );
     QDialogButtonBox* buttonBox = new QDialogButtonBox( this );
     buttonBox->setStandardButtons( QDialogButtonBox::Close );
     QVBoxLayout* layout = new QVBoxLayout( this );

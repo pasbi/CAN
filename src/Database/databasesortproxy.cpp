@@ -1,4 +1,5 @@
 #include "databasesortproxy.h"
+#include "database.h"
 
 DatabaseSortProxyBase::DatabaseSortProxyBase(QObject *parent) :
     QSortFilterProxyModel(parent)

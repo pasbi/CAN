@@ -5,14 +5,13 @@
 #include <QComboBox>
 #include "global.h"
 #include "application.h"
-#include "Commands/DatabaseCommands/databaseedititemcommand.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 
-template<typename T>
-class TypeComboBoxDelegate : public ItemDelegate<T, QComboBox>
+class TypeComboBoxDelegate : public ItemDelegate<QComboBox>
 {
 public:
     TypeComboBoxDelegate( const QStringList& types, QObject* parent = 0 ) :
-        ItemDelegate<T, QComboBox>( parent ),
+        ItemDelegate<QComboBox>( parent ),
         m_types(types)
     {
     }
@@ -30,9 +29,9 @@ public:
         editor->setCurrentIndex( index.model()->data( index, Qt::EditRole ).toInt() );
     }
 
-    void setModelData(QComboBox *editor, Database<T> *database, const QModelIndex &index) const
+    void setModelData(QComboBox *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
-        app().pushCommand( new DatabaseEditItemCommand<T>( database, index, editor->currentIndex()) );
+        app().pushCommand( new DatabaseEditCommand( model, index, editor->currentIndex()) );
     }
 
 

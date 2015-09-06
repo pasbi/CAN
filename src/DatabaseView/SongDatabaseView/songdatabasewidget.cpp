@@ -13,8 +13,6 @@
 SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
     DatabaseWidget(new SongTableView(), new AttachmentChooser(), parent)
 {
-    databaseView()->setModel( app().project()->songDatabaseProxy() );
-
     connect( databaseView()->selectionModel(),
              SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
              this,
@@ -23,17 +21,8 @@ SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
 
 void SongDatabaseWidget::updateAttachmentChooser()
 {
-    QModelIndexList list = databaseView()->selectionModel()->selectedRows();
-
-    if (list.isEmpty())
-    {
-        attachmentChooser()->setSong( NULL );
-    }
-    else
-    {
-        Song* song = databaseView()->model()->resolveItemAtIndex( list.first() );
-        attachmentChooser()->setSong( song );
-    }
+    Song* song = databaseView()->currentItem();
+    attachmentChooser()->setSong( song );
 }
 
 AttachmentChooser* SongDatabaseWidget::attachmentChooser() const

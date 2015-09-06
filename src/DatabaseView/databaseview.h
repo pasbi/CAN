@@ -23,20 +23,25 @@ protected:
     void leaveEvent(QEvent *event);
     void enterEvent(QEvent *event);
 
+    void setModel(QAbstractItemModel *model);
+
 private:
     HudDecorator* m_hud;
 
 signals:
     void clicked();
+    void changed(); // anything in the database changed (insert, delete, move or edit)
 };
 
 template<typename T>
 class DatabaseView : public DatabaseViewBase
 {
 public:
-    explicit DatabaseView(QWidget *parent = 0) :
-        DatabaseViewBase(parent)
+    explicit DatabaseView(DatabaseSortProxy<T>* proxyModel, QWidget *parent = 0) :
+        DatabaseViewBase(parent),
+        m_proxy( proxyModel )
     {
+        m_proxy->setParent(this);
         setAutoScroll(true);
         setContextMenuPolicy(Qt::ActionsContextMenu);
         setAlternatingRowColors( true );
@@ -50,36 +55,43 @@ public:
         return indexAt(pos);
     }
 
-    void setModel(DatabaseSortProxy<T> *model)
+    void setModel(Database<T> *model)
     {
-        DatabaseViewBase::setModel( model );
-        connect( model->sourceModel(), &QAbstractTableModel::rowsInserted, [this](QModelIndex, int last) {
-            selectRow( last );
-        });
-    }
-
-    DatabaseSortProxy<T>* proxyModel() const
-    {
-        // cast may fail, e.g. if model was set via QTableView::setModel
-        return dynamic_cast<DatabaseSortProxy<T>*>(DatabaseViewBase::model());
-    }
-
-    Database<T>* model() const
-    {
-        QAbstractItemModel* model = DatabaseViewBase::model();
-        while (model && model->inherits("QAbstractProxyModel"))
+        // disconnect old model
+        if (m_model)
         {
-            model = qobject_assert_cast<QAbstractProxyModel*>(model)->sourceModel();
+            disconnect(m_connection_updateSelection);
         }
 
-        return static_cast<Database<T>*>(model);
+        // set new model
+        m_model = model;
+        m_proxy->setSourceModel(model);
+        DatabaseViewBase::setModel( m_proxy );
+
+        // connect new model
+        if (model)
+        {
+            m_connection_updateSelection = connect( model, &QAbstractTableModel::rowsInserted, [this](QModelIndex index, int first, int last) {
+                clearSelection();
+                assert(!index.isValid());
+                for (int i = first; i <= last; ++i)
+                {
+                    selectRow( i );
+                }
+            });
+        }
+    }
+
+    Database<T>* sourceModel() const
+    {
+        return m_model;
     }
 
     QString filter() const
     {
-        if (proxyModel())
+        if (m_proxy)
         {
-            return proxyModel()->filter();
+            return m_proxy->filter();
         }
         else
         {
@@ -89,25 +101,47 @@ public:
 
     void setFilter(const QString &filter)
     {
-        if (proxyModel())
+        if (m_proxy)
         {
-            proxyModel()->setFilter(filter);
+            m_proxy->setFilter(filter);
         }
         DatabaseViewBase::setFilter(filter);
+    }
+
+    T* itemAtIndex(const QModelIndex& index) const
+    {
+        if (index.model() == m_proxy)
+        {
+            return m_proxy->itemAtIndex(index);
+        }
+        else if (index.model() == m_model)
+        {
+            return m_model->itemAtIndex(index);
+        }
+        else
+        {
+            assert(false);
+            return nullptr;
+        }
     }
 
     T* currentItem() const
     {
         QModelIndexList rows = selectionModel()->selectedRows();
-        if (rows.isEmpty())
+        if (rows.isEmpty() || !m_proxy)
         {
             return nullptr;
         }
         else
         {
-            return model()->resolveItemAtIndex( rows.first() );
+            return sourceModel()->itemAtIndex( m_proxy->mapToSource(rows.first()) );
         }
     }
+
+private:
+    DatabaseSortProxy<T>* m_proxy = nullptr;
+    Database<T>* m_model = nullptr;
+    QMetaObject::Connection m_connection_updateSelection;
 };
 
 #endif // DATABASEVIEW_H

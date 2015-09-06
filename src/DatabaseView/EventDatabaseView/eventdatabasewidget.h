@@ -4,9 +4,9 @@
 #include "DatabaseView/databasewidget.h"
 
 class SetlistView;
-class Setlist;
 class SetlistWidget;
 class Event;
+class SetlistItem;
 class EventDatabaseWidget : public DatabaseWidget<Event, SetlistWidget>
 {
     Q_OBJECT
@@ -15,7 +15,6 @@ public:
     explicit EventDatabaseWidget(QWidget *parent = 0);
 
     SetlistView *setlistView() const;
-    Setlist* currentSetlist() const;
 
 private slots:
     void updateSetlistView();

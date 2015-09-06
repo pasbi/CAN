@@ -4,7 +4,7 @@
 #include "DatabaseView/databaseview.h"
 
 class Attachment;
-class Setlist;
+template<typename T> class Database;
 class SetlistItem;
 class Song;
 class SetlistView : public DatabaseView<SetlistItem>
@@ -13,8 +13,7 @@ class SetlistView : public DatabaseView<SetlistItem>
 public:
     explicit SetlistView(QWidget *parent = 0);
 
-    Setlist* model() const;
-    void setModel(Setlist* setlist);
+    void setModel(Database<SetlistItem>* setlist);
 
     QList<SetlistItem*> selectedItems() const;
 
