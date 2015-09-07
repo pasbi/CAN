@@ -25,7 +25,6 @@
 #include "Database/EventDatabase/setlistproxy.h"
 
 
-#include <QPushButton>
 SetlistView::SetlistView(QWidget *parent) :
     DatabaseView( new SetlistProxy(), parent)
 {

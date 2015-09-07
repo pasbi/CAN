@@ -9,6 +9,7 @@ class IndexedFileChooseDialog;
 }
 
 class Song;
+class FileFilter;
 class IndexedFileChooseDialog : public QDialog
 {
     Q_OBJECT
@@ -40,6 +41,8 @@ private:
 
     void setFilename(const QString& filename);
     QString currentFilename();
+
+    FileFilter* m_fileFilter;
 
 
 };

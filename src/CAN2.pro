@@ -14,7 +14,6 @@
 #3//TODO decode aiff-audio-files.
 #4//TODO increase the number of endings that can be indexed and played. Probably, this issue is gone when #2 is solved.
 #//TODO  replace app()  with qApp wherever possible
-#//TODO  indexed-files proposed list by name, ordering is crappy
 
 
 
@@ -151,7 +150,8 @@ SOURCES += main.cpp\
     huddecorator.cpp \
     Database/EventDatabase/setlistproxy.cpp \
     Commands/DatabaseCommands/databaseeditcommand.cpp \
-    Database/database.cpp
+    Database/database.cpp \
+    AttachmentView/IndexedFileAttachmentView/filefilter.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -276,7 +276,8 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/editablecomboboxdelegate.h \
     DatabaseView/ItemDelegates/durationdelegate.h \
     Database/EventDatabase/setlistproxy.h \
-    Commands/DatabaseCommands/databaseeditcommand.h
+    Commands/DatabaseCommands/databaseeditcommand.h \
+    AttachmentView/IndexedFileAttachmentView/filefilter.h
 
 
 
