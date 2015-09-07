@@ -38,6 +38,7 @@ void Player::open( const QString &filename )
 
     m_audioOutput = new QAudioOutput( QAudioDeviceInfo::defaultOutputDevice(), m_buffer.audioFormat() );
     m_audioOutput->setNotifyInterval( 200 );    // sync
+    seek(0);
 }
 
 void Player::play()

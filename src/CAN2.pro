@@ -13,7 +13,6 @@
 
 #3//TODO decode aiff-audio-files.
 #4//TODO increase the number of endings that can be indexed and played. Probably, this issue is gone when #2 is solved.
-#//TODO  replace app()  with qApp wherever possible
 
 
 
