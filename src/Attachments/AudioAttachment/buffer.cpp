@@ -314,6 +314,15 @@ void BufferConverters::charToFloatInterleaved( float* f, const char* rc, const c
     }
 }
 
+void BufferConverters::charToFloatInterleaved2( float* f, const char* rlc, int n )
+{
+    for (int i = 0; i < n; i++)
+    {
+        charToFloat( f[2*i+0], rlc[4*i+0], rlc[4*i+1]);
+        charToFloat( f[2*i+1], rlc[4*i+2], rlc[4*i+3]);
+    }
+}
+
 void BufferConverters::floatToChar( char* c, const float* f, int n )
 {
     for (int i = 0; i < n; ++i )
@@ -323,6 +332,7 @@ void BufferConverters::floatToChar( char* c, const float* f, int n )
 }
 
 
+//TODO set transpose >0, seek to the very end. Then seek somewhere else => no sound
 bool Buffer::Decoder::decode()
 {
 #ifdef HAVE_SOUNDTOUCH
@@ -362,27 +372,31 @@ bool Buffer::Decoder::decode()
                     decodingPacket.size -= result;
                     decodingPacket.data += result;
 
-                    int n = m_frame->linesize[0] / 2;
-                    if (m_codecContext->channels == 1)
+                    int n = m_frame->linesize[0];// / 2;   // why the 2?
+
+                    if (m_codecContext->channels == 2)
                     {
-                        float* buffer = new float[n];
-                        BufferConverters::charToFloat( buffer, (char*) m_frame->extended_data[0], n );
-                        m_soundTouch.putSamples( buffer, n );
-                        delete[] buffer;
-                    }
-                    else if (m_codecContext->channels == 2)
-                    {
-                        float* buffer = new float[2*n];
-                        BufferConverters::charToFloatInterleaved( buffer,
-                                                                  (char*) m_frame->extended_data[0],
-                                                                  (char*) m_frame->extended_data[1],
-                                                                  n                                          );
-                        m_soundTouch.putSamples( buffer, n );
-                        delete[] buffer;
+                        if (m_frame->extended_data[1])
+                        {
+                            float* buffer = new float[n];
+                            BufferConverters::charToFloatInterleaved( buffer,
+                                                                      (char*) m_frame->extended_data[0],
+                                                                      (char*) m_frame->extended_data[1],
+                                                                      n/2                                          );
+                            m_soundTouch.putSamples( buffer, n/2 );
+                            delete[] buffer;
+                        }
+                        else
+                        {
+                            float* buffer = new float[n];
+                            BufferConverters::charToFloatInterleaved2( buffer, (char*) m_frame->extended_data[0], n/2 );
+                            m_soundTouch.putSamples( buffer, n/4 );
+                            delete[] buffer;
+                        }
                     }
                     else
                     {
-                        assert( false );
+                        qWarning() << "Unsupported number of channels: " << m_codecContext->channels << " (only supported number is 2)";
                     }
                 }
                 else

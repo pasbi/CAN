@@ -91,6 +91,7 @@ void floatToChar( char& c1, char& c2, float f);
 void charToFloat( float* f, const char* c, int n );
 void charToFloatInterleaved( float* f, const char* rc, const char* lc, int n );
 void floatToChar( char* c, const float* f, int n );
+void charToFloatInterleaved2( float* f, const char* rlc, int n );
 }
 
 #endif // BUFFER_H
