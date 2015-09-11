@@ -27,6 +27,7 @@ QWidget* SetlistViewItemDelegate::createEditor(QWidget *parent, const QStyleOpti
         return new QLineEdit(parent);
     default:
         assert(false);
+        return nullptr;
     }
 }
 
