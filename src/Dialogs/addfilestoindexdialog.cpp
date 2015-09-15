@@ -1,13 +1,19 @@
 #include "addfilestoindexdialog.h"
 #include "ui_addfilestoindexdialog.h"
 #include <QFileDialog>
+#include <QCheckBox>
 
 DEFN_CONFIG( AddFilesToIndexDialog, "AddFilesToIndexDialog" );
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( AddFilesToIndexDialog, defaultpath, QDir::homePath() );
-CONFIGURABLE_ADD_ITEM_HIDDEN( AddFilesToIndexDialog, includePDF, true );
-CONFIGURABLE_ADD_ITEM_HIDDEN( AddFilesToIndexDialog, includeMP3, true );
-CONFIGURABLE_ADD_ITEM_HIDDEN( AddFilesToIndexDialog, includeOgg, true );
+CONFIGURABLE_ADD_ITEM_HIDDEN( AddFilesToIndexDialog, acceptedEndings, QVariantMap() );
+
+CONFIGURABLE_ADD_ITEM( AddFilesToIndexDialog,
+                       endings,
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Endings"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "All Endings that may be included"),
+                       (QStringList() << "mp3" << "ogg" << "aif" << "aiff" << "pdf").join(QChar(0x2C)), /* 0x2C = , macro does not allow to write it!*/
+                       ConfigurableItemOptions::LineEditOptions("") );
 
 AddFilesToIndexDialog::AddFilesToIndexDialog(QWidget *parent) :
     QDialog(parent),
@@ -16,20 +22,51 @@ AddFilesToIndexDialog::AddFilesToIndexDialog(QWidget *parent) :
     ui->setupUi(this);
 
     ui->lineEdit->setText( config["defaultpath"].toString() );
-    ui->checkBoxPDF->setChecked( config["includePDF"].toBool() );
-    ui->checkBoxMP3->setChecked( config["includeMP3"].toBool() );
-    ui->checkBoxOgg->setChecked( config["includeOgg"].toBool() );
+
+    QStringList endings = config["endings"].toString().split(",");
+    for (QString& ending: endings)
+    {
+        ending = ending.remove(QRegExp("\\W"));
+    }
+    endings = endings.filter(QRegExp(".+"));
+
+    setEndings(endings);
+}
+
+bool AddFilesToIndexDialog::acceptEnding(const QString &ending) const
+{
+    qDebug() << "read " << config["acceptedEndings"];
+    return config["acceptedEndings"].toMap().value(ending, QVariant(false)).toBool();
+}
+
+void AddFilesToIndexDialog::setAcceptEnding(const QString &ending, bool accept)
+{
+    QVariantMap map = config["acceptedEndings"].toMap();
+    map.insert(ending, accept);
+    config.set("acceptedEndings", map);
+}
+void AddFilesToIndexDialog::setEndings(const QStringList &endings)
+{
+    for (const QString& ending : endings)
+    {
+        QCheckBox* checkBox = new QCheckBox(this);
+        checkBox->setText(tr("*.%1").arg(ending));
+        checkBox->setChecked(acceptEnding(ending));
+        ui->endingCheckBoxesLayout->addWidget(checkBox);
+        m_checkBoxes.insert(ending, checkBox);
+    }
 }
 
 AddFilesToIndexDialog::~AddFilesToIndexDialog()
 {
-    config.set( "includePDF", ui->checkBoxPDF->isChecked() );
-    config.set( "includeMP3", ui->checkBoxMP3->isChecked() );
-    config.set( "includeOgg", ui->checkBoxOgg->isChecked() );
+    for (const QString& ending : m_checkBoxes.keys())
+    {
+        setAcceptEnding(ending, m_checkBoxes[ending]->isChecked());
+    }
     delete ui;
 }
 
-void AddFilesToIndexDialog::on_pushButton_clicked()
+void AddFilesToIndexDialog::on_buttonOpenFileDialog_clicked()
 {
     QFileDialog::Options options = 0;
     QString filename = QFileDialog::getExistingDirectory( this,
@@ -44,24 +81,18 @@ void AddFilesToIndexDialog::on_pushButton_clicked()
     }
 }
 
-bool AddFilesToIndexDialog::includePDF() const
-{
-    return ui->checkBoxPDF->isChecked();
-}
-bool AddFilesToIndexDialog::includeMP3() const
-{
-    return ui->checkBoxMP3->isChecked();
-}
-bool AddFilesToIndexDialog::includeOgg() const
-{
-    return ui->checkBoxOgg->isChecked();
-}
-bool AddFilesToIndexDialog::includeAif() const
-{
-    return ui->checkBoxAif->isChecked();
-}
-
 QString AddFilesToIndexDialog::path() const
 {
     return ui->lineEdit->text();
+}
+
+QMap<QString, bool> AddFilesToIndexDialog::acceptedEndings() const
+{
+    QMap<QString, bool> acceptedEndings;
+    const QVariantMap map = config["acceptedEndings"].toMap();
+    for (const QString& ending : map.keys())
+    {
+        acceptedEndings.insert(ending, map[ending].toBool());
+    }
+    return acceptedEndings;
 }

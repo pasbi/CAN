@@ -133,11 +133,11 @@ void FileIndex::restore( )
 }
 
 
-void FileIndex::addSource(const QString & path, bool pdf, bool mp3, bool ogg , bool aif)
+void FileIndex::addSource(const QString & path, const QMap<QString, bool>& acceptedEndings)
 {
     assert( !m_indexer );
     m_sources << path;
-    m_indexer = new Indexer( path, pdf, mp3, ogg, aif, Indexer::Scan, this );
+    m_indexer = new Indexer( path, acceptedEndings, Indexer::Scan, this );
     connect(m_indexer, &QThread::finished, [this]()
     {
         m_indexer->deleteLater();

@@ -7,15 +7,24 @@
     <x>0</x>
     <y>0</y>
     <width>194</width>
-    <height>169</height>
+    <height>197</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item>
       <widget class="QLineEdit" name="lineEdit">
        <property name="placeholderText">
@@ -24,7 +33,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="buttonOpenFileDialog">
        <property name="minimumSize">
         <size>
          <width>32</width>
@@ -49,32 +58,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBoxPDF">
-     <property name="text">
-      <string>*.pdf</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="checkBoxMP3">
-     <property name="text">
-      <string>*.mp3</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="checkBoxOgg">
-     <property name="text">
-      <string>*.ogg</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="checkBoxAif">
-     <property name="text">
-      <string>*.aif</string>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="endingCheckBoxesLayout"/>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

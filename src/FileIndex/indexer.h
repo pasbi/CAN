@@ -2,7 +2,7 @@
 #define INDEXER_H
 
 #include <QThread>
-#include <QStringList>
+#include <QMap>
 
 class FileIndex;
 class Indexer : public QThread
@@ -10,11 +10,7 @@ class Indexer : public QThread
     Q_OBJECT
 public:
     enum Mode { Update, Scan };
-    explicit Indexer(const QString & path,
-                     bool pdf,
-                     bool mp3,
-                     bool ogg,
-                     bool aif,
+    explicit Indexer(const QString & path, const QMap<QString, bool>& acceptedIndexes,
                      Mode mode, FileIndex* fileIndex, QObject *parent = 0);
 
     void abort();
@@ -26,7 +22,7 @@ protected:
 private:
 
     const QString m_path;
-    const bool m_pdf, m_mp3, m_ogg, m_aif;
+    const QMap<QString, bool> m_acceptedIndexes;
     FileIndex* const m_fileIndex;
     const Mode m_mode;
 

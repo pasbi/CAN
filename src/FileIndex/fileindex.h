@@ -26,7 +26,12 @@ public:
     void save() const;
     void restore();
 
-    void addSource(const QString & path, bool pdf, bool mp3, bool ogg, bool aif);
+    /**
+     * @brief addSource
+     * @param path
+     * @param acceptedEndings
+     */
+    void addSource(const QString & path, const QMap<QString, bool> &acceptedEndings);
     QString currentFilename() const;
     bool operationIsFinished() const;
 

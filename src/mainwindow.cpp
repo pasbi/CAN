@@ -711,11 +711,7 @@ void MainWindow::on_actionAdd_Folder_triggered()
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
 
-    app().fileIndex().addSource( dialog.path(),
-                                 dialog.includePDF(),
-                                 dialog.includeMP3(),
-                                 dialog.includeOgg(),
-                                 dialog.includeAif() );
+    app().fileIndex().addSource( dialog.path(), dialog.acceptedEndings());
 
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);

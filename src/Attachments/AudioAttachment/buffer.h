@@ -35,7 +35,6 @@ private:
     double m_offset = 0;
 
     QBuffer m_buffer;       // start audio device here on
-    QString m_source;    // original data
     QAudioFormat m_audioFormat;
 
 private:

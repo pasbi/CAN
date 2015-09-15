@@ -4,13 +4,10 @@
 #include "fileindex.h"
 #include "global.h"
 
-Indexer::Indexer(const QString &path, bool pdf, bool mp3, bool ogg, bool aif, Mode mode, FileIndex *fileIndex, QObject *parent) :
+Indexer::Indexer(const QString &path, const QMap<QString, bool>& acceptedIndexes, Mode mode, FileIndex *fileIndex, QObject *parent) :
     QThread(parent),
     m_path(path),
-    m_pdf( pdf ),
-    m_mp3( mp3 ),
-    m_ogg( ogg ),
-    m_aif( aif ),
+    m_acceptedIndexes( acceptedIndexes ),
     m_fileIndex(fileIndex),
     m_mode(mode)
 {
@@ -70,10 +67,7 @@ void Indexer::addRecursively(const QString &path)
     else
     {
         QString end = QFileInfo(path).suffix().toLower();
-        if (  (m_pdf && end == "pdf")
-            ||(m_mp3 && end == "mp3")
-            ||(m_ogg && end == "ogg")
-            ||(m_aif && end == "aif") )
+        if (m_acceptedIndexes.value(end, false))
         {
             m_fileIndex->add( path );
         }
