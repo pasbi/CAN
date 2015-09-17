@@ -6,9 +6,6 @@
 
 DEFN_CONFIG( FileIndex, "File Index" );
 
-CONFIGURABLE_ADD_ITEM_HIDDEN( FileIndex, FileIndex, QByteArray() );
-
-
 CONFIGURABLE_ADD_ITEM( FileIndex,
                        endings,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Endings"),
@@ -23,7 +20,7 @@ FileIndex::FileIndex()
 
 }
 
-void FileIndex::add(const QString& filename)
+void FileIndex::addFilePrivate(const QString& filename)
 {
     QFile file(filename);
     QByteArray hash;
@@ -59,6 +56,12 @@ void FileIndex::add(const QString& filename)
     m_backward.insert(filename, hash);
 }
 
+void FileIndex::addFile(const QString& filename)
+{
+    addFilePrivate(filename);
+    save();
+}
+
 void FileIndex::remove(const QString & filename)
 {
     QByteArray hash = m_backward.value(filename);
@@ -92,12 +95,12 @@ QByteArray FileIndex::hash(const QString &filename)
 {
     if (!m_backward.contains(filename))
     {
-        add(filename);
+        addFile(filename);
     }
     return m_backward.value( filename );
 }
 
-QByteArray FileIndex::serialize() const
+void FileIndex::save() const
 {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
@@ -110,12 +113,16 @@ QByteArray FileIndex::serialize() const
         stream << key << m_backward[key];
     }
 
-    return data;
+    QSettings settings;
+    settings.setValue("FileIndex/Index", data);
 }
 
 
-void FileIndex::deserialize( QByteArray data )
+void FileIndex::restore()
 {
+    QSettings settings;
+    QByteArray data = settings.value("FileIndex/Index").toByteArray();
+
     QDataStream stream(&data, QIODevice::ReadOnly);
     quint64 size;
     stream >> size;
@@ -134,17 +141,6 @@ void FileIndex::deserialize( QByteArray data )
 }
 
 
-void FileIndex::save( ) const
-{
-    config.set( "FileIndex", serialize() );
-}
-
-void FileIndex::restore( )
-{
-    deserialize( config.value("FileIndex").toByteArray() );
-}
-
-
 void FileIndex::addDirectory(const QString & path, const QStringList& acceptedEndings)
 {
     assert( !m_indexer );
@@ -157,7 +153,7 @@ void FileIndex::addDirectory(const QString & path, const QStringList& acceptedEn
         emit operationFinished();
     });
     m_indexer->start();
-
+    save();
 }
 
 bool FileIndex::operationIsFinished() const

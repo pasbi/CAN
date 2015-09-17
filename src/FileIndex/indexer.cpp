@@ -39,7 +39,7 @@ void Indexer::update(const QString &path)
     QFileInfo info( path );
     if (info.exists() && info.isFile())
     {
-        m_fileIndex->add( path );
+        m_fileIndex->addFilePrivate( path );
     }
     else
     {
@@ -69,7 +69,7 @@ void Indexer::addRecursively(const QString &path)
         QString end = QFileInfo(path).suffix().toLower();
         if (m_acceptedEndings.contains(end))
         {
-            m_fileIndex->add( path );
+            m_fileIndex->addFilePrivate( path );
         }
     }
 }

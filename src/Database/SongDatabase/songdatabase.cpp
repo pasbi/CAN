@@ -95,12 +95,7 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
 Qt::ItemFlags SongDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
-    Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
-    if (index.column() != 2)
-    {
-        flags |= Qt::ItemIsEditable;
-    }
-    return flags;
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled | Qt::ItemIsEditable;
 }
 
 bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int role)

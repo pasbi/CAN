@@ -34,7 +34,7 @@ public:
 
     // QStringList.contains is faster than QMap.contains for n < 20. acceptedEndings is expected to be < 10
     void addDirectory(const QString & path, const QStringList& acceptedEndings);
-    void add(const QString& filename);
+    void addFile(const QString& filename);
     QString currentFilename() const;
     bool operationIsFinished() const;
 
@@ -60,6 +60,7 @@ private:
 
     QStringList m_sources;
     Indexer* m_indexer = NULL;
+    void addFilePrivate(const QString& filename);
 
 };
 

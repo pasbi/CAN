@@ -103,7 +103,7 @@ SOURCES += main.cpp\
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
     combobox.cpp \
-    Dialogs/indexedfilechoosedialog.cpp \
+    Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.cpp \
     Dialogs/tagdialog.cpp \
     Commands/edittagscommand.cpp \
     PDFCreator/page.cpp \
@@ -112,7 +112,6 @@ SOURCES += main.cpp\
     Dialogs/chordpatternviewer.cpp \
     PDFCreator/orphantsetlist.cpp \
     Dialogs/hud.cpp \
-    Dialogs/addfilestoindexdialog.cpp \
     AttachmentView/chordpatternproxyattachmentview.cpp \
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.cpp \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.cpp \
@@ -137,7 +136,7 @@ SOURCES += main.cpp\
     Database/EventDatabase/setlistproxy.cpp \
     Commands/DatabaseCommands/databaseeditcommand.cpp \
     Database/database.cpp \
-    AttachmentView/IndexedFileAttachmentView/filefilter.cpp
+    Dialogs/IndexedFileChooseDialog/filefilter.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -202,7 +201,7 @@ HEADERS  += mainwindow.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h \
     DatabaseView/databaseview.h \
     combobox.h \
-    Dialogs/indexedfilechoosedialog.h \
+    Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.h \
     Dialogs/tagdialog.h \
     Commands/edittagscommand.h \
     PDFCreator/page.h \
@@ -216,7 +215,6 @@ HEADERS  += mainwindow.h \
     Dialogs/chordpatternviewer.h \
     PDFCreator/orphantsetlist.h \
     Dialogs/hud.h \
-    Dialogs/addfilestoindexdialog.h \
     git.h \
     AttachmentView/chordpatternproxyattachmentview.h \
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.h \
@@ -252,7 +250,7 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/durationdelegate.h \
     Database/EventDatabase/setlistproxy.h \
     Commands/DatabaseCommands/databaseeditcommand.h \
-    AttachmentView/IndexedFileAttachmentView/filefilter.h
+    Dialogs/IndexedFileChooseDialog/filefilter.h
 
 
 
@@ -267,7 +265,7 @@ FORMS    += mainwindow.ui \
     Dialogs/configurationdialog.ui \
     Dialogs/datetimedialog.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
-    Dialogs/indexedfilechoosedialog.ui \
+    Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.ui \
     Dialogs/tagdialog.ui \
     Dialogs/chordpatternviewer.ui \
     Dialogs/addfilestoindexdialog.ui \

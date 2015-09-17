@@ -15,7 +15,6 @@
 #include "ui_mainwindow.h"
 #include "util.h"
 #include "application.h"
-#include "Dialogs/addfilestoindexdialog.h"
 #include "Dialogs/stringdialog.h"
 #include "Dialogs/configurationdialog.h"
 #include "Dialogs/programdialog.h"
