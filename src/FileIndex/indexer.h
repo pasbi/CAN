@@ -2,7 +2,7 @@
 #define INDEXER_H
 
 #include <QThread>
-#include <QMap>
+#include <QStringList>
 
 class FileIndex;
 class Indexer : public QThread
@@ -22,7 +22,7 @@ protected:
 private:
 
     const QString m_path;
-    const QStringList& m_acceptedEndings;
+    const QStringList m_acceptedEndings;
     FileIndex* const m_fileIndex;
     const Mode m_mode;
 

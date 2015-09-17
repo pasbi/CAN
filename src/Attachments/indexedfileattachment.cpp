@@ -1,5 +1,6 @@
 #include "indexedfileattachment.h"
 #include "application.h"
+#include "FileIndex/fileindex.h"
 
 IndexedFileAttachment::IndexedFileAttachment() :
     Attachment()
@@ -9,7 +10,7 @@ IndexedFileAttachment::IndexedFileAttachment() :
 
 bool IndexedFileAttachment::fileExists() const
 {
-    return !m_hash.isEmpty() && app().fileIndex().contains( filename() );
+    return !m_hash.isEmpty() && app().fileIndex()->contains( filename() );
 }
 
 QString IndexedFileAttachment::filename() const
@@ -20,15 +21,15 @@ QString IndexedFileAttachment::filename() const
     }
     else
     {
-        return app().fileIndex().filename( m_hash );
+        return app().fileIndex()->filename( m_hash );
     }
 }
 
 bool IndexedFileAttachment::setFilename(QString filename)
 {
-    if ( app().fileIndex().contains( filename ) )
+    if ( app().fileIndex()->contains( filename ) )
     {
-        m_hash = app().fileIndex().hash( filename );
+        m_hash = app().fileIndex()->hash( filename );
         open();
         return true;
     }
@@ -41,7 +42,7 @@ bool IndexedFileAttachment::setFilename(QString filename)
 
 bool IndexedFileAttachment::setHash(QByteArray hash)
 {
-    if ( app().fileIndex().contains( hash ) || hash.isEmpty() )
+    if ( app().fileIndex()->contains( hash ) || hash.isEmpty() )
     {
         if (hash != m_hash)
         {

@@ -17,7 +17,7 @@ const QCryptographicHash::Algorithm FileIndex::m_hashAlgorithm = QCryptographicH
 
 FileIndex::FileIndex()
 {
-
+    restore();
 }
 
 void FileIndex::addFilePrivate(const QString& filename)
@@ -59,7 +59,7 @@ void FileIndex::addFilePrivate(const QString& filename)
 void FileIndex::addFile(const QString& filename)
 {
     addFilePrivate(filename);
-    save();
+    saveDetached();
 }
 
 void FileIndex::remove(const QString & filename)
@@ -75,6 +75,7 @@ void FileIndex::clear()
     m_backward.clear();
     m_forward.clear();
     m_sources.clear();
+    save();
 }
 
 QString FileIndex::filename(const QByteArray &hash) const
@@ -102,6 +103,7 @@ QByteArray FileIndex::hash(const QString &filename)
 
 void FileIndex::save() const
 {
+    m_saveRequested = false;
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
 
@@ -141,11 +143,14 @@ void FileIndex::restore()
 }
 
 
-void FileIndex::addDirectory(const QString & path, const QStringList& acceptedEndings)
+void FileIndex::addDirectory(const QString & path)
 {
     assert( !m_indexer );
     m_sources << path;
-    m_indexer = new Indexer( path, acceptedEndings, Indexer::Scan, this );
+    m_indexer = new Indexer( path,
+                             FileIndex::acceptedEndings(),
+                             Indexer::Scan,
+                             this );
     connect(m_indexer, &QThread::finished, [this]()
     {
         m_indexer->deleteLater();
@@ -153,7 +158,7 @@ void FileIndex::addDirectory(const QString & path, const QStringList& acceptedEn
         emit operationFinished();
     });
     m_indexer->start();
-    save();
+    connect(m_indexer, SIGNAL(finished()), this, SLOT(saveDetached()));
 }
 
 bool FileIndex::operationIsFinished() const
@@ -209,6 +214,41 @@ QStringList FileIndex::acceptedEndings()
     return endings;
 }
 
+void FileIndex::saveDetached() const
+{
+    class SaverThread : public QThread
+    {
+    public:
+        SaverThread(const FileIndex* index) : m_index(index) {}
+        void run() { m_index->save(); }
+    private:
+        const FileIndex* m_index;
+    };
+
+    if (m_saverThread)
+    {
+        // there is a saver-thread still running. set the requested flag. If the thread terminates, it will run again.
+        m_saveRequested = true;
+    }
+    else
+    {
+        // there is no saver thread running, so create one.
+        m_saverThread = new SaverThread(this);
+        connect(m_saverThread, &QThread::finished, [this]()
+        {
+            // if the thread terminates, delete it and check if a request was made during the run.
+            // if a request was made, start again.
+            this->m_saverThread->deleteLater();
+            this->m_saverThread = nullptr;
+            if (this->m_saveRequested)
+            {
+                this->saveDetached();
+            }
+        });
+        // start the thread.
+        m_saverThread->start();
+    }
+}
 
 
 

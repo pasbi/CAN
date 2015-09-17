@@ -39,6 +39,7 @@
 #include "PDFCreator/orphantsetlist.h"
 #include "PDFCreator/pdfcreator.h"
 #include "DatabaseView/EventDatabaseView/setlistview.h"
+#include "FileIndex/fileindex.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -699,23 +700,23 @@ void MainWindow::on_actionAdd_Folder_triggered()
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
 
-    app().fileIndex().addDirectory( path, FileIndex::acceptedEndings() );
+    app().fileIndex()->addDirectory( path );
 
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);
     pd.setLabel(label);
     pd.show();
 
-    while (!app().fileIndex().operationIsFinished())
+    while (!app().fileIndex()->operationIsFinished())
     {
         pd.setValue( (pd.value() + 1) % 100 );
-        label->setText( QString("%1\n%2").arg(app().fileIndex().currentFilename())
-                                         .arg(app().fileIndex().size())            );
+        label->setText( QString("%1\n%2").arg(app().fileIndex()->currentFilename())
+                                         .arg(app().fileIndex()->size())            );
         qApp->processEvents();
         QThread::msleep( 10 );
         if (pd.wasCanceled())
         {
-            app().fileIndex().abortOperations();
+            app().fileIndex()->abortOperations();
         }
     }
 
@@ -723,7 +724,7 @@ void MainWindow::on_actionAdd_Folder_triggered()
 
 void MainWindow::on_actionClear_Index_triggered()
 {
-    app().fileIndex().clear();
+    app().fileIndex()->clear();
 }
 
 void MainWindow::on_actionRename_Attachment_triggered()
@@ -757,7 +758,7 @@ void MainWindow::on_action_Index_Info_triggered()
 {
     QMessageBox::information( this,
                               tr("File index information"),
-                              QString(tr("Files: %1")).arg(app().fileIndex().size()) );
+                              QString(tr("Files: %1")).arg(app().fileIndex()->size()) );
 }
 
 void MainWindow::my_on_actionNew_Event_triggered()

@@ -76,9 +76,6 @@ int main(int argc, char *argv[])
         qWarning() << "cannot load translation file for " << language;
     }
 
-
-    app.fileIndex().restore();
-
     MainWindow m;
     m.show();
 

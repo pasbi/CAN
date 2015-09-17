@@ -29,11 +29,7 @@ public:
 
     int size() const { return m_forward.size(); }
 
-    void save() const;
-    void restore();
-
-    // QStringList.contains is faster than QMap.contains for n < 20. acceptedEndings is expected to be < 10
-    void addDirectory(const QString & path, const QStringList& acceptedEndings);
+    void addDirectory(const QString & path);
     void addFile(const QString& filename);
     QString currentFilename() const;
     bool operationIsFinished() const;
@@ -62,6 +58,13 @@ private:
     Indexer* m_indexer = NULL;
     void addFilePrivate(const QString& filename);
 
+private slots:
+    void saveDetached() const;
+    void save() const;
+    void restore();
+private:
+    mutable bool m_saveRequested = false;
+    mutable QThread* m_saverThread = nullptr;
 };
 
 

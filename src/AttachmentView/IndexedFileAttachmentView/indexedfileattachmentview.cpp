@@ -6,7 +6,7 @@
 #include "Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Project/project.h"
-#include "Dialogs/indexedfilechoosedialog.h"
+#include "Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.h"
 
 
 IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :

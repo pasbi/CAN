@@ -5,6 +5,8 @@
 #include "Database/SongDatabase/song.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"
 #include "DatabaseView/SongDatabaseView/songtableview.h"
+#include "FileIndex/fileindex.h"
+
 
 Application::Application(int &argc, char **argv) :
     QApplication( argc, argv)
@@ -17,7 +19,8 @@ Application::Application(int &argc, char **argv) :
 
 Application::~Application()
 {
-    m_fileIndex.save();
+    delete m_fileIndex;
+    m_fileIndex = nullptr;
     Configurable::saveAll();
 }
 
@@ -64,5 +67,14 @@ void Application::endMacro()
 Attachment* Application::currentAttachment() const
 {
     return mainWindow()->currentAttachment();
+}
+
+FileIndex* Application::fileIndex() const
+{
+    if (!m_fileIndex)
+    {
+        m_fileIndex = new FileIndex();
+    }
+    return m_fileIndex;
 }
 

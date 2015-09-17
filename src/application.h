@@ -6,13 +6,13 @@
 #include <QAction>
 
 #include "global.h"
-#include "FileIndex/fileindex.h"
 
 class MainWindow;
 class Project;
 class Command;
 class Song;
 class Attachment;
+class FileIndex;
 class Application : public QApplication
 {
     Q_OBJECT
@@ -20,7 +20,7 @@ public:
     explicit Application(int & argc, char** argv);
     ~Application();
 
-    FileIndex & fileIndex() { return m_fileIndex; }
+    FileIndex* fileIndex() const;
     Project* project() const { return m_project; }
 
     void setProject(Project* project);
@@ -38,14 +38,14 @@ public:
     Attachment *currentAttachment() const;
 
 private:
-    FileIndex m_fileIndex;
+    mutable FileIndex* m_fileIndex = nullptr;
     QSettings m_settings;
 
     static Application* m_singleton;
     friend Application & app();
 
-    Project* m_project = NULL;
-    MainWindow* m_mainWindow = NULL;
+    Project* m_project = nullptr;
+    MainWindow* m_mainWindow = nullptr;
 
 };
 

@@ -8,6 +8,7 @@
 #include "Attachments/AudioAttachment/sectionsmodel.h"
 #include "Database/SongDatabase/song.h"
 #include "filefilter.h"
+#include "FileIndex/fileindex.h"
 
 
 IndexedFileChooseDialog::IndexedFileChooseDialog(const Song *song, const QByteArray &currentHash, const QStringList &endings, QWidget *parent) :
@@ -56,7 +57,7 @@ IndexedFileChooseDialog::~IndexedFileChooseDialog()
 
 QStringList IndexedFileChooseDialog::gatherFiles()
 {
-    QStringList filenames = app().fileIndex().filenames();
+    QStringList filenames = app().fileIndex()->filenames();
     return m_fileFilter->apply(filenames, m_song->textAttributes(), m_acceptedEndings);
 }
 
@@ -70,7 +71,7 @@ void IndexedFileChooseDialog::setFilename(const QString &filename)
     }
     else
     {
-        QByteArray hash = app().fileIndex().hash( filename );
+        QByteArray hash = app().fileIndex()->hash( filename );
 
         m_hash = hash;
 
@@ -92,7 +93,7 @@ void IndexedFileChooseDialog::setFilename(const QString &filename)
 
 QString IndexedFileChooseDialog::currentFilename()
 {
-    return app().fileIndex().filename( m_hash );
+    return app().fileIndex()->filename( m_hash );
 }
 
 void IndexedFileChooseDialog::on_pushButtonOpenFileDialog_clicked()
