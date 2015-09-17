@@ -11,7 +11,6 @@ class ChordPatternProxyAttachment : public AbstractChordPatternAttachment
 
 public:
     ChordPatternProxyAttachment();
-    void setChordPatternAttachment(const ChordPatternAttachment *source );
 
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject &object);
@@ -32,9 +31,13 @@ protected:
     void deserialize(QDataStream &in);
 
 private:
+    void setChordPatternAttachment(const ChordPatternAttachment *source );
     const ChordPatternAttachment* m_source;
     int m_transpose = 4;
     QString m_patternCache;
+
+private slots:
+    void adjustSourceTransposing(int sourceTransposing);
 
 };
 

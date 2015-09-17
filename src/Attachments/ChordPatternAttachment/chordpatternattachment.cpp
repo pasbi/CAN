@@ -71,6 +71,7 @@ void ChordPatternAttachment::setPattern(const QString &pattern)
 void ChordPatternAttachment::transpose(int transposing)
 {
     setPattern( process(m_pattern, transposing) );
+    emit transposed(transposing);
 }
 
 QString ChordPatternAttachment::process(QString text, int transpose)

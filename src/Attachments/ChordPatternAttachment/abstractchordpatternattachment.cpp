@@ -3,5 +3,4 @@
 AbstractChordPatternAttachment::AbstractChordPatternAttachment() :
     Attachment()
 {
-
 }

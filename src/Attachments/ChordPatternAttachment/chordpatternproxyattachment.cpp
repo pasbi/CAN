@@ -35,11 +35,14 @@ void ChordPatternProxyAttachment::transpose(int t)
 
 void ChordPatternProxyAttachment::setChordPatternAttachment( const ChordPatternAttachment *source )
 {
-    if (m_source != source)
+    assert(!m_source);
+    assert(source);
+    m_source = source;
+    updateCache();
+    emit changed();
+    if (m_source)
     {
-        m_source = source;
-        updateCache();
-        emit changed();
+        connect(m_source, SIGNAL(transposed(int)), this, SLOT(adjustSourceTransposing(int)));
     }
 }
 
@@ -100,5 +103,10 @@ void ChordPatternProxyAttachment::deserialize(QDataStream &in)
     }
     m_transpose = transpose;
     updateCache();
+}
+
+void ChordPatternProxyAttachment::adjustSourceTransposing(int sourceTransposing)
+{
+    transpose( -sourceTransposing );
 }
 
