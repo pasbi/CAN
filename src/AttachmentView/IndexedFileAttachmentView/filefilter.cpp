@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "util.h"
+#include "global.h"
 
 FileFilter::FileFilter()
 {

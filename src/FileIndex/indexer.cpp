@@ -4,10 +4,10 @@
 #include "fileindex.h"
 #include "global.h"
 
-Indexer::Indexer(const QString &path, const QMap<QString, bool>& acceptedIndexes, Mode mode, FileIndex *fileIndex, QObject *parent) :
+Indexer::Indexer(const QString &path, const QStringList &acceptedEndings, Mode mode, FileIndex *fileIndex, QObject *parent) :
     QThread(parent),
     m_path(path),
-    m_acceptedIndexes( acceptedIndexes ),
+    m_acceptedEndings( acceptedEndings ),
     m_fileIndex(fileIndex),
     m_mode(mode)
 {
@@ -67,7 +67,7 @@ void Indexer::addRecursively(const QString &path)
     else
     {
         QString end = QFileInfo(path).suffix().toLower();
-        if (m_acceptedIndexes.value(end, false))
+        if (m_acceptedEndings.contains(end))
         {
             m_fileIndex->add( path );
         }

@@ -44,5 +44,12 @@ void AudioAttachment::deserialize(QDataStream &in)
     qint32 index;
     in >> m_sectionsModel;
     in >> index;
-    setSection( sectionsModel()->section(index) );
+    if (index < 0)
+    {
+        setSection(nullptr);
+    }
+    else
+    {
+        setSection( sectionsModel()->section(index) );
+    }
 }

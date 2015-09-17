@@ -53,8 +53,10 @@ QString defaultStyleSheet()
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentCloneURL, QDir::homePath());
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexFilter, "");
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexFilter, ""); //TODO
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, locale, QLocale::system().name().toStdString().c_str());
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexDefaultPath, QDir::homePath() );
+
 CONFIGURABLE_ADD_ITEM( MainWindow,
                        Style,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "Style"),
@@ -685,17 +687,20 @@ void MainWindow::my_on_actionDelete_Song_triggered()
 
 void MainWindow::on_actionAdd_Folder_triggered()
 {
-    AddFilesToIndexDialog dialog( this );
+    enum { ShowNotOnlyDirs = 0x0 };
+    QString path = QFileDialog::getExistingDirectory(this, tr("Add to index ..."), config["FileIndexDefaultPath"].toString(), 0 );
 
-    if (dialog.exec() != QDialog::Accepted)
+    if (path.isEmpty())
     {
         return;
     }
 
+    config.set("FileIndexDefaultPath", path);
+
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
 
-    app().fileIndex().addSource( dialog.path(), dialog.acceptedEndings());
+    app().fileIndex().addDirectory( path, FileIndex::acceptedEndings() );
 
     QLabel* label = new QLabel(&pd);
     label->setWordWrap(true);

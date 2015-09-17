@@ -8,6 +8,14 @@ DEFN_CONFIG( FileIndex, "File Index" );
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( FileIndex, FileIndex, QByteArray() );
 
+
+CONFIGURABLE_ADD_ITEM( FileIndex,
+                       endings,
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "Endings"),
+                       QT_TRANSLATE_NOOP("ConfigurableItem", "All Endings that may be included"),
+                       (QStringList() << "mp3" << "ogg" << "aif" << "aiff" << "pdf").join(QChar(0x2C)), /* 0x2C = , macro does not allow to write it!*/
+                       ConfigurableItemOptions::LineEditOptions("") );
+
 const QCryptographicHash::Algorithm FileIndex::m_hashAlgorithm = QCryptographicHash::Sha1;
 
 FileIndex::FileIndex()
@@ -80,8 +88,12 @@ QString FileIndex::filename(const QByteArray &hash) const
     return filenames.isEmpty() ? QString() : filenames.first();
 }
 
-QByteArray FileIndex::hash(const QString &filename) const
+QByteArray FileIndex::hash(const QString &filename)
 {
+    if (!m_backward.contains(filename))
+    {
+        add(filename);
+    }
     return m_backward.value( filename );
 }
 
@@ -133,7 +145,7 @@ void FileIndex::restore( )
 }
 
 
-void FileIndex::addSource(const QString & path, const QMap<QString, bool>& acceptedEndings)
+void FileIndex::addDirectory(const QString & path, const QStringList& acceptedEndings)
 {
     assert( !m_indexer );
     m_sources << path;
@@ -190,6 +202,16 @@ QString FileIndex::currentFilename() const
     }
 }
 
+QStringList FileIndex::acceptedEndings()
+{
+    QStringList endings = config["endings"].toString().split(",");
+    for (QString& ending: endings)
+    {
+        ending = ending.remove(QRegExp("\\W"));
+    }
+    endings = endings.filter(QRegExp(".+"));
+    return endings;
+}
 
 
 

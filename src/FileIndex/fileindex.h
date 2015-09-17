@@ -17,7 +17,13 @@ public:
     void clear();
     QString filename( const QByteArray & hash ) const;
     QStringList filenames() const;
-    QByteArray hash( const QString & filename ) const;
+
+    /**
+     * @brief hash adds the filename to the hash if index does not contain it
+     * @param filename
+     * @return
+     */
+    QByteArray hash( const QString & filename );
     bool contains(const QByteArray & hash) { return m_forward.contains(hash); }
     bool contains(const QString & filename) { return m_backward.contains(filename); }
 
@@ -26,14 +32,13 @@ public:
     void save() const;
     void restore();
 
-    /**
-     * @brief addSource
-     * @param path
-     * @param acceptedEndings
-     */
-    void addSource(const QString & path, const QMap<QString, bool> &acceptedEndings);
+    // QStringList.contains is faster than QMap.contains for n < 20. acceptedEndings is expected to be < 10
+    void addDirectory(const QString & path, const QStringList& acceptedEndings);
+    void add(const QString& filename);
     QString currentFilename() const;
     bool operationIsFinished() const;
+
+    static QStringList acceptedEndings();
 
 signals:
     void operationFinished();
@@ -48,7 +53,6 @@ private:
     const static QCryptographicHash::Algorithm m_hashAlgorithm;
 
     friend class Indexer;
-    void add(const QString& filename);
     void remove(const QString & filename);
 
     QByteArray serialize() const;

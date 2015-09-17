@@ -71,16 +71,7 @@ void IndexedFileChooseDialog::setFilename(const QString &filename)
     else
     {
         QByteArray hash = app().fileIndex().hash( filename );
-        if (hash.isEmpty())
-        {
-            QMessageBox::warning( this,
-                                  tr("File not indexed"),
-                                  tr("The file you want to use is not indexed.\n"
-                                     "Index it before you can use it."),
-                                  QMessageBox::Ok,
-                                  QMessageBox::NoButton );
-            return;
-        }
+
         m_hash = hash;
 
         ui->lineEdit->setText( filename );
@@ -133,8 +124,6 @@ void IndexedFileChooseDialog::on_pushButtonOpenFileDialog_clicked()
         setFilename( filename );
     }
 }
-
-
 
 void IndexedFileChooseDialog::on_lineEdit_editingFinished()
 {

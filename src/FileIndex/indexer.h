@@ -10,7 +10,7 @@ class Indexer : public QThread
     Q_OBJECT
 public:
     enum Mode { Update, Scan };
-    explicit Indexer(const QString & path, const QMap<QString, bool>& acceptedIndexes,
+    explicit Indexer(const QString & path, const QStringList& acceptedEndings,
                      Mode mode, FileIndex* fileIndex, QObject *parent = 0);
 
     void abort();
@@ -22,7 +22,7 @@ protected:
 private:
 
     const QString m_path;
-    const QMap<QString, bool> m_acceptedIndexes;
+    const QStringList& m_acceptedEndings;
     FileIndex* const m_fileIndex;
     const Mode m_mode;
 

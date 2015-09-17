@@ -58,13 +58,12 @@ void IndexedFileAttachmentView::updateStackedWidget()
 
 void IndexedFileAttachmentView::chooseFile()
 {
-    QStringList endings = attachment<IndexedFileAttachment>()->acceptedEndings();
-    const IndexedFileAttachment* ifa = attachment<IndexedFileAttachment>();
-    IndexedFileChooseDialog dialog( ifa->song(), ifa->hash(), endings );
+    IndexedFileAttachment* ifa = attachment<IndexedFileAttachment>();
+    IndexedFileChooseDialog dialog( ifa->song(), ifa->hash(), ifa->acceptedEndings() );
 
     if (dialog.exec() == QDialog::Accepted)
     {
-        app().pushCommand( new FileAttachmentCommandSetHashCommand( attachment<IndexedFileAttachment>(), dialog.hash() ) );
+        app().pushCommand( new FileAttachmentCommandSetHashCommand( ifa, dialog.hash() ) );
     }
 }
 
