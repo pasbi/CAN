@@ -6,7 +6,7 @@
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include "chordpatternattachmentview.h"
 #include "Database/SongDatabase/song.h"
-
+#include "Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h"
 
 DEFN_CREATABLE(ChordPatternProxyAttachmentView, AttachmentView);
 
@@ -30,7 +30,6 @@ void ChordPatternProxyAttachmentView::polish()
     updateViewIcon();
 }
 
-#include "Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h"
 void ChordPatternProxyAttachmentView::on_buttonUp_clicked()
 {
     app().pushCommand( new AbstractChordPatternAttachmentTransposeCommand( attachment<ChordPatternProxyAttachment>(),  1 ) );
@@ -71,7 +70,21 @@ void ChordPatternProxyAttachmentView::updateText()
 
     if (source)
     {
-        ui->buttonOriginal->setText( "< " + source->name() + " >");
+        int t = attachment<ChordPatternProxyAttachment>()->transpose();
+        if (t > 6)
+        {
+            t -= 12;
+        }
+        QString transpose = QString("%1").arg(t);
+        if (t > 0)
+        {
+            transpose = "+" + transpose;
+        }
+        else if (t == 0)
+        {
+            transpose = QChar(0x00B1) + transpose;
+        }
+        ui->buttonOriginal->setText( "< " + source->name() + " > [" + transpose + "]");
         ui->buttonOriginal->setEnabled( true );
     }
     else

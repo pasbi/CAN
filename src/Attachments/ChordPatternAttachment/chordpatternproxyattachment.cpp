@@ -36,12 +36,11 @@ void ChordPatternProxyAttachment::transpose(int t)
 void ChordPatternProxyAttachment::setChordPatternAttachment( const ChordPatternAttachment *source )
 {
     assert(!m_source);
-    assert(source);
-    m_source = source;
-    updateCache();
-    emit changed();
-    if (m_source)
+    if (source)
     {
+        m_source = source;
+        updateCache();
+        emit changed();
         connect(m_source, SIGNAL(transposed(int)), this, SLOT(adjustSourceTransposing(int)));
     }
 }
@@ -98,7 +97,8 @@ void ChordPatternProxyAttachment::deserialize(QDataStream &in)
     }
     else
     {
-        m_source = qobject_assert_cast<ChordPatternAttachment*>(song()->attachments()[index]);
+        // we can assume that the source is deserialized first, so it is already existent in song()->attachments()
+        setChordPatternAttachment( qobject_assert_cast<ChordPatternAttachment*>(song()->attachments()[index]) );
         assert(m_source);
     }
     m_transpose = transpose;
