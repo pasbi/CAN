@@ -29,7 +29,6 @@ QMAKE_CXXFLAGS += -std=c++0x
 QMAKE_LFLAGS += -static-libgcc
 
 unix {
-LIBS += -lgit2
 LIBS += -L/usr/local/lib -lpoppler-qt5
 LIBS += -lavformat -lavcodec -lavutil -lpthread
 LIBS += -lSoundTouch
@@ -37,7 +36,6 @@ LIBS += -lSoundTouch
 
 win32 {
 INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
-LIBS += -L../../bin -lgit2
 LIBS += -L../../lib -lpoppler-qt5
 LIBS += -L../../bin -lavformat -lavcodec -lavutil
 LIBS += -L../../bin -lsoundtouch
@@ -105,7 +103,7 @@ SOURCES += main.cpp\
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
     combobox.cpp \
-    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.cpp \
+    Dialogs/indexedfilechoosedialog.cpp \
     Dialogs/tagdialog.cpp \
     Commands/edittagscommand.cpp \
     PDFCreator/page.cpp \
@@ -204,7 +202,7 @@ HEADERS  += mainwindow.h \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h \
     DatabaseView/databaseview.h \
     combobox.h \
-    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.h \
+    Dialogs/indexedfilechoosedialog.h \
     Dialogs/tagdialog.h \
     Commands/edittagscommand.h \
     PDFCreator/page.h \
@@ -269,7 +267,7 @@ FORMS    += mainwindow.ui \
     Dialogs/configurationdialog.ui \
     Dialogs/datetimedialog.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
-    AttachmentView/IndexedFileAttachmentView/indexedfilechoosedialog.ui \
+    Dialogs/indexedfilechoosedialog.ui \
     Dialogs/tagdialog.ui \
     Dialogs/chordpatternviewer.ui \
     Dialogs/addfilestoindexdialog.ui \
