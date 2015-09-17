@@ -29,6 +29,9 @@ public:
     static QString labelSong(const Song* song);
     void setSong(const Song *song);
 
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
+
 private:
     Type m_type;
     const Song* m_song = NULL;

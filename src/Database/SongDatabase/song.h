@@ -17,10 +17,6 @@ public:
     Song(Database<Song> *database);
     ~Song();
 
-public:
-    bool restoreFromJsonObject(const QJsonObject &json);
-    QJsonObject toJsonObject() const;
-
     /////////////////////////////////////////////////
     ////
     ///  Attributes
@@ -78,8 +74,9 @@ public:
 private:
     Program m_program = Program();
 
-
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 
 };
-
 #endif // SONG_H

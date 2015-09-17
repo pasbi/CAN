@@ -196,9 +196,6 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
-    <addaction name="separator"/>
-    <addaction name="actionSync"/>
-    <addaction name="actionClone"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="toolTip">
@@ -207,7 +204,6 @@
     <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="actionIdentites"/>
     <addaction name="actionSettings"/>
     <addaction name="action_Export_all_songs"/>
    </widget>

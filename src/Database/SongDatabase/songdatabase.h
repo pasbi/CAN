@@ -40,16 +40,6 @@ public:
 
     QString fileNameBase() const { return "song"; }
 
-
-    /////////////////////////////////////////////////
-    ////
-    ///  Converting to and from JsonObject
-    //
-    /////////////////////////////////////////////////
-public:
-    QJsonObject toJsonObject() const;
-    bool restoreFromJsonObject(const QJsonObject &object);
-
 signals:
     void attachmentAdded(int);
     void attachmentRemoved(int);
@@ -57,7 +47,6 @@ signals:
     void songRemoved(int);
 
     friend class SongDatabaseSortProxy;
-
 };
 
 #endif // SONGDATABASE_H

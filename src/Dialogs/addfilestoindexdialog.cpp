@@ -35,7 +35,6 @@ AddFilesToIndexDialog::AddFilesToIndexDialog(QWidget *parent) :
 
 bool AddFilesToIndexDialog::acceptEnding(const QString &ending) const
 {
-    qDebug() << "read " << config["acceptedEndings"];
     return config["acceptedEndings"].toMap().value(ending, QVariant(false)).toBool();
 }
 

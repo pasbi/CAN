@@ -78,17 +78,12 @@ SOURCES += main.cpp\
     AttachmentView/attachmentchooser.cpp \
     Commands/AttachmentCommands/attachmentrenamecommand.cpp \
     Attachments/ChordPatternAttachment/chord.cpp \
-    Dialogs/clonedialog.cpp \
     Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.cpp \
     Dialogs/stringdialog.cpp \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp \
     Attachments/AudioAttachment/audioattachment.cpp \
     AttachmentView/chordpatternedit.cpp \
-    conflicteditor.cpp \
-    Dialogs/commitdialog.cpp \
-    identitymanager.cpp \
-    Dialogs/identitydialog.cpp \
     Dialogs/configurationdialog.cpp \
     Dialogs/configurationwidgets.cpp \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp \
@@ -120,12 +115,6 @@ SOURCES += main.cpp\
     PDFCreator/orphantsetlist.cpp \
     Dialogs/hud.cpp \
     Dialogs/addfilestoindexdialog.cpp \
-    Project/zipped.cpp \
-    Project/conflictfile.cpp \
-    Project/gitrepository.cpp \
-    Project/identity.cpp \
-    Project/gitutil.cpp \
-    Project/file.cpp \
     AttachmentView/chordpatternproxyattachmentview.cpp \
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.cpp \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.cpp \
@@ -185,18 +174,13 @@ HEADERS  += mainwindow.h \
     DatabaseView/SongDatabaseView/songdatabasewidget.h \
     AttachmentView/attachmentchooser.h \
     Attachments/ChordPatternAttachment/chord.h \
-    Dialogs/clonedialog.h \
     Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h \
     Dialogs/stringdialog.h \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.h \
     Attachments/AudioAttachment/audioattachment.h \
     AttachmentView/chordpatternedit.h \
-    conflicteditor.h \
     global.h \
-    Dialogs/commitdialog.h \
-    identitymanager.h \
-    Dialogs/identitydialog.h \
     Dialogs/configurationdialog.h \
     Dialogs/configurationwidgets.h \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h \
@@ -235,13 +219,7 @@ HEADERS  += mainwindow.h \
     PDFCreator/orphantsetlist.h \
     Dialogs/hud.h \
     Dialogs/addfilestoindexdialog.h \
-    Project/zipped.h \
-    Project/conflictfile.h \
-    Project/gitrepository.h \
-    Project/identity.h \
-    Project/gitutil.h \
     git.h \
-    Project/file.h \
     AttachmentView/chordpatternproxyattachmentview.h \
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.h \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.h \
@@ -285,12 +263,9 @@ FORMS    += mainwindow.ui \
     AttachmentView/chordpatternattachmentview.ui \
     AttachmentView/IndexedFileAttachmentView/pdfattachmentview.ui \
     AttachmentView/attachmentchooser.ui \
-    Dialogs/clonedialog.ui \
     Dialogs/stringdialog.ui \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui \
-    Dialogs/commitdialog.ui \
-    Dialogs/identitydialog.ui \
     Dialogs/configurationdialog.ui \
     Dialogs/datetimedialog.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
@@ -298,7 +273,6 @@ FORMS    += mainwindow.ui \
     Dialogs/tagdialog.ui \
     Dialogs/chordpatternviewer.ui \
     Dialogs/addfilestoindexdialog.ui \
-    conflicteditor.ui \
     AttachmentView/chordpatternproxyattachmentview.ui \
     Dialogs/exportpdfdialog.ui \
     Dialogs/tageditor.ui \

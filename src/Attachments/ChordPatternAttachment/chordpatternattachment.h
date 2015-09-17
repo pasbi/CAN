@@ -27,6 +27,9 @@ public:
     void setScrollDownTempo( double tempo );
     static QString process(QString text, int transpose = 0);
 
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
+
 public slots:
     void transpose( int transposing = 0 );
 

@@ -20,28 +20,17 @@ Section::Section() :
 {
 }
 
-QJsonObject Section::toJsonObject() const
+QDataStream& operator<<(QDataStream& out, const Section& section)
 {
-    QJsonObject object;
-    object["caption"] = m_caption;
-    object["begin"] = m_begin;
-    object["end"] = m_end;
-    return object;
+    out << section.m_caption << static_cast<qreal>(section.m_begin) << static_cast<qreal>(section.m_end);
+    return out;
 }
 
-bool Section::restoreFromJsonObject(const QJsonObject &object)
+QDataStream& operator>>(QDataStream& in, Section& section)
 {
-    if (    checkJsonObject( object, "caption", QJsonValue::String )
-         && checkJsonObject( object, "begin", QJsonValue::Double )
-         && checkJsonObject( object, "end", QJsonValue::Double )    )
-    {
-        m_caption = object["caption"].toString();
-        m_begin = object["begin"].toDouble();
-        m_end = object["end"].toDouble();
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    qreal begin, end;
+    in >> section.m_caption >> begin >> end;
+    section.m_begin = begin;
+    section.m_end = end;
+    return in;
 }

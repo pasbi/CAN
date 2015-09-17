@@ -37,14 +37,14 @@ public:
 public:
     virtual QStringList acceptedEndings() const = 0;
 
-    virtual QJsonObject toJsonObject() const;
-    virtual bool restoreFromJsonObject(const QJsonObject &object);
-
-
 public slots:
     bool setHash(QByteArray hash);
     bool setFilename(QString filename );
     virtual void open() = 0;
+
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 
 signals:
     void hashChanged( QByteArray hash );

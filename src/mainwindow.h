@@ -5,7 +5,6 @@
 
 #include "Project/project.h"
 #include "configurable.h"
-#include "identitymanager.h"
 
 
 namespace Ui {
@@ -51,7 +50,6 @@ private:
     Ui::MainWindow *ui;
 
     Project m_project;
-    IdentityManager m_identityManager;
 
     // saving and loading related stuff
     bool canProjectClose();
@@ -84,10 +82,6 @@ private slots:
     void on_actionClear_Index_triggered();
     void on_actionRename_Attachment_triggered();
     void on_actionDuplicate_Attachment_triggered();
-    void on_actionOpen_Terminal_here_triggered();
-    void on_actionClone_triggered();
-    void on_actionSync_triggered();
-    void on_actionIdentites_triggered();
     void on_actionSettings_triggered();
     void on_action_Index_Info_triggered();
     void on_action_Export_all_songs_triggered();
@@ -147,8 +141,6 @@ private:
     QAction* m_actionDelete_SetlistItem;
     QAction* m_actionCopy_SetlistItem;
     QAction* m_actionPaste_SetlistItem;
-
-    void askForSync();
 
     friend class Application;   // application handles some quasi-global functions
 };

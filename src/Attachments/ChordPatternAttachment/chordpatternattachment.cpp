@@ -43,39 +43,20 @@ QString replaceTabs(QString text)
     return lines.join("\n");
 }
 
-QJsonObject ChordPatternAttachment::toJsonObject() const
+void ChordPatternAttachment::serialize(QDataStream &out) const
 {
-    QJsonObject object = Attachment::toJsonObject();
-
-    object.insert("pattern", chordPattern());
-    object.insert("scrollDownTempo", m_scrollDownTempo);
-
-    return object;
+    AbstractChordPatternAttachment::serialize(out);
+    out << m_pattern;
+    out << static_cast<qreal>(m_scrollDownTempo);
 }
 
-bool ChordPatternAttachment::restoreFromJsonObject(const QJsonObject &object)
+void ChordPatternAttachment::deserialize(QDataStream &in)
 {
-    bool success = true;
-    if (checkJsonObject( object, "pattern", QJsonValue::String ))
-    {
-        m_pattern = object["pattern"].toString();
-    }
-    else
-    {
-        m_pattern = "";
-        success = false;
-    }
-    if (checkJsonObject( object, "scrollDownTempo", QJsonValue::Double ))
-    {
-        setScrollDownTempo( object["scrollDownTempo"].toDouble() );
-    }
-    else
-    {
-        setScrollDownTempo( 0 );
-        // scrollDownTempo is not as important. keep success.
-    }
-
-    return success && Attachment::restoreFromJsonObject( object );
+    AbstractChordPatternAttachment::deserialize(in);
+    qreal tempo;
+    in >> m_pattern;
+    in >> tempo;
+    m_scrollDownTempo = static_cast<double>(tempo);
 }
 
 void ChordPatternAttachment::setPattern(const QString &pattern)

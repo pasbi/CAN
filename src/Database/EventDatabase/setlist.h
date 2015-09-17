@@ -30,9 +30,6 @@ public:
 
     QString fileNameBase() const { UNIMPLEMENTED(""); }
 
-    QJsonObject toJsonObject() const;
-    bool restoreFromJsonObject(const QJsonObject& object );
-
 
 signals:
     void selectionRequest(QModelIndexList);

@@ -2,27 +2,31 @@
 
 const Program Program::INVALID = Program();
 
-QJsonObject Program::toJsonObject() const
+
+Program::Program() :
+   m_bank(0),
+   m_program(0),
+   m_valid(false)
 {
-    QJsonObject program;
-    program["bank"] = m_bank;
-    program["program"] = m_program;
-    program["valid"] = m_valid;
-    return program;
 }
 
-bool Program::restoreFromJsonObject(const QJsonObject& json)
+Program::~Program()
 {
-    if (   !checkJsonObject(json, "bank",    QJsonValue::Double)
-        || !checkJsonObject(json, "program", QJsonValue::Double)
-        || !checkJsonObject(json, "valid",   QJsonValue::Bool)   )
-    {
-        return false;
-    }
 
-    m_bank = json["bank"].toDouble();
-    m_program = json["program"].toDouble();
-    m_valid = json["valid"].toBool();
+}
 
-    return true;
+void Program::serialize(QDataStream &out) const
+{
+    out << static_cast<qint32>(m_bank);
+    out << static_cast<qint32>(m_program);
+    out << static_cast<qint32>(m_valid);
+}
+
+void Program::deserialize(QDataStream &in)
+{
+    qint32 bank, program, valid;
+    in >> bank >> program >> valid;
+    m_bank = bank;
+    m_program = program;
+    m_valid = valid;
 }

@@ -35,9 +35,6 @@ public:
     TimeSpan timeSpan() const { return m_timeSpan; }
     QString notices() const { return m_notices; }
 
-    bool restoreFromJsonObject(const QJsonObject &json);
-    QJsonObject toJsonObject() const;
-
     void setLabel( const QString & label );
     void setBeginning( const QDateTime & beginning );
     void setEnding( const QDateTime & ending );
@@ -49,6 +46,10 @@ public:
     Setlist* setlist() { return m_setlist; }
 
     QStringList textAttributes() const;
+
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 
 private:
     TimeSpan m_timeSpan;

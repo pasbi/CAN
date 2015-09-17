@@ -132,26 +132,6 @@ const Section* SectionsModel::section(int index) const
     return &m_sections[index];
 }
 
-void SectionsModel::restoreFromJsonArray(const QJsonArray& array )
-{
-    for ( const QJsonValue& val : array )
-    {
-        Section section;
-        section.restoreFromJsonObject(val.toObject());
-        m_sections.append( section );
-    }
-}
-
-QJsonArray SectionsModel::toJsonArray() const
-{
-    QJsonArray array;
-    for (const Section& section : m_sections)
-    {
-        array.append(section.toJsonObject());
-    }
-    return array;
-}
-
 int SectionsModel::indexOf(const Section *section) const
 {
     for (int i = 0; i < m_sections.length(); ++i)
@@ -187,7 +167,17 @@ void SectionsModel::removeSection(int i)
     app().pushCommand( new DeleteSectionCommand( this, i ) );
 }
 
+QDataStream& operator<<(QDataStream& out, const SectionsModel* model)
+{
+    out << model->m_sections;
+    return out;
+}
 
+QDataStream& operator>>(QDataStream& in, SectionsModel* model)
+{
+    in >> model->m_sections;
+    return in;
+}
 
 
 

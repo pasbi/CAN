@@ -31,28 +31,18 @@ void AudioAttachment::setSection(const Section *section)
     emit currentSectionChanged( m_currentSection );
 }
 
-QJsonObject AudioAttachment::toJsonObject() const
+void AudioAttachment::serialize(QDataStream &out) const
 {
-    QJsonObject object = IndexedFileAttachment::toJsonObject();
-
-    QJsonArray sections = sectionsModel()->toJsonArray();
-
-    object["sections"] = sections;
-    object["currentSection"] = sectionsModel()->indexOf(m_currentSection);
-    return object;
-
+    IndexedFileAttachment::serialize(out);
+    out << m_sectionsModel;
+    out << static_cast<qint32>(sectionsModel()->indexOf(m_currentSection));
 }
 
-bool AudioAttachment::restoreFromJsonObject(const QJsonObject &object)
+void AudioAttachment::deserialize(QDataStream &in)
 {
-    IndexedFileAttachment::restoreFromJsonObject( object );
-    sectionsModel()->restoreFromJsonArray( object["sections"].toArray() );
-    int i = object["currentSection"].toDouble();
-    if (i >= 0)
-    {
-        setSection( sectionsModel()->section(i) );
-    }
-
-    return     checkJsonObject( object, "sections", QJsonValue::Array )
-            && checkJsonObject( object, "currentSection", QJsonValue::Double);
+    IndexedFileAttachment::deserialize(in);
+    qint32 index;
+    in >> m_sectionsModel;
+    in >> index;
+    setSection( sectionsModel()->section(index) );
 }

@@ -27,6 +27,13 @@ private:
     QString m_caption;
     double m_begin;
     double m_end;
+
+    friend QDataStream& operator<<(QDataStream& out, const Section& model);
+    friend QDataStream& operator>>(QDataStream& in, Section& model);
+
 };
+
+QDataStream& operator<<(QDataStream& out, const Section& model);
+QDataStream& operator>>(QDataStream& in, Section& model);
 
 #endif // SECTION_H

@@ -29,8 +29,8 @@ public:
 
 private:
     Project* m_project;
-
 };
+
 
 template<typename T>
 class Database : public DatabaseBase
@@ -91,40 +91,6 @@ public:
         qDeleteAll( m_items );
         m_items.clear();
         endResetModel();
-    }
-
-    bool restoreFromJsonObject(const QJsonObject &object)
-    {
-        beginResetModel();
-        bool success = PersistentObject::restoreFromJsonObject(object);
-
-        m_items.clear();
-        QStringList filenames = QDir( this->project()->path() ).entryList( QStringList() << QString("%1*").arg(this->fileNameBase()) );
-        filenames.removeOne(QString("%1Database").arg(this->fileNameBase()));
-
-        for (const QString& filename : filenames)
-        {
-            T* s = new T(this);
-            success &= s->loadFrom( this->project()->makeAbsolute(filename ));
-            m_items << s;
-        }
-
-        endResetModel();
-        return success;
-    }
-
-    QList<File> getFiles() const
-    {
-        QList<File> files;
-        files << File( QString("%1Database").arg(this->fileNameBase()), QJsonDocument(toJsonObject()).toJson() );
-
-        for (int i = 0; i < m_items.size(); ++i)
-        {
-            files << File( QString("%1%2").arg(this->fileNameBase()).arg( m_items[i]->randomID() ),
-                           QJsonDocument(m_items[i]->toJsonObject()).toJson() );
-        }
-
-        return files;
     }
 
     QMimeData* mimeData(const QModelIndexList &indexes) const
@@ -207,6 +173,40 @@ public:
     {
         int row = rowOf(item);
         emit dataChanged( index(row, 0), index(row, columnCount() - 1) );
+    }
+
+    void serialize(QDataStream &out) const
+    {
+        out << (qint32) m_items.length();
+        for (T* item : m_items)
+        {
+            out << item;
+        }
+    }
+
+    void deserialize(QDataStream &in)
+    {
+        reset();
+        qint32 n;
+        in >> n;
+        beginResetModel();
+        for (int i = 0; i < n; ++i)
+        {
+            T* item = new T(this);
+            in >> item;
+            m_items << item;
+        }
+        endResetModel();
+    }
+
+    T* retrieveItem(qint32 id) const
+    {
+        return m_items[id];
+    }
+
+    int identifyItem(const T* item) const
+    {
+        return m_items.indexOf(const_cast<T*>(item));
     }
 
 

@@ -8,7 +8,6 @@
 EventDatabase::EventDatabase(Project *project) :
     Database(project)
 {
-    Event::seedRandomID();
 }
 
 Qt::DropActions EventDatabase::supportedDragActions() const

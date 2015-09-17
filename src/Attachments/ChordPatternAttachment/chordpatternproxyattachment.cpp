@@ -3,6 +3,8 @@
 #include "Database/SongDatabase/song.h"
 #include "application.h"
 
+//TODO display transpose
+//TODO keep transpose constant when source is transposed
 DEFN_CREATABLE_NAME(ChordPatternProxyAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Proxy Attachment"))
 
 ChordPatternProxyAttachment::ChordPatternProxyAttachment() :
@@ -75,67 +77,28 @@ void ChordPatternProxyAttachment::setScrollDownTempo(double)
     qWarning() << "cannot set scroll down tempo of ChordPatternProxyAttachment as it would change the scroll down tempo of the original.";
 }
 
-QJsonObject ChordPatternProxyAttachment::toJsonObject() const
+void ChordPatternProxyAttachment::serialize(QDataStream &out) const
 {
-    QJsonObject object = Attachment::toJsonObject();
-
-    int i = -1;
-    for (const Attachment* a : song()->attachments())
-    {
-         if (a == m_source)
-         {
-             ++i;
-             break;
-         }
-         else
-         {
-             ++i;
-         }
-    }
-
-    object.insert("source", i );
-    object.insert("transpose", m_transpose);
-
-    return object;
+    AbstractChordPatternAttachment::serialize(out);
+    out << static_cast<qint32>(song()->attachments().indexOf(const_cast<ChordPatternAttachment*>(m_source)));
+    out << static_cast<qint32>(m_transpose);
 }
 
-bool ChordPatternProxyAttachment::restoreFromJsonObject(const QJsonObject &object)
+void ChordPatternProxyAttachment::deserialize(QDataStream &in)
 {
-    if (checkJsonObject( object, "transpose", QJsonValue::Double ))
+    AbstractChordPatternAttachment::deserialize(in);
+    qint32 index, transpose;
+    in >> index >> transpose;
+    if (index < 0)
     {
-        m_transpose = object["transpose"].toInt();
+        m_source = nullptr;
     }
     else
     {
-        m_transpose = 0;
+        m_source = qobject_assert_cast<ChordPatternAttachment*>(song()->attachments()[index]);
+        assert(m_source);
     }
-    if (checkJsonObject( object, "source", QJsonValue::Double ))
-    {
-        int i = object["source"].toInt();
-        if (i < 0)
-        {
-            m_source = NULL;
-        }
-        else if (i >= song()->attachments().length())
-        {
-            qWarning() << "source does not exist.";
-            m_source = NULL;
-        }
-        else
-        {
-            Attachment* a = song()->attachment(i);
-            if (a->inherits("ChordPatternAttachment"))
-            {
-                m_source = qobject_assert_cast<ChordPatternAttachment*>( a );
-                updateCache();
-            }
-            else
-            {
-                m_source = NULL;
-                qWarning() << "wrong source type";
-            }
-        }
-    }
-
-    return Attachment::restoreFromJsonObject( object );
+    m_transpose = transpose;
+    updateCache();
 }
+

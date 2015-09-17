@@ -20,12 +20,12 @@ public:
     const Player& player() const { return m_player; }
 
     void appendSection( const Section& section );
-
-
-    virtual QJsonObject toJsonObject() const;
-    virtual bool restoreFromJsonObject(const QJsonObject &object);
-
     void setSection( const Section* section );
+
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
+
 
 public slots:
     void open();

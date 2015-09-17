@@ -28,9 +28,6 @@ public:
 
     const Section* section( int index ) const;
 
-    void restoreFromJsonArray( const QJsonArray& array );
-    QJsonArray toJsonArray() const;
-
     int indexOf( const Section* section ) const;
 private:
     bool insertRows(int row, int count, const QModelIndex &parent);
@@ -47,7 +44,14 @@ private:
     friend class InsertSectionCommand;
     friend class DeleteSectionCommand;
 
+    friend QDataStream& operator<<(QDataStream& out, const SectionsModel* model);
+    friend QDataStream& operator>>(QDataStream& in, SectionsModel* model);
 
 };
+
+QDataStream& operator<<(QDataStream& out, const SectionsModel* model);
+QDataStream& operator>>(QDataStream& in, SectionsModel* model);
+
+
 
 #endif // SECTIONSMODEL_H

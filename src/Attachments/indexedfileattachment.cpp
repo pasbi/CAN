@@ -58,24 +58,16 @@ bool IndexedFileAttachment::setHash(QByteArray hash)
     }
 }
 
-QJsonObject IndexedFileAttachment::toJsonObject() const
+void IndexedFileAttachment::deserialize(QDataStream &in)
 {
-    QJsonObject object = Attachment::toJsonObject();
-
-    object.insert("hash", QString::fromLatin1( m_hash.toHex() ));
-
-    return object;
+    Attachment::deserialize(in);
+    in >> m_hash;
 }
 
-bool IndexedFileAttachment::restoreFromJsonObject(const QJsonObject &object)
+void IndexedFileAttachment::serialize(QDataStream &out) const
 {
-    bool success = true;
-    if (success && (success = checkJsonObject( object, "hash", QJsonValue::String )))
-    {
-        m_hash = QByteArray::fromHex( object["hash"].toString().toLatin1() );
-    }
-
-    return Attachment::restoreFromJsonObject( object ) && success;
+    Attachment::serialize(out);
+    out << m_hash;
 }
 
 

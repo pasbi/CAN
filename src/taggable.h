@@ -18,9 +18,10 @@ public:
     QStringList tags() const { return m_tags; }
     void setTags( const QStringList& tags );
 
-    virtual bool restoreFromJsonObject( const QJsonObject & object );
-    virtual QJsonObject toJsonObject() const;
     static QStringList allTags() { return m_allTags.keys(); }
+
+    virtual void serialize(QDataStream &out) const;
+    virtual void deserialize(QDataStream &in);
 
 private:
     QStringList m_tags;

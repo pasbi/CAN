@@ -18,102 +18,6 @@ Song::~Song()
     qDeleteAll( m_attachments );
 }
 
-bool Song::restoreFromJsonObject(const QJsonObject &json)
-{
-    if (!Taggable::restoreFromJsonObject(json))
-    {
-        return false;
-    }
-
-    if (json.contains("attributes")) // load legacy file format
-    {
-        const QJsonArray& array = json["attributes"].toArray();
-        if (array.count() > 0)
-        {
-            m_title = array[0].toString();
-        }
-        if (array.count() > 1)
-        {
-            m_artist = array[1].toString();
-        }
-        if (array.count() > 2)
-        {
-            m_creationDateTime = QDateTime::fromString(array[2].toString(), DATE_TIME_FORMAT);
-        }
-        if (array.count() > 3)
-        {
-            m_duration = QTime::fromString(array[3].toString(), DATE_TIME_FORMAT);
-        }
-    }
-    else    // load up-to-date file format
-    {
-        if (        !checkJsonObject(json, "title", QJsonValue::String)
-                ||  !checkJsonObject(json, "artist", QJsonValue::String)
-                ||  !checkJsonObject(json, "creationDateTime", QJsonValue::String)
-                ||  !checkJsonObject(json, "duration", QJsonValue::String) )
-        {
-            return false;
-        }
-
-        m_title = json["title"].toString();
-        m_artist = json["artist"].toString();
-        m_creationDateTime = QDateTime::fromString(json["creationDateTime"].toString(), DATE_TIME_FORMAT);
-        m_duration = QTime::fromString(json["duration"].toString(), DATE_TIME_FORMAT);
-    }
-
-    if (!checkJsonObject( json, "id", QJsonValue::String))
-    {
-        qWarning() << "expected id. create one: " << randomID();
-    }
-    else
-    {
-        m_randomID = json["id"].toString();
-    }
-
-    m_program.restoreFromJsonObject(json["program"].toObject());
-
-    QJsonArray attachments = json["attachments"].toArray();
-    m_attachments.clear();
-    m_attachments.reserve(attachments.size());
-    for (const QJsonValue & val : attachments)
-    {
-        Attachment* a = NULL;
-        if (Attachment::create( val.toObject(), a, this))
-        {
-            m_attachments.append( a );
-            connectAttachment(a);
-        }
-    }
-
-    return true;
-}
-
-QJsonObject Song::toJsonObject() const
-{
-    QJsonObject json = Taggable::toJsonObject();
-
-    json.insert("title", m_title);
-    json.insert("artist", m_artist);
-    json.insert("creationDateTime", m_creationDateTime.toString(DATE_TIME_FORMAT));
-    json.insert("duration", m_duration.toString(DATE_TIME_FORMAT));
-
-    // attachments
-    QJsonArray attachments;
-    for (const Attachment* a : m_attachments)
-    {
-        QJsonObject o = a->toJsonObject();
-        attachments.append( o );
-    }
-    json.insert("attachments", attachments);
-
-    // id
-    json["id"] = randomID();
-
-    json["program"] = m_program.toJsonObject();
-
-    return json;
-}
-
 QStringList Song::attachmentNames() const
 {
     QStringList akk;
@@ -187,7 +91,38 @@ QStringList Song::textAttributes() const
     return QStringList( { artist(), title() } );
 }
 
+void Song::deserialize(QDataStream &in)
+{
+    DatabaseItem::deserialize(in);
+    qint32 n;
+    in >> m_title >> m_artist >> m_creationDateTime >> m_duration;
+    in >> &m_program;
+    in >> n;
+    assert(m_attachments.isEmpty());
+    m_attachments.reserve(n);
+    for (int i = 0; i < n; ++i)
+    {
+        QString classname;
+        in >> classname;
+        Attachment* attachment = Attachment::create(classname, this);
+        in >> attachment;
+        m_attachments.append( attachment );
+        connectAttachment(attachment);
+    }
 
+}
 
+void Song::serialize(QDataStream &out) const
+{
+    DatabaseItem::serialize(out);
+    out << m_title << m_artist << m_creationDateTime << m_duration;
+    out << &m_program;
+    out << static_cast<qint32>(m_attachments.length());
+    for (const Attachment* a : m_attachments)
+    {
+        out << a->classname();
+        out << a;
+    }
+}
 
 

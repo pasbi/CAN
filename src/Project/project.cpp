@@ -5,11 +5,11 @@
 #include "global.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/eventdatabase.h"
+#include "Database/EventDatabase/event.h"
 
 DEFN_CONFIG(Project, "Project");
 
 Project::Project() :
-    GitRepository("can"),
     m_songDatabase( new SongDatabase(this) ),
     m_eventDatabase( new EventDatabase(this) )
 {
@@ -34,52 +34,8 @@ void Project::setCanClose(bool b)
         m_canClose = b;
         emit canCloseChanged(b);
     }
-
-    if (!b)
-    {
-        m_isSynchronized = false;
-    }
 }
 
-
-bool Project::loadFromTempDir()
-{
-    bool success = true;
-
-
-    if (!m_songDatabase->loadFrom(makeAbsolute("songDatabase")))
-    {
-        WARNING << "Cannot load Song Database";
-        success = false;
-    }
-
-    // event database must be restored after song database.
-    if (!m_eventDatabase->loadFrom(makeAbsolute("eventDatabase")))
-    {
-        WARNING << "Cannot load Date Database";
-        success = false;
-    }
-
-    QUndoStack::clear();
-    emit undoStackCleared();
-    setCanClose(true);
-
-    return success;
-}
-
-bool Project::saveToTempDir()
-{
-    setCanClose(true);
-    return GitRepository::saveToTempDir();
-}
-
-QList<File> Project::getFiles() const
-{
-    QList<File> files;
-    files << m_eventDatabase->getFiles();
-    files << m_songDatabase->getFiles();
-    return files;
-}
 
 void emitCommandPushedSignal(Command::Type type, Project* project, bool commandFocalizesAffiliatedView)
 {
@@ -158,15 +114,16 @@ bool Project::canClose() const
     return m_canClose;
 }
 
-bool Project::isSynchronized() const
+QDataStream& operator<<(QDataStream& out, const Project& project)
 {
-    return m_isSynchronized;
+    out << project.m_songDatabase;
+    out << project.m_eventDatabase;
+    return out;
 }
 
-void Project::setIsSynchronized()
+QDataStream& operator>>(QDataStream& in, Project& project)
 {
-    m_isSynchronized = true;
+    in >> project.m_songDatabase;
+    in >> project.m_eventDatabase;
+    return in;
 }
-
-
-

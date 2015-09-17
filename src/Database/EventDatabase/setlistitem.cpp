@@ -86,68 +86,36 @@ bool SetlistItem::setLabel(const QString label)
     }
 }
 
-QJsonObject SetlistItem::toJsonObject() const
+void SetlistItem::serialize(QDataStream &out) const
 {
-    QJsonObject object;
-
-    object["type"] = (int) m_type;
-    if (m_song)
+    DatabaseItem::serialize(out);
+    out << static_cast<qint32>(m_type);
+    if (m_type == SongType)
     {
-        object["SongID"] = m_song->randomID();
+        out << static_cast<qint32>(app().project()->songDatabase()->identifyItem(m_song));
     }
     else
     {
-        object["SongID"] = "";
+        out << m_label;
     }
-    object["Label"] = m_label;
-
-    return object;
 }
 
-bool SetlistItem::restoreFromJsonObject(const QJsonObject & object)
+void SetlistItem::deserialize(QDataStream &in)
 {
-    if (!checkJsonObject( object, "type", QJsonValue::Double ))
+    DatabaseItem::deserialize(in);
+    qint32 type;
+    in >> type;
+    m_type = static_cast<Type>(type);
+    if (m_type == SongType)
     {
-        return false;
+        qint32 id;
+        in >> id;
+        m_song = app().project()->songDatabase()->retrieveItem(id);
     }
-    switch (static_cast<Type>(object["type"].toInt()))
+    else
     {
-    case SongType:
-        if (!checkJsonObject(object, "SongID", QJsonValue::String))
-        {
-            qWarning() << "Did not found SongID";
-            return false;
-        }
-        else
-        {
-            Song* song = app().project()->songDatabase()->song( object["SongID"].toString() );
-            if (song)
-            {
-                m_type = SongType;
-                setSong(song);
-                return true;
-            }
-            else
-            {
-                qWarning() << "Failed to resolve song";
-                return false;
-            }
-        }
-        break;
-    case LabelType:
-        if (!checkJsonObject(object, "Label", QJsonValue::String))
-        {
-            qWarning() << "Did not found label";
-            return false;
-        }
-        else
-        {
-            m_type = LabelType;
-            m_label = object["Label"].toString();
-            return true;
-        }
+        in >> m_label;
     }
-    return false;
 }
 
 QStringList SetlistItem::textAttributes() const

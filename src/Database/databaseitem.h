@@ -3,12 +3,14 @@
 
 #include "taggable.h"
 #include <QObject>
+#include <QBuffer>
+//#include "database.h"
 
 template<typename T> class Database;
 template<typename T>
 class DatabaseItem : public QObject, public Taggable
 {
-public:
+protected:
     DatabaseItem(Database<T>* database) :
         m_database(database)
     {
@@ -20,12 +22,18 @@ public:
 
     }
 
+public:
     Database<T>* database() const { return m_database; }
 
     T* copy(Database<T>* database) const
     {
+        QBuffer buffer;
+        assert(buffer.open(QIODevice::ReadWrite));
+        QDataStream stream(&buffer);
+        stream << this;
+
         T* copy = new T(database);
-        copy->restoreFromJsonObject(this->toJsonObject());
+        stream >> copy;
         return copy;
     }
 

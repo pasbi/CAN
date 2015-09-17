@@ -19,78 +19,6 @@ Event::~Event()
     m_setlist = nullptr;
 }
 
-bool Event::restoreFromJsonObject(const QJsonObject &json)
-{
-    bool success = true;
-    if (    checkJsonObject( json, "beginning", QJsonValue::String )
-         && checkJsonObject( json, "ending",    QJsonValue::String )
-         && checkJsonObject( json, "label",     QJsonValue::String )
-         && checkJsonObject( json, "notices",   QJsonValue::String )
-         && checkJsonObject( json, "setlist",   QJsonValue::Array ) )
-    {
-        m_timeSpan  = TimeSpan( QDateTime::fromString( json["beginning"].toString(), DATE_TIME_FORMAT ),
-                                QDateTime::fromString( json["ending"].toString(),    DATE_TIME_FORMAT ) );
-        m_label     = json["label"].toString();
-        m_notices   = json["notices"].toString();
-        m_setlist->restoreFromJsonObject( json );
-
-    }
-    else
-    {
-        return false;
-    }
-
-    if ( checkJsonObject( json, "type", QJsonValue::Double ))
-    {
-        // Load the new format where Event::type is encoded as int
-        m_type = static_cast<Type>(json["type"].toDouble());
-    }
-    else if checkJsonObject( json, "type", QJsonValue::String)
-    {
-        qWarning() << "load deprecated Event-format.";
-        QString type = json["type"].toString();
-        if (type == "Rehearsal")
-        {
-            m_type = Rehearsal;
-        }
-        else if (type == "Gig")
-        {
-            m_type = Gig;
-        }
-        else
-        {
-            m_type = Other;
-        }
-    }
-
-
-    if (!checkJsonObject( json, "id", QJsonValue::String))
-    {
-        qWarning() << "expected id. create one: " << randomID();
-    }
-    else
-    {
-        m_randomID = json["id"].toString();
-    }
-
-    return success;
-}
-
-QJsonObject Event::toJsonObject() const
-{
-    QJsonObject json;
-
-    json["ending"]    = m_timeSpan.ending.toString( DATE_TIME_FORMAT );
-    json["beginning"] = m_timeSpan.beginning.toString( DATE_TIME_FORMAT );
-    json["type"]      = static_cast<int>(m_type);
-    json["label"]     = m_label;
-    json["notices"]   = m_notices;
-    json["setlist"]   = m_setlist->toJsonObject()["setlist"];
-    json["id"]        = randomID();
-
-    return json;
-}
-
 void Event::setLabel( const QString & label )
 {
     m_label = label;
@@ -144,8 +72,28 @@ QStringList Event::textAttributes() const
 }
 
 
+void Event::serialize(QDataStream &out) const
+{
+    DatabaseItem::serialize(out);
+    out << m_timeSpan.ending;
+    out << m_timeSpan.beginning;
+    out << static_cast<qint32>(m_type);
+    out << m_label;
+    out << m_setlist;
+}
 
+void Event::deserialize(QDataStream &in)
+{
+    DatabaseItem::deserialize(in);
+    qint32 type;
+    in >> m_timeSpan.ending;
+    in >> m_timeSpan.beginning;
+    in >> type;
+    in >> m_label;
+    in >> m_setlist;
 
+    m_type = static_cast<Event::Type>(type);
+}
 
 
 

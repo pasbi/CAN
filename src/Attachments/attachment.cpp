@@ -1,5 +1,6 @@
 #include "attachment.h"
 #include "Database/SongDatabase/song.h"
+#include <QBuffer>
 
 Attachment::Attachment() :
     m_song(nullptr)
@@ -40,36 +41,23 @@ void Attachment::makeNameUnique()
     setName( newName );
 }
 
-bool Attachment::create(const QJsonObject &object, Attachment *&attachment, Song* song)
+Attachment* Attachment::create(const QString& classname, Song* song)
 {
-    checkJsonObject( object, "classname", QJsonValue::String );
-
-
-    QString classname = object.value("classname").toString();
-    if (Creatable::category(classname) != "Attachment")
-    {
-        WARNING << "Cannot create attachment " << classname << ".";
-        return false;
-    }
-
-    attachment = Creatable::create<Attachment>( classname );
-
+    Attachment* attachment = Creatable::create<Attachment>( classname );
     attachment->setSong( song );
-    attachment->restoreFromJsonObject( object );
-
-    attachment->setName( object["name"].toString() );
-    return attachment->restoreFromJsonObject( object );
+    return attachment;
 }
 
-
-QJsonObject Attachment::toJsonObject() const
+void Attachment::serialize(QDataStream &out) const
 {
-    QJsonObject object = Taggable::toJsonObject();
+    Taggable::serialize(out);
+    out << name();
+}
 
-    object.insert("classname", classname());
-    object.insert("name", name());
-
-    return object;
+void Attachment::deserialize(QDataStream &in)
+{
+    Taggable::deserialize(in);
+    in >> m_name;
 }
 
 QString Attachment::description() const
@@ -79,8 +67,14 @@ QString Attachment::description() const
 
 Attachment* Attachment::copy() const
 {
-    Attachment* copy;
-    assert(Attachment::create(toJsonObject(), copy, song()));
+    QBuffer buffer;
+    buffer.open(QIODevice::ReadWrite);
+    QDataStream stream(&buffer);
+    stream << this;
+
+    Attachment* copy = create(classname(), song());
+    stream >> copy;
+
     return copy;
 }
 

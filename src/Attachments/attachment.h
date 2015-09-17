@@ -23,13 +23,15 @@ public:
     void makeNameUnique();
 
     QJsonObject toJsonObject() const;
-    static bool create(const QJsonObject & object, Attachment* &attachment, Song *song);
+    static Attachment* create(const QString& classname, Song *song);
 
     virtual QString type() const = 0;
 
     QString description() const;
 
     Attachment* copy() const;
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 
 signals:
     void attachmentRenamed(QString);

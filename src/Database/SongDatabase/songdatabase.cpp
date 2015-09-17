@@ -12,7 +12,6 @@
 SongDatabase::SongDatabase(Project *project) :
     Database(project)
 {
-    Song::seedRandomID();
 }
 
 int SongDatabase::columnCount(const QModelIndex &parent) const
@@ -130,34 +129,6 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
     }
 
     return false;
-}
-
-QJsonObject SongDatabase::toJsonObject() const
-{
-    QJsonObject json = PersistentObject::toJsonObject();
-    json["id"] = randomID();
-    return json;
-}
-
-bool SongDatabase::restoreFromJsonObject(const QJsonObject &object)
-{
-    m_randomID = object["id"].toString();
-
-    bool success = Database::restoreFromJsonObject(object);
-    emit attachmentAdded(-1);
-    return success;
-}
-
-Song* SongDatabase::song( const QString& id ) const
-{
-    for (Song* song : m_items)
-    {
-        if (song->randomID() == id)
-        {
-            return song;
-        }
-    }
-    return NULL;
 }
 
 Qt::DropActions SongDatabase::supportedDragActions() const

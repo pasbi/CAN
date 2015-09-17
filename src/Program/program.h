@@ -6,13 +6,8 @@
 class Program : public PersistentObject
 {
 public:
-    Program() :
-        m_bank(0),
-        m_program(0),
-        m_valid(false)
-    {
-
-    }
+    Program();
+    ~Program();
 
     const static Program INVALID;
 
@@ -25,6 +20,10 @@ public:
     bool& isValid() { return m_valid; }
     int& bank() { return m_bank; }
     int& program() { return m_program; }
+
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 
 private:
     int m_bank;

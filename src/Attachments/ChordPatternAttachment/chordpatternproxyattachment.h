@@ -27,6 +27,10 @@ public:
 
     const ChordPatternAttachment* source() const { return m_source; }
 
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
+
 private:
     const ChordPatternAttachment* m_source;
     int m_transpose = 4;

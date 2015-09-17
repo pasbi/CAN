@@ -118,45 +118,6 @@ bool Setlist::setData(const QModelIndex &index, const QVariant &value, int role)
     return success;
 }
 
-QJsonObject Setlist::toJsonObject() const
-{
-    QJsonArray array;
-    for (const SetlistItem* item : m_items)
-    {
-        array.append( item->toJsonObject() );
-    }
-    QJsonObject object;
-    object["setlist"] = array;
-    return object;
-}
-
-bool Setlist::restoreFromJsonObject(const QJsonObject & object )
-{
-    if (!checkJsonObject(object, "setlist", QJsonValue::Array))
-    {
-        return false;
-    }
-    QJsonArray array = object["setlist"].toArray();
-    beginResetModel();
-    bool success = true;
-    m_items.clear();
-    for (const QJsonValue & val : array)
-    {
-        SetlistItem* item = new SetlistItem(this);
-        item->restoreFromJsonObject(val.toObject());
-        if (item)
-        {
-            m_items << item;
-        }
-        else
-        {
-            success = false;
-        }
-    }
-    endResetModel();
-    return success;
-}
-
 QList<const Song*> Setlist::songs() const
 {
     QList<const Song*> s;

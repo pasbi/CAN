@@ -7,6 +7,7 @@ FilterWidget::FilterWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FilterWidget)
 {
+    assert(false);
     ui->setupUi(this);
 
     connect(ui->comboBox, SIGNAL(currentTextChanged(QString)), this, SIGNAL(filterChanged(QString)));
@@ -17,7 +18,6 @@ FilterWidget::FilterWidget(QWidget *parent) :
     {
         ui->comboBox->setCurrentIndex(-1);
     });
-
 }
 
 FilterWidget::~FilterWidget()

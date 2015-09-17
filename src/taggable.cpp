@@ -72,40 +72,17 @@ void Taggable::setTags(const QStringList &tags)
     }
 }
 
-bool Taggable::restoreFromJsonObject(const QJsonObject& json)
+void Taggable::serialize(QDataStream &out) const
 {
-    if (!checkJsonObject(json, "tags", QJsonValue::Array))
-    {
-        return false;
-    }
-
-    m_tags.clear();
-    for (const QJsonValue & value : json["tags"].toArray())
-    {
-        if (value.isString())
-        {
-            addTag( value.toString() );
-        }
-        else
-        {
-            WARNING << "Expected String";
-            return false;
-        }
-    }
-
-    return true;
+    out << m_tags;
 }
 
-
-QJsonObject Taggable::toJsonObject() const
+void Taggable::deserialize(QDataStream &in)
 {
-    QJsonObject json;
-    QJsonArray tags;
-    for (const QString & tag : m_tags)
+    QStringList tags;
+    in >> tags;
+    for (const QString& tag : tags)
     {
-        tags.append(tag);
+        addTag(tag);
     }
-
-    json.insert("tags", tags);
-    return json;
 }
