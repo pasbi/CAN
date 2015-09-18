@@ -216,59 +216,44 @@ Do you want to keep it?</source>
         <translation>Edit Chord Pattern</translation>
     </message>
     <message>
-        <location filename="Commands/DatabaseCommands/databaseeditcommand.cpp" line="11"/>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="Commands/DatabaseCommands/databasemoverowscommand.h" line="22"/>
         <source>Move %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Move %1</translation>
     </message>
     <message>
         <location filename="Commands/DatabaseCommands/databasenewitemcommand.h" line="17"/>
         <source>New %1</source>
-        <translation type="unfinished">New %1</translation>
+        <translation>New %1</translation>
     </message>
     <message>
         <location filename="Commands/DatabaseCommands/databaseremoveitemcommand.h" line="18"/>
         <source>Remove %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove %1</translation>
     </message>
     <message>
         <location filename="Commands/SongCommands/songeditprogramcommand.cpp" line="9"/>
         <source>set program</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit program</translation>
     </message>
     <message>
         <location filename="Commands/SongCommands/songnewattachmentcommand.cpp" line="9"/>
         <source>New Song</source>
-        <translation type="unfinished"></translation>
+        <translation>New Attachment</translation>
     </message>
     <message>
         <location filename="Commands/SongCommands/songremoveattachmentcommand.cpp" line="10"/>
         <source>Remove Attachment</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove Attachment</translation>
     </message>
     <message>
         <location filename="Commands/edittagscommand.cpp" line="9"/>
         <source>Edit Tags</source>
-        <translation type="unfinished">Edit tags</translation>
+        <translation>Edit tags</translation>
     </message>
     <message>
-        <location filename="Commands/modelcommand.h" line="29"/>
-        <source>Event</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="Commands/modelcommand.h" line="33"/>
-        <source>Song</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="Commands/modelcommand.h" line="37"/>
-        <source>Setlist Item</source>
-        <translation type="unfinished"></translation>
+        <location filename="Commands/DatabaseCommands/databaseeditcommand.cpp" line="12"/>
+        <source>Edit %1</source>
+        <translation>Edit %1</translation>
     </message>
 </context>
 <context>
@@ -566,37 +551,32 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
     <message>
         <location filename="FileIndex/fileindex.cpp" line="11"/>
         <source>Endings</source>
-        <translation type="unfinished"></translation>
+        <translation>Endings</translation>
     </message>
     <message>
         <location filename="FileIndex/fileindex.cpp" line="12"/>
         <source>All Endings that may be included</source>
-        <translation type="unfinished"></translation>
+        <translation>All endings that shall be included in file index.</translation>
     </message>
     <message>
         <location filename="Program/midicontroller.cpp" line="11"/>
         <source>Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Channel</translation>
     </message>
     <message>
         <location filename="Program/midicontroller.cpp" line="12"/>
         <source>ConfigurableItem/MidiCommand/Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>All Midi packets are sent on this channel.</translation>
     </message>
     <message>
         <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="9"/>
         <source>ChordPatternAttachment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="15"/>
-        <source>ChordPatternViewer</source>
-        <translation type="unfinished"></translation>
+        <translation>Chord Pattern</translation>
     </message>
     <message>
         <location filename="PDFCreator/pdfcreator.cpp" line="20"/>
         <source>PDF Export</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF Export</translation>
     </message>
 </context>
 <context>
@@ -648,7 +628,7 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
     <message>
         <location filename="Database/database.h" line="139"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Paste</translation>
     </message>
 </context>
 <context>
@@ -693,16 +673,21 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
     <name>Event</name>
     <message>
         <location filename="Database/EventDatabase/event.cpp" line="4"/>
+        <source>Event</source>
+        <translation>Event</translation>
+    </message>
+    <message>
+        <location filename="Database/EventDatabase/event.cpp" line="6"/>
         <source>Rehearsal</source>
         <translation>Rehearsal</translation>
     </message>
     <message>
-        <location filename="Database/EventDatabase/event.cpp" line="4"/>
+        <location filename="Database/EventDatabase/event.cpp" line="6"/>
         <source>Gig</source>
         <translation>Gig</translation>
     </message>
     <message>
-        <location filename="Database/EventDatabase/event.cpp" line="4"/>
+        <location filename="Database/EventDatabase/event.cpp" line="6"/>
         <source>Other</source>
         <translation>Other</translation>
     </message>
@@ -712,7 +697,7 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
     <message>
         <location filename="Database/EventDatabase/eventdatabase.cpp" line="48"/>
         <source>MM/dd/yy hh:mm ap</source>
-        <translation type="unfinished"></translation>
+        <translation>MM/dd/yy hh:mm ap</translation>
     </message>
 </context>
 <context>
@@ -1129,23 +1114,23 @@ or does not exist.</translation>
     <message>
         <location filename="mainwindow.cpp" line="134"/>
         <source>&amp;Edit Program</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit &amp;program</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="134"/>
         <source>Edit program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit the program of this song.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="135"/>
         <location filename="mainwindow.cpp" line="141"/>
         <source>&amp;Edit Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit &amp;tags</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="135"/>
         <source>Edit tags of the song.</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit the tags of this song.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="137"/>
@@ -1190,47 +1175,47 @@ or does not exist.</translation>
     <message>
         <location filename="mainwindow.cpp" line="141"/>
         <source>Edit tags of the event.</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit tags of this event.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="143"/>
         <source>&amp;New Item</source>
-        <translation type="unfinished">&amp;New item</translation>
+        <translation>&amp;New item</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="143"/>
         <source>Insert new item</source>
-        <translation type="unfinished">Insert new item.</translation>
+        <translation>Insert new item.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="144"/>
         <source>&amp;Remove Item</source>
-        <translation type="unfinished">&amp;Remove items</translation>
+        <translation>&amp;Remove items</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="144"/>
         <source>Delete selected items</source>
-        <translation type="unfinished">Delete selecteded items.</translation>
+        <translation>Delete selecteded items.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="145"/>
         <source>&amp;Copy Items</source>
-        <translation type="unfinished">&amp;Copy items</translation>
+        <translation>&amp;Copy items</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="145"/>
         <source>Copy selected items</source>
-        <translation type="unfinished">Copy selected items.</translation>
+        <translation>Copy selected items.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="146"/>
         <source>&amp;Paste Items</source>
-        <translation type="unfinished">&amp;Paste items</translation>
+        <translation>&amp;Paste items</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="146"/>
         <source>Paste items</source>
-        <translation type="unfinished">Paste items.</translation>
+        <translation>Paste items.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="238"/>
@@ -1275,12 +1260,12 @@ or does not exist.</translation>
     <message>
         <location filename="mainwindow.cpp" line="669"/>
         <source>Add to index ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Add folder to index ...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="969"/>
         <source>Remove Setlist Items</source>
-        <translation type="unfinished">Remove setlist items</translation>
+        <translation>Remove setlist items</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="111"/>
@@ -1408,29 +1393,29 @@ or does not exist.</translation>
         <translation>Draw attachment %1 of song %2 ...</translation>
     </message>
     <message>
+        <location filename="PDFCreator/pdfcreator.cpp" line="850"/>
         <location filename="PDFCreator/pdfcreator.cpp" line="857"/>
-        <location filename="PDFCreator/pdfcreator.cpp" line="864"/>
         <source>Export PDF ...</source>
         <translation>Export to PDF ...</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="888"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="881"/>
         <source>Confirm overwrite</source>
         <translation>Confirm overwrite</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="889"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="882"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="928"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="921"/>
         <source>Cannot write</source>
         <translation>Cannot write.</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="929"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="922"/>
         <source>File %1 is not writable.</source>
         <translation>%1 is not writable.</translation>
     </message>
@@ -1440,136 +1425,136 @@ Do you want to replace it?</source>
     <message>
         <location filename="Dialogs/programdialog.ui" line="14"/>
         <source>Edit Program ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit Program</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="20"/>
         <source>Select Bank, Page, Program ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Select Bank, Page and Program ...</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="45"/>
         <source>Bank &amp;A</source>
-        <translation type="unfinished"></translation>
+        <translation>Bank &amp;A</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="48"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="67"/>
         <source>Bank &amp;B</source>
-        <translation type="unfinished"></translation>
+        <translation>Bank &amp;B</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="70"/>
         <source>Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="89"/>
         <source>Bank &amp;C</source>
-        <translation type="unfinished"></translation>
+        <translation>Bank &amp;C</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="92"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="111"/>
         <source>Bank &amp;D</source>
-        <translation type="unfinished"></translation>
+        <translation>Bank &amp;D</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="114"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="171"/>
         <source>No Page</source>
-        <translation type="unfinished"></translation>
+        <translation>No Page</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="174"/>
         <source>Page </source>
-        <translation type="unfinished"></translation>
+        <translation>Page</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="221"/>
         <source>Program &amp;1</source>
-        <translation type="unfinished"></translation>
+        <translation>Program &amp;1</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="224"/>
         <source>Ctrl+1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+1</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="243"/>
         <source>Program &amp;2</source>
-        <translation type="unfinished"></translation>
+        <translation>Program &amp;2</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="246"/>
         <source>Ctrl+2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+2</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="265"/>
         <source>Program &amp;3</source>
-        <translation type="unfinished"></translation>
+        <translation>Program &amp;3</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="268"/>
         <source>Ctrl+3</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+3</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="287"/>
         <source>Program &amp;4</source>
-        <translation type="unfinished"></translation>
+        <translation>Program &amp;4</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="290"/>
         <source>Ctrl+4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+4</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="309"/>
         <source>Program &amp;5</source>
-        <translation type="unfinished"></translation>
+        <translation>Program &amp;5</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="312"/>
         <source>Ctrl+5</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+5</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="342"/>
         <location filename="Dialogs/programdialog.ui" line="367"/>
         <source>No Program</source>
-        <translation type="unfinished"></translation>
+        <translation>No Program</translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="355"/>
         <source>Select Program ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Select program ...</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="Database/EventDatabase/setlistitem.cpp" line="18"/>
+        <location filename="Database/EventDatabase/setlistitem.cpp" line="20"/>
         <source>Unnamed</source>
         <translation>Unamed</translation>
     </message>
     <message>
         <location filename="PDFCreator/pdfcreator.cpp" line="489"/>
         <source>Setlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Setlist</translation>
     </message>
 </context>
 <context>
@@ -1577,12 +1562,20 @@ Do you want to replace it?</source>
     <message>
         <location filename="Database/EventDatabase/setlist.cpp" line="181"/>
         <source>New Setlist Item</source>
-        <translation type="unfinished"></translation>
+        <translation>New setlist item</translation>
     </message>
     <message>
         <location filename="Database/EventDatabase/setlist.cpp" line="216"/>
         <source>Copy Items</source>
-        <translation type="unfinished"></translation>
+        <translation>Copy items</translation>
+    </message>
+</context>
+<context>
+    <name>SetlistItem</name>
+    <message>
+        <location filename="Database/EventDatabase/setlistitem.cpp" line="7"/>
+        <source>SetlistItem</source>
+        <translation>Setlist item</translation>
     </message>
 </context>
 <context>
@@ -1614,21 +1607,29 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>Song</name>
+    <message>
+        <location filename="Database/SongDatabase/song.cpp" line="7"/>
+        <source>Song</source>
+        <translation>Song</translation>
+    </message>
+</context>
+<context>
     <name>SongDatabase</name>
     <message>
         <location filename="Database/SongDatabase/songdatabase.cpp" line="68"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Title</translation>
     </message>
     <message>
         <location filename="Database/SongDatabase/songdatabase.cpp" line="70"/>
         <source>Artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Artist</translation>
     </message>
     <message>
         <location filename="Database/SongDatabase/songdatabase.cpp" line="72"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Duration</translation>
     </message>
 </context>
 <context>
