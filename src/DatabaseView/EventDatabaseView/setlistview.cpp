@@ -35,6 +35,7 @@ SetlistView::SetlistView(QWidget *parent) :
     setDropIndicatorShown(true);
     setAlternatingRowColors( true );
     horizontalHeader()->hide();
+    verticalHeader()->show();
 
     setEditTriggers( QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed );
 

@@ -16,7 +16,7 @@
 #include "util.h"
 #include "itemhastypenameinterface.h"
 
-class DatabaseBase : public QAbstractTableModel, public PersistentObject/*, public ItemHasTypenameInterface*/
+class DatabaseBase : public QAbstractTableModel, public PersistentObject, public ItemHasTypenameInterface
 {
     Q_OBJECT
 protected:

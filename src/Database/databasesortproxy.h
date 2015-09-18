@@ -3,6 +3,7 @@
 
 #include <QSortFilterProxyModel>
 #include "global.h"
+#include "itemhastypenameinterface.h"
 
 class DatabaseBase;
 class DatabaseSortProxyBase : public QSortFilterProxyModel
@@ -14,6 +15,7 @@ protected:
 
 public slots:
     virtual void setFilter(const QString& filter);
+
 public:
     QString filter() const;
 
@@ -23,7 +25,7 @@ private:
 
 template<typename T> class Database;
 template<typename T>
-class DatabaseSortProxy : public DatabaseSortProxyBase
+class DatabaseSortProxy : public DatabaseSortProxyBase, public ItemHasTypenameInterface
 {
 public:
     explicit DatabaseSortProxy(QObject *parent = 0) :
@@ -52,6 +54,39 @@ public:
         {
             return nullptr;
         }
+    }
+
+    // for some reason, proxyIndex.parent() is corrupted.
+    // fortunately, we don't need it since it is exepected to be invalid.
+    // this is a workaround, which works^^
+    QModelIndex mapToSource(const QModelIndex &proxyIndex) const
+    {
+        if (sourceModel())
+        {
+            return DatabaseSortProxyBase::mapToSource(index(proxyIndex.row(), proxyIndex.column(), QModelIndex()));
+        }
+        else
+        {
+            return QModelIndex();
+        }
+    }
+
+    bool setData(const QModelIndex &index, const QVariant &value, int role)
+    {
+        if (sourceModel())
+        {
+            sourceModel()->setData(mapToSource(index), value, role);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    QString itemTypeName() const
+    {
+        return sourceModel()->itemTypeName();
     }
 
 protected:

@@ -22,6 +22,11 @@ public:
         return m_model;
     }
 
+    QString itemTypeName() const
+    {
+        return dynamic_cast<ItemHasTypenameInterface*>(this->m_model)->itemTypeName();
+    }
+
 private:
     T* m_model;
 };

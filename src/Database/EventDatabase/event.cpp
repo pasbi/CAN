@@ -1,7 +1,7 @@
 #include "event.h"
 #include "setlist.h"
 
-const QString Event::TYPE_NAME = Event::tr("SetlistItem");
+const QString Event::TYPE_NAME = Event::tr("Event");
 
 const QStringList Event::TYPES = QStringList({ Event::tr("Rehearsal"), Event::tr("Gig"), Event::tr("Other") });
 
