@@ -3,8 +3,6 @@
 #include "Database/SongDatabase/song.h"
 #include "application.h"
 
-//TODO display transpose
-//TODO keep transpose constant when source is transposed
 DEFN_CREATABLE_NAME(ChordPatternProxyAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Proxy Attachment"))
 
 ChordPatternProxyAttachment::ChordPatternProxyAttachment() :

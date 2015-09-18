@@ -32,6 +32,7 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case Qt::DisplayRole:
+            case Qt::ToolTipRole:
             return Event::typeName( m_items[row]->type() );
         case Qt::EditRole:
             return (int) m_items[row]->type();
@@ -43,7 +44,8 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case Qt::DisplayRole:
-            return m_items[row]->beginning();
+        case Qt::ToolTipRole:
+            return QLocale().toString(m_items[row]->beginning(), tr("MM/dd/yy hh:mm ap"));
         case Qt::EditRole:
             return QVariant::fromValue( TimeSpan( m_items[row]->timeSpan() ));
         default:
@@ -55,6 +57,7 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         {
         case Qt::DisplayRole:
         case Qt::EditRole:
+        case Qt::ToolTipRole:
             return m_items[row]->label();
         default:
             return QVariant();

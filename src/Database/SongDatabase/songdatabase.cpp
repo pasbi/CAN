@@ -28,6 +28,7 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
     {
     case Qt::DisplayRole:
     case Qt::EditRole:
+    case Qt::ToolTipRole:
     {
         const Song* song = m_items[index.row()];
         switch (index.column())
@@ -60,6 +61,7 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
         {
         case Qt::DisplayRole:
         case Qt::EditRole:
+        case Qt::ToolTipRole:
             switch (section)
             {
             case 0:

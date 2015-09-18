@@ -8,14 +8,6 @@
 #1//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
 
-#2//TODO audio-attachment must be rewritten. The Index-based solution is not good imo.
-#  it would be better to rely on filenames, with a user-dependend prefix (e.g. C:\Music\, /dev/media/music-volume/, ...)
-
-#3//TODO decode aiff-audio-files.
-#4//TODO increase the number of endings that can be indexed and played. Probably, this issue is gone when #2 is solved.
-
-
-
 QT       += core gui multimedia
 
 QT += testlib

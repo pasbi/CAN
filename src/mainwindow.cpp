@@ -53,7 +53,6 @@ QString defaultStyleSheet()
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentCloneURL, QDir::homePath());
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexFilter, ""); //TODO
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, locale, QLocale::system().name().toStdString().c_str());
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexDefaultPath, QDir::homePath() );
 
@@ -63,27 +62,6 @@ CONFIGURABLE_ADD_ITEM( MainWindow,
                        QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/Style"),
                        QVariant(),  // is set in MainWindow constructor since ::defaultStyleSheet() is not available in static context.
                        ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP( "ConfigurableItem", "Stylesheet") )
-                       );
-CONFIGURABLE_ADD_ITEM( MainWindow,
-                       AskForCommitMessage,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Ask for commit message"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/AskForCommitMessage"),
-                       QVariant(true),
-                       ConfigurableItemOptions::CheckboxOptions()
-                       );
-CONFIGURABLE_ADD_ITEM( MainWindow,
-                       CommitMessage,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Commit message"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/CommitMessage"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Synchronizing"),
-                       ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP( "ConfigurableItem", "commit message") )
-                       );
-CONFIGURABLE_ADD_ITEM( MainWindow,
-                       AskForSynchronizing,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Remind synchronizing"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/AskForSynchronizing"),
-                       true,
-                       ConfigurableItemOptions::CheckboxOptions()
                        );
 
 MainWindow::MainWindow(QWidget *parent) :
