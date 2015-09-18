@@ -19,7 +19,7 @@ public:
         m_recentStatus(this->model()->items()),
         m_targetRow(targetRow)
     {
-        this->setText( CommandTranslator::tr("Move %1").arg(this->itemName()) );
+        this->setText( CommandTranslator::tr("Move %1").arg(database->itemTypeName()) );
     }
 
     void undo()

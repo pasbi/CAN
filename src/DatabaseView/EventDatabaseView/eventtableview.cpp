@@ -13,6 +13,7 @@
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
+#include "Database/database.h"
 
 
 EventTableView::EventTableView(QWidget *parent) :

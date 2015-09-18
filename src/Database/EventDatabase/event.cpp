@@ -1,6 +1,8 @@
 #include "event.h"
 #include "setlist.h"
 
+const QString Event::TYPE_NAME = Event::tr("SetlistItem");
+
 const QStringList Event::TYPES = QStringList({ Event::tr("Rehearsal"), Event::tr("Gig"), Event::tr("Other") });
 
 Event::Event( Database<Event>* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
@@ -53,7 +55,7 @@ QString Event::description() const
 {
     if (label().isEmpty())
     {
-        return typeName( type() );
+        return eventTypeName( type() );
     }
     else
     {
@@ -61,14 +63,14 @@ QString Event::description() const
     }
 }
 
-QString Event::typeName(Type type)
+QString Event::eventTypeName(Type type)
 {
     return TYPES[(int) type];
 }
 
 QStringList Event::textAttributes() const
 {
-    return QStringList( { typeName(type()), label(), notices() } );
+    return QStringList( { eventTypeName(type()), label(), notices() } );
 }
 
 

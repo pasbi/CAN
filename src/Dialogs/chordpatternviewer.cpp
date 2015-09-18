@@ -12,7 +12,7 @@
 #include "Database/SongDatabase/song.h"
 #include "Program/midicommand.h"
 
-DEFN_CONFIG( ChordPatternViewer, tr("ChordPatternViewer") );
+DEFN_CONFIG( ChordPatternViewer, QT_TRANSLATE_NOOP("ConfigurableItem", "ChordPatternViewer") );
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, zoom, 1.0 );
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, line, true );

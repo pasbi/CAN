@@ -128,7 +128,8 @@ SOURCES += main.cpp\
     Database/EventDatabase/setlistproxy.cpp \
     Commands/DatabaseCommands/databaseeditcommand.cpp \
     Database/database.cpp \
-    Dialogs/IndexedFileChooseDialog/filefilter.cpp
+    Dialogs/IndexedFileChooseDialog/filefilter.cpp \
+    DatabaseView/ItemDelegates/editablecomboboxdelegate.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -242,7 +243,8 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/durationdelegate.h \
     Database/EventDatabase/setlistproxy.h \
     Commands/DatabaseCommands/databaseeditcommand.h \
-    Dialogs/IndexedFileChooseDialog/filefilter.h
+    Dialogs/IndexedFileChooseDialog/filefilter.h \
+    Database/itemhastypenameinterface.h
 
 
 

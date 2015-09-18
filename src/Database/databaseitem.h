@@ -4,7 +4,6 @@
 #include "taggable.h"
 #include <QObject>
 #include <QBuffer>
-//#include "database.h"
 
 template<typename T> class Database;
 template<typename T>
@@ -42,5 +41,6 @@ public:
 private:
     Database<T>* m_database;
 };
+
 
 #endif // DATABASEITEM_H

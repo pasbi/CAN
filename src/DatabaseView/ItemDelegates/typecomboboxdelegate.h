@@ -7,6 +7,7 @@
 #include "application.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 
+class DatabaseBase;
 class TypeComboBoxDelegate : public ItemDelegate<QComboBox>
 {
 public:
@@ -31,7 +32,10 @@ public:
 
     void setModelData(QComboBox *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
-        app().pushCommand( new DatabaseEditCommand( model, index, editor->currentIndex()) );
+        if (model->data(index, Qt::EditRole) != editor->currentIndex())
+        {
+            app().pushCommand( new DatabaseEditCommand( model, index, editor->currentIndex()) );
+        }
     }
 
 

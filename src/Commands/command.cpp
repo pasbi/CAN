@@ -4,6 +4,7 @@
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
+#include "Database/EventDatabase/setlistitem.h"
 
 const QStringList Command::SONG_RELATED_TYPENAMES    = QStringList() << typeid(Song).name()
                                                                      << typeid(Database<Song>).name()

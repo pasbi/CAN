@@ -17,7 +17,7 @@ class Event : public DatabaseItem<Event>
 public:
     enum Type { Rehearsal, Gig, Other };
     static const QStringList TYPES;
-    static QString typeName(Type type);
+    static QString eventTypeName(Type type);
 
 
     Event( Database<Event>*   database,
@@ -46,6 +46,8 @@ public:
     Setlist* setlist() { return m_setlist; }
 
     QStringList textAttributes() const;
+
+    static const QString TYPE_NAME;
 
 protected:
     void serialize(QDataStream &out) const;

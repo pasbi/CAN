@@ -4,8 +4,10 @@
 #include <QJsonDocument>
 #include "Attachments/attachment.h"
 
+const QString Song::TYPE_NAME = Song::tr("Song");
+
 Song::Song(Database<Song> * database) :
-    DatabaseItem<Song>(database),
+    DatabaseItem(database),
     m_creationDateTime(QDateTime::currentDateTime())
 {
     connect( this, SIGNAL(attachmentAdded(int)),   database, SIGNAL(attachmentAdded(int)  ));

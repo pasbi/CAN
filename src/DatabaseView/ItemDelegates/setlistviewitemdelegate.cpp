@@ -79,14 +79,21 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
         if (comboBoxIndex >= 0)
         {
             const Song* song = availableSongs[comboBoxIndex];
-            app().pushCommand( new SetlistItemChangeSongCommand(item, song));
+            if (item->song() != song)
+            {
+                app().pushCommand( new SetlistItemChangeSongCommand(item, song));
+            }
         }
     }
         break;
     case SetlistItem::LabelType:
     {
         QLineEdit* lineEdit = qobject_assert_cast<QLineEdit*>(editor);
-        app().pushCommand( new DatabaseEditCommand(model, index, lineEdit->text()) );
+        QVariant newValue = lineEdit->text();
+        if (model->data(index) != newValue)
+        {
+            app().pushCommand( new DatabaseEditCommand(qobject_assert_cast<DatabaseBase*>(model), index, newValue) );
+        }
     }
         break;
     }

@@ -558,7 +558,7 @@ void MainWindow::gotoEventView()
 
 void MainWindow::my_on_actionNew_Song_triggered()
 {
-    app().pushCommand( new DatabaseNewItemCommand<Song>( m_project.songDatabase(), new Song(m_project.songDatabase()) ) );
+    app().pushCommand( new DatabaseNewItemCommand<Song>( m_project.songDatabase(), new Song(m_project.songDatabase()) )  );
     updateActionsEnabled();
 }
 

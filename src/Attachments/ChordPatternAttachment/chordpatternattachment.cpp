@@ -6,7 +6,7 @@
 #include "chord.h"
 
 DEFN_CREATABLE_NAME(ChordPatternAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Attachment"))
-DEFN_CONFIG( ChordPatternAttachment, tr("ChordPatternAttachment") );
+DEFN_CONFIG( ChordPatternAttachment, QT_TRANSLATE_NOOP("ConfigurableItem", "ChordPatternAttachment") );
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternAttachment, EnharmonicPolicy, 1 );
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternAttachment, MinorPolicy, 0 );

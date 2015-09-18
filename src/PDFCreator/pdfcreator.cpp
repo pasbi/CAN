@@ -17,7 +17,7 @@
 #include "Attachments/ChordPatternAttachment/chord.h"
 #include "Database/EventDatabase/setlist.h"
 
-DEFN_CONFIG( PDFCreator, tr("PDF Export") );
+DEFN_CONFIG( PDFCreator, QT_TRANSLATE_NOOP("ConfigurableItem", "PDF Export") );
 
 #include "pdfcreatorconfig.h"
 
@@ -810,17 +810,10 @@ void PDFCreator::save(QString filename)
 }
 
 
-
-
-
-
-
-
-
 QString defaultFilename( Setlist* setlist )
 {
     QString label = setlist->event()->label();
-    QString type = Event::typeName(setlist->event()->type());
+    QString type = Event::eventTypeName(setlist->event()->type());
 
     QString date = QLocale().toString( setlist->event()->beginning().date(), QLocale().dateFormat( QLocale::ShortFormat ) ).replace(".", "_");
 

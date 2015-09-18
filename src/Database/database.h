@@ -10,12 +10,13 @@
 #include "Project/project.h"
 #include "Database/databasemimedata.h"
 #include "application.h"
-#include "EventDatabase/setlistitem.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
+#include "Database/EventDatabase/setlistitem.h"
 
 #include "util.h"
+#include "itemhastypenameinterface.h"
 
-class DatabaseBase : public QAbstractTableModel, public PersistentObject
+class DatabaseBase : public QAbstractTableModel, public PersistentObject/*, public ItemHasTypenameInterface*/
 {
     Q_OBJECT
 protected:
@@ -23,7 +24,6 @@ protected:
     virtual ~DatabaseBase();
 public:
     Project* project() const;
-    virtual QString fileNameBase() const = 0;
 
     Qt::DropActions supportedDropActions() const;
 
@@ -136,7 +136,7 @@ public:
         // copy paste
         if (action == Qt::CopyAction)
         {
-            app().beginMacro( tr("Paste") );
+            app().beginMacro( DatabaseBase::tr("Paste") );
             int i = 0;
             typedef typename DatabaseMimeData<T>::IndexedItem IndexedItem;
             for (IndexedItem item : itemData->indexedItems())
@@ -207,6 +207,11 @@ public:
     int identifyItem(const T* item) const
     {
         return m_items.indexOf(const_cast<T*>(item));
+    }
+
+    QString itemTypeName() const
+    {
+        return T::TYPE_NAME;
     }
 
 

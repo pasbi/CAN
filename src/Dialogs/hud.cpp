@@ -3,6 +3,8 @@
 #include "global.h"
 #include <QPainter>
 
+//TODO replace with HUDDecorator
+
 HUD::HUD(QWidget *parent) :
     QLabel(parent),
     m_duration( 80 )

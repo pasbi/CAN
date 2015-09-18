@@ -14,7 +14,7 @@ public:
         ItemOwnerCommandDecorator<T>(item),
         m_row( row )
     {
-        this->setText( CommandTranslator::tr("New %1").arg(this->itemName()) );
+        this->setText( CommandTranslator::tr("New %1").arg(item->textAttributes().first()) );//TODO
     }
 
     ~DatabaseNewItemCommand()

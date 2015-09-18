@@ -7,6 +7,8 @@
 #include "application.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 
+
+
 class LineEditDelegate : public ItemDelegate<QLineEdit>
 {
 public:
@@ -24,7 +26,11 @@ protected:
 
     void setModelData(QLineEdit *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
-        app().pushCommand( new DatabaseEditCommand(model, index, editor->text() ) );
+        QVariant newValue = editor->text();
+        if (model->data(index) != newValue)
+        {
+            app().pushCommand( new DatabaseEditCommand(model, index, newValue ) );
+        }
     }
 };
 
