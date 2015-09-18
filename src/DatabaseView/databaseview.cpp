@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QAbstractAnimation>
 #include <QHeaderView>
+#include <QApplication>
 
 DatabaseViewBase::DatabaseViewBase(QWidget* parent) :
     QTableView(parent),
@@ -39,9 +40,36 @@ void DatabaseViewBase::setFilter(const QString &filter)
     m_hud->setText(filter);
 }
 
+bool isAscendant(const QObject* candidate)
+{
+    QObject* object = QApplication::focusWidget();
+    while (candidate != object && object)
+    {
+        object = object->parent();
+    }
+
+    return candidate == object;
+}
+
+bool cursorOnDatabaseView(const QWidget* widget)
+{
+    QPoint pos = widget->mapFromGlobal(QCursor::pos());
+    if (widget->rect().contains(pos))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void DatabaseViewBase::focusOutEvent(QFocusEvent *event)
 {
-    setFilter("");
+    if (!cursorOnDatabaseView(this) && !isAscendant(this))
+    {
+        setFilter("");
+    }
     QTableView::focusOutEvent(event);
 }
 
@@ -74,7 +102,10 @@ void DatabaseViewBase::keyPressEvent(QKeyEvent *event)
 
 void DatabaseViewBase::leaveEvent(QEvent *event)
 {
-    setFilter("");
+    if (!cursorOnDatabaseView(this) && !isAscendant(this))
+    {
+        setFilter("");
+    }
     QTableView::leaveEvent(event);
 }
 
