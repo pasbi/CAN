@@ -7,7 +7,6 @@ SongRemoveAttachmentCommand::SongRemoveAttachmentCommand(Song* song, int i) :
     ItemOwnerCommandDecorator(song->attachment( i )),
     m_index(i)
 {
-    setText( CommandTranslator::tr("Remove Attachment") );
 }
 
 void SongRemoveAttachmentCommand::undo()

@@ -9,7 +9,6 @@ DatabaseEditCommand::DatabaseEditCommand( QAbstractItemModel*   database,
     m_newData(newData),
     m_oldData( database->data( index, Qt::EditRole ) )
 {
-    setText( CommandTranslator::tr("Edit %1").arg(itemTypeName()) );
 }
 
 void DatabaseEditCommand::undo()

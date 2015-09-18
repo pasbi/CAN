@@ -174,90 +174,6 @@ Do you want to keep it?</source>
     </message>
 </context>
 <context>
-    <name>CommandTranslator</name>
-    <message>
-        <location filename="Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp" line="8"/>
-        <source>delete section</source>
-        <oldsource>Delete Section [%1 - %2]</oldsource>
-        <translation>Section löschen</translation>
-    </message>
-    <message>
-        <location filename="Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.cpp" line="11"/>
-        <source>edit section</source>
-        <oldsource>Edit section %1 -&gt; %2</oldsource>
-        <translation>Section editieren</translation>
-    </message>
-    <message>
-        <location filename="Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.cpp" line="10"/>
-        <source>new section</source>
-        <oldsource>New Section [%1 - %2]</oldsource>
-        <translation>Neue Section erzeugen</translation>
-    </message>
-    <message>
-        <location filename="Commands/AttachmentCommands/attachmentrenamecommand.cpp" line="10"/>
-        <source>rename attachment</source>
-        <oldsource>Rename attachment %1 -&gt; %2</oldsource>
-        <translation>Anhang umbennenen</translation>
-    </message>
-    <message>
-        <location filename="Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.cpp" line="8"/>
-        <source>transpose chord pattern</source>
-        <translation>Akkordschema transponieren</translation>
-    </message>
-    <message>
-        <location filename="Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp" line="11"/>
-        <source>Set File</source>
-        <oldsource>set file</oldsource>
-        <translation>Datei ändern</translation>
-    </message>
-    <message>
-        <location filename="Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.cpp" line="13"/>
-        <source>Edit Chord Pattern</source>
-        <translation>Akkord Schema bearbeiten</translation>
-    </message>
-    <message>
-        <location filename="Commands/DatabaseCommands/databasemoverowscommand.h" line="22"/>
-        <source>Move %1</source>
-        <translation>Verschiebe %1</translation>
-    </message>
-    <message>
-        <location filename="Commands/DatabaseCommands/databasenewitemcommand.h" line="17"/>
-        <source>New %1</source>
-        <translatorcomment>Neues Event Neuer Song, (Neue{s/r})?</translatorcomment>
-        <translation>Erstelle %1</translation>
-    </message>
-    <message>
-        <location filename="Commands/DatabaseCommands/databaseremoveitemcommand.h" line="18"/>
-        <source>Remove %1</source>
-        <translation>Entferne %1</translation>
-    </message>
-    <message>
-        <location filename="Commands/SongCommands/songeditprogramcommand.cpp" line="9"/>
-        <source>set program</source>
-        <translation>Programm bearbeiten</translation>
-    </message>
-    <message>
-        <location filename="Commands/SongCommands/songnewattachmentcommand.cpp" line="9"/>
-        <source>New Song</source>
-        <translation>Erstelle Anhang</translation>
-    </message>
-    <message>
-        <location filename="Commands/SongCommands/songremoveattachmentcommand.cpp" line="10"/>
-        <source>Remove Attachment</source>
-        <translation>Entferne Anhang</translation>
-    </message>
-    <message>
-        <location filename="Commands/edittagscommand.cpp" line="9"/>
-        <source>Edit Tags</source>
-        <translation>Tags bearbeiten</translation>
-    </message>
-    <message>
-        <location filename="Commands/DatabaseCommands/databaseeditcommand.cpp" line="12"/>
-        <source>Edit %1</source>
-        <translation>%1 bearbeiten</translation>
-    </message>
-</context>
-<context>
     <name>ConfigurableItem</name>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="15"/>
@@ -627,7 +543,7 @@ Dabei wird {EventTitle} z.B. durch den Namen des Events ersetzt, oder {Begin} du
 <context>
     <name>DatabaseBase</name>
     <message>
-        <location filename="Database/database.h" line="139"/>
+        <location filename="Database/database.h" line="138"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
@@ -673,22 +589,17 @@ Dabei wird {EventTitle} z.B. durch den Namen des Events ersetzt, oder {Begin} du
 <context>
     <name>Event</name>
     <message>
-        <location filename="Database/EventDatabase/event.cpp" line="4"/>
-        <source>Event</source>
-        <translation>Event</translation>
-    </message>
-    <message>
-        <location filename="Database/EventDatabase/event.cpp" line="6"/>
+        <location filename="Database/EventDatabase/event.cpp" line="98"/>
         <source>Rehearsal</source>
         <translation>Probe</translation>
     </message>
     <message>
-        <location filename="Database/EventDatabase/event.cpp" line="6"/>
+        <location filename="Database/EventDatabase/event.cpp" line="98"/>
         <source>Gig</source>
         <translation>Auftritt</translation>
     </message>
     <message>
-        <location filename="Database/EventDatabase/event.cpp" line="6"/>
+        <location filename="Database/EventDatabase/event.cpp" line="98"/>
         <source>Other</source>
         <translation>Verschiedenes</translation>
     </message>
@@ -1548,7 +1459,7 @@ Do you want to replace it?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="Database/EventDatabase/setlistitem.cpp" line="20"/>
+        <location filename="Database/EventDatabase/setlistitem.cpp" line="17"/>
         <source>Unnamed</source>
         <translation>Unbenannt</translation>
     </message>
@@ -1569,14 +1480,6 @@ Do you want to replace it?</source>
         <location filename="Database/EventDatabase/setlist.cpp" line="216"/>
         <source>Copy Items</source>
         <translation>Einträge kopieren</translation>
-    </message>
-</context>
-<context>
-    <name>SetlistItem</name>
-    <message>
-        <location filename="Database/EventDatabase/setlistitem.cpp" line="7"/>
-        <source>SetlistItem</source>
-        <translation>Setlist Eintrag</translation>
     </message>
 </context>
 <context>
@@ -1605,14 +1508,6 @@ Do you want to replace it?</source>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="203"/>
         <source>%1 songs, duration: %2:%3:%4</source>
         <translation>%1 Songs, Dauer: %2:%3:%4</translation>
-    </message>
-</context>
-<context>
-    <name>Song</name>
-    <message>
-        <location filename="Database/SongDatabase/song.cpp" line="7"/>
-        <source>Song</source>
-        <translation>Song</translation>
     </message>
 </context>
 <context>

@@ -15,7 +15,6 @@ public:
         m_index(database->rowOf(item))
     {
         assert( item );
-        this->setText( CommandTranslator::tr("Remove %1").arg(this->model()->itemTypeName()) );
     }
 
     ~DatabaseRemoveItemCommand()

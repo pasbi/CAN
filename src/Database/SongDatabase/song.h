@@ -39,9 +39,6 @@ public:
 
     QStringList textAttributes() const;
 
-    static const QString TYPE_NAME;
-
-
     /////////////////////////////////////////////////
     ////
     ///  Attachments

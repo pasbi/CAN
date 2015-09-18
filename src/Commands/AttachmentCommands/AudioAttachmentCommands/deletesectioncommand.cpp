@@ -5,7 +5,6 @@ DeleteSectionCommand::DeleteSectionCommand(SectionsModel *model, int row) :
     ModelCommand<SectionsModel>( model ),
     m_row( row )
 {
-    setText( CommandTranslator::tr("delete section") );
 }
 
 void DeleteSectionCommand::redo()

@@ -5,7 +5,6 @@
 #include <QString>
 #include <typeinfo>
 #include "global.h"
-#include "Database/itemhastypenameinterface.h"
 
 template<typename T>
 class ModelCommand : public Command
@@ -20,11 +19,6 @@ public:
     T* model() const
     {
         return m_model;
-    }
-
-    QString itemTypeName() const
-    {
-        return dynamic_cast<ItemHasTypenameInterface*>(this->m_model)->itemTypeName();
     }
 
 private:

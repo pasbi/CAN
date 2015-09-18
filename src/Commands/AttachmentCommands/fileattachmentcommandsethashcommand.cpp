@@ -8,7 +8,6 @@ FileAttachmentCommandSetHashCommand::FileAttachmentCommandSetHashCommand(Indexed
     m_oldHash( attachment->hash() ),
     m_newHash( newHash )
 {
-    setText( CommandTranslator::tr("Set File") );
 }
 
 void FileAttachmentCommandSetHashCommand::undo()

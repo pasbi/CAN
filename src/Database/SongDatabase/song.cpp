@@ -4,7 +4,7 @@
 #include <QJsonDocument>
 #include "Attachments/attachment.h"
 
-const QString Song::TYPE_NAME = Song::tr("Song");
+
 
 Song::Song(Database<Song> * database) :
     DatabaseItem(database),
@@ -126,5 +126,3 @@ void Song::serialize(QDataStream &out) const
         out << a;
     }
 }
-
-

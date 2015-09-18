@@ -243,8 +243,7 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/durationdelegate.h \
     Database/EventDatabase/setlistproxy.h \
     Commands/DatabaseCommands/databaseeditcommand.h \
-    Dialogs/IndexedFileChooseDialog/filefilter.h \
-    Database/itemhastypenameinterface.h
+    Dialogs/IndexedFileChooseDialog/filefilter.h
 
 
 

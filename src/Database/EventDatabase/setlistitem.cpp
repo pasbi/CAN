@@ -4,9 +4,6 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/setlist.h"
 
-const QString SetlistItem::TYPE_NAME = SetlistItem::tr("SetlistItem");
-
-
 SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString & label ) :
     DatabaseItem(setlist),
     m_type( LabelType ),

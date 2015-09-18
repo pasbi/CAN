@@ -7,7 +7,6 @@ AttachmentRenameCommand::AttachmentRenameCommand(Attachment *attachment, const Q
     m_newName( newName ),
     m_oldName( attachment->name() )
 {
-    setText( CommandTranslator::tr("rename attachment") );
 }
 
 void AttachmentRenameCommand::redo()

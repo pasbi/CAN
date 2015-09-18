@@ -6,7 +6,6 @@ SongEditProgramCommand::SongEditProgramCommand(Song *song, const Program &progra
     m_newProgram( program ),
     m_oldProgram(song->program())
 {
-    setText( CommandTranslator::tr("set program") );
 }
 
 void SongEditProgramCommand::undo()

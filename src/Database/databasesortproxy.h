@@ -3,7 +3,6 @@
 
 #include <QSortFilterProxyModel>
 #include "global.h"
-#include "itemhastypenameinterface.h"
 
 class DatabaseBase;
 class DatabaseSortProxyBase : public QSortFilterProxyModel
@@ -25,7 +24,7 @@ private:
 
 template<typename T> class Database;
 template<typename T>
-class DatabaseSortProxy : public DatabaseSortProxyBase, public ItemHasTypenameInterface
+class DatabaseSortProxy : public DatabaseSortProxyBase
 {
 public:
     explicit DatabaseSortProxy(QObject *parent = 0) :
@@ -82,11 +81,6 @@ public:
         {
             return false;
         }
-    }
-
-    QString itemTypeName() const
-    {
-        return sourceModel()->itemTypeName();
     }
 
 protected:

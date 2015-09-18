@@ -6,7 +6,6 @@ SongNewAttachmentCommand::SongNewAttachmentCommand(Song *song, Attachment *attac
     ModelCommand<Song>(song),
     ItemOwnerCommandDecorator(attachment)
 {
-    setText( CommandTranslator::tr("New Song") );
     attachment->setSong(song);
 }
 

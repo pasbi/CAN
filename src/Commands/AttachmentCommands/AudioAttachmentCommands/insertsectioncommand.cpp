@@ -7,7 +7,6 @@ InsertSectionCommand::InsertSectionCommand(SectionsModel *model, const Section &
     m_section( section ),
     m_index( index )
 {
-    setText( CommandTranslator::tr("new section") );
 }
 
 void InsertSectionCommand::undo()

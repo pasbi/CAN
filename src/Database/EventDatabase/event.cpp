@@ -1,9 +1,6 @@
 #include "event.h"
 #include "setlist.h"
 
-const QString Event::TYPE_NAME = Event::tr("Event");
-
-const QStringList Event::TYPES = QStringList({ Event::tr("Rehearsal"), Event::tr("Gig"), Event::tr("Other") });
 
 Event::Event( Database<Event>* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
     DatabaseItem( database ),
@@ -65,14 +62,13 @@ QString Event::description() const
 
 QString Event::eventTypeName(Type type)
 {
-    return TYPES[(int) type];
+    return eventTypeNames()[static_cast<int>(type)];
 }
 
 QStringList Event::textAttributes() const
 {
     return QStringList( { eventTypeName(type()), label(), notices() } );
 }
-
 
 void Event::serialize(QDataStream &out) const
 {
@@ -97,6 +93,10 @@ void Event::deserialize(QDataStream &in)
     m_type = static_cast<Event::Type>(type);
 }
 
+QStringList Event::eventTypeNames()
+{
+    return QStringList({ app().translate("Event", "Rehearsal"), app().translate("Event", "Gig"), app().translate("Event", "Other") });
+}
 
 
 

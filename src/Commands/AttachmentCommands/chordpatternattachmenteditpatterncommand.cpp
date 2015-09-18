@@ -10,7 +10,6 @@ ChordPatternAttachmentEditPatternCommand::ChordPatternAttachmentEditPatternComma
     m_newPattern( pattern ),
     m_mostRecentPattern( m_oldPattern )
 {
-    setText( CommandTranslator::tr("Edit Chord Pattern") );
 }
 
 void ChordPatternAttachmentEditPatternCommand::undo()

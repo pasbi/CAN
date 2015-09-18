@@ -5,7 +5,6 @@ AbstractChordPatternAttachmentTransposeCommand::AbstractChordPatternAttachmentTr
     ModelCommand(attachment),
     m_transpose( transpose )
 {
-    setText( QString(CommandTranslator::tr("transpose chord pattern")) );
 }
 
 void AbstractChordPatternAttachmentTransposeCommand::undo()

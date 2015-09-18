@@ -14,9 +14,8 @@
 #include "Database/EventDatabase/setlistitem.h"
 
 #include "util.h"
-#include "itemhastypenameinterface.h"
 
-class DatabaseBase : public QAbstractTableModel, public PersistentObject, public ItemHasTypenameInterface
+class DatabaseBase : public QAbstractTableModel, public PersistentObject
 {
     Q_OBJECT
 protected:
@@ -208,12 +207,6 @@ public:
     {
         return m_items.indexOf(const_cast<T*>(item));
     }
-
-    QString itemTypeName() const
-    {
-        return T::TYPE_NAME;
-    }
-
 
 protected:
     QList<T*> m_items;

@@ -32,8 +32,6 @@ public:
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);
 
-    static const QString TYPE_NAME;
-
 private:
     Type m_type;
     const Song* m_song = NULL;

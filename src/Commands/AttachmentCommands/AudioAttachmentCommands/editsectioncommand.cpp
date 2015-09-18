@@ -8,7 +8,6 @@ EditSectionCommand::EditSectionCommand(SectionsModel *model, const QVariant &new
     m_index( index ),
     m_role( role )
 {
-    setText( CommandTranslator::tr("edit section") );
 }
 
 void EditSectionCommand::undo()
