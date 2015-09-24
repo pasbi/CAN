@@ -43,7 +43,7 @@
 
 DEFN_CONFIG( MainWindow, "Global" );
 
-QString defaultStyleSheet()
+QString styleSheetContent()
 {
     QFile file(":/style/styles/stylesheet.qss");
 
@@ -56,19 +56,10 @@ CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentCloneURL, QDir::homePath());
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, locale, QLocale::system().name().toStdString().c_str());
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexDefaultPath, QDir::homePath() );
 
-CONFIGURABLE_ADD_ITEM( MainWindow,
-                       Style,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Style"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/MainWindow/Style"),
-                       QVariant(),  // is set in MainWindow constructor since ::defaultStyleSheet() is not available in static context.
-                       ConfigurableItemOptions::TextEditOptions( QT_TRANSLATE_NOOP( "ConfigurableItem", "Stylesheet") )
-                       );
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     setWindowIcon( QIcon(":/icons/icons/01-elephant-icon.png") );
     app().setMainWindow( this );
     app().setProject( &m_project );
@@ -81,12 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     restoreGeometry( settings.value("Geometry").toByteArray() );
 
     //     load stylesheet
-    config.item("Style")->setDefaultValue( defaultStyleSheet() );
-    connect( config.item("Style"), &ConfigurableItem::valueChanged, [this](QVariant value)
-    {
-        app().setStyleSheet( value.toString() );
-    });
-    app().setStyleSheet( config.value( "Style" ).toString() );
+    app().setStyleSheet( styleSheetContent() );
 
     //////////////////////////////////////////
     /// restore Configurable

@@ -3,6 +3,7 @@
 
 #include <QScrollArea>
 
+class HudDecorator;
 class ChordPatternViewerScrollArea : public QScrollArea
 {
     Q_OBJECT
@@ -12,7 +13,6 @@ public:
 protected:
     void wheelEvent(QWheelEvent *e);
     void keyPressEvent(QKeyEvent* e);
-
 };
 
 #endif // CHORDPATTERNVIEWERSCROLLAREA_H

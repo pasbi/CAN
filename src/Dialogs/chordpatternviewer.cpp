@@ -7,9 +7,9 @@
 #include <QKeyEvent>
 #include "Program/midicontroller.h"
 #include "Attachments/ChordPatternAttachment/abstractchordpatternattachment.h"
-#include "hud.h"
 #include "poppler.h"
 #include "Database/SongDatabase/song.h"
+#include "overlaydecorator.h"
 #include "Program/midicommand.h"
 
 DEFN_CONFIG( ChordPatternViewer, "ChordPatternViewer");
@@ -24,7 +24,6 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     m_pos( 0 )
 {
     ui->setupUi(this);
-    m_hud = new HUD(this);
     m_playTimer = new QTimer( this );
     m_speed = attachment->scrollDownTempo();
     setWindowState( Qt::WindowFullScreen );
@@ -67,14 +66,10 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     QTimer::singleShot( 1, this, SLOT(applyZoom()) );
 
     applySpeed();
-    m_hud->hide();
-
-    ui->label->installEventFilter( this );  // catch paintEvent of label and draw the line.
 
     m_playTimer->setInterval( 50 );
     connect( m_playTimer, SIGNAL(timeout()), this, SLOT(on_playTimerTimeout()) );
 
-    ui->buttonEnableLine->setChecked( config["line"].toBool() );
 #else
     QMessageBox::information( this,
                               tr("Poppler is not available"),
@@ -124,7 +119,6 @@ void ChordPatternViewer::displayChordPatternAttachment(AbstractChordPatternAttac
 void ChordPatternViewer::resizeEvent(QResizeEvent *e)
 {
     applyZoom();
-    m_hud->replace();
     QDialog::resizeEvent(e);
 }
 
@@ -234,30 +228,7 @@ void ChordPatternViewer::applySpeed()
         ui->buttonSlower->setEnabled( true );
     }
 
-    m_hud->setText( QString("%1").arg(qRound(m_speed * 1000) / 1000.0) );
-
-    m_hud->show();
-}
-
-bool ChordPatternViewer::eventFilter(QObject *o, QEvent *e)
-{
-    if (o == ui->label && e->type() == QEvent::Paint)
-    {
-        QLabel* label = (QLabel*) o;
-        QPainter painter(label);
-        const QPixmap* pixmap = label->pixmap();
-        int xshift = ui->scrollArea->viewport()->width() - pixmap->width();
-        painter.drawPixmap( xshift/2, 0, *pixmap );
-        painter.setPen( QColor(255, 0, 0, 100));
-        if (config["line"].toBool())
-        {
-            painter.drawLine( 0, m_pos, label->width(), m_pos );
-        }
-        label->update();
-        return true;
-    }
-    return QDialog::eventFilter(o, e);
-
+    ui->label->setOverlayText( QString("%1").arg(qRound(m_speed * 1000) / 1000.0 ) );
 }
 
 void ChordPatternViewer::keyPressEvent(QKeyEvent *e)
@@ -326,15 +297,9 @@ void ChordPatternViewer::on_pushButtonPauseJumpToBegin_clicked()
 
 void ChordPatternViewer::update()
 {
-    double pos = m_pos;
-    ui->scrollArea->ensureVisible( ui->label->width() / 2, pos, 0, ui->scrollArea->viewport()->height() / 2 );
+    ui->scrollArea->ensureVisible( ui->label->width() / 2, m_pos, 0, ui->scrollArea->viewport()->height() / 2 );
+    ui->label->setLinePos( m_pos );
     QDialog::update();
-}
-
-void ChordPatternViewer::on_buttonEnableLine_clicked(bool checked)
-{
-    config.set("line", checked);
-    update();
 }
 
 void ChordPatternViewer::on_pushButtonPlay_toggled(bool checked)

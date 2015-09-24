@@ -4,10 +4,11 @@
 #include <QAbstractAnimation>
 #include <QHeaderView>
 #include <QApplication>
+#include "overlaydecorator.h"
 
 DatabaseViewBase::DatabaseViewBase(QWidget* parent) :
     QTableView(parent),
-    m_hud( new HudDecorator(this, 1000, this) )
+    m_hud( new OverlayDecorator(this, 1000, this) )
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);

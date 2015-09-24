@@ -103,7 +103,6 @@ SOURCES += main.cpp\
     AttachmentView/looselines.cpp \
     Dialogs/chordpatternviewer.cpp \
     PDFCreator/orphantsetlist.cpp \
-    Dialogs/hud.cpp \
     AttachmentView/chordpatternproxyattachmentview.cpp \
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.cpp \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.cpp \
@@ -124,12 +123,13 @@ SOURCES += main.cpp\
     DatabaseView/databasewidget.cpp \
     DatabaseView/ItemDelegates/setlistviewitemdelegate.cpp \
     Commands/SetlistCommands/setlistitemchangesongcommand.cpp \
-    huddecorator.cpp \
     Database/EventDatabase/setlistproxy.cpp \
     Commands/DatabaseCommands/databaseeditcommand.cpp \
     Database/database.cpp \
     Dialogs/IndexedFileChooseDialog/filefilter.cpp \
-    DatabaseView/ItemDelegates/editablecomboboxdelegate.cpp
+    DatabaseView/ItemDelegates/editablecomboboxdelegate.cpp \
+    Dialogs/overlaylabel.cpp \
+    overlaydecorator.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -207,8 +207,6 @@ HEADERS  += mainwindow.h \
     AttachmentView/looselines.h \
     Dialogs/chordpatternviewer.h \
     PDFCreator/orphantsetlist.h \
-    Dialogs/hud.h \
-    git.h \
     AttachmentView/chordpatternproxyattachmentview.h \
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.h \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.h \
@@ -238,12 +236,13 @@ HEADERS  += mainwindow.h \
     DatabaseView/databasewidget.h \
     DatabaseView/ItemDelegates/setlistviewitemdelegate.h \
     Commands/SetlistCommands/setlistitemchangesongcommand.h \
-    huddecorator.h \
     DatabaseView/ItemDelegates/editablecomboboxdelegate.h \
     DatabaseView/ItemDelegates/durationdelegate.h \
     Database/EventDatabase/setlistproxy.h \
     Commands/DatabaseCommands/databaseeditcommand.h \
-    Dialogs/IndexedFileChooseDialog/filefilter.h
+    Dialogs/IndexedFileChooseDialog/filefilter.h \
+    Dialogs/overlaylabel.h \
+    overlaydecorator.h
 
 
 

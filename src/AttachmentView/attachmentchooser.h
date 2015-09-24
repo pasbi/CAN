@@ -30,7 +30,7 @@ public slots:
 private slots:
     void editTags();
     void focusAttachment( const Attachment* a );
-    void setDefaultAction( QAction* hint );
+    void on_buttonDelete_clicked();
 
 private:
     Ui::AttachmentChooser *ui;

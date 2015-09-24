@@ -64,6 +64,7 @@ void AttachmentEditor::setAttachment(Attachment *attachment)
     }
 
     m_scrollArea->setLayout( layout );
+
 }
 
 void AttachmentEditor::updateAttachmentView()

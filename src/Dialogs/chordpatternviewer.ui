@@ -42,7 +42,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="OverlayLabel" name="label">
          <property name="text">
           <string/>
          </property>
@@ -87,19 +87,6 @@
       </widget>
      </item>
      <item>
-      <spacer name="verticalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="Line" name="line">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -118,6 +105,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="Line" name="line_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="buttonZoomIn">
@@ -178,6 +172,13 @@
       </widget>
      </item>
      <item>
+      <widget class="Line" name="line_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -194,48 +195,6 @@
       <widget class="Line" name="line_4">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="verticalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonEnableLine">
-       <property name="minimumSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../ressources.qrc">
-         <normaloff>:/icons/icons/minus.png</normaloff>:/icons/icons/minus.png</iconset>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -385,6 +344,11 @@
    <extends>QScrollArea</extends>
    <header>Dialogs/chordpatternviewerscrollarea.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OverlayLabel</class>
+   <extends>QLabel</extends>
+   <header>Dialogs/overlaylabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

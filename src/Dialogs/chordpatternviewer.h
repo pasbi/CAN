@@ -9,7 +9,6 @@ namespace Ui {
 class ChordPatternViewer;
 }
 
-class HUD;
 class AbstractChordPatternAttachment;
 class ChordPatternViewer : public QDialog
 {
@@ -36,7 +35,6 @@ private:
     QPixmap m_pixmap;
     double m_zoom;
     double m_speed;
-    HUD* m_hud;
 
     double m_pos;
     bool m_atEnd = false;
@@ -58,16 +56,12 @@ private slots:
     void on_pushButtonPauseJumpToBegin_clicked();
     void on_playTimerTimeout();
     void on_pushButtonPlay_toggled(bool checked);
-    void on_buttonEnableLine_clicked(bool checked);
 
 
 protected:
     void resizeEvent(QResizeEvent *e);
-    bool eventFilter(QObject *o, QEvent *e);
     void wheelEvent(QWheelEvent *e);
     void keyPressEvent(QKeyEvent *e);
-
-
 };
 
 

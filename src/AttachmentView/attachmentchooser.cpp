@@ -9,6 +9,7 @@
 #include "application.h"
 #include "mainwindow.h"
 #include "Commands/AttachmentCommands/attachmentrenamecommand.h"
+#include "Commands/SongCommands/songremoveattachmentcommand.h"
 #include "Attachments/attachment.h"
 #include "Database/SongDatabase/song.h"
 
@@ -43,9 +44,7 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "ChordPatternProxyAttachment" ) );
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "AudioAttachment" ) );
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "PDFAttachment" ) );
-    ui->toolButton->setDefaultAction( ui->toolButton->actions()[1] );
 
-    connect( ui->toolButton, SIGNAL(triggered(QAction*)), this, SLOT( setDefaultAction(QAction*)) );
     connect( ui->attachmentEditor, SIGNAL(focusAttachment(const Attachment*)), this, SLOT(focusAttachment(const Attachment*)) );
 
     setSong( NULL );
@@ -80,6 +79,7 @@ void AttachmentChooser::setSong(Song *song)
         ui->comboBox->setCurrentIndex( m_lastOpenedIndex.value( m_song, 0 ) );
     }
 
+    ui->toolButton->setEnabled( !!song );
     // other actions in toolButton are updated in mainwindow
 
 }
@@ -116,7 +116,7 @@ void AttachmentChooser::setAttachment( int index )
     }
     m_editTagAction->setEnabled( song() && currentAttachment() );
 
-
+    ui->buttonDelete->setEnabled( !!m_currentAttachment );
 }
 
 int AttachmentChooser::currentAttachmentIndex() const
@@ -214,23 +214,11 @@ void AttachmentChooser::renameCurrentAttachment()
     }
 }
 
-void AttachmentChooser::setDefaultAction(QAction *hint)
+void AttachmentChooser::on_buttonDelete_clicked()
 {
-    if (hint && hint->isEnabled())
+    Attachment* attachment = currentAttachment();
+    if (attachment)
     {
-        ui->toolButton->setDefaultAction(hint);
+        app().pushCommand( new SongRemoveAttachmentCommand(attachment->song(), attachment->song()->attachments().indexOf(attachment) ) );
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -12,7 +12,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
      <item>
       <widget class="ComboBox" name="comboBox">
        <property name="toolTip">
@@ -24,18 +24,22 @@
       <widget class="QToolButton" name="toolButton">
        <property name="minimumSize">
         <size>
-         <width>58</width>
+         <width>32</width>
          <height>32</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>58</width>
+         <width>32</width>
          <height>32</height>
         </size>
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/icons/plus44.png</normaloff>:/icons/icons/plus44.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -44,10 +48,33 @@
         </size>
        </property>
        <property name="popupMode">
-        <enum>QToolButton::MenuButtonPopup</enum>
+        <enum>QToolButton::InstantPopup</enum>
        </property>
        <property name="autoRaise">
         <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonDelete">
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/icons/rubbish7.png</normaloff>:/icons/icons/rubbish7.png</iconset>
        </property>
       </widget>
      </item>
@@ -71,6 +98,8 @@
    <header>combobox.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

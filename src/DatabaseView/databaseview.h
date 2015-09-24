@@ -7,8 +7,8 @@
 #include "Database/databasesortproxy.h"
 #include "global.h"
 #include <QKeyEvent>
-#include "huddecorator.h"
 
+class OverlayDecorator;
 class DatabaseViewBase : public QTableView
 {
     Q_OBJECT
@@ -26,7 +26,7 @@ protected:
     void setModel(QAbstractItemModel *model);
 
 private:
-    HudDecorator* m_hud;
+    OverlayDecorator* m_hud;
 
 signals:
     void clicked();
