@@ -99,6 +99,11 @@ public:
         }
     }
 
+    DatabaseSortProxy<T>* sortProxy() const
+    {
+        return m_proxy;
+    }
+
     void setFilter(const QString &filter)
     {
         if (m_proxy)

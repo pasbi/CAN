@@ -28,11 +28,14 @@ public:
     {
         QBuffer buffer;
         assert(buffer.open(QIODevice::ReadWrite));
+
         QDataStream stream(&buffer);
         stream << this;
 
+        buffer.reset();
         T* copy = new T(database);
         stream >> copy;
+
         return copy;
     }
 

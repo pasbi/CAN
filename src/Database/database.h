@@ -31,6 +31,7 @@ private:
 };
 
 
+#include "SongDatabase/song.h"
 template<typename T>
 class Database : public DatabaseBase
 {

@@ -767,6 +767,11 @@ QAction* MainWindow::newAttachment_Action( const QString& classname )
 void MainWindow::my_on_actionCopy_Song_triggered()
 {
     QModelIndexList selectedSongs = ui->songDatabaseWidget->databaseView()->selectionModel()->selectedIndexes();
+
+    for (QModelIndex& index : selectedSongs)
+    {
+        index = ui->songDatabaseWidget->databaseView()->sortProxy()->mapToSource(index);
+    }
     app().clipboard()->setMimeData( m_project.songDatabase()->mimeData( selectedSongs ) );
 }
 

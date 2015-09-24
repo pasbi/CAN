@@ -11,7 +11,6 @@ Indexer::Indexer(const QString &path, const QStringList &acceptedEndings, Mode m
     m_fileIndex(fileIndex),
     m_mode(mode)
 {
-    qDebug() << "endings = " << acceptedEndings;
 }
 
 void Indexer::abort()
