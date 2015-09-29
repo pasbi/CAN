@@ -175,5 +175,11 @@ void Slider::checkTurns()
             setValue( m_section->begin() );
             emit valueChanged( m_section->begin() );
         }
+
+        if (value() < m_section->begin())
+        {
+            setValue( m_section->begin() );
+            emit valueChanged( m_section->begin() );
+        }
     }
 }
