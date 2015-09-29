@@ -7,6 +7,7 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Project/project.h"
 #include "Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.h"
+#include <QFileInfo>
 
 
 IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :

@@ -76,7 +76,7 @@ public:
 
     int rowOf(const T* item) const
     {
-        return indexOfConstInList( m_items, item );
+        return m_items.indexOf(const_cast<T*>(item));
     }
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const

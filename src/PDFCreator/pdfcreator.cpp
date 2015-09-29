@@ -654,23 +654,6 @@ void PDFCreator::decoratePageNumbers()
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 QString makeFilename( QString filename )
 {
     // find non-word characters and replace them by `_`

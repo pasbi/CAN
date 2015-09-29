@@ -49,8 +49,7 @@ void SetlistViewItemDelegate::setEditorData(QWidget *editor, const QModelIndex &
         comboBox->setEditable(true);
         comboBox->setInsertPolicy(QComboBox::NoInsert);
 
-        const Song* song = item->song();
-        int index = indexOfConstInList<Song>( availableSongs, song );
+        int index = availableSongs.indexOf(const_cast<Song*>(item->song()));
         comboBox->setCurrentIndex(index);
         comboBox->lineEdit()->selectAll();
     }

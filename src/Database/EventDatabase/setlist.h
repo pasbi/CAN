@@ -28,7 +28,7 @@ public:
     QList<const Song *> songs() const;
     Event const* event() const;
 
-    QString fileNameBase() const { UNIMPLEMENTED(""); }
+    QString fileNameBase() const { return "SetlistItem"; }
 
 
 signals:
