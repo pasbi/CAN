@@ -63,7 +63,7 @@ void AttachmentChooser::setSong(Song *song)
     }
 
     m_song = song;
-    ui->attachmentEditor->deactivateAttachments();
+    ui->attachmentEditor->deactivateAttachmentViews();
     ui->comboBox->clear();
     if (song == NULL)
     {
@@ -219,6 +219,7 @@ void AttachmentChooser::on_buttonDelete_clicked()
     Attachment* attachment = currentAttachment();
     if (attachment)
     {
+        ui->attachmentEditor->deactivateAttachmentView(attachment);
         app().pushCommand( new SongRemoveAttachmentCommand(attachment->song(), attachment->song()->attachments().indexOf(attachment) ) );
     }
 }

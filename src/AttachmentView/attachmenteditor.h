@@ -13,7 +13,8 @@ class AttachmentEditor : public QWidget
 public:
     explicit AttachmentEditor(QWidget *parent = 0);
     void setAttachment(Attachment* attachment);
-    void deactivateAttachments();
+    void deactivateAttachmentViews();
+    void deactivateAttachmentView(const Attachment* attachment);
 
 public slots:
     void updateAttachmentView();

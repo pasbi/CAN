@@ -75,10 +75,15 @@ void AttachmentEditor::updateAttachmentView()
     }
 }
 
-void AttachmentEditor::deactivateAttachments()
+void AttachmentEditor::deactivateAttachmentViews()
 {
     for (AttachmentView* av : m_attachmentViews.values())
     {
         av->deactivate();
     }
+}
+
+void AttachmentEditor::deactivateAttachmentView(const Attachment *attachment)
+{
+    m_attachmentViews.value(const_cast<Attachment*>(attachment), nullptr)->deactivate();
 }
