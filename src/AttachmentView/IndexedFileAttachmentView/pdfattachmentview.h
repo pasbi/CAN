@@ -19,14 +19,9 @@ public:
     explicit PDFAttachmentView(QWidget *parent = 0);
     ~PDFAttachmentView();
 
-
-    void restoreOptions(const QByteArray &options);
-    QByteArray options() const;
-
 protected slots:
     void polish();
     void open();
-
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

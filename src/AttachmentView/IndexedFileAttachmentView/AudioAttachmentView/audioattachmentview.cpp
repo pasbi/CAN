@@ -4,6 +4,7 @@
 
 const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/icons/icons/turnleft.png";
 const QString AudioAttachmentView::RECORD_RIGHT_POSITION_ICON_PATH = ":/icons/icons/turnright.png";
+AudioAttachmentView* AudioAttachmentView::m_playingAudioAttachmentView = nullptr;
 
 DEFN_CREATABLE( AudioAttachmentView, AttachmentView );
 
@@ -52,8 +53,6 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
 
 AudioAttachmentView::~AudioAttachmentView()
 {
-    on_pushButtonStop_clicked();
-    ui->pushButtonStop->click();
     delete ui;
 }
 
@@ -77,7 +76,7 @@ void AudioAttachmentView::polish()
     ui->slider->setMaximum( a->player().duration() );
     ui->doubleSpinBoxPitch->setValue( player().pitch() );
     ui->doubleSpinBoxTempo->setValue( player().tempo() );
-    player().pause();
+
     ui->sectionView->setModel( a->sectionsModel() );
 
 #endif
@@ -87,9 +86,7 @@ void AudioAttachmentView::on_pushButtonStop_clicked()
 {
 #ifdef HAVE_SOUNDTOUCH
     player().stop();
-    ui->pushButtonPlayPause->blockSignals( true );
     ui->pushButtonPlayPause->setChecked( false );
-    ui->pushButtonPlayPause->blockSignals( false );
     ui->slider->stop();
 #endif
 }
@@ -99,6 +96,7 @@ void AudioAttachmentView::on_pushButtonPlayPause_toggled(bool checked)
 #ifdef HAVE_SOUNDTOUCH
     if (checked)
     {
+        setPlayingAudioAttachmentView();
         player().play();
         ui->slider->play();
     }
@@ -200,10 +198,36 @@ void AudioAttachmentView::open()
     IndexedFileAttachmentView::open();
 }
 
+void AudioAttachmentView::pause()
+{
+    ui->pushButtonPlayPause->setChecked(false);
+    on_pushButtonPlayPause_toggled(false);
+}
+
+void AudioAttachmentView::play()
+{
+    ui->pushButtonPlayPause->setChecked(true);
+    on_pushButtonPlayPause_toggled(true);
+}
+
 void AudioAttachmentView::chooseFile()
 {
     on_pushButtonStop_clicked();
     ui->pushButtonStop->click();
     IndexedFileAttachmentView::chooseFile();
+}
+
+void AudioAttachmentView::deactivate()
+{
+    pause();
+}
+
+void AudioAttachmentView::setPlayingAudioAttachmentView()
+{
+    if (m_playingAudioAttachmentView)
+    {
+        m_playingAudioAttachmentView->pause();
+    }
+    m_playingAudioAttachmentView = this;
 }
 

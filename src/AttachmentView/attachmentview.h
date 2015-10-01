@@ -26,9 +26,10 @@ public:
      */
     virtual void updateAttachmentView() {}
 
-    virtual void restoreOptions(const QByteArray &options) { Q_UNUSED(options); }
-    virtual QByteArray options() const { return QByteArray(); }
-
+    /**
+     * @brief deactivate deactivates this attachment view, e.g. pauses audio attachment.
+     */
+    virtual void deactivate() {}
 
 protected:
     virtual void polish() = 0;

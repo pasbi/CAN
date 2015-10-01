@@ -14,7 +14,14 @@ AttachmentEditor::AttachmentEditor(QWidget *parent) :
     layout->setContentsMargins( 0, 0, 0, 0 );
     layout->setSpacing( 0 );
     layout->addWidget( m_scrollArea );
-    setAttachment( NULL );
+
+    QHBoxLayout* scrollAreaLayout = new QHBoxLayout(m_scrollArea);
+    layout->setContentsMargins( 0, 0, 0, 0 );
+    layout->setSpacing( 0 );
+    m_scrollArea->setLayout( scrollAreaLayout );
+    setAttachment( nullptr );
+
+
 }
 
 AttachmentView* createAttachmentView(Attachment* attachment)
@@ -35,36 +42,29 @@ void AttachmentEditor::setAttachment(Attachment *attachment)
 {
     if (m_currentView)
     {
-        m_attachmentViewOptions[m_currentView->attachment()] = m_currentView->options();
+        m_currentView->hide();
     }
-
-    delete m_currentView;
-    delete m_scrollArea->layout();
-    QVBoxLayout* layout = new QVBoxLayout(m_scrollArea);
-
 
     if (attachment)
     {
-        m_currentView = createAttachmentView( attachment );
-        if (m_attachmentViewOptions.contains( attachment ))
+        if (!m_attachmentViews.contains(attachment))
         {
-            m_currentView->restoreOptions(m_attachmentViewOptions[attachment]);
+            m_currentView = createAttachmentView(attachment);
+            m_currentView->setParent(m_scrollArea);
+            m_scrollArea->layout()->addWidget(m_currentView);
+            connect( m_currentView, SIGNAL(focusAttachment(const Attachment*)), this, SIGNAL( focusAttachment( const Attachment* )));
+            m_attachmentViews.insert(attachment, m_currentView);
         }
-
-        m_currentView->setParent( m_scrollArea );
-        layout->addWidget( m_currentView );
-
-        connect( m_currentView, SIGNAL(focusAttachment(const Attachment*)), this, SIGNAL( focusAttachment( const Attachment* )));
-
-        delete m_scrollArea->widget();
+        else
+        {
+            m_currentView = m_attachmentViews[attachment];
+        }
+        m_currentView->show();
     }
     else
     {
-        m_currentView = NULL;
+        m_currentView = nullptr;
     }
-
-    m_scrollArea->setLayout( layout );
-
 }
 
 void AttachmentEditor::updateAttachmentView()
@@ -72,5 +72,13 @@ void AttachmentEditor::updateAttachmentView()
     if (m_currentView)
     {
         m_currentView->updateAttachmentView();
+    }
+}
+
+void AttachmentEditor::deactivateAttachments()
+{
+    for (AttachmentView* av : m_attachmentViews.values())
+    {
+        av->deactivate();
     }
 }

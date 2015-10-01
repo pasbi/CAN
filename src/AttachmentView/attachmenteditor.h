@@ -13,6 +13,7 @@ class AttachmentEditor : public QWidget
 public:
     explicit AttachmentEditor(QWidget *parent = 0);
     void setAttachment(Attachment* attachment);
+    void deactivateAttachments();
 
 public slots:
     void updateAttachmentView();
@@ -20,7 +21,7 @@ public slots:
 private:
     AttachmentView* m_currentView = 0;
     QScrollArea* m_scrollArea = 0;
-    QMap<Attachment*, QByteArray> m_attachmentViewOptions;
+    QMap<Attachment*, AttachmentView*> m_attachmentViews;
 
 signals:
     void focusAttachment( const Attachment* );

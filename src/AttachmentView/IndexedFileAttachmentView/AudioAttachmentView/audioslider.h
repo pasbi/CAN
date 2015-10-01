@@ -19,6 +19,7 @@ public:
 
     double value() const;
     void setTempo( double tempo );
+    void setPosition( double pos );
 
 public slots:
     void setMaximum( double max );
@@ -39,7 +40,6 @@ signals:
 private:
     Ui::AudioSlider *ui;
     double m_tempo = 1;
-    void setPosition( double pos );
     QTimer m_timer;
 
 private slots:

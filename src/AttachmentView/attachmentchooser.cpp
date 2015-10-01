@@ -51,15 +51,19 @@ AttachmentChooser::~AttachmentChooser()
 
 void AttachmentChooser::setSong(Song *song)
 {
-    // remeber index
+    if (song == m_song)
+    {
+        return;
+    }
 
+    // remember index
     if (m_song)
     {
         m_lastOpenedIndex[m_song] = ui->comboBox->currentIndex();
     }
 
-
     m_song = song;
+    ui->attachmentEditor->deactivateAttachments();
     ui->comboBox->clear();
     if (song == NULL)
     {

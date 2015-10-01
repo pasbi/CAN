@@ -21,7 +21,6 @@ public:
     void seek( double second );
 
     // position and duration are independend from tempo.
-    double position() const;
     double duration() const;
     double pitch() const { return m_pitch; }
     double tempo() const { return m_tempo; }
@@ -36,7 +35,7 @@ private:
     double m_pitch = 0;
     double m_tempo = 1;
     double m_offset = 0;
-    QAudioOutput* m_audioOutput = NULL;
+    QAudioOutput* m_audioOutput = nullptr;
     void seek();
 
 };

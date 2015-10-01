@@ -183,22 +183,6 @@ void PDFAttachmentView::on_spinBoxPage_valueChanged(int arg1)
 }
 
 
-QByteArray PDFAttachmentView::options() const
-{
-    QByteArray o;
-    QDataStream stream(&o, QIODevice::WriteOnly);
-    stream << m_zoom << m_currentPage;
-    return o;
-}
-
-void PDFAttachmentView::restoreOptions(const QByteArray &options)
-{
-    QDataStream stream(options);
-    stream >> m_zoom >> m_currentPage;
-    handlePageControlEnabled();
-    ui->spinBoxScale->setValue( 100 * m_zoom );
-}
-
 void PDFAttachmentView::resizeEvent(QResizeEvent *e)
 {
     static QTimer* timer = NULL;

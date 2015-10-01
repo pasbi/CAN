@@ -20,9 +20,6 @@ public:
     explicit ChordPatternAttachmentView(QWidget *parent = 0);
     ~ChordPatternAttachmentView();
 
-    void restoreOptions(const QByteArray &options) { Q_UNUSED(options); }
-    QByteArray options() const { return QByteArray(); }
-
     static void highlightTextEdit(ChordPatternEdit *edit , const QString &text);
     void updateViewIcon();
 

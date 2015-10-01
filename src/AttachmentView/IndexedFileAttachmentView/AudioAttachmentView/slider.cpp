@@ -15,6 +15,7 @@ Slider::Slider(QWidget *parent) :
         double value_d = value / SLIDER_MULTIPLIER;
         emit valueChanged( value_d );
     });
+
     m_checkTurnTimer = new QTimer( this );
     connect( m_checkTurnTimer, SIGNAL(timeout()), this, SLOT(checkTurns()) );
     m_checkTurnTimer->start( 10 );
