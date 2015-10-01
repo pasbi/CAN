@@ -29,6 +29,10 @@ template< class T, class S > T dynamic_assert_cast( S s )
     return t;
 }
 
+#define UNIMPLEMENTED                                                                                       \
+    qWarning("%s:%d: %s: Unimplemented code.", __FILE__, __LINE__, Q_FUNC_INFO);                            \
+    assert(false);
+
 
 #define initAction( name, associated_widget, text, tooltip, shortcut, menu, icon )                          \
     {                                                                                                       \

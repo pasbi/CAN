@@ -7,6 +7,7 @@
 
 #1//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
+#//TODO new project -> old attachment is displayed
 
 QT       += core gui multimedia
 

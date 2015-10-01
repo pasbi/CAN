@@ -229,12 +229,12 @@ double Buffer::duration() const
 #ifdef HAVE_SOUNDTOUCH
     if (m_formatContext)
     {
-        return m_formatContext->duration / AV_TIME_BASE;
+        return qMax( m_formatContext->duration, int64_t(0) ) / AV_TIME_BASE;
     }
     else
 #endif
     {
-        return -1;
+        return 0;
     }
 }
 
@@ -252,15 +252,15 @@ double Buffer::position() const
         pos /= m_codecContext->channels;    // pos in samples per channel
         double dpos = pos / (double) m_codecContext->sample_rate; // pos in seconds
 
-        return dpos + m_offset;
+        return qMax(0.0, dpos + m_offset);
     }
     else
     {
         qWarning() << "no codecContext";
-        return -1;
+        return 0;
     }
 #else
-    return -1;
+    return 0;
 #endif
 }
 
@@ -268,7 +268,6 @@ qint64 Buffer::positionInBytes() const
 {
     return m_buffer.pos();
 }
-
 
 
 typedef union
