@@ -471,21 +471,6 @@
     <string notr="true">Ctrl+D</string>
    </property>
   </action>
-  <action name="actionSync">
-   <property name="icon">
-    <iconset resource="ressources.qrc">
-     <normaloff>:/icons/icons/git-compare.png</normaloff>:/icons/icons/git-compare.png</iconset>
-   </property>
-   <property name="text">
-    <string>Sync</string>
-   </property>
-   <property name="toolTip">
-    <string>Synchronizes local project with remote repository.</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true"/>
-   </property>
-  </action>
   <action name="actionIdentites">
    <property name="text">
     <string>Identites ...</string>

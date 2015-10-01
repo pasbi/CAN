@@ -20,14 +20,8 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
     ui->setupUi(this);
     connect( ui->comboBox, static_cast< void (QComboBox::*)(int) >(&QComboBox::currentIndexChanged), [this](int index)
     {
-        if (m_song && index >= 0)
-        {
-            setAttachment( index );
-        }
-        else
-        {
-            setAttachment( -1 );
-        }
+        assert( m_song || index < 0 );
+        setAttachment( index );
         app().mainWindow()->updateActionsEnabled();
     });
     ui->comboBox->setInvalidText( tr("No Attachment") );
@@ -89,8 +83,8 @@ void AttachmentChooser::setAttachment( int index )
     ui->comboBox->clear();
     if (!m_song || index < 0)
     {
-        m_currentAttachment = NULL;
-        ui->attachmentEditor->setAttachment( NULL );
+        m_currentAttachment = nullptr;
+        ui->attachmentEditor->setAttachment( nullptr );
     }
     else
     {
@@ -114,9 +108,11 @@ void AttachmentChooser::setAttachment( int index )
         }
         ui->comboBox->blockSignals(false);
     }
-    m_editTagAction->setEnabled( song() && currentAttachment() );
 
+
+    m_editTagAction->setEnabled( !!m_currentAttachment );
     ui->buttonDelete->setEnabled( !!m_currentAttachment );
+    ui->toolButton->setEnabled( !!song() );
 }
 
 int AttachmentChooser::currentAttachmentIndex() const

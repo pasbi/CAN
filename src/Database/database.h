@@ -21,6 +21,8 @@ class DatabaseBase : public QAbstractTableModel, public PersistentObject
 protected:
     DatabaseBase(Project *project, QObject *parent = nullptr);
     virtual ~DatabaseBase();
+    void reset();
+
 public:
     Project* project() const;
 
@@ -28,6 +30,9 @@ public:
 
 private:
     Project* m_project;
+
+signals:
+    void reseted();
 };
 
 
@@ -91,6 +96,7 @@ public:
         qDeleteAll( m_items );
         m_items.clear();
         endResetModel();
+        DatabaseBase::reset();
     }
 
     QMimeData* mimeData(const QModelIndexList &indexes) const

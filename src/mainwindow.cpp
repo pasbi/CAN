@@ -158,6 +158,10 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         ui->songDatabaseWidget->attachmentChooser()->updateAttachmentView();
     });
+    connect( m_project.songDatabase(), &SongDatabase::reseted, [this]()
+    {
+        ui->songDatabaseWidget->attachmentChooser()->setSong( nullptr );
+    });
 
     //////////////////////////////////////////
     ///
@@ -378,6 +382,7 @@ bool MainWindow::newProject()
     m_project.reset();
     setCurrentPath( QString() );
     updateWindowTitle();
+    updateActionsEnabled();
     return true;
 }
 
@@ -466,14 +471,13 @@ void MainWindow::updateActionsEnabled()
     bool attachment = !!currentAttachment();
     bool setlist = !ui->eventDatabaseWidget->setlistView()->selectionModel()->selectedRows().isEmpty();
 
-    QList<QAction*> attachmentActions, songActions, gitActions, eventActions, setlistActions;
+    QList<QAction*> attachmentActions, songActions, eventActions, setlistActions;
 
     for (QAction* action : m_newAttachmentActions)
     {
         songActions << action;
     }
 
-    gitActions          << ui->actionSync;
     attachmentActions   << ui->actionDuplicate_Attachment << ui->actionRename_Attachment << ui->actionDelete_Attachment;
     songActions         << m_actionDelete_Song << m_actionCopy_Song << m_actionEdit_Program << m_actionEdit_Song_Tags;
     eventActions        << m_actionDelete_Event << m_actionCopy_Event << m_actionEdit_Event_Tags;

@@ -36,7 +36,6 @@ public:
     // Drag'n'Drop
     // we only allow songs to be dragged (LinkAction). No redordering.
     Qt::DropActions supportedDragActions() const;
-    void reset();
 
     QString fileNameBase() const { return "song"; }
 

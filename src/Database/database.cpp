@@ -22,3 +22,8 @@ Qt::DropActions DatabaseBase::supportedDropActions() const
 {
     return Qt::IgnoreAction;
 }
+
+void DatabaseBase::reset()
+{
+    emit reseted();
+}

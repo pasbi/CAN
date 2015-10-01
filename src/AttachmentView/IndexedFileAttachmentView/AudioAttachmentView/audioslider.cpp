@@ -33,7 +33,6 @@ void AudioSlider::setPosition( double pos )
     ui->doubleSpinBoxRight->blockSignals( true );
     ui->slider->blockSignals( true );
 
-    qDebug() << "pos = " << pos;
     assert( pos >= 0);
 
     ui->doubleSpinBoxLeft->setValue( pos );

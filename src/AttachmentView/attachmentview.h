@@ -39,6 +39,9 @@ private:
 signals:
     void focusAttachment( const Attachment* );
 
+private slots:
+    void listenToAttachmentDestruction();
+
 };
 
 #endif // ATTACHMENTVIEW_H

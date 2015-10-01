@@ -132,9 +132,3 @@ Qt::DropActions SongDatabase::supportedDragActions() const
 {
     return Qt::LinkAction;
 }
-
-void SongDatabase::reset()
-{
-    emit attachmentAdded(-1);
-    Database::reset();
-}
