@@ -29,7 +29,7 @@ public:
     /**
      * @brief newAttachmentAction returns the action that is used to create Attachment with given classname.
      * @param classname
-     * @return QAction to create the Attachment or NULL if no action is known to create it.
+     * @return QAction to create the Attachment or nullptr if no action is known to create it.
      */
     QAction* newAttachment_Action(const QString &classname);
 

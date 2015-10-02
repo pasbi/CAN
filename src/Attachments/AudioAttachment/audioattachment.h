@@ -35,7 +35,7 @@ private:
     Player m_player;
     QString m_filename;
 
-    const Section* m_currentSection = NULL;
+    const Section* m_currentSection = nullptr;
 
 signals:
     void currentSectionChanged( const Section* );

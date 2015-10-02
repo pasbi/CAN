@@ -157,7 +157,7 @@ private:
     double topMargin() const { return 15 + m_additionalTopMargin; }
     double bottomMargin() const { return 15 + 25; } // bottom line is 15 below the end of the page
 
-    ExportPDFDialog* m_exportPDFDialog = NULL; // is required from so many member functions
+    ExportPDFDialog* m_exportPDFDialog = nullptr; // is required from so many member functions
 
 public:
     static const int ALIGN_SONGS__SEPARATE_PAGES;

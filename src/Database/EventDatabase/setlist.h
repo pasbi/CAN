@@ -37,7 +37,7 @@ signals:
 
 private:
     QList<void*> viewableAttachments( const QModelIndex& index ) const;    // returns a list of viewable attachments
-    Event* m_event = NULL;
+    Event* m_event = nullptr;
 
     // helper to keep dropMimeData clear.
     bool dropSongs(const DatabaseMimeData<Song>*        songData,    int targetRow, QModelIndexList& indexes);

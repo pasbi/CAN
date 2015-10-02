@@ -40,7 +40,7 @@ private slots:
 
 private:
     Ui::PDFAttachmentView *ui;
-    QWidget* m_pdfWidget = NULL;
+    QWidget* m_pdfWidget = nullptr;
     double m_zoom = 1;
 
     int m_currentPage = 0;

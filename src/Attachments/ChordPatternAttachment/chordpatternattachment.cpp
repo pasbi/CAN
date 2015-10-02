@@ -103,7 +103,7 @@ void ChordPatternAttachment::setScrollDownTempo( double tempo )
     if (m_scrollDownTempo != tempo)
     {
         m_scrollDownTempo = tempo;
-        app().project()->pushCommand( NULL ); // push empty command to indicate project changed.
+        app().project()->pushCommand( nullptr ); // push empty command to indicate project changed.
     }
 }
 

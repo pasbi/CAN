@@ -90,19 +90,19 @@ void Buffer::open(const QString &filename)
     if (m_formatContext)
     {
         avformat_free_context( m_formatContext );
-        m_formatContext = NULL;
+        m_formatContext = nullptr;
     }
 
     av_register_all();
 
-    if (avformat_open_input(&m_formatContext, filename.toStdString().c_str(), NULL, NULL) != 0)
+    if (avformat_open_input(&m_formatContext, filename.toStdString().c_str(), nullptr, nullptr) != 0)
     {
         qWarning() << "Error opening the file" << filename;
         return;
     }
 
 
-    if (avformat_find_stream_info(m_formatContext, NULL) < 0)
+    if (avformat_find_stream_info(m_formatContext, nullptr) < 0)
     {
         qWarning() << "Error finding the stream info";
         return;
@@ -122,7 +122,7 @@ void Buffer::open(const QString &filename)
     m_codecContext = m_audioStream->codec;
     m_codecContext->codec = cdc;
 
-    if (avcodec_open2(m_codecContext, m_codecContext->codec, NULL) != 0)
+    if (avcodec_open2(m_codecContext, m_codecContext->codec, nullptr) != 0)
     {
         qWarning() << "Couldn't open the context with the decoder";
         return;
@@ -145,7 +145,7 @@ void Buffer::stop()
     {
         delete m_decoder;
     }
-    m_decoder = NULL;
+    m_decoder = nullptr;
     m_buffer.buffer().clear();
     m_buffer.reset();
 }
@@ -183,7 +183,7 @@ Buffer::Decoder::Decoder( AVFormatContext * formatContext,
                           double            tempo,
                           double            offset,
                           QByteArray*       dest            ) :
-    QThread( NULL ),
+    QThread( nullptr ),
     m_formatContext( formatContext ),
     m_audioStream( audioStream ),
     m_codecContext( codecContext ),

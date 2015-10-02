@@ -35,7 +35,7 @@ private slots:
 private:
     Ui::AttachmentChooser *ui;
     Song* m_song;
-    Attachment* m_currentAttachment = NULL;
+    Attachment* m_currentAttachment = nullptr;
     QMap<Song*, int> m_lastOpenedIndex;
     QAction* m_editTagAction;
 

@@ -140,7 +140,7 @@ void AudioAttachmentView::recordSection(bool abort)
         state = Idle;
         ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
         ui->slider->clearIndicators();
-        attachment<AudioAttachment>()->setSection( NULL );
+        attachment<AudioAttachment>()->setSection( nullptr );
     }
     else
     {
@@ -150,7 +150,7 @@ void AudioAttachmentView::recordSection(bool abort)
             ui->slider->clearIndicators();
             leftPos = pos;
             ui->slider->setLeftIndicator( leftPos );
-            attachment<AudioAttachment>()->setSection( NULL );
+            attachment<AudioAttachment>()->setSection( nullptr );
 
             state = LeftRecorded;
             ui->pushButtonRecordSection->setIcon( QIcon(RECORD_RIGHT_POSITION_ICON_PATH) );
@@ -175,7 +175,7 @@ void AudioAttachmentView::recordSection(bool abort)
 
 void AudioAttachmentView::restoreCurrentSection()
 {
-    const Section* section = NULL;
+    const Section* section = nullptr;
     QModelIndexList indexes = ui->sectionView->selectionModel()->selectedRows();
     if (!indexes.isEmpty() && indexes.first().isValid())
     {

@@ -34,7 +34,7 @@ public:
 
 private:
     Type m_type;
-    const Song* m_song = NULL;
+    const Song* m_song = nullptr;
     QString m_label;
 
     QMetaObject::Connection m_updateSongLabelConnection;

@@ -7,7 +7,7 @@ DEFN_CREATABLE_NAME(ChordPatternProxyAttachment, Attachment, QT_TRANSLATE_NOOP("
 
 ChordPatternProxyAttachment::ChordPatternProxyAttachment() :
     AbstractChordPatternAttachment(),
-    m_source( NULL )
+    m_source( nullptr )
 {
     setName( tr("Proxy Pattern") );
 
@@ -18,7 +18,7 @@ ChordPatternProxyAttachment::ChordPatternProxyAttachment() :
     }
     else
     {
-        setChordPatternAttachment( NULL );
+        setChordPatternAttachment( nullptr );
     }
 }
 

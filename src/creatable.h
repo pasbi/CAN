@@ -33,7 +33,7 @@ public:
     {
         if (!m_constructorMap->contains(classname))
         {
-            return NULL;
+            return nullptr;
         }
         else
         {

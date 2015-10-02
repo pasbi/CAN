@@ -53,7 +53,7 @@ private:
 
 private:
     Ui::AudioAttachmentView *ui;
-    QWidget* m_audioWidget = NULL;
+    QWidget* m_audioWidget = nullptr;
 
     static const QString RECORD_LEFT_POSITION_ICON_PATH;
     static const QString RECORD_RIGHT_POSITION_ICON_PATH;

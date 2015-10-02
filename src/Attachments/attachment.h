@@ -36,7 +36,7 @@ public:
 signals:
     void attachmentRenamed(QString);
 private:
-    Song* m_song = NULL;
+    Song* m_song = nullptr;
     QString m_name;
 };
 

@@ -73,7 +73,7 @@ void PDFAttachmentView::open()
     handlePageControlEnabled();
 
     PDFAttachment* pdf = attachment<PDFAttachment>();
-    Poppler::Document* doc = pdf ? pdf->document() : NULL;
+    Poppler::Document* doc = pdf ? pdf->document() : nullptr;
     if (!doc)
     {
         ui->label->setPixmap(QPixmap());
@@ -185,7 +185,7 @@ void PDFAttachmentView::on_spinBoxPage_valueChanged(int arg1)
 
 void PDFAttachmentView::resizeEvent(QResizeEvent *e)
 {
-    static QTimer* timer = NULL;
+    static QTimer* timer = nullptr;
 
     IndexedFileAttachmentView::resizeEvent(e);
 

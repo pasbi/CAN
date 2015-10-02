@@ -96,7 +96,7 @@ void ConfigurationDialog::buildPage(const QString &key)
     else
     {
         delete scrollArea;
-        scrollArea = NULL;
+        scrollArea = nullptr;
     }
 
 }

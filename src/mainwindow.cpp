@@ -126,10 +126,10 @@ MainWindow::MainWindow(QWidget *parent) :
     initAction( actionPaste_Event,      ui->eventDatabaseWidget->databaseView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
     initAction( actionEdit_Event_Tags,  ui->eventDatabaseWidget->databaseView(),  tr("&Edit Tags"),      tr("Edit tags of the event."),"",         ui->menuEvents, ":/icons/icons/tag-2.png" )
 
-    initAction( actionNew_SetlistItem,    ui->eventDatabaseWidget->setlistView(),   tr("&New Item"),       tr("Insert new item"),        "Ctrl+N",   NULL, "" )
-    initAction( actionDelete_SetlistItem, ui->eventDatabaseWidget->setlistView(),   tr("&Remove Item"),    tr("Delete selected items"),  "Del",      NULL, "" )
-    initAction( actionCopy_SetlistItem,   ui->eventDatabaseWidget->setlistView(),   tr("&Copy Items"),     tr("Copy selected items"),    "Ctrl+C",   NULL, "" )
-    initAction( actionPaste_SetlistItem,  ui->eventDatabaseWidget->setlistView(),   tr("&Paste Items"),    tr("Paste items"),            "Ctrl+V",   NULL, "" )
+    initAction( actionNew_SetlistItem,    ui->eventDatabaseWidget->setlistView(),   tr("&New Item"),       tr("Insert new item"),        "Ctrl+N",   nullptr, "" )
+    initAction( actionDelete_SetlistItem, ui->eventDatabaseWidget->setlistView(),   tr("&Remove Item"),    tr("Delete selected items"),  "Del",      nullptr, "" )
+    initAction( actionCopy_SetlistItem,   ui->eventDatabaseWidget->setlistView(),   tr("&Copy Items"),     tr("Copy selected items"),    "Ctrl+C",   nullptr, "" )
+    initAction( actionPaste_SetlistItem,  ui->eventDatabaseWidget->setlistView(),   tr("&Paste Items"),    tr("Paste items"),            "Ctrl+V",   nullptr, "" )
 
 
     //////////////////////////////////////////
@@ -764,7 +764,7 @@ QAction* MainWindow::newAttachment_Action( const QString& classname )
     else
     {
         qWarning() << "Attachment " << classname << "not known." << m_newAttachmentActions.keys();
-        return NULL;
+        return nullptr;
     }
 }
 

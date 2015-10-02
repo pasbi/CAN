@@ -26,9 +26,9 @@ public:
 
 private:
 #ifdef HAVE_SOUNDTOUCH
-    AVFormatContext* m_formatContext = NULL;
-    AVStream* m_audioStream = NULL;
-    AVCodecContext* m_codecContext = NULL;
+    AVFormatContext* m_formatContext = nullptr;
+    AVStream* m_audioStream = nullptr;
+    AVCodecContext* m_codecContext = nullptr;
 #endif
     int m_streamIndex = -1;
 
@@ -61,10 +61,10 @@ private:
 
     private:
 #ifdef HAVE_SOUNDTOUCH
-        AVFormatContext* m_formatContext = NULL;
-        AVStream* m_audioStream = NULL;
-        AVCodecContext* m_codecContext = NULL;
-        AVFrame* m_frame = NULL;
+        AVFormatContext* m_formatContext = nullptr;
+        AVStream* m_audioStream = nullptr;
+        AVCodecContext* m_codecContext = nullptr;
+        AVFrame* m_frame = nullptr;
         soundtouch::SoundTouch m_soundTouch;
 #endif
         int m_streamIndex = -1;
@@ -79,7 +79,7 @@ private:
         bool decode();
 
 
-    } * m_decoder = NULL;
+    } * m_decoder = nullptr;
 
 };
 

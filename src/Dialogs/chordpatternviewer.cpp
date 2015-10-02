@@ -29,7 +29,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     setWindowState( Qt::WindowFullScreen );
 
 #ifdef HAVE_POPPLER
-    Poppler::Document* document = NULL;
+    Poppler::Document* document = nullptr;
     { // open pdf document
         QTemporaryFile file;
         file.open();

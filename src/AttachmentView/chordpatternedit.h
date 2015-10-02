@@ -21,7 +21,7 @@ protected:
     void mousePressEvent(QMouseEvent *e);
 
 private:
-    QMenu* m_contextMenu = NULL;
+    QMenu* m_contextMenu = nullptr;
     QList<int> m_selectedLines;
 
 

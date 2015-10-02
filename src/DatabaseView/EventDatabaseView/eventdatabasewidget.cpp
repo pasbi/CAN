@@ -32,7 +32,7 @@ void EventDatabaseWidget::updateSetlistView()
     }
     else
     {
-        setlistWidget()->setSetlist( NULL );
+        setlistWidget()->setSetlist( nullptr );
     }
 }
 

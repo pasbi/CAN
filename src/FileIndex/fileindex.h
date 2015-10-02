@@ -55,7 +55,7 @@ private:
     void deserialize(QByteArray data );
 
     QStringList m_sources;
-    Indexer* m_indexer = NULL;
+    Indexer* m_indexer = nullptr;
     void addFilePrivate(const QString& filename);
 
 private slots:

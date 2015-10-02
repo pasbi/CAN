@@ -31,7 +31,7 @@ protected:
 private:
     static const double SLIDER_MULTIPLIER;
     double m_leftIndicator = -1;
-    const Section* m_section = NULL;
+    const Section* m_section = nullptr;
 
     QTimer* m_checkTurnTimer;
 private slots:

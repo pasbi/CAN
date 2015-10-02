@@ -58,7 +58,7 @@ void ChordPatternProxyAttachmentView::on_buttonView_clicked()
 void ChordPatternProxyAttachmentView::updateText()
 {
     ChordPatternProxyAttachment* a = attachment<ChordPatternProxyAttachment>();
-    const ChordPatternAttachment* source = a ? a->source() : NULL;
+    const ChordPatternAttachment* source = a ? a->source() : nullptr;
     if (a)
     {
         ChordPatternAttachmentView::highlightTextEdit( ui->textEdit, a->chordPattern() );

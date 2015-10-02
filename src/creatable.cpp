@@ -1,9 +1,9 @@
 #include "creatable.h"
 
-QHash<QString, Creatable* (*)()>*    Creatable::m_constructorMap = NULL;
-QHash<QString, QString>*             Creatable::m_categoryMap = NULL;
-QHash<QString, QString>*             Creatable::m_inverseCategoryMap = NULL;
-QHash<QString, const char*>*         Creatable::m_nameMap  = NULL;
+QHash<QString, Creatable* (*)()>*    Creatable::m_constructorMap = nullptr;
+QHash<QString, QString>*             Creatable::m_categoryMap = nullptr;
+QHash<QString, QString>*             Creatable::m_inverseCategoryMap = nullptr;
+QHash<QString, const char*>*         Creatable::m_nameMap  = nullptr;
 
 Creatable::Creatable()
 {

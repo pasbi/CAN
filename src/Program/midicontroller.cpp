@@ -15,7 +15,7 @@ CONFIGURABLE_ADD_DEFEATABLE_ITEM(  MidiController,
                         ConfigurableItemOptions::SpinBoxOptions( 1, 8, 1 ) );
 
 
-MidiController* MidiController::m_singleton = NULL;
+MidiController* MidiController::m_singleton = nullptr;
 
 MidiController::MidiController()
 {

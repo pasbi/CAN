@@ -840,7 +840,7 @@ QString PDFCreator::setlistFilename( QWidget* parent, Setlist* setlist, bool sep
                                                         tr("Export PDF ..."),
                                                         filename,
                                                         "*.pdf",
-                                                        NULL,
+                                                        nullptr,
                                                         QFileDialog::DontConfirmOverwrite );
         }
 
@@ -930,7 +930,7 @@ void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
     }
 
     delete exportPDFDialog;
-    exportPDFDialog = NULL;
+    exportPDFDialog = nullptr;
 }
 
 void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *attachment, const QString &path)
@@ -945,7 +945,7 @@ void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *att
     config.set("enable_TableOfContentsPattern", false);
     config.set("PageNumbers", false);
 
-    PDFCreator creator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), NULL, "" );
+    PDFCreator creator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), nullptr, "" );
     creator.m_currentIndex = -1;
     creator.newPage( Page::SongStartsHere );
     creator.paintChordPatternAttachment( attachment );

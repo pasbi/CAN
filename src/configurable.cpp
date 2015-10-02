@@ -223,13 +223,13 @@ ConfigurableItem* Configurable::item(const QString & key)
     }
     else
     {
-        return NULL;
+        return nullptr;
     }
 }
 
 const ConfigurableItem* Configurable::item(const QString & key) const
 {
-    return m_items.value( key, NULL );
+    return m_items.value( key, nullptr );
 }
 
 QString Configurable::caption() const

@@ -22,23 +22,23 @@ QMAKE_CXXFLAGS += -std=c++0x
 QMAKE_LFLAGS += -static-libgcc
 
 unix {
-LIBS += -L/usr/local/lib -lpoppler-qt5
-LIBS += -lavformat -lavcodec -lavutil -lpthread
-LIBS += -lSoundTouch
+    LIBS += -L/usr/local/lib -lpoppler-qt5
+    LIBS += -lavformat -lavcodec -lavutil -lpthread
+    LIBS += -lSoundTouch
 }
 
 win32 {
-INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
-LIBS += -L../../lib -lpoppler-qt5
-LIBS += -L../../bin -lavformat -lavcodec -lavutil
-LIBS += -L../../bin -lsoundtouch
+    INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
+    LIBS += -L../../lib -lpoppler-qt5
+    LIBS += -L../../bin -lavformat -lavcodec -lavutil
+    LIBS += -L../../bin -lsoundtouch
 
 }
 
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     configurable.cpp \
     Project/project.cpp \
     Database/SongDatabase/songdatabase.cpp \

@@ -13,7 +13,7 @@ void PDFAttachment::open()
 {
 #ifdef HAVE_POPPLER
     delete m_document;
-    m_document = NULL;
+    m_document = nullptr;
 
     if (filename().isEmpty())
     {

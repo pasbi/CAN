@@ -154,8 +154,8 @@ private:
     ConfigurableItem* m_item;
 
 public:
-    DefeatableConfigurationWidget( ConfigurableItem* switchItem, ConfigurableItem* item, QWidget* parent = NULL ) :
-        ConfigurationWidget( NULL, parent ),
+    DefeatableConfigurationWidget( ConfigurableItem* switchItem, ConfigurableItem* item, QWidget* parent = nullptr ) :
+        ConfigurationWidget( nullptr, parent ),
         m_switchWidget( new ConfigQCheckBox( switchItem, this ) ),
         m_switchItem( switchItem ),
         m_configWidget( create( item, parent, true )),
@@ -217,7 +217,7 @@ ConfigurationWidget* ConfigurationWidget::create( ConfigurableItem *item, QWidge
         case ConfigurableItemOptions::Hidden:
         case ConfigurableItemOptions::Invalid:
             assert( false );
-            return NULL;
+            return nullptr;
             break;
         case ConfigurableItemOptions::TextEdit:
             return new ConfigQTextEdit( item, parent );
@@ -243,7 +243,7 @@ ConfigurationWidget* ConfigurationWidget::create( ConfigurableItem *item, QWidge
         case ConfigurableItemOptions::EditableComboBox:
         case ConfigurableItemOptions::ColorEditor:
         default:
-            return NULL;
+            return nullptr;
         }
     }
 }

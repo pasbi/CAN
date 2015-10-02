@@ -154,7 +154,7 @@ void FileIndex::addDirectory(const QString & path)
     connect(m_indexer, &QThread::finished, [this]()
     {
         m_indexer->deleteLater();
-        m_indexer = NULL;
+        m_indexer = nullptr;
         emit operationFinished();
     });
     m_indexer->start();
@@ -186,7 +186,7 @@ void FileIndex::abortOperations()
         m_indexer->abort();
         m_indexer->wait();
         m_indexer->deleteLater();
-        m_indexer = NULL;
+        m_indexer = nullptr;
     }
 }
 

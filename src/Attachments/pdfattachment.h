@@ -22,7 +22,7 @@ public slots:
 
 private:
 #ifdef HAVE_POPPLER
-    Poppler::Document* m_document = NULL;
+    Poppler::Document* m_document = nullptr;
 #endif
 
 

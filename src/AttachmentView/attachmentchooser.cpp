@@ -41,7 +41,7 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
 
     connect( ui->attachmentEditor, SIGNAL(focusAttachment(const Attachment*)), this, SLOT(focusAttachment(const Attachment*)) );
 
-    setSong( NULL );
+    setSong( nullptr );
 }
 
 AttachmentChooser::~AttachmentChooser()
@@ -65,7 +65,7 @@ void AttachmentChooser::setSong(Song *song)
     m_song = song;
     ui->attachmentEditor->deactivateAttachmentViews();
     ui->comboBox->clear();
-    if (song == NULL)
+    if (song == nullptr)
     {
         setAttachment( -1 );
     }
@@ -101,8 +101,8 @@ void AttachmentChooser::setAttachment( int index )
         if (index < 0 || index >= song()->attachments().length())
         {
             ui->comboBox->setCurrentIndex( -1 );
-            m_currentAttachment = NULL;
-            ui->attachmentEditor->setAttachment( NULL );
+            m_currentAttachment = nullptr;
+            ui->attachmentEditor->setAttachment( nullptr );
         }
         else
         {
