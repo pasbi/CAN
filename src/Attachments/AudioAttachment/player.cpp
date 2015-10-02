@@ -103,6 +103,18 @@ double Player::duration() const
     return m_buffer.duration();
 }
 
+void Player::setVolume(double volume)
+{
+    if (m_audioOutput)
+    {
+        m_audioOutput->setVolume(volume);
+    }
+    else
+    {
+        qWarning() << "no audio output, failed to set Volume " << Q_FUNC_INFO;
+    }
+}
+
 
 
 

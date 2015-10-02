@@ -25,6 +25,8 @@ public:
     double pitch() const { return m_pitch; }
     double tempo() const { return m_tempo; }
 
+    void setVolume(double volume);
+
 public slots:
     void play();
     void pause();

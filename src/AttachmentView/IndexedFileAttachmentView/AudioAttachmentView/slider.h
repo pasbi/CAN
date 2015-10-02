@@ -33,6 +33,10 @@ private:
     double m_leftIndicator = -1;
     const Section* m_section = nullptr;
 
+    static void drawHandle(QPainter& painter, int pos);
+    static void drawRange(QPainter& painter, int start, int width, int pos);
+
+
     QTimer* m_checkTurnTimer;
 private slots:
     void checkTurns();

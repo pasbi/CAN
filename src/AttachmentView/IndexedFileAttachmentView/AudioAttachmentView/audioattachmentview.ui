@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>403</height>
+    <width>524</width>
+    <height>426</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -180,6 +180,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="VolumeSlider" name="volumeSlider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButtonPlayPause">
        <property name="toolTip">
         <string>Play or pause current song.</string>
@@ -228,6 +235,11 @@
    <extends>QWidget</extends>
    <header>AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VolumeSlider</class>
+   <extends>QSlider</extends>
+   <header>AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.h</header>
   </customwidget>
  </customwidgets>
  <resources>

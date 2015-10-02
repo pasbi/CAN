@@ -1,12 +1,17 @@
 #include "audioattachmentview.h"
 #include "ui_audioattachmentview.h"
 #include "Attachments/AudioAttachment/sectionsmodel.h"
+#include "QSignalBlocker"
 
 const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/icons/icons/turnleft.png";
 const QString AudioAttachmentView::RECORD_RIGHT_POSITION_ICON_PATH = ":/icons/icons/turnright.png";
 AudioAttachmentView* AudioAttachmentView::m_playingAudioAttachmentView = nullptr;
 
 DEFN_CREATABLE( AudioAttachmentView, AttachmentView );
+DEFN_CONFIG( AudioAttachmentView, "AudioAttachmentView" );
+
+CONFIGURABLE_ADD_ITEM_HIDDEN( AudioAttachmentView, Volume, 100 );
+CONFIGURABLE_ADD_ITEM_HIDDEN( AudioAttachmentView, Muted, false);
 
 AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     IndexedFileAttachmentView(parent),
@@ -49,6 +54,9 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     connect( ui->sectionView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(restoreCurrentSection()) );
     connect( ui->pushButtonRestoreSection, SIGNAL(clicked()), this, SLOT(restoreCurrentSection()) );
     connect( ui->pushButtonDeleteSection, SIGNAL(clicked()), this, SLOT(deleteCurrentSection()) );
+
+    connect( ui->volumeSlider, SIGNAL(wasMuted(bool)), this, SLOT(updateVolume()) );
+    connect( ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(updateVolume()) );
 }
 
 AudioAttachmentView::~AudioAttachmentView()
@@ -204,12 +212,6 @@ void AudioAttachmentView::pause()
     on_pushButtonPlayPause_toggled(false);
 }
 
-void AudioAttachmentView::play()
-{
-    ui->pushButtonPlayPause->setChecked(true);
-    on_pushButtonPlayPause_toggled(true);
-}
-
 void AudioAttachmentView::chooseFile()
 {
     on_pushButtonStop_clicked();
@@ -224,10 +226,28 @@ void AudioAttachmentView::deactivate()
 
 void AudioAttachmentView::setPlayingAudioAttachmentView()
 {
-    if (m_playingAudioAttachmentView)
+    if (m_playingAudioAttachmentView && m_playingAudioAttachmentView != this)
     {
         m_playingAudioAttachmentView->pause();
     }
     m_playingAudioAttachmentView = this;
+}
+
+void AudioAttachmentView::showEvent(QShowEvent *e)
+{
+    QSignalBlocker(ui->volumeSlider);
+    ui->volumeSlider->setValue( config["Volume"].toInt() );
+    ui->volumeSlider->setMuted( config["Muted"].toBool() );
+
+    updateVolume();
+    AttachmentView::showEvent(e);
+}
+
+void AudioAttachmentView::updateVolume()
+{
+    config.set("Muted", ui->volumeSlider->isMuted());
+    config.set("Volume", ui->volumeSlider->value());
+
+    attachment<AudioAttachment>()->player().setVolume(double(ui->volumeSlider->value()) / ui->volumeSlider->maximum());
 }
 

@@ -130,7 +130,8 @@ SOURCES += main.cpp\
     Dialogs/IndexedFileChooseDialog/filefilter.cpp \
     DatabaseView/ItemDelegates/editablecomboboxdelegate.cpp \
     Dialogs/overlaylabel.cpp \
-    overlaydecorator.cpp
+    overlaydecorator.cpp \
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -243,7 +244,8 @@ HEADERS  += mainwindow.h \
     Commands/DatabaseCommands/databaseeditcommand.h \
     Dialogs/IndexedFileChooseDialog/filefilter.h \
     Dialogs/overlaylabel.h \
-    overlaydecorator.h
+    overlaydecorator.h \
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.h
 
 
 

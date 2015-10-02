@@ -54,7 +54,7 @@ void Slider::clearIndicators()
     setLeftIndicator( -1 );
 }
 
-void drawHandle(QPainter& painter, int pos)
+void Slider::drawHandle(QPainter& painter, int pos)
 {
     int width = 15;
     int height = 15;
@@ -68,7 +68,7 @@ void drawHandle(QPainter& painter, int pos)
     painter.drawEllipse(QRectF(pos-width/2+2,-height/2+2,width-5,height-5));
 }
 
-void drawRange(QPainter& painter, int start, int width, int pos)
+void Slider::drawRange(QPainter& painter, int start, int width, int pos)
 {
     QPainterPath path;
     int height = 8;

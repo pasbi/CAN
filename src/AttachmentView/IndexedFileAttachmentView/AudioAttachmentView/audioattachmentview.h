@@ -33,6 +33,7 @@ private slots:
     void on_pushButtonStop_clicked();
     void on_pushButtonPlayPause_toggled(bool checked);
     void seek( double pos );
+    void updateVolume();
 
     void abortSection() { recordSection(true);}
     void recordSection( bool abort = false );
@@ -43,13 +44,15 @@ private slots:
     void deleteCurrentSection();
 
     void pause();
-    void play();
-
 
 private:
     // there shall be at most one AudioAttachmentView which is currently playing.
     static AudioAttachmentView* m_playingAudioAttachmentView;
     void setPlayingAudioAttachmentView();
+
+
+protected:
+    void showEvent(QShowEvent *e);
 
 private:
     Ui::AudioAttachmentView *ui;
