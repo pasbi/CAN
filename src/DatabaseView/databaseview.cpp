@@ -17,6 +17,7 @@ DatabaseViewBase::DatabaseViewBase(QWidget* parent) :
     horizontalHeader()->show();
     horizontalHeader()->setSortIndicatorShown( true );
     horizontalHeader()->setSectionsClickable( true );
+    horizontalHeader()->setFixedHeight(20);
     setSortingEnabled( true );
 
     setHorizontalScrollMode( QTableView::ScrollPerPixel );
