@@ -9,7 +9,6 @@
 #       this is slow and stupid for obvious reasons.
 #//TODO single `a` in a line is not recognized as chord, in general a false positive is better than false negative!
 #//TODO skip tempo change-confirmation on first change (aka init)
-#//TODO C2 is not recognized
 #//TODO show whether song has a program
 
 QT       += core gui multimedia
