@@ -32,6 +32,7 @@ public:
      * @return
      */
     static bool parseLine(const QString &line, QStringList &chords, QStringList &tokens);
+
 private:
     QString m_before, m_after;
     int m_base;

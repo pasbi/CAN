@@ -7,7 +7,6 @@
 
 #1//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
-#//TODO single `a` in a line is not recognized as chord, in general a false positive is better than false negative!
 #//TODO skip tempo change-confirmation on first change (aka init)
 #//TODO show whether song has a program
 
