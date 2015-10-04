@@ -27,8 +27,6 @@
         <file>icons/calendaricons.png</file>
         <file>icons/snail.png</file>
         <file>icons/gazelle.png</file>
-        <file>icons/Git-Icon-Black.png</file>
-        <file>icons/git-compare.png</file>
         <file>icons/eye106.png</file>
         <file>icons/turnright.png</file>
         <file>icons/turnleft.png</file>
@@ -48,6 +46,7 @@
         <file>icons/1411737168_POWER - RESTART.png</file>
         <file>icons/1411734805_rename.png</file>
         <file>icons/eye_midi.png</file>
+        <file>icons/midi.png</file>
     </qresource>
     <qresource prefix="/translations">
         <file>can2_de_DE.qm</file>

@@ -9,6 +9,7 @@
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "DatabaseView/ItemDelegates/editablecomboboxdelegate.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"
+#include <QHeaderView>
 
 
 SongTableView::SongTableView(QWidget *parent) :

@@ -119,15 +119,15 @@ MainWindow::MainWindow(QWidget *parent) :
     initAction( actionPaste_Song,       ui->songDatabaseWidget->databaseView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
 
 #ifdef HAVE_PROGRAM
-    initAction( actionEdit_Program,     ui->songDatabaseWidget->databaseView(),    tr("&Edit Program"),   tr("Edit program."),          "",         ui->menuSongs,  "" )
+    initAction( actionEdit_Program,     ui->songDatabaseWidget->databaseView(),    tr("&Edit Program"),   tr("Edit program."),          "Ctrl+P",   ui->menuSongs,  "" )
 #endif
-    initAction( actionEdit_Song_Tags,   ui->songDatabaseWidget->databaseView(),    tr("&Edit Tags"),      tr("Edit tags of the song."), "",         ui->menuSongs,  ":/icons/icons/tag-2.png" )
+    initAction( actionEdit_Song_Tags,   ui->songDatabaseWidget->databaseView(),    tr("&Edit Tags"),      tr("Edit tags of the song."), "Ctrl+T",   ui->menuSongs,  ":/icons/icons/tag-2.png" )
 
-    initAction( actionNew_Event,        ui->eventDatabaseWidget->databaseView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
-    initAction( actionDelete_Event,     ui->eventDatabaseWidget->databaseView(),  tr("&Remove Event"),   tr("Remove selected event."), "Del",      ui->menuEvents, ":/icons/icons/rubbish7.png" )
-    initAction( actionCopy_Event,       ui->eventDatabaseWidget->databaseView(),  tr("&Copy Event"),     tr("Copy selected event."),   "Ctrl+C",   ui->menuEvents, "" )
-    initAction( actionPaste_Event,      ui->eventDatabaseWidget->databaseView(),  tr("&Paste Event"),    tr("Paste event."),           "Ctrl+V",   ui->menuEvents, "" )
-    initAction( actionEdit_Event_Tags,  ui->eventDatabaseWidget->databaseView(),  tr("&Edit Tags"),      tr("Edit tags of the event."),"",         ui->menuEvents, ":/icons/icons/tag-2.png" )
+    initAction( actionNew_Event,        ui->eventDatabaseWidget->databaseView(),  tr("&New Event"),      tr("Add a new event."),        "Ctrl+N",   ui->menuEvents, "" )
+    initAction( actionDelete_Event,     ui->eventDatabaseWidget->databaseView(),  tr("&Remove Event"),   tr("Remove selected event."),  "Del",      ui->menuEvents, ":/icons/icons/rubbish7.png" )
+    initAction( actionCopy_Event,       ui->eventDatabaseWidget->databaseView(),  tr("&Copy Event"),     tr("Copy selected event."),    "Ctrl+C",   ui->menuEvents, "" )
+    initAction( actionPaste_Event,      ui->eventDatabaseWidget->databaseView(),  tr("&Paste Event"),    tr("Paste event."),            "Ctrl+V",   ui->menuEvents, "" )
+    initAction( actionEdit_Event_Tags,  ui->eventDatabaseWidget->databaseView(),  tr("&Edit Tags"),      tr("Edit tags of the event."), "",         ui->menuEvents, ":/icons/icons/tag-2.png" )
 
     initAction( actionNew_SetlistItem,    ui->eventDatabaseWidget->setlistView(),   tr("&New Item"),       tr("Insert new item"),        "Ctrl+N",   nullptr, "" )
     initAction( actionDelete_SetlistItem, ui->eventDatabaseWidget->setlistView(),   tr("&Remove Item"),    tr("Delete selected items"),  "Del",      nullptr, "" )
@@ -801,9 +801,9 @@ void MainWindow::my_on_actionPaste_Event_triggered()
     app().project()->eventDatabase()->dropMimeData(app().clipboard()->mimeData(), Qt::CopyAction, m_project.eventDatabase()->rowCount(), 0, QModelIndex());
 }
 
-#ifdef HAVE_PROGRAM
 void MainWindow::my_on_actionEdit_Program_triggered()
 {
+#ifdef HAVE_PROGRAM
     if (!currentSong())
     {
         return;
@@ -815,8 +815,8 @@ void MainWindow::my_on_actionEdit_Program_triggered()
     {
         app().pushCommand( new SongEditProgramCommand( currentSong(), pd.program() ) );
     }
-}
 #endif
+}
 
 
 void MainWindow::my_on_actionEdit_Song_Tags_triggered()

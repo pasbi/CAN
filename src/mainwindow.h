@@ -93,9 +93,7 @@ private slots:
     void my_on_actionDelete_Song_triggered();
     void my_on_actionCopy_Song_triggered();
     void my_on_actionPaste_Song_triggered();
-#ifdef HAVE_PROGRAM
     void my_on_actionEdit_Program_triggered();
-#endif
     void my_on_actionEdit_Song_Tags_triggered();
 
     void my_on_actionNew_Event_triggered();

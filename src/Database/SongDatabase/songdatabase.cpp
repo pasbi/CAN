@@ -48,6 +48,17 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
             }
         }
     }
+#ifdef HAVE_PROGRAM
+    case Qt::DecorationRole:
+        if (index.column() == 0 && m_items[index.row()]->program().isValid())
+        {
+            return QIcon(":/icons/icons/midi.png");
+        }
+        else
+        {
+            return QVariant();
+        }
+#endif
     default:
         return QVariant();
     }
@@ -72,18 +83,6 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
                 return tr("Duration");
             }
 
-        default:
-            return QVariant();
-        }
-    }
-    if (orientation == Qt::Vertical)
-    {
-        switch (role)
-        {
-        case Qt::SizeHintRole:
-        {
-            return QSize(10, 10);
-        }
         default:
             return QVariant();
         }
