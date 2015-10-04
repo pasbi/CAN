@@ -1564,6 +1564,14 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>SetlistItemSelector</name>
+    <message>
+        <location filename="DatabaseView/EventDatabaseView/setlistitemselector.cpp" line="18"/>
+        <source>Close</source>
+        <translation>Schließen</translation>
+    </message>
+</context>
+<context>
     <name>SetlistWidget</name>
     <message>
         <location filename="DatabaseView/EventDatabaseView/setlistwidget.ui" line="55"/>

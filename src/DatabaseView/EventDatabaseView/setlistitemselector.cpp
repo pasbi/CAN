@@ -2,9 +2,8 @@
 
 #include "Project/project.h"
 #include <QVBoxLayout>
-#include <QDialogButtonBox>
+#include <QPushButton>
 #include <QSettings>
-
 #include "application.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "DatabaseView/SongDatabaseView/songtableview.h"
@@ -15,18 +14,23 @@ SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
 {
     SongTableView* songTableView = new SongTableView( this );
     songTableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
-    QDialogButtonBox* buttonBox = new QDialogButtonBox( this );
-    buttonBox->setStandardButtons( QDialogButtonBox::Close );
+    QPushButton* button = new QPushButton( this );
+    button->setText(tr("Close"));
     QVBoxLayout* layout = new QVBoxLayout( this );
     layout->addWidget( songTableView );
-    layout->addWidget( buttonBox );
+    layout->addWidget( button, Qt::AlignRight );
+    button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    button->setShortcut(QKeySequence("Esc"));
+    QHBoxLayout* hlayout = new QHBoxLayout( this );
+    hlayout->addStretch();
+    hlayout->addWidget(button);
+    layout->addLayout(hlayout);
     this->setLayout( layout );
-    connect(buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(hide()));
+    connect(button, SIGNAL(clicked()), this, SLOT(hide()));
 }
 
 void SetlistItemSelector::showEvent(QShowEvent *e)
 {
-    //TODO we have an abstraction of QSettings!
     restoreGeometry( QSettings().value("SetlistItemSelector_Geometry").toByteArray() );
     app().project()->setCommandFocalizesAffiliatedView( false );
     QDialog::showEvent(e);
