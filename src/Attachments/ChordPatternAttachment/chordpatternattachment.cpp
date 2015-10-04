@@ -18,6 +18,7 @@ ChordPatternAttachment::ChordPatternAttachment() :
     m_pattern( "" )
 {
     setName( tr("Chord Pattern") );
+    m_scrollDownTempo = 0;
 }
 
 QString white(int n)

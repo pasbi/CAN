@@ -100,8 +100,11 @@ void ChordPatternViewer::displayChordPatternAttachment(AbstractChordPatternAttac
     ChordPatternViewer cpv( attachment, parent );
     cpv.exec();
 
-
-    if (cpv.scrollDownTempo() != attachment->scrollDownTempo())
+    if (!qFuzzyIsNull(attachment->scrollDownTempo()))
+    {
+        attachment->setScrollDownTempo( cpv.scrollDownTempo() );
+    }
+    else if (cpv.scrollDownTempo() != attachment->scrollDownTempo())
     {
         if ( QMessageBox::question( parent,
                                     tr("Apply new tempo?"),

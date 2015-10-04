@@ -77,12 +77,18 @@
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
+       <property name="toolTip">
+        <string>Close (Esc)</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
          <normaloff>:/icons/icons/cross56.png</normaloff>:/icons/icons/cross56.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Esc</string>
        </property>
       </widget>
      </item>
@@ -130,12 +136,18 @@
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
+       <property name="toolTip">
+        <string>Zoom in (+)</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
          <normaloff>:/icons/icons/plus47.png</normaloff>:/icons/icons/plus47.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>+</string>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -159,12 +171,18 @@
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
+       <property name="toolTip">
+        <string>Zoom Out (-)</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
          <normaloff>:/icons/icons/less2.png</normaloff>:/icons/icons/less2.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string/>
        </property>
        <property name="autoRepeat">
         <bool>true</bool>
@@ -215,6 +233,9 @@
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
+       <property name="toolTip">
+        <string>Faster (F)</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -222,8 +243,14 @@
         <iconset resource="../ressources.qrc">
          <normaloff>:/icons/icons/gazelle.png</normaloff>:/icons/icons/gazelle.png</iconset>
        </property>
+       <property name="shortcut">
+        <string>F</string>
+       </property>
        <property name="autoRepeat">
         <bool>true</bool>
+       </property>
+       <property name="autoRepeatDelay">
+        <number>100</number>
        </property>
        <property name="autoRepeatInterval">
         <number>5</number>
@@ -247,6 +274,9 @@
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
+       <property name="toolTip">
+        <string>Slower (S)</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -254,8 +284,14 @@
         <iconset resource="../ressources.qrc">
          <normaloff>:/icons/icons/snail.png</normaloff>:/icons/icons/snail.png</iconset>
        </property>
+       <property name="shortcut">
+        <string>S</string>
+       </property>
        <property name="autoRepeat">
         <bool>true</bool>
+       </property>
+       <property name="autoRepeatDelay">
+        <number>100</number>
        </property>
        <property name="autoRepeatInterval">
         <number>5</number>
@@ -285,6 +321,9 @@
        </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="toolTip">
+        <string>Go to start</string>
        </property>
        <property name="text">
         <string/>
@@ -319,12 +358,21 @@
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
+       <property name="toolTip">
+        <string>Play (Space)</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="../ressources.qrc">
          <normaloff>:/icons/icons/1411738411_519570-066_Play-128.png</normaloff>:/icons/icons/1411738411_519570-066_Play-128.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Space</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -362,8 +410,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>725</x>
-     <y>24</y>
+     <x>491</x>
+     <y>34</y>
     </hint>
     <hint type="destinationlabel">
      <x>757</x>
