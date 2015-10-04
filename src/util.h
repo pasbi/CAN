@@ -2,11 +2,21 @@
 #define UTIL_H
 
 #include <QObject>
+#include "global.h"
 
 // since I experienced some problems on windows with Q_ASSERT, it is turned of there.
 #ifdef assert   // do not use third party asserts.
 #undef assert
 #endif
+
+inline void check( bool a, const char* msg, const char* file, int line)
+{
+    if (!a)
+    {
+        qWarning() << QString("Assertion %1 failed, %2:%3").arg(msg).arg(file).arg(line);
+        exit(1);
+    }
+}
 
 #if defined __linux && defined QT_DEBUG
 #define assert( assertion ) Q_ASSERT( assertion )

@@ -21,7 +21,7 @@ MidiCommand::MidiCommand( Type type, uchar dataByte_1, uchar dataByte_2 ) :
 
 void MidiCommand::polishBytes()
 {
-    u_int8_t MSB = (1<<7);
+    quint8 MSB = (1<<7);
     statusByte |= MSB;
     if (dataByte_1 & MSB)
     {

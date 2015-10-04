@@ -18,7 +18,7 @@ OverlayDecorator::OverlayDecorator(QWidget* widget, int duration, QObject* paren
 QPoint OverlayDecorator::computeOffset()
 {
     const QObject* object = m_widget;
-    const QScrollArea* scrollArea;
+    const QScrollArea* scrollArea = nullptr;
     while ( object && !(scrollArea = qobject_cast<const QScrollArea*>( object->parent() )) )
     {
         object = object->parent();

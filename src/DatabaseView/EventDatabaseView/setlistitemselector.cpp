@@ -14,19 +14,23 @@ SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
 {
     SongTableView* songTableView = new SongTableView( this );
     songTableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
-    QPushButton* button = new QPushButton( this );
+
+    QVBoxLayout* vlayout = new QVBoxLayout();
+
+    QHBoxLayout* hlayout = new QHBoxLayout();
+    QPushButton* button = new QPushButton();
     button->setText(tr("Close"));
-    QVBoxLayout* layout = new QVBoxLayout( this );
-    layout->addWidget( songTableView );
-    layout->addWidget( button, Qt::AlignRight );
     button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     button->setShortcut(QKeySequence("Esc"));
-    QHBoxLayout* hlayout = new QHBoxLayout( this );
     hlayout->addStretch();
     hlayout->addWidget(button);
-    layout->addLayout(hlayout);
-    this->setLayout( layout );
+
+    vlayout->addWidget( songTableView );
+    vlayout->addLayout(hlayout);
+    setLayout(vlayout);
+
     connect(button, SIGNAL(clicked()), this, SLOT(hide()));
+
 }
 
 void SetlistItemSelector::showEvent(QShowEvent *e)

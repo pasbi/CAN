@@ -16,9 +16,9 @@ public:
     MidiCommand( Channel channel, Type type, uchar dataByte_1, uchar dataByte_2 = 0 );
     MidiCommand( Type type, uchar dataByte_1, uchar dataByte_2 = 0 );
 
-    u_int8_t statusByte;
-    u_int8_t dataByte_1;
-    u_int8_t dataByte_2;
+    quint8 statusByte;
+    quint8 dataByte_1;
+    quint8 dataByte_2;
 
 private:
     void polishBytes();

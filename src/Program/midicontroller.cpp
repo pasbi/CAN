@@ -73,7 +73,7 @@ void MidiController::send(const MidiCommand& command)
     }
     else
     {
-        u_int8_t buffer[3] = { command.statusByte, command.dataByte_1, command.dataByte_2 };
+        quint8 buffer[3] = { command.statusByte, command.dataByte_1, command.dataByte_2 };
         m_midiDevice.write( (char*) buffer, 3 );
         m_midiDevice.flush();
     }

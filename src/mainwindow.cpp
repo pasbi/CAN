@@ -40,6 +40,7 @@
 #include "PDFCreator/pdfcreator.h"
 #include "DatabaseView/EventDatabaseView/setlistview.h"
 #include "FileIndex/fileindex.h"
+#include <QFontDatabase>
 
 DEFN_CONFIG( MainWindow, "Global" );
 
