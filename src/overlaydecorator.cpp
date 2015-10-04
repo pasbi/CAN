@@ -40,6 +40,7 @@ QPoint OverlayDecorator::computeOffset()
 
 void OverlayDecorator::paint(QPainter &painter)
 {
+
     if (state() == QAbstractAnimation::Running)
     {
         // create the path

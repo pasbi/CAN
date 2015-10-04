@@ -123,5 +123,10 @@ bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int
     return false;
 }
 
+QString EventDatabase::itemName(int n) const
+{
+    return tr("Event(s)", "", n);
+}
+
 
 

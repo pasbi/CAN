@@ -1,10 +1,10 @@
 #include "databaseview.h"
-#include <QPainter>
 #include <QTimer>
 #include <QAbstractAnimation>
 #include <QHeaderView>
 #include <QApplication>
 #include "overlaydecorator.h"
+#include "Database/database.h"
 
 DatabaseViewBase::DatabaseViewBase(QWidget* parent) :
     QTableView(parent),
@@ -30,11 +30,48 @@ void DatabaseViewBase::mousePressEvent(QMouseEvent *event)
     emit clicked();
 }
 
+QString itemName(int n, QAbstractItemModel* model)
+{
+    DatabaseBase* databaseBase = qobject_cast<DatabaseBase*>(model);
+    if (databaseBase)
+    {
+        return databaseBase->itemName(n);
+    }
+
+    DatabaseSortProxyBase* databaseBaseProxy = qobject_cast<DatabaseSortProxyBase*>(model);
+    if (databaseBaseProxy)
+    {
+        return itemName(n, databaseBaseProxy->sourceModel());
+    }
+
+    qWarning() << "Cannot retrieve item name for " << model;
+    return "";
+}
+
+QString DatabaseViewBase::itemName(int n) const
+{
+    return ::itemName(n, model());
+}
+
 void DatabaseViewBase::paintEvent(QPaintEvent *e)
 {
     QTableView::paintEvent(e);
     QPainter painter(viewport());
     m_hud->paint(painter);
+
+    int y = 0;
+    for (int i = 0; i < model()->rowCount(); ++i)
+    {
+        y += rowHeight(i);
+    }
+
+    int n = numFilteredItems();
+    if (n > 0)
+    {
+        painter.save();
+        painter.drawText( QRect(0, y, viewport()->width(), 30), Qt::AlignCenter, QString(tr("Omit %1 %2")).arg(n).arg(itemName(n)) );
+        painter.restore();
+    }
 }
 
 void DatabaseViewBase::setFilter(const QString &filter)

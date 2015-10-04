@@ -132,3 +132,8 @@ Qt::DropActions SongDatabase::supportedDragActions() const
 {
     return Qt::LinkAction;
 }
+
+QString SongDatabase::itemName(int n) const
+{
+    return tr("%Song(s)", "", n);
+}

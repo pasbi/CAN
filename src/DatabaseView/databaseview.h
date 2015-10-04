@@ -3,6 +3,7 @@
 
 #include <QMenu>
 #include <QTableView>
+#include <QPainter>
 
 #include "Database/databasesortproxy.h"
 #include "global.h"
@@ -24,6 +25,8 @@ protected:
     void enterEvent(QEvent *event);
 
     void setModel(QAbstractItemModel *model);
+    virtual int numFilteredItems() const = 0;
+    QString itemName(int n) const;
 
 private:
     OverlayDecorator* m_hud;
@@ -140,6 +143,18 @@ public:
         else
         {
             return sourceModel()->itemAtIndex( m_proxy->mapToSource(rows.first()) );
+        }
+    }
+
+    int numFilteredItems() const
+    {
+        if (m_model && m_proxy)
+        {
+            return reinterpret_cast<QAbstractItemModel*>(m_model)->rowCount() - reinterpret_cast<QAbstractItemModel*>(m_proxy)->rowCount();
+        }
+        else
+        {
+            return 0;
         }
     }
 

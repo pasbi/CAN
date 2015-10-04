@@ -29,7 +29,7 @@ public:
     Event const* event() const;
 
     QString fileNameBase() const { return "SetlistItem"; }
-
+    QString itemName(int n) const;
 
 signals:
     void selectionRequest(QModelIndexList);

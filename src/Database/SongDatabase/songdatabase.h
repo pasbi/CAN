@@ -38,6 +38,7 @@ public:
     Qt::DropActions supportedDragActions() const;
 
     QString fileNameBase() const { return "song"; }
+    QString itemName(int n) const;
 
 signals:
     void attachmentAdded(int);

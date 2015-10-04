@@ -5,6 +5,7 @@
 
 #include "Project/project.h"
 #include "configurable.h"
+#include "Program/program.h"
 
 
 namespace Ui {
@@ -92,7 +93,9 @@ private slots:
     void my_on_actionDelete_Song_triggered();
     void my_on_actionCopy_Song_triggered();
     void my_on_actionPaste_Song_triggered();
+#ifdef HAVE_PROGRAM
     void my_on_actionEdit_Program_triggered();
+#endif
     void my_on_actionEdit_Song_Tags_triggered();
 
     void my_on_actionNew_Event_triggered();
@@ -128,7 +131,9 @@ private:
     QAction* m_actionDelete_Song;
     QAction* m_actionCopy_Song;
     QAction* m_actionPaste_Song;
+#ifdef HAVE_PROGRAM
     QAction* m_actionEdit_Program;
+#endif
     QAction* m_actionEdit_Song_Tags;
 
     QAction* m_actionNew_Event;

@@ -27,6 +27,8 @@ public:
     Project* project() const;
 
     Qt::DropActions supportedDropActions() const;
+    virtual QString fileNameBase() const = 0;
+    virtual QString itemName(int n) const = 0;
 
 private:
     Project* m_project;

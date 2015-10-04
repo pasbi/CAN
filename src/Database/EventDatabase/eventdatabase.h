@@ -27,6 +27,7 @@ public:
 
     // we need mimeData and dropMimeData for copy/paste
     QString fileNameBase() const { return "event"; }
+    QString itemName(int n) const;
 };
 
 #endif // DATEDATABASE_H

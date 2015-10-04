@@ -117,7 +117,10 @@ MainWindow::MainWindow(QWidget *parent) :
     initAction( actionDelete_Song,      ui->songDatabaseWidget->databaseView(),    tr("&Remove Song"),    tr("Remove selected song."),  "Del",      ui->menuSongs,  ":/icons/icons/rubbish7.png" )
     initAction( actionCopy_Song,        ui->songDatabaseWidget->databaseView(),    tr("&Copy Song"),      tr("Copy selected song."),    "Ctrl+C",   ui->menuSongs,  "" )
     initAction( actionPaste_Song,       ui->songDatabaseWidget->databaseView(),    tr("&Paste Song"),     tr("Paste song."),            "Ctrl+V",   ui->menuSongs,  "" )
+
+#ifdef HAVE_PROGRAM
     initAction( actionEdit_Program,     ui->songDatabaseWidget->databaseView(),    tr("&Edit Program"),   tr("Edit program."),          "",         ui->menuSongs,  "" )
+#endif
     initAction( actionEdit_Song_Tags,   ui->songDatabaseWidget->databaseView(),    tr("&Edit Tags"),      tr("Edit tags of the song."), "",         ui->menuSongs,  ":/icons/icons/tag-2.png" )
 
     initAction( actionNew_Event,        ui->eventDatabaseWidget->databaseView(),  tr("&New Event"),      tr("Add a new event."),       "Ctrl+N",   ui->menuEvents, "" )
@@ -479,7 +482,10 @@ void MainWindow::updateActionsEnabled()
     }
 
     attachmentActions   << ui->actionDuplicate_Attachment << ui->actionRename_Attachment << ui->actionDelete_Attachment;
-    songActions         << m_actionDelete_Song << m_actionCopy_Song << m_actionEdit_Program << m_actionEdit_Song_Tags;
+    songActions         << m_actionDelete_Song << m_actionCopy_Song << m_actionEdit_Song_Tags;
+#ifdef HAVE_PROGRAM
+    songActions << m_actionEdit_Program;
+#endif
     eventActions        << m_actionDelete_Event << m_actionCopy_Event << m_actionEdit_Event_Tags;
     setlistActions      << m_actionDelete_SetlistItem << m_actionCopy_SetlistItem;
 
@@ -795,6 +801,7 @@ void MainWindow::my_on_actionPaste_Event_triggered()
     app().project()->eventDatabase()->dropMimeData(app().clipboard()->mimeData(), Qt::CopyAction, m_project.eventDatabase()->rowCount(), 0, QModelIndex());
 }
 
+#ifdef HAVE_PROGRAM
 void MainWindow::my_on_actionEdit_Program_triggered()
 {
     if (!currentSong())
@@ -809,6 +816,7 @@ void MainWindow::my_on_actionEdit_Program_triggered()
         app().pushCommand( new SongEditProgramCommand( currentSong(), pd.program() ) );
     }
 }
+#endif
 
 
 void MainWindow::my_on_actionEdit_Song_Tags_triggered()

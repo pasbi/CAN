@@ -1,6 +1,12 @@
 #ifndef PROGRAM_H
 #define PROGRAM_H
 
+#include <Qt>
+
+#ifdef Q_OS_LINUX
+#define HAVE_PROGRAM
+#endif
+
 #include "persistentobject.h"
 
 class Program : public PersistentObject
@@ -30,6 +36,5 @@ private:
     int m_program;
     bool m_valid;
 };
-
 
 #endif // PROGRAM_H

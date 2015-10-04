@@ -297,3 +297,8 @@ void Setlist::setFilter(QString filter)
 
     emit dataChanged( topLeft, bottomRight, QVector<int>({Qt::BackgroundRole})  );
 }
+
+QString Setlist::itemName(int n) const
+{
+    return tr("SetlistItem", nullptr, n);
+}
