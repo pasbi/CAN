@@ -6,8 +6,11 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Database/EventDatabase/event.h"
+#include <QCryptographicHash>
 
 DEFN_CONFIG(Project, "Project");
+
+const QByteArray Project::SERIALIZE_KEY = "f24e693129d1b378d3496a42cb7096bd";
 
 Project::Project() :
     m_songDatabase( new SongDatabase(this) ),
@@ -114,16 +117,65 @@ bool Project::canClose() const
     return m_canClose;
 }
 
+QByteArray hash(const QByteArray& data)
+{
+    QCryptographicHash hash(QCryptographicHash::Md5);
+    hash.addData(data);
+    return hash.result();
+}
+
 QDataStream& operator<<(QDataStream& out, const Project& project)
 {
-    out << project.m_songDatabase;
-    out << project.m_eventDatabase;
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << project.m_songDatabase;
+    stream << project.m_eventDatabase;
+
+    // stream KEY
+    out << Project::SERIALIZE_KEY;
+
+    // stream hash value of data
+    out << hash(data);
+
+    // stream data itself
+    out << data;
+
     return out;
 }
 
 QDataStream& operator>>(QDataStream& in, Project& project)
 {
-    in >> project.m_songDatabase;
-    in >> project.m_eventDatabase;
+    QByteArray key, hash, data;
+    in >> key >> hash >> data;
+
+    // we do the check in a separate function to obtain more flexibility
+    Q_UNUSED(key);
+    Q_UNUSED(hash);
+
+    QDataStream stream(&data, QIODevice::ReadOnly);
+
+    stream >> project.m_songDatabase;
+    stream >> project.m_eventDatabase;
+
     return in;
+}
+
+Project::ValidCode Project::isValid(const QByteArray& data)
+{
+    QDataStream stream(data);
+    QByteArray key, projectHash, projectData;
+    stream >> key >> projectHash >> projectData;
+
+    if (key != Project::SERIALIZE_KEY)
+    {
+        return Project::InvalidKey;
+    }
+    else if (hash(projectData) != projectHash)
+    {
+        return Project::InvalidHash;
+    }
+    else
+    {
+        return Project::Valid;
+    }
 }

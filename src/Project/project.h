@@ -46,9 +46,12 @@ private:
 public:
     bool canClose() const;
     void setCanClose( bool b );
-
+    enum ValidCode { Valid, InvalidKey, InvalidHash };
+    static ValidCode isValid(const QByteArray &data);
+private:
     friend QDataStream& operator<<(QDataStream& out, const Project& project);
     friend QDataStream& operator>>(QDataStream& in, Project& project);
+    static const QByteArray SERIALIZE_KEY;
 };
 
 QDataStream& operator<<(QDataStream& out, const Project& project);

@@ -849,33 +849,37 @@ void MainWindow::my_on_actionEdit_Event_Tags_triggered()
 
 void MainWindow::open(const QString &filename)
 {
+    // 1. Check filename
     if (!filename.isEmpty())
     {
-        if (QFileInfo(filename).isReadable())
+        // 2. Check file
+        QFile file(filename);
+        if (QFileInfo(filename).isReadable() && file.open(QIODevice::ReadOnly))
         {
-            QFile file(filename);
-            if (file.open(QIODevice::ReadOnly))
+            // 3. Check file content
+            QByteArray content = file.readAll();
+            switch (Project::isValid(content))
             {
-                QDataStream stream(&file);
-                stream >> m_project;
-                setCurrentPath(filename);
-            }
-            else
-            {
+            case Project::InvalidHash:
+            case Project::InvalidKey:
                 QMessageBox::warning( this,
                                       QString(tr("Opening %1")).arg(filename),
                                       QString(tr("Cannot open %1. Unknown file format.")).arg(filename),
                                       QMessageBox::Ok
                                       );
-                setCurrentPath("");
-                newProject();
+                break;
+            case Project::Valid:
+                QDataStream stream(content);
+                stream >> m_project;
+                setCurrentPath(filename);
+                break;
             }
         }
         else
         {
             QMessageBox::warning( this,
                                   QString(tr("Opening %1")).arg(filename),
-                                  QString(tr("File %1 not found.")).arg(filename),
+                                  QString(tr("Cannot open %1. Maybe the file does not exist or you have insufficient permissions.")).arg(filename),
                                   QMessageBox::Ok
                                   );
             m_project.reset();
