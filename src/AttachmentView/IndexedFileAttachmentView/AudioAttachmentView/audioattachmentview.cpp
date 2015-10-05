@@ -102,16 +102,19 @@ void AudioAttachmentView::on_pushButtonStop_clicked()
 void AudioAttachmentView::on_pushButtonPlayPause_toggled(bool checked)
 {
 #ifdef HAVE_SOUNDTOUCH
-    if (checked)
+    if (attachment())
     {
-        setPlayingAudioAttachmentView();
-        player().play();
-        ui->slider->play();
-    }
-    else
-    {
-        player().pause();
-        ui->slider->pause();
+        if (checked)
+        {
+            setPlayingAudioAttachmentView();
+            player().play();
+            ui->slider->play();
+        }
+        else
+        {
+            player().pause();
+            ui->slider->pause();
+        }
     }
 #else
     Q_UNUSED( checked );
