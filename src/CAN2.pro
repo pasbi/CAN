@@ -7,9 +7,6 @@
 
 #1//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
-#//TODO skip tempo change-confirmation on first change (aka init)
-#//TODO show whether song has a program
-#//TODO tags do not work in setlist
 
 QT       += core gui multimedia
 
