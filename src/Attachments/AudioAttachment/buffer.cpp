@@ -330,8 +330,6 @@ void BufferConverters::floatToChar( char* c, const float* f, int n )
     }
 }
 
-
-//TODO set transpose >0, seek to the very end. Then seek somewhere else => no sound
 bool Buffer::Decoder::decode()
 {
 #ifdef HAVE_SOUNDTOUCH
