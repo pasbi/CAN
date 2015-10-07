@@ -8,3 +8,4 @@
 *.pro.user*
 build-*
 *.autosave
+*.exe
