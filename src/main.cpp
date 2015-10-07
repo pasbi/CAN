@@ -13,14 +13,8 @@
 #endif
 
 
-int main(int argc, char *argv[])
+void installTranslator()
 {
-#ifdef Q_OS_WIN32
-    ShowWindow( GetConsoleWindow(), SW_HIDE );
-#endif
-
-    Application app( argc, argv );
-
     QString localeCode = MainWindow::config["locale"].toString();
     QLocale locale( localeCode );
     QLocale::setDefault( locale );
@@ -75,6 +69,18 @@ int main(int argc, char *argv[])
     {
         qWarning() << "cannot load translation file for " << language;
     }
+}
+
+
+int main(int argc, char *argv[])
+{
+#ifdef Q_OS_WIN32
+    ShowWindow( GetConsoleWindow(), SW_HIDE );
+#endif
+
+    Application app( argc, argv );
+
+    installTranslator();
 
     MainWindow m;
     m.show();

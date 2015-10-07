@@ -177,7 +177,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( ui->songDatabaseWidget->databaseView(),   SIGNAL(clicked()), this, SLOT(updateActionsEnabled()) );
     updateActionsEnabled();
 
-    loadDefaultProject();
+
+    if (app().arguments().size() > 1)
+    {
+        QString filename = app().arguments()[1];
+        setCurrentPath(filename);
+        open(filename);
+    }
+    else
+    {
+        loadDefaultProject();
+    }
 
     connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
     connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
