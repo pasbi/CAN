@@ -43,6 +43,7 @@ InstallDir "$PROGRAMFILES\CAN2"
 ######################################################################
 
 !include "MUI.nsh"
+!include "fileassoc.nsh"
 
 !define MUI_ABORTWARNING
 !define MUI_UNABORTWARNING
@@ -92,6 +93,8 @@ FunctionEnd
 ######################################################################
 
 RequestExecutionLevel admin
+
+!include "FileAssociation.nsh"
 
 Section -MainProgram
 ${INSTALL_TYPE}
@@ -176,8 +179,11 @@ WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "Publisher" "${COMP_NAME}"
 WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "URLInfoAbout" "${WEB_SITE}"
 !endif
 
-${registerExtension} "c:\myplayer.exe" ".mkv" "MKV_File"
+;register file extensions
+!insertmacro APP_ASSOCIATE "can" "CAN.projectFile" "CAN Project File" "$INSTDIR\${MAIN_APP_EXE},0" "Open with CAN" "$INSTDIR\${MAIN_APP_EXE} $\"%1$\""
+!insertmacro UPDATEFILEASSOC
 
+  
 SectionEnd
 
 ######################################################################
@@ -251,10 +257,8 @@ Delete "$DESKTOP\${APP_NAME}.lnk"
 RmDir "$SMPROGRAMS\CAN2"
 !endif
 
-DeleteRegKey ${REG_ROOT} "${REG_APP_PATH}"
-DeleteRegKey ${REG_ROOT} "${UNINSTALL_PATH}"
-
-${unregisterExtension} ".can" "CAN_File"
+!insertmacro APP_UNASSOCIATE "can" "CAN.projectFile"
+!insertmacro UPDATEFILEASSOC
 
 SectionEnd
 
