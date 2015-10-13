@@ -295,12 +295,17 @@ public:
     Configurable& operator= (const Configurable& other);
     Configurable( const Configurable& other );
 
+    static void deinit();
+
 private:
     QMap<QString, ConfigurableItem*> m_items;
     QStringList m_itemKeys; // is needed to keep order. QMap::keys is arbitrary order.
 
     const QString m_prefix;
     const QString m_caption;
+
+    static QSettings* m_settings;
+    static QSettings* settings();
 
     // we want to know all classes that have a static Configurable member
     // i.e. we want to know the Configurable member in particular

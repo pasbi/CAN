@@ -212,6 +212,7 @@ MainWindow::~MainWindow()
 {
     QSettings settings;
     settings.setValue( "Geometry", saveGeometry() );
+    Configurable::deinit();
     delete ui;
 }
 
