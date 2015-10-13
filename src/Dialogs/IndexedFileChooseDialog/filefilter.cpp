@@ -27,23 +27,28 @@ QString normalizeString( QString s )
     return Util::replaceDiacritics(s).toLower();
 }
 
-double computeScore(const QString& filename, const QStringList& normalizedKeys)
+double computeScore(QString filename, const QStringList& normalizedKeys)
 {
     qreal score = 0;
 
+
+    filename = normalizeString(filename);
     QStringList tokens = filename.split("/", QString::SkipEmptyParts);
     int i = tokens.length();
-    for (const QString& token : tokens)
+    for (const QString& key : normalizedKeys)
     {
-        for (const QString& key : normalizedKeys)
+        if (filename.contains(key)) // this little if saves a hughe amount of time...
         {
-            QString nToken = normalizeString(token);
-            if (nToken.contains(key))
+            for (const QString& token : tokens)
             {
-                score += (qreal) key.length() / i;
+                QString nToken = token;
+                if (nToken.contains(key))
+                {
+                    score += (qreal) key.length() / i;
+                }
             }
+            --i;
         }
-        --i;
     }
     return -score;
 }

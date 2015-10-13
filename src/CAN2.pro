@@ -8,6 +8,13 @@
 #1//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
 
+#//TODO do not always save large index
+#//crash when indexing
+#//large database are not performant enough when searching
+#//when inside loop, changing tempo brings problems
+#//loop start/end should be changable
+#//Play/pause = space
+
 QT       += core gui multimedia
 
 QT += testlib
