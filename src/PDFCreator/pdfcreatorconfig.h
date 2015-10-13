@@ -70,13 +70,6 @@ CONFIGURABLE_ADD_ITEM(  PDFCreator,
                         ConfigurableItemOptions::CheckboxOptions()
                      );
 
-CONFIGURABLE_ADD_ITEM(  PDFCreator,
-                        enable_SongTitlePattern,
-                        QT_TRANSLATE_NOOP("ConfigurableItem", "Song Title"),
-                        QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFCreator/SongTitlePattern"),
-                        true,
-                        ConfigurableItemOptions::CheckboxOptions()
-                      );
 
 
 CONFIGURABLE_ADD_ITEM( PDFCreator,

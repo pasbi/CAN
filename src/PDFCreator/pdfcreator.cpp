@@ -218,12 +218,9 @@ QString labelSong( const Song* song )
 
 void PDFCreator::paintTitle()
 {
-    if (PDFCreator::config["enable_SongTitlePattern"].toBool())
-    {
-        newPage( Page::NothingSpecial );
-        QString title = labelSetlist( m_setlist );
-        currentPainter().drawText( pageRectMargins(), Qt::AlignCenter, title );
-    }
+    newPage( Page::NothingSpecial );
+    QString title = labelSetlist( m_setlist );
+    currentPainter().drawText( pageRectMargins(), Qt::AlignCenter, title );
 }
 
 void PDFCreator::insertTableOfContentsStub()
@@ -939,7 +936,6 @@ void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *att
     Configurable savedConfigs = config;
 
     config.set("enable_TitlePagePattern", false);
-    config.set("enable_SongTitlePattern", false);
     config.set("PDFSize", 4); // DinA4
     config.set("AlignSongs", 4); // we always want to have one page per song.
     config.set("enable_TableOfContentsPattern", false);
