@@ -188,6 +188,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonPlayPause">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="toolTip">
         <string>Play or pause current song.</string>
        </property>
@@ -198,6 +201,9 @@
         <iconset resource="../../../ressources.qrc">
          <normaloff>:/icons/icons/1411738411_519570-066_Play-128.png</normaloff>
          <normalon>:/icons/icons/1411738419_519571-067_Pause-128.png</normalon>:/icons/icons/1411738411_519570-066_Play-128.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Space</string>
        </property>
        <property name="checkable">
         <bool>true</bool>

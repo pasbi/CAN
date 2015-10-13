@@ -10,7 +10,6 @@
 
 #//TODO do not always save large index
 #//crash when indexing
-#//large database are not performant enough when searching
 #//when inside loop, changing tempo brings problems
 #//loop start/end should be changable
 #//Play/pause = space
