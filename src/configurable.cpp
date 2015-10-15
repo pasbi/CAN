@@ -102,13 +102,10 @@ void Configurable::saveConfigurable() const
 {
     settings()->beginGroup("Configurables");
     settings()->beginGroup(m_prefix);
-    qDebug() << "write " << m_prefix;
     for (const QString & key : m_items.keys() )
     {
-        qDebug() << "    write " << key;
         if (m_items[key])
         {
-            qDebug() << "             write " << settings() << key << m_items[key]->actualValue();
             settings()->setValue(key, m_items[key]->actualValue());
         }
         else
@@ -126,14 +123,11 @@ void Configurable::restoreConfigurable()
     settings->beginGroup("Configurables");
     settings->beginGroup(m_prefix);
     QStringList keys = settings->allKeys();
-    qDebug() << "restore " << m_prefix;
     for (const QString & key : keys)
     {
-        qDebug() << "      restore " << key;
         // only overwrite, dont create.
         if (item(key))
         {
-            qDebug() << "             restore " << settings << key << settings->value(key);
             set( key, settings->value(key) );
         }
         else
