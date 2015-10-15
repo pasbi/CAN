@@ -295,8 +295,6 @@ public:
     Configurable& operator= (const Configurable& other);
     Configurable( const Configurable& other );
 
-    static void deinit();
-
 private:
     QMap<QString, ConfigurableItem*> m_items;
     QStringList m_itemKeys; // is needed to keep order. QMap::keys is arbitrary order.

@@ -212,7 +212,6 @@ MainWindow::~MainWindow()
 {
     QSettings settings;
     settings.setValue( "Geometry", saveGeometry() );
-    Configurable::deinit();
     delete ui;
 }
 
@@ -456,7 +455,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::loadDefaultProject()
 {
-    m_currentPath = config.value( "RecentProject" ).toString();
+    setCurrentPath(config.value( "RecentProject" ).toString());
     open( m_currentPath );
 }
 

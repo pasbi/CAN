@@ -22,6 +22,10 @@ Configurable::Configurable(const QString &prefix, const QString & caption ) :
 Configurable::~Configurable()
 {
     qDeleteAll( m_items.values() );
+    if (m_settings)
+    {
+        m_settings->sync();
+    }
 }
 
 QSettings* Configurable::settings()
@@ -98,10 +102,13 @@ void Configurable::saveConfigurable() const
 {
     settings()->beginGroup("Configurables");
     settings()->beginGroup(m_prefix);
+    qDebug() << "write " << m_prefix;
     for (const QString & key : m_items.keys() )
     {
+        qDebug() << "    write " << key;
         if (m_items[key])
         {
+            qDebug() << "             write " << settings() << key << m_items[key]->actualValue();
             settings()->setValue(key, m_items[key]->actualValue());
         }
         else
@@ -115,15 +122,19 @@ void Configurable::saveConfigurable() const
 
 void Configurable::restoreConfigurable()
 {
-    settings()->beginGroup("Configurables");
-    settings()->beginGroup(m_prefix);
-    QStringList keys = settings()->allKeys();
+    QSettings* settings = Configurable::settings();
+    settings->beginGroup("Configurables");
+    settings->beginGroup(m_prefix);
+    QStringList keys = settings->allKeys();
+    qDebug() << "restore " << m_prefix;
     for (const QString & key : keys)
     {
+        qDebug() << "      restore " << key;
         // only overwrite, dont create.
         if (item(key))
         {
-            set( key, settings()->value(key) );
+            qDebug() << "             restore " << settings << key << settings->value(key);
+            set( key, settings->value(key) );
         }
         else
         {
@@ -131,8 +142,8 @@ void Configurable::restoreConfigurable()
         }
     }
     apply();
-    settings()->endGroup();
-    settings()->endGroup();
+    settings->endGroup();
+    settings->endGroup();
 }
 
 void Configurable::ConfigurableRegisterer::registerConfigurable(Configurable *config)
@@ -302,19 +313,6 @@ Configurable& Configurable::operator =(const Configurable &other)
 Configurable::Configurable(const Configurable &other)
 {
     *this = other;
-}
-
-void Configurable::deinit()
-{
-    // caution, settings() is static, so all Configurables share one settings() object.
-    // However, usually when one configurable is deleted, all Configurables are delete subsequentially
-    // If not, nevermind, the singleton-pattern ensures that there is always a QSettings object if needed.
-    // note, that QSettings objects derive QObjects, so they cannot be constructed/destructed without valid QApplication (e.g. not in static initialization/deinititalization)
-    if (m_settings)
-    {
-        delete m_settings;
-        m_settings = nullptr;
-    }
 }
 
 
