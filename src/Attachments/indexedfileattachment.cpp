@@ -1,16 +1,12 @@
 #include "indexedfileattachment.h"
 #include "application.h"
 #include "FileIndex/fileindex.h"
+#include <QFileInfo>
 
 IndexedFileAttachment::IndexedFileAttachment() :
     Attachment()
 {
 
-}
-
-bool IndexedFileAttachment::fileExists() const
-{
-    return !m_hash.isEmpty() && app().fileIndex()->contains( filename() );
 }
 
 QString IndexedFileAttachment::filename() const
