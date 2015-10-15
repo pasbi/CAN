@@ -21,13 +21,24 @@ int SectionsModel::rowCount(const QModelIndex &parent) const
     return m_sections.length();
 }
 
+QString timeToString(const QTime& time)
+{
+    if (time.hour() > 0)
+    {
+        return time.toString(QString("hh:mm:ss%1zzz").arg(QLocale().decimalPoint()));
+    }
+    else
+    {
+        return time.toString(QString("mm:ss%1zzz").arg(QLocale().decimalPoint()));
+    }
+}
+
 QVariant SectionsModel::data(const QModelIndex &index, int role) const
 {
     const Section& section = m_sections[ index.row() ];
     switch (role)
     {
     case Qt::EditRole:
-    case Qt::DisplayRole:
         switch (index.column())
         {
         case 0:
@@ -36,6 +47,19 @@ QVariant SectionsModel::data(const QModelIndex &index, int role) const
             return section.begin();
         case 2:
             return section.end();
+        default:
+            assert( false );
+            return QVariant();
+        }
+    case Qt::DisplayRole:
+        switch (index.column())
+        {
+        case 0:
+            return section.caption();
+        case 1:
+            return timeToString(section.begin());
+        case 2:
+            return timeToString(section.end());
         default:
             assert( false );
             return QVariant();
@@ -55,38 +79,28 @@ QVariant SectionsModel::headerData(int section, Qt::Orientation orientation, int
 
 Qt::ItemFlags SectionsModel::flags(const QModelIndex &index) const
 {
-    Qt::ItemFlags flags = QAbstractTableModel::flags(index);
-    if (index.column() == 0)
-    {
-        flags |= Qt::ItemIsEditable;
-    }
-    return flags;
+    Q_UNUSED(index);
+    return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
-#include "Commands/AttachmentCommands/AudioAttachmentCommands/editsectioncommand.h"
 bool SectionsModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (index.column() != 0)
-    {
-        qWarning() << "SectionsModel columns > 0 are not editable";
-        return false;
-    }
-
-    if (role != Qt::EditRole)
-    {
-        return false;
-    }
-
-    app().pushCommand( new EditSectionCommand( this, value, index, role) );
-    return true;
-}
-
-bool SectionsModel::setData_(const QModelIndex &index, const QVariant &value, int role)
 {
     if (role == Qt::EditRole)
     {
-        assert( index.column() == 0 );
-        m_sections[index.row()].setCaption( value.toString() );
+        switch (index.column())
+        {
+        case 0:
+            m_sections[index.row()].setCaption(value.toString());
+            break;
+        case 1:
+            qDebug() << "set begin " << value;
+            m_sections[index.row()].setBegin(value.toTime());
+            break;
+        case 2:
+            qDebug() << "set end " << value;
+            m_sections[index.row()].setEnd(value.toTime());
+            break;
+        }
         return true;
     }
     else

@@ -35,9 +35,6 @@ private:
 
     bool removeRows(int row, int count, const QModelIndex &parent);
 
-    // this will actually set the data.
-    bool setData_(const QModelIndex &index, const QVariant &value, int role);
-
     QList<Section> m_sections;
 
     friend class EditSectionCommand;

@@ -3,20 +3,25 @@
 
 #include <QJsonObject>
 #include "global.h"
+#include <QTime>
 
 class Section
 {
 public:
-    Section( const QString & caption, const double begin, const double end );
+    Section(const QString & caption, const QTime &begin, const QTime &end );
+    Section(const QString & caption, const double begin, const double end);
     Section();
 
     QString caption() const { return m_caption; }
-    double begin() const { return m_begin; }
-    double end() const { return m_end; }
+    QTime begin() const { return m_begin; }
+    QTime end() const { return m_end; }
+
+    double beginDouble() const;
+    double endDouble() const;
 
     void setCaption( const QString & caption ) { m_caption = caption; }
-
-    bool valid() const { return m_begin < m_end && m_begin >= 0 && m_end >= 0 && !m_caption.isNull(); }
+    void setBegin(const QTime& begin);
+    void setEnd(const QTime& end);
 
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject& object );
@@ -25,8 +30,8 @@ public:
 
 private:
     QString m_caption;
-    double m_begin;
-    double m_end;
+    QTime m_begin;
+    QTime m_end;
 
     friend QDataStream& operator<<(QDataStream& out, const Section& model);
     friend QDataStream& operator>>(QDataStream& in, Section& model);

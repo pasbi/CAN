@@ -12,10 +12,10 @@ EditSectionCommand::EditSectionCommand(SectionsModel *model, const QVariant &new
 
 void EditSectionCommand::undo()
 {
-    model()->setData_( m_index, m_oldValue, m_role );
+    model()->setData( m_index, m_oldValue, m_role );
 }
 
 void EditSectionCommand::redo()
 {
-    model()->setData_( m_index, m_newValue, m_role );
+    model()->setData( m_index, m_newValue, m_role );
 }

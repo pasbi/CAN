@@ -28,6 +28,12 @@
      <property name="toolTip">
       <string>Elapsed time in seconds.</string>
      </property>
+     <property name="suffix">
+      <string> s</string>
+     </property>
+     <property name="maximum">
+      <double>999.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item>
@@ -44,6 +50,12 @@
     <widget class="QDoubleSpinBox" name="doubleSpinBoxRight">
      <property name="toolTip">
       <string>Remaining time in seconds.</string>
+     </property>
+     <property name="suffix">
+      <string> s</string>
+     </property>
+     <property name="maximum">
+      <double>999.000000000000000</double>
      </property>
     </widget>
    </item>

@@ -142,8 +142,8 @@ void Slider::paintEvent(QPaintEvent *ev)
     }
     else if  (m_section)
     {
-        const double relPosL = (m_section->begin() - minimum()) / (maximum() - minimum());
-        const double relPosR = (m_section->end()   - minimum()) / (maximum() - minimum());
+        const double relPosL = (m_section->beginDouble() - minimum()) / (maximum() - minimum());
+        const double relPosR = (m_section->endDouble()   - minimum()) / (maximum() - minimum());
 
         const int posL = relPosL * (width() - lMargin - rMargin) + lMargin;
         const int posR = relPosR * (width() - lMargin - rMargin) + lMargin;
@@ -163,16 +163,16 @@ void Slider::checkTurns()
 {
     if (m_section)
     {
-        if (value() > m_section->end())
+        if (value() > m_section->endDouble())
         {
-            setValue( m_section->begin() );
-            emit valueChanged( m_section->begin() );
+            setValue( m_section->beginDouble() );
+            emit valueChanged( m_section->beginDouble() );
         }
 
-        if (value() < m_section->begin())
+        if (value() < m_section->beginDouble())
         {
-            setValue( m_section->begin() );
-            emit valueChanged( m_section->begin() );
+            setValue( m_section->beginDouble() );
+            emit valueChanged( m_section->beginDouble() );
         }
     }
 }

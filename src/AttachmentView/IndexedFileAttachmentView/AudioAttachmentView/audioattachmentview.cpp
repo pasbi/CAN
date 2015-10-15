@@ -2,6 +2,9 @@
 #include "ui_audioattachmentview.h"
 #include "Attachments/AudioAttachment/sectionsmodel.h"
 #include "QSignalBlocker"
+#include "DatabaseView/ItemDelegates/durationdelegate.h"
+#include "DatabaseView/ItemDelegates/lineeditdelegate.h"
+
 
 const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/icons/icons/turnleft.png";
 const QString AudioAttachmentView::RECORD_RIGHT_POSITION_ICON_PATH = ":/icons/icons/turnright.png";
@@ -57,6 +60,10 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
 
     connect( ui->volumeSlider, SIGNAL(wasMuted(bool)), this, SLOT(updateVolume()) );
     connect( ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(updateVolume()) );
+
+    ui->sectionView->setItemDelegateForColumn(0, new LineEditDelegate(this));
+    ui->sectionView->setItemDelegateForColumn(1, new DurationDelegate(this));
+    ui->sectionView->setItemDelegateForColumn(2, new DurationDelegate(this));
 }
 
 AudioAttachmentView::~AudioAttachmentView()

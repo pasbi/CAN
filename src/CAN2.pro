@@ -9,8 +9,8 @@
 #       this is slow and stupid for obvious reasons.
 
 #//TODO crash when indexing
-#//loop start/end should be changable
-#//no-existent files are displayed (audio)
+#//TODO when time runs out in audio attachment, seeking does not work until pause + play is pressed
+
 
 QT       += core gui multimedia
 
@@ -132,7 +132,8 @@ SOURCES += main.cpp\
     DatabaseView/ItemDelegates/editablecomboboxdelegate.cpp \
     Dialogs/overlaylabel.cpp \
     overlaydecorator.cpp \
-    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.cpp
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.cpp \
+    DatabaseView/ItemDelegates/durationdelegate.cpp
 
 
 HEADERS  += mainwindow.h \

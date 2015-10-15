@@ -6,19 +6,36 @@
 #include <QLineEdit>
 #include <QTime>
 #include <QValidator>
+#include "application.h"
 
-class DurationDelegate : public ItemDelegate<QLineEdit>
+class DurationEditor : public QLineEdit
+{
+    Q_OBJECT
+public:
+    explicit DurationEditor(QWidget* parent = nullptr);
+    void setTime(const QTime& time);
+    QTime time() const;
+
+    void increase();
+    void decrease();
+
+protected:
+    void keyPressEvent(QKeyEvent *e);
+    void wheelEvent(QWheelEvent *e);
+};
+
+class DurationDelegate : public ItemDelegate<DurationEditor>
 {
 public:
     DurationDelegate(QObject* parent = 0) :
-        ItemDelegate<QLineEdit>(parent)
+        ItemDelegate<DurationEditor>(parent)
     {
     }
 
 private:
-    void setModelData(QLineEdit *editor, QAbstractItemModel *model, const QModelIndex &index) const
+    void setModelData(DurationEditor *editor, QAbstractItemModel *model, const QModelIndex &index) const
     {
-        QTime time = fromString(editor->text().replace("-", ""));
+        QTime time = editor->time();
         QTime currentTime = index.model()->data(index, Qt::EditRole).toTime();
         if (time != currentTime)
         {
@@ -26,17 +43,15 @@ private:
         }
     }
 
-    void setEditorData(QLineEdit *editor, const QModelIndex &index) const
+    void setEditorData(DurationEditor *editor, const QModelIndex &index) const
     {
-        editor->setInputMask("00:00;-");
-        editor->setValidator(new QRegExpValidator(QRegExp("([0-5]|-)([0-9]|-):([0-5]|-)([0-9]|-)"), editor));
-        editor->setText(index.model()->data(index, Qt::EditRole).toTime().toString("mm:ss"));
+        editor->setTime( index.model()->data(index, Qt::EditRole).toTime() );
     }
 
 private:
     static QTime fromString(const QString& string)
     {
-        QStringList tokens = string.split(":");
+        QStringList tokens = string.split(QRegExp(QString("%1|%2").arg(QRegExp::escape(":")).arg(QRegExp::escape(QLocale().decimalPoint()))));
         if (tokens.length() == 2)
         {
             bool minutesOk, secondsOk;
@@ -62,8 +77,6 @@ private:
         {
             return QTime();
         }
-
-
     }
 
 };
