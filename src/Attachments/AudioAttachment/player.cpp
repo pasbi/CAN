@@ -94,7 +94,7 @@ void Player::seek(double pitch, double tempo, double second)
 
 void Player::seek(double second)
 {
-    m_offset = second / m_tempo;
+    m_offset = second;// / m_tempo;
     seek();
 }
 
@@ -102,6 +102,7 @@ double Player::duration() const
 {
     return m_buffer.duration();
 }
+
 
 void Player::setVolume(double volume)
 {

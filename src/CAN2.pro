@@ -9,10 +9,8 @@
 #       this is slow and stupid for obvious reasons.
 
 #//TODO crash when indexing
-#//changing tempo brings problems
 #//loop start/end should be changable
 #//no-existent files are displayed (audio)
-#//TODO do not safe file index in settings, create a file in a proper place
 
 QT       += core gui multimedia
 
