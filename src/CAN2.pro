@@ -9,7 +9,7 @@
 #       this is slow and stupid for obvious reasons.
 
 #//TODO crash when indexing
-
+#//TODO improve chord recognition (see Rolling in The Deep)
 
 QT       += core gui multimedia
 

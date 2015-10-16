@@ -133,7 +133,7 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
         if (Chord(token).isValid())
         {
             chords << token;
-            if ( token == "a" )
+            if ( token == "a" ) // "a" is very common in english lyrics. it may be chord or a word...
             {
                 numberOfUncertainChords++;
             }
@@ -145,16 +145,21 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
         }
     }
 
-    const int numChords = chords.length();
-    const int noChords = numToken - numChords;
+    int numChords = chords.length();
 
-    if ( (double) noChords / numChords < 0.1 )
+    if (numChords - numberOfUncertainChords >= 2)
     {
+        // if there are at least 2 chords without doubts, return true.
+        return true;
+    }
+    else if (numChords > (numToken - numChords))
+    {
+        // if there are more chords than other tokens, return true.
         return true;
     }
     else
     {
-        return (double) (numChords - numberOfUncertainChords) / qMax(0, (numToken - numChords)) > 0.8;
+        return false;
     }
 }
 
