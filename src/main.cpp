@@ -22,7 +22,7 @@ void installTranslator()
 
     bool useQtTranslator = (localeCode != "en_US");
 
-    QTranslator qtBaseTranslator;
+    static QTranslator qtBaseTranslator;
     // load qtbase-translator
     if (useQtTranslator)
     {
@@ -40,7 +40,7 @@ void installTranslator()
     }
 
     // load qtmultimedia-translator
-    QTranslator qtMultimediaTranslator;
+    static QTranslator qtMultimediaTranslator;
     if (useQtTranslator)
     {
         if (qtMultimediaTranslator.load(":/translations/qtmultimedia_" + localeCode))
@@ -57,7 +57,7 @@ void installTranslator()
     }
 
     // load translator
-    QTranslator translator;
+    static QTranslator translator;
     if (translator.load(":/translations/can2_" + localeCode))
     {
         if (!Application::installTranslator( &translator ))
