@@ -12,7 +12,65 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,1,0,0">
+     <item>
+      <widget class="QPushButton" name="buttonBackward">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/icons/left64.png</normaloff>:/icons/icons/left64.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Alt+Left</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonForward">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/icons/right53.png</normaloff>:/icons/icons/right53.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Alt+Right</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="ComboBox" name="comboBox">
        <property name="toolTip">

@@ -93,11 +93,9 @@ bool SectionsModel::setData(const QModelIndex &index, const QVariant &value, int
             m_sections[index.row()].setCaption(value.toString());
             break;
         case 1:
-            qDebug() << "set begin " << value;
             m_sections[index.row()].setBegin(value.toTime());
             break;
         case 2:
-            qDebug() << "set end " << value;
             m_sections[index.row()].setEnd(value.toTime());
             break;
         }

@@ -133,7 +133,8 @@ SOURCES += main.cpp\
     Dialogs/overlaylabel.cpp \
     overlaydecorator.cpp \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.cpp \
-    DatabaseView/ItemDelegates/durationdelegate.cpp
+    DatabaseView/ItemDelegates/durationdelegate.cpp \
+    AttachmentView/attachmenthistory.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -247,7 +248,8 @@ HEADERS  += mainwindow.h \
     Dialogs/IndexedFileChooseDialog/filefilter.h \
     Dialogs/overlaylabel.h \
     overlaydecorator.h \
-    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.h
+    AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.h \
+    AttachmentView/attachmenthistory.h
 
 
 

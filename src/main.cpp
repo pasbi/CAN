@@ -71,7 +71,6 @@ void installTranslator()
     }
 }
 
-
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_WIN32

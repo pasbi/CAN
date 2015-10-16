@@ -84,10 +84,8 @@ QString FileIndex::filename(const QByteArray &hash) const
     QStringList filenames = m_forward.values( hash );
     for (const QString & filename : filenames)
     {
-        qDebug() << "test " << filename;
         if (QFileInfo(filename).isReadable())
         {
-            qDebug() << "hit";
             return filename;
         }
     }
