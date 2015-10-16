@@ -62,6 +62,11 @@ void AudioSlider::setMaximum(double max)
     ui->slider->blockSignals( false );
 }
 
+double AudioSlider::maximum() const
+{
+    return ui->doubleSpinBoxLeft->maximum();
+}
+
 void AudioSlider::setLeftIndicator( double value )
 {
     ui->slider->setLeftIndicator( value );
@@ -102,4 +107,8 @@ void AudioSlider::onTimerTimeout()
 {
     double pos = ui->slider->value() + m_timer.interval() / 1000.0 * m_tempo;
     setPosition( pos );
+    if (maximum() - value() < 0.01)
+    {
+        emit paused();
+    }
 }

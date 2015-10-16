@@ -24,13 +24,14 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     ui->setupUi( m_audioWidget );
     setWidget( m_audioWidget );
 
-    connect( ui->doubleSpinBoxTempo,        SIGNAL(valueChanged(double)),   this, SLOT(setPitchTempo()));
-    connect( ui->doubleSpinBoxPitch,        SIGNAL(valueChanged(double)),   this, SLOT(setPitchTempo()));
+    connect( ui->doubleSpinBoxTempo,        SIGNAL(valueChanged(double)),   this, SLOT(setPitchTempo())                             );
+    connect( ui->doubleSpinBoxPitch,        SIGNAL(valueChanged(double)),   this, SLOT(setPitchTempo())                             );
     connect( ui->pushButtonPlayPause,       SIGNAL(clicked(bool)),          this, SLOT(on_pushButtonPlayPause_toggled(bool))        );
     connect( ui->pushButtonStop,            SIGNAL(clicked()),              this, SLOT(on_pushButtonStop_clicked())                 );
-    connect( ui->slider,                    SIGNAL(valueChanged(double)),   this, SLOT(seek(double)) );
-    connect( ui->pushButtonClearSection,    SIGNAL(clicked()),              this, SLOT(abortSection()) );
-    connect( ui->pushButtonRecordSection,   SIGNAL(clicked()),              this, SLOT(recordSection()) );
+    connect( ui->slider,                    SIGNAL(valueChanged(double)),   this, SLOT(seek(double))                                );
+    connect( ui->pushButtonClearSection,    SIGNAL(clicked()),              this, SLOT(abortSection())                              );
+    connect( ui->pushButtonRecordSection,   SIGNAL(clicked()),              this, SLOT(recordSection())                             );
+    connect( ui->slider,                    SIGNAL(paused()),               this, SLOT(pause())                                     );
 
     ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
     ui->pushButtonClearSection->setIcon( QIcon(":/icons/icons/cross56.png") );

@@ -9,7 +9,7 @@
 #       this is slow and stupid for obvious reasons.
 
 #//TODO crash when indexing
-#//TODO when time runs out in audio attachment, seeking does not work until pause + play is pressed
+#//TODO improve accessability of attachments
 
 
 QT       += core gui multimedia

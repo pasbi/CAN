@@ -20,6 +20,7 @@ public:
     double value() const;
     void setTempo( double tempo );
     void setPosition( double pos );
+    double maximum() const;
 
 public slots:
     void setMaximum( double max );
@@ -35,6 +36,7 @@ public slots:
 
 signals:
     void valueChanged(double);
+    void paused();
 
 
 private:
