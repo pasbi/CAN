@@ -29,9 +29,6 @@ void AttachmentHistory::appendAttachment(Attachment *a)
             m_index++;
         }
     }
-
-//    qDebug() << "   Append " << a;
-//    debug();
 }
 
 void AttachmentHistory::removeAttachment(Attachment *a)
@@ -63,17 +60,12 @@ void AttachmentHistory::removeAttachment(Attachment *a)
         }
 
     }
-
-//    qDebug() << "   Remove " << a;
-//    debug();
 }
 
 bool AttachmentHistory::hasNextAttachment() const
 {
     if (m_history)
     {
-        qDebug() << "index = " << m_index;
-        qDebug() << "history length = " << m_history->length() - 1 << *m_history;
         return m_index < m_history->length() - 1;
     }
     else
@@ -165,109 +157,4 @@ void AttachmentHistory::removeObsoleteAttachments()
         }
     }
 }
-
-
-//#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
-//#include "Database/SongDatabase/songdatabase.h"
-
-//void AttachmentHistory::debug()
-//{
-//    qDebug() << "----------------------";
-//    if (m_history)
-//    {
-//        int i = 0;
-//        for (Attachment* a : *m_history)
-//        {
-//            qDebug() << QString("%1[%2] %3").arg(a->type()).arg(a->name()).arg(i==m_index?"<-":"").toStdString().c_str();
-//            i++;
-//        }
-//    }
-//    qDebug() << "^^^^^^^^^^^^^^^^^^^^^^";
-//}
-
-//void testHist()
-//{
-//    Project* project = new Project();
-//    SongDatabase* sd = new SongDatabase(project);
-//    Song* s0 = new Song(sd);
-////    Song* s1 = new Song(sd);
-//    AttachmentHistory* hist = new AttachmentHistory();
-//    ChordPatternAttachment* c0 = new ChordPatternAttachment();
-//    c0->setSong(s0);
-//    ChordPatternAttachment* c1 = new ChordPatternAttachment();
-//    c1->setSong(s0);
-//    ChordPatternAttachment* c2 = new ChordPatternAttachment();
-//    c2->setSong(s0);
-//    ChordPatternAttachment* c3 = new ChordPatternAttachment();
-//    c3->setSong(s0);
-//    ChordPatternAttachment* c4 = new ChordPatternAttachment();
-//    c4->setSong(s0);
-//    QList<Attachment*> attachments = QList<Attachment*>({ c0, c1, c2, c3, c4 });
-
-//    auto ind = [attachments](Attachment* a)
-//    {
-//        return attachments.indexOf(a);
-//    };
-
-//    auto debug = [hist, ind]()
-//    {
-//        qDebug() << "=====================";
-//        int i = 0;
-//        for (Attachment* a : *hist->m_history)
-//        {
-//            qDebug() << QString("c%1 %2").arg(ind(a)).arg(i==hist->m_index?"<-":"").toStdString().c_str();
-//            i++;
-//        }
-//    };
-
-//    hist->appendAttachment(c0);
-//    hist->appendAttachment(c1);
-//    hist->appendAttachment(c2);
-//    hist->appendAttachment(c1);
-//    hist->appendAttachment(c2);
-//    hist->appendAttachment(c1);
-//    hist->appendAttachment(c1);
-//    hist->appendAttachment(c3);
-
-//    hist->previousAttachment();
-//    hist->previousAttachment();
-//    hist->previousAttachment();
-//    hist->previousAttachment();
-
-//    debug();
-
-//    hist->removeAttachment(c1);
-
-//    debug();
-
-//    hist->appendAttachment(c1);
-
-//    debug();
-
-//    hist->removeAttachment(c0);
-
-//    debug();
-
-//    hist->removeAttachment(c1);
-
-//    debug();
-
-//    qDebug() << hist->currentAttachment();
-
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

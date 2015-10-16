@@ -9,7 +9,6 @@
 #       this is slow and stupid for obvious reasons.
 
 #//TODO crash when indexing
-#//TODO improve accessability of attachments
 
 
 QT       += core gui multimedia
