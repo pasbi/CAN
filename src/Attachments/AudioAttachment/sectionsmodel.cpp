@@ -101,6 +101,7 @@ bool SectionsModel::setData(const QModelIndex &index, const QVariant &value, int
             m_sections[index.row()].setEnd(value.toTime());
             break;
         }
+        emit dataChanged( index, index );
         return true;
     }
     else
