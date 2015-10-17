@@ -122,7 +122,7 @@ void Song::serialize(QDataStream &out) const
     out << static_cast<qint32>(m_attachments.length());
     for (const Attachment* a : m_attachments)
     {
-        out << a->classname();
+        out << a->type();
         out << a;
     }
 }

@@ -166,9 +166,8 @@
 <context>
     <name>ChordPatternViewer</name>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="14"/>
         <source>Dialog</source>
-        <translation>Viewer</translation>
+        <translation type="vanished">Viewer</translation>
     </message>
     <message>
         <location filename="Dialogs/chordpatternviewer.ui" line="81"/>
@@ -552,12 +551,12 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
         <translation>All endings that shall be included in file index.</translation>
     </message>
     <message>
-        <location filename="Program/midicontroller.cpp" line="11"/>
+        <location filename="Program/midicontroller.cpp" line="12"/>
         <source>Channel</source>
         <translation>Channel</translation>
     </message>
     <message>
-        <location filename="Program/midicontroller.cpp" line="12"/>
+        <location filename="Program/midicontroller.cpp" line="13"/>
         <source>ConfigurableItem/MidiCommand/Channel</source>
         <translation>All Midi packets are sent on this channel.</translation>
     </message>
@@ -591,6 +590,39 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
         <location filename="Dialogs/configurationdialog.cpp" line="41"/>
         <source>Reset value to default.</source>
         <translation>Reset to default.</translation>
+    </message>
+</context>
+<context>
+    <name>CopyIndexedFilesDialog</name>
+    <message>
+        <location filename="Dialogs/copyindexedfilesdialog.cpp" line="17"/>
+        <source>Select All</source>
+        <translation>Select all</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/copyindexedfilesdialog.cpp" line="24"/>
+        <source>Deselect All</source>
+        <translation>Deselect all</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/copyindexedfilesdialog.cpp" line="31"/>
+        <source>Toggle Selection</source>
+        <translation>Toggle selection</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/copyindexedfilesdialog.cpp" line="68"/>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/copyindexedfilesdialog.cpp" line="68"/>
+        <source>Full Filename</source>
+        <translation>Full filename</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/copyindexedfilesdialog.ui" line="14"/>
+        <source>Copy files ...</source>
+        <translation>Copy files ...</translation>
     </message>
 </context>
 <context>
@@ -851,143 +883,148 @@ Think twice before you replace it.
         <translation>&amp;Tools</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="212"/>
+        <location filename="mainwindow.ui" line="213"/>
         <source>Attachment related stuff.</source>
         <translation>Attachment related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="215"/>
+        <location filename="mainwindow.ui" line="216"/>
         <source>&amp;Attachments</source>
         <translation>&amp;Attachments</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="227"/>
+        <location filename="mainwindow.ui" line="228"/>
         <source>Edit.</source>
         <translation>Edit.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="230"/>
+        <location filename="mainwindow.ui" line="231"/>
         <source>&amp;Edit</source>
         <translation>&amp;Edit</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="241"/>
+        <location filename="mainwindow.ui" line="242"/>
         <source>File index related stuff.</source>
         <translation>File index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="244"/>
+        <location filename="mainwindow.ui" line="245"/>
         <source>F&amp;ile Index</source>
         <translation>File&amp;index</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="253"/>
+        <location filename="mainwindow.ui" line="254"/>
         <source>Event related stuff.</source>
         <translation>Event related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="256"/>
+        <location filename="mainwindow.ui" line="257"/>
         <source>E&amp;vents</source>
         <translation>E&amp;vents</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="264"/>
+        <location filename="mainwindow.ui" line="265"/>
         <source>Song related stuff.</source>
         <translation>Song related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="267"/>
+        <location filename="mainwindow.ui" line="268"/>
         <source>&amp;Songs</source>
         <translation>&amp;Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="275"/>
+        <location filename="mainwindow.ui" line="276"/>
         <source>&amp;Language</source>
         <translation>&amp;Language</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="289"/>
+        <location filename="mainwindow.ui" line="290"/>
         <source>&amp;New Project</source>
         <translation>&amp;New project</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="292"/>
+        <location filename="mainwindow.ui" line="293"/>
         <source>Create a new empty project.</source>
         <translation>Create a new empty project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="304"/>
+        <location filename="mainwindow.ui" line="305"/>
         <source>&amp;Save</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="307"/>
+        <location filename="mainwindow.ui" line="308"/>
         <source>Save the current project.</source>
         <translation>Save the current project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="319"/>
+        <location filename="mainwindow.ui" line="320"/>
         <source>Save As</source>
         <translation>Save as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="322"/>
+        <location filename="mainwindow.ui" line="323"/>
         <source>Save the current project as.</source>
         <translation>Save the current project as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="334"/>
+        <location filename="mainwindow.ui" line="335"/>
         <source>Open</source>
         <translation>Open ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="337"/>
+        <location filename="mainwindow.ui" line="338"/>
         <source>Open an existing project.</source>
         <translation>Open an existing project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="345"/>
+        <location filename="mainwindow.ui" line="346"/>
         <source>Index Info ...</source>
         <oldsource>Index Info</oldsource>
         <translation>Index info ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="348"/>
+        <location filename="mainwindow.ui" line="349"/>
         <source>Information about the file index.</source>
         <translation>Show informations about the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="356"/>
+        <location filename="mainwindow.ui" line="357"/>
         <source>Add Folder ...</source>
         <oldsource>Add Folder</oldsource>
         <translation>Add folder ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="359"/>
+        <location filename="mainwindow.ui" line="360"/>
         <source>Add Folder to the file index.</source>
         <translation>Add folder to the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="367"/>
+        <location filename="mainwindow.ui" line="368"/>
         <source>Clear Index</source>
         <translation>Clear index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="370"/>
+        <location filename="mainwindow.ui" line="371"/>
         <source>Remove all files from file index.</source>
         <translation>Remove all files from file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="382"/>
+        <location filename="mainwindow.ui" line="383"/>
         <source>Delete Attachment</source>
         <oldsource>New Attachment </oldsource>
         <translation>Delete attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="385"/>
+        <location filename="mainwindow.ui" line="386"/>
         <source>Delete Attachment selected attachment.</source>
         <oldsource>Add new attachment to a song.</oldsource>
         <translation>Delete selected attachment.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="504"/>
+        <source>Copy Indexed Attachments ...</source>
+        <translation>Copy files from attachments ...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="108"/>
@@ -997,7 +1034,7 @@ Think twice before you replace it.
         <translation>&amp;Undo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="400"/>
+        <location filename="mainwindow.ui" line="401"/>
         <source>Undo the last action.</source>
         <translation>Undo the last action.</translation>
     </message>
@@ -1009,47 +1046,47 @@ Think twice before you replace it.
         <translation>&amp;Redo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="415"/>
+        <location filename="mainwindow.ui" line="416"/>
         <source>Redo the last undone action.</source>
         <translation>Redo the last undone action.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="427"/>
+        <location filename="mainwindow.ui" line="428"/>
         <source>Clone ...</source>
         <translation>Clone ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="430"/>
+        <location filename="mainwindow.ui" line="431"/>
         <source>Clone a repository.</source>
         <translation>Klone a repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="438"/>
+        <location filename="mainwindow.ui" line="439"/>
         <source>Open terminal</source>
         <translation>Open terminal</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="450"/>
+        <location filename="mainwindow.ui" line="451"/>
         <source>Rename Attachment ...</source>
         <translation>Rename attachment ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="498"/>
+        <location filename="mainwindow.ui" line="499"/>
         <source>&amp;Export all songs</source>
         <translation>&amp;Export all songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="453"/>
+        <location filename="mainwindow.ui" line="454"/>
         <source>Rename selected attachment.</source>
         <translation>Rename selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="465"/>
+        <location filename="mainwindow.ui" line="466"/>
         <source>Duplicate Attachment</source>
         <translation>Duplicate attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="468"/>
+        <location filename="mainwindow.ui" line="469"/>
         <source>Duplicate selected attachment.</source>
         <translation>Duplicate selected attachment.</translation>
     </message>
@@ -1062,22 +1099,22 @@ Think twice before you replace it.
         <translation type="vanished">Synchronize local repository with remote repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="476"/>
+        <location filename="mainwindow.ui" line="477"/>
         <source>Identites ...</source>
         <translation>Identities ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="479"/>
+        <location filename="mainwindow.ui" line="480"/>
         <source>Manage identities.</source>
         <translation>Manage identities.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="487"/>
+        <location filename="mainwindow.ui" line="488"/>
         <source>Preferences ...</source>
         <translation>Preferences ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="490"/>
+        <location filename="mainwindow.ui" line="491"/>
         <source>Settings.</source>
         <translation>Preferences.</translation>
     </message>
@@ -1281,6 +1318,27 @@ Think twice before you replace it.
         <location filename="mainwindow.cpp" line="993"/>
         <source>Remove Setlist Items</source>
         <translation>Remove setlist items</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1036"/>
+        <source>Nothing copied</source>
+        <translation>Nothing copied</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1036"/>
+        <source>You have not selected any file.</source>
+        <translation>You have not selected any file.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1071"/>
+        <source>Copying finished.
+  Successfull:	%1
+  Not overwritten:	%2
+  Failure:		%3</source>
+        <translation>Copying finished.
+  Successfull:	%1
+  Not overwritten:	%2
+  Failure:		%3</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="98"/>
@@ -1494,7 +1552,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="Dialogs/programdialog.ui" line="174"/>
         <source>Page </source>
-        <translation>Page</translation>
+        <translation>Page </translation>
     </message>
     <message>
         <location filename="Dialogs/programdialog.ui" line="221"/>

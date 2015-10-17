@@ -26,7 +26,7 @@ AttachmentEditor::AttachmentEditor(QWidget *parent) :
 
 AttachmentView* createAttachmentView(Attachment* attachment)
 {
-    QString classname = attachment->classname();
+    QString classname = attachment->type();
     classname = classname.append("View");
 
     assert( Creatable::category(classname) == "AttachmentView" );

@@ -18,13 +18,13 @@ public:
     void setSong( Song* song );
     Song* song() const { return m_song; }
 
-    QString classname() const { return metaObject()->className(); }
 
     void makeNameUnique();
 
     QJsonObject toJsonObject() const;
     static Attachment* create(const QString& classname, Song *song);
 
+    // see Creatable
     virtual QString type() const = 0;
 
     QString description() const;

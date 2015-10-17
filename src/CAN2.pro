@@ -133,7 +133,8 @@ SOURCES += main.cpp\
     overlaydecorator.cpp \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.cpp \
     DatabaseView/ItemDelegates/durationdelegate.cpp \
-    AttachmentView/attachmenthistory.cpp
+    AttachmentView/attachmenthistory.cpp \
+    Dialogs/copyindexedfilesdialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -248,7 +249,8 @@ HEADERS  += mainwindow.h \
     Dialogs/overlaylabel.h \
     overlaydecorator.h \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.h \
-    AttachmentView/attachmenthistory.h
+    AttachmentView/attachmenthistory.h \
+    Dialogs/copyindexedfilesdialog.h
 
 
 
@@ -271,7 +273,8 @@ FORMS    += mainwindow.ui \
     Dialogs/exportpdfdialog.ui \
     Dialogs/tageditor.ui \
     Dialogs/programdialog.ui \
-    DatabaseView/EventDatabaseView/setlistwidget.ui
+    DatabaseView/EventDatabaseView/setlistwidget.ui \
+    Dialogs/copyindexedfilesdialog.ui
 
 
 RESOURCES += \

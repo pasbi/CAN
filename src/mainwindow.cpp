@@ -40,7 +40,7 @@
 #include "PDFCreator/pdfcreator.h"
 #include "DatabaseView/EventDatabaseView/setlistview.h"
 #include "FileIndex/fileindex.h"
-#include <QFontDatabase>
+#include "Dialogs/copyindexedfilesdialog.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -53,7 +53,7 @@ QString styleSheetContent()
 }
 
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentCloneURL, QDir::homePath());
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentCopyIndexedFilesTargetDir, QDir::homePath());
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, locale, QLocale::system().name().toStdString().c_str());
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexDefaultPath, QDir::homePath() );
 
@@ -1023,6 +1023,61 @@ void MainWindow::my_on_actionPaste_SetlistItem_triggered()
     }
 }
 
+void MainWindow::on_actionCopy_Indexed_Attachments_triggered()
+{
+    CopyIndexedFilesDialog dialog(app().project()->songDatabase()->items());
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QStringList filenames = dialog.sources();
+
+        if (filenames.isEmpty())
+        {
+            QMessageBox::information(this, tr("Nothing copied"), tr("You have not selected any file."), QMessageBox::Ok);
+        }
+        else
+        {
+            QString path = QFileDialog::getExistingDirectory(this, Application::applicationName(), config["RecentCopyIndexedFilesTargetDir"].toString());
+            if (!path.isEmpty())
+            {
+                config.set("RecentCopyIndexedFilesTargetDir", path);
+                QDir dir(path);
+
+                QStringList success, failure, notOverwritten;
+
+                for (const QString & filename : filenames)
+                {
+                    QString newName = dir.absoluteFilePath(QFileInfo(filename).fileName());
+
+                    if (QFile::copy(filename, newName))
+                    {
+                        success << newName;
+                    }
+                    else
+                    {
+                        if (QFileInfo(newName).exists())
+                        {
+                            notOverwritten << newName;
+                        }
+                        else
+                        {
+                            failure << newName;
+                        }
+                    }
+                }
+
+                QMessageBox::information( this,
+                                          Application::applicationName(),
+                                          tr("Copying finished.\n  Successfull:\t%1\n  Not overwritten:\t%2\n  Failure:\t\t%3")
+                                            .arg(success.count())
+                                            .arg(notOverwritten.count())
+                                            .arg(failure.count()) );
+            }
+        }
+    }
+
+
+}
 
 
 

@@ -86,6 +86,7 @@ private slots:
     void on_actionSettings_triggered();
     void on_action_Index_Info_triggered();
     void on_action_Export_all_songs_triggered();
+    void on_actionCopy_Indexed_Attachments_triggered();
 
 
     // my auto-connection slots

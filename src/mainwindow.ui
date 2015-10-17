@@ -206,6 +206,7 @@
     </property>
     <addaction name="actionSettings"/>
     <addaction name="action_Export_all_songs"/>
+    <addaction name="actionCopy_Indexed_Attachments"/>
    </widget>
    <widget class="QMenu" name="menuAttachments">
     <property name="toolTip">
@@ -420,7 +421,7 @@
   </action>
   <action name="actionClone">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/icons/icons/Git-Icon-Black.png</normaloff>:/icons/icons/Git-Icon-Black.png</iconset>
    </property>
    <property name="text">
@@ -496,6 +497,11 @@
   <action name="action_Export_all_songs">
    <property name="text">
     <string>&amp;Export all songs</string>
+   </property>
+  </action>
+  <action name="actionCopy_Indexed_Attachments">
+   <property name="text">
+    <string>Copy Indexed Attachments ...</string>
    </property>
   </action>
  </widget>

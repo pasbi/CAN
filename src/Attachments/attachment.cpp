@@ -72,7 +72,7 @@ Attachment* Attachment::copy() const
     QDataStream stream(&buffer);
     stream << this;
 
-    Attachment* copy = create(classname(), song());
+    Attachment* copy = create(type(), song());
     stream >> copy;
 
     return copy;
