@@ -184,15 +184,15 @@ void ChordPatternViewer::applyZoom()
 
 void ChordPatternViewer::on_buttonZoomOut_clicked()
 {
-    m_pos /= 1.05;
-    m_zoom /= 1.05;
+    m_pos /= 1.01;
+    m_zoom /= 1.01;
     applyZoom();
 }
 
 void ChordPatternViewer::on_buttonZoomIn_clicked()
 {
-    m_pos *= 1.05;
-    m_zoom *= 1.05;
+    m_pos *= 1.01;
+    m_zoom *= 1.01;
     applyZoom();
 }
 
