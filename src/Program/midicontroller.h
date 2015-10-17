@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include "configurable.h"
+#include <QFileSystemWatcher>
 
 class Program;
 class MidiCommand;
@@ -23,6 +24,9 @@ public:
 private:
     static MidiController* m_singleton;
     QFile m_midiDevice;
+    void initFileSystemWatcher();
+    static const QString MIDI_DEVICE_FILENAME;
+    QFileSystemWatcher m_midiDeviceWatcher;
 };
 
 #endif // MIDICONTROLLER_H

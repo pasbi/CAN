@@ -2,6 +2,7 @@
 #include "global.h"
 #include "program.h"
 #include "midicommand.h"
+#include <QFileInfo>
 
 DEFN_CONFIG( MidiController, "Midi" );
 
@@ -17,9 +18,12 @@ CONFIGURABLE_ADD_DEFEATABLE_ITEM(  MidiController,
 
 MidiController* MidiController::m_singleton = nullptr;
 
+const QString MidiController::MIDI_DEVICE_FILENAME = "/dev/midi1";
+
 MidiController::MidiController()
 {
     reinit();
+    initFileSystemWatcher();
 }
 
 MidiController* MidiController::singleton()
@@ -33,9 +37,8 @@ MidiController* MidiController::singleton()
 
 void MidiController::reinit()
 {
-    // reinitialize midi connection, e.g. open /dev/midi{0-9}
     m_midiDevice.close();
-    m_midiDevice.setFileName( "/dev/midi1" );
+    m_midiDevice.setFileName( MIDI_DEVICE_FILENAME );
     if (!m_midiDevice.open( QIODevice::WriteOnly ))
     {
         qWarning() << "No Mididevice";
@@ -77,4 +80,18 @@ void MidiController::send(const MidiCommand& command)
         m_midiDevice.write( (char*) buffer, 3 );
         m_midiDevice.flush();
     }
+}
+
+void MidiController::initFileSystemWatcher()
+{
+    QString dirname  = QFileInfo(MIDI_DEVICE_FILENAME).path();
+
+    assert(m_midiDeviceWatcher.addPath(dirname));
+    QObject::connect( &m_midiDeviceWatcher, &QFileSystemWatcher::directoryChanged, [this](QString)
+    {
+        if (QFileInfo(MIDI_DEVICE_FILENAME).exists())
+        {
+            reinit();
+        }
+    });
 }
