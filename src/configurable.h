@@ -253,7 +253,6 @@ class Configurable
 {
 public:
     Configurable(const QString & prefix, const QString& caption );
-    ~Configurable();
 
     void addItem(const QString &                    key,
                  const QString &                    caption,
@@ -274,6 +273,9 @@ public:
     void reset();
     void apply();
     void restore();
+
+    // deletes all items. Prevents destroying QObjects after destroying QApplication
+    void deinit();
 
     /**
      * @brief saveConfigurable saves the Configurable with QSettings system.
@@ -335,6 +337,7 @@ public:
 public:
     static void saveAll();
     static void restoreAll();
+    static void deinitAll();
 };
 
 #endif // CONFIGURABLE_H

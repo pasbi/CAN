@@ -84,6 +84,11 @@ int main(int argc, char *argv[])
     MainWindow m;
     m.show();
 
-    return app.exec();
+    int code = app.exec();
+
+    Configurable::saveAll();
+    Configurable::deinitAll();
+
+    return code;
 }
 

@@ -19,15 +19,6 @@ Configurable::Configurable(const QString &prefix, const QString & caption ) :
     registerer()->registerConfigurable(this);
 }
 
-Configurable::~Configurable()
-{
-    qDeleteAll( m_items.values() );
-    if (m_settings)
-    {
-        m_settings->sync();
-    }
-}
-
 QSettings* Configurable::settings()
 {
     if (!m_settings)
@@ -160,6 +151,14 @@ void Configurable::restoreAll()
     for (Configurable* c : registerer()->configs().values())
     {
         c->restoreConfigurable();
+    }
+}
+
+void Configurable::deinitAll()
+{
+    for (Configurable* c : registerer()->configs().values())
+    {
+        c->deinit();
     }
 }
 
@@ -307,6 +306,15 @@ Configurable& Configurable::operator =(const Configurable &other)
 Configurable::Configurable(const Configurable &other)
 {
     *this = other;
+}
+
+void Configurable::deinit()
+{
+    qDeleteAll( m_items.values() );
+    if (m_settings)
+    {
+        m_settings->sync();
+    }
 }
 
 

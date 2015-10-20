@@ -21,7 +21,6 @@ Application::~Application()
 {
     delete m_fileIndex;
     m_fileIndex = nullptr;
-    Configurable::saveAll();
 }
 
 Application & app()
