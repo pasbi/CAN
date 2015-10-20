@@ -170,62 +170,62 @@
         <translation type="vanished">Viewer</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="81"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="96"/>
         <source>Close (Esc)</source>
         <translation>Schließen (Esc)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="91"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="106"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="140"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="155"/>
         <source>Zoom in (+)</source>
         <translation>Herein zoomen (+)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="150"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="165"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="175"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="190"/>
         <source>Zoom Out (-)</source>
         <translation>Heraus zoomen (-)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="237"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="252"/>
         <source>Faster (F)</source>
         <translation>Schneller (S)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="247"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="262"/>
         <source>F</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="278"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="293"/>
         <source>Slower (S)</source>
         <translation>Langsamer (L)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="288"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="303"/>
         <source>S</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="326"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="341"/>
         <source>Go to start</source>
         <translation>Zum Anfang gehen</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="362"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="377"/>
         <source>Play (Space)</source>
         <translation>Play (Leertaste)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="375"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="390"/>
         <source>Space</source>
         <translation>Space</translation>
     </message>

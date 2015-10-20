@@ -12,12 +12,10 @@
 #include "Commands/SongCommands/songremoveattachmentcommand.h"
 #include "Attachments/attachment.h"
 #include "Database/SongDatabase/song.h"
-#include "attachmenthistory.h"
 
 AttachmentChooser::AttachmentChooser(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AttachmentChooser),
-    m_attachmentHistory(new AttachmentHistory())
+    ui(new Ui::AttachmentChooser)
 {
     ui->setupUi(this);
     connect( ui->comboBox, static_cast< void (QComboBox::*)(int) >(&QComboBox::currentIndexChanged), [this](int index)
@@ -42,6 +40,7 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "PDFAttachment" ) );
 
     connect( ui->attachmentEditor, SIGNAL(focusAttachment(const Attachment*)), this, SLOT(focusAttachment(const Attachment*)) );
+    connect( ui->browseAttachmentButtonBox, SIGNAL(attachmentSelected(int)), this, SLOT(setAttachment(int)));
 
     setSong( nullptr );
 
@@ -50,8 +49,6 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
 AttachmentChooser::~AttachmentChooser()
 {
     delete ui;
-    delete m_attachmentHistory;
-    m_attachmentHistory = nullptr;
 }
 
 void AttachmentChooser::setSong(Song *song)
@@ -68,12 +65,12 @@ void AttachmentChooser::setSong(Song *song)
     }
 
     m_currentSong = song;
-    m_attachmentHistory->loadHistory(song);
     ui->attachmentEditor->deactivateAttachmentViews();
     ui->comboBox->clear();
+    ui->browseAttachmentButtonBox->setSong(song);
     if (song == nullptr)
     {
-        setAttachment( -1 );
+        setAttachment(-1);
     }
     else
     {
@@ -88,8 +85,10 @@ void AttachmentChooser::setSong(Song *song)
 
 }
 
-void AttachmentChooser::setAttachment( int index, bool affectHistory )
+void AttachmentChooser::setAttachment(int index)
 {
+    ui->browseAttachmentButtonBox->setAttachment(index);
+
     ui->comboBox->clear();
     if (!m_currentSong || index < 0)
     {
@@ -114,10 +113,6 @@ void AttachmentChooser::setAttachment( int index, bool affectHistory )
         {
             ui->comboBox->setCurrentIndex( index );
             m_currentAttachment = m_currentSong->attachment(index);
-            if (affectHistory)
-            {
-                m_attachmentHistory->appendAttachment( m_currentAttachment );
-            }
             ui->attachmentEditor->setAttachment( m_currentAttachment );
         }
         ui->comboBox->blockSignals(false);
@@ -127,8 +122,6 @@ void AttachmentChooser::setAttachment( int index, bool affectHistory )
     m_editTagAction->setEnabled( !!m_currentAttachment );
     ui->buttonDelete->setEnabled( !!m_currentAttachment );
     ui->toolButton->setEnabled( !!song() );
-
-    updateHistoryButtons();
 }
 
 int AttachmentChooser::currentAttachmentIndex() const
@@ -234,33 +227,4 @@ void AttachmentChooser::on_buttonDelete_clicked()
         ui->attachmentEditor->deactivateAttachmentView(attachment);
         app().pushCommand( new SongRemoveAttachmentCommand(attachment->song(), attachment->song()->attachments().indexOf(attachment) ) );
     }
-}
-
-void AttachmentChooser::on_buttonForward_clicked()
-{
-    Attachment* a = m_attachmentHistory->nextAttachment();
-    if (m_currentSong)
-    {
-        int index = m_currentSong->attachments().indexOf(a);
-        setAttachment(index, false);
-    }
-}
-
-void AttachmentChooser::on_buttonBackward_clicked()
-{
-    Attachment* a = m_attachmentHistory->previousAttachment();
-    if (m_currentSong)
-    {
-        int index = m_currentSong->attachments().indexOf(a);
-        setAttachment(index, false);
-    }
-}
-
-void AttachmentChooser::updateHistoryButtons()
-{
-    // we do not know, if a attachment might have be deleted. Check this!
-    m_attachmentHistory->removeObsoleteAttachments();
-
-    ui->buttonBackward->setEnabled(m_attachmentHistory->hasPreviousAttachment());
-    ui->buttonForward->setEnabled(m_attachmentHistory->hasNextAttachment());
 }

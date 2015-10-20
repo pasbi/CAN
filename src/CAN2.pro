@@ -9,7 +9,6 @@
 #       this is slow and stupid for obvious reasons.
 
 #//TODO crash when indexing
-#//TODO improve chord recognition (see Rolling in The Deep)
 
 QT       += core gui multimedia
 
@@ -34,8 +33,6 @@ win32 {
     LIBS += -L../../bin -lsoundtouch
 
 }
-
-
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -133,8 +130,8 @@ SOURCES += main.cpp\
     overlaydecorator.cpp \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.cpp \
     DatabaseView/ItemDelegates/durationdelegate.cpp \
-    AttachmentView/attachmenthistory.cpp \
-    Dialogs/copyindexedfilesdialog.cpp
+    Dialogs/copyindexedfilesdialog.cpp \
+    AttachmentView/browseattachmentbuttonbox.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -249,8 +246,8 @@ HEADERS  += mainwindow.h \
     Dialogs/overlaylabel.h \
     overlaydecorator.h \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.h \
-    AttachmentView/attachmenthistory.h \
-    Dialogs/copyindexedfilesdialog.h
+    Dialogs/copyindexedfilesdialog.h \
+    AttachmentView/browseattachmentbuttonbox.h
 
 
 
@@ -274,7 +271,8 @@ FORMS    += mainwindow.ui \
     Dialogs/tageditor.ui \
     Dialogs/programdialog.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
-    Dialogs/copyindexedfilesdialog.ui
+    Dialogs/copyindexedfilesdialog.ui \
+    AttachmentView/browseattachmentbuttonbox.ui
 
 
 RESOURCES += \

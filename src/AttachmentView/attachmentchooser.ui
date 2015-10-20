@@ -14,60 +14,12 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,1,0,0">
      <item>
-      <widget class="QPushButton" name="buttonBackward">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../ressources.qrc">
-         <normaloff>:/icons/icons/left64.png</normaloff>:/icons/icons/left64.png</iconset>
-       </property>
-       <property name="shortcut">
-        <string>Alt+Left</string>
-       </property>
-      </widget>
+      <widget class="BrowseAttachmentButtonBox" name="browseAttachmentButtonBox" native="true"/>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonForward">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../ressources.qrc">
-         <normaloff>:/icons/icons/right53.png</normaloff>:/icons/icons/right53.png</iconset>
-       </property>
-       <property name="shortcut">
-        <string>Alt+Right</string>
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
@@ -154,6 +106,12 @@
    <class>ComboBox</class>
    <extends>QComboBox</extends>
    <header>combobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BrowseAttachmentButtonBox</class>
+   <extends>QWidget</extends>
+   <header>AttachmentView/browseattachmentbuttonbox.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
