@@ -922,11 +922,9 @@ void MainWindow::createLanguageMenu()
     for (const QFileInfo& fileInfo : QDir(":/translations/").entryInfoList(QStringList() << "can2*.qm", QDir::Files, QDir::Name ))
     {
         QString locale = fileInfo.baseName().mid(5); // skip ending, skip can2_
-        QAction* action = new QAction( ui->menu_Language );
-        action->setText( QLocale(locale).nativeLanguageName() );
-        ui->menu_Language->addAction(action);
+        QAction* action = ui->menu_Language->addAction( QLocale(locale).nativeLanguageName() );
         action->setCheckable( true );
-        connect(ui->menu_Language, SIGNAL(aboutToHide()), action, SLOT(deleteLater()));
+
         if (config["locale"] == locale)
         {
             action->setChecked(true);
