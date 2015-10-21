@@ -696,10 +696,10 @@ void MainWindow::on_actionAdd_Folder_triggered()
     {
         pd.setValue( (pd.value() + 1) % 100 );
 
-        qDebug() << label;
-        qDebug() << &app();
-        qDebug() << app().fileIndex();
-        qDebug() << app().fileIndex()->currentFilename();
+//        qDebug() << label;
+//        qDebug() << &app();
+//        qDebug() << app().fileIndex();
+//        qDebug() << app().fileIndex()->currentFilename();
 
         label->setText( QString("%1\n%2").arg(app().fileIndex()->currentFilename())
                                          .arg(app().fileIndex()->size())            );

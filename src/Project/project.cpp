@@ -109,6 +109,7 @@ void Project::reset()
     m_songDatabase->reset();
     m_eventDatabase->reset();
     QUndoStack::clear();
+    setCanClose(true);
     emit undoStackCleared();
 }
 
@@ -156,6 +157,8 @@ QDataStream& operator>>(QDataStream& in, Project& project)
 
     stream >> project.m_songDatabase;
     stream >> project.m_eventDatabase;
+
+    project.setCanClose(true);
 
     return in;
 }

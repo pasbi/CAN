@@ -47,10 +47,6 @@ void Player::play()
     {
         m_audioOutput->start( &m_buffer.buffer() );
     }
-    else
-    {
-        qWarning() << "no audioOutput";
-    }
 }
 
 void Player::pause()
@@ -58,10 +54,6 @@ void Player::pause()
     if (m_audioOutput)
     {
         m_audioOutput->stop();
-    }
-    else
-    {
-        qWarning() << "no audioOutput";
     }
 }
 
@@ -78,10 +70,6 @@ void Player::seek()
             m_audioOutput->start( &m_buffer.buffer() );
         }
         blockSignals(false);
-    }
-    else
-    {
-        qWarning() << "no audioOutput";
     }
 }
 
@@ -109,10 +97,6 @@ void Player::setVolume(double volume)
     if (m_audioOutput)
     {
         m_audioOutput->setVolume(volume);
-    }
-    else
-    {
-        qWarning() << "no audio output, failed to set Volume " << Q_FUNC_INFO;
     }
 }
 
