@@ -17,27 +17,25 @@
 <context>
     <name>AttachmentChooser</name>
     <message>
-        <location filename="AttachmentView/attachmentchooser.ui" line="41"/>
         <source>Alt+Left</source>
-        <translation>Alt+Left</translation>
+        <translation type="vanished">Alt+Left</translation>
     </message>
     <message>
-        <location filename="AttachmentView/attachmentchooser.ui" line="70"/>
         <source>Alt+Right</source>
-        <translation>Alt+Right</translation>
+        <translation type="vanished">Alt+Right</translation>
     </message>
     <message>
-        <location filename="AttachmentView/attachmentchooser.ui" line="77"/>
+        <location filename="AttachmentView/attachmentchooser.ui" line="29"/>
         <source>Choose an attachment.</source>
         <translation>Choose Attachment.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/attachmentchooser.cpp" line="29"/>
+        <location filename="AttachmentView/attachmentchooser.cpp" line="27"/>
         <source>No Attachment</source>
         <translation>No Attachment</translation>
     </message>
     <message>
-        <location filename="AttachmentView/attachmentchooser.cpp" line="36"/>
+        <location filename="AttachmentView/attachmentchooser.cpp" line="34"/>
         <source>Edit tags ...</source>
         <translation>Edit tags ...</translation>
     </message>
@@ -145,6 +143,24 @@
         <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="52"/>
         <source>Remaining time in seconds.</source>
         <translation>Remaining time in seconds.</translation>
+    </message>
+</context>
+<context>
+    <name>BrowseAttachmentButtonBox</name>
+    <message>
+        <location filename="AttachmentView/browseattachmentbuttonbox.ui" line="54"/>
+        <source>Ctrl+1</source>
+        <translation>Ctrl+1</translation>
+    </message>
+    <message>
+        <location filename="AttachmentView/browseattachmentbuttonbox.ui" line="89"/>
+        <source>Ctrl+2</source>
+        <translation>Ctrl+2</translation>
+    </message>
+    <message>
+        <location filename="AttachmentView/browseattachmentbuttonbox.ui" line="124"/>
+        <source>Ctrl+3</source>
+        <translation>Ctrl+3</translation>
     </message>
 </context>
 <context>
