@@ -47,6 +47,9 @@
         <file>icons/1411734805_rename.png</file>
         <file>icons/eye_midi.png</file>
         <file>icons/midi.png</file>
+        <file>icons/autozoom.png</file>
+        <file>icons/number40.png</file>
+        <file>icons/number41.png</file>
     </qresource>
     <qresource prefix="/translations">
         <file>can2_de_DE.qm</file>

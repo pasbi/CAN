@@ -192,6 +192,10 @@
        <property name="text">
         <string/>
        </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/icons/autozoom.png</normaloff>:/icons/icons/autozoom.png</iconset>
+       </property>
        <property name="shortcut">
         <string>+</string>
        </property>
@@ -284,6 +288,11 @@
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/icons/number41.png</normaloff>
+         <normalon>:/icons/icons/number40.png</normalon>:/icons/icons/number41.png</iconset>
        </property>
        <property name="shortcut">
         <string/>
