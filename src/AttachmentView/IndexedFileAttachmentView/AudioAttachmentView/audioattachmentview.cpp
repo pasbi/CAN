@@ -209,6 +209,7 @@ void AudioAttachmentView::deleteCurrentSection()
     if (!indexes.isEmpty() && indexes.first().isValid())
     {
         attachment<AudioAttachment>()->sectionsModel()->removeSection( indexes.first().row() );
+        attachment<AudioAttachment>()->setSection(nullptr);
     }
 }
 
