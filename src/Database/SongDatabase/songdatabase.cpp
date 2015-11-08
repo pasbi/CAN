@@ -8,6 +8,8 @@
 #include "songdatabasesortproxy.h"
 #include "application.h"
 #include "commontypes.h"
+#include "Attachments/attachment.h"
+#include <QPainter>
 
 SongDatabase::SongDatabase(Project *project) :
     Database(project)
@@ -48,20 +50,46 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
             }
         }
     }
-#ifdef HAVE_PROGRAM
-    case Qt::DecorationRole:
-        if (index.column() == 0 && m_items[index.row()]->program().isValid())
-        {
-            return QIcon(":/icons/icons/midi.png");
-        }
-        else
-        {
-            return QVariant();
-        }
-#endif
     default:
         return QVariant();
     }
+}
+
+QIcon buildIcon(QPixmap midiMap, QPixmap songMap)
+{
+    if (midiMap.isNull())
+    {
+        return songMap;
+    }
+    if (songMap.isNull())
+    {
+        return midiMap;
+    }
+
+    QSize singleSize = QSize(qMax(midiMap.width(), songMap.width()), qMax(midiMap.height(), songMap.height()));
+    midiMap = midiMap.scaled(singleSize);
+    songMap = songMap.scaled(singleSize);
+
+    QPixmap pixmap(QSize(singleSize.width() * 2 + 3, singleSize.height()));
+    pixmap.fill(Qt::transparent);
+    QPainter painter(&pixmap);
+    painter.drawPixmap(0, 0, midiMap);
+    painter.drawPixmap(singleSize.width() + 3, 0, songMap);
+
+
+    return QIcon(pixmap);
+}
+
+bool hasAudioAttachment(const Song* song)
+{
+    for (const Attachment* attachment : song->attachments())
+    {
+        if (attachment->inherits("AudioAttachment"))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int role) const
@@ -89,7 +117,24 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
     }
     else
     {
+        QPixmap midiIcon, songIcon;
+        switch (role)
+        {
+        case Qt::DecorationRole:
+#ifdef HAVE_PROGRAM
+            if (m_items[section]->program().isValid())
+            {
+                midiIcon = QPixmap(":/icons/icons/midi.png");
+            }
+#endif
+            if (hasAudioAttachment(m_items[section]))
+            {
+                songIcon = QPixmap(":/icons/icons/song1.png");
+            }
+            return buildIcon(midiIcon, songIcon);
+        }
         return QVariant();
+
     }
 }
 

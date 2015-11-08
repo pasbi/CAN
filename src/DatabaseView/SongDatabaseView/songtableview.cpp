@@ -22,4 +22,6 @@ SongTableView::SongTableView(QWidget *parent) :
     setItemDelegateForColumn(0, new LineEditDelegate(this));
     setItemDelegateForColumn(1, new EditableComboBoxDelegate(this));
     setItemDelegateForColumn(2, new DurationDelegate(this));
+
+    verticalHeader()->show();
 }
