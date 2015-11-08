@@ -6,6 +6,7 @@
 ChordPatternViewerScrollArea::ChordPatternViewerScrollArea(QWidget *parent) :
     QScrollArea(parent)
 {
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 void ChordPatternViewerScrollArea::wheelEvent(QWheelEvent *e)

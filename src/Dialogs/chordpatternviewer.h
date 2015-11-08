@@ -56,6 +56,8 @@ private slots:
     void on_pushButtonPauseJumpToBegin_clicked();
     void on_playTimerTimeout();
     void on_pushButtonPlay_toggled(bool checked);
+    void on_buttonAutoZoom_clicked();
+    void on_buttonColumnCount_toggled(bool checked);
 
 
 protected:

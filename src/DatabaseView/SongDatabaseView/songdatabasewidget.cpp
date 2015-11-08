@@ -17,6 +17,7 @@ SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
              SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
              this,
              SLOT(updateAttachmentChooser()) );
+
 }
 
 void SongDatabaseWidget::updateAttachmentChooser()

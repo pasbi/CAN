@@ -11,11 +11,31 @@
 #include "Database/SongDatabase/song.h"
 #include "overlaydecorator.h"
 #include "Program/midicommand.h"
+#include <QScrollBar>
 
 DEFN_CONFIG( ChordPatternViewer, "ChordPatternViewer");
 
+
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, zoom, 1.0 );
 CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, line, true );
+CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, TwoColumn, true );
+
+
+
+int describedWidth(const QImage& image, const QColor& backgroundColor)
+{
+    for (int x = image.width() - 1; x >= 0; --x)
+    {
+        for (int y = 0; y < image.height(); ++y)
+        {
+            if (image.pixel(x, y) != backgroundColor.rgba())
+            {
+                return x;
+            }
+        }
+    }
+    return 0;
+}
 
 ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachment, QWidget *parent) :
     QDialog(parent),
@@ -87,6 +107,10 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
             MidiController::singleton()->send( program );
         }
     }
+
+    ui->buttonColumnCount->blockSignals(true);
+    ui->buttonColumnCount->setChecked( config["TwoColumn"].toBool() );
+    ui->buttonColumnCount->blockSignals(false);
 }
 
 ChordPatternViewer::~ChordPatternViewer()
@@ -130,26 +154,30 @@ int ChordPatternViewer::pdfWidth()
     return ui->scrollArea->viewport()->width() * m_zoom;
 }
 
-QPixmap twoPageView( const QPixmap& pixmap, int height )
-{
-    QImage image = pixmap.toImage();
+static const int TWO_PAGE_GAP = 30;
 
-    QSize size = QSize( image.size().width() * 2, image.size().height() );
-    QImage doubleImage( size, image.format() );
-    doubleImage.fill( Qt::lightGray );
+int twoPageViewWidth( int describedWidth )
+{
+    return 2*describedWidth + TWO_PAGE_GAP + TWO_PAGE_GAP/2;
+}
+
+QPixmap twoPageView( QPixmap pixmap, int describedWidth, int viewportHeight, int height )
+{
+    QSize size = QSize( twoPageViewWidth(describedWidth), height );
+    QPixmap doublePixmap( size );
+    doublePixmap.fill( Qt::white );
 
     QPainter painter;
-    painter.begin(&doubleImage);
-    painter.drawImage( 0,             0,       image );
-    painter.drawImage( image.width(), -height, image );
-    painter.end();
+    painter.begin(&doublePixmap);
+    painter.drawPixmap( 0,                               0,               pixmap );
+    painter.drawPixmap( describedWidth + TWO_PAGE_GAP/2, -viewportHeight, pixmap );
 
     QPen pen;
     pen.setWidthF( 3 );
     painter.setPen( pen );
-    painter.drawLine( image.width(), 0, image.width(), doubleImage.height() );
+    painter.drawLine( QPoint(describedWidth + TWO_PAGE_GAP/2, 0), QPoint(describedWidth + TWO_PAGE_GAP/2, doublePixmap.height()) );
 
-    return QPixmap::fromImage(doubleImage);
+    return doublePixmap;
 }
 
 void ChordPatternViewer::applyZoom()
@@ -175,24 +203,31 @@ void ChordPatternViewer::applyZoom()
     }
 
     QPixmap pixmap = m_pixmap.scaledToWidth( pdfWidth(), Qt::SmoothTransformation );
-    if ( m_zoom < 0.5 )
+    int describedWidth = ::describedWidth(pixmap.toImage(), Qt::white);
+
+    if ( config["TwoColumn"].toBool() )
     {
-        pixmap = twoPageView(pixmap, ui->scrollArea->viewport()->height());
+        pixmap = twoPageView(pixmap, describedWidth, ui->scrollArea->viewport()->height(), pixmap.height());
     }
-    ui->label->setPixmap( pixmap  );
+    else
+    {
+        // keep pixmap
+    }
+
+    ui->label->setPixmap( pixmap );
 }
 
 void ChordPatternViewer::on_buttonZoomOut_clicked()
 {
-    m_pos /= 1.01;
-    m_zoom /= 1.01;
+    m_pos /= 1.02;
+    m_zoom /= 1.02;
     applyZoom();
 }
 
 void ChordPatternViewer::on_buttonZoomIn_clicked()
 {
-    m_pos *= 1.01;
-    m_zoom *= 1.01;
+    m_pos *= 1.02;
+    m_zoom *= 1.02;
     applyZoom();
 }
 
@@ -277,7 +312,6 @@ void ChordPatternViewer::scrollUp()
     update();
 }
 
-
 void ChordPatternViewer::on_playTimerTimeout()
 {
     m_pos += m_speed * m_zoom;
@@ -327,4 +361,23 @@ void ChordPatternViewer::wheelEvent(QWheelEvent *e)
     {
         scrollDown();
     }
+}
+
+void ChordPatternViewer::on_buttonAutoZoom_clicked()
+{
+    if (config["TwoColumn"].toBool())
+    {
+        m_zoom = (double) m_pixmap.width() / (twoPageViewWidth(describedWidth(m_pixmap.toImage(), Qt::white)) + 10);
+    }
+    else
+    {
+        m_zoom = 1;
+    }
+    applyZoom();
+}
+
+void ChordPatternViewer::on_buttonColumnCount_toggled(bool checked)
+{
+    config.set("TwoColumn", checked);
+    applyZoom();
 }

@@ -128,8 +128,8 @@ private:
     void paintHeadline(const QString &label);
     bool paintSong(const Song *song);
     void paintAttachment(Attachment *attachment );
-    void paintPDFAttachment(PDFAttachment *attachment );
-    void paintChordPatternAttachment(AbstractChordPatternAttachment *attachment );
+    void paintAttachment(PDFAttachment *attachment );
+    void paintAttachment(AbstractChordPatternAttachment *attachment );
     void insertTableOfContentsStub();
     void paintSetlist();
     void paintTableOfContents();

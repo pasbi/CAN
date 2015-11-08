@@ -150,7 +150,7 @@ void DatabaseViewBase::leaveEvent(QEvent *event)
 
 void DatabaseViewBase::enterEvent(QEvent *event)
 {
-    setFocus();
+    //setFocus();
     QTableView::enterEvent(event);
 }
 

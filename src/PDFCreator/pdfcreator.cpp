@@ -257,54 +257,9 @@ bool PDFCreator::paintSong(const Song* song)
 
 void PDFCreator::paintAttachment(Attachment *attachment)
 {
-    if (m_exportPDFDialog->test( attachment ))
-    {
-        if (attachment->type() == PDFAttachment::TYPE)
-        {
-            paintPDFAttachment( qobject_assert_cast<PDFAttachment*>(attachment) );
-        }
-        else if (attachment->inherits(AbstractChordPatternAttachment::staticMetaObject.className()))
-        {
-            paintChordPatternAttachment( qobject_assert_cast<AbstractChordPatternAttachment*>(attachment) );
-        }
-    }
-}
-
-void PDFCreator::paintPDFAttachment( PDFAttachment* attachment )
-{
-#ifdef HAVE_POPPLER
-    // ensure that there is the right loaded
-    attachment->open();
-    Poppler::Document* doc = attachment->document();
-    if (doc)
-    {
-        Poppler::Document::RenderBackend backendBefore = doc->renderBackend();
-        doc->setRenderBackend( Poppler::Document::ArthurBackend );  // the other backend will not work.
-        for (int i = 0; i < doc->numPages(); ++i)
-        {
-            if (i != 0)
-            {
-                newPage( Page::NothingSpecial );
-            }
-            currentPainter().save();
-            QSizeF pageSize = doc->page(i)->pageSizeF();
-            QSizeF targetSize = pageRect().size();
-            double fx = targetSize.width() / pageSize.width();
-            double fy = targetSize.height() / pageSize.height();
-
-            double resolution = config["PDFResolution"].toDouble();
-            double f = qMin(fx, fy) * 72.0 / resolution;
-
-            currentPainter().scale( f, f );
-
-            doc->page(i)->renderToPainter( &currentPainter(), resolution, resolution );
-            currentPainter().restore();
-        }
-        doc->setRenderBackend( backendBefore );
-    }
-#else
-    Q_UNUSED( attachment );
-#endif
+    // use the overloaded members
+    Q_UNUSED(attachment);
+    assert(false);
 }
 
 void configurePainter( QPainter& painter )
@@ -313,6 +268,7 @@ void configurePainter( QPainter& painter )
     font.setFamily( "Courier" );
     painter.setFont( font );
 }
+
 
 bool pageBreak( const QStringList & lines, const int currentLine, const double heightLeft, const QPainter& painter )
 {
@@ -358,20 +314,44 @@ bool pageBreak( const QStringList & lines, const int currentLine, const double h
     }
 }
 
-void PDFCreator::drawContinueOnNextPageMark()
+void PDFCreator::paintAttachment(PDFAttachment *attachment)
 {
-    currentPainter().save();
-    QFont font = currentPainter().font();
-    font.setBold( true );
-    font.setPointSizeF( font.pointSizeF() * 3 );
-    currentPainter().setFont( font );
-    QTextOption option;
-    option.setAlignment( Qt::AlignBottom | Qt::AlignRight );
-    currentPainter().drawText( pageRectMargins(), QChar(0x293E), option );
-    currentPainter().restore();
+#ifdef HAVE_POPPLER
+    // ensure that there is the right loaded
+    attachment->open();
+    Poppler::Document* doc = attachment->document();
+    if (doc)
+    {
+        Poppler::Document::RenderBackend backendBefore = doc->renderBackend();
+        doc->setRenderBackend( Poppler::Document::ArthurBackend );  // the other backend will not work.
+        for (int i = 0; i < doc->numPages(); ++i)
+        {
+            if (i != 0)
+            {
+                newPage( Page::NothingSpecial );
+            }
+            currentPainter().save();
+            QSizeF pageSize = doc->page(i)->pageSizeF();
+            QSizeF targetSize = pageRect().size();
+            double fx = targetSize.width() / pageSize.width();
+            double fy = targetSize.height() / pageSize.height();
+
+            double resolution = config["PDFResolution"].toDouble();
+            double f = qMin(fx, fy) * 72.0 / resolution;
+
+            currentPainter().scale( f, f );
+
+            doc->page(i)->renderToPainter( &currentPainter(), resolution, resolution );
+            currentPainter().restore();
+        }
+        doc->setRenderBackend( backendBefore );
+    }
+#else
+    Q_UNUSED( attachment );
+#endif
 }
 
-void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *attachment)
+void PDFCreator::paintAttachment(AbstractChordPatternAttachment *attachment)
 {
     currentPainter().save();
     configurePainter( currentPainter() );
@@ -460,6 +440,20 @@ void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *att
             y += height * config["LineSpacing"].toDouble();
         }
     }
+    currentPainter().restore();
+}
+
+
+void PDFCreator::drawContinueOnNextPageMark()
+{
+    currentPainter().save();
+    QFont font = currentPainter().font();
+    font.setBold( true );
+    font.setPointSizeF( font.pointSizeF() * 3 );
+    currentPainter().setFont( font );
+    QTextOption option;
+    option.setAlignment( Qt::AlignBottom | Qt::AlignRight );
+    currentPainter().drawText( pageRectMargins(), QChar(0x293E), option );
     currentPainter().restore();
 }
 
@@ -944,7 +938,7 @@ void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *att
     PDFCreator creator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), nullptr, "" );
     creator.m_currentIndex = -1;
     creator.newPage( Page::SongStartsHere );
-    creator.paintChordPatternAttachment( attachment );
+    creator.paintAttachment( attachment );
     creator.save( path );
 
     // restore preference

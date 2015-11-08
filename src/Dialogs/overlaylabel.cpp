@@ -21,10 +21,20 @@ void OverlayLabel::paintEvent(QPaintEvent *e)
 {
     QLabel::paintEvent(e);
 
+
     QPainter painter(this);
-    painter.setPen( QColor(255, 0, 0, 100));
     if (ChordPatternViewer::config["line"].toBool())
     {
+        QPen pen;
+
+        pen.setColor( QColor(255, 0, 0, 100));
+        pen.setWidth(3);
+        painter.setPen(pen);
+        painter.drawLine( 0, m_linePos, width(), m_linePos );
+
+        pen.setColor( QColor(255, 0, 0) );
+        pen.setWidth(1);
+        painter.setPen(pen);
         painter.drawLine( 0, m_linePos, width(), m_linePos );
     }
     m_overlayDecorator->paint(painter);
