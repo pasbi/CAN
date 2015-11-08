@@ -4,6 +4,8 @@
 
 #include <QPainter>
 #include <QTimer>
+#include <QStyle>
+#include <QMouseEvent>
 
 const double Slider::SLIDER_MULTIPLIER = 1000;
 
@@ -175,6 +177,26 @@ void Slider::checkTurns()
             emit valueChanged( m_section.beginDouble() );
         }
     }
+}
+
+void Slider::mousePressEvent(QMouseEvent *ev)
+{
+    if (ev->button() == Qt::LeftButton)
+    {
+        int sr = 30;
+        double halfHandleWidth = (0.5 * sr) + 0.5; // Correct rounding
+        int adaptedPosX = ev->x();
+        if ( adaptedPosX < halfHandleWidth )
+                adaptedPosX = halfHandleWidth;
+        if ( adaptedPosX > QSlider::width() - halfHandleWidth )
+                adaptedPosX = QSlider::width() - halfHandleWidth;
+        // get new dimensions accounting for slider handle width
+        double newWidth = (QSlider::width() - halfHandleWidth) - halfHandleWidth;
+        double normalizedPosition = (adaptedPosX - halfHandleWidth)  / newWidth ;
+
+        QSlider::setValue( QSlider::minimum() + ((QSlider::maximum()-QSlider::minimum()) * normalizedPosition) );
+    }
+    QSlider::mousePressEvent(ev);
 }
 
 // it makes no sense to set the minimum since it shall always be zero.

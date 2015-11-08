@@ -27,6 +27,7 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent *ev);
+    void mousePressEvent(QMouseEvent *ev);
 
 private:
     static const double SLIDER_MULTIPLIER;

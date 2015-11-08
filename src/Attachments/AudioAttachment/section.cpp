@@ -9,7 +9,7 @@ double timeToDouble(const QTime& time)
 
 QTime doubleToTime(const double secs)
 {
-    return QTime::fromMSecsSinceStartOfDay(secs / 1000.0);
+    return QTime::fromMSecsSinceStartOfDay(secs * 1000.0);
 }
 
 Section::Section( const QString & caption, const QTime& begin, const QTime& end ) :
@@ -30,7 +30,6 @@ Section::Section( const QString & caption, const QTime& begin, const QTime& end 
 Section::Section( const QString & caption, double begin, double end ) :
     Section(caption, doubleToTime(begin), doubleToTime(end))
 {
-
     assert( qFuzzyCompare(begin, timeToDouble(doubleToTime(begin))) );
     assert( qFuzzyCompare(end, timeToDouble(doubleToTime(end))) );
 }
