@@ -2,23 +2,19 @@
 #include "global.h"
 #include "Attachments/AudioAttachment/sectionsmodel.h"
 
-InsertSectionCommand::InsertSectionCommand(SectionsModel *model, const Section &section, int index) :
-    ModelCommand<SectionsModel>( model ),
+InsertSectionCommand::InsertSectionCommand(SectionsModel *model, Section section, int index) :
+    ModelCommand( model ),
     m_section( section ),
-    m_index( index )
+    m_index( index < 0 ? model->rowCount() : index )
 {
 }
 
 void InsertSectionCommand::undo()
 {
-    assert( model()->m_sectionsToBeInserted.isEmpty() );
-    model()->removeRows( m_index, 1, QModelIndex() );
+    model()->removeSection( m_index );
 }
 
 void InsertSectionCommand::redo()
 {
-
-    assert( model()->m_sectionsToBeInserted.isEmpty() );
-    model()->m_sectionsToBeInserted.append( m_section );
-    model()->insertRows( m_index, 1, QModelIndex() );
+    model()->insertSection( m_section, m_index );
 }

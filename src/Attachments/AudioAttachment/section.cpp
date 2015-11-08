@@ -4,21 +4,12 @@
 
 double timeToDouble(const QTime& time)
 {
-    double t = 0;
-    t += 60 * 60 * time.hour();
-    t += 60 * time.minute();
-    t += time.second();
-    t += time.msec() / 60.0;
-    return t;
+    return QTime(0, 0).msecsTo(time) / 1000.0;
 }
 
-QTime doubleToTime(const double time)
+QTime doubleToTime(const double secs)
 {
-    int msecs = int(time * 1000) % 1000;
-    int secs = int(time) % 60;
-    int mins = int(time / 60) % 60;
-    int hours = int(time / (60 * 60)) % 60;
-    return QTime(hours, mins, secs, msecs);
+    return QTime::fromMSecsSinceStartOfDay(secs / 1000.0);
 }
 
 Section::Section( const QString & caption, const QTime& begin, const QTime& end ) :
@@ -26,6 +17,9 @@ Section::Section( const QString & caption, const QTime& begin, const QTime& end 
     m_begin( begin ),
     m_end( end )
 {
+    assert( begin.msecsTo(doubleToTime(timeToDouble(begin))) < 1000);
+    assert( end.msecsTo(doubleToTime(timeToDouble(end))) < 1000);
+
     if (m_begin > m_end)
     {
         qSwap( m_begin, m_end );
@@ -33,16 +27,12 @@ Section::Section( const QString & caption, const QTime& begin, const QTime& end 
     }
 }
 
-Section::Section( const QString & caption, const double begin, const double end ) :
-    m_caption( caption ),
-    m_begin( doubleToTime(begin) ),
-    m_end( doubleToTime(end) )
+Section::Section( const QString & caption, double begin, double end ) :
+    Section(caption, doubleToTime(begin), doubleToTime(end))
 {
-    if (m_begin > m_end)
-    {
-        qSwap( m_begin, m_end );
-        qWarning() << "Beginning is after ending. Swapped them.";
-    }
+
+    assert( qFuzzyCompare(begin, timeToDouble(doubleToTime(begin))) );
+    assert( qFuzzyCompare(end, timeToDouble(doubleToTime(end))) );
 }
 
 
@@ -85,13 +75,18 @@ void Section::setEnd(const QTime &end)
     reorder(m_begin, m_end);
 }
 
-QDataStream& operator<<(QDataStream& out, const Section& section)
+bool Section::operator ==(const Section& other) const
+{
+    return other.begin() == begin() && other.end() == end() && other.caption() == caption();
+}
+
+QDataStream& operator<<(QDataStream& out, Section section)
 {
     out << section.m_caption << section.m_begin << section.m_end;
     return out;
 }
 
-QDataStream& operator>>(QDataStream& in, Section& section)
+QDataStream& operator>>(QDataStream& in, Section section)
 {
     QTime begin, end;
     in >> section.m_caption >> begin >> end;
@@ -99,6 +94,11 @@ QDataStream& operator>>(QDataStream& in, Section& section)
     section.m_begin = begin;
     section.m_end = end;
     return in;
+}
+
+bool Section::isValid() const
+{
+    return m_begin.isValid() && m_end.isValid();
 }
 
 

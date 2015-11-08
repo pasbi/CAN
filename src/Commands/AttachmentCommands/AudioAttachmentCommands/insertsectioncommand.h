@@ -2,19 +2,19 @@
 #define INSERTSECTIONCOMMAND_H
 
 #include "Commands/modelcommand.h"
+#include "Attachments/AudioAttachment/section.h"
 
 class SectionsModel;
-class Section;
 class InsertSectionCommand : public ModelCommand<SectionsModel>
 {
 public:
-    InsertSectionCommand( SectionsModel* model, const Section& section, int index );
+    InsertSectionCommand( SectionsModel* model, Section section, int index = -1 );
 
     void undo();
     void redo();
 
 private:
-    const Section& m_section;
+    Section m_section;
     const int m_index;
 };
 

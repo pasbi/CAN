@@ -77,7 +77,7 @@ void AudioSlider::clearIndicators()
     ui->slider->clearIndicators();
 }
 
-void AudioSlider::setSection(const Section *section)
+void AudioSlider::setSection(Section section)
 {
     ui->slider->setSection( section );
 }

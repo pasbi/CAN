@@ -19,13 +19,7 @@ void AudioAttachment::open()
     }
 }
 
-void AudioAttachment::appendSection(const Section &section)
-{
-    sectionsModel()->appendSection( section );
-    setSection( sectionsModel()->section( sectionsModel()->rowCount() - 1 ) );
-}
-
-void AudioAttachment::setSection(const Section *section)
+void AudioAttachment::setSection(Section section)
 {
     m_currentSection = section;
     emit currentSectionChanged( m_currentSection );
@@ -46,7 +40,7 @@ void AudioAttachment::deserialize(QDataStream &in)
     in >> index;
     if (index < 0)
     {
-        setSection(nullptr);
+        setSection(Section());
     }
     else
     {

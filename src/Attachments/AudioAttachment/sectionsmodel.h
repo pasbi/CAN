@@ -18,22 +18,15 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
-    // creates a undo/redo command which will call setData_
     bool setData(const QModelIndex &index, const QVariant &value, int role);
 
-    void insertSection( const Section& section , int index);
-    void appendSection( const Section& section ) { insertSection( section, m_sections.length() ); }
     void removeSection( int i );
-    void removeSection( const Section* section );
+    void insertSection(Section section, int i);
 
-    const Section* section( int index ) const;
+    Section section( int index ) const;
 
-    int indexOf( const Section* section ) const;
+    int indexOf(Section section ) const;
 private:
-    bool insertRows(int row, int count, const QModelIndex &parent);
-    QList<Section> m_sectionsToBeInserted;
-
-    bool removeRows(int row, int count, const QModelIndex &parent);
 
     QList<Section> m_sections;
 

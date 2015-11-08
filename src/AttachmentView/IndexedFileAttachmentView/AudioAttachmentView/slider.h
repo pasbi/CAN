@@ -2,8 +2,8 @@
 #define SLIDER_H
 
 #include <QSlider>
+#include "Attachments/AudioAttachment/section.h"
 
-class Section;
 class Slider : public QSlider
 {
     Q_OBJECT
@@ -23,7 +23,7 @@ public slots:
     void setLeftIndicator( double value );
     void clearIndicators();
 
-    void setSection( const Section* section );
+    void setSection(Section section );
 
 protected:
     void paintEvent(QPaintEvent *ev);
@@ -31,7 +31,7 @@ protected:
 private:
     static const double SLIDER_MULTIPLIER;
     double m_leftIndicator = -1;
-    const Section* m_section = nullptr;
+    Section m_section;
 
     static void drawHandle(QPainter& painter, int pos);
     static void drawRange(QPainter& painter, int start, int width, int pos);

@@ -3,9 +3,9 @@
 
 #include "Attachments/indexedfileattachment.h"
 #include "player.h"
+#include "section.h"
 
 class SectionsModel;
-class Section;
 class AudioAttachment : public IndexedFileAttachment
 {
     Q_OBJECT
@@ -18,9 +18,7 @@ public:
     SectionsModel* sectionsModel() const { return m_sectionsModel; }
     Player& player() { return m_player; }
     const Player& player() const { return m_player; }
-
-    void appendSection( const Section& section );
-    void setSection( const Section* section );
+    void setSection(Section section );
 
 protected:
     void serialize(QDataStream &out) const;
@@ -35,10 +33,10 @@ private:
     Player m_player;
     QString m_filename;
 
-    const Section* m_currentSection = nullptr;
+    Section m_currentSection;
 
 signals:
-    void currentSectionChanged( const Section* );
+    void currentSectionChanged( Section );
 
 };
 

@@ -35,7 +35,7 @@ QString timeToString(const QTime& time)
 
 QVariant SectionsModel::data(const QModelIndex &index, int role) const
 {
-    const Section& section = m_sections[ index.row() ];
+    Section section = m_sections[ index.row() ];
     switch (role)
     {
     case Qt::EditRole:
@@ -108,48 +108,23 @@ bool SectionsModel::setData(const QModelIndex &index, const QVariant &value, int
     }
 }
 
-bool SectionsModel::insertRows(int row, int count, const QModelIndex &parent)
+void SectionsModel::insertSection(Section section, int i)
 {
-    assert( count == m_sectionsToBeInserted.length() );
-    assert( !parent.isValid() );
-
-    beginInsertRows(parent, row, row + count - 1);
-    for (int i = row; i < row + count; ++i)
-    {
-        m_sections.insert(i, m_sectionsToBeInserted.takeFirst());
-    }
+    beginInsertRows(QModelIndex(), i, i);
+    m_sections.insert(i, section);
     endInsertRows();
-    assert( m_sectionsToBeInserted.isEmpty() );
-    return true;
 }
 
-#include "Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.h"
-void SectionsModel::insertSection(const Section &section, int index)
+Section SectionsModel::section(int index) const
 {
-    app().pushCommand( new InsertSectionCommand( this, section, index ) );
+    return m_sections[index];
 }
 
-bool SectionsModel::removeRows(int row, int count, const QModelIndex &parent)
-{
-    beginRemoveRows( parent, row, row + count -1 );
-    for (int i = row + count - 1; i >= row; --i)
-    {
-        m_sections.removeAt(i);
-    }
-    endRemoveRows();
-    return true;
-}
-
-const Section* SectionsModel::section(int index) const
-{
-    return &m_sections[index];
-}
-
-int SectionsModel::indexOf(const Section *section) const
+int SectionsModel::indexOf(Section section) const
 {
     for (int i = 0; i < m_sections.length(); ++i)
     {
-        if (&m_sections[i] == section)
+        if (m_sections[i] == section)
         {
                 return i;
         }
@@ -157,27 +132,11 @@ int SectionsModel::indexOf(const Section *section) const
     return -1;
 }
 
-void SectionsModel::removeSection(const Section *section)
-{
-    int index = -1;
-    for (int i = 0; i < m_sections.length(); ++i)
-    {
-        if (&m_sections[i] == section)
-        {
-            index = i;
-        }
-    }
-
-    if (index >= 0)
-    {
-        removeSection( index );
-    }
-}
-
-
 void SectionsModel::removeSection(int i)
 {
-    app().pushCommand( new DeleteSectionCommand( this, i ) );
+    beginRemoveRows(QModelIndex(), i, i);
+    m_sections.removeAt(i);
+    endRemoveRows();
 }
 
 QDataStream& operator<<(QDataStream& out, const SectionsModel* model)

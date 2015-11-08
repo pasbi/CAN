@@ -9,7 +9,7 @@ class Section
 {
 public:
     Section(const QString & caption, const QTime &begin, const QTime &end );
-    Section(const QString & caption, const double begin, const double end);
+    Section(const QString & caption, double begin, double end);
     Section();
 
     QString caption() const { return m_caption; }
@@ -23,8 +23,12 @@ public:
     void setBegin(const QTime& begin);
     void setEnd(const QTime& end);
 
+    bool isValid() const;
+
     QJsonObject toJsonObject() const;
     bool restoreFromJsonObject(const QJsonObject& object );
+
+    bool operator==(const Section& other) const;
 
 
 
@@ -33,12 +37,12 @@ private:
     QTime m_begin;
     QTime m_end;
 
-    friend QDataStream& operator<<(QDataStream& out, const Section& model);
-    friend QDataStream& operator>>(QDataStream& in, Section& model);
+    friend QDataStream& operator<<(QDataStream& out, const Section model);
+    friend QDataStream& operator>>(QDataStream& in, Section model);
 
 };
 
-QDataStream& operator<<(QDataStream& out, const Section& model);
-QDataStream& operator>>(QDataStream& in, Section& model);
+QDataStream& operator<<(QDataStream& out, const Section model);
+QDataStream& operator>>(QDataStream& in, Section model);
 
 #endif // SECTION_H

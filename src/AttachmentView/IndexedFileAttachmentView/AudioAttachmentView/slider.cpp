@@ -140,10 +140,10 @@ void Slider::paintEvent(QPaintEvent *ev)
         const int pos = relPos * (width() - lMargin - rMargin) + lMargin;
         drawOpenSection(painter, pos);
     }
-    else if  (m_section)
+    else if (m_section.isValid())
     {
-        const double relPosL = (m_section->beginDouble() - minimum()) / (maximum() - minimum());
-        const double relPosR = (m_section->endDouble()   - minimum()) / (maximum() - minimum());
+        const double relPosL = (m_section.beginDouble() - minimum()) / (maximum() - minimum());
+        const double relPosR = (m_section.endDouble()   - minimum()) / (maximum() - minimum());
 
         const int posL = relPosL * (width() - lMargin - rMargin) + lMargin;
         const int posR = relPosR * (width() - lMargin - rMargin) + lMargin;
@@ -153,7 +153,7 @@ void Slider::paintEvent(QPaintEvent *ev)
     drawHandle(painter, handlePos);
 }
 
-void Slider::setSection(const Section *section)
+void Slider::setSection(Section section)
 {
     m_section = section;
     update();
@@ -161,18 +161,18 @@ void Slider::setSection(const Section *section)
 
 void Slider::checkTurns()
 {
-    if (m_section)
+    if (m_section.isValid())
     {
-        if (value() > m_section->endDouble())
+        if (value() > m_section.endDouble())
         {
-            setValue( m_section->beginDouble() );
-            emit valueChanged( m_section->beginDouble() );
+            setValue( m_section.beginDouble() );
+            emit valueChanged( m_section.beginDouble() );
         }
 
-        if (value() < m_section->beginDouble())
+        if (value() < m_section.beginDouble())
         {
-            setValue( m_section->beginDouble() );
-            emit valueChanged( m_section->beginDouble() );
+            setValue( m_section.beginDouble() );
+            emit valueChanged( m_section.beginDouble() );
         }
     }
 }

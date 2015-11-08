@@ -4,6 +4,7 @@
 #include "QSignalBlocker"
 #include "DatabaseView/ItemDelegates/durationdelegate.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
+#include "Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.h"
 
 
 const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/icons/icons/turnleft.png";
@@ -55,7 +56,7 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     ui->sectionView->addAction( restoreSectionAction );
     connect( restoreSectionAction, SIGNAL(triggered()), this, SLOT(restoreCurrentSection()) );
 
-    connect( ui->sectionView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(restoreCurrentSection()) );
+    connect( ui->sectionView, SIGNAL(clicked(QModelIndex)), this, SLOT(restoreCurrentSection()) );
     connect( ui->pushButtonRestoreSection, SIGNAL(clicked()), this, SLOT(restoreCurrentSection()) );
     connect( ui->pushButtonDeleteSection, SIGNAL(clicked()), this, SLOT(deleteCurrentSection()) );
 
@@ -85,7 +86,7 @@ void AudioAttachmentView::polish()
         ui->slider->stop();
     });
 
-    connect( a, SIGNAL(currentSectionChanged(const Section*)), ui->slider, SLOT(setSection(const Section*)));
+    connect( a, SIGNAL(currentSectionChanged(Section)), ui->slider, SLOT(setSection(Section)));
 
     open();
 
@@ -94,6 +95,15 @@ void AudioAttachmentView::polish()
     ui->doubleSpinBoxTempo->setValue( player().tempo() );
 
     ui->sectionView->setModel( a->sectionsModel() );
+
+    connect( a->sectionsModel(), &QAbstractTableModel::rowsAboutToBeRemoved, [this, a]()
+    {
+        a->setSection(Section());
+    });
+    connect( a->sectionsModel(), &QAbstractTableModel::rowsInserted, [this, a](const QModelIndex&, int index)
+    {
+        a->setSection( a->sectionsModel()->section(index) );
+    });
 
 #endif
 }
@@ -159,7 +169,7 @@ void AudioAttachmentView::recordSection(bool abort)
         state = Idle;
         ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
         ui->slider->clearIndicators();
-        attachment<AudioAttachment>()->setSection( nullptr );
+        attachment<AudioAttachment>()->setSection( Section() );
     }
     else
     {
@@ -169,7 +179,7 @@ void AudioAttachmentView::recordSection(bool abort)
             ui->slider->clearIndicators();
             leftPos = pos;
             ui->slider->setLeftIndicator( leftPos );
-            attachment<AudioAttachment>()->setSection( nullptr );
+            attachment<AudioAttachment>()->setSection( Section() );
 
             state = LeftRecorded;
             ui->pushButtonRecordSection->setIcon( QIcon(RECORD_RIGHT_POSITION_ICON_PATH) );
@@ -179,7 +189,8 @@ void AudioAttachmentView::recordSection(bool abort)
             ui->slider->clearIndicators();
 
             Section section(tr("Unnamed"), leftPos, pos );
-            attachment<AudioAttachment>()->appendSection( section );
+
+            app().pushCommand( new InsertSectionCommand(attachment<AudioAttachment>()->sectionsModel(), section));
 
             state = Idle;
             ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
@@ -194,7 +205,7 @@ void AudioAttachmentView::recordSection(bool abort)
 
 void AudioAttachmentView::restoreCurrentSection()
 {
-    const Section* section = nullptr;
+    Section section;
     QModelIndexList indexes = ui->sectionView->selectionModel()->selectedRows();
     if (!indexes.isEmpty() && indexes.first().isValid())
     {
@@ -209,7 +220,7 @@ void AudioAttachmentView::deleteCurrentSection()
     if (!indexes.isEmpty() && indexes.first().isValid())
     {
         attachment<AudioAttachment>()->sectionsModel()->removeSection( indexes.first().row() );
-        attachment<AudioAttachment>()->setSection(nullptr);
+        attachment<AudioAttachment>()->setSection(Section());
     }
 }
 

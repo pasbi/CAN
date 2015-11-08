@@ -3,12 +3,12 @@
 
 #include <QWidget>
 #include <QTimer>
+#include "Attachments/AudioAttachment/section.h"
 
 namespace Ui {
 class AudioSlider;
 }
 
-class Section;
 class AudioSlider : public QWidget
 {
     Q_OBJECT
@@ -28,7 +28,7 @@ public slots:
     void setLeftIndicator( double value );
     void clearIndicators();
 
-    void setSection( const Section* section );
+    void setSection(Section section );
 
     void pause();
     void play();
