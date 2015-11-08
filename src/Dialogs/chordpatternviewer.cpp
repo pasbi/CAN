@@ -124,7 +124,7 @@ void ChordPatternViewer::displayChordPatternAttachment(AbstractChordPatternAttac
     ChordPatternViewer cpv( attachment, parent );
     cpv.exec();
 
-    if (!qFuzzyIsNull(attachment->scrollDownTempo()))
+    if (qFuzzyIsNull(attachment->scrollDownTempo()))
     {
         attachment->setScrollDownTempo( cpv.scrollDownTempo() );
     }
