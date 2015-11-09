@@ -12,7 +12,6 @@
 #include "looselines.h"
 
 
-
 void insertSorted( QList<int>& list, int n )
 {
     int i = 0;
@@ -144,6 +143,39 @@ void ChordPatternEdit::keyPressEvent(QKeyEvent* e)
         // do not insert actual tab.
         e->accept();
         return;
+    }
+
+    if (se->key() == Qt::Key_Delete && (se->modifiers() & Qt::ShiftModifier))
+    {
+        QString text = toPlainText();
+        int pos = textCursor().position();
+
+        while (pos > 0)
+        {
+            pos--;
+            if (text[pos] == '\n')
+            {
+                break;
+            }
+        }
+
+        int n = pos;
+        while (n < text.length())
+        {
+            n++;
+            if (text[n] == '\n')
+            {
+                break;
+            }
+        }
+
+        QString removedLine = text.mid(pos, n-pos);
+        text.remove(pos, n-pos);
+        app().clipboard()->setText(removedLine);
+        setText(text);
+        QTextCursor cursor = textCursor();
+        cursor.setPosition(pos);
+        setTextCursor(cursor);
     }
 
     return QTextEdit::keyPressEvent(e);
