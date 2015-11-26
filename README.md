@@ -15,3 +15,6 @@ Features:
 - advanced copy/paste capabilities
 - export songs/collections to pdf
 - optionally arbitrary sized pdfs, so no need to turn pages in an electronic pdf viewer
+
+This branch is supposed to support git, i.e. a project is a git repository which can be commited, pushed, ... from within the gui.
+Unfortunately this feature is far from stable, actually this branch is quite outdated and probably won't receive updates anymore.
