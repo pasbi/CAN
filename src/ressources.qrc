@@ -52,8 +52,8 @@
         <file>icons/number41.png</file>
     </qresource>
     <qresource prefix="/translations">
-        <file>can2_de_DE.qm</file>
-        <file>can2_en_US.qm</file>
+        <file>can_de_DE.qm</file>
+        <file>can_en_US.qm</file>
         <file>qtmultimedia_de.qm</file>
         <file>qtbase_de.qm</file>
     </qresource>
