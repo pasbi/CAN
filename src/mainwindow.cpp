@@ -41,6 +41,7 @@
 #include "DatabaseView/EventDatabaseView/setlistview.h"
 #include "FileIndex/fileindex.h"
 #include "Dialogs/copyindexedfilesdialog.h"
+#include "AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -149,6 +150,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( m_project.songDatabase(), &SongDatabase::attachmentAdded, [this](int i)
     {
         setCurrentAttachment( i );
+
+        AttachmentView* view = ui->songDatabaseWidget->attachmentChooser()->currentAttachmentView();
+        if (view && view->inherits("IndexedFileAttachmentView"))
+        {
+            IndexedFileAttachmentView* ifa = static_cast<IndexedFileAttachmentView*>(view);
+            ifa->chooseFile();
+        }
+
     });
     connect( m_project.songDatabase(), &SongDatabase::attachmentRemoved, [this](int i)
     {

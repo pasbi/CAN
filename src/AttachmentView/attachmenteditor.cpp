@@ -87,3 +87,8 @@ void AttachmentEditor::deactivateAttachmentView(const Attachment *attachment)
 {
     m_attachmentViews.value(const_cast<Attachment*>(attachment), nullptr)->deactivate();
 }
+
+AttachmentView* AttachmentEditor::currentAttachmentView() const
+{
+    return m_currentView;
+}

@@ -15,6 +15,7 @@ public:
     void setAttachment(Attachment* attachment);
     void deactivateAttachmentViews();
     void deactivateAttachmentView(const Attachment* attachment);
+    AttachmentView* currentAttachmentView() const;
 
 public slots:
     void updateAttachmentView();

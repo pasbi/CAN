@@ -12,6 +12,7 @@
 #include "Commands/SongCommands/songremoveattachmentcommand.h"
 #include "Attachments/attachment.h"
 #include "Database/SongDatabase/song.h"
+#include "AttachmentView/attachmentview.h"
 
 AttachmentChooser::AttachmentChooser(QWidget *parent) :
     QWidget(parent),
@@ -227,4 +228,9 @@ void AttachmentChooser::on_buttonDelete_clicked()
         ui->attachmentEditor->deactivateAttachmentView(attachment);
         app().pushCommand( new SongRemoveAttachmentCommand(attachment->song(), attachment->song()->attachments().indexOf(attachment) ) );
     }
+}
+
+AttachmentView* AttachmentChooser::currentAttachmentView() const
+{
+    return ui->attachmentEditor->currentAttachmentView();
 }

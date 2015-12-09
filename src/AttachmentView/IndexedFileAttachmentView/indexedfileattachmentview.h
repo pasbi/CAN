@@ -20,6 +20,7 @@ public:
 protected slots:
     virtual void polish();
     virtual void open();
+public slots:
     virtual void chooseFile();
 
 private:

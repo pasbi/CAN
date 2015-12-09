@@ -10,6 +10,7 @@ class AttachmentChooser;
 
 class Song;
 class Attachment;
+class AttachmentView;
 class AttachmentChooser : public QWidget
 {
     Q_OBJECT
@@ -19,6 +20,7 @@ public:
     ~AttachmentChooser();
     int currentAttachmentIndex() const;
     Attachment* currentAttachment() const;
+    AttachmentView* currentAttachmentView() const;
 
 public slots:
     void setSong( Song* song );
