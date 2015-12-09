@@ -120,6 +120,8 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
         QPixmap midiIcon, songIcon;
         switch (role)
         {
+        case Qt::SizeHintRole:
+            return QSize(24, 0);
         case Qt::DecorationRole:
 #ifdef HAVE_PROGRAM
             if (m_items[section]->program().isValid())
