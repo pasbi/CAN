@@ -69,5 +69,18 @@ void IndexedFileAttachment::serialize(QDataStream &out) const
 
 
 
-
-
+IndexedFileAttachment::IndexedFileStatus IndexedFileAttachment::status() const
+{
+    if (hash().isEmpty())
+    {
+        return NoFileSet;
+    }
+    else if (filename().isEmpty())
+    {
+        return FileNotAvailable;
+    }
+    else
+    {
+        return FileAvailable;
+    }
+}

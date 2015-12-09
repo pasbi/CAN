@@ -157,7 +157,6 @@ MainWindow::MainWindow(QWidget *parent) :
             IndexedFileAttachmentView* ifa = static_cast<IndexedFileAttachmentView*>(view);
             ifa->chooseFile();
         }
-
     });
     connect( m_project.songDatabase(), &SongDatabase::attachmentRemoved, [this](int i)
     {
@@ -928,9 +927,9 @@ void MainWindow::open(const QString &filename)
 
 void MainWindow::createLanguageMenu()
 {
-    for (const QFileInfo& fileInfo : QDir(":/translations/").entryInfoList(QStringList() << "can2*.qm", QDir::Files, QDir::Name ))
+    for (const QFileInfo& fileInfo : QDir(":/translations/").entryInfoList(QStringList() << "can*.qm", QDir::Files, QDir::Name ))
     {
-        QString locale = fileInfo.baseName().mid(5); // skip ending, skip can2_
+        QString locale = fileInfo.baseName().mid(4); // skip ending, skip can_
         QAction* action = ui->menu_Language->addAction( QLocale(locale).nativeLanguageName() );
         action->setCheckable( true );
 

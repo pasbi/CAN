@@ -16,7 +16,10 @@ protected:
     IndexedFileAttachment();
 
 public:
-    bool fileExists() const;
+
+    enum IndexedFileStatus { NoAudioAttachment = 0, NoFileSet = 1, FileNotAvailable = 2, FileAvailable = 3};
+    IndexedFileStatus status() const;
+
     QString filename() const;
     QByteArray hash() const { return m_hash; }
 

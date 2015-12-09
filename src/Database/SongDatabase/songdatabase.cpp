@@ -9,6 +9,7 @@
 #include "application.h"
 #include "commontypes.h"
 #include "Attachments/attachment.h"
+#include "Attachments/AudioAttachment/audioattachment.h"
 #include <QPainter>
 
 SongDatabase::SongDatabase(Project *project) :
@@ -80,16 +81,18 @@ QIcon buildIcon(QPixmap midiMap, QPixmap songMap)
     return QIcon(pixmap);
 }
 
-bool hasAudioAttachment(const Song* song)
+
+AudioAttachment::IndexedFileStatus audioAttachmentStatus(const Song* song)
 {
-    for (const Attachment* attachment : song->attachments())
+    AudioAttachment::IndexedFileStatus best = AudioAttachment::NoAudioAttachment;
+    for (const Attachment* a : song->attachments())
     {
-        if (attachment->inherits("AudioAttachment"))
+        if (a->inherits("AudioAttachment"))
         {
-            return true;
+            best = qMax(best, static_cast<const AudioAttachment*>(a)->status());
         }
     }
-    return false;
+    return best;
 }
 
 QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int role) const
@@ -129,9 +132,20 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
                 midiIcon = QPixmap(":/icons/icons/midi.png");
             }
 #endif
-            if (hasAudioAttachment(m_items[section]))
+            switch (audioAttachmentStatus(m_items[section]))
             {
+            case IndexedFileAttachment::NoAudioAttachment:
+                songIcon = QPixmap();
+                break;
+            case IndexedFileAttachment::NoFileSet:
+                songIcon = QPixmap(":/icons/icons/songNoFile.png");
+                break;
+            case IndexedFileAttachment::FileNotAvailable:
+                songIcon = QPixmap(":/icons/icons/songNotAvailable.png");
+                break;
+            case IndexedFileAttachment::FileAvailable:
                 songIcon = QPixmap(":/icons/icons/song1.png");
+                break;
             }
             return buildIcon(midiIcon, songIcon);
         }

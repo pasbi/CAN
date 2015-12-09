@@ -58,7 +58,7 @@ void installTranslator()
 
     // load translator
     static QTranslator translator;
-    if (translator.load(":/translations/can2_" + localeCode))
+    if (translator.load(":/translations/can_" + localeCode))
     {
         if (!Application::installTranslator( &translator ))
         {
