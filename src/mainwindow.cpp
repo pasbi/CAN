@@ -573,7 +573,14 @@ void MainWindow::gotoEventView()
 
 void MainWindow::my_on_actionNew_Song_triggered()
 {
-    app().pushCommand( new DatabaseNewItemCommand<Song>( m_project.songDatabase(), new Song(m_project.songDatabase()) )  );
+    Song* song =  new Song(m_project.songDatabase());
+    app().pushCommand( new DatabaseNewItemCommand<Song>( m_project.songDatabase(), song)  );
+
+    // add default chord pattern attachment
+    Attachment* attachment = Creatable::create<Attachment>("ChordPatternAttachment");
+    attachment->setSong(song);
+    song->addAttachment( attachment );
+
     updateActionsEnabled();
 }
 

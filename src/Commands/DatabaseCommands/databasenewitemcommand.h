@@ -3,6 +3,8 @@
 
 #include "Commands/itemownercommanddecorator.h"
 #include "Commands/modelcommand.h"
+#include "global.h"
+
 
 template<typename T> class Database;
 template<typename T>
@@ -35,5 +37,9 @@ public:
 private:
     const int m_row;
 };
+
+
+
+
 
 #endif // DATABASENEWITEMCOMMAND_H
