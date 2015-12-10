@@ -194,6 +194,7 @@
     <addaction name="actionNew_Project"/>
     <addaction name="separator"/>
     <addaction name="actionOpen"/>
+    <addaction name="actionOpen_recent"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
    </widget>
@@ -502,6 +503,11 @@
   <action name="actionCopy_Indexed_Attachments">
    <property name="text">
     <string>Copy Indexed Attachments ...</string>
+   </property>
+  </action>
+  <action name="actionOpen_recent">
+   <property name="text">
+    <string>Open recent ...</string>
    </property>
   </action>
  </widget>

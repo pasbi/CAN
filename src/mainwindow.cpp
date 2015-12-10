@@ -53,7 +53,8 @@ QString styleSheetContent()
     return file.readAll();
 }
 
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProject, "");
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProjects, QStringList(""));
+CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, MaxRecentProjects, 5);
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentCopyIndexedFilesTargetDir, QDir::homePath());
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, locale, QLocale::system().name().toStdString().c_str());
 CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexDefaultPath, QDir::homePath() );
@@ -348,7 +349,32 @@ bool MainWindow::saveProject()
 void MainWindow::setCurrentPath(const QString &path)
 {
     m_currentPath = path;
-    config.set( "RecentProject", m_currentPath );
+
+    // get list of recent projects, update it and set it.
+    QStringList recentProjects = config.value("RecentProjects").toStringList();
+
+    recentProjects.removeDuplicates();
+    while (recentProjects.length() > config.value("MaxRecentProjects").toInt())
+    {
+        recentProjects.removeLast();
+    }
+    config.set( "RecentProjects", recentProjects );
+
+    // create open recent menu
+    if (!ui->actionOpen_recent->menu())
+    {
+        ui->actionOpen_recent->setMenu( new QMenu(this) );
+    }
+    ui->actionOpen_recent->menu()->clear();
+    for (const QString& filename : recentProjects)
+    {
+        QString name = QFileInfo(filename).baseName();
+        QAction* action = ui->actionOpen_recent->menu()->addAction(name);
+        connect(action, &QAction::triggered, [filename, this]()
+        {
+            this->open(filename);
+        });
+    }
 }
 
 QString MainWindow::proposedPath() const
@@ -463,8 +489,12 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::loadDefaultProject()
 {
-    setCurrentPath(config.value( "RecentProject" ).toString());
-    open( m_currentPath );
+    QStringList recentProjects = config.value("RecentProjects").toStringList();
+    if (!recentProjects.isEmpty())
+    {
+        setCurrentPath(recentProjects.first());
+        open( m_currentPath );
+    }
 }
 
 int MainWindow::currentAttachmentIndex() const
