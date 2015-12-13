@@ -353,6 +353,8 @@ void MainWindow::setCurrentPath(const QString &path)
     // get list of recent projects, update it and set it.
     QStringList recentProjects = config.value("RecentProjects").toStringList();
 
+    recentProjects.prepend(m_currentPath);
+
     recentProjects.removeDuplicates();
     while (recentProjects.length() > config.value("MaxRecentProjects").toInt())
     {
