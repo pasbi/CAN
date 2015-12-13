@@ -126,9 +126,22 @@ double Player::duration() const
 
 void Player::setVolume(double volume)
 {
-    if (m_audioOutput)
+    if (m_audioOutput && volume != m_audioOutput->volume())
     {
         m_audioOutput->setVolume(volume);
+        emit volumeChanged();
+    }
+}
+
+double Player::volume() const
+{
+    if (m_audioOutput)
+    {
+        return m_audioOutput->volume();
+    }
+    else
+    {
+        return 0;
     }
 }
 

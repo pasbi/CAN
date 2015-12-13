@@ -1,6 +1,8 @@
 #include "playerwidget.h"
 #include "ui_playerwidget.h"
 #include "Attachments/AudioAttachment/player.h"
+#include "AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.h"
+
 
 PlayerWidget::PlayerWidget(QWidget *parent) :
     QWidget(parent),
@@ -15,8 +17,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
     connect(ui->doubleSpinBoxTempo, SIGNAL(valueChanged(double)), this, SLOT(updatePitchTempo()));
     connect(ui->slider, SIGNAL(valueChanged(double)), this, SLOT(seek(double)));
 
-
-//    connect(this, SIGNAL(volumeChanged(int)), this, SLOT(updateVolume()));
+    connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(updateVolume()));
 }
 
 PlayerWidget::~PlayerWidget()
@@ -44,8 +45,10 @@ void PlayerWidget::setPlayer(Player *player)
     reConnect(m_player, player, SIGNAL(notify()), this, SLOT(updatePosition()));
     reConnect(m_player, player, SIGNAL(pitchChanged()), this, SLOT(setPitchTempo()));
     reConnect(m_player, player, SIGNAL(tempoChanged()), this, SLOT(setPitchTempo()));
+    reConnect(m_player, player, SIGNAL(volumeChanged()), this, SLOT(setVolume()));
 
     m_player = player;
+    setVolume();
 
     ui->slider->stop();
 
@@ -153,10 +156,17 @@ void PlayerWidget::start()
 
 void PlayerWidget::updateVolume()
 {
-    //config.set("Muted", ui->volumeSlider->isMuted());
-    //config.set("Volume", ui->volumeSlider->value());
+    AudioAttachmentView::config.set("Muted", ui->volumeSlider->isMuted());
+    AudioAttachmentView::config.set("Volume", ui->volumeSlider->value());
+    if (m_player)
+    {
+        m_player->setVolume(double(ui->volumeSlider->value()) / ui->volumeSlider->maximum());
+    }
+}
 
-    //TODO attachment<AudioAttachment>()->player().setVolume(double(ui->volumeSlider->value()) / ui->volumeSlider->maximum());
+void PlayerWidget::setVolume()
+{
+    ui->volumeSlider->setValue(m_player->volume() * ui->volumeSlider->maximum());
 }
 
 void PlayerWidget::updatePosition()

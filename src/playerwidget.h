@@ -29,6 +29,7 @@ private slots:
     void pause();
     void start();
     void updateVolume();
+    void setVolume();
     void updatePosition();
 
 private:

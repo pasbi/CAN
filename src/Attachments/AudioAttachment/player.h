@@ -29,6 +29,7 @@ public:
     bool isPlaying() const;
 
     void setVolume(double volume);
+    double volume() const;
 
 public slots:
     void start();
@@ -42,8 +43,9 @@ signals:
     void notify();
     void tempoChanged();
     void pitchChanged();
+    void volumeChanged();
 
-public: //TODO
+private:
     Buffer m_buffer;
     double m_pitch = 0;
     double m_tempo = 1;

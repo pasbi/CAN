@@ -165,7 +165,6 @@ void Buffer::decode(double pitch, double tempo, double offset)
                                  tempo,
                                  offset,
                                  &m_buffer.buffer() );
-        qDebug() << "start decoding...";
         m_decoder->start();
     }
 #else
