@@ -79,19 +79,21 @@ bool Section::operator ==(const Section& other) const
     return other.begin() == begin() && other.end() == end() && other.caption() == caption();
 }
 
-QDataStream& operator<<(QDataStream& out, Section section)
+bool Section::operator !=(const Section& other) const
+{
+    return !(*this == other);
+}
+
+QDataStream& operator<<(QDataStream& out, const Section& section)
 {
     out << section.m_caption << section.m_begin << section.m_end;
     return out;
 }
 
-QDataStream& operator>>(QDataStream& in, Section section)
+QDataStream& operator>>(QDataStream& in, Section& section)
 {
-    QTime begin, end;
-    in >> section.m_caption >> begin >> end;
+    in >> section.m_caption >> section.m_begin >> section.m_end;
 
-    section.m_begin = begin;
-    section.m_end = end;
     return in;
 }
 

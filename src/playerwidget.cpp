@@ -2,6 +2,7 @@
 #include "ui_playerwidget.h"
 #include "Attachments/AudioAttachment/player.h"
 #include "AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.h"
+#include "AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.h"
 
 
 PlayerWidget::PlayerWidget(QWidget *parent) :
@@ -46,9 +47,11 @@ void PlayerWidget::setPlayer(Player *player)
     reConnect(m_player, player, SIGNAL(pitchChanged()), this, SLOT(setPitchTempo()));
     reConnect(m_player, player, SIGNAL(tempoChanged()), this, SLOT(setPitchTempo()));
     reConnect(m_player, player, SIGNAL(volumeChanged()), this, SLOT(setVolume()));
+    reConnect(m_player, player, SIGNAL(currentSectionChanged()), this, SLOT(setCurrentSection()));
 
     m_player = player;
     setVolume();
+    setCurrentSection();
 
     ui->slider->stop();
 
@@ -72,10 +75,6 @@ void PlayerWidget::setPlayer(Player *player)
     ui->pushButtonStop->setEnabled(m_player);
 }
 
-void PlayerWidget::setSection(Section section)
-{
-    ui->slider->setSection(section);
-}
 
 void PlayerWidget::stop()
 {
@@ -173,3 +172,26 @@ void PlayerWidget::updatePosition()
 {
     ui->slider->setPosition(m_player->position());
 }
+
+void PlayerWidget::setCurrentSection()
+{
+    if (m_player)
+    {
+        ui->slider->setSection(m_player->currentSection());
+    }
+    else
+    {
+        ui->slider->setSection(Section());
+    }
+}
+
+void PlayerWidget::updateCurrentSection()
+{
+
+}
+
+AudioSlider* PlayerWidget::slider() const
+{
+    return ui->slider;
+}
+

@@ -5,6 +5,7 @@
 #include <QString>
 #include <QAudioOutput>
 #include <QTimer>
+#include "Attachments/AudioAttachment/section.h"
 
 #include "buffer.h"
 
@@ -25,6 +26,7 @@ public:
     double pitch() const { return m_pitch; }
     double tempo() const { return m_tempo; }
     double position() const;
+    Section currentSection() const;
 
     bool isPlaying() const;
 
@@ -35,6 +37,7 @@ public slots:
     void start();
     void pause();
     void stop();
+    void setCurrentSection(Section section);
 
 signals:
     void started();
@@ -44,6 +47,7 @@ signals:
     void tempoChanged();
     void pitchChanged();
     void volumeChanged();
+    void currentSectionChanged();
 
 private:
     Buffer m_buffer;
@@ -52,6 +56,7 @@ private:
     double m_offset = 0;
     QAudioOutput* m_audioOutput = nullptr;
     void seek();
+    Section m_currentSection;
 
 };
 #endif // PLAYER_H

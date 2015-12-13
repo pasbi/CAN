@@ -9,6 +9,7 @@ class PlayerWidget;
 }
 
 class Player;
+class AudioSlider;
 class PlayerWidget : public QWidget
 {
     Q_OBJECT
@@ -18,9 +19,9 @@ public:
     ~PlayerWidget();
 
     void setPlayer(Player* player);
+    AudioSlider* slider() const;
 
 private slots:
-    void setSection(Section section);
     void stop();
     void setPlayPause(bool play);
     void seek(double pos);
@@ -31,6 +32,8 @@ private slots:
     void updateVolume();
     void setVolume();
     void updatePosition();
+    void setCurrentSection();
+    void updateCurrentSection();
 
 private:
     Ui::PlayerWidget *ui;

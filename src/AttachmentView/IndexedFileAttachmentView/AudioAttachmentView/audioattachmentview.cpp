@@ -5,6 +5,7 @@
 #include "DatabaseView/ItemDelegates/durationdelegate.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "Commands/AttachmentCommands/AudioAttachmentCommands/insertsectioncommand.h"
+#include "AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.h"
 
 
 const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/icons/icons/turnleft.png";
@@ -28,7 +29,6 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
 
     connect( ui->pushButtonClearSection,    SIGNAL(clicked()),              this, SLOT(abortSection())                              );
     connect( ui->pushButtonRecordSection,   SIGNAL(clicked()),              this, SLOT(recordSection())                             );
-    //TODO connect( ui->slider,                    SIGNAL(paused()),               this, SLOT(pause())                                     );
 
     ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
     ui->pushButtonClearSection->setIcon( QIcon(":/icons/icons/cross56.png") );
@@ -56,7 +56,6 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     connect( ui->pushButtonRestoreSection, SIGNAL(clicked()), this, SLOT(restoreCurrentSection()) );
     connect( ui->pushButtonDeleteSection, SIGNAL(clicked()), this, SLOT(deleteCurrentSection()) );
 
-
     ui->sectionView->setItemDelegateForColumn(0, new LineEditDelegate(this));
     ui->sectionView->setItemDelegateForColumn(1, new DurationDelegate(this));
     ui->sectionView->setItemDelegateForColumn(2, new DurationDelegate(this));
@@ -83,20 +82,18 @@ void AudioAttachmentView::polish()
         ui->playerWidget->setPlayer(&a->player());
     });
 
-//    connect( a, SIGNAL(currentSectionChanged(Section)), ui->playerWidget, SLOT(setSection(Section)));
+    connect( a, SIGNAL(currentSectionChanged(Section)), &a->player(), SLOT(setCurrentSection(Section)));
 
+    ui->sectionView->setModel( a->sectionsModel() );
 
-
-//    ui->sectionView->setModel( a->sectionsModel() );
-
-//    connect( a->sectionsModel(), &QAbstractTableModel::rowsAboutToBeRemoved, [this, a]()
-//    {
-//        a->setSection(Section());
-//    });
-//    connect( a->sectionsModel(), &QAbstractTableModel::rowsInserted, [this, a](const QModelIndex&, int index)
-//    {
-//        a->setSection( a->sectionsModel()->section(index) );
-//    });
+    connect( a->sectionsModel(), &QAbstractTableModel::rowsAboutToBeRemoved, [this, a]()
+    {
+        a->setSection(Section());
+    });
+    connect( a->sectionsModel(), &QAbstractTableModel::rowsInserted, [this, a](const QModelIndex&, int index)
+    {
+        a->setSection( a->sectionsModel()->section(index) );
+    });
 
 #endif
 }
@@ -104,27 +101,28 @@ void AudioAttachmentView::polish()
 
 void AudioAttachmentView::recordSection(bool abort)
 {
-    //TODO sections stuff should work via Player
-#ifdef TODO // HAVE_SOUNDTOUCH
+#ifdef HAVE_SOUNDTOUCH
     enum State { Idle, LeftRecorded };
     static State state;
     static double leftPos = -1;
+
+    AudioSlider* slider = ui->playerWidget->slider();
 
     if (abort)
     {
         state = Idle;
         ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
-        ui->slider->clearIndicators();
+        slider->clearIndicators();
         attachment<AudioAttachment>()->setSection( Section() );
     }
     else
     {
-        double pos = ui->slider->value();
+        double pos = slider->value();
         if (state == Idle)
         {
-            ui->slider->clearIndicators();
+            slider->clearIndicators();
             leftPos = pos;
-            ui->slider->setLeftIndicator( leftPos );
+            slider->setLeftIndicator( leftPos );
             attachment<AudioAttachment>()->setSection( Section() );
 
             state = LeftRecorded;
@@ -132,7 +130,7 @@ void AudioAttachmentView::recordSection(bool abort)
         }
         else
         {
-            ui->slider->clearIndicators();
+            slider->clearIndicators();
 
             Section section(tr("Unnamed"), leftPos, pos );
 

@@ -147,14 +147,39 @@ double Player::volume() const
 
 bool Player::isPlaying() const
 {
-    return m_audioOutput->state() == QAudio::ActiveState;
+    if (m_audioOutput)
+    {
+        return m_audioOutput->state() == QAudio::ActiveState;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 double Player::position() const
 {
-    double elapsed = m_audioOutput->elapsedUSecs() / 1000.0 / 1000.0;
+    double elapsed = 0;
+    if (m_audioOutput)
+    {
+        elapsed += m_audioOutput->elapsedUSecs() / 1000.0 / 1000.0;
+    }
     elapsed += m_offset;
     return elapsed;
+}
+
+void Player::setCurrentSection(Section section)
+{
+    if (m_currentSection != section)
+    {
+        m_currentSection = section;
+        emit currentSectionChanged();
+    }
+}
+
+Section Player::currentSection() const
+{
+    return m_currentSection;
 }
 
 

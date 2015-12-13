@@ -29,6 +29,7 @@ public:
     bool restoreFromJsonObject(const QJsonObject& object );
 
     bool operator==(const Section& other) const;
+    bool operator!=(const Section& other) const;
 
 
 
@@ -37,12 +38,12 @@ private:
     QTime m_begin;
     QTime m_end;
 
-    friend QDataStream& operator<<(QDataStream& out, const Section model);
-    friend QDataStream& operator>>(QDataStream& in, Section model);
+    friend QDataStream& operator<<(QDataStream& out, const Section& model);
+    friend QDataStream& operator>>(QDataStream& in, Section& model);
 
 };
 
-QDataStream& operator<<(QDataStream& out, const Section model);
-QDataStream& operator>>(QDataStream& in, Section model);
+QDataStream& operator<<(QDataStream& out, const Section& model);
+QDataStream& operator>>(QDataStream& in, Section& model);
 
 #endif // SECTION_H
