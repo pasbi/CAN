@@ -8,11 +8,8 @@ AudioSlider::AudioSlider(QWidget *parent) :
     ui(new Ui::AudioSlider)
 {
     ui->setupUi(this);
-    connect( ui->slider, SIGNAL( valueChanged(double) ), this,                   SIGNAL( valueChanged(double) ) );
-    connect( ui->slider, SIGNAL( valueChanged(double) ), ui->doubleSpinBoxLeft,  SLOT(   setValue(double)     ) );
-    connect( ui->slider, SIGNAL( valueChanged(double) ), ui->doubleSpinBoxRight, SLOT(   setValue(double)     ) );
-    connect( &m_timer,   SIGNAL(timeout()),              this,                   SLOT(   onTimerTimeout()     ) );
-    m_timer.setInterval( 20 );
+
+    connect( ui->slider, SIGNAL( valueChanged(double) ), this, SIGNAL( valueChanged(double) ) );
 }
 
 AudioSlider::~AudioSlider()
@@ -22,7 +19,7 @@ AudioSlider::~AudioSlider()
 
 double AudioSlider::value() const
 {
-    return ui->doubleSpinBoxLeft->value();
+    return ui->slider->value();
 }
 
 void AudioSlider::setPosition( double pos )
@@ -87,28 +84,9 @@ void AudioSlider::setTempo(double tempo)
     m_tempo = tempo;
 }
 
-void AudioSlider::play()
-{
-    m_timer.start();
-}
-
-void AudioSlider::pause()
-{
-    m_timer.stop();
-}
 
 void AudioSlider::stop()
 {
     setPosition( 0 );
-    m_timer.stop();
 }
 
-void AudioSlider::onTimerTimeout()
-{
-    double pos = ui->slider->value() + m_timer.interval() / 1000.0 * m_tempo;
-    setPosition( pos );
-    if (maximum() - value() < 0.01)
-    {
-        emit paused();
-    }
-}

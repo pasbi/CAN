@@ -20,7 +20,7 @@ public:
     AudioAttachmentView(QWidget* parent = 0);
     ~AudioAttachmentView();
 
-    void deactivate();
+//    void deactivate();
 
 protected slots:
     void polish();
@@ -29,12 +29,6 @@ protected slots:
 
 
 private slots:
-    void setPitchTempo();
-    void on_pushButtonStop_clicked();
-    void on_pushButtonPlayPause_toggled(bool checked);
-    void seek( double pos );
-    void updateVolume();
-
     void abortSection() { recordSection(true);}
     void recordSection( bool abort = false );
 
@@ -43,12 +37,10 @@ private slots:
     void restoreCurrentSection();
     void deleteCurrentSection();
 
-    void pause();
-
 private:
     // there shall be at most one AudioAttachmentView which is currently playing.
     static AudioAttachmentView* m_playingAudioAttachmentView;
-    void setPlayingAudioAttachmentView();
+//    void setPlayingAudioAttachmentView();
 
 
 protected:

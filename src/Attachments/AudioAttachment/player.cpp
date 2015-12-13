@@ -19,10 +19,17 @@ void Player::stop()
 {
     if (m_audioOutput)
     {
-        m_audioOutput->stop();
-        seek(0);
+        if (m_audioOutput->state() != QAudio::StoppedState)
+        {
+            //m_offset = 0;
+            m_audioOutput->stop();
+            m_audioOutput->reset();
+            m_buffer.stop();
+            seek(0);
+            emit stopped();
+        }
+
     }
-    m_buffer.stop();
 }
 
 void Player::open( const QString &filename )
@@ -37,23 +44,36 @@ void Player::open( const QString &filename )
     m_buffer.open( filename );
 
     m_audioOutput = new QAudioOutput( QAudioDeviceInfo::defaultOutputDevice(), m_buffer.audioFormat() );
-    m_audioOutput->setNotifyInterval( 200 );    // sync
+    m_audioOutput->setNotifyInterval(11);
+    connect(m_audioOutput, SIGNAL(notify()), this, SIGNAL(notify()));
     seek(0);
 }
 
-void Player::play()
+void Player::start()
 {
     if (m_audioOutput)
     {
-        m_audioOutput->start( &m_buffer.buffer() );
+        if (m_audioOutput->state() != QAudio::ActiveState)
+        {
+            m_audioOutput->start( &m_buffer.buffer() );
+            emit started();
+        }
     }
 }
 
 void Player::pause()
 {
+    // save the position into offset. Else this information will be lost when stopping m_audioOutput.
+    // pause shall keep the position, unlike stop.
     if (m_audioOutput)
     {
-        m_audioOutput->stop();
+        if (m_audioOutput->state() != QAudio::StoppedState)
+        {
+            m_offset = position();
+            m_audioOutput->stop();
+            emit paused();
+        }
+
     }
 }
 
@@ -75,15 +95,27 @@ void Player::seek()
 
 void Player::seek(double pitch, double tempo, double second)
 {
-    m_pitch = pitch;
-    m_tempo = tempo;
+    if (m_pitch != pitch)
+    {
+        m_pitch = pitch;
+        emit pitchChanged();
+    }
+    if (m_tempo != tempo)
+    {
+        m_tempo = tempo;
+        emit tempoChanged();
+    }
     seek( second );
 }
 
 void Player::seek(double second)
 {
-    m_offset = second;// / m_tempo;
-    seek();
+    if (position() != second || m_buffer.buffer().size() == 0)
+    {
+        m_offset = second;
+        seek();
+        emit notify();
+    }
 }
 
 double Player::duration() const
@@ -98,6 +130,18 @@ void Player::setVolume(double volume)
     {
         m_audioOutput->setVolume(volume);
     }
+}
+
+bool Player::isPlaying() const
+{
+    return m_audioOutput->state() == QAudio::ActiveState;
+}
+
+double Player::position() const
+{
+    double elapsed = m_audioOutput->elapsedUSecs() / 1000.0 / 1000.0;
+    elapsed += m_offset;
+    return elapsed;
 }
 
 

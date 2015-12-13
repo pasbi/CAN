@@ -30,8 +30,6 @@ public slots:
 
     void setSection(Section section );
 
-    void pause();
-    void play();
     void stop();
 
 signals:
@@ -42,10 +40,6 @@ signals:
 private:
     Ui::AudioSlider *ui;
     double m_tempo = 1;
-    QTimer m_timer;
-
-private slots:
-    void onTimerTimeout();
 
 };
 

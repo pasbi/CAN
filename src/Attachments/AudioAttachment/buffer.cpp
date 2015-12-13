@@ -156,6 +156,7 @@ void Buffer::decode(double pitch, double tempo, double offset)
     stop();
     if (m_formatContext && m_audioStream && m_codecContext && m_streamIndex >= 0)
     {
+        m_offset = offset;
         m_decoder = new Decoder( m_formatContext,
                                  m_audioStream,
                                  m_codecContext,
@@ -164,8 +165,8 @@ void Buffer::decode(double pitch, double tempo, double offset)
                                  tempo,
                                  offset,
                                  &m_buffer.buffer() );
+        qDebug() << "start decoding...";
         m_decoder->start();
-        m_offset = offset;
     }
 #else
     Q_UNUSED( pitch  );

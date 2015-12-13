@@ -24,15 +24,26 @@ public:
     double duration() const;
     double pitch() const { return m_pitch; }
     double tempo() const { return m_tempo; }
+    double position() const;
+
+    bool isPlaying() const;
 
     void setVolume(double volume);
 
 public slots:
-    void play();
+    void start();
     void pause();
     void stop();
 
-private:
+signals:
+    void started();
+    void paused();
+    void stopped();
+    void notify();
+    void tempoChanged();
+    void pitchChanged();
+
+public: //TODO
     Buffer m_buffer;
     double m_pitch = 0;
     double m_tempo = 1;

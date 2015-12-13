@@ -110,142 +110,16 @@
     </layout>
    </item>
    <item>
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QDoubleSpinBox" name="doubleSpinBoxPitch">
-       <property name="toolTip">
-        <string>Adjust pitch in semi tones.</string>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-9.000000000000000</double>
-       </property>
-       <property name="maximum">
-        <double>9.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="doubleSpinBoxTempo">
-       <property name="toolTip">
-        <string>Adjust tempo</string>
-       </property>
-       <property name="suffix">
-        <string notr="true"> ×</string>
-       </property>
-       <property name="minimum">
-        <double>0.350000000000000</double>
-       </property>
-       <property name="maximum">
-        <double>2.000000000000000</double>
-       </property>
-       <property name="singleStep">
-        <double>0.050000000000000</double>
-       </property>
-       <property name="value">
-        <double>2.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="Line" name="line_3">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="VolumeSlider" name="volumeSlider">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonPlayPause">
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="toolTip">
-        <string>Play or pause current song.</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../ressources.qrc">
-         <normaloff>:/icons/icons/1411738411_519570-066_Play-128.png</normaloff>
-         <normalon>:/icons/icons/1411738419_519571-067_Pause-128.png</normalon>:/icons/icons/1411738411_519570-066_Play-128.png</iconset>
-       </property>
-       <property name="shortcut">
-        <string>Space</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonStop">
-       <property name="toolTip">
-        <string>Stop current song.</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../ressources.qrc">
-         <normaloff>:/icons/icons/1411738429_icon-stop-128.png</normaloff>:/icons/icons/1411738429_icon-stop-128.png</iconset>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="AudioSlider" name="slider" native="true">
-     <property name="toolTip">
-      <string>Seek position in song.</string>
-     </property>
-    </widget>
+    <widget class="PlayerWidget" name="playerWidget" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AudioSlider</class>
+   <class>PlayerWidget</class>
    <extends>QWidget</extends>
-   <header>AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.h</header>
+   <header>playerwidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>VolumeSlider</class>
-   <extends>QSlider</extends>
-   <header>AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.h</header>
   </customwidget>
  </customwidgets>
  <resources>

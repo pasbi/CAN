@@ -12,6 +12,7 @@
 #include "overlaydecorator.h"
 #include "Program/midicommand.h"
 #include <QScrollBar>
+#include "Attachments/AudioAttachment/audioattachment.h"
 
 DEFN_CONFIG( ChordPatternViewer, "ChordPatternViewer");
 
@@ -111,6 +112,17 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     ui->buttonColumnCount->blockSignals(true);
     ui->buttonColumnCount->setChecked( config["TwoColumn"].toBool() );
     ui->buttonColumnCount->blockSignals(false);
+
+    //TODO do this more sophisticated
+    ui->audioPlayerWidget->hide();
+    connect(ui->buttonSelectAudioAttachment, SIGNAL(clicked(bool)), ui->audioPlayerWidget, SLOT(setVisible(bool)));
+    for (Attachment* a : attachment->song()->attachments())
+    {
+        if (a->inherits("AudioAttachment"))
+        {
+            ui->audioPlayerWidget->setPlayer(&static_cast<AudioAttachment*>(a)->player());
+        }
+    }
 }
 
 ChordPatternViewer::~ChordPatternViewer()
