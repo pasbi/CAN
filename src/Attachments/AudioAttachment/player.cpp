@@ -48,6 +48,12 @@ void Player::open( const QString &filename )
     m_audioOutput = new QAudioOutput( QAudioDeviceInfo::defaultOutputDevice(), m_buffer.audioFormat() );
     m_audioOutput->setNotifyInterval(11);
     connect(m_audioOutput, SIGNAL(notify()), this, SIGNAL(notify()));
+    connect(m_audioOutput, &QAudioOutput::stateChanged, [this](QAudio::State state){
+        if (state == QAudio::IdleState)
+        {
+            stop();
+        }
+    });
     seek(0);
 }
 
