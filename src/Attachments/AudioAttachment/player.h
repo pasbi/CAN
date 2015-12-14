@@ -18,8 +18,10 @@ public:
     ~Player();
 
     void open( const QString& filename );
-    void seek( double pitch, double tempo, double second );
+    void setPitch( double pitch);
+    void setTempo( double tempo);
     void seek( double second );
+    void seek();
 
     // position and duration are independend from tempo.
     double duration() const;
@@ -55,10 +57,9 @@ private:
     double m_tempo = 1;
     double m_offset = 0;
     QAudioOutput* m_audioOutput = nullptr;
-    void seek();
     Section m_currentSection;
-
     static Player* m_activePlayer;
+
 public:
     static Player* activePlayer() { return m_activePlayer; }
     static void stopActivePlayer();

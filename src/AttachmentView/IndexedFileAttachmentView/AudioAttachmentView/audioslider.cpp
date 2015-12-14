@@ -9,7 +9,7 @@ AudioSlider::AudioSlider(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect( ui->slider, SIGNAL( valueChanged(double) ), this, SIGNAL( valueChanged(double) ) );
+    connect(ui->slider, SIGNAL(valueChanged(double)), this, SIGNAL(valueChanged(double)));
     connect(ui->doubleSpinBoxLeft, SIGNAL(valueChanged(double)), this, SIGNAL(valueChanged(double)));
     connect(ui->doubleSpinBoxRight, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), [this](double pos){
         double elapsed = ui->doubleSpinBoxRight->maximum() - pos;

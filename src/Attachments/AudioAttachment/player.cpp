@@ -88,6 +88,7 @@ void Player::seek()
 {
     if (m_audioOutput)
     {
+        m_offset = position();
         blockSignals(true);
         bool wasActive = (m_audioOutput->state() == QAudio::ActiveState);
         m_audioOutput->stop();
@@ -100,20 +101,24 @@ void Player::seek()
     }
 }
 
-void Player::seek(double pitch, double tempo, double second)
+void Player::setPitch(double pitch)
 {
     if (m_pitch != pitch)
     {
         m_pitch = pitch;
         emit pitchChanged();
     }
+}
+
+void Player::setTempo(double tempo)
+{
     if (m_tempo != tempo)
     {
         m_tempo = tempo;
         emit tempoChanged();
     }
-    seek( second );
 }
+
 
 void Player::seek(double second)
 {
@@ -169,9 +174,10 @@ double Player::position() const
     double elapsed = 0;
     if (m_audioOutput)
     {
-        elapsed += m_audioOutput->elapsedUSecs() / 1000.0 / 1000.0;
+        elapsed += m_audioOutput->elapsedUSecs() / 1000.0 / 1000.0 * m_tempo;
     }
     elapsed += m_offset;
+
     return elapsed;
 }
 

@@ -189,8 +189,6 @@ Buffer::Decoder::Decoder( AVFormatContext * formatContext,
     m_codecContext( codecContext ),
     m_streamIndex( streamIndex ),
     m_dest( dest ),
-    m_pitch( pitch ),
-    m_tempo( tempo ),
     m_offset( offset )
 {
     m_soundTouch.setChannels( m_codecContext->channels );

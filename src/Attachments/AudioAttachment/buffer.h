@@ -71,8 +71,6 @@ private:
 
 
         QByteArray* m_dest;
-        double m_pitch;
-        double m_tempo;
         double m_offset;
         bool m_interruptionRequested = false;
         void requestInterruption() { m_interruptionRequested = true; }

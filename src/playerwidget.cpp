@@ -130,7 +130,9 @@ void PlayerWidget::seek(double pos)
 void PlayerWidget::updatePitchTempo()
 {
 #ifdef HAVE_SOUNDTOUCH
-    m_player->seek( ui->doubleSpinBoxPitch->value(), ui->doubleSpinBoxTempo->value(), ui->slider->value() );
+    m_player->setPitch( ui->doubleSpinBoxPitch->value());
+    m_player->setTempo( ui->doubleSpinBoxTempo->value());
+    m_player->seek();
     ui->slider->setTempo( ui->doubleSpinBoxTempo->value() );
 #endif
 }
@@ -175,7 +177,9 @@ void PlayerWidget::setVolume()
 
 void PlayerWidget::updatePosition()
 {
+    ui->slider->blockSignals(true);
     ui->slider->setPosition(m_player->position());
+    ui->slider->blockSignals(false);
 }
 
 void PlayerWidget::setCurrentSection()
