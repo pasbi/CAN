@@ -8,6 +8,7 @@
 #include "AttachmentView/attachmentchooser.h"
 #include <QHBoxLayout>
 #include "Database/SongDatabase/songdatabasesortproxy.h"
+#include "Attachments/AudioAttachment/player.h"
 
 
 SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
@@ -24,6 +25,7 @@ void SongDatabaseWidget::updateAttachmentChooser()
 {
     Song* song = databaseView()->currentItem();
     attachmentChooser()->setSong( song );
+    Player::stopActivePlayer();
 }
 
 AttachmentChooser* SongDatabaseWidget::attachmentChooser() const

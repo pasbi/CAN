@@ -1,6 +1,8 @@
 #include "player.h"
 #include "global.h"
 
+Player* Player::m_activePlayer = nullptr;
+
 Player::Player()
 {
 }
@@ -27,8 +29,8 @@ void Player::stop()
             m_buffer.stop();
             seek(0);
             emit stopped();
+            m_activePlayer = nullptr;
         }
-
     }
 }
 
@@ -55,6 +57,11 @@ void Player::start()
     {
         if (m_audioOutput->state() != QAudio::ActiveState)
         {
+            if (m_activePlayer)
+            {
+                m_activePlayer->stop();
+            }
+            m_activePlayer = this;
             m_audioOutput->start( &m_buffer.buffer() );
             emit started();
         }
@@ -183,6 +190,13 @@ Section Player::currentSection() const
 }
 
 
+void Player::stopActivePlayer()
+{
+    if (m_activePlayer)
+    {
+        m_activePlayer->stop();
+    }
+}
 
 
 

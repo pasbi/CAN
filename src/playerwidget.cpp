@@ -50,13 +50,18 @@ void PlayerWidget::setPlayer(Player *player)
     reConnect(m_player, player, SIGNAL(currentSectionChanged()), this, SLOT(setCurrentSection()));
 
     m_player = player;
-    setVolume();
-    setCurrentSection();
+
+    if (m_player)
+    {
+        setVolume();
+        setCurrentSection();
+    }
 
     ui->slider->stop();
 
     if (m_player)
     {
+        ui->pushButtonPlayPause->setChecked(m_player->isPlaying());
         ui->slider->setMaximum( player->duration() );
         updatePosition();
 

@@ -115,14 +115,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
 
     //TODO do this more sophisticated
     ui->audioPlayerWidget->hide();
-    connect(ui->buttonSelectAudioAttachment, SIGNAL(clicked(bool)), ui->audioPlayerWidget, SLOT(setVisible(bool)));
-    for (Attachment* a : attachment->song()->attachments())
-    {
-        if (a->inherits("AudioAttachment"))
-        {
-            ui->audioPlayerWidget->setPlayer(&static_cast<AudioAttachment*>(a)->player());
-        }
-    }
+    initializeAudioPlayerWidget();
 }
 
 ChordPatternViewer::~ChordPatternViewer()
@@ -392,4 +385,46 @@ void ChordPatternViewer::on_buttonColumnCount_toggled(bool checked)
 {
     config.set("TwoColumn", checked);
     applyZoom();
+}
+
+void ChordPatternViewer::initializeAudioPlayerWidget()
+{
+    Player* firstPlayer = nullptr;
+    connect(ui->buttonSelectAudioAttachment, SIGNAL(clicked(bool)), ui->audioPlayerWidget, SLOT(setVisible(bool)));
+    for (Attachment* a : m_attachment->song()->attachments())
+    {
+        if (a->inherits("AudioAttachment"))
+        {
+            AudioAttachment* aa = static_cast<AudioAttachment*>(a);
+            Player* player = &aa->player();
+            if (!firstPlayer)
+            {
+                firstPlayer = player;
+            }
+            QAction* action = new QAction(ui->buttonSelectAudioAttachment);
+            action->setText(a->name());
+            ui->buttonSelectAudioAttachment->addAction(action);
+            connect(action, &QAction::triggered, [player, this, aa]()
+            {
+                aa->open();
+                ui->audioPlayerWidget->setPlayer(player);
+            });
+        }
+    }
+
+    if (ui->buttonSelectAudioAttachment->actions().isEmpty())
+    {
+        ui->buttonSelectAudioAttachment->setEnabled(false);
+    }
+
+    if (Player::activePlayer())
+    {
+        ui->audioPlayerWidget->setPlayer(Player::activePlayer());
+    }
+    else
+    {
+        //TODO second player is not playable in cpaviewdialog
+        ui->audioPlayerWidget->setPlayer(firstPlayer);
+    }
+
 }

@@ -20,11 +20,8 @@ public:
     AudioAttachmentView(QWidget* parent = 0);
     ~AudioAttachmentView();
 
-//    void deactivate();
-
 protected slots:
     void polish();
-    void open();
     void chooseFile();
 
 
@@ -36,12 +33,6 @@ private slots:
 
     void restoreCurrentSection();
     void deleteCurrentSection();
-
-private:
-    // there shall be at most one AudioAttachmentView which is currently playing.
-    static AudioAttachmentView* m_playingAudioAttachmentView;
-//    void setPlayingAudioAttachmentView();
-
 
 protected:
     void showEvent(QShowEvent *e);

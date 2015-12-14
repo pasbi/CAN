@@ -58,5 +58,10 @@ private:
     void seek();
     Section m_currentSection;
 
+    static Player* m_activePlayer;
+public:
+    static Player* activePlayer() { return m_activePlayer; }
+    static void stopActivePlayer();
+
 };
 #endif // PLAYER_H

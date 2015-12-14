@@ -42,6 +42,8 @@ private:
 
     void scrollDown();
     void scrollUp();
+    void initializeAudioPlayerWidget();
+
 
 
 private slots:

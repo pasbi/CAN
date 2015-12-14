@@ -10,7 +10,6 @@
 
 const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/icons/icons/turnleft.png";
 const QString AudioAttachmentView::RECORD_RIGHT_POSITION_ICON_PATH = ":/icons/icons/turnright.png";
-AudioAttachmentView* AudioAttachmentView::m_playingAudioAttachmentView = nullptr;
 
 DEFN_CREATABLE( AudioAttachmentView, AttachmentView );
 DEFN_CONFIG( AudioAttachmentView, "AudioAttachmentView" );
@@ -22,7 +21,7 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     IndexedFileAttachmentView(parent),
     ui(new Ui::AudioAttachmentView)
 {
-    m_audioWidget = new QWidget(this);
+    //m_audioWidget = new QWidget(this);
     ui->setupUi( m_audioWidget );
     setWidget( m_audioWidget );
 
@@ -81,8 +80,6 @@ void AudioAttachmentView::polish()
         // update duration, etc.
         ui->playerWidget->setPlayer(&a->player());
     });
-
-    connect( a, SIGNAL(currentSectionChanged(Section)), &a->player(), SLOT(setCurrentSection(Section)));
 
     ui->sectionView->setModel( a->sectionsModel() );
 
@@ -168,30 +165,11 @@ void AudioAttachmentView::deleteCurrentSection()
     }
 }
 
-void AudioAttachmentView::open()
-{
-    IndexedFileAttachmentView::open();
-}
-
 void AudioAttachmentView::chooseFile()
 {
     ui->playerWidget->stop();
     IndexedFileAttachmentView::chooseFile();
 }
-
-//void AudioAttachmentView::deactivate()
-//{
-//    pause();
-//}
-
-//void AudioAttachmentView::setPlayingAudioAttachmentView()
-//{
-//    if (m_playingAudioAttachmentView && m_playingAudioAttachmentView != this)
-//    {
-//        m_playingAudioAttachmentView->pause();
-//    }
-//    m_playingAudioAttachmentView = this;
-//}
 
 void AudioAttachmentView::showEvent(QShowEvent *)
 {
