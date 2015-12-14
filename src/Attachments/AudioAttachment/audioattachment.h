@@ -18,7 +18,6 @@ public:
     SectionsModel* sectionsModel() const { return m_sectionsModel; }
     Player& player() { return m_player; }
     const Player& player() const { return m_player; }
-    void setSection(Section section );
 
 protected:
     void serialize(QDataStream &out) const;
@@ -32,12 +31,6 @@ private:
     SectionsModel * const m_sectionsModel;
     Player m_player;
     QString m_filename;
-
-    Section m_currentSection;
-
-signals:
-    void currentSectionChanged( Section );
-
 };
 
 #endif // AUDIOATTACHMENT_H

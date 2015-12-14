@@ -36,6 +36,8 @@ private slots:
     void setCurrentSection();
     void updateCurrentSection();
 
+    void on_pushButtonReset_clicked();
+
 private:
     Ui::PlayerWidget *ui;
     Player* m_player;

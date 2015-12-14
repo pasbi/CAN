@@ -200,3 +200,9 @@ AudioSlider* PlayerWidget::slider() const
     return ui->slider;
 }
 
+
+void PlayerWidget::on_pushButtonReset_clicked()
+{
+    ui->doubleSpinBoxPitch->setValue(0);
+    ui->doubleSpinBoxTempo->setValue(1);
+}

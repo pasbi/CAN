@@ -19,17 +19,11 @@ void AudioAttachment::open()
     }
 }
 
-void AudioAttachment::setSection(Section section)
-{
-    m_currentSection = section;
-    emit currentSectionChanged( m_currentSection );
-}
-
 void AudioAttachment::serialize(QDataStream &out) const
 {
     IndexedFileAttachment::serialize(out);
     out << m_sectionsModel;
-    out << static_cast<qint32>(sectionsModel()->indexOf(m_currentSection));
+    out << static_cast<qint32>(sectionsModel()->indexOf(m_player.currentSection()));
 }
 
 void AudioAttachment::deserialize(QDataStream &in)
@@ -40,10 +34,10 @@ void AudioAttachment::deserialize(QDataStream &in)
     in >> index;
     if (index < 0)
     {
-        setSection(Section());
+        m_player.setCurrentSection(Section());
     }
     else
     {
-        setSection( sectionsModel()->section(index) );
+        m_player.setCurrentSection( sectionsModel()->section(index) );
     }
 }

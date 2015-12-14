@@ -84,11 +84,11 @@ void AudioAttachmentView::polish()
 
     connect( a->sectionsModel(), &QAbstractTableModel::rowsAboutToBeRemoved, [this, a]()
     {
-        a->setSection(Section());
+        a->player().setCurrentSection(Section());
     });
     connect( a->sectionsModel(), &QAbstractTableModel::rowsInserted, [this, a](const QModelIndex&, int index)
     {
-        a->setSection( a->sectionsModel()->section(index) );
+        a->player().setCurrentSection( a->sectionsModel()->section(index) );
     });
 
 #endif
@@ -109,7 +109,7 @@ void AudioAttachmentView::recordSection(bool abort)
         state = Idle;
         ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );
         slider->clearIndicators();
-        attachment<AudioAttachment>()->setSection( Section() );
+        attachment<AudioAttachment>()->player().setCurrentSection( Section() );
     }
     else
     {
@@ -119,7 +119,7 @@ void AudioAttachmentView::recordSection(bool abort)
             slider->clearIndicators();
             leftPos = pos;
             slider->setLeftIndicator( leftPos );
-            attachment<AudioAttachment>()->setSection( Section() );
+            attachment<AudioAttachment>()->player().setCurrentSection( Section() );
 
             state = LeftRecorded;
             ui->pushButtonRecordSection->setIcon( QIcon(RECORD_RIGHT_POSITION_ICON_PATH) );
@@ -151,7 +151,7 @@ void AudioAttachmentView::restoreCurrentSection()
     {
         section = attachment<AudioAttachment>()->sectionsModel()->section( indexes.first().row() );
     }
-    attachment<AudioAttachment>()->setSection( section );
+    attachment<AudioAttachment>()->player().setCurrentSection( section );
 }
 
 void AudioAttachmentView::deleteCurrentSection()
@@ -160,7 +160,7 @@ void AudioAttachmentView::deleteCurrentSection()
     if (!indexes.isEmpty() && indexes.first().isValid())
     {
         attachment<AudioAttachment>()->sectionsModel()->removeSection( indexes.first().row() );
-        attachment<AudioAttachment>()->setSection(Section());
+        attachment<AudioAttachment>()->player().setCurrentSection(Section());
     }
 }
 
