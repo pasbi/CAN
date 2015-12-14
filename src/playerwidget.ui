@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
-    <height>314</height>
+    <width>725</width>
+    <height>269</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,14 +18,47 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QDoubleSpinBox" name="doubleSpinBoxPitch">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string>Adjust pitch in semi tones.</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QDoubleSpinBox::up-button {
+	subcontrol-origin: border;
+	subcontrol-position: right;
+	width: 20px;
+	height: 25px;
+}
+
+QDoubleSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: left;
+	width: 20px;
+	height: 25px;
+}
+
+QDoubleSpinBox
+{
+	padding-left: 0px;
+	padding-right: 0px;
+}</string>
        </property>
        <property name="suffix">
         <string/>
        </property>
        <property name="decimals">
-        <number>1</number>
+        <number>2</number>
        </property>
        <property name="minimum">
         <double>-9.000000000000000</double>
@@ -37,11 +70,47 @@
      </item>
      <item>
       <widget class="QDoubleSpinBox" name="doubleSpinBoxTempo">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string>Adjust tempo</string>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QDoubleSpinBox::up-button {
+	subcontrol-origin: border;
+	subcontrol-position: right;
+	width: 20px;
+	height: 25px;
+}
+
+QDoubleSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: left;
+	width: 20px;
+	height: 25px;
+}
+
+QDoubleSpinBox
+{
+	padding-left: 0px;
+	padding-right: 0px;
+}</string>
+       </property>
        <property name="suffix">
         <string notr="true"> ×</string>
+       </property>
+       <property name="decimals">
+        <number>2</number>
        </property>
        <property name="minimum">
         <double>0.350000000000000</double>
@@ -54,6 +123,17 @@
        </property>
        <property name="value">
         <double>2.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonReset">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="ressources.qrc">
+         <normaloff>:/icons/icons/cross56.png</normaloff>:/icons/icons/cross56.png</iconset>
        </property>
       </widget>
      </item>

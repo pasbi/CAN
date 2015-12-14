@@ -25,8 +25,38 @@
    </property>
    <item>
     <widget class="QDoubleSpinBox" name="doubleSpinBoxLeft">
+     <property name="minimumSize">
+      <size>
+       <width>110</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Elapsed time in seconds.</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QDoubleSpinBox::up-button {
+	subcontrol-origin: border;
+	subcontrol-position: right;
+	width: 20px;
+	height: 25px;
+}
+
+QDoubleSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: left;
+	width: 20px;
+	height: 25px;
+}
+
+QDoubleSpinBox
+{
+	padding-left: 0px;
+	padding-right: 0px;
+}</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
      <property name="suffix">
       <string> s</string>
@@ -48,8 +78,38 @@
    </item>
    <item>
     <widget class="QDoubleSpinBox" name="doubleSpinBoxRight">
+     <property name="minimumSize">
+      <size>
+       <width>110</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Remaining time in seconds.</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QDoubleSpinBox::up-button {
+	subcontrol-origin: border;
+	subcontrol-position: right;
+	width: 20px;
+	height: 25px;
+}
+
+QDoubleSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: left;
+	width: 20px;
+	height: 25px;
+}
+
+QDoubleSpinBox
+{
+	padding-left: 0px;
+	padding-right: 0px;
+}</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
      <property name="suffix">
       <string> s</string>
