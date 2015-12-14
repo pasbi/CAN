@@ -21,8 +21,9 @@ public:
     void setPlayer(Player* player);
     AudioSlider* slider() const;
 
-private slots:
+public slots:
     void stop();
+private slots:
     void setPlayPause(bool play);
     void seek(double pos);
     void updatePitchTempo();

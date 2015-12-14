@@ -14,7 +14,7 @@ IndexedFileAttachmentView::IndexedFileAttachmentView(QWidget *parent) :
     AttachmentView(parent),
     ui(new Ui::IndexedFileAttachmentView)
 {
-
+    m_contentWidget = new QWidget(this);
     ui->setupUi(this);
     connect(ui->buttonChooseFile, SIGNAL(clicked()), this, SLOT(chooseFile()) );
     connect(ui->buttonChooseFileBig, SIGNAL(clicked()), this, SLOT(chooseFile()) );

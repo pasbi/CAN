@@ -27,9 +27,8 @@ PDFAttachmentView::PDFAttachmentView(QWidget *parent) :
     IndexedFileAttachmentView(parent),
     ui(new Ui::PDFAttachmentView)
 {
-    m_pdfWidget = new QWidget(this);
-    ui->setupUi(m_pdfWidget);
-    setWidget( m_pdfWidget );
+    ui->setupUi(contentWidget());
+    setWidget(contentWidget());
 
     // propably because of ui is not set up on this but on m_pdfWidget, connect-by-name does not work.
     connect(ui->buttonZoomIn,       SIGNAL(clicked()),              this, SLOT(on_buttonZoomIn_clicked())           );

@@ -1,9 +1,6 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#define private public
-#define protected public
-
 #include <QDebug>
 #include "util.h"
 

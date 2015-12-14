@@ -26,6 +26,13 @@ public slots:
 private:
     Ui::IndexedFileAttachmentView *ui;
 
+    // this widget holds the actual content of the view (e.g. player/pdf/...)
+    // you may use sth. like ui->setup(contentWidget()) in inherited class constructor
+private:
+    QWidget* m_contentWidget = nullptr;
+protected:
+    QWidget* contentWidget() const { return m_contentWidget; }
+
 private slots:
     void updateStackedWidget();
 
