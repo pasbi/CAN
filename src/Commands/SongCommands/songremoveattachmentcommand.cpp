@@ -18,5 +18,6 @@ void SongRemoveAttachmentCommand::undo()
 void SongRemoveAttachmentCommand::redo()
 {
     takeOwnershipOfItem();
+    item()->deactivate();
     model()->removeAttachment( item() );
 }

@@ -389,25 +389,24 @@ void ChordPatternViewer::on_buttonColumnCount_toggled(bool checked)
 
 void ChordPatternViewer::initializeAudioPlayerWidget()
 {
-    Player* firstPlayer = nullptr;
+    AudioAttachment* firstAudioAttachment = nullptr;
     connect(ui->buttonSelectAudioAttachment, SIGNAL(clicked(bool)), ui->audioPlayerWidget, SLOT(setVisible(bool)));
     for (Attachment* a : m_attachment->song()->attachments())
     {
         if (a->inherits("AudioAttachment"))
         {
             AudioAttachment* aa = static_cast<AudioAttachment*>(a);
-            Player* player = &aa->player();
-            if (!firstPlayer)
+            if (!firstAudioAttachment)
             {
-                firstPlayer = player;
+                firstAudioAttachment = aa;
             }
             QAction* action = new QAction(ui->buttonSelectAudioAttachment);
             action->setText(a->name());
             ui->buttonSelectAudioAttachment->addAction(action);
-            connect(action, &QAction::triggered, [player, this, aa]()
+            connect(action, &QAction::triggered, [this, aa]()
             {
                 aa->open();
-                ui->audioPlayerWidget->setPlayer(player);
+                ui->audioPlayerWidget->setPlayer(&aa->player());
             });
         }
     }
@@ -421,10 +420,14 @@ void ChordPatternViewer::initializeAudioPlayerWidget()
     {
         ui->audioPlayerWidget->setPlayer(Player::activePlayer());
     }
+    else if (firstAudioAttachment)
+    {
+        firstAudioAttachment->open();
+        ui->audioPlayerWidget->setPlayer(&firstAudioAttachment->player());
+    }
     else
     {
-        //TODO second player is not playable in cpaviewdialog
-        ui->audioPlayerWidget->setPlayer(firstPlayer);
+        ui->audioPlayerWidget->setPlayer(nullptr);
     }
 
 }

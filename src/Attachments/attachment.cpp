@@ -7,6 +7,11 @@ Attachment::Attachment() :
 {
 }
 
+Attachment::~Attachment()
+{
+
+}
+
 void Attachment::setSong(Song *song)
 {
     // set song, but do never overwrite.

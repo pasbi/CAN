@@ -10,6 +10,7 @@ AudioAttachment::AudioAttachment() :
     connect(this, SIGNAL(hashChanged(QByteArray)), this, SLOT(open()));
 }
 
+
 void AudioAttachment::open()
 {
     if (m_filename != filename())

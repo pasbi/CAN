@@ -19,6 +19,8 @@ public:
     Player& player() { return m_player; }
     const Player& player() const { return m_player; }
 
+    void deactivate() { player().pause(); }
+
 protected:
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);

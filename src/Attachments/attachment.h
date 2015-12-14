@@ -11,6 +11,7 @@ class Attachment : public QObject, public Taggable, public Creatable
 public:
 
     Attachment();
+    virtual ~Attachment();
 
     void setName( const QString & name );
     QString name() const { return m_name; }
@@ -18,6 +19,8 @@ public:
     void setSong( Song* song );
     Song* song() const { return m_song; }
 
+    // e.g. audio attachment stops playing
+    virtual void deactivate() { }
 
     void makeNameUnique();
 
