@@ -42,6 +42,7 @@
 #include "FileIndex/fileindex.h"
 #include "Dialogs/copyindexedfilesdialog.h"
 #include "AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h"
+#include "Attachments/indexedfileattachment.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -156,7 +157,10 @@ MainWindow::MainWindow(QWidget *parent) :
         if (view && view->inherits("IndexedFileAttachmentView"))
         {
             IndexedFileAttachmentView* ifa = static_cast<IndexedFileAttachmentView*>(view);
-            ifa->chooseFile();
+            if (ifa->attachment<IndexedFileAttachment>()->hash().isEmpty())
+            {
+                ifa->chooseFile();
+            }
         }
     });
     connect( m_project.songDatabase(), &SongDatabase::attachmentRemoved, [this](int i)
