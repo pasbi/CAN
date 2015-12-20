@@ -67,7 +67,6 @@ Page* PDFCreator::currentPage() const
 
 void PDFCreator::notifyCurrentTaskChanged( const QString &message)
 {
-    qDebug() << message + " ...";
     emit progress( m_currentStep++ );
     emit currentTaskChanged( message + " ..." );
 }

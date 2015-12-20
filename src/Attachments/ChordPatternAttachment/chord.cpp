@@ -14,8 +14,8 @@ const QString Chord::IGNORE_AFTER_PATTERN = "(" + (QStringList() << QRegExp::esc
                                                << QRegExp::escape(".") << "\\(\\w*\\)" << "\\[\\w*\\]").join("|") + ")*";
 
 
-const QString CHORD_EXTENSION_PATTERN = "(maj|min|2|5|7th|maj7|min7|sus4|sus2|sus|°|dim|dim7|aug|6|min6|"
-                                        "9|min9|maj9|11|min11|maj11|13|min13|maj13|add9|maj7th|7|\\+|_)*$" ;
+const QString CHORD_EXTENSION_PATTERN = "(maj|min|2|4|5|7th|maj7|min7|sus4|sus2|sus|°|dim|dim7|aug|6|min6|"
+                                        "9|min9|maj9|11|min11|maj11|13|min13|maj13|add9|maj7th|7|b5|\\+|_)*$" ;
 
 Chord::Chord(const QString token) :
     m_isValid( parse(token) )
@@ -125,42 +125,19 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
 {
     tokens = line.split(QRegExp(SPLIT_PATTERN));
 
-    int numberOfUncertainChords = 0;
-
-    int numToken = 0;
+    int numWords = 0;
     for (const QString & token : tokens)
     {
         if (Chord(token).isValid())
         {
             chords << token;
-            if ( token == "a" ) // "a" is very common in english lyrics. it may be chord or a word...
-            {
-                numberOfUncertainChords++;
-            }
         }
-        // do only count tokens that contains letters or numbers etc.
-        if (token.contains(QRegExp("[A-Za-z0-9]")))
+        else if (!token.isEmpty() && !token.contains(QRegExp("[^A-Za-z]")))
         {
-            numToken++;
+            numWords++;
         }
     }
-
-    int numChords = chords.length();
-
-    if (numChords - numberOfUncertainChords >= 2)
-    {
-        // if there are at least 2 chords without doubts, return true.
-        return true;
-    }
-    else if (numChords > (numToken - numChords))
-    {
-        // if there are more chords than other tokens, return true.
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return chords.length() >= numWords;
 }
 
 int parseBase( const QChar & c )
