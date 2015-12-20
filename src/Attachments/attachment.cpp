@@ -83,6 +83,10 @@ Attachment* Attachment::copy() const
     return copy;
 }
 
+void Attachment::paint(PDFCreator*)
+{
+    Q_UNIMPLEMENTED();
+}
 
 
 

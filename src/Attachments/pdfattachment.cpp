@@ -1,5 +1,6 @@
 #include "pdfattachment.h"
 #include "application.h"
+#include "PDFCreator/pdfcreator.h"
 
 DEFN_CREATABLE_NAME(PDFAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "PDF Attachment"))
 
@@ -28,5 +29,43 @@ void PDFAttachment::open()
         }
 
     }
+#endif
+}
+
+void PDFAttachment::paint(PDFCreator* pdfCreator)
+{
+#ifdef HAVE_POPPLER
+    QPainter* painter = pdfCreator->currentPage()->painter();
+    // ensure that there is the right loaded
+    open();
+    Poppler::Document* doc = document();
+    if (doc)
+    {
+        Poppler::Document::RenderBackend backendBefore = doc->renderBackend();
+        doc->setRenderBackend( Poppler::Document::ArthurBackend );  // the other backend will not work.
+        for (int i = 0; i < doc->numPages(); ++i)
+        {
+            if (i != 0)
+            {
+                pdfCreator->newPage( Page::NothingSpecial );
+            }
+            painter->save();
+            QSizeF pageSize = doc->page(i)->pageSizeF();
+            QSizeF targetSize = pdfCreator->currentPage()->sizePainter();
+            double fx = targetSize.width() / pageSize.width();
+            double fy = targetSize.height() / pageSize.height();
+
+            double resolution = PDFCreator::config["PDFResolution"].toDouble();
+            double f = qMin(fx, fy) * 72.0 / resolution;
+
+            painter->scale( f, f );
+
+            doc->page(i)->renderToPainter( painter, resolution, resolution );
+            painter->restore();
+        }
+        doc->setRenderBackend( backendBefore );
+    }
+#else
+    Q_UNUSED( attachment );
 #endif
 }

@@ -22,25 +22,12 @@ public:
     PDFCreator(QSizeF baseSizeMM, Setlist* setlist, const QString& dirname );
     ~PDFCreator();
 
-    QPainter &currentPainter();
-    /**
-     * @brief currentSizeInMM
-     * @return the size of the current page in mm
-     */
-    QSizeF currentSizeInMM() const;
-
-    /**
-     * @brief currentSizePainter
-     * @return the size of the current page in QPainter units.
-     */
-    QSizeF currentSizePainter() const;
-
     /**
      * @brief newPage insert a new page at index i (at the end if i<0) and
      *  activates it.
      * @param i the index of the new page.
      */
-    void newPage( Page::Flags flags, const QString &title, int i);
+    void newPage( Page::Flags flags, const QString &title = "", int index = -1);
 
 
     /**
@@ -57,26 +44,22 @@ public:
 
 
     /**
-     * @brief run since run ivokes save, run can only be called once
+     * @brief run since run calls save, run can only be called once
      *  on a PDFCreator.
      */
     virtual void run();
 
-    QRectF pageRect() const;
-    QRectF pageRectMargins() const;
-
     bool isEndlessPage() const;
 
-    const Page* currentPage() const;
+    Page *currentPage() const;
 
     static void paintChordPatternAttachment(AbstractChordPatternAttachment *attachment, const QString& path);
 
 
-private:
+public:
     QList<Page*> m_pages;
     int m_currentIndex;
     QSizeF m_baseSizeMM;
-    Page *currentPage();
     Setlist* m_setlist;
     const QString& m_filename;      // if each song gets one pdf, this will be the dirname (skipping *.pdf)
 
@@ -124,50 +107,34 @@ private:
         QList<Page*> pages;
     };
 
-    void paintTitle();
-    void paintHeadline(const QString &label);
+
     bool paintSong(const Song *song);
-    void paintAttachment(Attachment *attachment );
-    void paintAttachment(PDFAttachment *attachment );
-    void paintAttachment(AbstractChordPatternAttachment *attachment );
-    void insertTableOfContentsStub();
     void paintSetlist();
     void paintTableOfContents();
     void alignSongs( int mode );
     void optimizeForDuplex();
     void decoratePageNumbers();
-    void drawContinueOnNextPageMark();
     void paintAndSaveDocument(const Document& document, const QString &title, const QString& dirname );
     int lengthOfSong( int start );
 
-    /**
-     * @brief printAttachment returns wheter the @code attachment shall be printed.
-     * @param attachment
-     * @return
-     */
-    bool printAttachment( const Attachment* attachment );
 
-    double m_additionalTopMargin = 0;
     int m_tableOfContentsPage = -1;
     QStringList m_tableOfContents;
 
-    // margins in painter-units
-    double leftMargin() const { return 35; }
-    double rightMargin() const { return 10; }
-    double topMargin() const { return 15 + m_additionalTopMargin; }
-    double bottomMargin() const { return 15 + 25; } // bottom line is 15 below the end of the page
-
     ExportPDFDialog* m_exportPDFDialog = nullptr; // is required from so many member functions
 
-public:
-    static const int ALIGN_SONGS__SEPARATE_PAGES;
-    static QMap<QString, QString> dictionary();
-
-    static QString setlistFilename(QWidget* parent, Setlist* setlist , bool separatePages);
-    static void exportSetlist(Setlist *setlist, QWidget *widgetParent);
 
 public:
     static const QString HYPHEN;
+    static void exportSetlist(Setlist *setlist, QWidget *widgetParent);
+    static bool pageBreak(const QStringList & lines, const int currentLine, const double heightLeft, const QPainter *painter );
+    static void drawContinueOnNextPageMark(const Page *page, QPainter* painter);
+
+private:
+    static const int ALIGN_SONGS__SEPARATE_PAGES;
+    static QMap<QString, QString> dictionary();
+    static QString setlistFilename(QWidget* parent, Setlist* setlist , bool separatePages);
+    static void paintHeadline(Page *page, const QString &label);
 
 
 

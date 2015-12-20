@@ -12,6 +12,9 @@ public:
     virtual double scrollDownTempo() const = 0;
     virtual void setScrollDownTempo(double tempo) = 0;
 
+    bool isPaintable() const { return true; }
+    void paint(PDFCreator* pdfCreator);
+
 public slots:
     virtual void transpose( int i ) = 0;
 

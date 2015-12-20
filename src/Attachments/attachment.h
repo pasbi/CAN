@@ -4,6 +4,7 @@
 #include "taggable.h"
 #include "creatable.h"
 
+class PDFCreator;
 class Song;
 class Attachment : public QObject, public Taggable, public Creatable
 {
@@ -35,6 +36,11 @@ public:
     Attachment* copy() const;
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);
+
+    virtual bool isPaintable() const { return false; }
+
+    // this method cannot be pure virtual since an Attachment must not implement this.
+    virtual void paint(PDFCreator *);
 
 signals:
     void attachmentRenamed(QString);

@@ -4,18 +4,18 @@
 const double Page::MM_INCH = 25.4;
 
 Page::Page(QSizeF baseSizeInMM, Flags flags ) :
-    m_sizeInMM( baseSizeInMM ),
-    m_flags( flags )
+    Page(baseSizeInMM, "", flags)
 {
-    m_painter.begin( &m_picture );
+
 }
 
 Page::Page(QSizeF baseSizeInMM, const QString& title, Flags flags ) :
+    m_painter(&m_picture),
     m_sizeInMM( baseSizeInMM ),
     m_flags( flags ),
-    m_title( title )
+    m_title( title ),
+    m_additionalTopMargin(0)
 {
-    m_painter.begin( &m_picture );
 }
 
 Page::~Page()
@@ -75,4 +75,23 @@ double Page::painterUnitsInMM( double painter ) const
 {
     double inches = painter / dpi();
     return inches * MM_INCH;
+}
+
+
+QRectF Page::rect() const
+{
+    return QRectF( QPointF(), sizePainter() );
+}
+
+QRectF Page::contentRect() const
+{
+    return QRectF( QPointF( leftMargin(),
+                            topMargin() ),
+                   QPointF( sizePainter().width()  - leftMargin() - rightMargin(),
+                            sizePainter().height() - topMargin() -  bottomMargin() ) );
+}
+
+void Page::setAdditionalTopMargin(double atm)
+{
+    m_additionalTopMargin = atm;
 }

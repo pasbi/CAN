@@ -19,6 +19,9 @@ public:
 public slots:
     void open();
 
+    bool isPaintable() const { return true; }
+    void paint(PDFCreator *pdfCreator);
+
 
 private:
 #ifdef HAVE_POPPLER

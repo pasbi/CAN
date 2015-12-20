@@ -132,7 +132,7 @@ SOURCES += main.cpp\
     DatabaseView/ItemDelegates/durationdelegate.cpp \
     Dialogs/copyindexedfilesdialog.cpp \
     AttachmentView/browseattachmentbuttonbox.cpp \
-    playerwidget.cpp
+    playerwidget.cpp \
 
 
 HEADERS  += mainwindow.h \
@@ -249,8 +249,7 @@ HEADERS  += mainwindow.h \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/volumeslider.h \
     Dialogs/copyindexedfilesdialog.h \
     AttachmentView/browseattachmentbuttonbox.h \
-    playerwidget.h
-
+    playerwidget.h \
 
 
 FORMS    += mainwindow.ui \
