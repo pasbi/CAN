@@ -1,79 +1,56 @@
 #include "durationdelegate.h"
-#include <QKeyEvent>
-#include <QWheelEvent>
+#include <QTime>
+#include "application.h"
+#include "Commands/DatabaseCommands/databaseeditcommand.h"
 
-DurationEditor::DurationEditor(QWidget* parent) :
-    QLineEdit(parent)
+
+DurationDelegate::DurationDelegate(QObject* parent) :
+    ItemDelegate<DurationEditor>(parent)
 {
-    setInputMask(QString("00:00%1").arg(QLocale().decimalPoint()) + "000;-");
-    setValidator(new QRegExpValidator(QRegExp(QString("([0-5]|-)([0-9]|-):([0-5]|-)([0-9]|-)%1([0-9]|-){3,3}").arg(QLocale().decimalPoint())), this));
 }
 
-QString code()
+void DurationDelegate::setModelData(DurationEditor *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    return QString("mm:ss%1zzz").arg(QLocale().decimalPoint());
-}
-
-void DurationEditor::setTime(const QTime& time)
-{
-    setText(time.toString(code()));
-}
-
-QTime DurationEditor::time() const
-{
-    return QTime::fromString("00:" + text().replace("-", "0"));
-}
-
-
-void DurationEditor::increase()
-{
-    if (!time().isValid())
+    QTime time = editor->time();
+    QTime currentTime = index.model()->data(index, Qt::EditRole).toTime();
+    if (time != currentTime)
     {
-        setTime(QTime(0, 0, 0, 0));
+        app().pushCommand( new DatabaseEditCommand(model, index, time) );
+    }
+}
+
+void DurationDelegate::setEditorData(DurationEditor *editor, const QModelIndex &index) const
+{
+    editor->setTime( index.model()->data(index, Qt::EditRole).toTime() );
+}
+
+
+QTime fromString(const QString& string)
+{
+    QStringList tokens = string.split(QRegExp(QString("%1|%2").arg(QRegExp::escape(":")).arg(QRegExp::escape(QLocale().decimalPoint()))));
+    if (tokens.length() == 2)
+    {
+        bool minutesOk, secondsOk;
+        int minutes = tokens[0].toInt(&minutesOk);
+        int seconds = tokens[1].toInt(&secondsOk);
+
+        if (minutesOk && secondsOk)
+        {
+            return QTime(0, minutes, seconds, 0);
+        }
+        else
+        {
+            return QTime();
+        }
+    }
+    else if (tokens.length() > 2)
+    {
+        int n = tokens.length();
+        tokens = QStringList({tokens[n-2], tokens[n-1]});
+        return fromString(tokens.join(":"));
     }
     else
     {
-        setTime(time().addSecs(1));
+        return QTime();
     }
 }
-
-void DurationEditor::decrease()
-{
-    if (time() < QTime(0, 0, 1, 0))
-    {
-        setTime(QTime());
-    }
-    else
-    {
-        setTime(time().addSecs(-1));
-    }
-}
-
-void DurationEditor::keyPressEvent(QKeyEvent *e)
-{
-    if (e->key() == Qt::Key_Up)
-    {
-        increase();
-    }
-    else if (e->key() == Qt::Key_Down)
-    {
-        decrease();
-    }
-    else
-    {
-        QLineEdit::keyPressEvent(e);
-    }
-}
-
-void DurationEditor::wheelEvent(QWheelEvent *e)
-{
-    if (e->angleDelta().y() > 0)
-    {
-        increase();
-    }
-    else if (e->angleDelta().y() < 0)
-    {
-        decrease();
-    }
-}
-

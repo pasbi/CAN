@@ -9,6 +9,10 @@
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "DatabaseView/ItemDelegates/editablecomboboxdelegate.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"
+#include "DatabaseView/ItemDelegates/keydelegate.h"
+#include "DatabaseView/ItemDelegates/typecomboboxdelegate.h"
+#include "DatabaseView/ItemDelegates/peoplesdelegate.h"
+#include "DatabaseView/ItemDelegates/texteditdelegate.h"
 #include <QHeaderView>
 
 
@@ -19,9 +23,16 @@ SongTableView::SongTableView(QWidget *parent) :
 
     setDragEnabled(true);
 
-    setItemDelegateForColumn(0, new LineEditDelegate(this));
-    setItemDelegateForColumn(1, new EditableComboBoxDelegate(this));
-    setItemDelegateForColumn(2, new DurationDelegate(this));
+    setItemDelegateForColumn(0, new LineEditDelegate(this));            // title
+    setItemDelegateForColumn(1, new EditableComboBoxDelegate(this));    // artist
+    setItemDelegateForColumn(2, new DurationDelegate(this));            // duration
+    setItemDelegateForColumn(3, new KeyDelegate( this ) );              // key
+    setItemDelegateForColumn(4, new TypeComboBoxDelegate(Song::LABEL_NAMES, this));
+    setItemDelegateForColumn(5, new TypeComboBoxDelegate(Song::STATE_NAMES, this));
+    setItemDelegateForColumn(6, new PeoplesDelegate( this ) );          // solos
+    setItemDelegateForColumn(7, new PeoplesDelegate( this ));           // involved
+    setItemDelegateForColumn(8, new TextEditDelegate( this ));          // comments
+
 
     verticalHeader()->show();
 }

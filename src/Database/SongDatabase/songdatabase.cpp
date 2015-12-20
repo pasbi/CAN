@@ -20,7 +20,27 @@ SongDatabase::SongDatabase(Project *project) :
 int SongDatabase::columnCount(const QModelIndex &parent) const
 {
     assert(!parent.isValid());
-    return 3;
+    return 9;
+}
+
+QString peopleNames(QList<int> peoples)
+{
+    return "Some guy";
+}
+
+QString keyName(int key)
+{
+    return "C";
+}
+
+QString songLabelName(Song::Label label)
+{
+    return Song::LABEL_NAMES[static_cast<int>(label)];
+}
+
+QString songStateName(Song::State state)
+{
+    return Song::STATE_NAMES[static_cast<int>(state)];
 }
 
 QVariant SongDatabase::data(const QModelIndex &index, int role) const
@@ -49,6 +69,40 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
             {
                 return song->duration();
             }
+        case 3:
+            if (role == Qt::DisplayRole)
+            {
+                return keyName(song->key());
+            }
+            else
+            {
+                return song->key();
+            }
+        case 4:
+            if (role == Qt::DisplayRole)
+            {
+                return songLabelName(song->label());
+            }
+            else
+            {
+                return song->label();
+            }
+        case 5:
+            if (role == Qt::DisplayRole)
+            {
+                return songStateName(song->state());
+            }
+            else
+            {
+                return song->state();
+            }
+        case 6:
+            return QStringList({"1", "2"});
+            return peopleNames(song->soloPlayers());
+        case 7:
+            return peopleNames(song->singers());
+        case 8:
+            return song->comments();
         }
     }
     default:
@@ -112,6 +166,18 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
                 return tr("Artist");
             case 2:
                 return tr("Duration");
+            case 3:
+                return tr("Key");
+            case 4:
+                return tr("Labels");
+            case 5:
+                return tr("State");
+            case 6:
+                return tr("Solos");
+            case 7:
+                return tr("Singers");
+            case 8:
+                return tr("Comments");
             }
 
         default:
@@ -160,6 +226,16 @@ Qt::ItemFlags SongDatabase::flags(const QModelIndex &index) const
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled | Qt::ItemIsEditable;
 }
 
+QList<int> toIntList(const QVariant& value)
+{
+    QList<int> ints;
+    for (const QVariant& val : value.toList())
+    {
+        ints << val.toInt();
+    }
+    return ints;
+}
+
 bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     assert(!index.parent().isValid());
@@ -180,7 +256,25 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
         case 3:
             song->setDuration(value.toTime());
             break;
+        case 4:
+            song->setlabel(static_cast<Song::Label>(value.toInt()));
+            break;
+        case 5:
+            song->setState(static_cast<Song::State>(value.toInt()));
+            break;
+        case 6:
+            song->setSoloPlayers(toIntList(value));
+            break;
+        case 7:
+            song->setSingers(toIntList(value));
+            break;
+        case 8:
+            song->setComments(value.toString());
+            break;
+        default:
+            return false;
         }
+
         emit dataChanged(index, index);
         return true;
     }

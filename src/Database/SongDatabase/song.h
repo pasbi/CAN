@@ -17,6 +17,11 @@ public:
     Song(Database<Song> *database);
     ~Song();
 
+    enum Label { NoLabel, Acoustic, Normal };
+    enum State { NoState, Inactive, NeedsPractice, Works };
+    static const QStringList STATE_NAMES;
+    static const QStringList LABEL_NAMES;
+
     /////////////////////////////////////////////////
     ////
     ///  Attributes
@@ -27,15 +32,34 @@ private:
     QString m_artist;
     QDateTime m_creationDateTime;
     QTime m_duration;
+    Label m_label;
+    State m_state;
+    qint32 m_key;
+    QList<qint32> m_singers;
+    QList<qint32> m_soloPlayers;
+    QString m_comments;
+
 public:
     void setTitle(const QString& title);
     void setArtist(const QString& artist);
     void setDuration(const QTime& duration);
+    void setlabel(Label label);
+    void setState(State state);
+    void setSingers(QList<int> singers);
+    void setSoloPlayers(QList<int> soloPlayers);
+    void setComments(const QString& comments);
+    void setKey(int key);
     QString title() const { return m_title; }
     QString artist() const { return m_artist; }
     QTime duration() const { return m_duration; }
     QString description() const { return title(); }
     QDateTime creationTime() const { return m_creationDateTime; }
+    Label label() const { return m_label; }
+    State state() const { return m_state; }
+    QList<int> singers() const { return m_singers; }
+    QList<int> soloPlayers() const { return m_soloPlayers; }
+    int key() const { return m_key; }
+    QString comments() const { return m_comments; }
 
     QStringList textAttributes() const;
 

@@ -18,6 +18,8 @@ void DatabaseEditCommand::undo()
 
 void DatabaseEditCommand::redo()
 {
+    qDebug() << ">> " << m_newData;
     model()->setData( m_index, m_newData, Qt::EditRole );
+    qDebug() << "<< " << model()->data(m_index).toString();
 }
 

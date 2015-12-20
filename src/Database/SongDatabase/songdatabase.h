@@ -47,6 +47,7 @@ signals:
     void songRemoved(int);
 
     friend class SongDatabaseSortProxy;
+
 };
 
 #endif // SONGDATABASE_H

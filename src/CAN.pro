@@ -133,6 +133,10 @@ SOURCES += main.cpp\
     Dialogs/copyindexedfilesdialog.cpp \
     AttachmentView/browseattachmentbuttonbox.cpp \
     playerwidget.cpp \
+    DatabaseView/ItemDelegates/keydelegate.cpp \
+    DatabaseView/ItemDelegates/peoplesdelegate.cpp \
+    DatabaseView/ItemDelegates/texteditdelegate.cpp \
+    DatabaseView/ItemDelegates/durationeditor.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -250,6 +254,10 @@ HEADERS  += mainwindow.h \
     Dialogs/copyindexedfilesdialog.h \
     AttachmentView/browseattachmentbuttonbox.h \
     playerwidget.h \
+    DatabaseView/ItemDelegates/keydelegate.h \
+    DatabaseView/ItemDelegates/peoplesdelegate.h \
+    DatabaseView/ItemDelegates/texteditdelegate.h \
+    DatabaseView/ItemDelegates/durationeditor.h
 
 
 FORMS    += mainwindow.ui \
