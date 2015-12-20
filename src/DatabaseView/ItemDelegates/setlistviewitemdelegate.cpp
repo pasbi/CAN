@@ -91,7 +91,7 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
         QVariant newValue = lineEdit->text();
         if (model->data(index) != newValue)
         {
-            app().pushCommand( new DatabaseEditCommand(qobject_assert_cast<DatabaseBase*>(model), index, newValue) );
+            app().pushCommand( new DatabaseEditCommand( model, index, newValue) );
         }
     }
         break;
