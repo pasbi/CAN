@@ -89,7 +89,7 @@ QString ChordPatternAttachment::process(QString text, int transpose)
             if (chord.isValid() && isChordLine)
             {
                 chord.transpose(transpose);
-                QString c = chord.toString( (Chord::MinorPolicy) config["MinorPolicy"].toInt(), (Chord::EnharmonicPolicy) config["EnharmonicPolicy"].toInt() );
+                QString c = chord.toString();
                 text = text.replace(i, token.length(), c);
                 additional = c.length() - token.length();
             }

@@ -13,7 +13,7 @@ Song::Song(Database<Song> * database) :
     m_creationDateTime(QDateTime::currentDateTime()),
     m_label(NoLabel),
     m_state(NoState),
-    m_key(-1)
+    m_key()
 {
     connect( this, SIGNAL(attachmentAdded(int)),   database, SIGNAL(attachmentAdded(int)  ));
     connect( this, SIGNAL(attachmentRemoved(int)), database, SIGNAL(attachmentRemoved(int)));
@@ -118,7 +118,7 @@ void Song::setComments(const QString& comments)
     m_comments = comments;
 }
 
-void Song::setKey(int key)
+void Song::setKey(Chord key)
 {
     m_key = key;
 }

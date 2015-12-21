@@ -7,6 +7,7 @@
 #include "taggable.h"
 #include "Program/program.h"
 #include "Database/databaseitem.h"
+#include "chord.h"
 
 class Attachment;
 template<typename T> class Database;
@@ -34,7 +35,7 @@ private:
     QTime m_duration;
     Label m_label;
     State m_state;
-    qint32 m_key;
+    Chord m_key;
     QList<qint32> m_singers;
     QList<qint32> m_soloPlayers;
     QString m_comments;
@@ -48,7 +49,7 @@ public:
     void setSingers(QList<int> singers);
     void setSoloPlayers(QList<int> soloPlayers);
     void setComments(const QString& comments);
-    void setKey(int key);
+    void setKey(Chord key);
     QString title() const { return m_title; }
     QString artist() const { return m_artist; }
     QTime duration() const { return m_duration; }
@@ -58,7 +59,7 @@ public:
     State state() const { return m_state; }
     QList<int> singers() const { return m_singers; }
     QList<int> soloPlayers() const { return m_soloPlayers; }
-    int key() const { return m_key; }
+    Chord key() const { return m_key; }
     QString comments() const { return m_comments; }
 
     QStringList textAttributes() const;

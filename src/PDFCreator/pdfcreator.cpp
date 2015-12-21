@@ -14,7 +14,7 @@
 #include "Database/EventDatabase/event.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "util.h"
-#include "Attachments/ChordPatternAttachment/chord.h"
+#include "chord.h"
 #include "Database/EventDatabase/setlist.h"
 
 DEFN_CONFIG( PDFCreator, QT_TRANSLATE_NOOP("ConfigurableItem", "PDF Export") );

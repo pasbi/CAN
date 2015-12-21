@@ -11,6 +11,7 @@
 #include "Attachments/attachment.h"
 #include "Attachments/AudioAttachment/audioattachment.h"
 #include <QPainter>
+#include "chord.h"
 
 SongDatabase::SongDatabase(Project *project) :
     Database(project)
@@ -28,10 +29,6 @@ QString peopleNames(QList<int> peoples)
     return "Some guy";
 }
 
-QString keyName(int key)
-{
-    return "C";
-}
 
 QString songLabelName(Song::Label label)
 {
@@ -72,11 +69,11 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
         case 3:
             if (role == Qt::DisplayRole)
             {
-                return keyName(song->key());
+                return song->key().key();
             }
             else
             {
-                return song->key();
+                return QVariant::fromValue(song->key());
             }
         case 4:
             if (role == Qt::DisplayRole)
@@ -252,9 +249,10 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
             song->setArtist(value.toString());
             break;
         case 2:
-            qWarning() << "Cannot set read-only value CreationDateTime";
-        case 3:
             song->setDuration(value.toTime());
+            break;
+        case 3:
+            song->setKey(value.value<Chord>());
             break;
         case 4:
             song->setlabel(static_cast<Song::Label>(value.toInt()));

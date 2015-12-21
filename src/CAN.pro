@@ -65,7 +65,7 @@ SOURCES += main.cpp\
     DatabaseView/SongDatabaseView/songdatabasewidget.cpp \
     AttachmentView/attachmentchooser.cpp \
     Commands/AttachmentCommands/attachmentrenamecommand.cpp \
-    Attachments/ChordPatternAttachment/chord.cpp \
+    chord.cpp \
     Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.cpp \
     Dialogs/stringdialog.cpp \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp \
@@ -136,7 +136,8 @@ SOURCES += main.cpp\
     DatabaseView/ItemDelegates/keydelegate.cpp \
     DatabaseView/ItemDelegates/peoplesdelegate.cpp \
     DatabaseView/ItemDelegates/texteditdelegate.cpp \
-    DatabaseView/ItemDelegates/durationeditor.cpp
+    DatabaseView/ItemDelegates/durationeditor.cpp \
+    DatabaseView/ItemDelegates/keyeditor.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -170,7 +171,7 @@ HEADERS  += mainwindow.h \
     Attachments/pdfattachment.h \
     DatabaseView/SongDatabaseView/songdatabasewidget.h \
     AttachmentView/attachmentchooser.h \
-    Attachments/ChordPatternAttachment/chord.h \
+    chord.h \
     Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h \
     Dialogs/stringdialog.h \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h \
@@ -257,7 +258,8 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/keydelegate.h \
     DatabaseView/ItemDelegates/peoplesdelegate.h \
     DatabaseView/ItemDelegates/texteditdelegate.h \
-    DatabaseView/ItemDelegates/durationeditor.h
+    DatabaseView/ItemDelegates/durationeditor.h \
+    DatabaseView/ItemDelegates/keyeditor.h
 
 
 FORMS    += mainwindow.ui \

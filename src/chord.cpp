@@ -17,23 +17,24 @@ const QString Chord::IGNORE_AFTER_PATTERN = "(" + (QStringList() << QRegExp::esc
 const QString CHORD_EXTENSION_PATTERN = "(maj|min|2|4|5|7th|maj7|min7|sus4|sus2|sus|°|dim|dim7|aug|6|min6|"
                                         "9|min9|maj9|11|min11|maj11|13|min13|maj13|add9|maj7th|7|b5|\\+|_)*$" ;
 
+const QString Chord::FLAT = QChar(0x266D);
+const QString Chord::SHARP = QChar(0x266F);
+
 Chord::Chord(const QString token) :
     m_isValid( parse(token) )
 {
 }
 
-QString Chord::flat(const QString& s)
+Chord::Chord() :
+    m_isValid(false)
 {
-    return QString("%1%2").arg(s).arg(QChar(0x266D));
+
 }
 
-QString Chord::sharp(const QString& s)
+QString Chord::baseString() const
 {
-    return QString("%1%2").arg(s).arg(QChar(0x266F));
-}
+    Chord::EnharmonicPolicy epolicy = Chord::Natural; //static_cast<Chord::EnharmonicPolicy>(config["EnharmonicPolicy"].toInt());
 
-QString Chord::baseString( EnharmonicPolicy epolicy ) const
-{
     switch (m_base)
     {
     case 0:
@@ -42,10 +43,10 @@ QString Chord::baseString( EnharmonicPolicy epolicy ) const
         switch (epolicy)
         {
         case Sharp:
-            return sharp("C");
+            return "C" + SHARP;
         case Natural:
         case Flat:
-            return flat("D");
+            return "D" + FLAT;
         }
     case 2:
         return "D";
@@ -53,10 +54,10 @@ QString Chord::baseString( EnharmonicPolicy epolicy ) const
         switch (epolicy)
         {
         case Sharp:
-            return sharp("D");
+            return "D" + SHARP;
         case Natural:
         case Flat:
-            return flat("E");
+            return "E" + FLAT;
         }
     case 4:
         return "E";
@@ -67,9 +68,9 @@ QString Chord::baseString( EnharmonicPolicy epolicy ) const
         {
         case Sharp:
         case Natural:
-            return sharp("F");
+            return "F" + SHARP;
         case Flat:
-            return flat("G");
+            return "G" + FLAT;
         }
     case 7:
         return "G";
@@ -77,10 +78,10 @@ QString Chord::baseString( EnharmonicPolicy epolicy ) const
         switch (epolicy)
         {
         case Sharp:
-            return sharp("G");
+            return "G" + SHARP;
         case Flat:
         case Natural:
-            return flat("A");
+            return "A" + FLAT;
         }
     case 9:
         return "A";
@@ -88,10 +89,10 @@ QString Chord::baseString( EnharmonicPolicy epolicy ) const
         switch (epolicy)
         {
         case Sharp:
-            return sharp("A");
+            return "A" + SHARP;
         case Flat:
         case Natural:
-            return flat("B");
+            return "B" + FLAT;
         }
     case 11:
         return "B";
@@ -100,24 +101,9 @@ QString Chord::baseString( EnharmonicPolicy epolicy ) const
     }
 }
 
-QString Chord::toString(MinorPolicy mpolicy, EnharmonicPolicy epolicy) const
+QString Chord::toString() const
 {
-    QString text = baseString(epolicy);
-
-    if (isMinor())
-    {
-        switch (mpolicy)
-        {
-        case LowerCase:
-            text = text.toLower();
-            break;
-        case FollowingM:
-            text += "m";
-            break;
-        }
-    }
-
-    return m_before + text + attachment() + m_after;
+    return m_before + key() + attachment() + m_after;
 }
 
 
@@ -208,14 +194,14 @@ bool Chord::parse(QString text)
     if ( ifStartsWithTake( text, "es" )
      || (!text.startsWith("sus") && ifStartsWithTake( text, "s") )
      ||  ifStartsWithTake( text, "b" )
-     ||  ifStartsWithTake( text, flat())    )
+     ||  ifStartsWithTake( text, FLAT)    )
     {
         m_base--;
     }
 
     if ( ifStartsWithTake( text, "is" )
      ||  ifStartsWithTake( text, "#" )
-     ||  ifStartsWithTake( text, sharp() ) )
+     ||  ifStartsWithTake( text, SHARP ) )
     {
         m_base++;
     }
@@ -253,13 +239,60 @@ void Chord::transpose(int t)
     m_base %= 12;
 }
 
+QString Chord::key() const
+{
+    if (isValid())
+    {
+
+        Chord::MinorPolicy mpolicy = Chord::LowerCase; //TODO static_cast<Chord::MinorPolicy>(config["MinorPolicy"].toInt());
+        QString base = baseString();
+        if (isMinor())
+        {
+            switch (mpolicy)
+            {
+            case LowerCase:
+                return base.toLower();
+                break;
+            case FollowingM:
+                return base + "m";
+                break;
+            default:
+                Q_UNREACHABLE();
+                return "";
+            }
+        }
+        else
+        {
+            return base;
+        }
+    }
+    else
+    {
+        return "";
+    }
+}
 
 
+QDataStream& operator<<(QDataStream& out, const Chord& chord)
+{
+    qint32 base = chord.m_base;
+    qint32 isMinor = static_cast<qint32>(chord.m_isMinor);
+    qint32 isValid = static_cast<qint32>(chord.m_isValid);
+    out << chord.m_after << chord.m_attachment << base << chord.m_before << isMinor << isValid;
+    return out;
+}
 
-
-
-
-
+QDataStream& operator>>(QDataStream& in, Chord& chord)
+{
+    qint32 base;
+    qint32 isMinor;
+    qint32 isValid;
+    in >> chord.m_after >> chord.m_attachment >> base >> chord.m_before >> isMinor >> isValid;
+    chord.m_base = static_cast<int>(base);
+    chord.m_isMinor = static_cast<bool>(isMinor);
+    chord.m_isValid = static_cast<bool>(isValid);
+    return in;
+}
 
 
 
