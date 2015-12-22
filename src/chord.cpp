@@ -103,7 +103,7 @@ QString Chord::baseString() const
 
 QString Chord::toString() const
 {
-    return m_before + key() + attachment() + m_after;
+    return m_before + key() + m_attachment + m_after;
 }
 
 

@@ -10,8 +10,8 @@ public:
     KeyDelegate(QObject* parent = nullptr);
 
 private:
-    void setEditorData(KeyEditor* editor, const QModelIndex& index) const;
-    void setModelData(KeyEditor *editor, QAbstractItemModel *database, const QModelIndex &index) const;
+    void setSpecificEditorData(KeyEditor* editor, const QModelIndex& index) const;
+    void setSpecificModelData(KeyEditor *editor, QAbstractItemModel *database, const QModelIndex &index) const;
 };
 
 #endif // KEYDELEGATE_H

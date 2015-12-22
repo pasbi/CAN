@@ -9,7 +9,7 @@ DurationDelegate::DurationDelegate(QObject* parent) :
 {
 }
 
-void DurationDelegate::setModelData(DurationEditor *editor, QAbstractItemModel *model, const QModelIndex &index) const
+void DurationDelegate::setSpecificModelData(DurationEditor *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
     QTime time = editor->time();
     QTime currentTime = index.model()->data(index, Qt::EditRole).toTime();
@@ -19,7 +19,7 @@ void DurationDelegate::setModelData(DurationEditor *editor, QAbstractItemModel *
     }
 }
 
-void DurationDelegate::setEditorData(DurationEditor *editor, const QModelIndex &index) const
+void DurationDelegate::setSpecificEditorData(DurationEditor *editor, const QModelIndex &index) const
 {
     editor->setTime( index.model()->data(index, Qt::EditRole).toTime() );
 }

@@ -24,7 +24,7 @@ int SongDatabase::columnCount(const QModelIndex &parent) const
     return 9;
 }
 
-QString peopleNames(QList<int> peoples)
+QString peopleNames(const QBitArray& peoples)
 {
     return "Some guy";
 }
@@ -220,7 +220,16 @@ QVariant SongDatabase::headerData(int section, Qt::Orientation orientation, int 
 Qt::ItemFlags SongDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
-    return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled | Qt::ItemIsEditable;
+    Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
+    if (index.column() == 8)
+    {
+
+    }
+    else
+    {
+        flags |= Qt::ItemIsEditable;
+    }
+    return flags;
 }
 
 QList<int> toIntList(const QVariant& value)
@@ -261,10 +270,10 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
             song->setState(static_cast<Song::State>(value.toInt()));
             break;
         case 6:
-            song->setSoloPlayers(toIntList(value));
+            song->setSoloPlayers(value.toBitArray());
             break;
         case 7:
-            song->setSingers(toIntList(value));
+            song->setSingers(value.toBitArray());
             break;
         case 8:
             song->setComments(value.toString());

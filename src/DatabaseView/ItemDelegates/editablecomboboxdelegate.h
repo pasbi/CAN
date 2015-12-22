@@ -11,8 +11,8 @@ public:
     EditableComboBoxDelegate(QObject* parent = 0);
 
 private:
-    void setModelData(QComboBox *editor, QAbstractItemModel *model, const QModelIndex &index) const;
-    void setEditorData(QComboBox *editor, const QModelIndex &index) const;
+    void setSpecificModelData(QComboBox *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+    void setSpecificEditorData(QComboBox *editor, const QModelIndex &index) const;
 };
 
 #endif // EDITABLECOMBOBOXDELEGATE_H

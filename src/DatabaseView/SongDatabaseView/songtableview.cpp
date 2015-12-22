@@ -14,6 +14,7 @@
 #include "DatabaseView/ItemDelegates/peoplesdelegate.h"
 #include "DatabaseView/ItemDelegates/texteditdelegate.h"
 #include <QHeaderView>
+#include "Dialogs/textdialog.h"
 
 
 SongTableView::SongTableView(QWidget *parent) :
@@ -31,8 +32,17 @@ SongTableView::SongTableView(QWidget *parent) :
     setItemDelegateForColumn(5, new TypeComboBoxDelegate(Song::STATE_NAMES, this));
     setItemDelegateForColumn(6, new PeoplesDelegate( this ) );          // solos
     setItemDelegateForColumn(7, new PeoplesDelegate( this ));           // involved
-    setItemDelegateForColumn(8, new TextEditDelegate( this ));          // comments
 
+    connect(this, &QTableView::doubleClicked, [this](const QModelIndex& index)
+    {
+        if (index.column() == 8)
+        {
+            TextDialog dialog;
+            dialog.setText(model()->data(index, Qt::EditRole).toString());
+            dialog.exec();
+            app().pushCommand( new DatabaseEditCommand(model(), index, dialog.text()));
+        }
+    });
 
     verticalHeader()->show();
 }

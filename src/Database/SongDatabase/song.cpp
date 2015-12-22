@@ -103,12 +103,12 @@ void Song::setState(State state)
     m_state = state;
 }
 
-void Song::setSingers(QList<int> singers)
+void Song::setSingers(const QBitArray& singers)
 {
     m_singers = singers;
 }
 
-void Song::setSoloPlayers(QList<int> soloPlayers)
+void Song::setSoloPlayers(const QBitArray& soloPlayers)
 {
     m_soloPlayers = soloPlayers;
 }

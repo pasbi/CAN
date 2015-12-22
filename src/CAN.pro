@@ -137,7 +137,11 @@ SOURCES += main.cpp\
     DatabaseView/ItemDelegates/peoplesdelegate.cpp \
     DatabaseView/ItemDelegates/texteditdelegate.cpp \
     DatabaseView/ItemDelegates/durationeditor.cpp \
-    DatabaseView/ItemDelegates/keyeditor.cpp
+    DatabaseView/ItemDelegates/keyeditor.cpp \
+    Dialogs/peoplesdialog.cpp \
+    Dialogs/textdialog.cpp \
+    DatabaseView/ItemDelegates/lineeditdelegate.cpp \
+    DatabaseView/ItemDelegates/typecomboboxdelegate.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -259,7 +263,9 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/peoplesdelegate.h \
     DatabaseView/ItemDelegates/texteditdelegate.h \
     DatabaseView/ItemDelegates/durationeditor.h \
-    DatabaseView/ItemDelegates/keyeditor.h
+    DatabaseView/ItemDelegates/keyeditor.h \
+    Dialogs/peoplesdialog.h \
+    Dialogs/textdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -284,7 +290,9 @@ FORMS    += mainwindow.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
     Dialogs/copyindexedfilesdialog.ui \
     AttachmentView/browseattachmentbuttonbox.ui \
-    playerwidget.ui
+    playerwidget.ui \
+    Dialogs/peoplesdialog.ui \
+    Dialogs/textdialog.ui
 
 
 RESOURCES += \

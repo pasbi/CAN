@@ -12,7 +12,7 @@ EditableComboBoxDelegate::EditableComboBoxDelegate(QObject* parent) :
 
 }
 
-void EditableComboBoxDelegate::setModelData(QComboBox *editor, QAbstractItemModel *model, const QModelIndex &index) const
+void EditableComboBoxDelegate::setSpecificModelData(QComboBox *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
     if (editor->currentText() != model->data(index))
     {
@@ -20,7 +20,7 @@ void EditableComboBoxDelegate::setModelData(QComboBox *editor, QAbstractItemMode
     }
 }
 
-void EditableComboBoxDelegate::setEditorData(QComboBox *editor, const QModelIndex &index) const
+void EditableComboBoxDelegate::setSpecificEditorData(QComboBox *editor, const QModelIndex &index) const
 {
     QStringList columnData;
     int column = index.column();

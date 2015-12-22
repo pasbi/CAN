@@ -6,12 +6,12 @@ PeoplesDelegate::PeoplesDelegate(QObject* parent) :
 }
 
 
-void PeoplesDelegate::setEditorData(PeoplesEdit* editor, const QModelIndex& index) const
+void PeoplesDelegate::setSpecificEditorData(PeoplesEdit* editor, const QModelIndex& index) const
 {
 
 }
 
-void PeoplesDelegate::setModelData(PeoplesEdit *editor, QAbstractItemModel *database, const QModelIndex &index) const
+void PeoplesDelegate::setSpecificModelData(PeoplesEdit *editor, QAbstractItemModel *database, const QModelIndex &index) const
 {
 
 }

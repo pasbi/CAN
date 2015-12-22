@@ -11,8 +11,8 @@ public:
     DurationDelegate(QObject* parent = 0);
 
 private:
-    void setModelData(DurationEditor *editor, QAbstractItemModel *model, const QModelIndex &index) const;
-    void setEditorData(DurationEditor *editor, const QModelIndex &index) const;
+    void setSpecificModelData(DurationEditor *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+    void setSpecificEditorData(DurationEditor *editor, const QModelIndex &index) const;
 
 };
 
