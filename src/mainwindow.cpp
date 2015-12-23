@@ -43,6 +43,7 @@
 #include "Dialogs/copyindexedfilesdialog.h"
 #include "AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h"
 #include "Attachments/indexedfileattachment.h"
+#include "Dialogs/peoplesmanager.h"
 
 DEFN_CONFIG( MainWindow, "Global" );
 
@@ -1124,8 +1125,17 @@ void MainWindow::on_actionCopy_Indexed_Attachments_triggered()
             }
         }
     }
+}
 
-
+QBitArray resize(QBitArray old, int n)
+{
+    // remove only false-bits
+    for (int i = old.size(); i < n && i < old.size(); ++i)
+    {
+        assert(!old.at(i));
+    }
+    old.resize(n);
+    return old;
 }
 
 

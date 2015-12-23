@@ -10,6 +10,7 @@
 #include "chord.h"
 #include <QBitArray>
 
+class SongDatabase;
 class Attachment;
 template<typename T> class Database;
 class Song : public DatabaseItem<Song>
@@ -37,8 +38,8 @@ private:
     Label m_label;
     State m_state;
     Chord m_key;
-    QBitArray m_singers;
-    QBitArray m_soloPlayers;
+    QStringList m_singers;
+    QStringList m_soloPlayers;
     QString m_comments;
 
 public:
@@ -47,8 +48,8 @@ public:
     void setDuration(const QTime& duration);
     void setlabel(Label label);
     void setState(State state);
-    void setSingers(const QBitArray &singers);
-    void setSoloPlayers(const QBitArray& soloPlayers);
+    void setSingers(const QStringList& singers);
+    void setSoloPlayers(const QStringList& soloPlayers);
     void setComments(const QString& comments);
     void setKey(Chord key);
     QString title() const { return m_title; }
@@ -58,8 +59,8 @@ public:
     QDateTime creationTime() const { return m_creationDateTime; }
     Label label() const { return m_label; }
     State state() const { return m_state; }
-    QBitArray singers() const { return m_singers; }
-    QBitArray soloPlayers() const { return m_soloPlayers; }
+    QStringList singers() const { return m_singers; }
+    QStringList soloPlayers() const { return m_soloPlayers; }
     Chord key() const { return m_key; }
     QString comments() const { return m_comments; }
 

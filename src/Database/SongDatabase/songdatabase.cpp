@@ -24,9 +24,17 @@ int SongDatabase::columnCount(const QModelIndex &parent) const
     return 9;
 }
 
-QString peopleNames(const QBitArray& peoples)
+QString peopleNames(const QStringList& names, const QBitArray& peoples)
 {
-    return "Some guy";
+    QStringList ps;
+    for (int i = 0; i < peoples.size(); ++i)
+    {
+        if (peoples[i])
+        {
+            ps << names[i];
+        }
+    }
+    return ps.join(", ");
 }
 
 
@@ -94,10 +102,23 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
                 return song->state();
             }
         case 6:
-            return QStringList({"1", "2"});
-            return peopleNames(song->soloPlayers());
+            if (role == Qt::DisplayRole)
+            {
+                return song->soloPlayers().join(", ");
+            }
+            else
+            {
+                return song->soloPlayers();
+            }
         case 7:
-            return peopleNames(song->singers());
+            if (role == Qt::DisplayRole)
+            {
+                return song->singers().join(", ");
+            }
+            else
+            {
+                return song->singers();
+            }
         case 8:
             return song->comments();
         }
@@ -221,13 +242,13 @@ Qt::ItemFlags SongDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
     Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
-    if (index.column() == 8)
+    if (index.column() < 6)
     {
-
+        flags |= Qt::ItemIsEditable;
     }
     else
     {
-        flags |= Qt::ItemIsEditable;
+        // other columns use dialogs for editing
     }
     return flags;
 }
@@ -270,10 +291,10 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
             song->setState(static_cast<Song::State>(value.toInt()));
             break;
         case 6:
-            song->setSoloPlayers(value.toBitArray());
+            song->setSoloPlayers(value.toStringList());
             break;
         case 7:
-            song->setSingers(value.toBitArray());
+            song->setSingers(value.toStringList());
             break;
         case 8:
             song->setComments(value.toString());
@@ -297,4 +318,28 @@ Qt::DropActions SongDatabase::supportedDragActions() const
 QString SongDatabase::itemName(int n) const
 {
     return tr("%Song(s)", "", n);
+}
+
+void SongDatabase::serialize(QDataStream &out) const
+{
+    out << m_peoples;
+    Database::serialize(out);
+}
+
+void SongDatabase::deserialize(QDataStream &in)
+{
+    in >> m_peoples;
+    Database::deserialize(in);
+}
+
+QStringList SongDatabase::peoples() const
+{
+    QStringList peoples;
+    for (const Song* song : items())
+    {
+        peoples << song->singers();
+        peoples << song->soloPlayers();
+    }
+    peoples.removeDuplicates();
+    return peoples;
 }

@@ -22,7 +22,7 @@ protected:
     }
 
 public:
-    Database<T>* database() const { return m_database; }
+    virtual Database<T>* database() const { return m_database; }
 
     T* copy(Database<T>* database) const
     {

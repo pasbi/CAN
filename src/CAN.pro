@@ -134,7 +134,6 @@ SOURCES += main.cpp\
     AttachmentView/browseattachmentbuttonbox.cpp \
     playerwidget.cpp \
     DatabaseView/ItemDelegates/keydelegate.cpp \
-    DatabaseView/ItemDelegates/peoplesdelegate.cpp \
     DatabaseView/ItemDelegates/texteditdelegate.cpp \
     DatabaseView/ItemDelegates/durationeditor.cpp \
     DatabaseView/ItemDelegates/keyeditor.cpp \
@@ -260,7 +259,6 @@ HEADERS  += mainwindow.h \
     AttachmentView/browseattachmentbuttonbox.h \
     playerwidget.h \
     DatabaseView/ItemDelegates/keydelegate.h \
-    DatabaseView/ItemDelegates/peoplesdelegate.h \
     DatabaseView/ItemDelegates/texteditdelegate.h \
     DatabaseView/ItemDelegates/durationeditor.h \
     DatabaseView/ItemDelegates/keyeditor.h \

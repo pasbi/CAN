@@ -40,6 +40,14 @@ public:
     QString fileNameBase() const { return "song"; }
     QString itemName(int n) const;
 
+    QStringList peoples() const;
+
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
+
+private:
+    QStringList m_peoples;
+
 signals:
     void attachmentAdded(int);
     void attachmentRemoved(int);

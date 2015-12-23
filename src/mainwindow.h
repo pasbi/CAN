@@ -109,7 +109,6 @@ private slots:
     void my_on_actionPaste_SetlistItem_triggered();
 
 
-
 private:
     void createLanguageMenu();
     void createAttachmentActions();

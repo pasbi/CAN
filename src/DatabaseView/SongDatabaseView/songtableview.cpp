@@ -11,7 +11,7 @@
 #include "Database/SongDatabase/songdatabasesortproxy.h"
 #include "DatabaseView/ItemDelegates/keydelegate.h"
 #include "DatabaseView/ItemDelegates/typecomboboxdelegate.h"
-#include "DatabaseView/ItemDelegates/peoplesdelegate.h"
+#include "Dialogs/peoplesdialog.h"
 #include "DatabaseView/ItemDelegates/texteditdelegate.h"
 #include <QHeaderView>
 #include "Dialogs/textdialog.h"
@@ -30,14 +30,20 @@ SongTableView::SongTableView(QWidget *parent) :
     setItemDelegateForColumn(3, new KeyDelegate( this ) );              // key
     setItemDelegateForColumn(4, new TypeComboBoxDelegate(Song::LABEL_NAMES, this));
     setItemDelegateForColumn(5, new TypeComboBoxDelegate(Song::STATE_NAMES, this));
-    setItemDelegateForColumn(6, new PeoplesDelegate( this ) );          // solos
-    setItemDelegateForColumn(7, new PeoplesDelegate( this ));           // involved
 
     connect(this, &QTableView::doubleClicked, [this](const QModelIndex& index)
     {
+        if (index.column() == 6 || index.column() == 7)
+        {
+            PeoplesDialog dialog( static_cast<SongDatabase*>(sourceModel())->peoples(),
+                                  model()->data(index, Qt::EditRole).toStringList(), this);
+            dialog.exec();
+            app().pushCommand( new DatabaseEditCommand(model(), index, dialog.activePeoples()));
+        }
+
         if (index.column() == 8)
         {
-            TextDialog dialog;
+            TextDialog dialog(this);
             dialog.setText(model()->data(index, Qt::EditRole).toString());
             dialog.exec();
             app().pushCommand( new DatabaseEditCommand(model(), index, dialog.text()));
