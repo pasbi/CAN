@@ -12,10 +12,6 @@ const QString AudioAttachmentView::RECORD_LEFT_POSITION_ICON_PATH  = ":/icons/ic
 const QString AudioAttachmentView::RECORD_RIGHT_POSITION_ICON_PATH = ":/icons/icons/turnright.png";
 
 DEFN_CREATABLE( AudioAttachmentView, AttachmentView );
-DEFN_CONFIG( AudioAttachmentView, "AudioAttachmentView" );
-
-CONFIGURABLE_ADD_ITEM_HIDDEN( AudioAttachmentView, Volume, 100 );
-CONFIGURABLE_ADD_ITEM_HIDDEN( AudioAttachmentView, Muted, false);
 
 AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     IndexedFileAttachmentView(parent),

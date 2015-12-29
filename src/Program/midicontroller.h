@@ -2,15 +2,12 @@
 #define MIDICONTROLLER_H
 
 #include <QFile>
-#include "configurable.h"
 #include <QFileSystemWatcher>
 
 class Program;
 class MidiCommand;
 class MidiController
 {
-    DECL_CONFIG( MidiController )
-
 private:
     MidiController();
 public:

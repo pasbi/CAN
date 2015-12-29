@@ -17,8 +17,6 @@
 #include "Database/EventDatabase/setlist.h"
 #include "setlistitemselector.h"
 
-DEFN_CONFIG( SetlistWidget, "SetlistWidget" );
-
 SetlistWidget::SetlistWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SetlistWidget),

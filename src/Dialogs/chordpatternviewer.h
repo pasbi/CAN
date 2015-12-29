@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QTemporaryFile>
-#include "configurable.h"
 
 namespace Ui {
 class ChordPatternViewer;
@@ -13,7 +12,6 @@ class AbstractChordPatternAttachment;
 class ChordPatternViewer : public QDialog
 {
     Q_OBJECT
-    DECL_CONFIG( ChordPatternViewer )
 
 private: // you should use the static method `displayChordPatternAttachment()`
     explicit ChordPatternViewer(AbstractChordPatternAttachment *attachment, QWidget *parent = 0);

@@ -3,7 +3,6 @@
 
 #include "AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h"
 #include "Attachments/AudioAttachment/audioattachment.h"
-#include "configurable.h"
 
 
 namespace Ui {
@@ -14,7 +13,6 @@ class AudioAttachmentView : public IndexedFileAttachmentView
 {
     Q_OBJECT
     DECL_CREATABLE( AudioAttachmentView )
-    DECL_CONFIG( AudioAttachmentView )
 
 public:
     AudioAttachmentView(QWidget* parent = 0);

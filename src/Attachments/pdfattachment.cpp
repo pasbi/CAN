@@ -55,7 +55,7 @@ void PDFAttachment::paint(PDFCreator* pdfCreator)
             double fx = targetSize.width() / pageSize.width();
             double fy = targetSize.height() / pageSize.height();
 
-            double resolution = PDFCreator::config["PDFResolution"].toDouble();
+            double resolution = app().preference<double>("PDFResolution");
             double f = qMin(fx, fy) * 72.0 / resolution;
 
             painter->scale( f, f );

@@ -20,10 +20,12 @@ TEMPLATE = app
 QMAKE_CXXFLAGS += -std=c++0x
 QMAKE_LFLAGS += -static-libgcc
 
+INCLUDEPATH += ../../Preferences/src
 unix {
     LIBS += -L/usr/local/lib -lpoppler-qt5
     LIBS += -lavformat -lavcodec -lavutil -lpthread
     LIBS += -lSoundTouch
+    LIBS += -L../../Preferences/build-Preferences-Desktop-Debug/ -lPreferences
 }
 
 win32 {
@@ -36,7 +38,6 @@ win32 {
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    configurable.cpp \
     Project/project.cpp \
     Database/SongDatabase/songdatabase.cpp \
     Database/EventDatabase/eventdatabase.cpp \
@@ -72,8 +73,6 @@ SOURCES += main.cpp\
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp \
     Attachments/AudioAttachment/audioattachment.cpp \
     AttachmentView/chordpatternedit.cpp \
-    Dialogs/configurationdialog.cpp \
-    Dialogs/configurationwidgets.cpp \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.cpp \
     DatabaseView/EventDatabaseView/eventtableview.cpp \
     DatabaseView/EventDatabaseView/eventdatabasewidget.cpp \
@@ -140,12 +139,11 @@ SOURCES += main.cpp\
     Dialogs/peoplesdialog.cpp \
     Dialogs/textdialog.cpp \
     DatabaseView/ItemDelegates/lineeditdelegate.cpp \
-    DatabaseView/ItemDelegates/typecomboboxdelegate.cpp
+    DatabaseView/ItemDelegates/typecomboboxdelegate.cpp \
 
 
 HEADERS  += mainwindow.h \
     Project/project.h \
-    configurable.h \
     Database/SongDatabase/songdatabase.h \
     Database/EventDatabase/eventdatabase.h \
     Database/database.h \
@@ -182,8 +180,6 @@ HEADERS  += mainwindow.h \
     Attachments/AudioAttachment/audioattachment.h \
     AttachmentView/chordpatternedit.h \
     global.h \
-    Dialogs/configurationdialog.h \
-    Dialogs/configurationwidgets.h \
     Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h \
     DatabaseView/EventDatabaseView/eventtableview.h \
     DatabaseView/EventDatabaseView/eventdatabasewidget.h \
@@ -274,7 +270,6 @@ FORMS    += mainwindow.ui \
     Dialogs/stringdialog.ui \
     AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui \
-    Dialogs/configurationdialog.ui \
     Dialogs/datetimedialog.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
     Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.ui \

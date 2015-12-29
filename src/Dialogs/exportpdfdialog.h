@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include "taggable.h"
-#include "configurable.h"
 
 
 namespace Ui {
@@ -14,7 +13,6 @@ class Attachment;
 class ExportPDFDialog : public QDialog
 {
     Q_OBJECT
-    DECL_CONFIG( ExportPDFDialog )
 
 public:
     explicit ExportPDFDialog(QWidget *parent = 0);

@@ -2,7 +2,6 @@
 #define SETLISTWIDGET_H
 
 #include <QWidget>
-#include "configurable.h"
 
 namespace Ui {
 class SetlistWidget;
@@ -19,7 +18,7 @@ template<typename T> class Database;
 class SetlistWidget : public QWidget
 {
     Q_OBJECT
-    DECL_CONFIG( SetlistWidget )
+
 public:
     explicit SetlistWidget(QWidget *parent = 0);
     ~SetlistWidget();

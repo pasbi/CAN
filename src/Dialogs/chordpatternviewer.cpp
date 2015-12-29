@@ -13,13 +13,7 @@
 #include "Program/midicommand.h"
 #include <QScrollBar>
 #include "Attachments/AudioAttachment/audioattachment.h"
-
-DEFN_CONFIG( ChordPatternViewer, "ChordPatternViewer");
-
-
-CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, zoom, 1.0 );
-CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, line, true );
-CONFIGURABLE_ADD_ITEM_HIDDEN( ChordPatternViewer, TwoColumn, true );
+#include "application.h"
 
 
 
@@ -82,7 +76,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     ui->label->setPixmap( m_pixmap );
     }
 
-    m_zoom = config["zoom"].toDouble();
+    m_zoom = app().preference<double>("ChordPatternViewZoom");
 
     QTimer::singleShot( 1, this, SLOT(applyZoom()) );
 
@@ -99,9 +93,10 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     QTimer::singleShot( 1, this, SLOT(reject()) );
 #endif
 
-    if (MidiController::config["enable_Channel"].toBool())
+    int channel = app().preference<int>("Channel") - 1;
+    if (channel >= 0)
     {
-        MidiCommand::defaultChannel = (MidiCommand::Channel) (MidiController::config["Channel"].toInt() - 1);
+        MidiCommand::defaultChannel = (MidiCommand::Channel) (channel);
         const Program& program = attachment->song()->program();
         if (program.isValid())
         {
@@ -110,7 +105,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     }
 
     ui->buttonColumnCount->blockSignals(true);
-    ui->buttonColumnCount->setChecked( config["TwoColumn"].toBool() );
+    ui->buttonColumnCount->setChecked( app().preference<bool>("ChordPatternViewTwoColumn") );
     ui->buttonColumnCount->blockSignals(false);
 
     //TODO do this more sophisticated
@@ -120,7 +115,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
 
 ChordPatternViewer::~ChordPatternViewer()
 {
-    config.set( "zoom", m_zoom );
+    app().setPreference( "ChordPatternViewZoom", m_zoom );
     delete ui;
 }
 
@@ -210,7 +205,7 @@ void ChordPatternViewer::applyZoom()
     QPixmap pixmap = m_pixmap.scaledToWidth( pdfWidth(), Qt::SmoothTransformation );
     int describedWidth = ::describedWidth(pixmap.toImage(), Qt::white);
 
-    if ( config["TwoColumn"].toBool() )
+    if ( app().preference<bool>("ChordPatternViewTwoColumn"))
     {
         pixmap = twoPageView(pixmap, describedWidth, ui->scrollArea->viewport()->height(), pixmap.height());
     }
@@ -370,7 +365,7 @@ void ChordPatternViewer::wheelEvent(QWheelEvent *e)
 
 void ChordPatternViewer::on_buttonAutoZoom_clicked()
 {
-    if (config["TwoColumn"].toBool())
+    if (app().preference<bool>("ChordPatternViewTwoColumn"))
     {
         m_zoom = (double) m_pixmap.width() / (twoPageViewWidth(describedWidth(m_pixmap.toImage(), Qt::white)) + 10);
     }
@@ -383,7 +378,7 @@ void ChordPatternViewer::on_buttonAutoZoom_clicked()
 
 void ChordPatternViewer::on_buttonColumnCount_toggled(bool checked)
 {
-    config.set("TwoColumn", checked);
+    app().setPreference("ChordPatternViewTwoColumn", checked);
     applyZoom();
 }
 

@@ -12,8 +12,6 @@
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 
 DEFN_CREATABLE(ChordPatternAttachmentView, AttachmentView);
-DEFN_CONFIG( ChordPatternAttachmentView, "Chord Pattern Attachment" );
-
 
 ChordPatternAttachmentView::ChordPatternAttachmentView(QWidget *parent) :
     AttachmentView(parent),

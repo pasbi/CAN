@@ -2,7 +2,6 @@
 #define PROJECT_H
 
 #include <QUndoStack>
-#include "configurable.h"
 
 
 class SongDatabase;
@@ -10,7 +9,6 @@ class EventDatabase;
 class Command;
 class Project : public QUndoStack
 {
-    DECL_CONFIG(Project)
     Q_OBJECT
 public:
     Project();

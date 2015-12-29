@@ -1,13 +1,10 @@
 #include "exportpdfdialog.h"
 #include "ui_exportpdfdialog.h"
-#include "configurationdialog.h"
+#include "preferencedialog.h"
 #include "Attachments/attachment.h"
 #include "Database/SongDatabase/song.h"
+#include "application.h"
 
-DEFN_CONFIG( ExportPDFDialog, "ExportPDFDialog");
-
-CONFIGURABLE_ADD_ITEM_HIDDEN( ExportPDFDialog, include_tags, QStringList() );
-CONFIGURABLE_ADD_ITEM_HIDDEN( ExportPDFDialog, exclude_tags, QStringList() );
 
 ExportPDFDialog::ExportPDFDialog(QWidget *parent) :
     QDialog(parent),
@@ -15,8 +12,8 @@ ExportPDFDialog::ExportPDFDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->includeTagsEditor->setTags( config["include_tags"].toStringList() );
-    ui->includeTagsEditor->setTags( config["exclude_tags"].toStringList() );
+    ui->includeTagsEditor->setTags( app().preference<QStringList>("include_tags") );
+    ui->includeTagsEditor->setTags( app().preference<QStringList>("exclude_tags") );
 }
 
 ExportPDFDialog::~ExportPDFDialog()
@@ -40,8 +37,8 @@ bool ExportPDFDialog::test( const Song* song ) const
 bool ExportPDFDialog::test( const Attachment *attachment ) const
 {
 
-    bool includeOk = config["include_tags"].toStringList().isEmpty();
-    for ( const QString& tag : config["include_tags"].toStringList() )
+    bool includeOk = app().preference<QStringList>("include_tags").isEmpty();
+    for ( const QString& tag : app().preference<QStringList>("include_tags") )
     {
         if (attachment->tags().contains( tag ))
         {
@@ -55,7 +52,7 @@ bool ExportPDFDialog::test( const Attachment *attachment ) const
         return false;
     }
 
-    for ( const QString& tag : config["exclude_tags"].toStringList() )
+    for ( const QString& tag : app().preference<QStringList>("exclude_tags"))
     {
         if (attachment->tags().contains( tag ))
         {
@@ -68,14 +65,15 @@ bool ExportPDFDialog::test( const Attachment *attachment ) const
 
 void ExportPDFDialog::accept()
 {
-    config.set("include_tags", ui->includeTagsEditor->tags());
-    config.set("exclude_tags", ui->excludeTagsEditor->tags());
+    app().setPreference( "include_tags", ui->includeTagsEditor->tags());
+    app().setPreference( "exclude_tags", ui->excludeTagsEditor->tags());
     QDialog::accept();
 }
 
 void ExportPDFDialog::on_buttonEditPreferences_clicked()
 {
-    ConfigurationDialog dialog;
-    dialog.focusPage( "PDFCreator" );
-    dialog.exec();
+    //TODO
+//    ConfigurationDialog dialog;
+//    dialog.focusPage( "PDFCreator" );
+//    dialog.exec();
 }

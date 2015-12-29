@@ -16,7 +16,6 @@
 #include "util.h"
 #include "application.h"
 #include "Dialogs/stringdialog.h"
-#include "Dialogs/configurationdialog.h"
 #include "Dialogs/programdialog.h"
 #include "Dialogs/tagdialog.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
@@ -43,9 +42,7 @@
 #include "Dialogs/copyindexedfilesdialog.h"
 #include "AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h"
 #include "Attachments/indexedfileattachment.h"
-#include "Dialogs/peoplesmanager.h"
-
-DEFN_CONFIG( MainWindow, "Global" );
+#include "preferencedialog.h"
 
 QString styleSheetContent()
 {
@@ -55,11 +52,6 @@ QString styleSheetContent()
     return file.readAll();
 }
 
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentProjects, QStringList(""));
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, MaxRecentProjects, 5);
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, RecentCopyIndexedFilesTargetDir, QDir::homePath());
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, locale, QLocale::system().name().toStdString().c_str());
-CONFIGURABLE_ADD_ITEM_HIDDEN( MainWindow, FileIndexDefaultPath, QDir::homePath() );
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -356,16 +348,17 @@ void MainWindow::setCurrentPath(const QString &path)
     m_currentPath = path;
 
     // get list of recent projects, update it and set it.
-    QStringList recentProjects = config.value("RecentProjects").toStringList();
+    QStringList recentProjects = app().preference<QStringList>("RecentProjects");
 
     recentProjects.prepend(m_currentPath);
 
     recentProjects.removeDuplicates();
-    while (recentProjects.length() > config.value("MaxRecentProjects").toInt())
+    while (recentProjects.length() > app().preference<int>("MaxRecentProjects"))
     {
         recentProjects.removeLast();
     }
-    config.set( "RecentProjects", recentProjects );
+
+    app().setPreference("RecentProjects", recentProjects);
 
     // create open recent menu
     if (!ui->actionOpen_recent->menu())
@@ -496,7 +489,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::loadDefaultProject()
 {
-    QStringList recentProjects = config.value("RecentProjects").toStringList();
+    QStringList recentProjects = app().preference<QStringList>("RecentProjects");
     if (!recentProjects.isEmpty())
     {
         setCurrentPath(recentProjects.first());
@@ -725,14 +718,14 @@ void MainWindow::my_on_actionDelete_Song_triggered()
 void MainWindow::on_actionAdd_Folder_triggered()
 {
     enum { ShowNotOnlyDirs = 0x0 };
-    QString path = QFileDialog::getExistingDirectory(this, tr("Add to index ..."), config["FileIndexDefaultPath"].toString(), 0 );
+    QString path = QFileDialog::getExistingDirectory(this, tr("Add to index ..."), app().preference<QString>("FileIndexDefaultPath"));
 
     if (path.isEmpty())
     {
         return;
     }
 
-    config.set("FileIndexDefaultPath", path);
+    app().setPreference("FileIndexDefaultPath", path);
 
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
@@ -793,7 +786,7 @@ void MainWindow::on_actionDuplicate_Attachment_triggered()
 
 void MainWindow::on_actionSettings_triggered()
 {
-    ConfigurationDialog dialog(this);
+    PreferenceDialog dialog(app().preferences(), this);
     dialog.exec();
 }
 
@@ -977,7 +970,7 @@ void MainWindow::createLanguageMenu()
         QAction* action = ui->menu_Language->addAction( QLocale(locale).nativeLanguageName() );
         action->setCheckable( true );
 
-        if (config["locale"] == locale)
+        if (app().preference<QString>("locale") == locale)
         {
             action->setChecked(true);
         }
@@ -989,7 +982,7 @@ void MainWindow::createLanguageMenu()
                                       tr("Language changes will apply on next start."),
                                       QMessageBox::Ok,
                                       QMessageBox::NoButton );
-            config.set("locale", locale);
+            app().setPreference("locale", locale);
         });
     }
 }
@@ -1087,10 +1080,10 @@ void MainWindow::on_actionCopy_Indexed_Attachments_triggered()
         }
         else
         {
-            QString path = QFileDialog::getExistingDirectory(this, Application::applicationName(), config["RecentCopyIndexedFilesTargetDir"].toString());
+            QString path = QFileDialog::getExistingDirectory(this, Application::applicationName(), app().preference<QString>("RecentCopyIndexedFilesTargetDir"));
             if (!path.isEmpty())
             {
-                config.set("RecentCopyIndexedFilesTargetDir", path);
+                app().setPreference("RecentCopyIndexedFilesTargetDir", path);
                 QDir dir(path);
 
                 QStringList success, failure, notOverwritten;

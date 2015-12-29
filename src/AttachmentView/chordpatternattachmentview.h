@@ -2,7 +2,6 @@
 #define CHORDPATTERNATTACHMENTVIEW_H
 
 #include "attachmentview.h"
-#include "configurable.h"
 
 
 namespace Ui {
@@ -15,7 +14,7 @@ class ChordPatternAttachmentView : public AttachmentView
 {
     Q_OBJECT
     DECL_CREATABLE(ChordPatternAttachmentView)
-    DECL_CONFIG( ChordPatternAttachmentView )
+
 public:
     explicit ChordPatternAttachmentView(QWidget *parent = 0);
     ~ChordPatternAttachmentView();

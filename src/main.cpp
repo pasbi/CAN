@@ -5,7 +5,6 @@
 #include "mainwindow.h"
 #include "application.h"
 #include "Dialogs/tagdialog.h"
-#include "configurable.h"
 #include "global.h"
 
 #ifdef Q_OS_WIN32
@@ -15,7 +14,7 @@
 
 void installTranslator()
 {
-    QString localeCode = MainWindow::config["locale"].toString();
+    QString localeCode = app().preference<QString>("locale");
     QLocale locale( localeCode );
     QLocale::setDefault( locale );
     QString language = QLocale::languageToString( locale.language() );
@@ -85,11 +84,6 @@ int main(int argc, char *argv[])
     MainWindow m;
     m.show();
 
-    int code = app.exec();
-
-    Configurable::saveAll();
-    Configurable::deinitAll();
-
-    return code;
+    return app.exec();
 }
 

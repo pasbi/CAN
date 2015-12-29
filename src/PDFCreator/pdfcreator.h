@@ -4,7 +4,6 @@
 
 #include <QThread>
 #include <QPainter>
-#include "configurable.h"
 #include "page.h"
 
 class Setlist;
@@ -15,7 +14,6 @@ class Song;
 class Attachment;
 class PDFCreator : public QThread
 {
-    DECL_CONFIG( PDFCreator )
     Q_OBJECT
 
 public:

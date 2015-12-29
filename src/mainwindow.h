@@ -4,7 +4,6 @@
 #include <QMainWindow>
 
 #include "Project/project.h"
-#include "configurable.h"
 #include "Program/program.h"
 
 
@@ -20,7 +19,6 @@ class MainWindow : public QMainWindow
 {
     enum Page { SongDatabasePage, EventDatabasePage };
     Q_OBJECT
-    DECL_CONFIG( MainWindow )
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

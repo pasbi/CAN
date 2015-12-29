@@ -3,24 +3,12 @@
 #include "Attachments/pdfattachment.h"
 #include <qmath.h>
 #include <QTimer>
-#include "configurable.h"
+#include "application.h"
 
 #include "global.h"
 
 DEFN_CREATABLE(PDFAttachmentView, AttachmentView);
-DEFN_CONFIG( PDFAttachmentView, "PDF" );
 
-CONFIGURABLE_ADD_ITEM( PDFAttachmentView,
-                       Quality,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Quality"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "ConfigurableItem/PDFAttachmentView/Quality"),
-                       72.0,
-                       ConfigurableItemOptions::AdvancedDoubleSliderOptions( 0,
-                                                                             100,
-                                                                             1,
-                                                                             QT_TRANSLATE_NOOP("ConfigurableItem", "dpi")
-                                                                            )
-                     );
 
 
 PDFAttachmentView::PDFAttachmentView(QWidget *parent) :
@@ -83,7 +71,7 @@ void PDFAttachmentView::open()
 
         int size = ui->scrollArea->width();
 
-        double quality = config.value("Quality").toDouble();
+        double quality = app().preference<double>("Quality");
         QImage image = doc->page(m_currentPage)->renderToImage( quality, quality );
 
         image = image.scaledToWidth( size * m_zoom - 10 );

@@ -3,14 +3,13 @@
 
 #include "abstractchordpatternattachment.h"
 #include "chord.h"
-#include "configurable.h"
 
 
 class ChordPatternAttachment : public AbstractChordPatternAttachment
 {
     Q_OBJECT
     DECL_CREATABLE(ChordPatternAttachment)
-    DECL_CONFIG( ChordPatternAttachment )
+
 public:
     ChordPatternAttachment();
 

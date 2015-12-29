@@ -2,6 +2,7 @@
 #include <QPainter>
 #include "chordpatternviewer.h"
 #include "overlaydecorator.h"
+#include "application.h"
 
 OverlayLabel::OverlayLabel(QWidget *parent) :
     QLabel(parent)
@@ -23,7 +24,7 @@ void OverlayLabel::paintEvent(QPaintEvent *e)
 
 
     QPainter painter(this);
-    if (ChordPatternViewer::config["line"].toBool())
+    if (app().preference<bool>("ChordPatternViewHLine"))
     {
         QPen pen;
 

@@ -8,7 +8,6 @@
 #include "Database/EventDatabase/event.h"
 #include <QCryptographicHash>
 
-DEFN_CONFIG(Project, "Project");
 
 const QByteArray Project::SERIALIZE_KEY = "f24e693129d1b378d3496a42cb7096bd";
 

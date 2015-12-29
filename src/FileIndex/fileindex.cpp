@@ -3,15 +3,8 @@
 #include "global.h"
 #include "indexer.h"
 #include <QFileInfo>
-
-DEFN_CONFIG( FileIndex, "File Index" );
-
-CONFIGURABLE_ADD_ITEM( FileIndex,
-                       endings,
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "Endings"),
-                       QT_TRANSLATE_NOOP("ConfigurableItem", "All Endings that may be included"),
-                       (QStringList() << "mp3" << "ogg" << "aif" << "aiff" << "pdf").join(QChar(0x2C)), /* 0x2C = , macro does not allow to write it!*/
-                       ConfigurableItemOptions::LineEditOptions("") );
+#include <QSettings>
+#include "application.h"
 
 const QCryptographicHash::Algorithm FileIndex::m_hashAlgorithm = QCryptographicHash::Sha1;
 
@@ -205,7 +198,7 @@ QString FileIndex::currentFilename() const
 
 QStringList FileIndex::acceptedEndings()
 {
-    QStringList endings = config["endings"].toString().split(",");
+    QStringList endings = app().preference<QStringList>("FileIndexEndings");
     for (QString& ending: endings)
     {
         ending = ending.remove(QRegExp("\\W"));

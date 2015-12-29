@@ -4,13 +4,11 @@
 #include <QMap>
 #include <QCryptographicHash>
 #include <QStringList>
-#include "configurable.h"
 
 class Indexer;
 class FileIndex : public QObject
 {
     Q_OBJECT
-    DECL_CONFIG( FileIndex )
 
 public:
     FileIndex();

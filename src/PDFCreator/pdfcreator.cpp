@@ -17,11 +17,11 @@
 #include "chord.h"
 #include "Database/EventDatabase/setlist.h"
 
-DEFN_CONFIG( PDFCreator, QT_TRANSLATE_NOOP("ConfigurableItem", "PDF Export") );
-
 #include "pdfcreatorconfig.h"
 
 const QString PDFCreator::HYPHEN = QChar(0x2014);
+const int PDFCreator::ALIGN_SONGS__SEPARATE_PAGES = 5;
+
 
 PDFCreator::PDFCreator(QSizeF baseSizeMM, Setlist* setlist, const QString &filename) :
     m_baseSizeMM( baseSizeMM ),
@@ -85,7 +85,7 @@ void PDFCreator::run()
     }
 
     notifyCurrentTaskChanged( tr("Table of contents") );
-    if (config["enable_TableOfContentsPattern"].toBool())
+    if (app().preference<bool>("enable_TableOfContentsPattern"))
     {
         paintTableOfContents();
     }
@@ -96,7 +96,7 @@ void PDFCreator::run()
     }
 
     notifyCurrentTaskChanged( tr("Align songs") );
-    switch (config["AlignSongs"].toInt())
+    switch (app().preference<int>("AlignSongs"))
     {
     case 0: // do not align songs
         break;
@@ -120,7 +120,7 @@ void PDFCreator::run()
     }
 
     notifyCurrentTaskChanged( tr("Generate page numbers") );
-    if (config["PageNumbers"].toBool())
+    if (app().preference<bool>("PageNumbers"))
     {
         decoratePageNumbers();
     }
@@ -137,7 +137,7 @@ void PDFCreator::run()
 
 bool PDFCreator::isEndlessPage() const
 {
-    return config["AlignSongs"].toInt() == 4;
+    return app().preference<int>("AlignSongs") == 4;
 }
 
 
@@ -231,11 +231,11 @@ bool PDFCreator::pageBreak( const QStringList & lines, const int currentLine, co
             {
                 if (isChordLine)
                 {
-                    paragraphHeight += lineHeight * PDFCreator::config["ChordLineSpacing"].toDouble();
+                    paragraphHeight += lineHeight * app().preference<double>("ChordLineSpacing");
                 }
                 else
                 {
-                    paragraphHeight += lineHeight * PDFCreator::config["LineSpacing"].toDouble();
+                    paragraphHeight += lineHeight * app().preference<double>("LineSpacing");
                 }
             }
             paragraph += lines[i] + "\n";
@@ -462,7 +462,7 @@ void PDFCreator::decoratePageNumbers()
         double height = painter->fontMetrics().height();
 
         if (    (currentPage()->flags() & Page::SongStartsHere       )
-             && (config["AlignSongs"] == ALIGN_SONGS__SEPARATE_PAGES ) )
+             && (app().preference<int>("AlignSongs") == ALIGN_SONGS__SEPARATE_PAGES ) )
         {
             j = 0;
         }
@@ -557,7 +557,7 @@ void PDFCreator::paintAndSaveDocument( const Document& document, const QString& 
 
 void PDFCreator::save(QString filename)
 {
-    if (config["AlignSongs"].toInt() == ALIGN_SONGS__SEPARATE_PAGES)
+    if (app().preference<int>("AlignSongs") == ALIGN_SONGS__SEPARATE_PAGES)
     {
         // each document holds exactly one song and becomes one file.
         QList<Document> documents;
@@ -641,7 +641,7 @@ QString defaultFilename( Setlist* setlist )
 QString PDFCreator::setlistFilename( QWidget* parent, Setlist* setlist, bool separatePages )
 {
 
-    QString filename = config["DefaultPDFSavePath"].toString();
+    QString filename = app().preference<QString>("DefaultPDFSavePath");
     filename = QDir(filename).absoluteFilePath( defaultFilename( setlist ) );
 
     // QFileDialog::getSaveFilename does not asks for overwriting files when the default filename is used. Workaround: Disable overwrite
@@ -713,7 +713,7 @@ void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
 
     if (exportPDFDialog->exec() == QDialog::Accepted)
     {
-        bool askForDirectory = (config["AlignSongs"].toInt() == ALIGN_SONGS__SEPARATE_PAGES);
+        bool askForDirectory = (app().preference<int>("AlignSongs") == ALIGN_SONGS__SEPARATE_PAGES);
         QString filename = setlistFilename( widgetParent, setlist, askForDirectory );
 
         if (!filename.isEmpty())
@@ -730,7 +730,7 @@ void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
             }
             else
             {
-                config.set( "DefaultPDFSavePath", QFileInfo( filename ).path() );
+                app().setPreference( "DefaultPDFSavePath", QFileInfo( filename ).path() );
                 PDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), setlist, filename );
                 pdfCreator.m_exportPDFDialog = exportPDFDialog;
 
@@ -758,13 +758,13 @@ void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
 void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *attachment, const QString &path)
 {
     // save config and replace it at the end.
-    Configurable savedConfigs = config;
+    app().preferences()->save();
 
-    config.set("enable_TitlePagePattern", false);
-    config.set("PDFSize", 4); // DinA4
-    config.set("AlignSongs", 4); // we always want to have one page per song.
-    config.set("enable_TableOfContentsPattern", false);
-    config.set("PageNumbers", false);
+    app().setPreference("enable_TitlePagePattern", false);
+    app().setPreference("PDFSize", 4); // DinA4
+    app().setPreference("AlignSongs", 4); // we always want to have one page per song.
+    app().setPreference("enable_TableOfContentsPattern", false);
+    app().setPreference("PageNumbers", false);
 
     PDFCreator creator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), nullptr, "" );
     creator.m_currentIndex = -1;
@@ -773,7 +773,7 @@ void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *att
     creator.save( path );
 
     // restore preference
-    config = savedConfigs;
+    app().preferences()->restore();
 }
 
 

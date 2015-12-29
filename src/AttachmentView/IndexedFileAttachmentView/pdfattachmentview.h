@@ -2,7 +2,6 @@
 #define PDFATTACHMENTVIEW_H
 
 #include "indexedfileattachmentview.h"
-#include "configurable.h"
 
 namespace Ui {
 class PDFAttachmentView;
@@ -12,8 +11,6 @@ class PDFAttachmentView : public IndexedFileAttachmentView
 {
     Q_OBJECT
     DECL_CREATABLE( PDFAttachmentView )
-    DECL_CONFIG( PDFAttachmentView )
-
 
 public:
     explicit PDFAttachmentView(QWidget *parent = 0);

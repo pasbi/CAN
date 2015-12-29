@@ -4,18 +4,6 @@
 #include "midicommand.h"
 #include <QFileInfo>
 
-DEFN_CONFIG( MidiController, "Midi" );
-
-// this option is off by one. I.e. value 1 represents Midi-Channel #0, ..., value 8 represents Midi-Channel #7.
-CONFIGURABLE_ADD_DEFEATABLE_ITEM(  MidiController,
-                        Channel,
-                        QT_TRANSLATE_NOOP( "ConfigurableItem", "Channel" ),
-                        QT_TRANSLATE_NOOP( "ConfigurableItem", "ConfigurableItem/MidiCommand/Channel" ),
-                        0,
-                        false,
-                        ConfigurableItemOptions::SpinBoxOptions( 1, 8, 1 ) );
-
-
 MidiController* MidiController::m_singleton = nullptr;
 
 const QString MidiController::MIDI_DEVICE_FILENAME = "/dev/midi1";

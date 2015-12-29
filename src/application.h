@@ -6,6 +6,7 @@
 #include <QAction>
 
 #include "global.h"
+#include "preferences.h"
 
 class MainWindow;
 class Project;
@@ -37,6 +38,14 @@ public:
 
     Attachment *currentAttachment() const;
 
+    template<typename T> T preference(const QString& key) const
+    {
+        return m_preferences.get(key)->value().value<T>();
+    }
+
+    void setPreference(const QString& key, const QVariant& value);
+    Preferences* preferences() { return &m_preferences; }
+
 private:
     mutable FileIndex* m_fileIndex = nullptr;
     QSettings m_settings;
@@ -47,6 +56,8 @@ private:
     Project* m_project = nullptr;
     MainWindow* m_mainWindow = nullptr;
 
+    void initPreferences();
+    Preferences m_preferences;
 };
 
 Application & app();

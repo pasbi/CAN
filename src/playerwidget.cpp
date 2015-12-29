@@ -3,6 +3,7 @@
 #include "Attachments/AudioAttachment/player.h"
 #include "AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.h"
 #include "AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.h"
+#include "application.h"
 
 
 PlayerWidget::PlayerWidget(QWidget *parent) :
@@ -162,8 +163,8 @@ void PlayerWidget::start()
 
 void PlayerWidget::updateVolume()
 {
-    AudioAttachmentView::config.set("Muted", ui->volumeSlider->isMuted());
-    AudioAttachmentView::config.set("Volume", ui->volumeSlider->value());
+    app().setPreference("Muted", ui->volumeSlider->isMuted());
+    app().setPreference("Volume", ui->volumeSlider->value());
     if (m_player)
     {
         m_player->setVolume(double(ui->volumeSlider->value()) / ui->volumeSlider->maximum());
