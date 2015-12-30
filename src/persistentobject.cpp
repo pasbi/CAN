@@ -13,7 +13,6 @@ PersistentObject::PersistentObject()
 
 PersistentObject::~PersistentObject()
 {
-
 }
 
 QDataStream& operator<<(QDataStream& out, const PersistentObject* object)

@@ -4,8 +4,6 @@
 #include <QKeyEvent>
 
 #include "ui_attachmentchooser.h"
-#include "Dialogs/tagdialog.h"
-#include "Commands/edittagscommand.h"
 #include "application.h"
 #include "mainwindow.h"
 #include "Commands/AttachmentCommands/attachmentrenamecommand.h"
@@ -29,12 +27,6 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
     ui->comboBox->installEventFilter(this);
     ui->comboBox->setInsertPolicy(QComboBox::NoInsert);
 
-    m_editTagAction = new QAction( this );
-    m_editTagAction->setIcon( QIcon(":/icons/icons/tag-2.png") );
-    connect( m_editTagAction, SIGNAL(triggered()), this, SLOT(editTags()) );
-    m_editTagAction->setText( tr("Edit tags ...") );
-
-    ui->toolButton->addAction( m_editTagAction );
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "ChordPatternAttachment" ) );
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "ChordPatternProxyAttachment" ) );
     ui->toolButton->addAction( app().mainWindow()->newAttachment_Action( "AudioAttachment" ) );
@@ -119,8 +111,6 @@ void AttachmentChooser::setAttachment(int index)
         ui->comboBox->blockSignals(false);
     }
 
-
-    m_editTagAction->setEnabled( !!m_currentAttachment );
     ui->buttonDelete->setEnabled( !!m_currentAttachment );
     ui->toolButton->setEnabled( !!song() );
 }
@@ -138,18 +128,6 @@ Attachment* AttachmentChooser::currentAttachment() const
 void AttachmentChooser::updateAttachmentView()
 {
     ui->attachmentEditor->updateAttachmentView();
-}
-
-void AttachmentChooser::editTags()
-{
-    if (currentAttachment())
-    {
-        TagDialog dialog( currentAttachment()->tags(), this );
-        if (dialog.exec() == QDialog::Accepted)
-        {
-            app().pushCommand( new EditTagsCommand(currentAttachment(), dialog.tags() ));
-        }
-    }
 }
 
 void AttachmentChooser::focusAttachment(const Attachment *a)

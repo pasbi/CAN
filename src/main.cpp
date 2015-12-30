@@ -4,7 +4,6 @@
 
 #include "mainwindow.h"
 #include "application.h"
-#include "Dialogs/tagdialog.h"
 #include "global.h"
 
 #ifdef Q_OS_WIN32

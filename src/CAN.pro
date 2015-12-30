@@ -41,7 +41,6 @@ SOURCES += main.cpp\
     Project/project.cpp \
     Database/SongDatabase/songdatabase.cpp \
     Database/EventDatabase/eventdatabase.cpp \
-    taggable.cpp \
     Database/SongDatabase/song.cpp \
     Attachments/attachment.cpp \
     persistentobject.cpp \
@@ -93,8 +92,6 @@ SOURCES += main.cpp\
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
     combobox.cpp \
     Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.cpp \
-    Dialogs/tagdialog.cpp \
-    Commands/edittagscommand.cpp \
     PDFCreator/page.cpp \
     PDFCreator/pdfcreator.cpp \
     AttachmentView/looselines.cpp \
@@ -104,7 +101,6 @@ SOURCES += main.cpp\
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.cpp \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.cpp \
     Dialogs/exportpdfdialog.cpp \
-    Dialogs/tageditor.cpp \
     Dialogs/chordpatternviewerscrollarea.cpp \
     Dialogs/programdialog.cpp \
     Program/program.cpp \
@@ -147,7 +143,6 @@ HEADERS  += mainwindow.h \
     Database/SongDatabase/songdatabase.h \
     Database/EventDatabase/eventdatabase.h \
     Database/database.h \
-    taggable.h \
     Database/SongDatabase/song.h \
     Attachments/attachment.h \
     persistentobject.h \
@@ -202,8 +197,6 @@ HEADERS  += mainwindow.h \
     DatabaseView/databaseview.h \
     combobox.h \
     Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.h \
-    Dialogs/tagdialog.h \
-    Commands/edittagscommand.h \
     PDFCreator/page.h \
     PDFCreator/pdfcreatorconfig.h \
     PDFCreator/pdfcreator.h \
@@ -218,7 +211,6 @@ HEADERS  += mainwindow.h \
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.h \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.h \
     Dialogs/exportpdfdialog.h \
-    Dialogs/tageditor.h \
     Dialogs/chordpatternviewerscrollarea.h \
     Dialogs/programdialog.h \
     Program/program.h \
@@ -273,12 +265,10 @@ FORMS    += mainwindow.ui \
     Dialogs/datetimedialog.ui \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui \
     Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.ui \
-    Dialogs/tagdialog.ui \
     Dialogs/chordpatternviewer.ui \
     Dialogs/addfilestoindexdialog.ui \
     AttachmentView/chordpatternproxyattachmentview.ui \
     Dialogs/exportpdfdialog.ui \
-    Dialogs/tageditor.ui \
     Dialogs/programdialog.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
     Dialogs/copyindexedfilesdialog.ui \

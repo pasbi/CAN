@@ -2,7 +2,7 @@
 #define EXPORTPDFDIALOG_H
 
 #include <QDialog>
-#include "taggable.h"
+//TODO no advantage over QDialog
 
 
 namespace Ui {
@@ -17,15 +17,6 @@ class ExportPDFDialog : public QDialog
 public:
     explicit ExportPDFDialog(QWidget *parent = 0);
     ~ExportPDFDialog();
-
-    bool test( const Attachment *taggable ) const;
-    bool test( const Song* song ) const;
-
-public slots:
-    void accept();
-
-private slots:
-    void on_buttonEditPreferences_clicked();
 
 private:
     Ui::ExportPDFDialog *ui;

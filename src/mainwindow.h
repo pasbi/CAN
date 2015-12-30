@@ -93,13 +93,11 @@ private slots:
     void my_on_actionCopy_Song_triggered();
     void my_on_actionPaste_Song_triggered();
     void my_on_actionEdit_Program_triggered();
-    void my_on_actionEdit_Song_Tags_triggered();
 
     void my_on_actionNew_Event_triggered();
     void my_on_actionDelete_Event_triggered();
     void my_on_actionCopy_Event_triggered();
     void my_on_actionPaste_Event_triggered();
-    void my_on_actionEdit_Event_Tags_triggered();
 
     void my_on_actionNew_SetlistItem_triggered();
     void my_on_actionDelete_SetlistItem_triggered();
@@ -130,13 +128,11 @@ private:
 #ifdef HAVE_PROGRAM
     QAction* m_actionEdit_Program;
 #endif
-    QAction* m_actionEdit_Song_Tags;
 
     QAction* m_actionNew_Event;
     QAction* m_actionDelete_Event;
     QAction* m_actionCopy_Event;
     QAction* m_actionPaste_Event;
-    QAction* m_actionEdit_Event_Tags;
 
     QAction* m_actionNew_SetlistItem;
     QAction* m_actionDelete_SetlistItem;

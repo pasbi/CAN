@@ -1,13 +1,13 @@
 #ifndef DATABASEITEM_H
 #define DATABASEITEM_H
 
-#include "taggable.h"
+#include "persistentobject.h"
 #include <QObject>
 #include <QBuffer>
 
 template<typename T> class Database;
 template<typename T>
-class DatabaseItem : public QObject, public Taggable
+class DatabaseItem : public QObject, public PersistentObject
 {
 protected:
     DatabaseItem(Database<T>* database) :

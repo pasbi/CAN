@@ -90,26 +90,7 @@ bool SetlistView::attachmentIsIgnored( const Attachment* attachment ) const
         return true;
     }
 
-    // if attachment has no tags, include it.
-    else if ( attachment->tags().isEmpty() )
-    {
-        return false;
-    }
-
-    // if no filter tag is set, return true.
-    else if ( m_filterTag.isEmpty() )
-    {
-        return false;
-    }
-
-    // if attachment has filter tag, include it.
-    else if ( attachment->tags().contains( m_filterTag ) )
-    {
-        return false;
-    }
-
-    // otherwise, ignore attachment
-    return true;
+    return false;
 }
 
 QWidget* SetlistView::createSongCellWidget(const Song* song)
@@ -185,12 +166,6 @@ void SetlistView::updateCellWidgets()
             }
         }
     }
-}
-
-void SetlistView::setFilterTag( const QString& tag )
-{
-    m_filterTag = tag;
-    updateCellWidgets();
 }
 
 void SetlistView::select(QModelIndexList indexes)

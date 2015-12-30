@@ -96,8 +96,6 @@ void Application::initPreferences()
     m_preferences.registerPreference( "FileIndexDefaultPath", new Preference(QDir::homePath()) );
     m_preferences.registerPreference( "Volume", new Preference(100) );
     m_preferences.registerPreference( "Muted", new Preference(false) );
-    m_preferences.registerPreference( "include_tags", new Preference(QStringList()) );
-    m_preferences.registerPreference( "exclude_tags", new Preference(QStringList()) );
     m_preferences.registerPreference( "LineSpacing", new Preference(1.3) );
     m_preferences.registerPreference( "ChordLineSpacing", new Preference(1) );
     m_preferences.registerPreference( "DefaultPDFSavePath", new Preference(QDir::homePath()) );

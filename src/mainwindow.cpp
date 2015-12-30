@@ -17,13 +17,11 @@
 #include "application.h"
 #include "Dialogs/stringdialog.h"
 #include "Dialogs/programdialog.h"
-#include "Dialogs/tagdialog.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include "Commands/DatabaseCommands/databaseremoveitemcommand.h"
 #include "Commands/SongCommands/songremoveattachmentcommand.h"
 #include "Commands/SongCommands/songnewattachmentcommand.h"
-#include "Commands/edittagscommand.h"
 #include "Commands/AttachmentCommands/attachmentrenamecommand.h"
 #include "Commands/SongCommands/songeditprogramcommand.h"
 #include "AttachmentView/attachmentchooser.h"
@@ -118,13 +116,11 @@ MainWindow::MainWindow(QWidget *parent) :
 #ifdef HAVE_PROGRAM
     initAction( actionEdit_Program,     ui->songDatabaseWidget->databaseView(),    tr("&Edit Program"),   tr("Edit program."),          "Ctrl+P",   ui->menuSongs,  "" )
 #endif
-    initAction( actionEdit_Song_Tags,   ui->songDatabaseWidget->databaseView(),    tr("&Edit Tags"),      tr("Edit tags of the song."), "Ctrl+T",   ui->menuSongs,  ":/icons/icons/tag-2.png" )
 
     initAction( actionNew_Event,        ui->eventDatabaseWidget->databaseView(),  tr("&New Event"),      tr("Add a new event."),        "Ctrl+N",   ui->menuEvents, "" )
     initAction( actionDelete_Event,     ui->eventDatabaseWidget->databaseView(),  tr("&Remove Event"),   tr("Remove selected event."),  "Del",      ui->menuEvents, ":/icons/icons/rubbish7.png" )
     initAction( actionCopy_Event,       ui->eventDatabaseWidget->databaseView(),  tr("&Copy Event"),     tr("Copy selected event."),    "Ctrl+C",   ui->menuEvents, "" )
     initAction( actionPaste_Event,      ui->eventDatabaseWidget->databaseView(),  tr("&Paste Event"),    tr("Paste event."),            "Ctrl+V",   ui->menuEvents, "" )
-    initAction( actionEdit_Event_Tags,  ui->eventDatabaseWidget->databaseView(),  tr("&Edit Tags"),      tr("Edit tags of the event."), "",         ui->menuEvents, ":/icons/icons/tag-2.png" )
 
     initAction( actionNew_SetlistItem,    ui->eventDatabaseWidget->setlistView(),   tr("&New Item"),       tr("Insert new item"),        "Ctrl+N",   nullptr, "" )
     initAction( actionDelete_SetlistItem, ui->eventDatabaseWidget->setlistView(),   tr("&Remove Item"),    tr("Delete selected items"),  "Del",      nullptr, "" )
@@ -531,12 +527,10 @@ void MainWindow::updateActionsEnabled()
     }
 
     attachmentActions   << ui->actionDuplicate_Attachment << ui->actionRename_Attachment << ui->actionDelete_Attachment;
-    songActions         << m_actionDelete_Song << m_actionCopy_Song << m_actionEdit_Song_Tags;
+    songActions         << m_actionDelete_Song << m_actionCopy_Song;
 #ifdef HAVE_PROGRAM
     songActions << m_actionEdit_Program;
 #endif
-    eventActions        << m_actionDelete_Event << m_actionCopy_Event << m_actionEdit_Event_Tags;
-    setlistActions      << m_actionDelete_SetlistItem << m_actionCopy_SetlistItem;
 
     for (QAction* o : eventActions )
     {
@@ -878,43 +872,6 @@ void MainWindow::my_on_actionEdit_Program_triggered()
         app().pushCommand( new SongEditProgramCommand( currentSong(), pd.program() ) );
     }
 #endif
-}
-
-
-void MainWindow::my_on_actionEdit_Song_Tags_triggered()
-{
-    DatabaseView<Song>* songTableView = ui->songDatabaseWidget->databaseView();
-    QModelIndexList list = songTableView->selectionModel()->selectedIndexes();
-    if (!list.isEmpty())
-    {
-        Taggable* t = songTableView->itemAtIndex(list.first());
-        if (t != 0)
-        {
-            TagDialog d(t->tags(), this);
-            if (d.exec() == QDialog::Accepted)
-            {
-                app().pushCommand( new EditTagsCommand( t, d.tags() ) );
-            }
-        }
-    }
-}
-
-void MainWindow::my_on_actionEdit_Event_Tags_triggered()
-{
-    DatabaseView<Event>* eventTableView = ui->eventDatabaseWidget->databaseView();
-    QModelIndexList list = eventTableView->selectionModel()->selectedIndexes();
-    if (!list.isEmpty())
-    {
-        Taggable* t = eventTableView->itemAtIndex(list.first());
-        if (t != 0)
-        {
-            TagDialog d(t->tags(), this);
-            if (d.exec() == QDialog::Accepted)
-            {
-                app().pushCommand( new EditTagsCommand( t, d.tags() ) );
-            }
-        }
-    }
 }
 
 void MainWindow::open(const QString &filename)

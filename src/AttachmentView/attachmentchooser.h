@@ -30,7 +30,6 @@ public slots:
     void renameCurrentAttachment();
 
 private slots:
-    void editTags();
     void focusAttachment( const Attachment* a );
     void on_buttonDelete_clicked();
 
@@ -39,7 +38,6 @@ private:
     Song* m_currentSong;
     Attachment* m_currentAttachment = nullptr;
     QMap<Song*, int> m_lastOpenedIndex;
-    QAction* m_editTagAction;
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

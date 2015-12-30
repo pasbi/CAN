@@ -34,7 +34,6 @@ private slots:
     void on_buttonShowSongs_clicked();
     void on_buttonExportPDF_clicked();
     void updateInfoLabel();
-    void updateTagComboBox();
     void updateButtonsEnabled();
 
 protected:

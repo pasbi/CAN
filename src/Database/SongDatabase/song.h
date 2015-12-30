@@ -4,7 +4,6 @@
 #include <QList>
 #include <QDateTime>
 
-#include "taggable.h"
 #include "Program/program.h"
 #include "Database/databaseitem.h"
 #include "chord.h"

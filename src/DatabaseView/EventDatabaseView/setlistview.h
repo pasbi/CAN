@@ -19,15 +19,12 @@ public:
 
 public slots:
     void select(QModelIndexList indexes);
-    void setFilterTag( const QString& tag );
 
 
 private slots:
     void updateCellWidgets();
 
 private:
-    QString m_filterTag;
-
     bool attachmentIsIgnored( const Attachment* attachment ) const;
     QWidget* createSongCellWidget(const Song *song);
 

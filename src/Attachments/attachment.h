@@ -1,12 +1,12 @@
 #ifndef ATTACHMENT_H
 #define ATTACHMENT_H
 
-#include "taggable.h"
+#include "persistentobject.h"
 #include "creatable.h"
 
 class PDFCreator;
 class Song;
-class Attachment : public QObject, public Taggable, public Creatable
+class Attachment : public QObject, public PersistentObject, public Creatable
 {
     Q_OBJECT
 public:

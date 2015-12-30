@@ -29,9 +29,6 @@ SetlistWidget::SetlistWidget(QWidget *parent) :
 
     m_attentionPixmap = QPixmap::fromImage(QImage(":/icons/icons/lightbulb20.png")).scaledToWidth( 32, Qt::SmoothTransformation );
     ui->infoLabelIcon->setFixedSize( 32, 32 );
-
-    connect( ui->comboBox, SIGNAL(currentTextChanged(QString)), ui->setlistView, SLOT(setFilterTag(QString)) );
-
 }
 
 SetlistWidget::~SetlistWidget()
@@ -116,7 +113,6 @@ void SetlistWidget::showEvent(QShowEvent *e)
         m_selector->show();
     }
     updateInfoLabel();
-    updateTagComboBox();
     QWidget::showEvent(e);
 }
 
@@ -203,21 +199,5 @@ void SetlistWidget::updateInfoLabel()
     else
     {
         ui->infoLabel->setText( "" );
-    }
-}
-
-void SetlistWidget::updateTagComboBox()
-{
-    QString currentTag = ui->comboBox->currentText();
-    ui->comboBox->clear();
-    ui->comboBox->addItem("");
-    ui->comboBox->addItems( Taggable::allTags() );
-    if (Taggable::allTags().contains( currentTag ))
-    {
-        ui->comboBox->setCurrentText( currentTag );
-    }
-    else
-    {
-        ui->comboBox->setCurrentText( "" );
     }
 }

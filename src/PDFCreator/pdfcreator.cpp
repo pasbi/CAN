@@ -176,31 +176,28 @@ QString labelSong( const Song* song )
 
 bool PDFCreator::paintSong(const Song* song)
 {
-    if (m_exportPDFDialog->test( song ))
+    newPage( Page::SongStartsHere, labelSong(song) );
+    QString headline = labelSong( song );
+    m_tableOfContents.append( headline );
+    paintHeadline( currentPage(), headline );
+
+    int i = 0;
+    for ( Attachment* attachment : song->attachments() )
     {
-        newPage( Page::SongStartsHere, labelSong(song) );
-        QString headline = labelSong( song );
-        m_tableOfContents.append( headline );
-        paintHeadline( currentPage(), headline );
+        if (isInterruptionRequested()) return false;
+        notifyCurrentTaskChanged( QString(tr("Draw attachment %1 of song %2"))
+                                      .arg(song->title())
+                                      .arg(attachment->name())                  );
 
-        int i = 0;
-        for ( Attachment* attachment : song->attachments() )
+        if (attachment->isPaintable())
         {
-            if (isInterruptionRequested()) return false;
-            notifyCurrentTaskChanged( QString(tr("Draw attachment %1 of song %2"))
-                                          .arg(song->title())
-                                          .arg(attachment->name())                  );
-
-            if (attachment->isPaintable())
+            if (i++ != 0)
             {
-                if (i++ != 0)
-                {
-                    newPage( Page::NothingSpecial );
-                }
-                currentPage()->painter()->save();
-                attachment->paint(this);
-                currentPage()->painter()->restore();
+                newPage( Page::NothingSpecial );
             }
+            currentPage()->painter()->save();
+            attachment->paint(this);
+            currentPage()->painter()->restore();
         }
     }
     return true;

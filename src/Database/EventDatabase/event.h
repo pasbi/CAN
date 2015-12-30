@@ -5,7 +5,6 @@
 #include <QDateTime>
 #include <QObject>
 
-#include "taggable.h"
 #include "commontypes.h"
 #include "Database/databaseitem.h"
 

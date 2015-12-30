@@ -14,8 +14,8 @@ protected:
     virtual ~PersistentObject();
 
 protected:
-    virtual void serialize(QDataStream& out) const = 0;
-    virtual void deserialize(QDataStream& in) = 0;
+    virtual void serialize(QDataStream&) const {}
+    virtual void deserialize(QDataStream&) {}
     QMap<QString, QVariant> m_persistentProperties;
 
 public:

@@ -55,13 +55,13 @@ Attachment* Attachment::create(const QString& classname, Song* song)
 
 void Attachment::serialize(QDataStream &out) const
 {
-    Taggable::serialize(out);
+    PersistentObject::serialize(out);
     out << name();
 }
 
 void Attachment::deserialize(QDataStream &in)
 {
-    Taggable::deserialize(in);
+    PersistentObject::deserialize(in);
     in >> m_name;
 }
 
