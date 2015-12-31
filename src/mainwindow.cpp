@@ -371,6 +371,8 @@ void MainWindow::setCurrentPath(const QString &path)
             this->open(filename);
         });
     }
+
+    ui->actionOpen_recent->setEnabled( !ui->actionOpen_recent->menu() || ui->actionOpen_recent->menu()->actions().length() == 0 );
 }
 
 QString MainWindow::proposedPath() const
