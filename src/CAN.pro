@@ -100,7 +100,6 @@ SOURCES += main.cpp\
     AttachmentView/chordpatternproxyattachmentview.cpp \
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.cpp \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.cpp \
-    Dialogs/exportpdfdialog.cpp \
     Dialogs/chordpatternviewerscrollarea.cpp \
     Dialogs/programdialog.cpp \
     Program/program.cpp \
@@ -210,7 +209,6 @@ HEADERS  += mainwindow.h \
     AttachmentView/chordpatternproxyattachmentview.h \
     Attachments/ChordPatternAttachment/chordpatternproxyattachment.h \
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.h \
-    Dialogs/exportpdfdialog.h \
     Dialogs/chordpatternviewerscrollarea.h \
     Dialogs/programdialog.h \
     Program/program.h \
@@ -268,7 +266,6 @@ FORMS    += mainwindow.ui \
     Dialogs/chordpatternviewer.ui \
     Dialogs/addfilestoindexdialog.ui \
     AttachmentView/chordpatternproxyattachmentview.ui \
-    Dialogs/exportpdfdialog.ui \
     Dialogs/programdialog.ui \
     DatabaseView/EventDatabaseView/setlistwidget.ui \
     Dialogs/copyindexedfilesdialog.ui \

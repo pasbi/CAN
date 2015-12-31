@@ -9,7 +9,6 @@
 #include "Attachments/ChordPatternAttachment/abstractchordpatternattachment.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include "Attachments/pdfattachment.h"
-#include "Dialogs/exportpdfdialog.h"
 #include "global.h"
 #include "Database/EventDatabase/event.h"
 #include "Database/SongDatabase/songdatabase.h"
@@ -706,50 +705,41 @@ QString PDFCreator::setlistFilename( QWidget* parent, Setlist* setlist, bool sep
 
 void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
 {
-    ExportPDFDialog* exportPDFDialog = new ExportPDFDialog( widgetParent );
+    bool askForDirectory = (app().preference<int>("AlignSongs") == ALIGN_SONGS__SEPARATE_PAGES);
+    QString filename = setlistFilename( widgetParent, setlist, askForDirectory );
 
-    if (exportPDFDialog->exec() == QDialog::Accepted)
+    if (!filename.isEmpty())
     {
-        bool askForDirectory = (app().preference<int>("AlignSongs") == ALIGN_SONGS__SEPARATE_PAGES);
-        QString filename = setlistFilename( widgetParent, setlist, askForDirectory );
+        QFileInfo fi(filename);
 
-        if (!filename.isEmpty())
+        if (fi.exists() && !fi.isReadable())
         {
-            QFileInfo fi(filename);
+            QMessageBox::warning( widgetParent,
+                                  tr("Cannot write"),
+                                  QString(tr("File %1 is not writable.").arg(filename)),
+                                  QMessageBox::Ok,
+                                  QMessageBox::NoButton );
+        }
+        else
+        {
+            app().setPreference( "DefaultPDFSavePath", QFileInfo( filename ).path() );
+            PDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), setlist, filename );
 
-            if (fi.exists() && !fi.isReadable())
+            QProgressDialog dialog;
+            dialog.setRange(0, setlist->items().length());
+            connect( &pdfCreator, SIGNAL(progress(int)), &dialog, SLOT(setValue(int)) );
+            connect( &pdfCreator, SIGNAL(currentTaskChanged(QString)), &dialog, SLOT(setLabelText(QString)) );
+            connect( &pdfCreator, SIGNAL(finished()), &dialog, SLOT(close()) );
+            connect( &dialog, &QProgressDialog::canceled, [&pdfCreator]()
             {
-                QMessageBox::warning( widgetParent,
-                                      tr("Cannot write"),
-                                      QString(tr("File %1 is not writable.").arg(filename)),
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton );
-            }
-            else
-            {
-                app().setPreference( "DefaultPDFSavePath", QFileInfo( filename ).path() );
-                PDFCreator pdfCreator( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), setlist, filename );
-                pdfCreator.m_exportPDFDialog = exportPDFDialog;
+                pdfCreator.requestInterruption();
+            });
+            pdfCreator.start();
 
-                QProgressDialog dialog;
-                dialog.setRange(0, setlist->items().length());
-                connect( &pdfCreator, SIGNAL(progress(int)), &dialog, SLOT(setValue(int)) );
-                connect( &pdfCreator, SIGNAL(currentTaskChanged(QString)), &dialog, SLOT(setLabelText(QString)) );
-                connect( &pdfCreator, SIGNAL(finished()), &dialog, SLOT(close()) );
-                connect( &dialog, &QProgressDialog::canceled, [&pdfCreator]()
-                {
-                    pdfCreator.requestInterruption();
-                });
-                pdfCreator.start();
-
-                dialog.exec();
-                pdfCreator.wait();
-            }
+            dialog.exec();
+            pdfCreator.wait();
         }
     }
-
-    delete exportPDFDialog;
-    exportPDFDialog = nullptr;
 }
 
 void PDFCreator::paintChordPatternAttachment(AbstractChordPatternAttachment *attachment, const QString &path)
