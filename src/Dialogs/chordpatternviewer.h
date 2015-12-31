@@ -42,14 +42,11 @@ private:
     void scrollUp();
     void initializeAudioPlayerWidget();
 
-
-
 private slots:
     void on_buttonZoomOut_clicked();
     void on_buttonZoomIn_clicked();
     void applyZoom();
     void applySpeed();
-
 
     void on_buttonFaster_clicked();
     void on_buttonSlower_clicked();
@@ -64,6 +61,7 @@ protected:
     void resizeEvent(QResizeEvent *e);
     void wheelEvent(QWheelEvent *e);
     void keyPressEvent(QKeyEvent *e);
+    void showEvent(QShowEvent *e);
 };
 
 

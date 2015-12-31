@@ -158,4 +158,6 @@ void Application::initPreferences()
                                                                                       true ) );
     m_preferences.registerPreference( "Channel", new Preference(InterfaceOptions(InterfaceOptions::SpinBox, tr("Midi"), tr("Channel")),
                                                                                       0, 0, 8, 1, "", tr("Disable Midi") ) );
+    m_preferences.registerPreference( "minZoom", new Preference(0.0) );
+    m_preferences.registerPreference( "maxZoom", new Preference(0.75) );
 }

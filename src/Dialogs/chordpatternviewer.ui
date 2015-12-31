@@ -197,7 +197,7 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="toolTip">
-        <string>Zoom in (+)</string>
+        <string>Auto Zoom</string>
        </property>
        <property name="text">
         <string/>
@@ -538,6 +538,9 @@
        <property name="icon">
         <iconset resource="../ressources.qrc">
          <normaloff>:/icons/icons/song1.png</normaloff>:/icons/icons/song1.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+P</string>
        </property>
        <property name="checkable">
         <bool>true</bool>

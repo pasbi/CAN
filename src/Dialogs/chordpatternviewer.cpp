@@ -108,7 +108,6 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     ui->buttonColumnCount->setChecked( app().preference<bool>("ChordPatternViewTwoColumn") );
     ui->buttonColumnCount->blockSignals(false);
 
-    //TODO do this more sophisticated
     ui->audioPlayerWidget->hide();
     initializeAudioPlayerWidget();
 }
@@ -215,6 +214,8 @@ void ChordPatternViewer::applyZoom()
     }
 
     ui->label->setPixmap( pixmap );
+
+    qDebug() << m_zoom;
 }
 
 void ChordPatternViewer::on_buttonZoomOut_clicked()
@@ -425,4 +426,15 @@ void ChordPatternViewer::initializeAudioPlayerWidget()
         ui->audioPlayerWidget->setPlayer(nullptr);
     }
 
+}
+
+void ChordPatternViewer::showEvent(QShowEvent *e)
+{
+    on_buttonAutoZoom_clicked();
+    double minZoom = app().preference<double>("minZoom");
+    double maxZoom = app().preference<double>("maxZoom");
+    m_zoom = qBound(minZoom, m_zoom, maxZoom);    // too deep zooms are not convenient
+    applyZoom();
+
+    QDialog::showEvent(e);
 }
