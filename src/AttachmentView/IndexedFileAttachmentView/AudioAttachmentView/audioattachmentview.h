@@ -32,9 +32,6 @@ private slots:
     void restoreCurrentSection();
     void deleteCurrentSection();
 
-protected:
-    void showEvent(QShowEvent *e);
-
 private:
     Ui::AudioAttachmentView *ui;
 

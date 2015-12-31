@@ -53,6 +53,7 @@ AudioAttachmentView::AudioAttachmentView(QWidget* parent) :
     ui->sectionView->setItemDelegateForColumn(0, new LineEditDelegate(this));
     ui->sectionView->setItemDelegateForColumn(1, new DurationDelegate(this));
     ui->sectionView->setItemDelegateForColumn(2, new DurationDelegate(this));
+
 }
 
 AudioAttachmentView::~AudioAttachmentView()
@@ -164,17 +165,6 @@ void AudioAttachmentView::chooseFile()
 {
     ui->playerWidget->stop();
     IndexedFileAttachmentView::chooseFile();
-}
-
-void AudioAttachmentView::showEvent(QShowEvent *)
-{
-    //TODO
-//    QSignalBlocker(ui->volumeSlider);
-//    ui->volumeSlider->setValue( config["Volume"].toInt() );
-//    ui->volumeSlider->setMuted( config["Muted"].toBool() );
-
-//    updateVolume();
-//    AttachmentView::showEvent(e);
 }
 
 

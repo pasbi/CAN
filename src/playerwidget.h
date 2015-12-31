@@ -38,6 +38,10 @@ private slots:
 
     void on_pushButtonReset_clicked();
 
+protected:
+    void showEvent(QShowEvent *e);
+    void hideEvent(QHideEvent *e);
+
 private:
     Ui::PlayerWidget *ui;
     Player* m_player;

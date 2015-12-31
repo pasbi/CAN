@@ -163,8 +163,6 @@ void PlayerWidget::start()
 
 void PlayerWidget::updateVolume()
 {
-    app().setPreference("Muted", ui->volumeSlider->isMuted());
-    app().setPreference("Volume", ui->volumeSlider->value());
     if (m_player)
     {
         m_player->setVolume(double(ui->volumeSlider->value()) / ui->volumeSlider->maximum());
@@ -210,4 +208,20 @@ void PlayerWidget::on_pushButtonReset_clicked()
 {
     ui->doubleSpinBoxPitch->setValue(0);
     ui->doubleSpinBoxTempo->setValue(1);
+}
+
+void PlayerWidget::showEvent(QShowEvent *e)
+{
+    ui->volumeSlider->setMuted( app().preference<bool>("Muted") );
+    ui->volumeSlider->setValue( app().preference<int>("Volume") );
+    updateVolume();
+    QWidget::showEvent(e);
+}
+
+void PlayerWidget::hideEvent(QHideEvent *e)
+{
+    setVolume();
+    app().setPreference("Muted", ui->volumeSlider->isMuted());
+    app().setPreference("Volume", ui->volumeSlider->value());
+    QWidget::hideEvent(e);
 }
