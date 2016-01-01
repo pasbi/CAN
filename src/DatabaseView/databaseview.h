@@ -2,16 +2,17 @@
 #define DATABASEVIEW_H
 
 #include <QMenu>
-#include <QTableView>
 #include <QPainter>
 
 #include "Database/databasesortproxy.h"
 #include "global.h"
+#include "freezetableview.h"
 #include <QKeyEvent>
 
 class OverlayDecorator;
-class DatabaseViewBase : public QTableView
+class DatabaseViewBase : public FreezeTableView
 {
+    typedef FreezeTableView Super;
     Q_OBJECT
 protected:
     DatabaseViewBase(QWidget* parent = 0);
@@ -39,9 +40,10 @@ signals:
 template<typename T>
 class DatabaseView : public DatabaseViewBase
 {
+    typedef DatabaseViewBase Super;
 public:
     explicit DatabaseView(DatabaseSortProxy<T>* proxyModel, QWidget *parent = 0) :
-        DatabaseViewBase(parent),
+        Super(parent),
         m_proxy( proxyModel )
     {
         m_proxy->setParent(this);
@@ -69,7 +71,7 @@ public:
         // set new model
         m_model = model;
         m_proxy->setSourceModel(model);
-        DatabaseViewBase::setModel( m_proxy );
+        Super::setModel( m_proxy );
 
         // connect new model
         if (model)
@@ -113,7 +115,7 @@ public:
         {
             m_proxy->setFilter(filter);
         }
-        DatabaseViewBase::setFilter(filter);
+        Super::setFilter(filter);
     }
 
     T* itemAtIndex(const QModelIndex& index) const

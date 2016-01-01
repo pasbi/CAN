@@ -134,7 +134,8 @@ SOURCES += main.cpp\
     Dialogs/textdialog.cpp \
     DatabaseView/ItemDelegates/lineeditdelegate.cpp \
     DatabaseView/ItemDelegates/typecomboboxdelegate.cpp \
-    global.cpp
+    global.cpp \
+    DatabaseView/freezetableview.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -248,7 +249,8 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/durationeditor.h \
     DatabaseView/ItemDelegates/keyeditor.h \
     Dialogs/peoplesdialog.h \
-    Dialogs/textdialog.h
+    Dialogs/textdialog.h \
+    DatabaseView/freezetableview.h
 
 
 FORMS    += mainwindow.ui \

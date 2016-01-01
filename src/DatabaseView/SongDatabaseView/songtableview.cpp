@@ -49,4 +49,6 @@ SongTableView::SongTableView(QWidget *parent) :
     });
 
     verticalHeader()->show();
+
+    freezeFirstColumn(true);
 }

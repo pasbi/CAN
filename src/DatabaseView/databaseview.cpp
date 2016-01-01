@@ -7,7 +7,7 @@
 #include "Database/database.h"
 
 DatabaseViewBase::DatabaseViewBase(QWidget* parent) :
-    QTableView(parent),
+    Super(parent),
     m_hud( new OverlayDecorator(this, 1000, this) )
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
@@ -17,16 +17,15 @@ DatabaseViewBase::DatabaseViewBase(QWidget* parent) :
     horizontalHeader()->show();
     horizontalHeader()->setSortIndicatorShown( true );
     horizontalHeader()->setSectionsClickable( true );
-    horizontalHeader()->setFixedHeight(20);
     setSortingEnabled( true );
 
-    setHorizontalScrollMode( QTableView::ScrollPerPixel );
-    setVerticalScrollMode( QTableView::ScrollPerPixel );
+    setHorizontalScrollMode( Super::ScrollPerPixel );
+    setVerticalScrollMode( Super::ScrollPerPixel );
 }
 
 void DatabaseViewBase::mousePressEvent(QMouseEvent *event)
 {
-    QTableView::mousePressEvent(event);
+    Super::mousePressEvent(event);
     emit clicked();
 }
 
@@ -55,7 +54,7 @@ QString DatabaseViewBase::itemName(int n) const
 
 void DatabaseViewBase::paintEvent(QPaintEvent *e)
 {
-    QTableView::paintEvent(e);
+    Super::paintEvent(e);
     QPainter painter(viewport());
     m_hud->paint(painter);
 
@@ -109,7 +108,7 @@ void DatabaseViewBase::focusOutEvent(QFocusEvent *event)
     {
         setFilter("");
     }
-    QTableView::focusOutEvent(event);
+    Super::focusOutEvent(event);
 }
 
 bool isOk(const QString &string)
@@ -145,18 +144,18 @@ void DatabaseViewBase::leaveEvent(QEvent *event)
     {
         setFilter("");
     }
-    QTableView::leaveEvent(event);
+    Super::leaveEvent(event);
 }
 
 void DatabaseViewBase::enterEvent(QEvent *event)
 {
     //setFocus();
-    QTableView::enterEvent(event);
+    Super::enterEvent(event);
 }
 
 void DatabaseViewBase::setModel(QAbstractItemModel *model)
 {
-    QAbstractItemModel* oldModel = QTableView::model();
+    QAbstractItemModel* oldModel = Super::model();
     if (oldModel)
     {
         disconnect(oldModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),              this, SIGNAL(changed()));
@@ -168,7 +167,7 @@ void DatabaseViewBase::setModel(QAbstractItemModel *model)
         disconnect(oldModel, SIGNAL(columnsInserted(QModelIndex,int,int)),              this, SIGNAL(changed()));
         disconnect(oldModel, SIGNAL(modelReset()), this, SIGNAL(changed()));
     }
-    QTableView::setModel(model);
+    Super::setModel(model);
     if (model)
     {
         connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),                    this, SIGNAL(changed()));
