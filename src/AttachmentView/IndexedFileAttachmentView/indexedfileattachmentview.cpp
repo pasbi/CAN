@@ -1,6 +1,5 @@
 #include "indexedfileattachmentview.h"
 #include "ui_indexedfileattachmentview.h"
-#include "application.h"
 #include "Database/SongDatabase/song.h"
 #include "Attachments/indexedfileattachment.h"
 #include "Commands/AttachmentCommands/fileattachmentcommandsethashcommand.h"
@@ -73,7 +72,7 @@ void IndexedFileAttachmentView::chooseFile()
 
     if (dialog.exec() == QDialog::Accepted)
     {
-        app().pushCommand( new FileAttachmentCommandSetHashCommand( ifa, dialog.hash() ) );
+        pushCommand( new FileAttachmentCommandSetHashCommand( ifa, dialog.hash() ) );
     }
 }
 

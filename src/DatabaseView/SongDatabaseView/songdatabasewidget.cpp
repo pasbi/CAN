@@ -1,6 +1,5 @@
 #include "songdatabasewidget.h"
 #include <QTimer>
-#include "application.h"
 #include "Project/project.h"
 #include "DatabaseView/SongDatabaseView/songtableview.h"
 #include "Database/database.h"

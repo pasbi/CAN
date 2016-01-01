@@ -1,5 +1,4 @@
 #include "pdfattachment.h"
-#include "application.h"
 #include "PDFCreator/pdfcreator.h"
 
 DEFN_CREATABLE_NAME(PDFAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "PDF Attachment"))
@@ -55,7 +54,7 @@ void PDFAttachment::paint(PDFCreator* pdfCreator)
             double fx = targetSize.width() / pageSize.width();
             double fy = targetSize.height() / pageSize.height();
 
-            double resolution = app().preference<double>("PDFResolution");
+            double resolution = preference<double>("PDFResolution");
             double f = qMin(fx, fy) * 72.0 / resolution;
 
             painter->scale( f, f );

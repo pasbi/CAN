@@ -1,6 +1,5 @@
 #include "durationdelegate.h"
 #include <QTime>
-#include "application.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 
 
@@ -15,7 +14,7 @@ void DurationDelegate::setSpecificModelData(DurationEditor *editor, QAbstractIte
     QTime currentTime = index.model()->data(index, Qt::EditRole).toTime();
     if (time != currentTime)
     {
-        app().pushCommand( new DatabaseEditCommand(model, index, time) );
+        pushCommand( new DatabaseEditCommand(model, index, time) );
     }
 }
 

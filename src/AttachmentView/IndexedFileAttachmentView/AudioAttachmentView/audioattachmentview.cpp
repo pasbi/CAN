@@ -127,7 +127,7 @@ void AudioAttachmentView::recordSection(bool abort)
 
             Section section(tr("Unnamed"), leftPos, pos );
 
-            app().pushCommand( new InsertSectionCommand(attachment<AudioAttachment>()->sectionsModel(), section));
+            pushCommand( new InsertSectionCommand(attachment<AudioAttachment>()->sectionsModel(), section));
 
             state = Idle;
             ui->pushButtonRecordSection->setIcon( QIcon(RECORD_LEFT_POSITION_ICON_PATH) );

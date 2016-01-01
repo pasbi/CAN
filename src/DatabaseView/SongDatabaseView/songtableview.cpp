@@ -4,7 +4,6 @@
 #include "Project/project.h"
 #include "util.h"
 #include <QFocusEvent>
-#include "application.h"
 #include "DatabaseView/ItemDelegates/durationdelegate.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "DatabaseView/ItemDelegates/editablecomboboxdelegate.h"
@@ -12,7 +11,6 @@
 #include "DatabaseView/ItemDelegates/keydelegate.h"
 #include "DatabaseView/ItemDelegates/typecomboboxdelegate.h"
 #include "Dialogs/peoplesdialog.h"
-#include "DatabaseView/ItemDelegates/texteditdelegate.h"
 #include <QHeaderView>
 #include "Dialogs/textdialog.h"
 
@@ -38,7 +36,7 @@ SongTableView::SongTableView(QWidget *parent) :
             PeoplesDialog dialog( static_cast<SongDatabase*>(sourceModel())->peoples(),
                                   model()->data(index, Qt::EditRole).toStringList(), this);
             dialog.exec();
-            app().pushCommand( new DatabaseEditCommand(model(), index, dialog.activePeoples()));
+            pushCommand( new DatabaseEditCommand(model(), index, dialog.activePeoples()));
         }
 
         if (index.column() == 8)
@@ -46,7 +44,7 @@ SongTableView::SongTableView(QWidget *parent) :
             TextDialog dialog(this);
             dialog.setText(model()->data(index, Qt::EditRole).toString());
             dialog.exec();
-            app().pushCommand( new DatabaseEditCommand(model(), index, dialog.text()));
+            pushCommand( new DatabaseEditCommand(model(), index, dialog.text()));
         }
     });
 

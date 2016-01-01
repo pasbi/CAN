@@ -2,7 +2,6 @@
 #include "itemdelegate.h"
 #include <QComboBox>
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
-#include "application.h"
 #include <QLineEdit>
 #include "Database/database.h"
 
@@ -16,7 +15,7 @@ void EditableComboBoxDelegate::setSpecificModelData(QComboBox *editor, QAbstract
 {
     if (editor->currentText() != model->data(index))
     {
-        app().pushCommand( new DatabaseEditCommand(model, index, editor->currentText()) );
+        pushCommand( new DatabaseEditCommand(model, index, editor->currentText()) );
     }
 }
 

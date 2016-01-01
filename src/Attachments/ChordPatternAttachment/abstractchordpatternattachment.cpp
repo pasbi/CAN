@@ -2,7 +2,6 @@
 #include <QPainter>
 #include "PDFCreator/pdfcreator.h"
 #include "chord.h"
-#include "application.h"
 
 AbstractChordPatternAttachment::AbstractChordPatternAttachment() :
     Attachment()
@@ -48,7 +47,7 @@ void AbstractChordPatternAttachment::paint(PDFCreator *pdfCreator)
                                         pdfCreator->currentPage()->contentRect().bottom() - y,
                                         painter                            ))
             {
-                    if (app().preference<bool>("ContiuneOnNextPageMark"))
+                    if (preference<bool>("ContiuneOnNextPageMark"))
                     {
                         PDFCreator::drawContinueOnNextPageMark(pdfCreator->currentPage(), painter);
                     }
@@ -101,11 +100,11 @@ void AbstractChordPatternAttachment::paint(PDFCreator *pdfCreator)
 
         if (isChordLine)
         {
-            y += height * app().preference<double>("ChordLineSpacing");
+            y += height * preference<double>("ChordLineSpacing");
         }
         else
         {
-            y += height * app().preference<double>("LineSpacing");
+            y += height * preference<double>("LineSpacing");
         }
     }
 }

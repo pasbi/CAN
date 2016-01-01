@@ -244,7 +244,7 @@ QString Chord::key() const
     if (isValid())
     {
 
-        Chord::MinorPolicy mpolicy = Chord::LowerCase; //TODO static_cast<Chord::MinorPolicy>(config["MinorPolicy"].toInt());
+        Chord::MinorPolicy mpolicy = static_cast<Chord::MinorPolicy>(preference("MinorPolicy").toInt());
         QString base = baseString();
         if (isMinor())
         {

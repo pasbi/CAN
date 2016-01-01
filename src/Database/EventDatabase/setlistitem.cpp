@@ -1,5 +1,4 @@
 #include "setlistitem.h"
-#include "application.h"
 #include "Project/project.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/setlist.h"

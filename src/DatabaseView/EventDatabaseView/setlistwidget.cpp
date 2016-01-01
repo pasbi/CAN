@@ -9,7 +9,6 @@
 #include "PDFCreator/pdfcreator.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 #include "ui_setlistwidget.h"
-#include "application.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Project/project.h"
 #include "util.h"
@@ -80,7 +79,7 @@ void SetlistWidget::on_buttonAdd_clicked()
 {
     if (setlist())
     {
-        app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( setlist(), new SetlistItem(setlist()) ) );
+        pushCommand( new DatabaseNewItemCommand<SetlistItem>( setlist(), new SetlistItem(setlist()) ) );
     }
     else
     {

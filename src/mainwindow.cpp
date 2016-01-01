@@ -14,7 +14,6 @@
 
 #include "ui_mainwindow.h"
 #include "util.h"
-#include "application.h"
 #include "Dialogs/stringdialog.h"
 #include "Dialogs/programdialog.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
@@ -270,7 +269,7 @@ void MainWindow::createAttachmentActions()
             if (song)
             {
                 SongNewAttachmentCommand* command = new SongNewAttachmentCommand( song, Creatable::create<Attachment>(classname) );
-                app().pushCommand( command );
+                pushCommand( command );
                 updateActionsEnabled();
             }
         });
@@ -344,17 +343,17 @@ void MainWindow::setCurrentPath(const QString &path)
     m_currentPath = path;
 
     // get list of recent projects, update it and set it.
-    QStringList recentProjects = app().preference<QStringList>("RecentProjects");
+    QStringList recentProjects = preference<QStringList>("RecentProjects");
 
     recentProjects.prepend(m_currentPath);
 
     recentProjects.removeDuplicates();
-    while (recentProjects.length() > app().preference<int>("MaxRecentProjects"))
+    while (recentProjects.length() > preference<int>("MaxRecentProjects"))
     {
         recentProjects.removeLast();
     }
 
-    app().setPreference("RecentProjects", recentProjects);
+    setPreference("RecentProjects", recentProjects);
 
     // create open recent menu
     if (!ui->actionOpen_recent->menu())
@@ -487,7 +486,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::loadDefaultProject()
 {
-    QStringList recentProjects = app().preference<QStringList>("RecentProjects");
+    QStringList recentProjects = preference<QStringList>("RecentProjects");
     if (!recentProjects.isEmpty())
     {
         setCurrentPath(recentProjects.first());
@@ -600,7 +599,7 @@ void MainWindow::gotoEventView()
 void MainWindow::my_on_actionNew_Song_triggered()
 {
     Song* song =  new Song(m_project.songDatabase());
-    app().pushCommand( new DatabaseNewItemCommand<Song>( m_project.songDatabase(), song)  );
+    pushCommand( new DatabaseNewItemCommand<Song>( m_project.songDatabase(), song)  );
 
     // add default chord pattern attachment
     Attachment* attachment = Creatable::create<Attachment>("ChordPatternAttachment");
@@ -629,7 +628,7 @@ void MainWindow::on_actionDelete_Attachment_triggered()
 
     if (song && index >= 0)
     {
-        app().pushCommand( new SongRemoveAttachmentCommand( song, index ) );
+        pushCommand( new SongRemoveAttachmentCommand( song, index ) );
         updateActionsEnabled();
     }
 }
@@ -697,7 +696,7 @@ void MainWindow::my_on_actionDelete_Song_triggered()
     {
         if (canRemoveSong( song ))
         {
-            app().pushCommand( new DatabaseRemoveItemCommand<Song>( m_project.songDatabase(), song ) );
+            pushCommand( new DatabaseRemoveItemCommand<Song>( m_project.songDatabase(), song ) );
         }
         else
         {
@@ -714,14 +713,14 @@ void MainWindow::my_on_actionDelete_Song_triggered()
 void MainWindow::on_actionAdd_Folder_triggered()
 {
     enum { ShowNotOnlyDirs = 0x0 };
-    QString path = QFileDialog::getExistingDirectory(this, tr("Add to index ..."), app().preference<QString>("FileIndexDefaultPath"));
+    QString path = QFileDialog::getExistingDirectory(this, tr("Add to index ..."), preference<QString>("FileIndexDefaultPath"));
 
     if (path.isEmpty())
     {
         return;
     }
 
-    app().setPreference("FileIndexDefaultPath", path);
+    setPreference("FileIndexDefaultPath", path);
 
     QProgressDialog pd( "Task in Progress", "Cancel", 0, -1, this );
     pd.setWindowModality( Qt::WindowModal );
@@ -775,7 +774,7 @@ void MainWindow::on_actionDuplicate_Attachment_triggered()
     Attachment* attachment = cs->attachments()[index];
     assert( attachment );
 
-    app().pushCommand( new SongNewAttachmentCommand( cs, attachment->copy() ) );
+    pushCommand( new SongNewAttachmentCommand( cs, attachment->copy() ) );
     updateActionsEnabled();
 }
 
@@ -795,7 +794,7 @@ void MainWindow::on_action_Index_Info_triggered()
 
 void MainWindow::my_on_actionNew_Event_triggered()
 {
-    app().pushCommand( new DatabaseNewItemCommand<Event>( m_project.eventDatabase(), new Event(m_project.eventDatabase())) );
+    pushCommand( new DatabaseNewItemCommand<Event>( m_project.eventDatabase(), new Event(m_project.eventDatabase())) );
 }
 
 void MainWindow::my_on_actionDelete_Event_triggered()
@@ -803,7 +802,7 @@ void MainWindow::my_on_actionDelete_Event_triggered()
     Event* event = currentEvent();
     if (event)
     {
-        app().pushCommand( new DatabaseRemoveItemCommand<Event>( m_project.eventDatabase(), event ));
+        pushCommand( new DatabaseRemoveItemCommand<Event>( m_project.eventDatabase(), event ));
         updateActionsEnabled();
     }
 }
@@ -871,7 +870,7 @@ void MainWindow::my_on_actionEdit_Program_triggered()
     pd.setProgram( currentSong()->program() );
     if (pd.exec() == QDialog::Accepted)
     {
-        app().pushCommand( new SongEditProgramCommand( currentSong(), pd.program() ) );
+        pushCommand( new SongEditProgramCommand( currentSong(), pd.program() ) );
     }
 #endif
 }
@@ -929,7 +928,7 @@ void MainWindow::createLanguageMenu()
         QAction* action = ui->menu_Language->addAction( QLocale(locale).nativeLanguageName() );
         action->setCheckable( true );
 
-        if (app().preference<QString>("locale") == locale)
+        if (preference<QString>("locale") == locale)
         {
             action->setChecked(true);
         }
@@ -941,7 +940,7 @@ void MainWindow::createLanguageMenu()
                                       tr("Language changes will apply on next start."),
                                       QMessageBox::Ok,
                                       QMessageBox::NoButton );
-            app().setPreference("locale", locale);
+            setPreference("locale", locale);
         });
     }
 }
@@ -982,7 +981,7 @@ void MainWindow::my_on_actionNew_SetlistItem_triggered()
     if (currentEvent())
     {
         Setlist* setlist = currentEvent()->setlist();
-        app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( setlist, new SetlistItem(setlist) ) );
+        pushCommand( new DatabaseNewItemCommand<SetlistItem>( setlist, new SetlistItem(setlist) ) );
     }
 }
 
@@ -995,7 +994,7 @@ void MainWindow::my_on_actionDelete_SetlistItem_triggered()
         app().project()->beginMacro( tr("Remove Setlist Items"));
         for (SetlistItem* i : si)
         {
-            app().pushCommand( new DatabaseRemoveItemCommand<SetlistItem>( setlist, i ) );
+            pushCommand( new DatabaseRemoveItemCommand<SetlistItem>( setlist, i ) );
         }
         app().project()->endMacro();
     }
@@ -1039,10 +1038,10 @@ void MainWindow::on_actionCopy_Indexed_Attachments_triggered()
         }
         else
         {
-            QString path = QFileDialog::getExistingDirectory(this, Application::applicationName(), app().preference<QString>("RecentCopyIndexedFilesTargetDir"));
+            QString path = QFileDialog::getExistingDirectory(this, Application::applicationName(), preference<QString>("RecentCopyIndexedFilesTargetDir"));
             if (!path.isEmpty())
             {
-                app().setPreference("RecentCopyIndexedFilesTargetDir", path);
+                setPreference("RecentCopyIndexedFilesTargetDir", path);
                 QDir dir(path);
 
                 QStringList success, failure, notOverwritten;

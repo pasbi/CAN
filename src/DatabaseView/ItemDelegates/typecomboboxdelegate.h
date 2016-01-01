@@ -4,7 +4,6 @@
 #include "itemdelegate.h"
 #include <QComboBox>
 #include "global.h"
-#include "application.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 
 class DatabaseBase;

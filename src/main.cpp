@@ -13,7 +13,7 @@
 
 void installTranslator()
 {
-    QString localeCode = app().preference<QString>("locale");
+    QString localeCode = preference<QString>("locale");
     QLocale locale( localeCode );
     QLocale::setDefault( locale );
     QString language = QLocale::languageToString( locale.language() );

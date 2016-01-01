@@ -16,6 +16,6 @@ void LineEditDelegate::setSpecificModelData(QLineEdit *editor, QAbstractItemMode
     QVariant newValue = editor->text();
     if (model->data(index) != newValue)
     {
-        app().pushCommand( new DatabaseEditCommand(model, index, newValue ) );
+        pushCommand( new DatabaseEditCommand(model, index, newValue ) );
     }
 }

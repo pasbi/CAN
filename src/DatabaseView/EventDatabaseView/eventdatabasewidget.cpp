@@ -1,5 +1,4 @@
 #include "eventdatabasewidget.h"
-#include "application.h"
 #include "Project/project.h"
 #include "eventtableview.h"
 #include "Database/EventDatabase/eventdatabase.h"

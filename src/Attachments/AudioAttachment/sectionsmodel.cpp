@@ -1,5 +1,4 @@
 #include "sectionsmodel.h"
-#include "application.h"
 #include "persistentobject.h"
 #include "section.h"
 #include "Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h"

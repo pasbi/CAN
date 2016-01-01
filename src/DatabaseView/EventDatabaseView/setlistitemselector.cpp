@@ -4,7 +4,6 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QSettings>
-#include "application.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "DatabaseView/SongDatabaseView/songtableview.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"

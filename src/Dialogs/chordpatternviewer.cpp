@@ -13,7 +13,6 @@
 #include "Program/midicommand.h"
 #include <QScrollBar>
 #include "Attachments/AudioAttachment/audioattachment.h"
-#include "application.h"
 
 
 
@@ -76,7 +75,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     ui->label->setPixmap( m_pixmap );
     }
 
-    m_zoom = app().preference<double>("ChordPatternViewZoom");
+    m_zoom = preference<double>("ChordPatternViewZoom");
 
     QTimer::singleShot( 1, this, SLOT(applyZoom()) );
 
@@ -93,7 +92,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     QTimer::singleShot( 1, this, SLOT(reject()) );
 #endif
 
-    int channel = app().preference<int>("Channel") - 1;
+    int channel = preference<int>("Channel") - 1;
     if (channel >= 0)
     {
         MidiCommand::defaultChannel = (MidiCommand::Channel) (channel);
@@ -105,7 +104,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     }
 
     ui->buttonColumnCount->blockSignals(true);
-    ui->buttonColumnCount->setChecked( app().preference<bool>("ChordPatternViewTwoColumn") );
+    ui->buttonColumnCount->setChecked( preference<bool>("ChordPatternViewTwoColumn") );
     ui->buttonColumnCount->blockSignals(false);
 
     ui->audioPlayerWidget->hide();
@@ -114,7 +113,7 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
 
 ChordPatternViewer::~ChordPatternViewer()
 {
-    app().setPreference( "ChordPatternViewZoom", m_zoom );
+    setPreference( "ChordPatternViewZoom", m_zoom );
     delete ui;
 }
 
@@ -204,7 +203,7 @@ void ChordPatternViewer::applyZoom()
     QPixmap pixmap = m_pixmap.scaledToWidth( pdfWidth(), Qt::SmoothTransformation );
     int describedWidth = ::describedWidth(pixmap.toImage(), Qt::white);
 
-    if ( app().preference<bool>("ChordPatternViewTwoColumn"))
+    if ( preference<bool>("ChordPatternViewTwoColumn"))
     {
         pixmap = twoPageView(pixmap, describedWidth, ui->scrollArea->viewport()->height(), pixmap.height());
     }
@@ -366,7 +365,7 @@ void ChordPatternViewer::wheelEvent(QWheelEvent *e)
 
 void ChordPatternViewer::on_buttonAutoZoom_clicked()
 {
-    if (app().preference<bool>("ChordPatternViewTwoColumn"))
+    if (preference<bool>("ChordPatternViewTwoColumn"))
     {
         m_zoom = (double) m_pixmap.width() / (twoPageViewWidth(describedWidth(m_pixmap.toImage(), Qt::white)) + 10);
     }
@@ -379,7 +378,7 @@ void ChordPatternViewer::on_buttonAutoZoom_clicked()
 
 void ChordPatternViewer::on_buttonColumnCount_toggled(bool checked)
 {
-    app().setPreference("ChordPatternViewTwoColumn", checked);
+    setPreference("ChordPatternViewTwoColumn", checked);
     applyZoom();
 }
 
@@ -431,8 +430,8 @@ void ChordPatternViewer::initializeAudioPlayerWidget()
 void ChordPatternViewer::showEvent(QShowEvent *e)
 {
     on_buttonAutoZoom_clicked();
-    double minZoom = app().preference<double>("minZoom");
-    double maxZoom = app().preference<double>("maxZoom");
+    double minZoom = preference<double>("minZoom");
+    double maxZoom = preference<double>("maxZoom");
     m_zoom = qBound(minZoom, m_zoom, maxZoom);    // too deep zooms are not convenient
     applyZoom();
 

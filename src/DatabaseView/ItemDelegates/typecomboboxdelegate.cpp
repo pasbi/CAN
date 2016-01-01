@@ -16,6 +16,6 @@ void TypeComboBoxDelegate::setSpecificModelData(QComboBox *editor, QAbstractItem
 {
     if (model->data(index, Qt::EditRole) != editor->currentIndex())
     {
-        app().pushCommand( new DatabaseEditCommand( model, index, editor->currentIndex()) );
+        pushCommand( new DatabaseEditCommand( model, index, editor->currentIndex()) );
     }
 }

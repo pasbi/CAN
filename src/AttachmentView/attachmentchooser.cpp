@@ -166,7 +166,7 @@ bool AttachmentChooser::eventFilter(QObject *o, QEvent *e)
         switch (e->type())
         {
         case QEvent::FocusOut:
-            app().pushCommand( new AttachmentRenameCommand(attachment, newText));
+            pushCommand( new AttachmentRenameCommand(attachment, newText));
             ui->comboBox->setEditable(false);
             break;
         case QEvent::KeyPress:  // we need to catch the enter-press event since insert-policy is set to NoInsert
@@ -174,7 +174,7 @@ bool AttachmentChooser::eventFilter(QObject *o, QEvent *e)
             {
             case Qt::Key_Return:
             case Qt::Key_Enter:
-                app().pushCommand( new AttachmentRenameCommand(attachment, newText));
+                pushCommand( new AttachmentRenameCommand(attachment, newText));
             case Qt::Key_Escape:
                 ui->comboBox->setEditable(false);
             default:
@@ -204,7 +204,7 @@ void AttachmentChooser::on_buttonDelete_clicked()
     if (attachment)
     {
         ui->attachmentEditor->deactivateAttachmentView(attachment);
-        app().pushCommand( new SongRemoveAttachmentCommand(attachment->song(), attachment->song()->attachments().indexOf(attachment) ) );
+        pushCommand( new SongRemoveAttachmentCommand(attachment->song(), attachment->song()->attachments().indexOf(attachment) ) );
     }
 }
 

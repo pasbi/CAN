@@ -80,7 +80,7 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
             const Song* song = availableSongs[comboBoxIndex];
             if (item->song() != song)
             {
-                app().pushCommand( new SetlistItemChangeSongCommand(item, song));
+                pushCommand( new SetlistItemChangeSongCommand(item, song));
             }
         }
     }
@@ -91,7 +91,7 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
         QVariant newValue = lineEdit->text();
         if (model->data(index) != newValue)
         {
-            app().pushCommand( new DatabaseEditCommand( model, index, newValue) );
+            pushCommand( new DatabaseEditCommand( model, index, newValue) );
         }
     }
         break;

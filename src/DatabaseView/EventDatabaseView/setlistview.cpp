@@ -8,7 +8,6 @@
 #include <QClipboard>
 #include <QKeyEvent>
 
-#include "application.h"
 #include "Project/project.h"
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 #include "Commands/DatabaseCommands/databaseremoveitemcommand.h"

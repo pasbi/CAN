@@ -7,7 +7,6 @@
 #include "Dialogs/datetimedialog.h"
 #include <QMouseEvent>
 #include "util.h"
-#include "application.h"
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
 #include "DatabaseView/ItemDelegates/typecomboboxdelegate.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
@@ -55,7 +54,7 @@ bool EventTableView::showDialog(QModelIndex index)
 
         if (dialog.exec() == QDialog::Accepted)
         {
-            app().pushCommand( new DatabaseEditCommand(model(), index, QVariant::fromValue(dialog.timeSpan())));
+            pushCommand( new DatabaseEditCommand(model(), index, QVariant::fromValue(dialog.timeSpan())));
         }
         return true;
     }

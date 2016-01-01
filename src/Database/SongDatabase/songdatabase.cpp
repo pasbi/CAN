@@ -6,7 +6,6 @@
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 #include "Project/project.h"
 #include "songdatabasesortproxy.h"
-#include "application.h"
 #include "commontypes.h"
 #include "Attachments/attachment.h"
 #include "Attachments/AudioAttachment/audioattachment.h"

@@ -3,7 +3,6 @@
 #include "Attachments/pdfattachment.h"
 #include <qmath.h>
 #include <QTimer>
-#include "application.h"
 
 #include "global.h"
 
@@ -71,7 +70,7 @@ void PDFAttachmentView::open()
 
         int size = ui->scrollArea->width();
 
-        double quality = app().preference<double>("Quality");
+        double quality = preference<double>("Quality");
         QImage image = doc->page(m_currentPage)->renderToImage( quality, quality );
 
         image = image.scaledToWidth( size * m_zoom - 10 );

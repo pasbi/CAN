@@ -149,7 +149,7 @@ public:
             typedef typename DatabaseMimeData<T>::IndexedItem IndexedItem;
             for (IndexedItem item : itemData->indexedItems())
             {
-                app().pushCommand( new DatabaseNewItemCommand<T>( this, item.item->copy(this), row + i ) );
+                pushCommand( new DatabaseNewItemCommand<T>( this, item.item->copy(this), row + i ) );
                 i++;
             }
             app().endMacro();

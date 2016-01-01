@@ -4,7 +4,6 @@
 #include "indexer.h"
 #include <QFileInfo>
 #include <QSettings>
-#include "application.h"
 
 const QCryptographicHash::Algorithm FileIndex::m_hashAlgorithm = QCryptographicHash::Sha1;
 
@@ -198,7 +197,7 @@ QString FileIndex::currentFilename() const
 
 QStringList FileIndex::acceptedEndings()
 {
-    QStringList endings = app().preference<QStringList>("FileIndexEndings");
+    QStringList endings = preference<QStringList>("FileIndexEndings");
     for (QString& ending: endings)
     {
         ending = ending.remove(QRegExp("\\W"));

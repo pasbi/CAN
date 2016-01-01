@@ -1,6 +1,5 @@
 #include "keydelegate.h"
 #include "chord.h"
-#include "application.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 
 KeyDelegate::KeyDelegate(QObject *parent) :
@@ -15,5 +14,5 @@ void KeyDelegate::setSpecificEditorData(KeyEditor* editor, const QModelIndex& in
 
 void KeyDelegate::setSpecificModelData(KeyEditor *editor, QAbstractItemModel *database, const QModelIndex &index) const
 {
-    app().pushCommand(new DatabaseEditCommand(database, index, QVariant::fromValue(editor->key())));
+    pushCommand(new DatabaseEditCommand(database, index, QVariant::fromValue(editor->key())));
 }

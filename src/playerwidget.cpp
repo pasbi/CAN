@@ -3,7 +3,6 @@
 #include "Attachments/AudioAttachment/player.h"
 #include "AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.h"
 #include "AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.h"
-#include "application.h"
 
 
 PlayerWidget::PlayerWidget(QWidget *parent) :
@@ -212,8 +211,8 @@ void PlayerWidget::on_pushButtonReset_clicked()
 
 void PlayerWidget::showEvent(QShowEvent *e)
 {
-    ui->volumeSlider->setMuted( app().preference<bool>("Muted") );
-    ui->volumeSlider->setValue( app().preference<int>("Volume") );
+    ui->volumeSlider->setMuted( preference<bool>("Muted") );
+    ui->volumeSlider->setValue( preference<int>("Volume") );
     updateVolume();
     QWidget::showEvent(e);
 }
@@ -221,7 +220,7 @@ void PlayerWidget::showEvent(QShowEvent *e)
 void PlayerWidget::hideEvent(QHideEvent *e)
 {
     setVolume();
-    app().setPreference("Muted", ui->volumeSlider->isMuted());
-    app().setPreference("Volume", ui->volumeSlider->value());
+    setPreference("Muted", ui->volumeSlider->isMuted());
+    setPreference("Volume", ui->volumeSlider->value());
     QWidget::hideEvent(e);
 }

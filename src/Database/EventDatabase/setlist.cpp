@@ -1,6 +1,5 @@
 #include "setlist.h"
 
-#include "application.h"
 #include "Project/project.h"
 #include "event.h"
 
@@ -184,7 +183,7 @@ bool Setlist::dropSongs(const DatabaseMimeData<Song>* songData, int targetRow, Q
         {
             // create a new setlist item and link `song` with it
             SetlistItem* newItem = new SetlistItem( this, item.item );
-            app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ) );
+            pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ) );
             indexes << index(rowOf(newItem), 0);
             i++;
         }
@@ -201,7 +200,7 @@ void Setlist::moveItems(const DatabaseMimeData<SetlistItem>* setlistData, int ta
 {
     if (setlistData->indexedItems().count() > 0)
     {
-        app().pushCommand( new DatabaseMoveRowsCommand<SetlistItem>(this, setlistData->indexedItemsSorted(), targetRow) );
+        pushCommand( new DatabaseMoveRowsCommand<SetlistItem>(this, setlistData->indexedItemsSorted(), targetRow) );
         for (const DatabaseMimeData<SetlistItem>::IndexedItem& item : setlistData->indexedItems())
         {
             indexes << index(rowOf(item.item), 0);
@@ -219,7 +218,7 @@ void Setlist::copyItems(const DatabaseMimeData<SetlistItem>* setlistData, int ta
         {
             // create a new setlist item and link `song` with it
             SetlistItem* newItem = item.item->copy(this);
-            app().pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ));
+            pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ));
             indexes << index(rowOf(newItem), 0);
             i++;
         }

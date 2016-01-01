@@ -7,7 +7,6 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Project/project.h"
 #include "Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h"
-#include "application.h"
 #include "Dialogs/chordpatternviewer.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 
@@ -69,7 +68,7 @@ void ChordPatternAttachmentView::updateText()
 #include "Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h"
 void ChordPatternAttachmentView::textEdited()
 {
-    app().pushCommand( new ChordPatternAttachmentEditPatternCommand( attachment<ChordPatternAttachment>(), ui->textEdit->toPlainText() ) );
+    pushCommand( new ChordPatternAttachmentEditPatternCommand( attachment<ChordPatternAttachment>(), ui->textEdit->toPlainText() ) );
 }
 
 void ChordPatternAttachmentView::polish()
@@ -83,12 +82,12 @@ void ChordPatternAttachmentView::polish()
 
 void ChordPatternAttachmentView::on_buttonUp_clicked()
 {
-    app().pushCommand( new AbstractChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), 1 ) );
+    pushCommand( new AbstractChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), 1 ) );
 }
 
 void ChordPatternAttachmentView::on_buttonDown_clicked()
 {
-    app().pushCommand( new AbstractChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), -1 ) );
+    pushCommand( new AbstractChordPatternAttachmentTransposeCommand( attachment<ChordPatternAttachment>(), -1 ) );
 }
 
 void ChordPatternAttachmentView::on_buttonView_clicked()

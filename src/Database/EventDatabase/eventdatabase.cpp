@@ -1,7 +1,6 @@
 #include "eventdatabase.h"
 #include "Project/project.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
-#include "application.h"
 #include <QJsonDocument>
 #include "Database/databasemimedata.h"
 

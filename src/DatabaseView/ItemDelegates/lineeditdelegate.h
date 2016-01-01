@@ -4,7 +4,6 @@
 #include <QLineEdit>
 
 #include "itemdelegate.h"
-#include "application.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 
 

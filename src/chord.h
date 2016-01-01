@@ -4,7 +4,6 @@
 #include <QString>
 #include <QVariant>
 
-//TODO this is a commonly used class. it should not be in Attachment/ChordPatternAttachment dir.
 class Chord
 {
 public:
