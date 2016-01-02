@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Peoples</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -42,12 +42,12 @@
      </attribute>
      <column>
       <property name="text">
-       <string>Name</string>
+       <string notr="true">Name</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Del</string>
+       <string notr="true">Del</string>
       </property>
      </column>
     </widget>
