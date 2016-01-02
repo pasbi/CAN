@@ -910,7 +910,7 @@ Think twice before you replace it.
     <message>
         <location filename="mainwindow.ui" line="510"/>
         <source>Open recent ...</source>
-        <translation>Open recent ...</translation>
+        <translation>Zuletzt geöffnet ...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="101"/>
