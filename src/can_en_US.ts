@@ -15,29 +15,276 @@
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <location filename="application.cpp" line="107"/>
+        <source>PDF</source>
+        <translation>PDF</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="107"/>
+        <source>Quality</source>
+        <translation>Quality</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="107"/>
+        <location filename="application.cpp" line="156"/>
+        <source>dpi</source>
+        <translation>dpi</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="108"/>
+        <location filename="application.cpp" line="109"/>
+        <location filename="application.cpp" line="142"/>
+        <location filename="application.cpp" line="150"/>
+        <location filename="application.cpp" line="153"/>
+        <location filename="application.cpp" line="155"/>
+        <location filename="application.cpp" line="157"/>
+        <source>PDFCreator</source>
+        <translation>PDF export</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="108"/>
+        <source>Title Page</source>
+        <translation>Title Page</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="109"/>
+        <source>Page Size</source>
+        <translation>Page size</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="110"/>
+        <source>A0</source>
+        <translation>A0</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="111"/>
+        <source>A1</source>
+        <translation>A1</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="112"/>
+        <source>A2</source>
+        <translation>A2</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="113"/>
+        <source>A3</source>
+        <translation>A3</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="114"/>
+        <source>A4</source>
+        <translation>A4</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="115"/>
+        <source>A5</source>
+        <translation>A5</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="116"/>
+        <source>A6</source>
+        <translation>A6</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="117"/>
+        <source>A7</source>
+        <translation>A7</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="118"/>
+        <source>A8</source>
+        <translation>A8</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="119"/>
+        <source>A9</source>
+        <translation>A9</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="120"/>
+        <source>B0</source>
+        <translation>B0</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="121"/>
+        <source>B1</source>
+        <translation>B1</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="122"/>
+        <source>B2</source>
+        <translation>B2</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="123"/>
+        <source>B3</source>
+        <translation>B3</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="124"/>
+        <source>B4</source>
+        <translation>B4</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="125"/>
+        <source>B5</source>
+        <translation>B5</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="126"/>
+        <source>B6</source>
+        <translation>B6</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="127"/>
+        <source>B7</source>
+        <translation>B7</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="128"/>
+        <source>B8</source>
+        <translation>B8</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="129"/>
+        <source>B9</source>
+        <translation>B9</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="130"/>
+        <source>B10</source>
+        <translation>B10</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="131"/>
+        <source>C5E</source>
+        <translation>C5E</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="132"/>
+        <source>Comm10E</source>
+        <translation>Comm10E</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="133"/>
+        <source>DLE</source>
+        <translation>DLE</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="134"/>
+        <source>Executive</source>
+        <translation>Executice</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="135"/>
+        <source>Folio</source>
+        <translation>Folio</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="136"/>
+        <source>Ledger</source>
+        <translation>Ledger</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="137"/>
+        <source>Legal</source>
+        <translation>Legal</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="138"/>
+        <source>Letter</source>
+        <translation>Letter</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="139"/>
+        <source>Tabloid</source>
+        <translation>Tabloid</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="142"/>
+        <source>Align Songs</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="143"/>
+        <source>No alignment</source>
+        <translation>No alignment</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="144"/>
+        <source>Odd pages</source>
+        <translation>Odd pages</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="145"/>
+        <source>Even pages</source>
+        <translation>Even pages</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="146"/>
+        <source>Duplex</source>
+        <translation>Duplex</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="147"/>
+        <source>Endless</source>
+        <translation>Endless</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="148"/>
+        <source>Separate pages</source>
+        <translation>Separate pages</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="150"/>
+        <source>Table of Contents</source>
+        <translation>Table of Contents</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="153"/>
+        <source>Page Numbers</source>
+        <translation>Page numbers</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="155"/>
+        <source>Resolution</source>
+        <translation>Resolution</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="157"/>
+        <source>Show to-be-continued-hint</source>
+        <translation>To be continued hint</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="159"/>
+        <source>Midi</source>
+        <translation>Midi</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="159"/>
+        <source>Channel</source>
+        <translation>Channel</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="160"/>
+        <source>Disable Midi</source>
+        <translation>Midi disabled</translation>
+    </message>
+</context>
+<context>
     <name>AttachmentChooser</name>
-    <message>
-        <source>Alt+Left</source>
-        <translation type="vanished">Alt+Left</translation>
-    </message>
-    <message>
-        <source>Alt+Right</source>
-        <translation type="vanished">Alt+Right</translation>
-    </message>
     <message>
         <location filename="AttachmentView/attachmentchooser.ui" line="29"/>
         <source>Choose an attachment.</source>
         <translation>Choose Attachment.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/attachmentchooser.cpp" line="28"/>
+        <location filename="AttachmentView/attachmentchooser.cpp" line="26"/>
         <source>No Attachment</source>
         <translation>No Attachment</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/attachmentchooser.cpp" line="35"/>
-        <source>Edit tags ...</source>
-        <translation>Edit tags ...</translation>
     </message>
 </context>
 <context>
@@ -76,47 +323,17 @@
         <translation>Delete selected section.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="124"/>
-        <source>Adjust pitch in semi tones.</source>
-        <translation>Adjust pitch in semi tones.</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="143"/>
-        <source>Adjust tempo</source>
-        <translation>Adjust tempo</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="195"/>
-        <source>Play or pause current song.</source>
-        <translation>Play or pause current song.</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="206"/>
-        <source>Space</source>
-        <translation>Space</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="216"/>
-        <source>Stop current song.</source>
-        <translation>Stop current song.</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.ui" line="232"/>
-        <source>Seek position in song.</source>
-        <translation>Seek position in song.</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="45"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="35"/>
         <source>Delete Section</source>
         <translation>Delete section</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="53"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="43"/>
         <source>Restore Section</source>
         <translation>Restore Section</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="191"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioattachmentview.cpp" line="128"/>
         <source>Unnamed</source>
         <translation>Unamed</translation>
     </message>
@@ -124,23 +341,23 @@
 <context>
     <name>AudioSlider</name>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="29"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="35"/>
         <source>Elapsed time in seconds.</source>
         <translation>Elapsed time in seconds.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="32"/>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="55"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="62"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="115"/>
         <source> s</source>
         <translation> s</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="42"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="72"/>
         <source>Seek to the desired position.</source>
         <translation>Seek the desired position.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="52"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.ui" line="88"/>
         <source>Remaining time in seconds.</source>
         <translation>Remaining time in seconds.</translation>
     </message>
@@ -166,7 +383,7 @@
 <context>
     <name>ChordPatternAttachment</name>
     <message>
-        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="20"/>
+        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="16"/>
         <source>Chord Pattern</source>
         <translation>Chord Pattern</translation>
     </message>
@@ -182,433 +399,99 @@
 <context>
     <name>ChordPatternViewer</name>
     <message>
-        <source>Dialog</source>
-        <translation type="vanished">Viewer</translation>
-    </message>
-    <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="96"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="106"/>
         <source>Close (Esc)</source>
         <translation>Close (Esc)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="106"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="116"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="155"/>
-        <location filename="Dialogs/chordpatternviewer.ui" line="190"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="165"/>
         <source>Zoom in (+)</source>
         <translation>Zoom in (+)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="165"/>
-        <location filename="Dialogs/chordpatternviewer.ui" line="200"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="175"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="210"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="225"/>
-        <location filename="Dialogs/chordpatternviewer.ui" line="287"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="200"/>
+        <source>Auto Zoom</source>
+        <translation>Auto Zoom</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/chordpatternviewer.ui" line="235"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="297"/>
         <source>Zoom Out (-)</source>
         <translation>Zoom out (-)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="336"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="346"/>
         <source>Faster (F)</source>
         <translation>Faster (F)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="346"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="356"/>
         <source>F</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="377"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="387"/>
         <source>Slower (S)</source>
         <translation>Slower (S)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="387"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="397"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="425"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="435"/>
         <source>Go to start</source>
         <translation>Go to start</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="461"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="471"/>
         <source>Play (Space)</source>
         <translation>Play (Space)</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.ui" line="474"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="484"/>
         <source>Space</source>
         <translation>Space</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="95"/>
+        <location filename="Dialogs/chordpatternviewer.ui" line="543"/>
+        <source>Ctrl+P</source>
+        <translation>Ctrl+P</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="89"/>
         <source>Poppler is not available</source>
         <translation>Poppler is not available.</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="96"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="90"/>
         <source>It seems this application was build without poppler.
 Thus, this feature is not available.</source>
         <translation>It seems this application was build without poppler.
 Thus, this feature is not available.</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="134"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="132"/>
         <source>Apply new tempo?</source>
         <translation>Apply new tempo?</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="135"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="133"/>
         <source>You changed the tempo of this chord pattern.
 Do you want to keep it?</source>
         <translation>You changed the tempo of this chord pattern. Do you want to keep it?</translation>
-    </message>
-</context>
-<context>
-    <name>ConfigurableItem</name>
-    <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="15"/>
-        <source>Quality</source>
-        <translation>Quality</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="16"/>
-        <source>ConfigurableItem/PDFAttachmentView/Quality</source>
-        <translation>Quality of PDF rendering.
-Higher is better but slower.</translation>
-    </message>
-    <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/pdfattachmentview.cpp" line="21"/>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="148"/>
-        <source>dpi</source>
-        <translation>dpi</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="67"/>
-        <source>Title Page</source>
-        <oldsource>Title</oldsource>
-        <translation>Title Page</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="68"/>
-        <source>ConfigurableItem/PDFCreator/PDFTitlePattern</source>
-        <translation>Pattern to name the PDF.
-E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginnig date.</translation>
-    </message>
-    <message>
-        <source>Song Title</source>
-        <translation type="vanished">Song Title</translation>
-    </message>
-    <message>
-        <source>ConfigurableItem/PDFCreator/SongTitlePattern</source>
-        <translation type="vanished">Patten for the song title.
-{Title} is replaced by the title, {artist} by the artist and {xxx} by the corresponding attribute.</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="77"/>
-        <source>Page size</source>
-        <translation>Page size</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="78"/>
-        <source>ConfigurableItem/PDFCreator/PageSize</source>
-        <translation>Pagesize</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="80"/>
-        <source>A0</source>
-        <translation>A0</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="81"/>
-        <source>A1</source>
-        <translation>A1</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="82"/>
-        <source>A2</source>
-        <translation>A2</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="84"/>
-        <source>A4</source>
-        <translation>A4</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="85"/>
-        <source>A5</source>
-        <translation>A5</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="86"/>
-        <source>A6</source>
-        <translation>A6</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="87"/>
-        <source>A7</source>
-        <translation>A7</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="88"/>
-        <source>A8</source>
-        <translation>A8</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="89"/>
-        <source>A9</source>
-        <translation>A9</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="90"/>
-        <source>B0</source>
-        <translation>B0</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="91"/>
-        <source>B1</source>
-        <translation>B1</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="92"/>
-        <source>B2</source>
-        <translation>B2</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="93"/>
-        <source>B3</source>
-        <translation>B3</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="94"/>
-        <source>B4</source>
-        <translation>B4</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="95"/>
-        <source>B5</source>
-        <translation>B5</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="96"/>
-        <source>B6</source>
-        <translation>B6</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="97"/>
-        <source>B7</source>
-        <translation>B7</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="98"/>
-        <source>B8</source>
-        <translation>B8</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="99"/>
-        <source>B9</source>
-        <translation>B9</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="100"/>
-        <source>B10</source>
-        <translation>B10</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="101"/>
-        <source>C5E</source>
-        <translation>C5E</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="102"/>
-        <source>Comm10E</source>
-        <translation>Comm10E</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="103"/>
-        <source>DLE</source>
-        <translation>DLE</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="104"/>
-        <source>Executive</source>
-        <translation>Executice</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="105"/>
-        <source>Folio</source>
-        <translation>Folio</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="106"/>
-        <source>Ledger</source>
-        <translation>Ledger</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="107"/>
-        <source>Legal</source>
-        <translation>Legal</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="108"/>
-        <source>Letter</source>
-        <translation>Letter</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="109"/>
-        <source>Tabloid</source>
-        <translation>Tabloid</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="116"/>
-        <source>Align songs: </source>
-        <translation>Align songs:</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="117"/>
-        <source>ConfigurableItem/PDFCreator/AlignSongs</source>
-        <translation>Align songs</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="119"/>
-        <source>No alignment</source>
-        <translation>No alignment</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="120"/>
-        <source>Odd pages</source>
-        <translation>Odd pages</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="121"/>
-        <source>Even pages</source>
-        <translation>Even pages</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="122"/>
-        <source>Duplex</source>
-        <translation>Duplex</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="123"/>
-        <source>Endless</source>
-        <translation>Endless</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="124"/>
-        <source>Separate pages</source>
-        <translation>Separate pages</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="129"/>
-        <source>Table of Contents</source>
-        <translation>Table of Contents</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="130"/>
-        <source>ConfigurableItem/PDFCreator/TableOfContents</source>
-        <translation>Draw table of contents</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="137"/>
-        <source>Page Numbers</source>
-        <translation>Page numbers</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="138"/>
-        <source>ConfigurableItem/PDFCreator/PageNumbers</source>
-        <translation>Draw page numbers</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="145"/>
-        <source>Resolution</source>
-        <translation>Resolution</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="146"/>
-        <source>ConfigurableItem/PDFCreator/Resolution</source>
-        <translation>Resolution to draw PDF attachments</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="153"/>
-        <source>Show to-be-continued-hint</source>
-        <translation>To be continued hint</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="154"/>
-        <source>ConfigurableItem/PDFCreator/ContinueOnNextPageMark</source>
-        <translation>Draw hint if the song is continued on next page.</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="vanished">Style</translation>
-    </message>
-    <message>
-        <source>ConfigurableItem/MainWindow/Style</source>
-        <translation type="vanished">Stylesheet to manipulate the look of the application.</translation>
-    </message>
-    <message>
-        <source>Stylesheet</source>
-        <translation type="vanished">Stylesheet</translation>
-    </message>
-    <message>
-        <location filename="FileIndex/fileindex.cpp" line="11"/>
-        <source>Endings</source>
-        <translation>Endings</translation>
-    </message>
-    <message>
-        <location filename="FileIndex/fileindex.cpp" line="12"/>
-        <source>All Endings that may be included</source>
-        <translation>All endings that shall be included in file index.</translation>
-    </message>
-    <message>
-        <location filename="Program/midicontroller.cpp" line="12"/>
-        <source>Channel</source>
-        <translation>Channel</translation>
-    </message>
-    <message>
-        <location filename="Program/midicontroller.cpp" line="13"/>
-        <source>ConfigurableItem/MidiCommand/Channel</source>
-        <translation>All Midi packets are sent on this channel.</translation>
-    </message>
-    <message>
-        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="9"/>
-        <source>ChordPatternAttachment</source>
-        <translation>Chord Pattern</translation>
-    </message>
-    <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="20"/>
-        <source>PDF Export</source>
-        <translation>PDF Export</translation>
-    </message>
-</context>
-<context>
-    <name>ConfigurableItemE</name>
-    <message>
-        <location filename="PDFCreator/pdfcreatorconfig.h" line="83"/>
-        <source>A3</source>
-        <translation>A3</translation>
-    </message>
-</context>
-<context>
-    <name>ConfigurationDialog</name>
-    <message>
-        <location filename="Dialogs/configurationdialog.ui" line="14"/>
-        <source>Preferences</source>
-        <translation>Preferences</translation>
-    </message>
-    <message>
-        <location filename="Dialogs/configurationdialog.cpp" line="41"/>
-        <source>Reset value to default.</source>
-        <translation>Reset to default.</translation>
     </message>
 </context>
 <context>
@@ -652,7 +535,7 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
         <translation>Audio Attachment</translation>
     </message>
     <message>
-        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="8"/>
+        <location filename="Attachments/ChordPatternAttachment/chordpatternattachment.cpp" line="7"/>
         <source>Chord Attachment</source>
         <translation>Chord Attachment</translation>
     </message>
@@ -678,7 +561,7 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
 <context>
     <name>DatabaseViewBase</name>
     <message>
-        <location filename="DatabaseView/databaseview.cpp" line="72"/>
+        <location filename="DatabaseView/databaseview.cpp" line="71"/>
         <source>Omit %1 %2</source>
         <translation>Omit %1 %2</translation>
     </message>
@@ -742,41 +625,18 @@ E.g. {EventTitle} is replaced by the name of the event and {Begin] by the beginn
 <context>
     <name>EventDatabase</name>
     <message>
-        <location filename="Database/EventDatabase/eventdatabase.cpp" line="48"/>
+        <location filename="Database/EventDatabase/eventdatabase.cpp" line="47"/>
         <source>MM/dd/yy hh:mm ap</source>
         <translation>MM/dd/yy hh:mm ap</translation>
     </message>
     <message numerus="yes">
-        <location filename="Database/EventDatabase/eventdatabase.cpp" line="128"/>
+        <location filename="Database/EventDatabase/eventdatabase.cpp" line="127"/>
         <source>Event(s)</source>
         <oldsource>%n Event(s)</oldsource>
         <translation>
             <numerusform>Events</numerusform>
             <numerusform>Events</numerusform>
         </translation>
-    </message>
-</context>
-<context>
-    <name>ExportPDFDialog</name>
-    <message>
-        <location filename="Dialogs/exportpdfdialog.ui" line="14"/>
-        <source>Export PDF ...</source>
-        <translation>Export to PDF ...</translation>
-    </message>
-    <message>
-        <location filename="Dialogs/exportpdfdialog.ui" line="20"/>
-        <source>Include &amp;only</source>
-        <translation>Only</translation>
-    </message>
-    <message>
-        <location filename="Dialogs/exportpdfdialog.ui" line="32"/>
-        <source>Exclude</source>
-        <translation>But not</translation>
-    </message>
-    <message>
-        <location filename="Dialogs/exportpdfdialog.ui" line="56"/>
-        <source>  Edit Preferences</source>
-        <translation>Edit preferences ...</translation>
     </message>
 </context>
 <context>
@@ -818,12 +678,12 @@ or does not exist.</source>
 or does not exist.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="58"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="57"/>
         <source>&lt; No File &gt;</source>
         <translation>&lt; No file &gt;</translation>
     </message>
     <message>
-        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="62"/>
+        <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.cpp" line="61"/>
         <source>There is a file set, but it is unaccessible.
 Think twice before you replace it.
 %1</source>
@@ -892,464 +752,445 @@ Think twice before you replace it.
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="202"/>
+        <location filename="mainwindow.ui" line="203"/>
         <source>Tools.</source>
         <translation>Tools.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="205"/>
+        <location filename="mainwindow.ui" line="206"/>
         <source>&amp;Tools</source>
         <translation>&amp;Tools</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="213"/>
+        <location filename="mainwindow.ui" line="214"/>
         <source>Attachment related stuff.</source>
         <translation>Attachment related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="216"/>
+        <location filename="mainwindow.ui" line="217"/>
         <source>&amp;Attachments</source>
         <translation>&amp;Attachments</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="228"/>
+        <location filename="mainwindow.ui" line="229"/>
         <source>Edit.</source>
         <translation>Edit.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="231"/>
+        <location filename="mainwindow.ui" line="232"/>
         <source>&amp;Edit</source>
         <translation>&amp;Edit</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="242"/>
+        <location filename="mainwindow.ui" line="243"/>
         <source>File index related stuff.</source>
         <translation>File index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="245"/>
+        <location filename="mainwindow.ui" line="246"/>
         <source>F&amp;ile Index</source>
         <translation>File&amp;index</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="254"/>
+        <location filename="mainwindow.ui" line="255"/>
         <source>Event related stuff.</source>
         <translation>Event related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="257"/>
+        <location filename="mainwindow.ui" line="258"/>
         <source>E&amp;vents</source>
         <translation>E&amp;vents</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="265"/>
+        <location filename="mainwindow.ui" line="266"/>
         <source>Song related stuff.</source>
         <translation>Song related stuff.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="268"/>
+        <location filename="mainwindow.ui" line="269"/>
         <source>&amp;Songs</source>
         <translation>&amp;Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="276"/>
+        <location filename="mainwindow.ui" line="277"/>
         <source>&amp;Language</source>
         <translation>&amp;Language</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="290"/>
+        <location filename="mainwindow.ui" line="291"/>
         <source>&amp;New Project</source>
         <translation>&amp;New project</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="293"/>
+        <location filename="mainwindow.ui" line="294"/>
         <source>Create a new empty project.</source>
         <translation>Create a new empty project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="305"/>
+        <location filename="mainwindow.ui" line="306"/>
         <source>&amp;Save</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="308"/>
+        <location filename="mainwindow.ui" line="309"/>
         <source>Save the current project.</source>
         <translation>Save the current project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="320"/>
+        <location filename="mainwindow.ui" line="321"/>
         <source>Save As</source>
         <translation>Save as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="323"/>
+        <location filename="mainwindow.ui" line="324"/>
         <source>Save the current project as.</source>
         <translation>Save the current project as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="335"/>
+        <location filename="mainwindow.ui" line="336"/>
         <source>Open</source>
         <translation>Open ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="338"/>
+        <location filename="mainwindow.ui" line="339"/>
         <source>Open an existing project.</source>
         <translation>Open an existing project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="346"/>
+        <location filename="mainwindow.ui" line="347"/>
         <source>Index Info ...</source>
         <oldsource>Index Info</oldsource>
         <translation>Index info ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="349"/>
+        <location filename="mainwindow.ui" line="350"/>
         <source>Information about the file index.</source>
         <translation>Show informations about the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="357"/>
+        <location filename="mainwindow.ui" line="358"/>
         <source>Add Folder ...</source>
         <oldsource>Add Folder</oldsource>
         <translation>Add folder ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="360"/>
+        <location filename="mainwindow.ui" line="361"/>
         <source>Add Folder to the file index.</source>
         <translation>Add folder to the file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="368"/>
+        <location filename="mainwindow.ui" line="369"/>
         <source>Clear Index</source>
         <translation>Clear index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="371"/>
+        <location filename="mainwindow.ui" line="372"/>
         <source>Remove all files from file index.</source>
         <translation>Remove all files from file index.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="383"/>
+        <location filename="mainwindow.ui" line="384"/>
         <source>Delete Attachment</source>
         <oldsource>New Attachment </oldsource>
         <translation>Delete attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="386"/>
+        <location filename="mainwindow.ui" line="387"/>
         <source>Delete Attachment selected attachment.</source>
         <oldsource>Add new attachment to a song.</oldsource>
         <translation>Delete selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="504"/>
+        <location filename="mainwindow.ui" line="505"/>
         <source>Copy Indexed Attachments ...</source>
         <translation>Copy files from attachments ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="109"/>
-        <location filename="mainwindow.cpp" line="112"/>
+        <location filename="mainwindow.ui" line="510"/>
+        <source>Open recent ...</source>
+        <translation>Open recent ...</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="101"/>
+        <location filename="mainwindow.cpp" line="104"/>
         <source>&amp;Undo</source>
         <oldsource>Undo</oldsource>
         <translation>&amp;Undo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="401"/>
+        <location filename="mainwindow.ui" line="402"/>
         <source>Undo the last action.</source>
         <translation>Undo the last action.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="110"/>
-        <location filename="mainwindow.cpp" line="113"/>
+        <location filename="mainwindow.cpp" line="102"/>
+        <location filename="mainwindow.cpp" line="105"/>
         <source>&amp;Redo</source>
         <oldsource>Redo</oldsource>
         <translation>&amp;Redo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="416"/>
+        <location filename="mainwindow.ui" line="417"/>
         <source>Redo the last undone action.</source>
         <translation>Redo the last undone action.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="428"/>
+        <location filename="mainwindow.ui" line="429"/>
         <source>Clone ...</source>
         <translation>Clone ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="431"/>
+        <location filename="mainwindow.ui" line="432"/>
         <source>Clone a repository.</source>
         <translation>Klone a repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="439"/>
+        <location filename="mainwindow.ui" line="440"/>
         <source>Open terminal</source>
         <translation>Open terminal</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="451"/>
+        <location filename="mainwindow.ui" line="452"/>
         <source>Rename Attachment ...</source>
         <translation>Rename attachment ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="499"/>
+        <location filename="mainwindow.ui" line="500"/>
         <source>&amp;Export all songs</source>
         <translation>&amp;Export all songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="454"/>
+        <location filename="mainwindow.ui" line="455"/>
         <source>Rename selected attachment.</source>
         <translation>Rename selected attachment.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="466"/>
+        <location filename="mainwindow.ui" line="467"/>
         <source>Duplicate Attachment</source>
         <translation>Duplicate attachment</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="469"/>
+        <location filename="mainwindow.ui" line="470"/>
         <source>Duplicate selected attachment.</source>
         <translation>Duplicate selected attachment.</translation>
     </message>
     <message>
-        <source>Sync</source>
-        <translation type="vanished">Synchronisieren</translation>
-    </message>
-    <message>
-        <source>Synchronizes local project with remote repository.</source>
-        <translation type="vanished">Synchronize local repository with remote repository.</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="477"/>
+        <location filename="mainwindow.ui" line="478"/>
         <source>Identites ...</source>
         <translation>Identities ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="480"/>
+        <location filename="mainwindow.ui" line="481"/>
         <source>Manage identities.</source>
         <translation>Manage identities.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="488"/>
+        <location filename="mainwindow.ui" line="489"/>
         <source>Preferences ...</source>
         <translation>Preferences ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="491"/>
+        <location filename="mainwindow.ui" line="492"/>
         <source>Settings.</source>
         <translation>Preferences.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="118"/>
+        <location filename="mainwindow.cpp" line="110"/>
         <source>&amp;New Song</source>
         <translation>&amp;New song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="118"/>
+        <location filename="mainwindow.cpp" line="110"/>
         <source>Add a new song.</source>
         <translation>Add a new Song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="119"/>
+        <location filename="mainwindow.cpp" line="111"/>
         <source>&amp;Remove Song</source>
         <translation>&amp;Remove song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="119"/>
+        <location filename="mainwindow.cpp" line="111"/>
         <source>Remove selected song.</source>
         <translation>Remove selected song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="120"/>
+        <location filename="mainwindow.cpp" line="112"/>
         <source>&amp;Copy Song</source>
         <translation>&amp;Copy song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="120"/>
+        <location filename="mainwindow.cpp" line="112"/>
         <source>Copy selected song.</source>
         <translation>Copy selected song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="121"/>
+        <location filename="mainwindow.cpp" line="113"/>
         <source>&amp;Paste Song</source>
         <translation>&amp;Paste song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="121"/>
+        <location filename="mainwindow.cpp" line="113"/>
         <source>Paste song.</source>
         <translation>Paste song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="124"/>
+        <location filename="mainwindow.cpp" line="116"/>
         <source>&amp;Edit Program</source>
         <translation>Edit &amp;program</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="124"/>
+        <location filename="mainwindow.cpp" line="116"/>
         <source>Edit program.</source>
         <translation>Edit the program of this song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="126"/>
-        <location filename="mainwindow.cpp" line="132"/>
-        <source>&amp;Edit Tags</source>
-        <translation>Edit &amp;tags</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="126"/>
-        <source>Edit tags of the song.</source>
-        <translation>Edit the tags of this song.</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="128"/>
+        <location filename="mainwindow.cpp" line="119"/>
         <source>&amp;New Event</source>
         <translation>&amp;New event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="128"/>
+        <location filename="mainwindow.cpp" line="119"/>
         <source>Add a new event.</source>
         <translation>Add a new event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="129"/>
+        <location filename="mainwindow.cpp" line="120"/>
         <source>&amp;Remove Event</source>
         <translation>&amp;Remove event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="129"/>
+        <location filename="mainwindow.cpp" line="120"/>
         <source>Remove selected event.</source>
         <translation>Remove selected event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="130"/>
+        <location filename="mainwindow.cpp" line="121"/>
         <source>&amp;Copy Event</source>
         <translation>&amp;Copy event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="130"/>
+        <location filename="mainwindow.cpp" line="121"/>
         <source>Copy selected event.</source>
         <translation>Copy selected event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="131"/>
+        <location filename="mainwindow.cpp" line="122"/>
         <source>&amp;Paste Event</source>
         <translation>&amp;Paste event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="131"/>
+        <location filename="mainwindow.cpp" line="122"/>
         <source>Paste event.</source>
         <translation>Paste event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="132"/>
-        <source>Edit tags of the event.</source>
-        <translation>Edit tags of this event.</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="134"/>
+        <location filename="mainwindow.cpp" line="124"/>
         <source>&amp;New Item</source>
         <translation>&amp;New item</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="134"/>
+        <location filename="mainwindow.cpp" line="124"/>
         <source>Insert new item</source>
         <translation>Insert new item.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="135"/>
+        <location filename="mainwindow.cpp" line="125"/>
         <source>&amp;Remove Item</source>
         <translation>&amp;Remove items</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="135"/>
+        <location filename="mainwindow.cpp" line="125"/>
         <source>Delete selected items</source>
         <translation>Delete selecteded items.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="136"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>&amp;Copy Items</source>
         <translation>&amp;Copy items</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="136"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>Copy selected items</source>
         <translation>Copy selected items.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="137"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>&amp;Paste Items</source>
         <translation>&amp;Paste items</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="137"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>Paste items</source>
         <translation>Paste items.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="251"/>
+        <location filename="mainwindow.cpp" line="243"/>
         <source>New %1</source>
         <translation>New %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="317"/>
+        <location filename="mainwindow.cpp" line="309"/>
         <source>Unnamed</source>
         <translation>Unnamed</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="379"/>
+        <location filename="mainwindow.cpp" line="401"/>
         <source>Save As ...</source>
         <translation>Save as ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="422"/>
+        <location filename="mainwindow.cpp" line="444"/>
         <source>Really close %1</source>
         <translation>Really close %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="423"/>
+        <location filename="mainwindow.cpp" line="445"/>
         <source>There are unsaved changes.</source>
         <translation>There are unsaved changes.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="632"/>
+        <location filename="mainwindow.cpp" line="663"/>
         <source>Open ...</source>
         <translation>Open ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="673"/>
+        <location filename="mainwindow.cpp" line="704"/>
         <source>Song cannot be removed</source>
         <translation>Song cannot be removed</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="674"/>
+        <location filename="mainwindow.cpp" line="705"/>
         <source>This song is currently in use and can thus not be removed.</source>
         <translation>This song is currently in use and thus cannot be removed.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="685"/>
+        <location filename="mainwindow.cpp" line="716"/>
         <source>Add to index ...</source>
         <translation>Add folder to index ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="916"/>
+        <location filename="mainwindow.cpp" line="910"/>
         <source>Cannot open %1. Maybe the file does not exist or you have insufficient permissions.</source>
         <translation>Cannot open %1. Maybe the file does not exist or you have insufficient permissions.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1000"/>
+        <location filename="mainwindow.cpp" line="994"/>
         <source>Remove Setlist Items</source>
         <translation>Remove setlist items</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1043"/>
+        <location filename="mainwindow.cpp" line="1037"/>
         <source>Nothing copied</source>
         <translation>Nothing copied</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1043"/>
+        <location filename="mainwindow.cpp" line="1037"/>
         <source>You have not selected any file.</source>
         <translation>You have not selected any file.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1078"/>
+        <location filename="mainwindow.cpp" line="1072"/>
         <source>Copying finished.
   Successfull:	%1
   Not overwritten:	%2
@@ -1360,57 +1201,53 @@ Think twice before you replace it.
   Failure:		%3</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="99"/>
+        <location filename="mainwindow.cpp" line="91"/>
         <source>&amp;Undo %1</source>
         <translation>&amp;Undo %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="100"/>
+        <location filename="mainwindow.cpp" line="92"/>
         <source>&amp;Redo %1</source>
         <translation>&amp;Redo %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="962"/>
+        <location filename="mainwindow.cpp" line="956"/>
         <source>All songs</source>
         <translation>All songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="760"/>
+        <location filename="mainwindow.cpp" line="791"/>
         <source>File index information</source>
         <translation>File index information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="761"/>
+        <location filename="mainwindow.cpp" line="792"/>
         <source>Files: %1</source>
         <translation>Files: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="900"/>
-        <location filename="mainwindow.cpp" line="915"/>
+        <location filename="mainwindow.cpp" line="894"/>
+        <location filename="mainwindow.cpp" line="909"/>
         <source>Opening %1</source>
         <translation>Opening %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="901"/>
+        <location filename="mainwindow.cpp" line="895"/>
         <source>Cannot open %1. Unknown file format.</source>
         <translation>Cannot open %1. Unknown file format.</translation>
     </message>
     <message>
-        <source>File %1 not found.</source>
-        <translation type="vanished">File %1 not found.</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="945"/>
+        <location filename="mainwindow.cpp" line="939"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="946"/>
+        <location filename="mainwindow.cpp" line="940"/>
         <source>Language changes will apply on next start.</source>
         <translation>Language changes will apply on next start.</translation>
     </message>
     <message>
-        <location filename="mainwindow.h" line="59"/>
+        <location filename="mainwindow.h" line="57"/>
         <source>All files (*);;CAN files (*.can)</source>
         <translation>All files (*);;CAN files (*.can)</translation>
     </message>
@@ -1459,56 +1296,97 @@ Think twice before you replace it.
 <context>
     <name>PDFCreator</name>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="108"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="86"/>
         <source>Table of contents</source>
         <translation>Table of contents</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="119"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="97"/>
         <source>Align songs</source>
         <translation>Align songs</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="143"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="121"/>
         <source>Generate page numbers</source>
         <translation>Generate page numbers</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="154"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="132"/>
         <source>Save PDF</source>
         <translation>Save PDF</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="244"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="187"/>
         <source>Draw attachment %1 of song %2</source>
         <translation>Draw attachment %1 of song %2 ...</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="824"/>
-        <location filename="PDFCreator/pdfcreator.cpp" line="831"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="651"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="658"/>
         <source>Export PDF ...</source>
         <translation>Export to PDF ...</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="855"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="682"/>
         <source>Confirm overwrite</source>
         <translation>Confirm overwrite</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="856"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="683"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="895"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="718"/>
         <source>Cannot write</source>
         <translation>Cannot write.</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="896"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="719"/>
         <source>File %1 is not writable.</source>
         <translation>%1 is not writable.</translation>
+    </message>
+</context>
+<context>
+    <name>PeoplesDialog</name>
+    <message>
+        <location filename="Dialogs/peoplesdialog.ui" line="14"/>
+        <source>Peoples</source>
+        <translation>Peoples</translation>
+    </message>
+</context>
+<context>
+    <name>PlayerWidget</name>
+    <message>
+        <location filename="playerwidget.ui" line="34"/>
+        <source>Adjust pitch in semi tones.</source>
+        <translation>Adjust pitch in semi tones.</translation>
+    </message>
+    <message>
+        <location filename="playerwidget.ui" line="86"/>
+        <source>Adjust tempo</source>
+        <translation>Adjust tempo</translation>
+    </message>
+    <message>
+        <location filename="playerwidget.ui" line="173"/>
+        <source>Play or pause current song.</source>
+        <translation>Play or pause current song.</translation>
+    </message>
+    <message>
+        <location filename="playerwidget.ui" line="184"/>
+        <source>Space</source>
+        <translation>Space</translation>
+    </message>
+    <message>
+        <location filename="playerwidget.ui" line="194"/>
+        <source>Stop current song.</source>
+        <translation>Stop current song.</translation>
+    </message>
+    <message>
+        <location filename="playerwidget.ui" line="217"/>
+        <source>Seek position in song.</source>
+        <translation>Seek position in song.</translation>
     </message>
 </context>
 <context>
@@ -1638,12 +1516,12 @@ Do you want to replace it?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="Database/EventDatabase/setlistitem.cpp" line="17"/>
+        <location filename="Database/EventDatabase/setlistitem.cpp" line="16"/>
         <source>Unnamed</source>
         <translation>Unamed</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="480"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="296"/>
         <source>Setlist</source>
         <translation>Setlist</translation>
     </message>
@@ -1651,17 +1529,17 @@ Do you want to replace it?</source>
 <context>
     <name>Setlist</name>
     <message>
-        <location filename="Database/EventDatabase/setlist.cpp" line="181"/>
+        <location filename="Database/EventDatabase/setlist.cpp" line="180"/>
         <source>New Setlist Item</source>
         <translation>New setlist item</translation>
     </message>
     <message>
-        <location filename="Database/EventDatabase/setlist.cpp" line="216"/>
+        <location filename="Database/EventDatabase/setlist.cpp" line="215"/>
         <source>Copy Items</source>
         <translation>Copy items</translation>
     </message>
     <message>
-        <location filename="Database/EventDatabase/setlist.cpp" line="303"/>
+        <location filename="Database/EventDatabase/setlist.cpp" line="302"/>
         <source>SetlistItem</source>
         <translation>Setlist Item</translation>
     </message>
@@ -1669,7 +1547,7 @@ Do you want to replace it?</source>
 <context>
     <name>SetlistItemSelector</name>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistitemselector.cpp" line="22"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistitemselector.cpp" line="21"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
@@ -1692,35 +1570,96 @@ Do you want to replace it?</source>
         <translation>Export to PDF.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="190"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="183"/>
         <source>Attention: %1 songs have no information about their duration.</source>
         <translation>Attention: %1 songs have no information about their duration.</translation>
     </message>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="203"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistwidget.cpp" line="196"/>
         <source>%1 songs, duration: %2:%3:%4</source>
         <translation>%1 songs, duration: %2:%3:%4</translation>
     </message>
 </context>
 <context>
+    <name>Song</name>
+    <message>
+        <location filename="Database/SongDatabase/song.cpp" line="8"/>
+        <source>Normal</source>
+        <translation>Normal</translation>
+    </message>
+    <message>
+        <location filename="Database/SongDatabase/song.cpp" line="9"/>
+        <source>Needs Practice</source>
+        <translation>Needs Practice</translation>
+    </message>
+    <message>
+        <location filename="Database/SongDatabase/song.cpp" line="9"/>
+        <source>Works</source>
+        <translation>Works</translation>
+    </message>
+</context>
+<context>
+    <name>Song::Song</name>
+    <message>
+        <location filename="Database/SongDatabase/song.cpp" line="8"/>
+        <source>Acoustic</source>
+        <translation>Acoustic</translation>
+    </message>
+    <message>
+        <location filename="Database/SongDatabase/song.cpp" line="9"/>
+        <source>Inactive</source>
+        <translation>Inactive</translation>
+    </message>
+</context>
+<context>
     <name>SongDatabase</name>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="110"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="181"/>
         <source>Title</source>
         <translation>Title</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="112"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="183"/>
         <source>Artist</source>
         <translation>Artist</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="114"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="185"/>
         <source>Duration</source>
         <translation>Duration</translation>
     </message>
+    <message>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="187"/>
+        <source>Key</source>
+        <translation>Key</translation>
+    </message>
+    <message>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="189"/>
+        <source>Labels</source>
+        <translation>Label</translation>
+    </message>
+    <message>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="191"/>
+        <source>State</source>
+        <translation>State</translation>
+    </message>
+    <message>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="193"/>
+        <source>Solos</source>
+        <translation>Solos</translation>
+    </message>
+    <message>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="195"/>
+        <source>Singers</source>
+        <translation>Singers</translation>
+    </message>
+    <message>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="197"/>
+        <source>Comments</source>
+        <translation>Comments</translation>
+    </message>
     <message numerus="yes">
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="198"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="319"/>
         <source>%Song(s)</source>
         <oldsource>%n Song(s)</oldsource>
         <translation>
@@ -1758,29 +1697,11 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>TagDialog</name>
+    <name>TextDialog</name>
     <message>
-        <location filename="Dialogs/tagdialog.ui" line="14"/>
-        <source>Tags</source>
-        <translation>Tags</translation>
-    </message>
-</context>
-<context>
-    <name>TagEditor</name>
-    <message>
-        <location filename="Dialogs/tageditor.ui" line="22"/>
-        <source>Tags in use.</source>
-        <translation>Tags in use.</translation>
-    </message>
-    <message>
-        <location filename="Dialogs/tageditor.ui" line="32"/>
-        <source>Add tag.</source>
-        <translation>Add tag.</translation>
-    </message>
-    <message>
-        <location filename="Dialogs/tageditor.ui" line="78"/>
-        <source>Click on tag to remove it.</source>
-        <translation>Click on tag to remove it.</translation>
+        <location filename="Dialogs/textdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>Edit Text ...</translation>
     </message>
 </context>
 </TS>
