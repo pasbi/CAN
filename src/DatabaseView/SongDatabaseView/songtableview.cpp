@@ -67,12 +67,12 @@ void SongTableView::setHideInactives(bool hide)
     static_cast<SongDatabaseSortProxy*>(sortProxy())->setHideInactives(hide);
 }
 
-void SongTableView::setShowNormals(bool show)
+void SongTableView::setHideNormals(bool hide)
 {
-    static_cast<SongDatabaseSortProxy*>(sortProxy())->setShowNormals(show);
+    static_cast<SongDatabaseSortProxy*>(sortProxy())->setHideNormals(hide);
 }
 
-void SongTableView::setShowAcoustics(bool show)
+void SongTableView::setHideAcoustics(bool hide)
 {
-    static_cast<SongDatabaseSortProxy*>(sortProxy())->setShowAcoustics(show);
+    static_cast<SongDatabaseSortProxy*>(sortProxy())->setHideAcoustics(hide);
 }

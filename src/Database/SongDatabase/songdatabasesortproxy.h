@@ -13,13 +13,13 @@ public:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
 
     void setHideInactives(bool hide);
-    void setShowNormals(bool hide);
-    void setShowAcoustics(bool hide);
+    void setHideNormals(bool hide);
+    void setHideAcoustics(bool hide);
 
 private:
     bool m_hideInactives;
-    bool m_showNormals;
-    bool m_showAcoustics;
+    bool m_hideNormals;
+    bool m_hideAcoustics;
     bool acceptSong(const Song* song) const;
 };
 

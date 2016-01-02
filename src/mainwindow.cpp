@@ -362,7 +362,7 @@ void MainWindow::setCurrentPath(const QString &path)
         });
     }
 
-    ui->actionOpen_recent->setEnabled( !ui->actionOpen_recent->menu() || ui->actionOpen_recent->menu()->actions().length() == 0 );
+    ui->actionOpen_recent->setEnabled( ui->actionOpen_recent->menu() && ui->actionOpen_recent->menu()->actions().length() > 0 );
 }
 
 QString MainWindow::proposedPath() const
@@ -1085,12 +1085,12 @@ void MainWindow::on_actionHide_inactives_triggered(bool checked)
 
 void MainWindow::on_actionNormal_triggered(bool checked)
 {
-    static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setShowNormals(checked);
+    static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setHideAcoustics(!checked);
 }
 
 void MainWindow::on_actionAcoustic_triggered(bool checked)
 {
-    static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setShowAcoustics(checked);
+    static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setHideNormals(!checked);
 }
 
 

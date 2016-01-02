@@ -30,15 +30,15 @@ void SongDatabaseSortProxy::setHideInactives(bool hide)
     invalidate();
 }
 
-void SongDatabaseSortProxy::setShowNormals(bool show)
+void SongDatabaseSortProxy::setHideNormals(bool show)
 {
-    m_showNormals = show;
+    m_hideNormals = show;
     invalidate();
 }
 
-void SongDatabaseSortProxy::setShowAcoustics(bool show)
+void SongDatabaseSortProxy::setHideAcoustics(bool show)
 {
-    m_showAcoustics = show;
+    m_hideAcoustics = show;
     invalidate();
 }
 
@@ -48,16 +48,20 @@ bool SongDatabaseSortProxy::acceptSong(const Song *song) const
     {
         return false;
     }
-    else if (m_showAcoustics && (song->label() == Song::Acoustic || song->label() == Song::AcousticNormal))
+    else if (m_hideAcoustics && (song->label() != Song::Acoustic && song->label() != Song::AcousticNormal))
     {
-        return true;
+        return false;
     }
-    else if (m_showNormals && (song->label() == Song::Normal || song->label() == Song::AcousticNormal))
+    else if (m_hideNormals && (song->label() != Song::Normal && song->label() != Song::AcousticNormal))
     {
-        return true;
+        return false;
+    }
+    else if (m_hideNormals && m_hideAcoustics && song->label() == Song::AcousticNormal)
+    {
+        return false;
     }
     else
     {
-        return false;
+        return true;
     }
 }
