@@ -30,8 +30,3 @@ AttachmentChooser* SongDatabaseWidget::attachmentChooser() const
 {
     return m_secondWidget;
 }
-
-void SongDatabaseWidget::setDetailedView(bool on)
-{
-    static_cast<SongTableView*>(m_databaseView)->setDetailedView(on);
-}

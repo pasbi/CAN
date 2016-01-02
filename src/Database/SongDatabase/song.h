@@ -18,10 +18,8 @@ public:
     Song(Database<Song> *database);
     ~Song();
 
-    enum Label { NoLabel, Acoustic, Normal };
+    enum Label { NoLabel, Acoustic, Normal, AcousticNormal };
     enum State { NoState, Inactive, NeedsPractice, Works };
-    static const QStringList STATE_NAMES;
-    static const QStringList LABEL_NAMES;
 
     /////////////////////////////////////////////////
     ////
@@ -101,6 +99,11 @@ private:
 protected:
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);
+
+
+public:
+    static QStringList stateNames();
+    static QStringList labelNames();
 
 };
 #endif // SONG_H

@@ -11,6 +11,9 @@ public:
     explicit SongTableView(QWidget *parent = 0);
 
     void setDetailedView(bool detailed);
+    void setHideInactives(bool hide);
+    void setShowNormals(bool show);
+    void setShowAcoustics(bool hide);
 };
 
 #endif // SONGTABLE_H

@@ -161,4 +161,6 @@ void Application::initPreferences()
     m_preferences.registerPreference( "minZoom", new Preference(0.0) );
     m_preferences.registerPreference( "maxZoom", new Preference(0.75) );
     m_preferences.registerPreference( "View", new Preference(0) );
+    m_preferences.registerPreference( "HideInactived", new Preference(false) );
+
 }

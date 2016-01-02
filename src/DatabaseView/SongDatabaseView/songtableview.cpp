@@ -26,8 +26,8 @@ SongTableView::SongTableView(QWidget *parent) :
     setItemDelegateForColumn(1, new EditableComboBoxDelegate(this));    // artist
     setItemDelegateForColumn(2, new DurationDelegate(this));            // duration
     setItemDelegateForColumn(3, new KeyDelegate( this ) );              // key
-    setItemDelegateForColumn(4, new TypeComboBoxDelegate(Song::LABEL_NAMES, this));
-    setItemDelegateForColumn(5, new TypeComboBoxDelegate(Song::STATE_NAMES, this));
+    setItemDelegateForColumn(4, new TypeComboBoxDelegate(Song::labelNames(), this));
+    setItemDelegateForColumn(5, new TypeComboBoxDelegate(Song::stateNames(), this));
 
     connect(this, &QTableView::doubleClicked, [this](const QModelIndex& index)
     {
@@ -59,4 +59,20 @@ void SongTableView::setDetailedView(bool detailed)
     {
         setColumnHidden(i, !detailed && i >= 2);
     }
+}
+
+
+void SongTableView::setHideInactives(bool hide)
+{
+    static_cast<SongDatabaseSortProxy*>(sortProxy())->setHideInactives(hide);
+}
+
+void SongTableView::setShowNormals(bool show)
+{
+    static_cast<SongDatabaseSortProxy*>(sortProxy())->setShowNormals(show);
+}
+
+void SongTableView::setShowAcoustics(bool show)
+{
+    static_cast<SongDatabaseSortProxy*>(sortProxy())->setShowAcoustics(show);
 }

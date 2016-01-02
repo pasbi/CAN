@@ -192,6 +192,11 @@
     <addaction name="actionSongs"/>
     <addaction name="actionSong_Details"/>
     <addaction name="actionEvents"/>
+    <addaction name="separator"/>
+    <addaction name="actionAcoustic"/>
+    <addaction name="actionNormal"/>
+    <addaction name="separator"/>
+    <addaction name="actionHide_inactives"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
@@ -440,6 +445,30 @@
   <action name="actionSong_Details">
    <property name="text">
     <string>Song Details</string>
+   </property>
+  </action>
+  <action name="actionAcoustic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Acoustic</string>
+   </property>
+  </action>
+  <action name="actionNormal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Normal</string>
+   </property>
+  </action>
+  <action name="actionHide_inactives">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hide inactives</string>
    </property>
   </action>
  </widget>

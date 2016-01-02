@@ -84,6 +84,9 @@ private slots:
     void on_actionEvents_triggered();
     void on_actionSongs_triggered();
     void on_actionSong_Details_triggered();
+    void on_actionHide_inactives_triggered(bool checked);
+    void on_actionNormal_triggered(bool checked);
+    void on_actionAcoustic_triggered(bool checked);
 
 
     // my auto-connection slots
@@ -102,6 +105,7 @@ private slots:
     void my_on_actionDelete_SetlistItem_triggered();
     void my_on_actionCopy_SetlistItem_triggered();
     void my_on_actionPaste_SetlistItem_triggered();
+
 
 
 private:

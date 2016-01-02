@@ -4,9 +4,8 @@
 #include <QJsonDocument>
 #include "Attachments/attachment.h"
 
+//TODO assert -> Q_ASSERT
 
-const QStringList Song::LABEL_NAMES = QStringList({ Song::tr(""), Song::tr("Acoustic"), Song::tr("Normal") });
-const QStringList Song::STATE_NAMES = QStringList({ Song::tr(""), Song::tr("Inactive"), Song::tr("Needs Practice"), Song::tr("Works") });
 
 Song::Song(Database<Song> * database) :
     DatabaseItem(database),
@@ -168,3 +167,12 @@ void Song::serialize(QDataStream &out) const
 }
 
 
+QStringList Song::labelNames()
+{
+    return QStringList({ tr(""), tr("Acoustic"), tr("Normal"), tr("AN")});
+}
+
+QStringList Song::stateNames()
+{
+    return QStringList({ tr(""), tr("Inactive"), tr("Needs Practice"), tr("Works") });
+}

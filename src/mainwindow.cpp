@@ -184,13 +184,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( &m_project, &Project::songDatabaseCommandPushed, [this]()
     {
-        activateView(SongView);
+        if (m_currentView == EventView)
+        {
+            activateView(SongView);
+        }
     });
     connect( &m_project, &Project::eventDatabaseCommandPushed, [this]()
     {
         activateView(EventView);
     });
     activateView(static_cast<View>(preference<int>("View")));
+
+    on_actionAcoustic_triggered(true);
+    ui->actionAcoustic->setChecked(true);
+    on_actionNormal_triggered(true);
+    ui->actionNormal->setChecked(true);
+    on_actionHide_inactives_triggered(preference<bool>("HideInactived"));
+    ui->actionHide_inactives->setChecked(preference<bool>("HideInactived"));
+
 }
 
 MainWindow::~MainWindow()
@@ -199,6 +210,7 @@ MainWindow::~MainWindow()
     settings.setValue( "Geometry", saveGeometry() );
 
     setPreference( "View", static_cast<int>(m_currentView) );
+    setPreference( "HideInactived", ui->actionHide_inactives->isChecked() );
 
     delete ui;
 }
@@ -1052,12 +1064,12 @@ void MainWindow::activateView(View view)
     if (view == SongView)
     {
         ui->stackedWidget->setCurrentIndex(0);
-        ui->songDatabaseWidget->setDetailedView(false);
+        static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setDetailedView(false);
     }
     else if (view ==  DetailedSongView)
     {
         ui->stackedWidget->setCurrentIndex(0);
-        ui->songDatabaseWidget->setDetailedView(true);
+        static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setDetailedView(true);
 
     }
     else if (view == EventView)
@@ -1066,7 +1078,20 @@ void MainWindow::activateView(View view)
     }
 }
 
+void MainWindow::on_actionHide_inactives_triggered(bool checked)
+{
+    static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setHideInactives(checked);
+}
 
+void MainWindow::on_actionNormal_triggered(bool checked)
+{
+    static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setShowNormals(checked);
+}
+
+void MainWindow::on_actionAcoustic_triggered(bool checked)
+{
+    static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setShowAcoustics(checked);
+}
 
 
 

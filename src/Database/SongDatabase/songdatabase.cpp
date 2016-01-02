@@ -39,12 +39,12 @@ QString peopleNames(const QStringList& names, const QBitArray& peoples)
 
 QString songLabelName(Song::Label label)
 {
-    return Song::LABEL_NAMES[static_cast<int>(label)];
+    return Song::labelNames()[static_cast<int>(label)];
 }
 
 QString songStateName(Song::State state)
 {
-    return Song::STATE_NAMES[static_cast<int>(state)];
+    return Song::stateNames()[static_cast<int>(state)];
 }
 
 QVariant SongDatabase::data(const QModelIndex &index, int role) const
