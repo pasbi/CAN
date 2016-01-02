@@ -9,7 +9,6 @@
 #include "Database/SongDatabase/songdatabasesortproxy.h"
 #include "Attachments/AudioAttachment/player.h"
 
-
 SongDatabaseWidget::SongDatabaseWidget(QWidget *parent) :
     DatabaseWidget(new SongTableView(), new AttachmentChooser(), parent)
 {
@@ -30,4 +29,9 @@ void SongDatabaseWidget::updateAttachmentChooser()
 AttachmentChooser* SongDatabaseWidget::attachmentChooser() const
 {
     return m_secondWidget;
+}
+
+void SongDatabaseWidget::setDetailedView(bool on)
+{
+    static_cast<SongTableView*>(m_databaseView)->setDetailedView(on);
 }

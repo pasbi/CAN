@@ -126,14 +126,6 @@ MainWindow::MainWindow(QWidget *parent) :
     initAction( actionCopy_SetlistItem,   ui->eventDatabaseWidget->setlistView(),   tr("&Copy Items"),     tr("Copy selected items"),    "Ctrl+C",   nullptr, "" )
     initAction( actionPaste_SetlistItem,  ui->eventDatabaseWidget->setlistView(),   tr("&Paste Items"),    tr("Paste items"),            "Ctrl+V",   nullptr, "" )
 
-
-    //////////////////////////////////////////
-    /// Splitter
-    //////////////////////////////////////////
-    connect( ui->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeSplitter()));
-    QTimer::singleShot(10, this, SLOT(resizeSplitter()));
-
-
     //////////////////////////////////////////
     ///
     //////////////////////////////////////////
@@ -190,38 +182,25 @@ MainWindow::MainWindow(QWidget *parent) :
         loadDefaultProject();
     }
 
-    connect( &m_project, SIGNAL(songDatabaseCommandPushed()), this, SLOT(gotoSongView()) );
-    connect( &m_project, SIGNAL(eventDatabaseCommandPushed()), this, SLOT(gotoEventView()) );
-    connect( m_project.songDatabase(), SIGNAL(songRemoved(int)), ui->songDatabaseWidget, SLOT(updateAttachmentChooser()) );
-
-    //////////////////////////////////////////
-    ///
-    //////////////////////////////////////////
-    connect( ui->buttonSongDatabase, &QPushButton::clicked, [this]()
+    connect( &m_project, &Project::songDatabaseCommandPushed, [this]()
     {
-        selectPage( SongDatabasePage );
+        activateView(SongView);
     });
-    connect( ui->buttonEventDatabase, &QPushButton::clicked, [this]()
+    connect( &m_project, &Project::eventDatabaseCommandPushed, [this]()
     {
-        selectPage( EventDatabasePage );
+        activateView(EventView);
     });
-    selectPage( SongDatabasePage );
-
+    activateView(static_cast<View>(preference<int>("View")));
 }
 
 MainWindow::~MainWindow()
 {
     QSettings settings;
     settings.setValue( "Geometry", saveGeometry() );
-    delete ui;
-}
 
-void MainWindow::resizeSplitter()
-{
-    if (ui->splitter->sizes()[0] != 0)
-    {
-        ui->splitter->setSizes(QList<int>() << 1 << 10000000);
-    }
+    setPreference( "View", static_cast<int>(m_currentView) );
+
+    delete ui;
 }
 
 Song* MainWindow::currentSong() const
@@ -563,30 +542,6 @@ void MainWindow::updateActionsEnabled()
         m_actionPaste_SetlistItem->setEnabled( clipboard->hasFormat(DatabaseMimeData<SetlistItem>::mimeType())) ;
         m_actionPaste_Song->setEnabled( clipboard->hasFormat(DatabaseMimeData<Song>::mimeType()) );
     }
-}
-
-MainWindow::Page MainWindow::currentPage() const
-{
-    switch (ui->stackedWidget->currentIndex())
-    {
-    case 0:
-        return SongDatabasePage;
-    case 1:
-        return EventDatabasePage;
-    default:
-        assert( false );
-        return (Page) -1;
-    }
-}
-
-void MainWindow::gotoSongView()
-{
-    selectPage( SongDatabasePage );
-}
-
-void MainWindow::gotoEventView()
-{
-    selectPage( EventDatabasePage );
 }
 
 ////////////////////////////////////////////////
@@ -963,19 +918,6 @@ void MainWindow::on_action_Export_all_songs_triggered()
     PDFCreator::exportSetlist( &setlist, this );
 }
 
-void MainWindow::selectPage(Page page)
-{
-    switch (page)
-    {
-    case SongDatabasePage:
-        ui->stackedWidget->setCurrentIndex( 0 );
-        break;
-    case EventDatabasePage:
-        ui->stackedWidget->setCurrentIndex( 1 );
-        break;
-    }
-}
-
 void MainWindow::my_on_actionNew_SetlistItem_triggered()
 {
     if (currentEvent())
@@ -1087,6 +1029,41 @@ QBitArray resize(QBitArray old, int n)
     }
     old.resize(n);
     return old;
+}
+
+void MainWindow::on_actionEvents_triggered()
+{
+    activateView(EventView);
+}
+
+void MainWindow::on_actionSongs_triggered()
+{
+    activateView(SongView);
+}
+
+void MainWindow::on_actionSong_Details_triggered()
+{
+    activateView(DetailedSongView);
+}
+
+void MainWindow::activateView(View view)
+{
+    m_currentView = view;
+    if (view == SongView)
+    {
+        ui->stackedWidget->setCurrentIndex(0);
+        ui->songDatabaseWidget->setDetailedView(false);
+    }
+    else if (view ==  DetailedSongView)
+    {
+        ui->stackedWidget->setCurrentIndex(0);
+        ui->songDatabaseWidget->setDetailedView(true);
+
+    }
+    else if (view == EventView)
+    {
+        ui->stackedWidget->setCurrentIndex(1);
+    }
 }
 
 

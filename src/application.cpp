@@ -160,4 +160,5 @@ void Application::initPreferences()
                                                                                       0, 0, 8, 1, "", tr("Disable Midi") ) );
     m_preferences.registerPreference( "minZoom", new Preference(0.0) );
     m_preferences.registerPreference( "maxZoom", new Preference(0.75) );
+    m_preferences.registerPreference( "View", new Preference(0) );
 }

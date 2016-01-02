@@ -1,8 +1,6 @@
 #ifndef SONGDATABASE_H
 #define SONGDATABASE_H
 
-#include <QBitArray>
-
 #include "Database/database.h"
 #include "song.h"
 

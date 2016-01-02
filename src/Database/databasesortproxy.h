@@ -3,6 +3,7 @@
 
 #include <QSortFilterProxyModel>
 #include "global.h"
+#include <QBitArray>
 
 class DatabaseBase;
 class DatabaseSortProxyBase : public QSortFilterProxyModel
@@ -55,33 +56,6 @@ public:
         }
     }
 
-    // for some reason, proxyIndex.parent() is corrupted.
-    // fortunately, we don't need it since it is exepected to be invalid.
-    // this is a workaround, which works^^
-    QModelIndex mapToSource(const QModelIndex &proxyIndex) const
-    {
-        if (sourceModel())
-        {
-            return DatabaseSortProxyBase::mapToSource(index(proxyIndex.row(), proxyIndex.column(), QModelIndex()));
-        }
-        else
-        {
-            return QModelIndex();
-        }
-    }
-
-    bool setData(const QModelIndex &index, const QVariant &value, int role)
-    {
-        if (sourceModel())
-        {
-            sourceModel()->setData(mapToSource(index), value, role);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
@@ -98,6 +72,7 @@ protected:
         }
         return false;
     }
+
 };
 
 #endif // DATABASESORTPROXY_H

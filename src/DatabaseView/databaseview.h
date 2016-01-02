@@ -160,6 +160,7 @@ public:
         }
     }
 
+
 private:
     DatabaseSortProxy<T>* m_proxy = nullptr;
     Database<T>* m_model = nullptr;

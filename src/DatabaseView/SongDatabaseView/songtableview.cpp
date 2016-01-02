@@ -50,5 +50,13 @@ SongTableView::SongTableView(QWidget *parent) :
 
     verticalHeader()->show();
 
-    freezeFirstColumn(true);
+}
+
+void SongTableView::setDetailedView(bool detailed)
+{
+    freezeFirstColumn(detailed);
+    for (int i = 0; i < model()->columnCount(); ++i)
+    {
+        setColumnHidden(i, !detailed && i >= 2);
+    }
 }

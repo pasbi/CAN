@@ -13,9 +13,11 @@ class SongDatabaseWidget : public DatabaseWidget<Song, AttachmentChooser>
 public:
     explicit SongDatabaseWidget(QWidget *parent = 0);
     AttachmentChooser* attachmentChooser() const;
+    void setDetailedView(bool on);
 
 public slots:
     void updateAttachmentChooser();
+
 
 };
 #endif // SONGDATABASEWIDGET_H

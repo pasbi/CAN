@@ -17,7 +17,7 @@ class Event;
 class Attachment;
 class MainWindow : public QMainWindow
 {
-    enum Page { SongDatabasePage, EventDatabasePage };
+    enum View { SongView, DetailedSongView, EventView };
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -38,7 +38,6 @@ public slots:
     void updateActionsEnabled();
 
 private slots:
-    void resizeSplitter();  // left column should be as small as possible.
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
     void on_actionDelete_Attachment_triggered();
@@ -62,17 +61,14 @@ private:
     bool newProject();
     void loadDefaultProject();
     void createDebugMenu();
+    void activateView(View view);
+    View m_currentView;
 
 
 protected:
     void closeEvent(QCloseEvent *e);
 
-public slots:
-    void gotoSongView();
-    void gotoEventView();
-
 private slots:
-    void selectPage( Page page );
     void updateWindowTitle();
     void on_actionSave_triggered();
     void on_actionSave_As_triggered();
@@ -85,6 +81,9 @@ private slots:
     void on_action_Index_Info_triggered();
     void on_action_Export_all_songs_triggered();
     void on_actionCopy_Indexed_Attachments_triggered();
+    void on_actionEvents_triggered();
+    void on_actionSongs_triggered();
+    void on_actionSong_Details_triggered();
 
 
     // my auto-connection slots
@@ -116,7 +115,6 @@ private:
 
     int currentAttachmentIndex() const;
     Attachment* currentAttachment() const;
-    Page currentPage() const;
     bool canRemoveSong( Song* song );
 
     void open(const QString& filename);

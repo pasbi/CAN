@@ -7,7 +7,6 @@
 #include "Program/program.h"
 #include "Database/databaseitem.h"
 #include "chord.h"
-#include <QBitArray>
 
 class SongDatabase;
 class Attachment;

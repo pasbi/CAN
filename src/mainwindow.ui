@@ -28,145 +28,53 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QSplitter" name="splitter">
-      <property name="styleSheet">
-       <string notr="true"/>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>1</number>
       </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="handleWidth">
-       <number>3</number>
-      </property>
-      <widget class="QWidget" name="widget" native="true">
-       <layout class="QVBoxLayout" name="verticalLayout">
+      <widget class="QWidget" name="page">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QPushButton" name="buttonSongDatabase">
-          <property name="minimumSize">
-           <size>
-            <width>85</width>
-            <height>70</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>85</width>
-            <height>70</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Switch to song manager.</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="ressources.qrc">
-            <normaloff>:/icons/icons/song1.png</normaloff>:/icons/icons/song1.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="buttonEventDatabase">
-          <property name="minimumSize">
-           <size>
-            <width>85</width>
-            <height>70</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>85</width>
-            <height>70</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Switch to event manager.</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="ressources.qrc">
-            <normaloff>:/icons/icons/calendaricons.png</normaloff>:/icons/icons/calendaricons.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>196</height>
-           </size>
-          </property>
-         </spacer>
+         <widget class="SongDatabaseWidget" name="songDatabaseWidget" native="true"/>
         </item>
        </layout>
       </widget>
-      <widget class="QStackedWidget" name="stackedWidget">
-       <property name="currentIndex">
-        <number>1</number>
-       </property>
-       <widget class="QWidget" name="page">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="SongDatabaseWidget" name="songDatabaseWidget" native="true"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="page_2">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="EventDatabaseWidget" name="eventDatabaseWidget" native="true"/>
-         </item>
-        </layout>
-       </widget>
+      <widget class="QWidget" name="page_2">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="EventDatabaseWidget" name="eventDatabaseWidget" native="true"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -277,11 +185,20 @@
      <string>&amp;Language</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionSongs"/>
+    <addaction name="actionSong_Details"/>
+    <addaction name="actionEvents"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
    <addaction name="menuSongs"/>
-   <addaction name="menuAttachments"/>
    <addaction name="menuEvents"/>
+   <addaction name="menuAttachments"/>
+   <addaction name="menuView"/>
    <addaction name="menuTools"/>
    <addaction name="menuFile_Index"/>
    <addaction name="menu_Language"/>
@@ -508,6 +425,21 @@
   <action name="actionOpen_recent">
    <property name="text">
     <string>Open recent ...</string>
+   </property>
+  </action>
+  <action name="actionEvents">
+   <property name="text">
+    <string>Events</string>
+   </property>
+  </action>
+  <action name="actionSongs">
+   <property name="text">
+    <string>Songs</string>
+   </property>
+  </action>
+  <action name="actionSong_Details">
+   <property name="text">
+    <string>Song Details</string>
    </property>
   </action>
  </widget>
