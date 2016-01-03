@@ -213,8 +213,6 @@ void ChordPatternViewer::applyZoom()
     }
 
     ui->label->setPixmap( pixmap );
-
-    qDebug() << m_zoom;
 }
 
 void ChordPatternViewer::on_buttonZoomOut_clicked()
