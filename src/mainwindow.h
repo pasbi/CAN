@@ -121,7 +121,7 @@ private:
     Attachment* currentAttachment() const;
     bool canRemoveSong( Song* song );
 
-    void open(const QString& filename);
+    bool open(const QString& filename);
 
     QAction* m_actionNew_Song;
     QAction* m_actionDelete_Song;

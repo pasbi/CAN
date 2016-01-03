@@ -336,7 +336,10 @@ void MainWindow::setCurrentPath(const QString &path)
     // get list of recent projects, update it and set it.
     QStringList recentProjects = preference<QStringList>("RecentProjects");
 
-    recentProjects.prepend(m_currentPath);
+    if (!m_currentPath.isEmpty())
+    {
+        recentProjects.prepend(m_currentPath);
+    }
 
     recentProjects.removeDuplicates();
     while (recentProjects.length() > preference<int>("MaxRecentProjects"))
@@ -356,9 +359,15 @@ void MainWindow::setCurrentPath(const QString &path)
     {
         QString name = QFileInfo(filename).baseName();
         QAction* action = ui->actionOpen_recent->menu()->addAction(name);
-        connect(action, &QAction::triggered, [filename, this]()
+        connect(action, &QAction::triggered, [filename, this, action]()
         {
-            this->open(filename);
+            if (!this->open(filename))
+            {
+                QStringList recentProjects = preference<QStringList>("RecentProjects");
+                recentProjects.removeAll(filename);
+                setPreference("RecentProjects", recentProjects);
+                ui->actionOpen_recent->menu()->removeAction(action);
+            }
         });
     }
 
@@ -842,8 +851,9 @@ void MainWindow::my_on_actionEdit_Program_triggered()
 #endif
 }
 
-void MainWindow::open(const QString &filename)
+bool MainWindow::open(const QString &filename)
 {
+    bool success = false;
     // 1. Check filename
     if (!filename.isEmpty())
     {
@@ -867,6 +877,7 @@ void MainWindow::open(const QString &filename)
                 QDataStream stream(content);
                 stream >> m_project;
                 setCurrentPath(filename);
+                success = true;
                 break;
             }
         }
@@ -884,6 +895,7 @@ void MainWindow::open(const QString &filename)
 
         updateWindowTitle();
         updateActionsEnabled();
+        return success;
     }
 }
 
