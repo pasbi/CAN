@@ -41,9 +41,6 @@
 #include "Attachments/indexedfileattachment.h"
 #include "preferencedialog.h"
 
-//TODO speed is synchronized wrong between cp player and audioattachment player
-//TODO when audio slider is un-hidden, position is wrong
-
 QString styleSheetContent()
 {
     QFile file(":/style/styles/stylesheet.qss");

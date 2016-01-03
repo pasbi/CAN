@@ -73,11 +73,11 @@ void PlayerWidget::setPlayer(Player *player)
             setPlayPause(true);
         }
     }
-    ui->doubleSpinBoxPitch->setEnabled(m_player);
-    ui->doubleSpinBoxTempo->setEnabled(m_player);
-    ui->slider->setEnabled(m_player);
-    ui->pushButtonPlayPause->setEnabled(m_player);
-    ui->pushButtonStop->setEnabled(m_player);
+    ui->doubleSpinBoxPitch->setEnabled(!!m_player);
+    ui->doubleSpinBoxTempo->setEnabled(!!m_player);
+    ui->slider->setEnabled(!!m_player);
+    ui->pushButtonPlayPause->setEnabled(!!m_player);
+    ui->pushButtonStop->setEnabled(!!m_player);
 }
 
 
