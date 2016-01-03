@@ -78,7 +78,14 @@ QString typeMap(const QString& type)
 
 void BrowseAttachmentButtonBox::setAttachment(int index)
 {
-    setSong(m_currentSong);
+    if (index < 0)
+    {
+        setSong(nullptr);
+    }
+    else
+    {
+        setSong(m_currentSong);
+    }
     if (m_currentSong && index >= 0 && index < m_currentSong->attachments().length())
     {
         Attachment* attachment = m_currentSong->attachments()[index];
