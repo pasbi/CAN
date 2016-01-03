@@ -193,9 +193,6 @@
     <addaction name="actionSong_Details"/>
     <addaction name="actionEvents"/>
     <addaction name="separator"/>
-    <addaction name="actionAcoustic"/>
-    <addaction name="actionNormal"/>
-    <addaction name="separator"/>
     <addaction name="actionHide_inactives"/>
    </widget>
    <addaction name="menu_File"/>
