@@ -414,6 +414,7 @@ void ChordPatternViewer::initializeAudioPlayerWidget()
     if (Player::activePlayer())
     {
         ui->audioPlayerWidget->setPlayer(Player::activePlayer());
+        QTimer::singleShot(0, Player::activePlayer(), SLOT(start()));
     }
     else if (firstAudioAttachment)
     {

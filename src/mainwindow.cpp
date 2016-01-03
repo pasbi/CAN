@@ -41,7 +41,6 @@
 #include "Attachments/indexedfileattachment.h"
 #include "preferencedialog.h"
 
-//TODO switching to chord pattern view pauses player
 //TODO speed is synchronized wrong between cp player and audioattachment player
 //TODO when audio slider is un-hidden, position is wrong
 
