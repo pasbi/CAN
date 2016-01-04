@@ -897,6 +897,7 @@ bool MainWindow::open(const QString &filename)
         updateActionsEnabled();
         return success;
     }
+    return false;
 }
 
 void MainWindow::createLanguageMenu()
