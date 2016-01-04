@@ -25,7 +25,6 @@ unix {
     LIBS += -L/usr/local/lib -lpoppler-qt5
     LIBS += -lavformat -lavcodec -lavutil -lpthread
     LIBS += -lSoundTouch
-    LIBS += -L../../Preferences/build-Preferences-Desktop-Debug/ -lPreferences
 }
 
 win32 {
@@ -33,8 +32,10 @@ win32 {
     LIBS += -L../../lib -lpoppler-qt5
     LIBS += -L../../bin -lavformat -lavcodec -lavutil
     LIBS += -L../../bin -lsoundtouch
-
 }
+
+Debug: LIBS += -L../../Preferences/build-Preferences-Desktop-Debug/ -lPreferences
+Release: LIBS += -L../../Preferences/build-Preferences-Desktop-Release/ -lPreferences
 
 SOURCES += main.cpp\
     mainwindow.cpp \
