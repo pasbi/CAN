@@ -85,8 +85,6 @@ private slots:
     void on_actionSongs_triggered();
     void on_actionSong_Details_triggered();
     void on_actionHide_inactives_triggered(bool checked);
-    void on_actionNormal_triggered(bool checked);
-    void on_actionAcoustic_triggered(bool checked);
 
 
     // my auto-connection slots

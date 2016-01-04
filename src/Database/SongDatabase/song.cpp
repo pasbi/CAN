@@ -4,8 +4,6 @@
 #include <QJsonDocument>
 #include "Attachments/attachment.h"
 
-//TODO assert -> Q_ASSERT
-
 
 Song::Song(Database<Song> * database) :
     DatabaseItem(database),

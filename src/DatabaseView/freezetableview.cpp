@@ -1,5 +1,5 @@
 #include "freezetableview.h"
-#include <QHeaderView> //TODO
+#include <QHeaderView>
 #include <QScrollBar>
 
 FreezeTableView::FreezeTableView(QWidget *parent) :

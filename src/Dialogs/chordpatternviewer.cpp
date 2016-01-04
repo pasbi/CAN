@@ -213,8 +213,6 @@ void ChordPatternViewer::applyZoom()
     }
 
     ui->label->setPixmap( pixmap );
-
-    qDebug() << m_zoom;
 }
 
 void ChordPatternViewer::on_buttonZoomOut_clicked()
@@ -414,6 +412,7 @@ void ChordPatternViewer::initializeAudioPlayerWidget()
     if (Player::activePlayer())
     {
         ui->audioPlayerWidget->setPlayer(Player::activePlayer());
+        QTimer::singleShot(0, Player::activePlayer(), SLOT(start()));
     }
     else if (firstAudioAttachment)
     {

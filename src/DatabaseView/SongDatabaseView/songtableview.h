@@ -12,8 +12,6 @@ public:
 
     void setDetailedView(bool detailed);
     void setHideInactives(bool hide);
-    void setHideNormals(bool hide);
-    void setHideAcoustics(bool hide);
 };
 
 #endif // SONGTABLE_H

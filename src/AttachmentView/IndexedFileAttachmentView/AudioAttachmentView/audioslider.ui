@@ -69,7 +69,7 @@ QDoubleSpinBox
    <item>
     <widget class="Slider" name="slider">
      <property name="toolTip">
-      <string>Seek to the desired position.</string>
+      <string notr="true"/>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

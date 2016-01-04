@@ -128,10 +128,16 @@ void Player::setTempo(double tempo)
 
 void Player::seek(double second)
 {
+    bool active = (m_audioOutput->state() == QAudio::ActiveState);
     if (position() != second || m_buffer.buffer().size() == 0)
     {
         m_offset = second;
+        m_audioOutput->reset();
         seek();
+        if (active)
+        {
+            start();
+        }
         emit notify();
     }
 }

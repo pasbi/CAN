@@ -195,10 +195,6 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     activateView(static_cast<View>(preference<int>("View")));
 
-    on_actionAcoustic_triggered(true);
-    ui->actionAcoustic->setChecked(true);
-    on_actionNormal_triggered(true);
-    ui->actionNormal->setChecked(true);
     on_actionHide_inactives_triggered(preference<bool>("HideInactived"));
     ui->actionHide_inactives->setChecked(preference<bool>("HideInactived"));
 
@@ -1095,17 +1091,6 @@ void MainWindow::on_actionHide_inactives_triggered(bool checked)
 {
     static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setHideInactives(checked);
 }
-
-void MainWindow::on_actionNormal_triggered(bool checked)
-{
-    static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setHideAcoustics(!checked);
-}
-
-void MainWindow::on_actionAcoustic_triggered(bool checked)
-{
-    static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setHideNormals(!checked);
-}
-
 
 
 
