@@ -4,13 +4,13 @@
 #              by Vlasis K. Barkas aka Red Wine red_wine@freemail.gr Sep 2006               
 ############################################################################################
 
-!define APP_NAME "CAN2"
+!define APP_NAME "CAN"
 !define COMP_NAME "CAN Developers"
 !define VERSION "00.00.00.01"
 !define COPYRIGHT "Author © 2015"
 !define DESCRIPTION "Application"
 !define INSTALLER_NAME "setup.exe"
-!define MAIN_APP_EXE "CAN2.exe"
+!define MAIN_APP_EXE "CAN.exe"
 !define INSTALL_TYPE "SetShellVarContext current"
 !define REG_ROOT "HKCU"
 !define REG_APP_PATH "Software\Microsoft\Windows\CurrentVersion\App Paths\${MAIN_APP_EXE}"
@@ -38,7 +38,7 @@ OutFile "${INSTALLER_NAME}"
 BrandingText "${APP_NAME}"
 XPStyle on
 InstallDirRegKey "${REG_ROOT}" "${REG_APP_PATH}" ""
-InstallDir "$PROGRAMFILES\CAN2"
+InstallDir "$PROGRAMFILES\CAN"
 
 ######################################################################
 
@@ -61,7 +61,7 @@ InstallDir "$PROGRAMFILES\CAN2"
 !insertmacro MUI_PAGE_DIRECTORY
 
 !ifdef REG_START_MENU
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "CAN2"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "CAN"
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "${REG_ROOT}"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "${UNINSTALL_PATH}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${REG_START_MENU}"
@@ -100,40 +100,41 @@ Section -MainProgram
 ${INSTALL_TYPE}
 SetOverwrite ifnewer
 SetOutPath "$INSTDIR"
-File "..\Deploy\CAN2\avcodec-55.dll"
-File "..\Deploy\CAN2\avformat-55.dll"
-File "..\Deploy\CAN2\avutil-53.dll"
-File "..\Deploy\CAN2\CAN2.exe"
-File "..\Deploy\CAN2\freetype6.dll"
-File "..\Deploy\CAN2\icudt53.dll"
-File "..\Deploy\CAN2\icuin53.dll"
-File "..\Deploy\CAN2\icuuc53.dll"
-File "..\Deploy\CAN2\libgcc_s_dw2-1.dll"
-File "..\Deploy\CAN2\libgcc_s_sjlj-1.dll"
-File "..\Deploy\CAN2\libgit2.dll"
-File "..\Deploy\CAN2\libjpeg-8.dll"
-File "..\Deploy\CAN2\libmp3lame-0.dll"
-File "..\Deploy\CAN2\libogg-0.dll"
-File "..\Deploy\CAN2\libopenjpeg.dll"
-File "..\Deploy\CAN2\libopus-0.dll"
-File "..\Deploy\CAN2\libpng12.dll"
-File "..\Deploy\CAN2\libpoppler-qt5.dll"
-File "..\Deploy\CAN2\libpoppler.dll"
-File "..\Deploy\CAN2\libstdc++-6.dll"
-File "..\Deploy\CAN2\libvo-aacenc-0.dll"
-File "..\Deploy\CAN2\libvorbis-0.dll"
-File "..\Deploy\CAN2\libvorbisenc-2.dll"
-File "..\Deploy\CAN2\libwinpthread-1.dll"
-File "..\Deploy\CAN2\libx264-142.dll"
-File "..\Deploy\CAN2\Qt5Core.dll"
-File "..\Deploy\CAN2\Qt5Gui.dll"
-File "..\Deploy\CAN2\Qt5Multimedia.dll"
-File "..\Deploy\CAN2\Qt5Network.dll"
-File "..\Deploy\CAN2\Qt5Widgets.dll"
-File "..\Deploy\CAN2\Qt5Xml.dll"
-File "..\Deploy\CAN2\soundtouch.dll"
+File "..\Deploy\CAN\avcodec-55.dll"
+File "..\Deploy\CAN\avformat-55.dll"
+File "..\Deploy\CAN\avutil-53.dll"
+File "..\Deploy\CAN\CAN.exe"
+File "..\Deploy\CAN\freetype6.dll"
+File "..\Deploy\CAN\icudt53.dll"
+File "..\Deploy\CAN\icuin53.dll"
+File "..\Deploy\CAN\icuuc53.dll"
+File "..\Deploy\CAN\libgcc_s_dw2-1.dll"
+File "..\Deploy\CAN\libgcc_s_sjlj-1.dll"
+File "..\Deploy\CAN\libgit2.dll"
+File "..\Deploy\CAN\libjpeg-8.dll"
+File "..\Deploy\CAN\libmp3lame-0.dll"
+File "..\Deploy\CAN\libogg-0.dll"
+File "..\Deploy\CAN\libopenjpeg.dll"
+File "..\Deploy\CAN\libopus-0.dll"
+File "..\Deploy\CAN\libpng12.dll"
+File "..\Deploy\CAN\libpoppler-qt5.dll"
+File "..\Deploy\CAN\libpoppler.dll"
+File "..\Deploy\CAN\libstdc++-6.dll"
+File "..\Deploy\CAN\libvo-aacenc-0.dll"
+File "..\Deploy\CAN\libvorbis-0.dll"
+File "..\Deploy\CAN\libvorbisenc-2.dll"
+File "..\Deploy\CAN\libwinpthread-1.dll"
+File "..\Deploy\CAN\libx264-142.dll"
+File "..\Deploy\CAN\Qt5Core.dll"
+File "..\Deploy\CAN\Qt5Gui.dll"
+File "..\Deploy\CAN\Qt5Multimedia.dll"
+File "..\Deploy\CAN\Qt5Network.dll"
+File "..\Deploy\CAN\Qt5Widgets.dll"
+File "..\Deploy\CAN\Qt5Xml.dll"
+File "..\Deploy\CAN\soundtouch.dll"
+File "..\Deploy\CAN\Preferences.dll"
 SetOutPath "$INSTDIR\platforms"
-File "..\Deploy\CAN2\platforms\qwindows.dll"
+File "..\Deploy\CAN\platforms\qwindows.dll"
 SectionEnd
 
 ######################################################################
@@ -157,14 +158,14 @@ CreateShortCut "$SMPROGRAMS\$SM_Folder\${APP_NAME} Website.lnk" "$INSTDIR\${APP_
 !endif
 
 !ifndef REG_START_MENU
-CreateDirectory "$SMPROGRAMS\CAN2"
-CreateShortCut "$SMPROGRAMS\CAN2\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"
+CreateDirectory "$SMPROGRAMS\CAN"
+CreateShortCut "$SMPROGRAMS\CAN\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"
 CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"
-CreateShortCut "$SMPROGRAMS\CAN2\Uninstall ${APP_NAME}.lnk" "$INSTDIR\uninstall.exe"
+CreateShortCut "$SMPROGRAMS\CAN\Uninstall ${APP_NAME}.lnk" "$INSTDIR\uninstall.exe"
 
 !ifdef WEB_SITE
 WriteIniStr "$INSTDIR\${APP_NAME} website.url" "InternetShortcut" "URL" "${WEB_SITE}"
-CreateShortCut "$SMPROGRAMS\CAN2\${APP_NAME} Website.lnk" "$INSTDIR\${APP_NAME} website.url"
+CreateShortCut "$SMPROGRAMS\CAN\${APP_NAME} Website.lnk" "$INSTDIR\${APP_NAME} website.url"
 !endif
 !endif
 
@@ -194,7 +195,7 @@ ${INSTALL_TYPE}
 Delete "$INSTDIR\avcodec-55.dll"
 Delete "$INSTDIR\avformat-55.dll"
 Delete "$INSTDIR\avutil-53.dll"
-Delete "$INSTDIR\CAN2.exe"
+Delete "$INSTDIR\CAN.exe"
 Delete "$INSTDIR\freetype6.dll"
 Delete "$INSTDIR\icudt53.dll"
 Delete "$INSTDIR\icuin53.dll"
@@ -247,14 +248,14 @@ RmDir "$SMPROGRAMS\$SM_Folder"
 !endif
 
 !ifndef REG_START_MENU
-Delete "$SMPROGRAMS\CAN2\${APP_NAME}.lnk"
-Delete "$SMPROGRAMS\CAN2\Uninstall ${APP_NAME}.lnk"
+Delete "$SMPROGRAMS\CAN\${APP_NAME}.lnk"
+Delete "$SMPROGRAMS\CAN\Uninstall ${APP_NAME}.lnk"
 !ifdef WEB_SITE
-Delete "$SMPROGRAMS\CAN2\${APP_NAME} Website.lnk"
+Delete "$SMPROGRAMS\CAN\${APP_NAME} Website.lnk"
 !endif
 Delete "$DESKTOP\${APP_NAME}.lnk"
 
-RmDir "$SMPROGRAMS\CAN2"
+RmDir "$SMPROGRAMS\CAN"
 !endif
 
 !insertmacro APP_UNASSOCIATE "can" "CAN.projectFile"
