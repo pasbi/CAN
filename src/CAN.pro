@@ -34,8 +34,12 @@ win32 {
     LIBS += -L../../bin -lsoundtouch
 }
 
-Debug: LIBS += -L../../Preferences/build-Preferences-Desktop-Debug/ -lPreferences
-Release: LIBS += -L../../Preferences/build-Preferences-Desktop-Release/ -lPreferences
+CONFIG(debug, debug|release) {
+    LIBS += -L../../Preferences/build-Preferences-Desktop-Debug/ -lPreferences
+}
+CONFIG(release, debug|release) {
+    LIBS += -L../../Preferences/build-Preferences-Desktop-Release/ -lPreferences
+}
 
 SOURCES += main.cpp\
     mainwindow.cpp \
