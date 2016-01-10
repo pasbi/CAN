@@ -409,7 +409,7 @@ void ChordPatternViewer::initializeAudioPlayerWidget()
         ui->buttonSelectAudioAttachment->setEnabled(false);
     }
 
-    if (Player::activePlayer())
+    if (Player::activePlayer() && Player::activePlayer()->isPlaying())
     {
         ui->audioPlayerWidget->setPlayer(Player::activePlayer());
         QTimer::singleShot(0, Player::activePlayer(), SLOT(start()));
