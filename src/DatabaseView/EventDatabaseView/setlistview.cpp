@@ -94,7 +94,7 @@ QWidget* SetlistView::createSongCellWidget(const Song* song)
     button->setIcon( QIcon(":/icons/icons/eye106.png") );
     QMenu* menu = new QMenu( button );
     button->setMenu( menu );
-    button->setPopupMode( QToolButton::InstantPopup );
+    button->setPopupMode( QToolButton::DelayedPopup );
 
     for (Attachment* attachment : song->attachments())
     {
@@ -105,9 +105,10 @@ QWidget* SetlistView::createSongCellWidget(const Song* song)
             action->setText( cpa->name() );
             menu->addAction( action );
 
-            connect( action, &QAction::triggered, [this, cpa]()
+            connect( action, &QAction::triggered, [this, cpa, action, menu]()
             {
                 ChordPatternViewer::displayChordPatternAttachment( cpa, this );
+                menu->setDefaultAction(action);
             });
         }
     }
