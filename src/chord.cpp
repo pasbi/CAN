@@ -118,12 +118,12 @@ bool Chord::parseLine( const QString & line, QStringList & chords, QStringList &
         {
             chords << token;
         }
-        else if (!token.isEmpty() && !token.contains(QRegExp("[^A-Za-z]")))
+        else if (!token.isEmpty() && !token.contains(QRegExp(QString("[^A-Za-z%1']").arg(Util::diacriticLetters()))))
         {
             numWords++;
         }
     }
-    return chords.length() >= numWords;
+    return chords.length() > numWords;
 }
 
 int parseBase( const QChar & c )

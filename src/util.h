@@ -62,7 +62,9 @@ template< class T, class S > T dynamic_assert_cast( S s )
 
 namespace Util
 {
-    QString replaceDiacritics(QString string );
+    QString diacriticLetters();
+    QStringList nonDiacriticLetters();
+    QString replaceDiacritics(QString string);
 }
 
 
