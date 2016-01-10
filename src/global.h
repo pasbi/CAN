@@ -12,6 +12,9 @@ void setPreference(const QString& key, const QVariant& value);
 class Command;
 void pushCommand(Command* command);
 
+void reConnect(QObject* oldSender, QObject* newSender, const char* signal, QObject* receiver, const char* slot);
+void reConnect(QObject* sender, const char* signal, QObject* oldReceiver, QObject* newReceiver, const char* slot);
+
 template<typename T> void setPreference(const QString& key, T value)
 {
     setPreference(key, QVariant::fromValue<T>(value));

@@ -48,14 +48,10 @@ SetlistView::SetlistView(QWidget *parent) :
 
 void SetlistView::setModel(Database<SetlistItem> *setlist)
 {
-    if (sourceModel())
-    {
-        disconnect( sourceModel(), SIGNAL(selectionRequest(QModelIndexList)),          this, SLOT(select(QModelIndexList)) );
-    }
+    reConnect(sourceModel(), setlist, SIGNAL(selectionRequest(QModelIndexList)), this, SLOT(select(QModelIndexList)) );
     DatabaseView<SetlistItem>::setModel( setlist );
     if (setlist)
     {
-        connect( setlist, SIGNAL(selectionRequest(QModelIndexList)),                this, SLOT(select(QModelIndexList)) );
         updateCellWidgets();
 
         horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );

@@ -10,7 +10,6 @@ OverlayDecorator::OverlayDecorator(QWidget* widget, int duration, QObject* paren
     m_widget(widget),
     m_duration(duration)
 {
-
 }
 
 // It seems to be impossible to overpaint QScrollArea (no idea why not)

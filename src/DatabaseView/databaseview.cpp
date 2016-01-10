@@ -21,6 +21,11 @@ DatabaseViewBase::DatabaseViewBase(QWidget* parent) :
 
     setHorizontalScrollMode( Super::ScrollPerPixel );
     setVerticalScrollMode( Super::ScrollPerPixel );
+
+    connect(m_hud, &OverlayDecorator::finished, [this]()
+    {
+        m_filterEditMode = OverwriteFilter;
+    });
 }
 
 void DatabaseViewBase::mousePressEvent(QMouseEvent *event)
@@ -123,28 +128,28 @@ bool isOk(const QString &string)
 
 void DatabaseViewBase::keyPressEvent(QKeyEvent *event)
 {
-    QString filter = this->filter();
     if (event->key() == Qt::Key_Escape)
     {
         setFilter("");
     }
-    else if (event->key() == Qt::Key_Backspace)
+    else
     {
-        setFilter(filter.left(filter.length()-1));
-    }
-    else if (isOk(event->text()))
-    {
-        setFilter(filter + event->text());
-    }
-}
+        QString currentFilter = "";
+        if (m_filterEditMode == AppendFilter)
+        {
+            currentFilter = this->filter();
+        }
 
-void DatabaseViewBase::leaveEvent(QEvent *event)
-{
-    if (!cursorOnDatabaseView(this) && !isAscendant(this))
-    {
-        setFilter("");
+        if (event->key() == Qt::Key_Backspace)
+        {
+            setFilter(currentFilter.left(currentFilter.length()-1));
+        }
+        else if (isOk(event->text()))
+        {
+            setFilter(currentFilter + event->text());
+            m_filterEditMode = AppendFilter;
+        }
     }
-    Super::leaveEvent(event);
 }
 
 void DatabaseViewBase::enterEvent(QEvent *event)
@@ -156,27 +161,14 @@ void DatabaseViewBase::enterEvent(QEvent *event)
 void DatabaseViewBase::setModel(QAbstractItemModel *model)
 {
     QAbstractItemModel* oldModel = Super::model();
-    if (oldModel)
-    {
-        disconnect(oldModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),              this, SIGNAL(changed()));
-        disconnect(oldModel, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),    this, SIGNAL(changed()));
-        disconnect(oldModel, SIGNAL(rowsRemoved(QModelIndex,int,int)),                  this, SIGNAL(changed()));
-        disconnect(oldModel, SIGNAL(rowsInserted(QModelIndex,int,int)),                 this, SIGNAL(changed()));
-        disconnect(oldModel, SIGNAL(columnsMoved(QModelIndex,int,int,QModelIndex,int)), this, SIGNAL(changed()));
-        disconnect(oldModel, SIGNAL(columnsRemoved(QModelIndex,int,int)),               this, SIGNAL(changed()));
-        disconnect(oldModel, SIGNAL(columnsInserted(QModelIndex,int,int)),              this, SIGNAL(changed()));
-        disconnect(oldModel, SIGNAL(modelReset()), this, SIGNAL(changed()));
-    }
+
+    reConnect(oldModel, model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),              this, SIGNAL(changed()));
+    reConnect(oldModel, model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),    this, SIGNAL(changed()));
+    reConnect(oldModel, model, SIGNAL(rowsRemoved(QModelIndex,int,int)),                  this, SIGNAL(changed()));
+    reConnect(oldModel, model, SIGNAL(rowsInserted(QModelIndex,int,int)),                 this, SIGNAL(changed()));
+    reConnect(oldModel, model, SIGNAL(columnsMoved(QModelIndex,int,int,QModelIndex,int)), this, SIGNAL(changed()));
+    reConnect(oldModel, model, SIGNAL(columnsRemoved(QModelIndex,int,int)),               this, SIGNAL(changed()));
+    reConnect(oldModel, model, SIGNAL(columnsInserted(QModelIndex,int,int)),              this, SIGNAL(changed()));
+    reConnect(oldModel, model, SIGNAL(modelReset()), this, SIGNAL(changed()));
     Super::setModel(model);
-    if (model)
-    {
-        connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),                    this, SIGNAL(changed()));
-        connect(model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),          this, SIGNAL(changed()));
-        connect(model, SIGNAL(rowsRemoved(QModelIndex,int,int)),                        this, SIGNAL(changed()));
-        connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)),                       this, SIGNAL(changed()));
-        connect(model, SIGNAL(columnsMoved(QModelIndex,int,int,QModelIndex,int)),       this, SIGNAL(changed()));
-        connect(model, SIGNAL(columnsRemoved(QModelIndex,int,int)),                     this, SIGNAL(changed()));
-        connect(model, SIGNAL(columnsInserted(QModelIndex,int,int)),                    this, SIGNAL(changed()));
-        connect(model, SIGNAL(modelReset()),                                            this, SIGNAL(changed()));
-    }
 }

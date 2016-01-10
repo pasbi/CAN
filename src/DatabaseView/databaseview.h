@@ -22,7 +22,6 @@ protected:
     virtual QString filter() const = 0;
     void focusOutEvent(QFocusEvent *event);
     void keyPressEvent(QKeyEvent *event);
-    void leaveEvent(QEvent *event);
     void enterEvent(QEvent *event);
 
     void setModel(QAbstractItemModel *model);
@@ -31,6 +30,8 @@ protected:
 
 private:
     OverlayDecorator* m_hud;
+    enum FilterEditMode { OverwriteFilter, AppendFilter };
+    FilterEditMode m_filterEditMode;
 
 signals:
     void clicked();

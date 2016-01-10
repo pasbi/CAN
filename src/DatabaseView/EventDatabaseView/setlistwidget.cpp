@@ -48,18 +48,12 @@ void SetlistWidget::setSetlist(Database<SetlistItem> *setlist)
 {
     if (setlistView()->model())
     {
-        disconnect( setlistView()->model(), SIGNAL(rowsInserted(QModelIndex,int,int)) );
-        disconnect( setlistView()->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)) );
-        disconnect( setlistView()->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)) );
+        reConnect( setlistView()->model(), setlist, SIGNAL(rowsInserted(QModelIndex,int,int)),      this, SLOT(updateInfoLabel()) );
+        reConnect( setlistView()->model(), setlist, SIGNAL(rowsRemoved(QModelIndex,int,int)),       this, SLOT(updateInfoLabel()) );
+        reConnect( setlistView()->model(), setlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)),   this, SLOT(updateInfoLabel()) );
     }
 
     ui->setlistView->setModel( setlist );
-    if (setlist)
-    {
-        connect( setlist, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateInfoLabel()) );
-        connect( setlist, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateInfoLabel()) );
-        connect( setlist, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateInfoLabel()) );
-    }
     updateInfoLabel();
     updateButtonsEnabled();
 }

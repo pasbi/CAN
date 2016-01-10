@@ -26,17 +26,6 @@ PlayerWidget::~PlayerWidget()
     delete ui;
 }
 
-void reConnect(QObject* oldSender, QObject* newSender, const char* signal, QObject* receiver, const char* slot)
-{
-    if (oldSender)
-    {
-        QObject::disconnect(oldSender, signal, receiver, slot);
-    }
-    if (newSender)
-    {
-        QObject::connect(newSender, signal, receiver, slot);
-    }
-}
 
 void PlayerWidget::setPlayer(Player *player)
 {

@@ -9,18 +9,10 @@ AttachmentView::AttachmentView(QWidget *parent) :
 
 void AttachmentView::setAttachment(Attachment *attachment)
 {
-    if (m_attachment)
-    {
-        disconnect(m_attachment, SIGNAL(destroyed()), this, SLOT(listenToAttachmentDestruction()));
-    }
+    reConnect(m_attachment, attachment, SIGNAL(destroyed()), this, SLOT(listenToAttachmentDestruction()));
 
     m_attachment = attachment;
     polish();
-
-    if (m_attachment)
-    {
-        connect(m_attachment, SIGNAL(destroyed()), this, SLOT(listenToAttachmentDestruction()));
-    }
 }
 
 void AttachmentView::listenToAttachmentDestruction()

@@ -5,7 +5,7 @@
 
 class QWidget;
 class QPainter;
-class OverlayDecorator : QAbstractAnimation
+class OverlayDecorator : public QAbstractAnimation
 {
 public:
     OverlayDecorator(QWidget* widget, int duration, QObject* parent = 0);
