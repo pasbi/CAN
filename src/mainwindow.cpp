@@ -766,7 +766,9 @@ void MainWindow::on_action_Index_Info_triggered()
 
 void MainWindow::my_on_actionNew_Event_triggered()
 {
-    pushCommand( new DatabaseNewItemCommand<Event>( m_project.eventDatabase(), new Event(m_project.eventDatabase())) );
+    Event* newEvent = new Event(m_project.eventDatabase());
+    pushCommand( new DatabaseNewItemCommand<Event>( m_project.eventDatabase(), newEvent) );
+    static_cast<EventTableView*>(ui->eventDatabaseWidget->databaseView())->triggerEditDate(newEvent);
 }
 
 void MainWindow::my_on_actionDelete_Event_triggered()

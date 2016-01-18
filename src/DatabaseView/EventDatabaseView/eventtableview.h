@@ -11,15 +11,13 @@ class EventTableView : public DatabaseView<Event>
 public:
     explicit EventTableView(QWidget *parent = 0);
     int sizeHintForColumn(int column) const;
+    void triggerEditDate(const Event* event);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event);
 
 private:
-    bool showDialog(QModelIndex index);
-
-    QAction* m_actionNew_Event;
-    QAction* m_actionDelete_Event;
+    bool showDateTimeDialog(QModelIndex index);
 };
 
 #endif // DATETABLEVIEW_H

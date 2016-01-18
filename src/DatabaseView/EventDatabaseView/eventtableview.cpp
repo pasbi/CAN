@@ -45,7 +45,7 @@ int EventTableView::sizeHintForColumn(int column) const
     return QTableView::sizeHintForColumn( column ) + qMax( additional, 10 );
 }
 
-bool EventTableView::showDialog(QModelIndex index)
+bool EventTableView::showDateTimeDialog(QModelIndex index)
 {
     if (index.column() == 1)
     {
@@ -62,8 +62,13 @@ bool EventTableView::showDialog(QModelIndex index)
 
 void EventTableView::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    if (!showDialog( indexAt( event->pos() ) ))
+    if (!showDateTimeDialog( indexAt( event->pos() ) ))
     {
         QTableView::mouseDoubleClickEvent( event );
     }
+}
+
+void EventTableView::triggerEditDate(const Event *event)
+{
+    showDateTimeDialog( sourceModel()->indexOf(event, 1) );
 }

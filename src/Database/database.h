@@ -217,6 +217,11 @@ public:
         return m_items.indexOf(const_cast<T*>(item));
     }
 
+    QModelIndex indexOf(const T* item, int column = 0)
+    {
+        return index(m_items.indexOf(const_cast<T*>(item)), column);
+    }
+
 protected:
     QList<T*> m_items;
 
