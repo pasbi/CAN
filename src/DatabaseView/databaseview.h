@@ -161,6 +161,11 @@ public:
         }
     }
 
+    DatabaseSortProxy<T>* proxyModel() const
+    {
+        return m_proxy;
+    }
+
 
 private:
     DatabaseSortProxy<T>* m_proxy = nullptr;

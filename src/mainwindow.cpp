@@ -821,8 +821,12 @@ void MainWindow::my_on_actionPaste_Song_triggered()
 
 void MainWindow::my_on_actionCopy_Event_triggered()
 {
-    QModelIndexList selectedSongs = ui->eventDatabaseWidget->databaseView()->selectionModel()->selectedIndexes();
-    app().clipboard()->setMimeData( m_project.eventDatabase()->mimeData( selectedSongs ) );
+    QModelIndexList selectedEvents = ui->eventDatabaseWidget->databaseView()->selectionModel()->selectedIndexes();
+    for (QModelIndex& index : selectedEvents)
+    {
+        index = ui->eventDatabaseWidget->databaseView()->proxyModel()->mapToSource(index);
+    }
+    app().clipboard()->setMimeData( m_project.eventDatabase()->mimeData( selectedEvents ) );
 }
 
 void MainWindow::my_on_actionPaste_Event_triggered()
