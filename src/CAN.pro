@@ -186,7 +186,6 @@ HEADERS  += mainwindow.h \
     Dialogs/datetimedialog.h \
     Database/EventDatabase/eventdatabasesortproxy.h \
     DatabaseView/EventDatabaseView/setlistwidget.h \
-    commontypes.h \
     Database/EventDatabase/setlist.h \
     DatabaseView/EventDatabaseView/setlistitemselector.h \
     DatabaseView/EventDatabaseView/setlistview.h \

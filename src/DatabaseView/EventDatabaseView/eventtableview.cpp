@@ -50,11 +50,10 @@ bool EventTableView::showDialog(QModelIndex index)
     if (index.column() == 1)
     {
         DateTimeDialog dialog;
-        dialog.setTimeSpan( model()->data( index, Qt::EditRole ).value<TimeSpan>() );
-
+        dialog.setDateTime( model()->data( index, Qt::EditRole ).toDateTime() );
         if (dialog.exec() == QDialog::Accepted)
         {
-            pushCommand( new DatabaseEditCommand(model(), index, QVariant::fromValue(dialog.timeSpan())));
+            pushCommand( new DatabaseEditCommand(model(), index, QVariant::fromValue(dialog.dateTime())));
         }
         return true;
     }

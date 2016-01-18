@@ -5,7 +5,6 @@
 #include <QDateTime>
 #include <QObject>
 
-#include "commontypes.h"
 #include "Database/databaseitem.h"
 
 class Setlist;
@@ -17,9 +16,8 @@ public:
     enum Type { Rehearsal, Gig, Other };
 
 
-    Event( Database<Event>*   database,
+    Event(Database<Event>*   database,
            const QDateTime& beginning = QDateTime::currentDateTime(),
-           const QDateTime& ending    = QDateTime::currentDateTime(),
            Type             type      = Rehearsal,
            const QString &  label = "");
     ~Event();
@@ -27,15 +25,11 @@ public:
     Type type() const { return m_type; }
     QString label() const { return m_label; }
     QString description() const;
-    QDateTime beginning() const { return m_timeSpan.beginning; }
-    QDateTime ending() const { return m_timeSpan.ending; }
-    TimeSpan timeSpan() const { return m_timeSpan; }
+    QDateTime beginning() const { return m_beginning; }
     QString notices() const { return m_notices; }
 
     void setLabel( const QString & label );
     void setBeginning( const QDateTime & beginning );
-    void setEnding( const QDateTime & ending );
-    void setTimeSpan( const TimeSpan& timeSpan);
     void setType( Type type );
     void setNotice( const QString & notice );
 
@@ -52,7 +46,7 @@ protected:
     void deserialize(QDataStream &in);
 
 private:
-    TimeSpan m_timeSpan;
+    QDateTime m_beginning;
     Type m_type;
     QString m_label;
     QString m_notices;

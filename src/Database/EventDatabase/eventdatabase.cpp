@@ -46,7 +46,7 @@ QVariant EventDatabase::data(const QModelIndex &index, int role) const
         case Qt::ToolTipRole:
             return QLocale().toString(m_items[row]->beginning(), tr("MM/dd/yy hh:mm ap"));
         case Qt::EditRole:
-            return QVariant::fromValue( TimeSpan( m_items[row]->timeSpan() ));
+            return m_items[row]->beginning();
         default:
             return QVariant();
         }
@@ -108,7 +108,7 @@ bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int
             }
             break;
         case 1:
-            event->setTimeSpan( value.value<TimeSpan>() );
+            event->setBeginning( value.toDateTime() );
             break;
         case 2:
             event->setLabel( value.toString() );

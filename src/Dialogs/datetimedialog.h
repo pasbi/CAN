@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QDateTime>
-#include "commontypes.h"
 
 namespace Ui {
 class DateTimeDialog;
@@ -17,16 +16,11 @@ public:
     explicit DateTimeDialog(QWidget *parent = 0);
     ~DateTimeDialog();
 
-    TimeSpan timeSpan() const;
-    void setTimeSpan( TimeSpan timeSpan );    
+    QDateTime dateTime() const;
+    void setDateTime( const QDateTime& dateTime );
 
 private:
     Ui::DateTimeDialog *ui;
-    qint64 m_duration = 0;
-
-private slots:
-    void computeDuration();
-    void holdDuration();
 };
 
 #endif // DATETIMEDIALOG_H

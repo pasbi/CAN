@@ -2,9 +2,9 @@
 #include "setlist.h"
 
 
-Event::Event( Database<Event>* database, const QDateTime& beginning, const QDateTime& ending, Type type, const QString & label) :
+Event::Event( Database<Event>* database, const QDateTime& beginning, Type type, const QString & label) :
     DatabaseItem( database ),
-    m_timeSpan( TimeSpan(beginning, ending)),
+    m_beginning( beginning ),
     m_type(type),
     m_label(label),
     m_setlist( new Setlist(this) )
@@ -25,17 +25,7 @@ void Event::setLabel( const QString & label )
 
 void Event::setBeginning( const QDateTime & beginning )
 {
-    m_timeSpan.beginning = beginning;
-}
-
-void Event::setEnding( const QDateTime & ending )
-{
-    m_timeSpan.ending = ending;
-}
-
-void Event::setTimeSpan( const TimeSpan& timeSpan)
-{
-    m_timeSpan = timeSpan;
+    m_beginning = beginning;
 }
 
 void Event::setType( Type type )
@@ -73,8 +63,8 @@ QStringList Event::textAttributes() const
 void Event::serialize(QDataStream &out) const
 {
     DatabaseItem::serialize(out);
-    out << m_timeSpan.ending;
-    out << m_timeSpan.beginning;
+    out << QDateTime(); //LEGACY
+    out << m_beginning;
     out << static_cast<qint32>(m_type);
     out << m_label;
     out << m_setlist;
@@ -84,8 +74,9 @@ void Event::deserialize(QDataStream &in)
 {
     DatabaseItem::deserialize(in);
     qint32 type;
-    in >> m_timeSpan.ending;
-    in >> m_timeSpan.beginning;
+    QDateTime unusedEndingDateTime;
+    in >> unusedEndingDateTime; //LEGACY
+    in >> m_beginning;
     in >> type;
     in >> m_label;
     in >> m_setlist;
