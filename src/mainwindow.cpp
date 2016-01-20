@@ -904,6 +904,7 @@ bool MainWindow::open(const QString &filename)
 
 void MainWindow::createLanguageMenu()
 {
+    QActionGroup* languageGroup = new QActionGroup(this);
     for (const QFileInfo& fileInfo : QDir(":/translations/").entryInfoList(QStringList() << "can*.qm", QDir::Files, QDir::Name ))
     {
         QString locale = fileInfo.baseName().mid(4); // skip ending, skip can_
@@ -922,9 +923,12 @@ void MainWindow::createLanguageMenu()
                                       tr("Language changes will apply on next start."),
                                       QMessageBox::Ok,
                                       QMessageBox::NoButton );
+
             setPreference("locale", locale);
         });
+        languageGroup->addAction(action);
     }
+    languageGroup->setExclusive(true);
 }
 
 DatabaseView<Song>* MainWindow::songTableView()
