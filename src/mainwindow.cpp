@@ -40,6 +40,7 @@
 #include "AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h"
 #include "Attachments/indexedfileattachment.h"
 #include "preferencedialog.h"
+#include "Merge/merge.h"
 
 QString styleSheetContent()
 {
@@ -1100,6 +1101,33 @@ void MainWindow::activateView(View view)
 void MainWindow::on_actionHide_inactives_triggered(bool checked)
 {
     static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setHideInactives(checked);
+}
+
+void MainWindow::on_actionMerge_with_triggered()
+{
+    if (!m_project.canClose())
+    {
+        // saving is required
+        if (!saveProject())
+        {
+            // saving failed
+            return;
+        }
+        // saving succeeded
+    }
+
+    QString filename =
+    QFileDialog::getOpenFileName( this,
+                                  tr("Open ..."),
+                                  proposedPath(),
+                                  filter()              );
+    if (filename.isEmpty())
+    {
+        return; // user aborted opening
+    }
+
+    Merge(&m_project, filename, this);
+
 }
 
 

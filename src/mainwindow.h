@@ -106,6 +106,8 @@ private slots:
 
 
 
+    void on_actionMerge_with_triggered();
+
 private:
     void createLanguageMenu();
     void createAttachmentActions();

@@ -7,6 +7,7 @@
 class SongDatabase;
 class EventDatabase;
 class Command;
+
 class Project : public QUndoStack
 {
     Q_OBJECT

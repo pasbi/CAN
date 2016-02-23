@@ -140,7 +140,16 @@ SOURCES += main.cpp\
     DatabaseView/ItemDelegates/lineeditdelegate.cpp \
     DatabaseView/ItemDelegates/typecomboboxdelegate.cpp \
     global.cpp \
-    DatabaseView/freezetableview.cpp
+    DatabaseView/freezetableview.cpp \
+    Merge/merge.cpp \
+    Merge/mergedialog.cpp \
+    Merge/abstractmergewidget.cpp \
+    Merge/databasemerger.cpp \
+    Merge/songmergewidget.cpp \
+    Merge/eventmergewidget.cpp \
+    Merge/mergetreeview.cpp \
+    Merge/doubledatabasetreemodel.cpp \
+    Merge/mergetreeitem.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -254,7 +263,17 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/keyeditor.h \
     Dialogs/peoplesdialog.h \
     Dialogs/textdialog.h \
-    DatabaseView/freezetableview.h
+    DatabaseView/freezetableview.h \
+    Merge/merge.h \
+    Merge/mergedialog.h \
+    Merge/abstractmergewidget.h \
+    Merge/databasemerger.h \
+    Merge/songmergewidget.h \
+    Merge/eventmergewidget.h \
+    Merge/mergetreeview.h \
+    Merge/doubledatabasetreemodel.h \
+    Database/SongDatabase/songdatabasetreemodel.h \
+    Merge/mergetreeitem.h
 
 
 FORMS    += mainwindow.ui \
@@ -277,7 +296,9 @@ FORMS    += mainwindow.ui \
     AttachmentView/browseattachmentbuttonbox.ui \
     playerwidget.ui \
     Dialogs/peoplesdialog.ui \
-    Dialogs/textdialog.ui
+    Dialogs/textdialog.ui \
+    Merge/mergedialog.ui \
+    Merge/mergetreeview.ui
 
 
 RESOURCES += \
