@@ -25,7 +25,6 @@ public:
 
     void makeNameUnique();
 
-    QJsonObject toJsonObject() const;
     static Attachment* create(const QString& classname, Song *song);
 
     // see Creatable
