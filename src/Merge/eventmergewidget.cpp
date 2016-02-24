@@ -20,5 +20,5 @@ void EventMergeWidget::setDatabase(Database<Event> *master, Database<Event> *sla
 {
     Q_ASSERT(!m_eventDatabaseMerger);
     m_eventDatabaseMerger = new DatabaseMerger<Event>(master, slave);
-    m_mergeTreeView->setRootItem(m_eventDatabaseMerger->createItem());
+    m_mergeTreeView->setRootItem(m_eventDatabaseMerger->createItems());
 }

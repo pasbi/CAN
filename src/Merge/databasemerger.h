@@ -13,7 +13,7 @@ public:
     enum CompareResult { Unequal, Equal, Similar };
 };
 
-class MergeTreeItem;
+template<class T> class MergeTreeItem;
 
 template<class T>
 class DatabaseMerger
@@ -25,7 +25,7 @@ public:
         m_slave = slave;
     }
 
-    MergeTreeItem *createItem() const;
+    QTreeWidgetItem *createItems() const;
 
     Database<T>* masterProject() const { return m_master; }
     Database<T>* slaveProject() const { return m_slave; }

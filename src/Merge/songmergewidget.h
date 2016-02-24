@@ -14,7 +14,7 @@ public:
     explicit SongMergeWidget(QWidget* parent = nullptr);
     ~SongMergeWidget();
     void setDatabase(Database<Song> *master, Database<Song> *slave);
-    const MergeTreeItem* rootItem() const { return m_mergeTreeView->root(); }
+    const QTreeWidgetItem* rootItem() const { return m_mergeTreeView->root(); }
 
 private:
     MergeTreeView* m_mergeTreeView;

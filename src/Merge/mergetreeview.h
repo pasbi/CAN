@@ -8,7 +8,7 @@ namespace Ui {
 class MergeTreeView;
 }
 
-class MergeTreeItem;
+template<class T> class MergeTreeItem;
 
 class MergeTreeView : public QWidget
 {
@@ -17,8 +17,8 @@ class MergeTreeView : public QWidget
 public:
     explicit MergeTreeView(QWidget *parent = 0);
     ~MergeTreeView();
-    void setRootItem(MergeTreeItem* root);
-    const MergeTreeItem* root() const { return m_root; }
+    void setRootItem(QTreeWidgetItem* root);
+    const QTreeWidgetItem* root() const { return m_root; }
 
 protected:
     void resizeEvent(QResizeEvent *e);
@@ -27,7 +27,7 @@ protected:
 private:
     Ui::MergeTreeView *ui;
     void updateHeaderSize();
-    MergeTreeItem* m_root;
+    QTreeWidgetItem* m_root;
 };
 
 #endif // MERGETREEVIEW_H

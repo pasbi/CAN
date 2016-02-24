@@ -30,9 +30,9 @@ private:
     bool openMergeDialog();
     void performMerge();
 
-    QList<MergeInfo> m_songMergeItems;
-    QList<MergeInfo> m_eventMergeItems;
-    QMap<Song*, MergeInfo> m_attachmentMergeItems;
+    QList<MergeInfo<Song>> m_songMergeItems;
+    QList<MergeInfo<Event>> m_eventMergeItems;
+    QMap<Song*, MergeInfo<Attachment>> m_attachmentMergeItems;
 
     void performSongMerge();
     void performAttachmentMerge();

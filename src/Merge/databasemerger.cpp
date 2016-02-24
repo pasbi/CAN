@@ -103,9 +103,9 @@ template<> QString labelItem(const Attachment* attachment)
 }
 
 template<class T>
-MergeTreeItem*  DatabaseMerger<T>::createItem() const
+QTreeWidgetItem*  DatabaseMerger<T>::createItems() const
 {
-    MergeTreeItem* root = new MergeTreeItem();
+    QTreeWidgetItem* root = new QTreeWidgetItem();
 
     // get all items
     QList<T*> masterItems = m_master->items();
@@ -133,17 +133,14 @@ MergeTreeItem*  DatabaseMerger<T>::createItem() const
     QList<T*> deletedItems = masterItems; // they are no longer in slave document
     QList<T*> addedItems = slaveItems;    // they are not yet in master document
 
-    for (const T* addedItem : addedItems)
+    for (T* addedItem : addedItems)
     {
-        QString label = QString("%1: %2").arg(QObject::tr("Added")).arg(labelItem(addedItem));
-        root->addChild(new MergeTreeItem( MergeInfo::AddItemType, addedItem, { label } ));
+        root->addChild(new MergeTreeItem<T>( MergeInfoBase::AddItemType, addedItem, labelItem(addedItem) ));
     }
 
-    for (const T* deletedItem : deletedItems)
+    for (T* deletedItem : deletedItems)
     {
-        QString label = QString("%1: %2").arg(QObject::tr("Deleted")).arg(labelItem(deletedItem));
-        root->addChild(new MergeTreeItem( MergeInfo::DeleteItemType, deletedItem, { label } ));
-
+        root->addChild(new MergeTreeItem<T>( MergeInfoBase::DeleteItemType, deletedItem, labelItem(deletedItem) ));
     }
 
     return root;
@@ -151,5 +148,5 @@ MergeTreeItem*  DatabaseMerger<T>::createItem() const
 
 
 
-template MergeTreeItem* DatabaseMerger<Song>::createItem() const;
-template MergeTreeItem* DatabaseMerger<Event>::createItem() const;
+template QTreeWidgetItem* DatabaseMerger<Song>::createItems() const;
+template QTreeWidgetItem* DatabaseMerger<Event>::createItems() const;

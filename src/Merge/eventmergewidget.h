@@ -14,7 +14,7 @@ public:
     explicit EventMergeWidget(QWidget *parent = 0);
     ~EventMergeWidget();
     void setDatabase(Database<Event> *master, Database<Event> *slave);
-    const MergeTreeItem* rootItem() const { return m_mergeTreeView->root(); }
+    const QTreeWidgetItem* rootItem() const { return m_mergeTreeView->root(); }
 
 
 private:

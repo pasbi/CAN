@@ -59,33 +59,41 @@ void MergeDialog::setMerger(Merge *merger)
     eventMergeWidget()->setDatabase(merger->masterProject()->eventDatabase(), merger->slaveProject()->eventDatabase());
 }
 
-QList<MergeInfo> MergeDialog::songMergeItems() const
+QList<MergeInfo<Song> > MergeDialog::songMergeItems() const
 {
-    const MergeTreeItem* root = songMergeWidget()->rootItem();
+    const QTreeWidgetItem* root = songMergeWidget()->rootItem();
     // items are destroyed as soon as tree is destroyed, so they will not survive this class. Let's copy them...
-    QList<MergeInfo> items;
+    QList<MergeInfo<Song>> items;
 
-    for (MergeTreeItem* item : root->children())
+    for (int i = 0; i < root->childCount(); ++i)
     {
-        if (item->children().isEmpty()) // if the item has no children, merge on song level (otherwise on attachment level, see below (not implemented yet))
+        QTreeWidgetItem* item = root->child(i);
+        if (item->childCount() == 0) // if the item has no children, merge on song level (otherwise on attachment level, see below (not implemented yet))
         {
-            items << item->mergeInfo();
+            MergeTreeItemBase* mtib = static_cast<MergeTreeItemBase*>(item);
+            Q_ASSERT(mtib->type() == MergeTreeItemBase::SongType);
+            items << *static_cast<MergeTreeItem<Song>*>(item)->mergeInfo();
         }
     }
 
     return items;
 }
 
-QList<MergeInfo> MergeDialog::eventMergeItems() const
+QList<MergeInfo<Event> > MergeDialog::eventMergeItems() const
 {
-    const MergeTreeItem* root = eventMergeWidget()->rootItem();
+    const QTreeWidgetItem* root = eventMergeWidget()->rootItem();
     // items are destroyed as soon as tree is destroyed, so they will not survive this class. Let's copy them...
-    QList<MergeInfo> items;
+    QList<MergeInfo<Event>> items;
 
-    for (MergeTreeItem* item : root->children())
+    for (int i = 0; i < root->childCount(); ++i)
     {
-        Q_ASSERT(item->children().isEmpty()); // we don't want to copy the children since we don't expect any children here.
-        items << item->mergeInfo();
+        QTreeWidgetItem* item = root->child(i);
+        if (item->childCount() == 0) // if the item has no children, merge on song level (otherwise on attachment level, see below (not implemented yet))
+        {
+            MergeTreeItemBase* mtib = static_cast<MergeTreeItemBase*>(item);
+            Q_ASSERT(mtib->type() == MergeTreeItemBase::EventType);
+            items << *static_cast<MergeTreeItem<Event>*>(item)->mergeInfo();
+        }
     }
 
     return items;

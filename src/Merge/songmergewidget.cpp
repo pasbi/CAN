@@ -20,5 +20,5 @@ void SongMergeWidget::setDatabase(Database<Song> *master, Database<Song> *slave)
 {
     Q_ASSERT(!m_songDatabaseMerger);
     m_songDatabaseMerger = new DatabaseMerger<Song>(master, slave);
-    m_mergeTreeView->setRootItem(m_songDatabaseMerger->createItem());
+    m_mergeTreeView->setRootItem(m_songDatabaseMerger->createItems());
 }

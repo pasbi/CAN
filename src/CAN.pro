@@ -143,13 +143,13 @@ SOURCES += main.cpp\
     DatabaseView/freezetableview.cpp \
     Merge/merge.cpp \
     Merge/mergedialog.cpp \
-    Merge/abstractmergewidget.cpp \
     Merge/databasemerger.cpp \
     Merge/songmergewidget.cpp \
     Merge/eventmergewidget.cpp \
     Merge/mergetreeview.cpp \
     Merge/doubledatabasetreemodel.cpp \
-    Merge/mergetreeitem.cpp
+    Merge/mergetreeitem.cpp \
+    Merge/mergetreewidget.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -266,14 +266,14 @@ HEADERS  += mainwindow.h \
     DatabaseView/freezetableview.h \
     Merge/merge.h \
     Merge/mergedialog.h \
-    Merge/abstractmergewidget.h \
     Merge/databasemerger.h \
     Merge/songmergewidget.h \
     Merge/eventmergewidget.h \
     Merge/mergetreeview.h \
     Merge/doubledatabasetreemodel.h \
     Database/SongDatabase/songdatabasetreemodel.h \
-    Merge/mergetreeitem.h
+    Merge/mergetreeitem.h \
+    Merge/mergetreewidget.h
 
 
 FORMS    += mainwindow.ui \

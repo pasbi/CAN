@@ -17,17 +17,17 @@ MergeTreeView::~MergeTreeView()
     delete ui;
 }
 
-QWidget* createCellWidget(MergeTreeItem* item)
+QWidget* createCellWidget(MergeTreeItemBase* item)
 {
-    MergeInfo mergeInfo = item->mergeInfo();
+    MergeInfoBase mergeInfo = *item->mergeInfoBase();
     QComboBox* box = new QComboBox();
 
-    if (mergeInfo.type() == MergeInfo::AddItemType)
+    if (mergeInfo.type() == MergeInfoBase::AddItemType)
     {
         box->addItems( { QWidget::tr("Add to master project"),
                          QWidget::tr("Do not add to master project") } );
     }
-    else if (mergeInfo.type() == MergeInfo::DeleteItemType)
+    else if (mergeInfo.type() == MergeInfoBase::DeleteItemType)
     {
         box->addItems( { QWidget::tr("Keep in master project"),
                          QWidget::tr("Remove from master project") } );
@@ -37,27 +37,29 @@ QWidget* createCellWidget(MergeTreeItem* item)
     {
         if (index == 0)
         {
-            item->setAction(MergeInfo::AddItemAction);
+            item->setAction(MergeInfoBase::AddItemAction);
         }
         else
         {
-            item->setAction(MergeInfo::DeleteItemAction);
+            item->setAction(MergeInfoBase::DeleteItemAction);
         }
     };
     QObject::connect(box, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), on_indexChanged);
     on_indexChanged(box->currentIndex());
 
-
     return box;
 }
 
-void MergeTreeView::setRootItem(MergeTreeItem *root)
+void MergeTreeView::setRootItem(QTreeWidgetItem *root)
 {
     ui->treeWidget->clear();
     ui->treeWidget->addTopLevelItem(root);
     ui->treeWidget->expandItem(root);
-    for (MergeTreeItem* item : root->children())
+
+
+    for (int i = 0; i < root->childCount(); ++i)
     {
+        MergeTreeItemBase* item = static_cast<MergeTreeItemBase*>(root->child(i));
         ui->treeWidget->setItemWidget(item, 1, createCellWidget(item));
     }
     m_root = root;

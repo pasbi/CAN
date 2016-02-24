@@ -19,9 +19,9 @@ public:
     ~MergeDialog();
     void setMerger(Merge* merger);
 
-    QList<MergeInfo> songMergeItems() const;
-    QList<MergeInfo> eventMergeItems() const;
-    QMap<Song*, MergeInfo> attachmentMergeItems() const { Q_UNIMPLEMENTED(); return QMap<Song*, MergeInfo>(); }
+    QList<MergeInfo<Song>> songMergeItems() const;
+    QList<MergeInfo<Event>> eventMergeItems() const;
+    QMap<Song*, MergeInfo<Attachment>> attachmentMergeItems() const { Q_UNIMPLEMENTED(); return QMap<Song*, MergeInfo<Attachment>>(); }
 
 private slots:
     void on_buttonBack_clicked();

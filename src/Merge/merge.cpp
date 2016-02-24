@@ -132,17 +132,17 @@ template<> Database<Event>* findDatabase(Project* project)
 }
 
 template<class T>
-void performDatabaseItemMerge(Project* masterProject, Project* slaveProject, QList<MergeInfo> mergeInfos)
+void performDatabaseItemMerge(Project* masterProject, Project* slaveProject, QList<MergeInfo<T>> mergeInfos)
 {
     Database<T>* masterDatabase = findDatabase<T>(masterProject);
     Database<T>* slaveDatabase = findDatabase<T>(slaveProject);
 
-    for (const MergeInfo& merge : mergeInfos)
+    for (const MergeInfo<T>& merge : mergeInfos)
     {
         T* item = nullptr;
         switch (merge.action())
         {
-        case MergeInfo::AddItemAction:
+        case MergeInfoBase::AddItemAction:
         {
             item = findItem<T>(merge.dataPointer(), masterDatabase, slaveDatabase);
             Q_ASSERT(item);
@@ -150,7 +150,7 @@ void performDatabaseItemMerge(Project* masterProject, Project* slaveProject, QLi
             masterProject->setCanClose(false);
             break;
         }
-        case MergeInfo::DeleteItemAction:
+        case MergeInfoBase::DeleteItemAction:
         {
             item = findItem<T>(merge.dataPointer(), masterDatabase, slaveDatabase);
             Q_ASSERT(item);
@@ -158,7 +158,7 @@ void performDatabaseItemMerge(Project* masterProject, Project* slaveProject, QLi
             masterProject->setCanClose(false);
             break;
         }
-        case MergeInfo::NoAction:
+        case MergeInfoBase::NoAction:
         default:
             ;
         }

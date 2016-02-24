@@ -15,9 +15,12 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <widget class="QTreeWidget" name="treeWidget">
+    <widget class="MergeTreeWidget" name="treeWidget">
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="defaultDropAction">
+      <enum>Qt::MoveAction</enum>
      </property>
      <property name="headerHidden">
       <bool>true</bool>
@@ -76,6 +79,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MergeTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>Merge/mergetreewidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
