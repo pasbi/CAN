@@ -3,11 +3,11 @@
 
 EventMergeWidget::EventMergeWidget(QWidget *parent) :
     QWidget(parent),
-    m_mergeTreeView(new MergeTreeView(this)),
+    m_mergeListView(new MergeListView(this)),
     m_eventDatabaseMerger(nullptr)
 {
     setLayout(new QHBoxLayout(this));
-    layout()->addWidget(m_mergeTreeView);
+    layout()->addWidget(m_mergeListView);
 }
 
 EventMergeWidget::~EventMergeWidget()
@@ -20,5 +20,5 @@ void EventMergeWidget::setDatabase(Database<Event> *master, Database<Event> *sla
 {
     Q_ASSERT(!m_eventDatabaseMerger);
     m_eventDatabaseMerger = new DatabaseMerger<Event>(master, slave);
-    m_mergeTreeView->setRootItem(m_eventDatabaseMerger->createItems());
+    m_mergeListView->setItems(m_eventDatabaseMerger->createItems());
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MergeTreeView</class>
- <widget class="QWidget" name="MergeTreeView">
+ <class>MergeListView</class>
+ <widget class="QWidget" name="MergeListView">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,35 +15,13 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <widget class="MergeTreeWidget" name="treeWidget">
+    <widget class="MergeListWidget" name="mergeListWidget">
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
      <property name="defaultDropAction">
       <enum>Qt::MoveAction</enum>
      </property>
-     <property name="headerHidden">
-      <bool>true</bool>
-     </property>
-     <attribute name="headerVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="headerDefaultSectionSize">
-      <number>100</number>
-     </attribute>
-     <attribute name="headerStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string notr="true">Item</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Actions</string>
-      </property>
-     </column>
     </widget>
    </item>
    <item>
@@ -81,9 +59,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MergeTreeWidget</class>
-   <extends>QTreeWidget</extends>
-   <header>Merge/mergetreewidget.h</header>
+   <class>MergeListWidget</class>
+   <extends>QListView</extends>
+   <header>Merge/mergelistwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

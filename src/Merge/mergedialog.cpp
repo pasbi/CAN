@@ -4,6 +4,7 @@
 #include "Merge/eventmergewidget.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/eventdatabase.h"
+#include "mergeitem.h"
 
 MergeDialog::MergeDialog(QWidget *parent) :
     QDialog(parent),
@@ -59,44 +60,14 @@ void MergeDialog::setMerger(Merge *merger)
     eventMergeWidget()->setDatabase(merger->masterProject()->eventDatabase(), merger->slaveProject()->eventDatabase());
 }
 
-QList<MergeInfo<Song> > MergeDialog::songMergeItems() const
+QList<MergeItemBase> MergeDialog::songMergeItems() const
 {
-    const QTreeWidgetItem* root = songMergeWidget()->rootItem();
-    // items are destroyed as soon as tree is destroyed, so they will not survive this class. Let's copy them...
-    QList<MergeInfo<Song>> items;
-
-    for (int i = 0; i < root->childCount(); ++i)
-    {
-        QTreeWidgetItem* item = root->child(i);
-        if (item->childCount() == 0) // if the item has no children, merge on song level (otherwise on attachment level, see below (not implemented yet))
-        {
-            MergeTreeItemBase* mtib = static_cast<MergeTreeItemBase*>(item);
-            Q_ASSERT(mtib->type() == MergeTreeItemBase::SongType);
-            items << *static_cast<MergeTreeItem<Song>*>(item)->mergeInfo();
-        }
-    }
-
-    return items;
+    return songMergeWidget()->items();
 }
 
-QList<MergeInfo<Event> > MergeDialog::eventMergeItems() const
+QList<MergeItemBase> MergeDialog::eventMergeItems() const
 {
-    const QTreeWidgetItem* root = eventMergeWidget()->rootItem();
-    // items are destroyed as soon as tree is destroyed, so they will not survive this class. Let's copy them...
-    QList<MergeInfo<Event>> items;
-
-    for (int i = 0; i < root->childCount(); ++i)
-    {
-        QTreeWidgetItem* item = root->child(i);
-        if (item->childCount() == 0) // if the item has no children, merge on song level (otherwise on attachment level, see below (not implemented yet))
-        {
-            MergeTreeItemBase* mtib = static_cast<MergeTreeItemBase*>(item);
-            Q_ASSERT(mtib->type() == MergeTreeItemBase::EventType);
-            items << *static_cast<MergeTreeItem<Event>*>(item)->mergeInfo();
-        }
-    }
-
-    return items;
+    return songMergeWidget()->items();
 }
 
 

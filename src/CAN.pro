@@ -146,10 +146,11 @@ SOURCES += main.cpp\
     Merge/databasemerger.cpp \
     Merge/songmergewidget.cpp \
     Merge/eventmergewidget.cpp \
-    Merge/mergetreeview.cpp \
     Merge/doubledatabasetreemodel.cpp \
-    Merge/mergetreeitem.cpp \
-    Merge/mergetreewidget.cpp
+    Merge/mergelistwidget.cpp \
+    Merge/mergelistview.cpp \
+    Merge/mergeitem.cpp \
+    Merge/mergelistwidgetitemwidget.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -269,11 +270,12 @@ HEADERS  += mainwindow.h \
     Merge/databasemerger.h \
     Merge/songmergewidget.h \
     Merge/eventmergewidget.h \
-    Merge/mergetreeview.h \
     Merge/doubledatabasetreemodel.h \
     Database/SongDatabase/songdatabasetreemodel.h \
-    Merge/mergetreeitem.h \
-    Merge/mergetreewidget.h
+    Merge/mergelistview.h \
+    Merge/mergelistwidget.h \
+    Merge/mergeitem.h \
+    Merge/mergelistwidgetitemwidget.h
 
 
 FORMS    += mainwindow.ui \
@@ -298,7 +300,7 @@ FORMS    += mainwindow.ui \
     Dialogs/peoplesdialog.ui \
     Dialogs/textdialog.ui \
     Merge/mergedialog.ui \
-    Merge/mergetreeview.ui
+    Merge/mergelistview.ui
 
 
 RESOURCES += \

@@ -3,7 +3,8 @@
 
 #include <QWidget>
 #include "databasemerger.h"
-#include "mergetreeview.h"
+#include "mergeitem.h"
+#include "mergelistview.h"
 
 class Event;
 
@@ -14,11 +15,10 @@ public:
     explicit EventMergeWidget(QWidget *parent = 0);
     ~EventMergeWidget();
     void setDatabase(Database<Event> *master, Database<Event> *slave);
-    const QTreeWidgetItem* rootItem() const { return m_mergeTreeView->root(); }
-
+    QList<MergeItemBase> items() const { return m_mergeListView->items(); }
 
 private:
-    MergeTreeView* m_mergeTreeView;
+    MergeListView* m_mergeListView;
     DatabaseMerger<Event>* m_eventDatabaseMerger;
 
 

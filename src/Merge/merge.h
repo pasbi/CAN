@@ -3,7 +3,7 @@
 
 #include <QString>
 #include "Project/project.h"
-#include "mergetreeitem.h"
+#include "mergeitem.h"
 #include "Database/SongDatabase/song.h"
 
 class Event;
@@ -30,9 +30,9 @@ private:
     bool openMergeDialog();
     void performMerge();
 
-    QList<MergeInfo<Song>> m_songMergeItems;
-    QList<MergeInfo<Event>> m_eventMergeItems;
-    QMap<Song*, MergeInfo<Attachment>> m_attachmentMergeItems;
+    QList<MergeItemBase> m_songMergeItems;
+    QList<MergeItemBase> m_eventMergeItems;
+    QMap<Song*, MergeItem<Attachment>> m_attachmentMergeItems;
 
     void performSongMerge();
     void performAttachmentMerge();

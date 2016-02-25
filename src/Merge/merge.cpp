@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include "mergedialog.h"
 #include "global.h"
+#include "mergeitem.h"
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Database/SongDatabase/songdatabase.h"
 
@@ -95,7 +96,7 @@ Attachment* Merge::findAttachment(const void *pointer, Song *song)
     return nullptr;
 }
 
-template<class T> T* findItem(const void *pointer, Database<T>* masterDatabase, Database<T>* slaveDatabase)
+template<class T> T* findDatabaseItem(const void *pointer, Database<T>* masterDatabase, Database<T>* slaveDatabase)
 {
     for (T* song : slaveDatabase->items())
     {
@@ -132,33 +133,33 @@ template<> Database<Event>* findDatabase(Project* project)
 }
 
 template<class T>
-void performDatabaseItemMerge(Project* masterProject, Project* slaveProject, QList<MergeInfo<T>> mergeInfos)
+void performDatabaseItemMerge(Project* masterProject, Project* slaveProject, QList<MergeItemBase> mergeItems)
 {
     Database<T>* masterDatabase = findDatabase<T>(masterProject);
     Database<T>* slaveDatabase = findDatabase<T>(slaveProject);
 
-    for (const MergeInfo<T>& merge : mergeInfos)
+    for (const MergeItemBase& mergeItem : mergeItems)
     {
         T* item = nullptr;
-        switch (merge.action())
+        switch (mergeItem.action())
         {
-        case MergeInfoBase::AddItemAction:
+        case MergeItemBase::AddItemAction:
         {
-            item = findItem<T>(merge.dataPointer(), masterDatabase, slaveDatabase);
+            item = findDatabaseItem<T>(mergeItem.pointer(), masterDatabase, slaveDatabase);
             Q_ASSERT(item);
             masterDatabase->insertItem( item->copy(masterDatabase) );
             masterProject->setCanClose(false);
             break;
         }
-        case MergeInfoBase::DeleteItemAction:
+        case MergeItemBase::DeleteItemAction:
         {
-            item = findItem<T>(merge.dataPointer(), masterDatabase, slaveDatabase);
+            item = findDatabaseItem<T>(mergeItem.pointer(), masterDatabase, slaveDatabase);
             Q_ASSERT(item);
             masterDatabase->removeItem(item);  //TODO this may fail if the song is in use somewhere.
             masterProject->setCanClose(false);
             break;
         }
-        case MergeInfoBase::NoAction:
+        case MergeItemBase::NoAction:
         default:
             ;
         }

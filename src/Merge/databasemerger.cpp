@@ -3,7 +3,7 @@
 #include "Database/EventDatabase/event.h"
 #include "Database/EventDatabase/setlist.h"
 #include "Attachments/attachment.h"
-#include "mergetreeitem.h"
+#include "mergeitem.h"
 
 template<class T> DatabaseMergerPrivate::CompareResult compare(const T*, const T*)
 {
@@ -103,9 +103,9 @@ template<> QString labelItem(const Attachment* attachment)
 }
 
 template<class T>
-QTreeWidgetItem*  DatabaseMerger<T>::createItems() const
+QList<MergeItemBase> DatabaseMerger<T>::createItems() const
 {
-    QTreeWidgetItem* root = new QTreeWidgetItem();
+    QList<MergeItemBase> items;
 
     // get all items
     QList<T*> masterItems = m_master->items();
@@ -130,23 +130,20 @@ QTreeWidgetItem*  DatabaseMerger<T>::createItems() const
 
     //TODO filter those songs, where an attachment was deleted / added
 
-    QList<T*> deletedItems = masterItems; // they are no longer in slave document
-    QList<T*> addedItems = slaveItems;    // they are not yet in master document
-
-    for (T* addedItem : addedItems)
+    for (T* masterItem : masterItems)
     {
-        root->addChild(new MergeTreeItem<T>( MergeInfoBase::AddItemType, addedItem, labelItem(addedItem) ));
+        items << MergeItem<T>( MergeItemBase::MasterProject, masterItem, labelItem(masterItem) );
     }
 
-    for (T* deletedItem : deletedItems)
+    for (T* slaveItem : slaveItems)
     {
-        root->addChild(new MergeTreeItem<T>( MergeInfoBase::DeleteItemType, deletedItem, labelItem(deletedItem) ));
+        items << MergeItem<T>( MergeItemBase::SlaveProject, slaveItem, labelItem(slaveItem) );
     }
 
-    return root;
+    return items;
 }
 
 
 
-template QTreeWidgetItem* DatabaseMerger<Song>::createItems() const;
-template QTreeWidgetItem* DatabaseMerger<Event>::createItems() const;
+template QList<MergeItemBase> DatabaseMerger<Song>::createItems() const;
+template QList<MergeItemBase> DatabaseMerger<Event>::createItems() const;

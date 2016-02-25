@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "databasemerger.h"
-#include "mergetreeview.h"
+#include "mergelistview.h"
 
 
 class Song;
@@ -14,10 +14,10 @@ public:
     explicit SongMergeWidget(QWidget* parent = nullptr);
     ~SongMergeWidget();
     void setDatabase(Database<Song> *master, Database<Song> *slave);
-    const QTreeWidgetItem* rootItem() const { return m_mergeTreeView->root(); }
+    QList<MergeItemBase> items() const { return m_mergeListView->items(); }
 
 private:
-    MergeTreeView* m_mergeTreeView;
+    MergeListView* m_mergeListView;
     DatabaseMerger<Song>* m_songDatabaseMerger;
 };
 

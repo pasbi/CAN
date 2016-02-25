@@ -4,7 +4,7 @@
 #include "Database/database.h"
 #include "Database/EventDatabase/event.h"
 #include "Database/SongDatabase/song.h"
-#include "QTreeWidgetItem"
+#include "mergeitem.h"
 
 
 class DatabaseMergerPrivate
@@ -25,10 +25,10 @@ public:
         m_slave = slave;
     }
 
-    QTreeWidgetItem *createItems() const;
+    QList<MergeItemBase> createItems() const;
 
-    Database<T>* masterProject() const { return m_master; }
-    Database<T>* slaveProject() const { return m_slave; }
+    Database<T>* master() const { return m_master; }
+    Database<T>* slave() const { return m_slave; }
 
 private:
     Database<T>* m_master;
