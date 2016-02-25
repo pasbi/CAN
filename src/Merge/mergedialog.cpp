@@ -62,12 +62,12 @@ void MergeDialog::setMerger(Merge *merger)
 
 QList<MergeItemBase> MergeDialog::songMergeItems() const
 {
-    return songMergeWidget()->items();
+    return songMergeWidget()->mergeItems();
 }
 
 QList<MergeItemBase> MergeDialog::eventMergeItems() const
 {
-    return songMergeWidget()->items();
+    return eventMergeWidget()->mergeItems();
 }
 
 

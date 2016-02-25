@@ -18,13 +18,12 @@ class MergeListView : public QWidget
 public:
     explicit MergeListView(QWidget *parent = 0);
     ~MergeListView();
-    QList<MergeItemBase> items() const { return m_items; }
+    QList<MergeItemBase> mergeItems() const;
     void setItems(const QList<MergeItemBase> items);
 
 private:
     Ui::MergeListView *ui;
     void updateHeaderSize();
-    QList<MergeItemBase> m_items;
 };
 
 #endif // MERGELISTVIEW_H

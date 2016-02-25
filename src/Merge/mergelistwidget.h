@@ -14,7 +14,8 @@ public:
     QMimeData* mimeData(const QList<QListWidgetItem *> items) const;
     Qt::DropActions supportedDropActions() const { return Qt::LinkAction; }
     Qt::DropAction defaultDropAction() const { return Qt::LinkAction; }
-    void setItems(const QList<MergeItemBase>& items);
+    void setMergeItems(const QList<MergeItemBase>& items);
+    QList<MergeItemBase> mergeItems() const;
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

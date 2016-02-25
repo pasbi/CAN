@@ -262,7 +262,7 @@ void MergeListWidget::createContextMenu(const QPoint &pos)
     }
 }
 
-void MergeListWidget::setItems(const QList<MergeItemBase> &items)
+void MergeListWidget::setMergeItems(const QList<MergeItemBase> &items)
 {
     Q_ASSERT(m_mergeItems.isEmpty());
 
@@ -273,5 +273,10 @@ void MergeListWidget::setItems(const QList<MergeItemBase> &items)
         m_mergeItems.insert(listWidgetItem, item);
         setItemWidget(listWidgetItem, new MergeListWidgetItemWidget(m_mergeItems[listWidgetItem]));
     }
+}
+
+QList<MergeItemBase> MergeListWidget::mergeItems() const
+{
+    return m_mergeItems.values();
 }
 

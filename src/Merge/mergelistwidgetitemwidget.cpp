@@ -68,12 +68,11 @@ QComboBox* MergeListWidgetItemWidget::makeComboBox(MergeItemBase::Origin origin)
     QComboBox* box = new QComboBox(this);
     switch (origin)
     {
-    case MergeItemBase::MasterProject:
+    case MergeItemBase::SlaveProject:
         box->addItem( tr("Add to master project") );
         box->addItem( tr("Do not add to master project") );
         break;
-
-    case MergeItemBase::SlaveProject:
+    case MergeItemBase::MasterProject:
         box->addItem( tr("Keep in master project") );
         box->addItem( tr("Remove from master project") );
         break;

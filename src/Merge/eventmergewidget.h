@@ -15,7 +15,7 @@ public:
     explicit EventMergeWidget(QWidget *parent = 0);
     ~EventMergeWidget();
     void setDatabase(Database<Event> *master, Database<Event> *slave);
-    QList<MergeItemBase> items() const { return m_mergeListView->items(); }
+    QList<MergeItemBase> mergeItems() const { return m_mergeListView->mergeItems(); }
 
 private:
     MergeListView* m_mergeListView;

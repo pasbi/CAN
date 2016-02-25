@@ -18,5 +18,10 @@ MergeListView::~MergeListView()
 
 void MergeListView::setItems(const QList<MergeItemBase> items)
 {
-    ui->mergeListWidget->setItems(items);
+    ui->mergeListWidget->setMergeItems(items);
+}
+
+QList<MergeItemBase> MergeListView::mergeItems() const
+{
+    return ui->mergeListWidget->mergeItems();
 }
