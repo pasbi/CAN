@@ -98,7 +98,11 @@ bool MergeListWidget::canDrop(const MergeItemBase &item, const QMimeData *data, 
 
 bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAction action)
 {
-    Q_ASSERT(index < count() && index >= 0);
+    if (index >= count() || index < 0)
+    {
+        // index is not guaranteed to be nice.
+        return false;
+    }
 
     QListWidgetItem* item = MergeListWidget::item(index);
     if(!canDrop(item, data, action))
@@ -248,7 +252,7 @@ void MergeListWidget::createContextMenu(const QPoint &pos)
         connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
 
         QAction* splitAction = menu->addAction(tr("Split"));
-        menu->move(pos);
+        menu->move(mapToGlobal(pos));
         menu->show();
 
         connect(splitAction, &QAction::triggered, [this, item]()
