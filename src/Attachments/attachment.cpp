@@ -72,12 +72,17 @@ QString Attachment::description() const
 
 Attachment* Attachment::copy() const
 {
+    return copy(song());
+}
+
+Attachment* Attachment::copy(Song* song) const
+{
     QBuffer buffer;
     buffer.open(QIODevice::ReadWrite);
     QDataStream stream(&buffer);
     stream << this;
 
-    Attachment* copy = create(type(), song());
+    Attachment* copy = create(type(), song);
     stream >> copy;
 
     return copy;

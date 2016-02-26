@@ -32,6 +32,7 @@ public:
 
     QString description() const;
 
+    Attachment* copy(Song *song) const;
     Attachment* copy() const;
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);

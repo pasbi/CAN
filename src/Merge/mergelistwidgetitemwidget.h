@@ -11,14 +11,14 @@ class MergeListWidgetItemWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MergeListWidgetItemWidget(MergeItemBase& mergeItem);
+    explicit MergeListWidgetItemWidget(MergeItemBase* mergeItem);
 
 signals:
-    void clicked();
+    void clicked(MergeItemBase*);
     void indexChanged(MergeItemBase::Action);
 
 private:
-    MergeItemBase& m_mergeItem;
+    MergeItemBase* m_mergeItem;
     QComboBox* makeComboBox(MergeItemBase::Origin origin);
     QPushButton* makePushButton();
 

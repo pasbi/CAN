@@ -6,12 +6,13 @@
 #include "Database/EventDatabase/eventdatabase.h"
 #include "mergeitem.h"
 
-MergeDialog::MergeDialog(QWidget *parent) :
+MergeDialog::MergeDialog(Merge *merge, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MergeDialog)
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
+    setMerger(merge);
 }
 
 MergeDialog::~MergeDialog()
@@ -43,33 +44,13 @@ void MergeDialog::on_buttonNext_clicked()
     }
 }
 
-SongMergeWidget* MergeDialog::songMergeWidget() const
-{
-    return static_cast<SongMergeWidget*>(ui->stackedWidget->widget(0));
-}
-
-EventMergeWidget* MergeDialog::eventMergeWidget() const
-{
-    return static_cast<EventMergeWidget*>(ui->stackedWidget->widget(1));
-}
-
 void MergeDialog::setMerger(Merge *merger)
 {
     m_merger = merger;
-    songMergeWidget()->setDatabase(merger->masterProject()->songDatabase(), merger->slaveProject()->songDatabase());
-    eventMergeWidget()->setDatabase(merger->masterProject()->eventDatabase(), merger->slaveProject()->eventDatabase());
-}
 
-QList<MergeItemBase> MergeDialog::songMergeItems() const
-{
-    return songMergeWidget()->mergeItems();
+    ui->songListWidget->setMerge(m_merger);
+    ui->eventListWidget->setMerge(m_merger);
 }
-
-QList<MergeItemBase> MergeDialog::eventMergeItems() const
-{
-    return eventMergeWidget()->mergeItems();
-}
-
 
 void MergeDialog::on_buttonCancel_clicked()
 {

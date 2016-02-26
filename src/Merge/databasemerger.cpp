@@ -103,9 +103,9 @@ template<> QString labelItem(const Attachment* attachment)
 }
 
 template<class T>
-QList<MergeItemBase> DatabaseMerger<T>::createItems() const
+QList<MergeItemBase*> DatabaseMerger<T>::createItems() const
 {
-    QList<MergeItemBase> items;
+    QList<MergeItemBase*> items;
 
     // get all items
     QList<T*> masterItems = m_master->items();
@@ -132,12 +132,12 @@ QList<MergeItemBase> DatabaseMerger<T>::createItems() const
 
     for (T* masterItem : masterItems)
     {
-        items << MergeItem<T>( MergeItemBase::MasterProject, masterItem, labelItem(masterItem) );
+        items << new MergeItem<T>( MergeItemBase::MasterProject, masterItem, labelItem(masterItem) );
     }
 
     for (T* slaveItem : slaveItems)
     {
-        items << MergeItem<T>( MergeItemBase::SlaveProject, slaveItem, labelItem(slaveItem) );
+        items << new MergeItem<T>( MergeItemBase::SlaveProject, slaveItem, labelItem(slaveItem) );
     }
 
     return items;
@@ -145,5 +145,5 @@ QList<MergeItemBase> DatabaseMerger<T>::createItems() const
 
 
 
-template QList<MergeItemBase> DatabaseMerger<Song>::createItems() const;
-template QList<MergeItemBase> DatabaseMerger<Event>::createItems() const;
+template QList<MergeItemBase*> DatabaseMerger<Song>::createItems() const;
+template QList<MergeItemBase*> DatabaseMerger<Event>::createItems() const;

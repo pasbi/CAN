@@ -25,7 +25,7 @@ public:
         m_slave = slave;
     }
 
-    QList<MergeItemBase> createItems() const;
+    QList<MergeItemBase *> createItems() const;
 
     Database<T>* master() const { return m_master; }
     Database<T>* slave() const { return m_slave; }

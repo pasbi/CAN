@@ -15,13 +15,10 @@ class MergeDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit MergeDialog(QWidget *parent = 0);
+    explicit MergeDialog(Merge* merge, QWidget *parent = 0);
     ~MergeDialog();
-    void setMerger(Merge* merger);
 
-    QList<MergeItemBase> songMergeItems() const;
-    QList<MergeItemBase> eventMergeItems() const;
-    QMap<Song*, MergeItem<Attachment>> attachmentMergeItems() const { Q_UNIMPLEMENTED(); return QMap<Song*, MergeItem<Attachment>>(); }
+    QMap<Song*, MergeItemBase*> attachmentMergeItems() const { Q_UNIMPLEMENTED(); return QMap<Song*, MergeItemBase*>(); }
 
 private slots:
     void on_buttonBack_clicked();
@@ -31,8 +28,7 @@ private slots:
 private:
     Ui::MergeDialog *ui;
     Merge* m_merger;
-    SongMergeWidget* songMergeWidget() const;
-    EventMergeWidget* eventMergeWidget() const;
+    void setMerger(Merge* merger);
 };
 
 #endif // MERGEDIALOG_H

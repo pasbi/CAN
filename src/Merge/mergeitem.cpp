@@ -6,7 +6,8 @@ MergeItemBase::MergeItemBase(Origin origin, Type type, void *pointer, const QStr
     m_pointer(pointer),
     m_masterPointer(nullptr),
     m_slavePointer(nullptr),
-    m_baseLabel(baseLabel)
+    m_baseLabel(baseLabel),
+    m_combinationPointer(nullptr)
 {
     switch (origin)
     {
@@ -24,10 +25,8 @@ MergeItemBase::MergeItemBase(Origin origin, Type type, void *pointer, const QStr
     }
 }
 
-MergeItemBase::MergeItemBase(const QByteArray &data)
+MergeItemBase::~MergeItemBase()
 {
-    QDataStream stream(data);
-    stream >> *this;
 }
 
 MergeItemBase::MergeItemBase() :
@@ -58,40 +57,6 @@ bool MergeItemBase::operator==(const MergeItemBase& other) const
     }
 
     return false;
-}
-
-QDataStream& operator<<(QDataStream& out, const MergeItemBase& mergeItem)
-{
-    out << static_cast<qint32>(mergeItem.m_action)
-        << static_cast<qint32>(mergeItem.m_type)
-        << static_cast<qint32>(mergeItem.m_origin)
-        << reinterpret_cast<quintptr>(mergeItem.m_pointer)
-        << reinterpret_cast<quintptr>(mergeItem.m_masterPointer)
-        << reinterpret_cast<quintptr>(mergeItem.m_slavePointer)
-        << mergeItem.m_baseLabel
-        << mergeItem.m_masterBaseLabel
-        << mergeItem.m_slaveBaseLabel;
-    return out;
-}
-
-QDataStream& operator>>(QDataStream& in, MergeItemBase& mergeInfo)
-{
-
-    qint32 action, type, origin;
-    in >> action >> type >> origin;
-    mergeInfo.m_action = static_cast<MergeItemBase::Action>(action);
-    mergeInfo.m_type = static_cast<MergeItemBase::Type>(type);
-    mergeInfo.m_origin = static_cast<MergeItemBase::Origin>(origin);
-
-    quintptr pointer, masterPointer, slavePointer;
-    in >> pointer >> masterPointer >> slavePointer;
-    mergeInfo.m_pointer = reinterpret_cast<void*>(pointer);
-    mergeInfo.m_masterPointer = reinterpret_cast<void*>(masterPointer);
-    mergeInfo.m_slavePointer = reinterpret_cast<void*>(slavePointer);
-
-    in >> mergeInfo.m_baseLabel >> mergeInfo.m_masterBaseLabel >> mergeInfo.m_slaveBaseLabel;
-
-    return in;
 }
 
 MergeItemBase::Action MergeItemBase::action() const
@@ -147,22 +112,18 @@ void MergeItemBase::setAction(Action a)
 void MergeItemBase::setPointer(void* dataPointer)
 {
     m_pointer = dataPointer;
-    m_masterPointer = nullptr;
-    m_slavePointer = nullptr;
 }
 
 void MergeItemBase::setMasterSlavePointer(void* masterPointer, void* slavePointer)
 {
     m_masterPointer = masterPointer;
     m_slavePointer = slavePointer;
-    m_pointer = nullptr;
 }
 
 void MergeItemBase::setMasterSlaveLabel(const QString& masterLabel, const QString& slaveLabel)
 {
     m_masterBaseLabel = masterLabel;
     m_slaveBaseLabel = slaveLabel;
-    m_baseLabel = "";
 }
 
 QString MergeItemBase::label() const
@@ -192,7 +153,51 @@ void MergeItemBase::setOrigin(Origin origin)
 void MergeItemBase::setLabel(const QString &label)
 {
     m_baseLabel = label;
-    m_masterBaseLabel = "";
-    m_slaveBaseLabel = "";
+}
+
+void MergeItemBase::setCombinationPointer(void *combinationPointer)
+{
+    m_combinationPointer = combinationPointer;
+}
+
+void MergeItemBase::initializeCombinationObject()
+{
+    switch (type())
+    {
+    case SongType:
+        setCombinationPointer(masterPointer<Song>()->copy());
+        break;
+    case EventType:
+        setCombinationPointer(masterPointer<Event>()->copy());
+        break;
+    case AttachmentType:
+        setCombinationPointer(masterPointer<Attachment>()->copy());
+        break;
+    default:
+        Q_UNREACHABLE();
+    }
+}
+
+void MergeItemBase::deleteCombinationObject()
+{
+    if (m_combinationPointer)
+    {
+        qDebug() << "delete" << m_combinationPointer;
+    }
+    switch (type())
+    {
+    case SongType:
+        delete combinationPointer<Song>();
+        break;
+    case EventType:
+        delete combinationPointer<Event>();
+        break;
+    case AttachmentType:
+        delete combinationPointer<Attachment>();
+        break;
+    default:
+        Q_ASSERT(m_combinationPointer == nullptr);
+    }
+    setCombinationPointer(nullptr);
 }
 

@@ -24,6 +24,11 @@ protected:
 public:
     virtual Database<T>* database() const { return m_database; }
 
+    T* copy() const
+    {
+        return copy(database());
+    }
+
     T* copy(Database<T>* database) const
     {
         QBuffer buffer;

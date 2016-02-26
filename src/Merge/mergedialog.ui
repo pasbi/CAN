@@ -31,8 +31,20 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="SongMergeWidget" name="songMergeWidget"/>
-     <widget class="EventMergeWidget" name="eventMergeWidget"/>
+     <widget class="QWidget" name="songWidget">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="MergeListWidget" name="songListWidget"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="eventWidget">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="MergeListWidget" name="eventListWidget"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
@@ -92,16 +104,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SongMergeWidget</class>
-   <extends>QWidget</extends>
-   <header>Merge/songmergewidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>EventMergeWidget</class>
-   <extends>QWidget</extends>
-   <header>Merge/eventmergewidget.h</header>
-   <container>1</container>
+   <class>MergeListWidget</class>
+   <extends>QListWidget</extends>
+   <header>Merge/mergelistwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

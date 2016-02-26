@@ -4,17 +4,17 @@
 #include <QPushButton>
 #include <QLabel>
 
-MergeListWidgetItemWidget::MergeListWidgetItemWidget(MergeItemBase& mergeItem) :
+MergeListWidgetItemWidget::MergeListWidgetItemWidget(MergeItemBase *mergeItem) :
     QWidget(nullptr),
     m_mergeItem(mergeItem)
 {
-    QLabel* label = new QLabel(mergeItem.label(), this);
+    QLabel* label = new QLabel(mergeItem->label(), this);
     QWidget* controlWidget = nullptr;
 
-    switch (mergeItem.origin()) {
+    switch (mergeItem->origin()) {
     case MergeItemBase::MasterProject:
     case MergeItemBase::SlaveProject:
-        controlWidget = makeComboBox(mergeItem.origin());
+        controlWidget = makeComboBox(mergeItem->origin());
         break;
     case MergeItemBase::BothProjects:
         controlWidget = makePushButton();
@@ -86,17 +86,17 @@ QComboBox* MergeListWidgetItemWidget::makeComboBox(MergeItemBase::Origin origin)
     {
         if (index == 0)
         {
-            m_mergeItem.setAction(MergeItemBase::AddItemAction);
+            m_mergeItem->setAction(MergeItemBase::AddItemAction);
             emit indexChanged(MergeItemBase::AddItemAction);
         }
         else
         {
-            m_mergeItem.setAction(MergeItemBase::DeleteItemAction);
+            m_mergeItem->setAction(MergeItemBase::DeleteItemAction);
             emit indexChanged(MergeItemBase::DeleteItemAction);
         }
     });
 
-    m_mergeItem.setAction(MergeItemBase::AddItemAction);
+    m_mergeItem->setAction(MergeItemBase::AddItemAction);
     return box;
 }
 
@@ -106,8 +106,7 @@ QPushButton* MergeListWidgetItemWidget::makePushButton()
 
     connect(button, &QPushButton::clicked, [this]()
     {
-        qDebug() << "open detail dialog ....";
-        emit clicked();
+        emit clicked(m_mergeItem);
     });
 
     return button;

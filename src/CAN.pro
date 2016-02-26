@@ -150,7 +150,9 @@ SOURCES += main.cpp\
     Merge/mergelistwidget.cpp \
     Merge/mergelistview.cpp \
     Merge/mergeitem.cpp \
-    Merge/mergelistwidgetitemwidget.cpp
+    Merge/mergelistwidgetitemwidget.cpp \
+    Merge/combinesongsdialog.cpp \
+    Merge/combineitems.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -275,7 +277,9 @@ HEADERS  += mainwindow.h \
     Merge/mergelistview.h \
     Merge/mergelistwidget.h \
     Merge/mergeitem.h \
-    Merge/mergelistwidgetitemwidget.h
+    Merge/mergelistwidgetitemwidget.h \
+    Merge/combinesongsdialog.h \
+    Merge/combineitems.h
 
 
 FORMS    += mainwindow.ui \
@@ -300,7 +304,8 @@ FORMS    += mainwindow.ui \
     Dialogs/peoplesdialog.ui \
     Dialogs/textdialog.ui \
     Merge/mergedialog.ui \
-    Merge/mergelistview.ui
+    Merge/mergelistview.ui \
+    Merge/combinesongsdialog.ui
 
 
 RESOURCES += \

@@ -5,27 +5,27 @@
 #include "Database/SongDatabase/song.h"
 #include "Database/EventDatabase/event.h"
 #include "Attachments/attachment.h"
+#include "global.h"
 
+//TODO disable copy, use one list of merge items in Merge class and make them easily accessible (e.g. static)
+// everywhere else, use only pointers to MergeItemBase objects that are stored in Merge class.
 class MergeItemBase
 {
 public:
     enum Type { SongType, EventType, AttachmentType, NoType };
     enum Origin { MasterProject, SlaveProject, BothProjects, NoProject };
     enum Action { AddItemAction, DeleteItemAction, ModifyItemAction, NoAction };
-    MergeItemBase(const QByteArray& data);
     MergeItemBase();
-
-protected:
-    // use this constructor only via template<class T> MergeItem
     MergeItemBase(Origin origin, Type type, void* pointer, const QString& baseLabel);
+    ~MergeItemBase();
 
+    MergeItemBase(const MergeItemBase &data) = delete;
+    const MergeItemBase& operator=(const MergeItemBase& other) = delete;
 
-public:
     QString label() const;
-
     void setMasterSlavePointer(void* masterPointer, void* slavePointer);
-    void* masterPointer() const { return m_masterPointer; }
-    void* slavePointer() const { return m_slavePointer; }
+    template<class T = void> T* masterPointer() const { return static_cast<T*>(m_masterPointer); }
+    template<class T = void> T* slavePointer() const { return static_cast<T*>(m_masterPointer); }
     void setPointer(void* pointer);
     void* pointer() const { return m_pointer; }
 
@@ -45,6 +45,16 @@ public:
     void setOrigin(Origin origin);
     Origin origin() const { return m_origin; }
 
+    /**
+     * @brief setCombinationPointer remember to delete combination pointer before overwriting it!
+     * @param combinationPointer
+     */
+    void setCombinationPointer(void* combinationPointer);
+    // pure virtual is not possible for technical reasons
+    void initializeCombinationObject();
+    void deleteCombinationObject();
+    template<class T = void> T* combinationPointer() const { return static_cast<T*>(m_combinationPointer); }
+
     bool operator==(const MergeItemBase& other) const;
 
 
@@ -60,13 +70,9 @@ private:
     QString m_masterBaseLabel;
     QString m_slaveBaseLabel;
 
-
-    friend QDataStream& operator<<(QDataStream& out, const MergeItemBase& mergeInfo);
-    friend QDataStream& operator>>(QDataStream& in, MergeItemBase& mergeInfo);
+    // this field is not serialized or compared.
+    void* m_combinationPointer;
 };
-
-QDataStream& operator<<(QDataStream& out, const MergeItemBase& mergeInfo);
-QDataStream& operator>>(QDataStream& in, MergeItemBase& mergeInfo);
 
 template<class T>
 MergeItemBase::Type findType()
@@ -107,6 +113,7 @@ public:
     T* pointer() const { return static_cast<T*>(MergeItemBase::pointer()); }
     T* masterPointer() const { return static_cast<T*>(MergeItemBase::masterPointer()); }
     T* slavePointer() const { return static_cast<T*>(MergeItemBase::slavePointer()); }
+    T* combinationPointer() const { return static_cast<T*>(MergeItemBase::combinationPointer()); }
     void setMasterSlavePointer(T* masterPointer, T* slavePointer)
     {
         MergeItemBase::setMasterSlavePointer(masterPointer, slavePointer);
@@ -115,6 +122,17 @@ public:
     void setPointer(T* pointer)
     {
         MergeItemBase::setPointer(pointer);
+    }
+
+    void initializeCombinationObject()
+    {
+        setCombinationPointer(masterPointer()->copy());
+    }
+
+    void deleteCombinationObject()
+    {
+        delete combinationPointer();
+        setCombinationPointer(nullptr);
     }
 
 
