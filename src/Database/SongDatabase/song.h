@@ -7,6 +7,7 @@
 #include "Program/program.h"
 #include "Database/databaseitem.h"
 #include "chord.h"
+#include "pedanticmap.h"
 
 class SongDatabase;
 class Attachment;
@@ -27,16 +28,7 @@ public:
     //
     /////////////////////////////////////////////////
 private:
-    QString m_title;
-    QString m_artist;
-    QDateTime m_creationDateTime;
-    QTime m_duration;
-    Label m_label;
-    State m_state;
-    Chord m_key;
-    QStringList m_singers;
-    QStringList m_soloPlayers;
-    QString m_comments;
+    PedanticVariantMap m_attributes;
 
 public:
     void setTitle(const QString& title);
@@ -48,21 +40,24 @@ public:
     void setSoloPlayers(const QStringList& soloPlayers);
     void setComments(const QString& comments);
     void setKey(Chord key);
-    QString title() const { return m_title; }
-    QString artist() const { return m_artist; }
-    QTime duration() const { return m_duration; }
-    QString description() const { return title(); }
-    QDateTime creationTime() const { return m_creationDateTime; }
-    Label label() const { return m_label; }
-    State state() const { return m_state; }
-    QStringList singers() const { return m_singers; }
-    QString singersDisplay() const { return m_singers.join(", "); }
-    QStringList soloPlayers() const { return m_soloPlayers; }
-    QString soloPlayersDisplay() const { return m_soloPlayers.join(", "); }
+    QString title() const;
+    QString artist() const;
+    QTime duration() const;
+    QString description() const;
+    QDateTime creationTime() const;
+    Label label() const;
+    State state() const;
+    QStringList singers() const;
+    QStringList soloPlayers() const;
+    QString singersDisplay() const { return singers().join(", "); }
+    QString soloPlayersDisplay() const { return soloPlayers().join(", "); }
     QString stateDisplay() const;
     QString labelDisplay() const;
-    Chord key() const { return m_key; }
-    QString comments() const { return m_comments; }
+    Chord key() const;
+    QString comments() const;
+    PedanticVariantMap attributes() const;
+    QString attributeDisplay(const QString& key) const;
+    void setAttributes(const PedanticVariantMap &attributes);
 
     QStringList textAttributes() const;
 
@@ -110,4 +105,8 @@ public:
     static QStringList labelNames();
 
 };
+
+Q_DECLARE_METATYPE(Song::Label)
+Q_DECLARE_METATYPE(Song::State)
+
 #endif // SONG_H

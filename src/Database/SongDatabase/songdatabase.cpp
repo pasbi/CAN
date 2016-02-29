@@ -39,77 +39,15 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
 {
     assert(!index.parent().isValid());
 
+    const Song* song = m_items[index.row()];
+    const QString key = song->attributes().keys()[index.column()];
     switch (role)
     {
     case Qt::DisplayRole:
-    case Qt::EditRole:
     case Qt::ToolTipRole:
-    {
-        const Song* song = m_items[index.row()];
-        switch (index.column())
-        {
-        case 0:
-            return song->title();
-        case 1:
-            return song->artist();
-        case 2:
-            if (role == Qt::DisplayRole)
-            {
-                return song->duration().toString("mm:ss");
-            }
-            else
-            {
-                return song->duration();
-            }
-        case 3:
-            if (role == Qt::DisplayRole)
-            {
-                return song->key().key();
-            }
-            else
-            {
-                return QVariant::fromValue(song->key());
-            }
-        case 4:
-            if (role == Qt::DisplayRole)
-            {
-                return song->labelDisplay();
-            }
-            else
-            {
-                return song->label();
-            }
-        case 5:
-            if (role == Qt::DisplayRole)
-            {
-                return song->stateDisplay();
-            }
-            else
-            {
-                return song->state();
-            }
-        case 6:
-            if (role == Qt::DisplayRole)
-            {
-                return song->soloPlayersDisplay();
-            }
-            else
-            {
-                return song->soloPlayers();
-            }
-        case 7:
-            if (role == Qt::DisplayRole)
-            {
-                return song->singersDisplay();
-            }
-            else
-            {
-                return song->singers();
-            }
-        case 8:
-            return song->comments();
-        }
-    }
+        return song->attributeDisplay(key);
+    case Qt::EditRole:
+        return song->attributes()[key];
     default:
         return QVariant();
     }

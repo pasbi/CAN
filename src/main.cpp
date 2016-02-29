@@ -72,6 +72,10 @@ void installTranslator()
 int main(int argc, char *argv[])
 {
 
+    QStringList list = {"1", "2", "4"};
+    QVariant var = list;
+    qDebug() << var.toString();
+
 #ifdef Q_OS_WIN32
     ShowWindow( GetConsoleWindow(), SW_HIDE );
 #endif

@@ -49,7 +49,7 @@ void CombineSongsDialog::assembleCombination(Song *result)
     result->setComments(m_comments);
 }
 
-void CombineSongsDialog::addTableWidgetItem(const QString& master, const QString& slave)
+void CombineSongsDialog::addTableWidgetItem(const QString& master, const QString& slave, const QString& key)
 {
     int row = ui->tableWidget->rowCount();
     QTableWidgetItem* mi = new QTableWidgetItem();
@@ -59,6 +59,9 @@ void CombineSongsDialog::addTableWidgetItem(const QString& master, const QString
 
     mi->setFlags(mi->flags() | Qt::ItemIsSelectable);
     si->setFlags(si->flags() | Qt::ItemIsSelectable);
+
+    mi->setData(Qt::UserRole, key);
+    si->setData(Qt::UserRole, key);
 
     mi->setText( master );
     si->setText( slave );
@@ -70,44 +73,12 @@ void CombineSongsDialog::addTableWidgetItem(const QString& master, const QString
 
 void CombineSongsDialog::init()
 {
-    if (master()->title() != slave()->title())
+    for (const QString& key : master()->attributes().keys())
     {
-        addTableWidgetItem(master()->title(), slave()->title());
-    }
-
-    if (master()->artist() != slave()->artist())
-    {
-        addTableWidgetItem(master()->artist(), slave()->artist());
-    }
-
-    if (master()->label() != slave()->label())
-    {
-        addTableWidgetItem(master()->labelDisplay(), slave()->labelDisplay());
-    }
-
-    if (master()->state() != slave()->state())
-    {
-        addTableWidgetItem(master()->stateDisplay(), slave()->stateDisplay());
-    }
-
-    if (master()->key() != slave()->key())
-    {
-        addTableWidgetItem(master()->key().key(), slave()->key().key());
-    }
-
-    if (master()->singers() != slave()->singers())
-    {
-        addTableWidgetItem(master()->singersDisplay(), slave()->singersDisplay());
-    }
-
-    if (master()->soloPlayers() != slave()->soloPlayers())
-    {
-        addTableWidgetItem(master()->soloPlayersDisplay(), slave()->soloPlayersDisplay());
-    }
-
-    if (master()->comments() != slave()->comments())
-    {
-        addTableWidgetItem(master()->comments(), slave()->comments());
+        if (master()->attributes()[key] != slave()->attributes()[key])
+        {
+            addTableWidgetItem(master()->attributeDisplay(key), slave()->attributeDisplay(key), key);
+        }
     }
 }
 
