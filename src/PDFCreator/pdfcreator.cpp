@@ -167,8 +167,8 @@ QString labelSong( const Song* song )
 {
     QString pattern = QString("%2 %1 %3")
             .arg( PDFCreator::HYPHEN )
-            .arg( song->title() )
-            .arg( song->artist() );
+            .arg( song->attribute("title").toString() )
+            .arg( song->attribute("artist").toString() );
 
     return pattern;
 }
@@ -185,7 +185,7 @@ bool PDFCreator::paintSong(const Song* song)
     {
         if (isInterruptionRequested()) return false;
         notifyCurrentTaskChanged( QString(tr("Draw attachment %1 of song %2"))
-                                      .arg(song->title())
+                                      .arg(song->attribute("title").toString())
                                       .arg(attachment->name())                  );
 
         if (attachment->isPaintable())

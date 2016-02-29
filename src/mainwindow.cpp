@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //TODO outsource load, save, etc. stuff into separate object that is handled by Application
     setWindowIcon( QIcon(":/icons/icons/01-elephant-icon.png") );
     app().setMainWindow( this );
     app().setProject( &m_project );
@@ -180,7 +181,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else
     {
-        loadDefaultProject();
+//        loadDefaultProject();
     }
 
     connect( &m_project, &Project::songDatabaseCommandPushed, [this]()

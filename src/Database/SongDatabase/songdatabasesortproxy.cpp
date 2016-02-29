@@ -32,7 +32,7 @@ void SongDatabaseSortProxy::setHideInactives(bool hide)
 
 bool SongDatabaseSortProxy::acceptSong(const Song *song) const
 {
-    if (m_hideInactives && song->state() == Song::Inactive)
+    if (m_hideInactives && song->attribute("state").value<Song::State>() == Song::Inactive)
     {
         return false;
     }

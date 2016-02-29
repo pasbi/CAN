@@ -304,6 +304,12 @@ QDataStream& operator>>(QDataStream& in, Chord& chord)
     return in;
 }
 
+QDebug& operator <<(QDebug& dbg, const Chord& chord)
+{
+    dbg << chord.toString();
+    return dbg;
+}
+
 
 
 

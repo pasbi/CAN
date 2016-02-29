@@ -25,4 +25,14 @@ template<typename T> T preference(const QString& key)
     return preference(key).value<T>();
 }
 
+
+#define REGISTER_META_TYPE_STREAM_OPERATORS(NAMESPACE, TYPE) \
+    static struct TYPE##_RegisterMetaTypeStreamOperators_t \
+    { \
+        TYPE##_RegisterMetaTypeStreamOperators_t() \
+        { \
+            qRegisterMetaTypeStreamOperators<NAMESPACE TYPE>(); \
+        } \
+    } TYPE##_RegisterMetaTypeStreamOperators;
+
 #endif // GLOBAL_H

@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QVariant>
+#include "global.h"
 
 class Chord
 {
@@ -93,7 +94,9 @@ public:
 
 QDataStream& operator<<(QDataStream& out, const Chord& chord);
 QDataStream& operator>>(QDataStream& in, Chord& chord);
+QDebug& operator<<(QDebug& dbg, const Chord& chord);
 
 Q_DECLARE_METATYPE(Chord)
+REGISTER_META_TYPE_STREAM_OPERATORS(, Chord)
 
 #endif // CHORD_H

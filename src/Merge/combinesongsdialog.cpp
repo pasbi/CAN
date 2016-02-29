@@ -37,16 +37,39 @@ CombineSongsDialog::~CombineSongsDialog()
     delete ui;
 }
 
+bool CombineSongsDialog::useSlaveValue(const QString& key) const
+{
+    for (int row = 0; row < ui->tableWidget->rowCount(); ++row)
+    {
+        // find the item with correct key
+        QTableWidgetItem* masterItem = ui->tableWidget->item(row, 0);
+        QTableWidgetItem* slaveItem = ui->tableWidget->item(row, 1);
+        Q_ASSERT(masterItem->data(Qt::UserRole).toString() == slaveItem->data(Qt::UserRole).toString());
+        if (key != masterItem->data(Qt::UserRole).toString())
+        {
+            return slaveItem->isSelected();
+        }
+    }
+
+    // key was not found => slave and master value are identical => they have no entry => Choice is arbitrary.
+    return false;
+}
+
 void CombineSongsDialog::assembleCombination(Song *result)
 {
-    result->setTitle(m_title);
-    result->setArtist(m_artist);
-    result->setlabel(m_label);
-    result->setState(m_state);
-    result->setKey(m_key);
-    result->setSingers(m_singers);
-    result->setSoloPlayers(m_soloPlayers);
-    result->setComments(m_comments);
+    for (const QString& key : Song::ATTRIBUTE_KEYS)
+    {
+        QVariant value;
+        if (useSlaveValue(key))
+        {
+            value = slave()->attribute(key);
+        }
+        else
+        {
+            value = master()->attribute(key);
+        }
+        result->setAttribute(key, value);
+    }
 }
 
 void CombineSongsDialog::addTableWidgetItem(const QString& master, const QString& slave, const QString& key)
@@ -73,13 +96,15 @@ void CombineSongsDialog::addTableWidgetItem(const QString& master, const QString
 
 void CombineSongsDialog::init()
 {
-    for (const QString& key : master()->attributes().keys())
+    for (const QString& key : Song::ATTRIBUTE_KEYS)
     {
-        if (master()->attributes()[key] != slave()->attributes()[key])
+        if (master()->attribute(key) != slave()->attribute(key))
         {
             addTableWidgetItem(master()->attributeDisplay(key), slave()->attributeDisplay(key), key);
         }
     }
+
+    //TODO attachments
 }
 
 void CombineSongsDialog::updateHeaderWidths()

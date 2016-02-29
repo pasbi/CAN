@@ -20,7 +20,7 @@ EventTableView::EventTableView(QWidget *parent) :
 {
     setModel( app().project()->eventDatabase() );
 
-    setItemDelegateForColumn( 0, new TypeComboBoxDelegate( Event::eventTypeNames(), this ) );
+    setItemDelegateForColumn( 0, new TypeComboBoxDelegate<Event::Type>( Event::eventTypeNames(), this ) );
     setItemDelegateForColumn( 2, new LineEditDelegate( this ));
 
     horizontalHeader()->setResizeContentsPrecision( -1 ); // look at all rows.

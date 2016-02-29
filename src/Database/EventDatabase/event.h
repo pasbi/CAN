@@ -54,5 +54,7 @@ private:
     Setlist* m_setlist;
 };
 
+Q_DECLARE_METATYPE(Event::Type)
+
 
 #endif // DATE_H

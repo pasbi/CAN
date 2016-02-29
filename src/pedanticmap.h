@@ -63,6 +63,7 @@ QDataStream& operator << (QDataStream& out, const PedanticMap<Key, T>& map)
 {
     out << map.m_keys;
     out << map.m_map;
+    qDebug() << "<< " << map.m_map;
     return out;
 }
 
@@ -71,6 +72,7 @@ QDataStream& operator >> (QDataStream& in, PedanticMap<Key, T>& map)
 {
     in >> map.m_keys;
     in >> map.m_map;
+    qDebug() << ">> " << map.m_map;
     return in;
 }
 

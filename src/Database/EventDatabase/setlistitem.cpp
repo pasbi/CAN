@@ -54,7 +54,7 @@ void SetlistItem::setSong(const Song *song)
 
 QString SetlistItem::labelSong(const Song *song)
 {
-    return QString("%1 - %2").arg(song->title(), song->artist());
+    return QString("%1 - %2").arg(song->attribute("title").toString(), song->attribute("artist").toString());
 }
 
 QString SetlistItem::label() const

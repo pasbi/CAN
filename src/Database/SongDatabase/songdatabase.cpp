@@ -40,14 +40,13 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
     assert(!index.parent().isValid());
 
     const Song* song = m_items[index.row()];
-    const QString key = song->attributes().keys()[index.column()];
     switch (role)
     {
     case Qt::DisplayRole:
     case Qt::ToolTipRole:
-        return song->attributeDisplay(key);
+        return song->attributeDisplay(index.column());
     case Qt::EditRole:
-        return song->attributes()[key];
+        return song->attribute(index.column());
     default:
         return QVariant();
     }
@@ -195,44 +194,14 @@ bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int 
     if (role == Qt::EditRole)
     {
         Song* song = m_items[index.row()];
-        switch (index.column())
-        {
-        case 0:
-            song->setTitle(value.toString());
-            break;
-        case 1:
-            song->setArtist(value.toString());
-            break;
-        case 2:
-            song->setDuration(value.toTime());
-            break;
-        case 3:
-            song->setKey(value.value<Chord>());
-            break;
-        case 4:
-            song->setlabel(static_cast<Song::Label>(value.toInt()));
-            break;
-        case 5:
-            song->setState(static_cast<Song::State>(value.toInt()));
-            break;
-        case 6:
-            song->setSoloPlayers(value.toStringList());
-            break;
-        case 7:
-            song->setSingers(value.toStringList());
-            break;
-        case 8:
-            song->setComments(value.toString());
-            break;
-        default:
-            return false;
-        }
-
+        song->setAttribute(index.column(), value);
         emit dataChanged(index, index);
         return true;
     }
-
-    return false;
+    else
+    {
+        return false;
+    }
 }
 
 Qt::DropActions SongDatabase::supportedDragActions() const
@@ -262,8 +231,8 @@ QStringList SongDatabase::peoples() const
     QStringList peoples;
     for (const Song* song : items())
     {
-        peoples << song->singers();
-        peoples << song->soloPlayers();
+        peoples << song->attribute("singers").toStringList();
+        peoples << song->attribute("soloPlayers").toStringList();
     }
     peoples.removeDuplicates();
     return peoples;

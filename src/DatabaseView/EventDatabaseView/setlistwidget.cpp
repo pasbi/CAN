@@ -140,11 +140,12 @@ void SetlistWidget::updateInfoLabel()
         {
             if (i->type() == SetlistItem::SongType)
             {
-                if (i->song()->duration().isValid())
+                QTime duration = i->song()->attribute("duration").toTime();
+                if (duration.isValid())
                 {
-                    seconds += i->song()->duration().second();
-                    minutes += i->song()->duration().minute();
-                    hours   += i->song()->duration().hour();
+                    seconds += duration.second();
+                    minutes += duration.minute();
+                    hours   += duration.hour();
                     songsWithValidDuration++;
                 }
                 else

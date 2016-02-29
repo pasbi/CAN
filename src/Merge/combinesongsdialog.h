@@ -39,6 +39,7 @@ private:
     QString m_comments;
     void updateHeaderWidths();
     void addTableWidgetItem(const QString& master, const QString& slave, const QString &name);
+    bool useSlaveValue(const QString& key) const;
 
 };
 

@@ -19,18 +19,20 @@ template<> DatabaseMergerPrivate::CompareResult compare(const Attachment*, const
 
 template<> DatabaseMergerPrivate::CompareResult compare(const Song* master, const Song* slave)
 {
-    if (master->title() != slave->title())
+    //TODO recognize renamings
+    for (const QString& key : Song::ATTRIBUTE_KEYS)
     {
-        return DatabaseMergerPrivate::Unequal;
+        if (master->attribute(key) != slave->attribute(key))
+        {
+            return DatabaseMergerPrivate::Unequal;
+        }
     }
-    if (master->artist() != slave->artist())
-    {
-        return DatabaseMergerPrivate::Unequal;
-    }
+
     if (master->attachments().length() != slave->attachments().length())
     {
         return DatabaseMergerPrivate::Unequal;
     }
+
     for (int i = 0; i < master->attachments().length(); ++i)
     {
         switch (compare(master->attachment(i), slave->attachment(i)))
@@ -87,7 +89,7 @@ template<class T> QString labelItem(const T*)
 
 template<> QString labelItem(const Song* song)
 {
-    return song->title();
+    return song->attribute("title").toString();
 }
 
 

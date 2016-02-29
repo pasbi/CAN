@@ -138,7 +138,6 @@ SOURCES += main.cpp\
     Dialogs/peoplesdialog.cpp \
     Dialogs/textdialog.cpp \
     DatabaseView/ItemDelegates/lineeditdelegate.cpp \
-    DatabaseView/ItemDelegates/typecomboboxdelegate.cpp \
     global.cpp \
     DatabaseView/freezetableview.cpp \
     Merge/merge.cpp \

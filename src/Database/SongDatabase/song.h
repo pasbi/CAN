@@ -31,35 +31,16 @@ private:
     PedanticVariantMap m_attributes;
 
 public:
-    void setTitle(const QString& title);
-    void setArtist(const QString& artist);
-    void setDuration(const QTime& duration);
-    void setlabel(Label label);
-    void setState(State state);
-    void setSingers(const QStringList& singers);
-    void setSoloPlayers(const QStringList& soloPlayers);
-    void setComments(const QString& comments);
-    void setKey(Chord key);
-    QString title() const;
-    QString artist() const;
-    QTime duration() const;
-    QString description() const;
-    QDateTime creationTime() const;
-    Label label() const;
-    State state() const;
-    QStringList singers() const;
-    QStringList soloPlayers() const;
-    QString singersDisplay() const { return singers().join(", "); }
-    QString soloPlayersDisplay() const { return soloPlayers().join(", "); }
-    QString stateDisplay() const;
-    QString labelDisplay() const;
-    Chord key() const;
-    QString comments() const;
-    PedanticVariantMap attributes() const;
+    static const QStringList ATTRIBUTE_KEYS;
+    QVariant attribute(const QString& key) const;
+    QVariant attribute(int i) const;
+    void setAttribute(const QString& key, const QVariant& value);
+    void setAttribute(int i, const QVariant &value);
     QString attributeDisplay(const QString& key) const;
-    void setAttributes(const PedanticVariantMap &attributes);
+    QString attributeDisplay(int i) const;
 
-    QStringList textAttributes() const;
+
+    QStringList textAttributes() const; //TODO can this be removed?
 
     /////////////////////////////////////////////////
     ////
@@ -108,5 +89,11 @@ public:
 
 Q_DECLARE_METATYPE(Song::Label)
 Q_DECLARE_METATYPE(Song::State)
+REGISTER_META_TYPE_STREAM_OPERATORS(Song::, Label)
+REGISTER_META_TYPE_STREAM_OPERATORS(Song::, State)
+QDataStream& operator <<(QDataStream& out, const Song::State& state);
+QDataStream& operator >>(QDataStream& in,        Song::State& state);
+QDataStream& operator <<(QDataStream& out, const Song::Label& state);
+QDataStream& operator >>(QDataStream& in,        Song::Label& state);
 
 #endif // SONG_H

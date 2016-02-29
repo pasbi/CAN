@@ -26,8 +26,8 @@ SongTableView::SongTableView(QWidget *parent) :
     setItemDelegateForColumn(1, new EditableComboBoxDelegate(this));    // artist
     setItemDelegateForColumn(2, new DurationDelegate(this));            // duration
     setItemDelegateForColumn(3, new KeyDelegate( this ) );              // key
-    setItemDelegateForColumn(4, new TypeComboBoxDelegate(Song::labelNames(), this));
-    setItemDelegateForColumn(5, new TypeComboBoxDelegate(Song::stateNames(), this));
+    setItemDelegateForColumn(4, new TypeComboBoxDelegate<Song::Label>(Song::labelNames(), this));
+    setItemDelegateForColumn(5, new TypeComboBoxDelegate<Song::State>(Song::stateNames(), this));
 
     connect(this, &QTableView::doubleClicked, [this](const QModelIndex& index)
     {
