@@ -56,7 +56,11 @@ public:
     Label label() const { return m_label; }
     State state() const { return m_state; }
     QStringList singers() const { return m_singers; }
+    QString singersDisplay() const { return m_singers.join(", "); }
     QStringList soloPlayers() const { return m_soloPlayers; }
+    QString soloPlayersDisplay() const { return m_soloPlayers.join(", "); }
+    QString stateDisplay() const;
+    QString labelDisplay() const;
     Chord key() const { return m_key; }
     QString comments() const { return m_comments; }
 

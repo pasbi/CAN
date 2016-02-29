@@ -144,15 +144,11 @@ SOURCES += main.cpp\
     Merge/merge.cpp \
     Merge/mergedialog.cpp \
     Merge/databasemerger.cpp \
-    Merge/songmergewidget.cpp \
-    Merge/eventmergewidget.cpp \
-    Merge/doubledatabasetreemodel.cpp \
     Merge/mergelistwidget.cpp \
-    Merge/mergelistview.cpp \
     Merge/mergeitem.cpp \
     Merge/mergelistwidgetitemwidget.cpp \
     Merge/combinesongsdialog.cpp \
-    Merge/combineitems.cpp
+    Merge/combinedialogselectionmodel.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -270,16 +266,13 @@ HEADERS  += mainwindow.h \
     Merge/merge.h \
     Merge/mergedialog.h \
     Merge/databasemerger.h \
-    Merge/songmergewidget.h \
-    Merge/eventmergewidget.h \
-    Merge/doubledatabasetreemodel.h \
     Database/SongDatabase/songdatabasetreemodel.h \
-    Merge/mergelistview.h \
     Merge/mergelistwidget.h \
     Merge/mergeitem.h \
     Merge/mergelistwidgetitemwidget.h \
     Merge/combinesongsdialog.h \
-    Merge/combineitems.h
+    Merge/combineitems.h \
+    Merge/combinedialogselectionmodel.h
 
 
 FORMS    += mainwindow.ui \
@@ -304,7 +297,6 @@ FORMS    += mainwindow.ui \
     Dialogs/peoplesdialog.ui \
     Dialogs/textdialog.ui \
     Merge/mergedialog.ui \
-    Merge/mergelistview.ui \
     Merge/combinesongsdialog.ui
 
 

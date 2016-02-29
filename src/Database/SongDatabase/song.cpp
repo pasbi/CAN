@@ -165,6 +165,17 @@ void Song::serialize(QDataStream &out) const
 }
 
 
+QString Song::labelDisplay() const
+{
+    return Song::labelNames()[static_cast<int>(label())];
+}
+
+QString Song::stateDisplay() const
+{
+    return Song::stateNames()[static_cast<int>(state())];
+}
+
+
 QStringList Song::labelNames()
 {
     return QStringList({ tr(""), tr("Acoustic"), tr("Normal"), tr("AN")});

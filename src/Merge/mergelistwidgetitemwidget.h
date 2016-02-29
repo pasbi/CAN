@@ -14,7 +14,7 @@ public:
     explicit MergeListWidgetItemWidget(MergeItemBase* mergeItem);
 
 signals:
-    void clicked(MergeItemBase*);
+    void clicked();
     void indexChanged(MergeItemBase::Action);
 
 private:

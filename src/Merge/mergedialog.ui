@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MergeDialog</class>
- <widget class="QWidget" name="MergeDialog">
+ <widget class="QDialog" name="MergeDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -27,24 +27,10 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QStackedWidget" name="stackedWidget">
-     <property name="currentIndex">
-      <number>0</number>
+    <widget class="MergeListWidget" name="songEventListWidget">
+     <property name="selectionMode">
+      <enum>QAbstractItemView::MultiSelection</enum>
      </property>
-     <widget class="QWidget" name="songWidget">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="MergeListWidget" name="songListWidget"/>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="eventWidget">
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="MergeListWidget" name="eventListWidget"/>
-       </item>
-      </layout>
-     </widget>
     </widget>
    </item>
    <item>
@@ -62,39 +48,9 @@
       <number>9</number>
      </property>
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonBack">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>&amp;Back</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonNext">
-       <property name="text">
-        <string>&amp;Next</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonCancel">
-       <property name="text">
-        <string>&amp;Cancel</string>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
        </property>
       </widget>
      </item>
@@ -105,10 +61,43 @@
  <customwidgets>
   <customwidget>
    <class>MergeListWidget</class>
-   <extends>QListWidget</extends>
+   <extends>QListView</extends>
    <header>Merge/mergelistwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>MergeDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>633</x>
+     <y>448</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>644</x>
+     <y>422</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>MergeDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>546</x>
+     <y>439</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>473</x>
+     <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

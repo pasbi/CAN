@@ -35,17 +35,6 @@ QString peopleNames(const QStringList& names, const QBitArray& peoples)
     return ps.join(", ");
 }
 
-
-QString songLabelName(Song::Label label)
-{
-    return Song::labelNames()[static_cast<int>(label)];
-}
-
-QString songStateName(Song::State state)
-{
-    return Song::stateNames()[static_cast<int>(state)];
-}
-
 QVariant SongDatabase::data(const QModelIndex &index, int role) const
 {
     assert(!index.parent().isValid());
@@ -84,7 +73,7 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
         case 4:
             if (role == Qt::DisplayRole)
             {
-                return songLabelName(song->label());
+                return song->labelDisplay();
             }
             else
             {
@@ -93,7 +82,7 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
         case 5:
             if (role == Qt::DisplayRole)
             {
-                return songStateName(song->state());
+                return song->stateDisplay();
             }
             else
             {
@@ -102,7 +91,7 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
         case 6:
             if (role == Qt::DisplayRole)
             {
-                return song->soloPlayers().join(", ");
+                return song->soloPlayersDisplay();
             }
             else
             {
@@ -111,7 +100,7 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
         case 7:
             if (role == Qt::DisplayRole)
             {
-                return song->singers().join(", ");
+                return song->singersDisplay();
             }
             else
             {

@@ -20,12 +20,7 @@ public:
 
     QMap<Song*, MergeItemBase*> attachmentMergeItems() const { Q_UNIMPLEMENTED(); return QMap<Song*, MergeItemBase*>(); }
 
-private slots:
-    void on_buttonBack_clicked();
-    void on_buttonNext_clicked();
-    void on_buttonCancel_clicked();
-
-private:
+ private:
     Ui::MergeDialog *ui;
     Merge* m_merger;
     void setMerger(Merge* merger);

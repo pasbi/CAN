@@ -60,6 +60,9 @@ public:
      */
     static bool parseLine(const QString &line, QStringList &chords, QStringList &tokens);
 
+    bool operator ==(const Chord& other) const;
+    bool operator !=(const Chord& other) const { return !(*this == other); }
+
 private:
     QString m_before, m_after;
     int m_base;

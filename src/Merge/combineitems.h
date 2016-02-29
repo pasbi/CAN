@@ -15,13 +15,17 @@ protected:
     {
         m_combination = new T(m_master->database());
     }
-    virtual void assembleCombination(const T* master, const T* slave, T* result) = 0;
+    virtual void assembleCombination(T* result) = 0;
 
 public:
     T* combination() const
     {
         return m_combination;
     }
+
+protected:
+    const T* master() const { return m_master; }
+    const T* slave() const { return m_slave; }
 
 private:
     const T* m_master;

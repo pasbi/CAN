@@ -25,7 +25,7 @@ public:
     QString label() const;
     void setMasterSlavePointer(void* masterPointer, void* slavePointer);
     template<class T = void> T* masterPointer() const { return static_cast<T*>(m_masterPointer); }
-    template<class T = void> T* slavePointer() const { return static_cast<T*>(m_masterPointer); }
+    template<class T = void> T* slavePointer() const { return static_cast<T*>(m_slavePointer); }
     void setPointer(void* pointer);
     void* pointer() const { return m_pointer; }
 

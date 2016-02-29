@@ -106,7 +106,7 @@ QPushButton* MergeListWidgetItemWidget::makePushButton()
 
     connect(button, &QPushButton::clicked, [this]()
     {
-        emit clicked(m_mergeItem);
+        emit clicked();
     });
 
     return button;

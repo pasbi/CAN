@@ -9,9 +9,6 @@
 #include "merge.h"
 #include "combinesongsdialog.h"
 
-//class Song;
-//class Event;
-//class Attachment;
 
 MergeListWidget::MergeListWidget(QWidget *parent) :
     QListWidget(parent),
@@ -48,7 +45,15 @@ QString mimeFormat(MergeItemBase::Type type)
 
 QMimeData* MergeListWidget::mimeData(const QList<QListWidgetItem *> items) const
 {
-    Q_ASSERT(items.length() == 1);
+    qDebug() << "has " << items.count() << "items";
+    if (items.count() > 1)
+    {
+        for (const QListWidgetItem* item : items)
+        {
+            item->text();
+        }
+    }
+    Q_ASSERT(items.length() == 1);  // TODO this may fail!
     return merge()->encodeMimeData( m_mergeItems.value(items.first()) );
 }
 
@@ -101,6 +106,7 @@ bool MergeListWidget::canDrop(const MergeItemBase* item, const QMimeData *data, 
 
 bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAction action)
 {
+    // apparently index is sometimes off by one.
     if (index >= count() || index < 0)
     {
         // index is not guaranteed to be nice.
@@ -203,23 +209,24 @@ void MergeListWidget::join(QListWidgetItem* targetWidgetItem, QListWidgetItem *s
     targetMergeItem->setMasterSlavePointer(masterPointer, slavePointer);
     targetMergeItem->setMasterSlaveLabel(masterLabel, slaveLabel);
     targetMergeItem->setOrigin(MergeItemBase::BothProjects);
+    targetMergeItem->setAction(MergeItemBase::ModifyItemAction);
     targetMergeItem->initializeCombinationObject();  // copy master object to combination object
 
     // update target item widget
     MergeListWidgetItemWidget* itemWidget = new MergeListWidgetItemWidget(targetMergeItem);
-    connect(itemWidget, &MergeListWidgetItemWidget::clicked, [this, &targetMergeItem](MergeItemBase* mergeItem)
+    connect(itemWidget, &MergeListWidgetItemWidget::clicked, [this, targetMergeItem]()
     {
-        switch (mergeItem->type())
+        switch (targetMergeItem->type())
         {
         case MergeItemBase::SongType:
         {
-            const Song* masterSong = static_cast<const Song*>(mergeItem->masterPointer());
-            const Song* slaveSong = static_cast<const Song*>(mergeItem->slavePointer());
-            CombineSongsDialog dialog(masterSong, slaveSong, this);
+            CombineSongsDialog dialog(targetMergeItem->masterPointer<Song>(),
+                                      targetMergeItem->slavePointer<Song>(), this);
+
             if (dialog.exec() == QDialog::Accepted)
             {
-                mergeItem->deleteCombinationObject();
-                mergeItem->setCombinationPointer(dialog.combination());
+                targetMergeItem->deleteCombinationObject();
+                targetMergeItem->setCombinationPointer(dialog.combination());
             }
             break;
         }
