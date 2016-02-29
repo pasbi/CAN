@@ -147,7 +147,8 @@ SOURCES += main.cpp\
     Merge/mergeitem.cpp \
     Merge/mergelistwidgetitemwidget.cpp \
     Merge/combinesongsdialog.cpp \
-    Merge/combinedialogselectionmodel.cpp
+    Merge/combinedialogselectionmodel.cpp \
+    Merge/mergelistwidgetselectionmodel.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -272,7 +273,8 @@ HEADERS  += mainwindow.h \
     Merge/combinesongsdialog.h \
     Merge/combineitems.h \
     Merge/combinedialogselectionmodel.h \
-    pedanticmap.h
+    pedanticmap.h \
+    Merge/mergelistwidgetselectionmodel.h
 
 
 FORMS    += mainwindow.ui \

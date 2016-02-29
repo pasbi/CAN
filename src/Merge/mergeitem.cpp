@@ -182,7 +182,7 @@ void MergeItemBase::deleteCombinationObject()
 {
     if (m_combinationPointer)
     {
-        qDebug() << "delete" << m_combinationPointer;
+        //TODO ??
     }
     switch (type())
     {

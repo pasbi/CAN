@@ -13,7 +13,6 @@ void CombineDialogSelectionModel::select(const QModelIndex &index, SelectionFlag
 
 void CombineDialogSelectionModel::select(const QItemSelection &selection, QItemSelectionModel::SelectionFlags command)
 {
-    qDebug() << "command = " << command << Select;
     if (command & Select)
     {
         for (const QModelIndex& selected : selection.indexes())
@@ -21,15 +20,12 @@ void CombineDialogSelectionModel::select(const QItemSelection &selection, QItemS
             for (int column = 0; column < model()->columnCount(); ++column)
             {
                 QModelIndex index = model()->index(selected.row(), column);
-                qDebug() << "index: " << index << isSelected(index) << (index == selected);
                 if (isSelected(index) && index != selected)
                 {
-                    qDebug() << "  deselect!";
                     select(index, QItemSelectionModel::Deselect);
                 }
                 else if (!isSelected(index) && index == selected)
                 {
-                    qDebug() << "  select!";
                     select(index, QItemSelectionModel::Select);
                 }
             }

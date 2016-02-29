@@ -105,7 +105,6 @@ void Song::deserialize(QDataStream &in)
     in >> title >> artist >> creationDateTime >> duration;
     in >> state >> label >> key >> singers >> soloPlayers >> comments;
 
-    qDebug() << "load state/label: " << state << label;
     m_attributes.set("title", title);
     m_attributes.set("artist", artist);
     m_attributes.set("duration", duration);
@@ -213,9 +212,6 @@ QStringList Song::stateNames()
 {
     return QStringList({ tr(""), tr("Inactive"), tr("Needs Practice"), tr("Works") });
 }
-
-
-
 
 
 QDataStream& operator <<(QDataStream& out, const Song::State& state)

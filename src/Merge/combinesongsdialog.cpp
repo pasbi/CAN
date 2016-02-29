@@ -96,11 +96,18 @@ void CombineSongsDialog::addTableWidgetItem(const QString& master, const QString
 
 void CombineSongsDialog::init()
 {
+    int row = 0;
     for (const QString& key : Song::ATTRIBUTE_KEYS)
     {
+        if (key == "creationDateTime")
+        {
+            continue;
+        }
         if (master()->attribute(key) != slave()->attribute(key))
         {
+            ui->tableWidget->setVerticalHeaderItem(row, new QTableWidgetItem(key));
             addTableWidgetItem(master()->attributeDisplay(key), slave()->attributeDisplay(key), key);
+            row++;
         }
     }
 
@@ -113,6 +120,8 @@ void CombineSongsDialog::updateHeaderWidths()
 
     ui->tableWidget->horizontalHeader()->resizeSection(0, viewportWidth/2);
     ui->tableWidget->horizontalHeader()->resizeSection(1, viewportWidth - viewportWidth/2);
+    ui->tableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Master")));
+    ui->tableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Other")));
 }
 
 void CombineSongsDialog::showEvent(QShowEvent *e)

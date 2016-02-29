@@ -226,7 +226,7 @@ void Merge::removeMergeItem(const MergeItemBase *mergeItem)
         m_songMergeItems.removeOne(nonconstMergeItem);
         break;
     case MergeItemBase::EventType:
-        Q_ASSERT(m_attachmentMergeItems.contains(nonconstMergeItem));
+        Q_ASSERT(m_eventMergeItems.contains(nonconstMergeItem));
         m_eventMergeItems.removeOne(nonconstMergeItem);
         break;
     case MergeItemBase::AttachmentType:

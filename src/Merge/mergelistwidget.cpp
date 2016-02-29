@@ -8,6 +8,7 @@
 #include "mergelistwidgetitemwidget.h"
 #include "merge.h"
 #include "combinesongsdialog.h"
+#include "mergelistwidgetselectionmodel.h"
 
 
 MergeListWidget::MergeListWidget(QWidget *parent) :
@@ -18,7 +19,9 @@ MergeListWidget::MergeListWidget(QWidget *parent) :
     setDropIndicatorShown(true);
     setDragDropMode(DragDrop);
     setSelectionBehavior(QAbstractItemView::SelectRows);
-    setSelectionMode(QAbstractItemView::SingleSelection);
+    setSelectionMode(QAbstractItemView::SingleSelection); // does not work properly
+    selectionModel()->deleteLater();
+    setSelectionModel(new MergeListWidgetSelectionModel(model()));
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(createContextMenu(QPoint)));
 }
@@ -27,33 +30,9 @@ MergeListWidget::~MergeListWidget()
 {
 }
 
-QString mimeFormat(MergeItemBase::Type type)
-{
-    switch (type)
-    {
-    case MergeItemBase::SongType:
-        return "song/mergeInfo";
-    case MergeItemBase::EventType:
-        return "event/mergeInfo";
-    case MergeItemBase::AttachmentType:
-        return "attachment/mergeInfo";
-    default:
-        Q_UNIMPLEMENTED();
-        return "";
-    }
-}
-
 QMimeData* MergeListWidget::mimeData(const QList<QListWidgetItem *> items) const
 {
-    qDebug() << "has " << items.count() << "items";
-    if (items.count() > 1)
-    {
-        for (const QListWidgetItem* item : items)
-        {
-            item->text();
-        }
-    }
-    Q_ASSERT(items.length() == 1);  // TODO this may fail!
+    Q_ASSERT(items.length() == 1);
     return merge()->encodeMimeData( m_mergeItems.value(items.first()) );
 }
 
@@ -80,9 +59,9 @@ bool MergeListWidget::canDrop(const MergeItemBase* item, const QMimeData *data, 
     // combine only same-type items
     Q_ASSERT(data->formats().length() == 1);
     QString mimeFormat = data->formats().first();
-    if (       (item->type() == MergeItemBase::SongType        && mimeFormat != "song/mergeInfo")
-            && (item->type() == MergeItemBase::AttachmentType  && mimeFormat != "attachment/mergeInfo")
-            && (item->type() == MergeItemBase::EventType       && mimeFormat != "event/mergeInfo")          )
+    if (       (item->type() == MergeItemBase::SongType        && mimeFormat != "merge")
+            && (item->type() == MergeItemBase::AttachmentType  && mimeFormat != "merge")
+            && (item->type() == MergeItemBase::EventType       && mimeFormat != "merge")          )
     {
         return false;
     }
@@ -106,9 +85,11 @@ bool MergeListWidget::canDrop(const MergeItemBase* item, const QMimeData *data, 
 
 bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAction action)
 {
+    qDebug() << "drop!";
     // apparently index is sometimes off by one.
     if (index >= count() || index < 0)
     {
+        qDebug() << "-->fail!";
         // index is not guaranteed to be nice.
         return false;
     }
@@ -116,6 +97,7 @@ bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAct
     QListWidgetItem* item = MergeListWidget::item(index);
     if(!canDrop(item, data, action))
     {
+        qDebug() << "-->fail!";
         // it is not guaranteed that dropMimeData is only called when canDrop returns true.
         return false;
     }
@@ -125,6 +107,7 @@ bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAct
 
     join(item, m_mergeItems.key(source));
 
+    qDebug() << "-->success!";
     return true;
 }
 
