@@ -20,7 +20,7 @@ public:
     void setMergeItems(const QList<MergeItemBase *> &items);
     QList<MergeItemBase *> mergeItems() const;
     Merge* merge() const { return m_merge; }
-    void setMerge(Merge* merge);
+    void setMerge(Merge* merge, QList<MergeItemBase*> mergItems);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

@@ -304,11 +304,10 @@ QList<MergeItemBase*> MergeListWidget::mergeItems() const
     return m_mergeItems.values();
 }
 
-void MergeListWidget::setMerge(Merge* merge)
+void MergeListWidget::setMerge(Merge* merge, QList<MergeItemBase*> mergeItems)
 {
     Q_ASSERT(!m_merge);
     m_merge = merge;
-    setMergeItems(m_merge->songMergeItems());
-    setMergeItems(m_merge->eventMergeItems());
+    setMergeItems(mergeItems);
 }
 
