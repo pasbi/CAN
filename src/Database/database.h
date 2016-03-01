@@ -51,7 +51,6 @@ private:
 
     virtual ~Database()
     {
-
     }
 
 public:

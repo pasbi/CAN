@@ -55,6 +55,10 @@ public:
                        | QAbstractItemView::EditKeyPressed );
     }
 
+    virtual ~DatabaseView()
+    {
+    }
+
     QModelIndex indexUnderCursor() const
     {
         QPoint pos = viewport()->mapFromGlobal( QCursor::pos() );

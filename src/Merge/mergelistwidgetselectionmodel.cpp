@@ -13,6 +13,11 @@ void MergeListWidgetSelectionModel::select(const QModelIndex &index, SelectionFl
 
 void MergeListWidgetSelectionModel::select(const QItemSelection &selection, QItemSelectionModel::SelectionFlags command)
 {
+    if (selection.isEmpty())
+    {
+        return;
+    }
+
     QModelIndex toBeSelected = selection.last().bottomRight();
     QItemSelection deselect;
     QItemSelection select;
@@ -28,12 +33,10 @@ void MergeListWidgetSelectionModel::select(const QItemSelection &selection, QIte
             if (index == toBeSelected)
             {
                 select << QItemSelectionRange(index);
-                qDebug() << "select: " << select;
             }
             else
             {
                 deselect << QItemSelectionRange(index);
-                qDebug() << "deselect: " << select;
             }
         }
     }

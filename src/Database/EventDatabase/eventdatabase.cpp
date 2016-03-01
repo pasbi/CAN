@@ -128,4 +128,3 @@ QString EventDatabase::itemName(int n) const
 }
 
 
-

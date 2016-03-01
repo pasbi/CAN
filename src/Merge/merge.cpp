@@ -8,6 +8,9 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Attachments/attachment.h"
 
+//TODO creating new event and opening project results in crash
+//TODO build combineEventDIalog
+
 Merge::Merge(Project* masterProject, const QString &slaveFilename, QWidget* dialogParent) :
     m_masterProject(masterProject),
     m_slaveProject(openProject(slaveFilename)),
