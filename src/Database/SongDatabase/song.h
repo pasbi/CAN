@@ -77,10 +77,12 @@ public:
 };
 
 Q_DECLARE_METATYPE(const Song*)
+//Do not register Song-stream operators. We never want to save song via QVariant!
 Q_DECLARE_METATYPE(Song::Label)
-Q_DECLARE_METATYPE(Song::State)
 REGISTER_META_TYPE_STREAM_OPERATORS(Song::Label, SongLabel)
+Q_DECLARE_METATYPE(Song::State)
 REGISTER_META_TYPE_STREAM_OPERATORS(Song::State, SongState)
+
 QDataStream& operator <<(QDataStream& out, const Song::State& state);
 QDataStream& operator >>(QDataStream& in,        Song::State& state);
 QDataStream& operator <<(QDataStream& out, const Song::Label& state);

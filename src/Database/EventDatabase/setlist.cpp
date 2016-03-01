@@ -50,11 +50,9 @@ QList<void*> Setlist::viewableAttachments(const QModelIndex &index) const
     return list;
 }
 
-//TODO initialize date of event: editor has wrong datetime
-
 QVariant Setlist::data(const QModelIndex &index, int role) const
 {
-    SetlistItem* item = items()[index.row()];
+    SetlistItem* item = itemAtIndex(index);
     switch (role)
     {
     case Qt::UserRole:
@@ -77,7 +75,7 @@ bool Setlist::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (role == Qt::EditRole)
     {
-        SetlistItem* item = items()[index.row()];
+        SetlistItem* item = itemAtIndex(index);
         if (item)
         {
             item->setAttribute("label", value);

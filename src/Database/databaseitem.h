@@ -4,7 +4,6 @@
 #include "persistentobject.h"
 #include <QObject>
 #include "pedanticmap.h"
-#include <QBuffer> //TODO
 
 class DatabaseItemBase : public QObject, public PersistentObject
 {
@@ -55,16 +54,13 @@ public:
 
     T* copy(Database<T>* database) const
     {
-        //TODO replace buffer with QByteArray?
-        QBuffer buffer;
-        assert(buffer.open(QIODevice::ReadWrite));
+        QByteArray buffer;
+        QDataStream writeStream(&buffer, QIODevice::WriteOnly);
+        writeStream << this;
 
-        QDataStream stream(&buffer);
-        stream << this;
-
-        buffer.reset();
+        QDataStream readStream(buffer);
         T* copy = new T(database);
-        stream >> copy;
+        readStream >> copy;
 
         return copy;
     }

@@ -50,7 +50,8 @@ bool EventTableView::showDateTimeDialog(QModelIndex index)
     if (index.column() == 1)
     {
         DateTimeDialog dialog;
-        dialog.setDateTime( model()->data( index, Qt::EditRole ).toDateTime() );
+        QDateTime currentDateTime = sourceModel()->itemAtIndex(index)->attribute("beginning").toDateTime();
+        dialog.setDateTime( currentDateTime );
         if (dialog.exec() == QDialog::Accepted)
         {
             pushCommand( new DatabaseEditCommand(model(), index, QVariant::fromValue(dialog.dateTime())));

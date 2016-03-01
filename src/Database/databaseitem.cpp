@@ -35,7 +35,6 @@ void DatabaseItemBase::serialize(QDataStream & out) const
     PedanticVariantMap copy = m_attributes;
     for (const QString& key : skipSerializeAttributes())
     {
-        qDebug() << "take: " << key;
         copy.take(key);
     }
     out << copy;

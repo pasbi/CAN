@@ -50,12 +50,12 @@ void SetlistView::setModel(Database<SetlistItem> *setlist)
 {
     // implicitly assert that the old model was deleted from outside.
     // i.e. sourceModel() is a dangling pointer invalid.
-    connect(setlist, SIGNAL(selectionRequest(QModelIndexList)), this, SLOT(select(QModelIndexList)) );
     DatabaseView<SetlistItem>::setModel( setlist );
     if (setlist)
     {
         updateCellWidgets();
 
+        connect(setlist, SIGNAL(selectionRequest(QModelIndexList)), this, SLOT(select(QModelIndexList)) );
         horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );
         horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Fixed );
         horizontalHeader()->resizeSection( 1, 60 );

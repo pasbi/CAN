@@ -61,7 +61,6 @@ private:
 template<class Key, class T>
 QDataStream& operator << (QDataStream& out, const PedanticMap<Key, T>& map)
 {
-    qDebug() << "save keys: " << map.m_keys;
     out << map.m_keys;
     out << map.m_map;
     return out;
@@ -70,7 +69,6 @@ QDataStream& operator << (QDataStream& out, const PedanticMap<Key, T>& map)
 template<class Key, class T>
 QDataStream& operator >> (QDataStream& in, PedanticMap<Key, T>& map)
 {
-    qDebug() << "load keys: " << map.m_keys;
     in >> map.m_keys;
     in >> map.m_map;
     return in;
