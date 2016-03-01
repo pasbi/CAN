@@ -35,41 +35,15 @@ QString Event::eventTypeName(Type type)
     return eventTypeNames()[static_cast<int>(type)];
 }
 
-#define OLD_LOAD //TODO
-#define OLD_SAVE
-
 void Event::serialize(QDataStream &out) const
 {
-#ifdef OLD_SAVE
-    out << QDateTime(); //LEGACY
-    out << attribute("beginning").toDateTime();
-    out << static_cast<EnumSurrogate_t>(attribute("type").value<Type>());
-    out << attribute("label").toString();
-#else
     DatabaseItem::serialize(out);
-#endif
     out << m_setlist;
 }
 
 void Event::deserialize(QDataStream &in)
 {
-#ifdef OLD_LOAD
-    EnumSurrogate_t type;
-    QDateTime unusedEndingDateTime;
-    QDateTime beginning;
-    QString label;
-
-    in >> unusedEndingDateTime; //LEGACY
-    in >> beginning;
-    in >> type;
-    in >> label;
-    setAttribute("beginning", beginning);
-    setAttribute("type", QVariant::fromValue<Type>(static_cast<Type>(type)));
-    setAttribute("label", label);
-#else
     DatabaseItem::deserialize(in);
-#endif
-    qDebug() << "deserialize setlist";
     in >> m_setlist;
 
 }
