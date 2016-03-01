@@ -24,7 +24,7 @@ Event* OrphantSetlist::createEvent(const QString& label)
     m_project = new Project();
     m_eventDatabase = new EventDatabase( m_project );
     m_event = new Event( m_eventDatabase );
-    m_event->setLabel( label );
+    m_event->setAttribute( "label", label );
 
     return m_event;
 }

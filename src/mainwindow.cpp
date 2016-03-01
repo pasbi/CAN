@@ -653,7 +653,7 @@ bool MainWindow::canRemoveSong(Song *song)
     {
         for (SetlistItem* item : event->setlist()->items())
         {
-            if (item->song() == song)
+            if (item->attribute("song").value<const Song*>() == song)
             {
                 return false;
             }

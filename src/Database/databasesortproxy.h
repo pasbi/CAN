@@ -63,11 +63,15 @@ protected:
         assert(!source_parent.isValid());
         T* item = sourceModel()->items()[source_row];
 
-        for (const QString& token : item->textAttributes())
+        for (int column = 0; column < sourceModel()->columnCount(); ++column)
         {
-            if (token.contains(filter(), Qt::CaseInsensitive))
+            const QString key = item->attributeKeys()[column];
+            if (filterAcceptsColumn(column, source_parent))
             {
-                return true;
+                if (item->attributeDisplay(key).contains(filter(), Qt::CaseInsensitive))
+                {
+                    return true;
+                }
             }
         }
         return false;

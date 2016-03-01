@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QDateTime>
 #include <QObject>
+#include "global.h"
 
 #include "Database/databaseitem.h"
 
@@ -22,39 +23,29 @@ public:
            const QString &  label = "");
     ~Event();
 
-    Type type() const { return m_type; }
-    QString label() const { return m_label; }
     QString description() const;
-    QDateTime beginning() const { return m_beginning; }
-    QString notices() const { return m_notices; }
-
-    void setLabel( const QString & label );
-    void setBeginning( const QDateTime & beginning );
-    void setType( Type type );
-    void setNotice( const QString & notice );
 
     const Setlist* setlist() const { return m_setlist; }
     Setlist* setlist() { return m_setlist; }
 
-    QStringList textAttributes() const;
+    QString attributeDisplay(const QString &key) const;
 
     static QStringList eventTypeNames();
     static QString eventTypeName(Type type);
+    static const QStringList ATTRIBUTE_KEYS;
 
 protected:
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);
 
 private:
-    QDateTime m_beginning;
-    Type m_type;
-    QString m_label;
-    QString m_notices;
-
     Setlist* m_setlist;
 };
 
 Q_DECLARE_METATYPE(Event::Type)
+REGISTER_META_TYPE_STREAM_OPERATORS(Event::Type, EventType)
+QDataStream& operator <<(QDataStream& out, const Event::Type& type);
+QDataStream& operator >>(QDataStream& in,        Event::Type& type);
 
 
 #endif // DATE_H

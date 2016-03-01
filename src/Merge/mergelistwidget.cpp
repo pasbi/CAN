@@ -85,11 +85,9 @@ bool MergeListWidget::canDrop(const MergeItemBase* item, const QMimeData *data, 
 
 bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAction action)
 {
-    qDebug() << "drop!";
     // apparently index is sometimes off by one.
     if (index >= count() || index < 0)
     {
-        qDebug() << "-->fail!";
         // index is not guaranteed to be nice.
         return false;
     }
@@ -97,7 +95,6 @@ bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAct
     QListWidgetItem* item = MergeListWidget::item(index);
     if(!canDrop(item, data, action))
     {
-        qDebug() << "-->fail!";
         // it is not guaranteed that dropMimeData is only called when canDrop returns true.
         return false;
     }
@@ -107,7 +104,6 @@ bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAct
 
     join(item, m_mergeItems.key(source));
 
-    qDebug() << "-->success!";
     return true;
 }
 

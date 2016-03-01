@@ -173,7 +173,6 @@ public:
         {
             return nullptr;
         }
-
     }
 
     void notifiyDataChange(const T *item)
@@ -184,7 +183,8 @@ public:
 
     void serialize(QDataStream &out) const
     {
-        out << (qint32) m_items.length();
+        qDebug() << "serialize n = " << static_cast<qint32>(m_items.length());
+        out << static_cast<qint32>(m_items.length());
         for (T* item : m_items)
         {
             out << item;
@@ -196,6 +196,7 @@ public:
         reset();
         qint32 n;
         in >> n;
+        qDebug() << "deserialize n = " << n;
         beginResetModel();
         for (int i = 0; i < n; ++i)
         {

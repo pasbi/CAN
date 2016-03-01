@@ -7,7 +7,6 @@
 #include "Program/program.h"
 #include "Database/databaseitem.h"
 #include "chord.h"
-#include "pedanticmap.h"
 
 class SongDatabase;
 class Attachment;
@@ -27,20 +26,10 @@ public:
     ///  Attributes
     //
     /////////////////////////////////////////////////
-private:
-    PedanticVariantMap m_attributes;
-
 public:
     static const QStringList ATTRIBUTE_KEYS;
-    QVariant attribute(const QString& key) const;
-    QVariant attribute(int i) const;
-    void setAttribute(const QString& key, const QVariant& value);
-    void setAttribute(int i, const QVariant &value);
     QString attributeDisplay(const QString& key) const;
-    QString attributeDisplay(int i) const;
 
-
-    QStringList textAttributes() const; //TODO can this be removed?
 
     /////////////////////////////////////////////////
     ////
@@ -87,10 +76,11 @@ public:
 
 };
 
+Q_DECLARE_METATYPE(const Song*)
 Q_DECLARE_METATYPE(Song::Label)
 Q_DECLARE_METATYPE(Song::State)
-REGISTER_META_TYPE_STREAM_OPERATORS(Song::, Label)
-REGISTER_META_TYPE_STREAM_OPERATORS(Song::, State)
+REGISTER_META_TYPE_STREAM_OPERATORS(Song::Label, SongLabel)
+REGISTER_META_TYPE_STREAM_OPERATORS(Song::State, SongState)
 QDataStream& operator <<(QDataStream& out, const Song::State& state);
 QDataStream& operator >>(QDataStream& in,        Song::State& state);
 QDataStream& operator <<(QDataStream& out, const Song::Label& state);

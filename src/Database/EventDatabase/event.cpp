@@ -1,15 +1,15 @@
 #include "event.h"
 #include "setlist.h"
 
+const QStringList Event::ATTRIBUTE_KEYS = { "type", "beginning", "label", "notices" };
 
 Event::Event( Database<Event>* database, const QDateTime& beginning, Type type, const QString & label) :
-    DatabaseItem( database ),
-    m_beginning( beginning ),
-    m_type(type),
-    m_label(label),
+    DatabaseItem( ATTRIBUTE_KEYS, database ),
     m_setlist( new Setlist(this) )
 {
-
+    setAttribute("beginning", beginning);
+    setAttribute("type", type);
+    setAttribute("label", label);
 }
 
 Event::~Event()
@@ -18,35 +18,15 @@ Event::~Event()
     m_setlist = nullptr;
 }
 
-void Event::setLabel( const QString & label )
-{
-    m_label = label;
-}
-
-void Event::setBeginning( const QDateTime & beginning )
-{
-    m_beginning = beginning;
-}
-
-void Event::setType( Type type )
-{
-    m_type = type;
-}
-
-void Event::setNotice(const QString &notice)
-{
-    m_notices = notice;
-}
-
 QString Event::description() const
 {
-    if (label().isEmpty())
+    if (attributeDisplay("label").isEmpty())
     {
-        return eventTypeName( type() );
+        return attributeDisplay("type");
     }
     else
     {
-        return label();
+        return attributeDisplay("label");
     }
 }
 
@@ -55,33 +35,43 @@ QString Event::eventTypeName(Type type)
     return eventTypeNames()[static_cast<int>(type)];
 }
 
-QStringList Event::textAttributes() const
-{
-    return QStringList( { eventTypeName(type()), label(), notices() } );
-}
+#define OLD_LOAD //TODO
+#define OLD_SAVE
 
 void Event::serialize(QDataStream &out) const
 {
-    DatabaseItem::serialize(out);
+#ifdef OLD_SAVE
     out << QDateTime(); //LEGACY
-    out << m_beginning;
-    out << static_cast<qint32>(m_type);
-    out << m_label;
+    out << attribute("beginning").toDateTime();
+    out << static_cast<EnumSurrogate_t>(attribute("type").value<Type>());
+    out << attribute("label").toString();
+#else
+    DatabaseItem::serialize(out);
+#endif
     out << m_setlist;
 }
 
 void Event::deserialize(QDataStream &in)
 {
-    DatabaseItem::deserialize(in);
-    qint32 type;
+#ifdef OLD_LOAD
+    EnumSurrogate_t type;
     QDateTime unusedEndingDateTime;
+    QDateTime beginning;
+    QString label;
+
     in >> unusedEndingDateTime; //LEGACY
-    in >> m_beginning;
+    in >> beginning;
     in >> type;
-    in >> m_label;
+    in >> label;
+    setAttribute("beginning", beginning);
+    setAttribute("type", QVariant::fromValue<Type>(static_cast<Type>(type)));
+    setAttribute("label", label);
+#else
+    DatabaseItem::deserialize(in);
+#endif
+    qDebug() << "deserialize setlist";
     in >> m_setlist;
 
-    m_type = static_cast<Event::Type>(type);
 }
 
 QStringList Event::eventTypeNames()
@@ -89,6 +79,44 @@ QStringList Event::eventTypeNames()
     return QStringList({ app().translate("Event", "Rehearsal"), app().translate("Event", "Gig"), app().translate("Event", "Other") });
 }
 
+QString Event::attributeDisplay(const QString &key) const
+{
+    QVariant attribute = DatabaseItem::attribute(key);
+    if (key == "beginning" || key == "creationDateTime")
+    {
+        const QString format = tr("MM/dd/yy hh:mm ap");
+        return attribute.toDateTime().toString(format);
+        return attribute.toDateTime().toString(format);
+    }
+    if (key == "type")
+    {
+        return eventTypeName(attribute.value<Type>());
+    }
+    if (attribute.isNull())
+    {
+        return "";
+    }
+    if (attribute.canConvert<QString>())
+    {
+        return attribute.toString();
+    }
+    Q_UNREACHABLE();
+    return "";
+}
+
+QDataStream& operator <<(QDataStream& out, const Event::Type& type)
+{
+    out << static_cast<EnumSurrogate_t>(type);
+    return out;
+}
+
+QDataStream& operator >>(QDataStream& in,        Event::Type& type)
+{
+    EnumSurrogate_t ftype;
+    in >> ftype;
+    type = static_cast<Event::Type>(ftype);
+    return in;
+}
 
 
 

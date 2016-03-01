@@ -263,8 +263,8 @@ QString labelSetlist(Setlist *setlist)
 {
     QString title = QString("Setlist\n\n%1 %2 %1\n\n%3")
             .arg( QChar(0x2014) )
-            .arg( setlist->event()->label() )
-            .arg( QLocale().toString( setlist->event()->beginning(), QLocale().dateTimeFormat( QLocale::ShortFormat ) ) );
+            .arg( setlist->event()->attributeDisplay("label") )
+            .arg( setlist->event()->attributeDisplay("beginning") );
 
     return title;
 }
@@ -613,10 +613,10 @@ void PDFCreator::save(QString filename)
 
 QString defaultFilename( Setlist* setlist )
 {
-    QString label = setlist->event()->label();
-    QString type = Event::eventTypeName(setlist->event()->type());
+    QString label = setlist->event()->attributeDisplay("label");
+    QString type = setlist->event()->attributeDisplay("type");
 
-    QString date = QLocale().toString( setlist->event()->beginning().date(), QLocale().dateFormat( QLocale::ShortFormat ) ).replace(".", "_");
+    QString date = setlist->event()->attributeDisplay("beginning");
 
     if (label.isEmpty())
     {

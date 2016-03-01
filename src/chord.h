@@ -97,6 +97,6 @@ QDataStream& operator>>(QDataStream& in, Chord& chord);
 QDebug& operator<<(QDebug& dbg, const Chord& chord);
 
 Q_DECLARE_METATYPE(Chord)
-REGISTER_META_TYPE_STREAM_OPERATORS(, Chord)
+REGISTER_META_TYPE_STREAM_OPERATORS(Chord, Chord)
 
 #endif // CHORD_H

@@ -28,9 +28,6 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
 
-    SongID songID( const Song* song ) const;
-    Song* song(const QString &id ) const;
-
     // Drag'n'Drop
     // we only allow songs to be dragged (LinkAction). No redordering.
     Qt::DropActions supportedDragActions() const;

@@ -138,9 +138,9 @@ void SetlistWidget::updateInfoLabel()
     {
         for (const SetlistItem* i : sl->items())
         {
-            if (i->type() == SetlistItem::SongType)
+            if (i->attribute("type").value<SetlistItem::Type>() == SetlistItem::SongType)
             {
-                QTime duration = i->song()->attribute("duration").toTime();
+                QTime duration = i->attribute("song").value<const Song*>()->attribute("duration").toTime();
                 if (duration.isValid())
                 {
                     seconds += duration.second();

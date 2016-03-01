@@ -48,37 +48,17 @@ template<> DatabaseMergerPrivate::CompareResult compare(const Song* master, cons
 
 template<> DatabaseMergerPrivate::CompareResult compare(const Event* master, const Event* slave)
 {
-    if (master->type() != slave->type())
+    //TODO recognize renamings
+    for (const QString& key : Event::ATTRIBUTE_KEYS)
     {
-        return DatabaseMergerPrivate::Unequal;
-    }
-    if (master->label() != slave->label())
-    {
-        return DatabaseMergerPrivate::Unequal;
-    }
-    if (master->beginning() != slave->beginning())
-    {
-        return DatabaseMergerPrivate::Unequal;
-    }
-    if (master->setlist()->items().length() != slave->setlist()->items().length())
-    {
-        return DatabaseMergerPrivate::Unequal;
-    }
-    for (int i = 0; i < master->setlist()->items().length(); ++i)
-    {
-        if (master->setlist()->items()[i]->type() != slave->setlist()->items()[i]->type())
-        {
-            return DatabaseMergerPrivate::Unequal;
-        }
-        if (master->setlist()->items()[i]->song() != slave->setlist()->items()[i]->song())
-        {
-            return DatabaseMergerPrivate::Unequal;
-        }
-        if (master->setlist()->items()[i]->label() != slave->setlist()->items()[i]->label())
+        if (master->attribute(key) != slave->attribute(key))
         {
             return DatabaseMergerPrivate::Unequal;
         }
     }
+
+    //TODO check setlist
+
     return DatabaseMergerPrivate::Equal;
 }
 

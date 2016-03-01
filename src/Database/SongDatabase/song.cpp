@@ -7,13 +7,12 @@
 const QStringList Song::ATTRIBUTE_KEYS = {"title", "artist", "duration", "key", "label", "state", "singers", "soloPlayers", "comments", "creationDateTime"};
 
 Song::Song(Database<Song> * database) :
-    DatabaseItem(database),
-    m_attributes(ATTRIBUTE_KEYS)
+    DatabaseItem(ATTRIBUTE_KEYS, database)
 {
-    m_attributes.set("creationDateTime", QDateTime::currentDateTime());
-    m_attributes.set("label", NoLabel);
-    m_attributes.set("state", NoState);
-    m_attributes.set("key", QVariant::fromValue(Chord()));
+    setAttribute("creationDateTime", QDateTime::currentDateTime());
+    setAttribute("label", NoLabel);
+    setAttribute("state", NoState);
+    setAttribute("key", QVariant::fromValue(Chord()));
     connect( this, SIGNAL(attachmentAdded(int)),   database, SIGNAL(attachmentAdded(int)  ));
     connect( this, SIGNAL(attachmentRemoved(int)), database, SIGNAL(attachmentRemoved(int)));
     connect( this, SIGNAL(attachmentRenamed(int, QString)), database, SIGNAL(attachmentRenamed(int, QString)));
@@ -65,59 +64,10 @@ void Song::connectAttachment(Attachment *attachment)
     });
 }
 
-void Song::setAttribute(const QString &key, const QVariant &value)
-{
-    m_attributes.set(key, value);
-}
-
-void Song::setAttribute(int i, const QVariant &value)
-{
-    setAttribute(ATTRIBUTE_KEYS[i], value);
-}
-
-QVariant Song::attribute(const QString& key) const
-{
-    return m_attributes[key];
-}
-
-QVariant Song::attribute(int i) const
-{
-    return attribute(ATTRIBUTE_KEYS[i]);
-}
-
-QStringList Song::textAttributes() const
-{
-    return QStringList( { attribute("artist").toString(), attribute("label").toString() } );
-}
 
 void Song::deserialize(QDataStream &in)
 {
     DatabaseItem::deserialize(in);
-
-#ifdef OLD_LOAD
-    qint32 state, label;
-    QString title, artist, comments;
-    QStringList singers, soloPlayers;
-    QTime duration;
-    QDateTime creationDateTime;
-    Chord key;
-
-    in >> title >> artist >> creationDateTime >> duration;
-    in >> state >> label >> key >> singers >> soloPlayers >> comments;
-
-    m_attributes.set("title", title);
-    m_attributes.set("artist", artist);
-    m_attributes.set("duration", duration);
-    m_attributes.set("creationDateTime", creationDateTime);
-    m_attributes.set("label", QVariant::fromValue(static_cast<Label>(label)));
-    m_attributes.set("state", QVariant::fromValue(static_cast<State>(state)));
-    m_attributes.set("singers", singers);
-    m_attributes.set("soloPlayers", soloPlayers);
-    m_attributes.set("comments", comments);
-    m_attributes.set("key", QVariant::fromValue(key));
-#else
-    in >> m_attributes;
-#endif
 
     in >> &m_program;
 
@@ -141,20 +91,6 @@ void Song::serialize(QDataStream &out) const
 {
     DatabaseItem::serialize(out);
 
-#ifdef OLD_SAVE
-    out << m_attributes["title"].toString();
-    out << m_attributes["artist"].toString();
-    out << m_attributes["creationDateTime"].toDateTime();
-    out << m_attributes["duration"].toTime();
-    out << static_cast<qint32>(m_attributes["label"].value<Label>());
-    out << static_cast<qint32>(m_attributes["state"].value<State>());
-    out << m_attributes["key"].value<Chord>();
-    out << m_attributes["singers"].toStringList();
-    out << m_attributes["soloPlayers"].toStringList();
-    out << m_attributes["comments"].toString();
-#else
-    out << m_attributes;
-#endif
     out << &m_program;
     out << qint32(m_attachments.length());
     for (const Attachment* a : m_attachments)
@@ -163,39 +99,34 @@ void Song::serialize(QDataStream &out) const
         out << a;
     }
 }
-
-QString Song::attributeDisplay(int i) const
-{
-    return attributeDisplay(m_attributes.keys()[i]);
-}
-
 QString Song::attributeDisplay(const QString &key) const
 {
+    QVariant attribute = Song::attribute(key);
     if (key == "label")
     {
-        return Song::labelNames()[static_cast<int>(m_attributes["label"].value<Label>())];
+        return Song::labelNames()[static_cast<int>(attribute.value<Label>())];
     }
     if (key == "state")
     {
-        return Song::stateNames()[static_cast<int>(m_attributes["state"].value<State>())];
+        return Song::stateNames()[static_cast<int>(attribute.value<State>())];
     }
     if (key == "key")
     {
-        return m_attributes["key"].value<Chord>().key();
+        return attribute.value<Chord>().key();
     }
     if (key == "duration")
     {
-        return m_attributes["duration"].toTime().toString("mm:ss");
+        return attribute.toTime().toString(tr("mm:ss"));
     }
-    if (m_attributes[key].canConvert(QVariant::StringList))
+    if (attribute.canConvert(QVariant::StringList))
     {
-        return m_attributes[key].toStringList().join(", ");
+        return attribute.toStringList().join(", ");
     }
-    if (m_attributes[key].canConvert(QVariant::String))
+    if (attribute.canConvert(QVariant::String))
     {
-        return m_attributes[key].toString();
+        return attribute.toString();
     }
-    if (m_attributes[key].isNull())
+    if (attribute.isNull())
     {
         return "";
     }
@@ -216,13 +147,13 @@ QStringList Song::stateNames()
 
 QDataStream& operator <<(QDataStream& out, const Song::State& state)
 {
-    out << static_cast<qint32>(state);
+    out << static_cast<EnumSurrogate_t>(state);
     return out;
 }
 
 QDataStream& operator >>(QDataStream& in,        Song::State& state)
 {
-    qint32 fstate;
+    EnumSurrogate_t fstate;
     in >> fstate;
     state = static_cast<Song::State>(fstate);
     return in;

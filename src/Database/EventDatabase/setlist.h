@@ -44,7 +44,6 @@ private:
     void moveItems(const DatabaseMimeData<SetlistItem>* setlistData, int targetRow, QModelIndexList &indexes);
     void copyItems(const DatabaseMimeData<SetlistItem>* setlistData, int targetRow, QModelIndexList &indexes);
 
-
 public slots:
     void setFilter(QString filter);
 public:

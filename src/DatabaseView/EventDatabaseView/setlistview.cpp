@@ -153,13 +153,13 @@ void SetlistView::updateCellWidgets()
         SetlistItem* item = itemAtIndex( index );
         if (item)
         {
-            switch (item->type())
+            switch (item->attribute("type").value<SetlistItem::Type>())
             {
             case SetlistItem::LabelType:
                 setSpan(i, 0, 1, model()->columnCount()); // there is no widget, so we don't need this column here.
                 break;
             case SetlistItem::SongType:
-                setIndexWidget( index, createSongCellWidget(item->song()) );
+                setIndexWidget( index, createSongCellWidget(item->attribute("song").value<const Song*>()) );
                 break;
             }
         }

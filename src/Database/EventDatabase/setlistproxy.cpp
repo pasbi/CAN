@@ -18,9 +18,9 @@ bool acceptItem(const SetlistItem* item, const QString& filter)
 {
     if (!filter.isEmpty())
     {
-        for (const QString& token : item->textAttributes())
+        for (const QString& key : item->attributeKeys())
         {
-            if (token.contains(filter, Qt::CaseInsensitive))
+            if (item->attributeDisplay(key).contains(filter, Qt::CaseInsensitive))
             {
                 return true;
             }

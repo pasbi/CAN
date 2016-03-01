@@ -19,7 +19,8 @@ SetlistViewItemDelegate::SetlistViewItemDelegate(QObject *parent) :
 QWidget* SetlistViewItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(option);
-    switch (itemFromIndex(index)->type())
+    Q_ASSERT(itemFromIndex(index));
+    switch (itemFromIndex(index)->attribute("type").value<SetlistItem::Type>())
     {
     case SetlistItem::SongType:
         return new QComboBox(parent);
@@ -34,7 +35,7 @@ QWidget* SetlistViewItemDelegate::createEditor(QWidget *parent, const QStyleOpti
 void SetlistViewItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     SetlistItem* item = itemFromIndex(index);
-    switch (item->type())
+    switch (item->attribute("type").value<SetlistItem::Type>())
     {
     case SetlistItem::SongType:
     {
@@ -49,7 +50,7 @@ void SetlistViewItemDelegate::setEditorData(QWidget *editor, const QModelIndex &
         comboBox->setEditable(true);
         comboBox->setInsertPolicy(QComboBox::NoInsert);
 
-        int index = availableSongs.indexOf(const_cast<Song*>(item->song()));
+        int index = availableSongs.indexOf(const_cast<Song*>(item->attribute("song").value<const Song*>()));
         comboBox->setCurrentIndex(index);
         comboBox->lineEdit()->selectAll();
     }
@@ -57,7 +58,7 @@ void SetlistViewItemDelegate::setEditorData(QWidget *editor, const QModelIndex &
     case SetlistItem::LabelType:
     {
         QLineEdit* lineEdit = qobject_assert_cast<QLineEdit*>(editor);
-        lineEdit->setText(item->label());
+        lineEdit->setText(item->attribute("label").toString());
     }
         break;
     }
@@ -67,7 +68,7 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
 {
     Q_UNUSED(model);
     SetlistItem* item = itemFromIndex(index);
-    switch (item->type())
+    switch (item->attribute("type").value<SetlistItem::Type>())
     {
     case SetlistItem::SongType:
     {
@@ -78,7 +79,7 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
         if (comboBoxIndex >= 0)
         {
             const Song* song = availableSongs[comboBoxIndex];
-            if (item->song() != song)
+            if (item->attribute("song").value<const Song*>() != song)
             {
                 pushCommand( new SetlistItemChangeSongCommand(item, song));
             }

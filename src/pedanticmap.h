@@ -38,14 +38,14 @@ public:
         return m_map[key];
     }
 
-    T operator[](int i) const
+    /**
+     * @brief take takes the key from the map, but it will remain as key.
+     * @param key
+     */
+    void take(const Key& key)
     {
-        return m_map[m_keys[i]];
-    }
-
-    T& operator[](int i)
-    {
-        return m_map[m_keys[i]];
+        Q_ASSERT(m_keys.contains(key));
+        m_map.remove(key);
     }
 
 private:
@@ -61,6 +61,7 @@ private:
 template<class Key, class T>
 QDataStream& operator << (QDataStream& out, const PedanticMap<Key, T>& map)
 {
+    qDebug() << "save keys: " << map.m_keys;
     out << map.m_keys;
     out << map.m_map;
     return out;
@@ -69,6 +70,7 @@ QDataStream& operator << (QDataStream& out, const PedanticMap<Key, T>& map)
 template<class Key, class T>
 QDataStream& operator >> (QDataStream& in, PedanticMap<Key, T>& map)
 {
+    qDebug() << "load keys: " << map.m_keys;
     in >> map.m_keys;
     in >> map.m_map;
     return in;

@@ -5,7 +5,7 @@
 SetlistItemChangeSongCommand::SetlistItemChangeSongCommand(SetlistItem *setlistItem, const Song *newSong) :
     ModelCommand(setlistItem),
     m_newSong(newSong),
-    m_oldSong( setlistItem->song() )
+    m_oldSong( setlistItem->attribute("song").value<const Song*>() )
 {
 }
 

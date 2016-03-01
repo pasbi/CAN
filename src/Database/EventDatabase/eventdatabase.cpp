@@ -24,44 +24,15 @@ int EventDatabase::columnCount(const QModelIndex &parent) const
 QVariant EventDatabase::data(const QModelIndex &index, int role) const
 {
     assert(!index.parent().isValid());
-    int row = index.row();
-    switch (index.column())
+    const Event* event = m_items[index.row()];  //TODO same code as in SongDatabase::data
+    const QString key = event->attributeKeys()[index.column()];
+    switch (role)
     {
-    case 0:
-        switch (role)
-        {
-        case Qt::DisplayRole:
-        case Qt::ToolTipRole:
-            return Event::eventTypeName( m_items[row]->type() );
-        case Qt::EditRole:
-            return static_cast<int>(m_items[row]->type());
-        default:
-            return QVariant();
-        }
-        break;
-    case 1:
-        switch (role)
-        {
-        case Qt::DisplayRole:
-        case Qt::ToolTipRole:
-            return QLocale().toString(m_items[row]->beginning(), tr("MM/dd/yy hh:mm ap"));
-        case Qt::EditRole:
-            return m_items[row]->beginning();
-        default:
-            return QVariant();
-        }
-        break;
-    case 2:
-        switch (role)
-        {
-        case Qt::DisplayRole:
-        case Qt::EditRole:
-        case Qt::ToolTipRole:
-            return m_items[row]->label();
-        default:
-            return QVariant();
-        }
-        break;
+    case Qt::DisplayRole:
+    case Qt::ToolTipRole:
+        return event->attributeDisplay(key);
+    case Qt::EditRole:
+        return event->attribute(key);
     default:
         return QVariant();
     }
@@ -86,40 +57,18 @@ bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int
     assert(!index.parent().isValid());
 
     Event* event = itemAtIndex(index);
-    assert( event );
+    const QString key = event->attributeKeys()[index.column()];
+
     if (role == Qt::EditRole)
     {
-        switch (index.column())
-        {
-        case 0:
-            switch (value.toInt())
-            {
-            case 0:
-                event->setType( Event::Rehearsal );
-                break;
-            case 1:
-                event->setType( Event::Gig );
-                break;
-            case 2:
-                event->setType( Event::Other );
-                break;
-            default:
-                qWarning() << "Did not expect type " << value.toInt();
-            }
-            break;
-        case 1:
-            event->setBeginning( value.toDateTime() );
-            break;
-        case 2:
-            event->setLabel( value.toString() );
-            break;
-        }
-
-        emit dataChanged( index, index );
+        event->setAttribute(key, value);
+        emit dataChanged(index, index);
         return true;
     }
-
-    return false;
+    else
+    {
+        return false;
+    }
 }
 
 QString EventDatabase::itemName(int n) const

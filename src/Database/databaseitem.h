@@ -3,14 +3,38 @@
 
 #include "persistentobject.h"
 #include <QObject>
-#include <QBuffer>
+#include "pedanticmap.h"
+#include <QBuffer> //TODO
 
-template<typename T> class Database;
-template<typename T>
-class DatabaseItem : public QObject, public PersistentObject
+class DatabaseItemBase : public QObject, public PersistentObject
 {
 protected:
-    DatabaseItem(Database<T>* database) :
+    explicit DatabaseItemBase(const QStringList& attributeKeys);
+
+public:
+    QVariant attribute(const QString& key) const;
+    void setAttribute(const QString& key, const QVariant& value);
+    virtual QString attributeDisplay(const QString& key) const = 0;
+    QStringList attributeKeys() const;
+
+protected:
+    virtual QStringList skipSerializeAttributes() const { return QStringList(); }
+
+protected:
+    virtual void deserialize(QDataStream & in);
+    virtual void serialize(QDataStream & out) const;
+
+private:
+    PedanticVariantMap m_attributes;
+};
+
+template<typename T> class Database;
+
+template<typename T> class DatabaseItem : public DatabaseItemBase
+{
+protected:
+    DatabaseItem(const QStringList& attributeKeys, Database<T>* database) :
+        DatabaseItemBase(attributeKeys),
         m_database(database)
     {
 
@@ -31,6 +55,7 @@ public:
 
     T* copy(Database<T>* database) const
     {
+        //TODO replace buffer with QByteArray?
         QBuffer buffer;
         assert(buffer.open(QIODevice::ReadWrite));
 
@@ -43,8 +68,6 @@ public:
 
         return copy;
     }
-
-    virtual QStringList textAttributes() const = 0;
 
 private:
     Database<T>* m_database;

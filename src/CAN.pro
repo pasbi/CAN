@@ -148,7 +148,8 @@ SOURCES += main.cpp\
     Merge/mergelistwidgetitemwidget.cpp \
     Merge/combinesongsdialog.cpp \
     Merge/combinedialogselectionmodel.cpp \
-    Merge/mergelistwidgetselectionmodel.cpp
+    Merge/mergelistwidgetselectionmodel.cpp \
+    Database/databaseitem.cpp
 
 
 HEADERS  += mainwindow.h \

@@ -32,9 +32,10 @@ QList<void*> Setlist::viewableAttachments(const QModelIndex &index) const
 {
     QList<void*> list;
     SetlistItem* item = itemAtIndex( index );
-    if (item && item->song())
+    const Song* song = item->attribute("song").value<const Song*>();
+    if (item && song)
     {
-        for (Attachment* attachment : item->song()->attachments())
+        for (Attachment* attachment : song->attachments())
         {
             if (attachment->type() == "ChordPatternAttachment")
             {
@@ -49,72 +50,49 @@ QList<void*> Setlist::viewableAttachments(const QModelIndex &index) const
     return list;
 }
 
+//TODO initialize date of event: editor has wrong datetime
+
 QVariant Setlist::data(const QModelIndex &index, int role) const
 {
-    if (role == Qt::BackgroundRole)
+    SetlistItem* item = items()[index.row()];
+    switch (role)
     {
-        if (!m_filter.isEmpty())
+    case Qt::UserRole:
+        return QVariant::fromValue(item);
+    case Qt::DisplayRole:
+    case Qt::EditRole:
+        switch (index.column())
         {
-            assert(!index.parent().isValid());
-            SetlistItem* item = items()[index.row()];
-            for (const QString& token : item->textAttributes())
-            {
-                if (token.contains(m_filter, Qt::CaseInsensitive))
-                {
-                    return QColor(Qt::red);
-                }
-            }
-        }
-        else
-        {
-            return QVariant();
-        }
-    }
-    else if (role == Qt::UserRole)
-    {
-        return QVariant::fromValue<SetlistItem*>(items()[index.row()]);
-    }
-
-    switch ( index.column() )
-    {
-    case 0:
-        switch (role)
-        {
-        case Qt::DisplayRole:
-        case Qt::EditRole:
-            return m_items[index.row()]->label();
+        case 0:
+            return item->attributeDisplay("label");
+        case 1:
         default:
-            return QVariant();
+            return "";
         }
-    case 1:
-        switch (role)
-        {
-        case Qt::DisplayRole:
-        case Qt::EditRole:
-            return ""; //QVariant::fromValue( viewableAttachments( index ) );"
-        default:
-            return QVariant();
-        }
-
-    default:
-        return QVariant();
     }
-
+    return QVariant();
 }
 
 bool Setlist::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    bool success = true;
     if (role == Qt::EditRole)
     {
-        success &= itemAtIndex( index )->setLabel( value.toString() );
-        emit dataChanged( index, index );
+        SetlistItem* item = items()[index.row()];
+        if (item)
+        {
+            item->setAttribute("label", value);
+            emit dataChanged(index, index);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     else
     {
-        success = false;
+        return false;
     }
-    return success;
 }
 
 QList<const Song*> Setlist::songs() const
@@ -122,9 +100,9 @@ QList<const Song*> Setlist::songs() const
     QList<const Song*> s;
     for (const SetlistItem* item : m_items)
     {
-        if (item->type() == SetlistItem::SongType)
+        if (item->attribute("type").value<SetlistItem::Type>() == SetlistItem::SongType)
         {
-            s << item->song();
+            s << item->attribute("song").value<Song*>();
         }
     }
     return s;

@@ -58,7 +58,12 @@ IndexedFileChooseDialog::~IndexedFileChooseDialog()
 QStringList IndexedFileChooseDialog::gatherFiles()
 {
     QStringList filenames = app().fileIndex()->filenames();
-    return m_fileFilter->apply(filenames, m_song->textAttributes(), m_acceptedEndings);
+    return m_fileFilter->apply(filenames,
+                               QStringList( {
+                                   m_song->attribute("title").toString(),
+                                   m_song->attribute("artist").toString()
+                               } ),
+                               m_acceptedEndings );
 }
 
 void IndexedFileChooseDialog::setFilename(const QString &filename)

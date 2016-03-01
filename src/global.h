@@ -25,14 +25,16 @@ template<typename T> T preference(const QString& key)
     return preference(key).value<T>();
 }
 
+typedef qint32 EnumSurrogate_t;
 
-#define REGISTER_META_TYPE_STREAM_OPERATORS(NAMESPACE, TYPE) \
-    static struct TYPE##_RegisterMetaTypeStreamOperators_t \
+
+#define REGISTER_META_TYPE_STREAM_OPERATORS(TYPE, NAME) \
+    static struct NAME##RegisterMetaTypeStreamOperators_t \
     { \
-        TYPE##_RegisterMetaTypeStreamOperators_t() \
+        NAME##RegisterMetaTypeStreamOperators_t() \
         { \
-            qRegisterMetaTypeStreamOperators<NAMESPACE TYPE>(); \
+            qRegisterMetaTypeStreamOperators<TYPE>(); \
         } \
-    } TYPE##_RegisterMetaTypeStreamOperators;
+    } NAME##RegisterMetaTypeStreamOperators;
 
 #endif // GLOBAL_H

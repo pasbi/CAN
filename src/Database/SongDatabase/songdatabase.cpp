@@ -40,13 +40,14 @@ QVariant SongDatabase::data(const QModelIndex &index, int role) const
     assert(!index.parent().isValid());
 
     const Song* song = m_items[index.row()];
+    const QString key = song->attributeKeys()[index.column()];
     switch (role)
     {
     case Qt::DisplayRole:
     case Qt::ToolTipRole:
-        return song->attributeDisplay(index.column());
+        return song->attributeDisplay(key);
     case Qt::EditRole:
-        return song->attribute(index.column());
+        return song->attribute(key);
     default:
         return QVariant();
     }
@@ -190,11 +191,11 @@ QList<int> toIntList(const QVariant& value)
 bool SongDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     assert(!index.parent().isValid());
-
+    Song* song = m_items[index.row()];
+    const QString key = song->attributeKeys()[index.column()];
     if (role == Qt::EditRole)
     {
-        Song* song = m_items[index.row()];
-        song->setAttribute(index.column(), value);
+        song->setAttribute(key, value);
         emit dataChanged(index, index);
         return true;
     }

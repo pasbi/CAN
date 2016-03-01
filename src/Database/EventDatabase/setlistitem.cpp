@@ -3,30 +3,32 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/setlist.h"
 
+const QStringList SetlistItem::ATTRIBUTE_KEYS = { "type", "label", "song" };
+
 SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString & label ) :
-    DatabaseItem(setlist),
-    m_type( LabelType ),
-    m_label( label )
+    DatabaseItem(ATTRIBUTE_KEYS, setlist)
 {
+    setAttribute("type", QVariant::fromValue(LabelType));
+    setAttribute("label", label);
 }
 
 SetlistItem::SetlistItem( Database<SetlistItem>* setlist ) :
-    DatabaseItem(setlist),
-    m_type( LabelType ),
-    m_label( QObject::tr("Unnamed") )
+    DatabaseItem(ATTRIBUTE_KEYS, setlist)
 {
+    setAttribute("type", QVariant::fromValue(LabelType));
+    setAttribute("label", QObject::tr("Unnamed"));
 }
 
 SetlistItem::SetlistItem( Database<SetlistItem>* setlist, const Song* song ) :
-    DatabaseItem(setlist),
-    m_type( SongType )
+    DatabaseItem(ATTRIBUTE_KEYS, setlist)
 {
-    setSong(song);
+    setAttribute("type", QVariant::fromValue(SongType));
+    setAttribute("song", QVariant::fromValue(song));
 }
 
 SetlistItem::~SetlistItem()
 {
-    if (m_song)
+    if (attribute("song").value<const Song*>())
     {
         QObject::disconnect(m_updateSongLabelConnection);
     }
@@ -34,12 +36,12 @@ SetlistItem::~SetlistItem()
 
 void SetlistItem::setSong(const Song *song)
 {
-    if (m_song)
+    if (attribute("song").value<const Song*>())
     {
         QObject::disconnect(m_updateSongLabelConnection);
     }
 
-    m_song = song;
+    setAttribute("song", QVariant::fromValue(song));
 
     m_updateSongLabelConnection = QObject::connect(song, &Song::attributeChanged, [song, this]()
     {
@@ -57,67 +59,68 @@ QString SetlistItem::labelSong(const Song *song)
     return QString("%1 - %2").arg(song->attribute("title").toString(), song->attribute("artist").toString());
 }
 
-QString SetlistItem::label() const
-{
-    switch (m_type)
-    {
-    case SongType:
-        return labelSong(m_song);
-    case LabelType:
-        return m_label;
-    default:
-        return QString();
-    }
-}
-
-bool SetlistItem::setLabel(const QString label)
-{
-    if (type() == LabelType)
-    {
-        m_label = label;
-        return true;
-    }
-    else
-    {
-        // ignore.
-        return false;
-    }
-}
-
 void SetlistItem::serialize(QDataStream &out) const
 {
     DatabaseItem::serialize(out);
-    out << static_cast<qint32>(m_type);
-    if (m_type == SongType)
+    if (attribute("type").value<Type>() == SongType)
     {
-        out << static_cast<qint32>(app().project()->songDatabase()->identifyItem(m_song));
-    }
-    else
-    {
-        out << m_label;
+        out << static_cast<qint32>(app().project()->songDatabase()->identifyItem(attribute("song").value<const Song*>()));
     }
 }
+
+//TODO setlist item, song editing should be more user friendly (i.e. typing artist etc. instead of just title);
+
 
 void SetlistItem::deserialize(QDataStream &in)
 {
-    DatabaseItem::deserialize(in);
-    qint32 type;
-    in >> type;
-    m_type = static_cast<Type>(type);
-    if (m_type == SongType)
+    DatabaseItem::deserialize(in); // see serialize
+    if (attribute("type").value<Type>() == SongType)
     {
         qint32 id;
         in >> id;
-        m_song = app().project()->songDatabase()->retrieveItem(id);
-    }
-    else
-    {
-        in >> m_label;
+        setSong( app().project()->songDatabase()->retrieveItem(id) );
     }
 }
 
-QStringList SetlistItem::textAttributes() const
+QString SetlistItem::attributeDisplay(const QString &key) const
 {
-    return QStringList( { label() } );
+    if (key == "song" || key == "type")
+    {
+        return "";
+    }
+
+    if (key == "label")
+    {
+        switch (attribute("type").value<Type>())
+        {
+        case SongType:
+            return labelSong(attribute("song").value<const Song*>());
+        case LabelType:
+            return attribute("label").toString();
+        }
+    }
+
+    Q_UNREACHABLE();
+    return "";
+
 }
 
+QStringList SetlistItem::skipSerializeAttributes() const
+{
+    return QStringList({"song"});
+}
+
+
+QDataStream& operator<<(QDataStream& out, const SetlistItem::Type& type)
+{
+    out << static_cast<EnumSurrogate_t>(type);
+    return out;
+}
+
+QDataStream& operator>>(QDataStream& in,        SetlistItem::Type& type)
+{
+    EnumSurrogate_t ftype;
+    in >> ftype;
+    type = static_cast<SetlistItem::Type>(ftype);
+    return in;
+}
