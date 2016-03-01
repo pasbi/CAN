@@ -222,6 +222,41 @@ public:
         return index(m_items.indexOf(const_cast<T*>(item)), column);
     }
 
+    virtual QVariant data(const QModelIndex &index, int role) const
+    {
+        assert(!index.parent().isValid());
+        const T* item = m_items[index.row()];
+        const QString key = item->attributeKeys()[index.column()];
+        switch (role)
+        {
+        case Qt::DisplayRole:
+        case Qt::ToolTipRole:
+            return item->attributeDisplay(key);
+        case Qt::EditRole:
+            return item->attribute(key);
+        default:
+            return QVariant();
+        }
+    }
+
+
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int role)
+    {
+        assert(!index.parent().isValid());
+        T* item = m_items[index.row()];
+        const QString key = item->attributeKeys()[index.column()];
+        if (role == Qt::EditRole)
+        {
+            item->setAttribute(key, value);
+            emit dataChanged(index, index);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 protected:
     QList<T*> m_items;
 

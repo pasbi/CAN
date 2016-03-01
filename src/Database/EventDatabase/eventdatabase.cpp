@@ -21,23 +21,6 @@ int EventDatabase::columnCount(const QModelIndex &parent) const
     return 3;
 }
 
-QVariant EventDatabase::data(const QModelIndex &index, int role) const
-{
-    assert(!index.parent().isValid());
-    const Event* event = m_items[index.row()];  //TODO same code as in SongDatabase::data
-    const QString key = event->attributeKeys()[index.column()];
-    switch (role)
-    {
-    case Qt::DisplayRole:
-    case Qt::ToolTipRole:
-        return event->attributeDisplay(key);
-    case Qt::EditRole:
-        return event->attribute(key);
-    default:
-        return QVariant();
-    }
-}
-
 QVariant EventDatabase::headerData(int section, Qt::Orientation orientation, int role) const
 {
     Q_UNUSED(section);
@@ -50,25 +33,6 @@ Qt::ItemFlags EventDatabase::flags(const QModelIndex &index) const
 {
     Q_UNUSED(index);
     return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable;
-}
-
-bool EventDatabase::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    assert(!index.parent().isValid());
-
-    Event* event = itemAtIndex(index);
-    const QString key = event->attributeKeys()[index.column()];
-
-    if (role == Qt::EditRole)
-    {
-        event->setAttribute(key, value);
-        emit dataChanged(index, index);
-        return true;
-    }
-    else
-    {
-        return false;
-    }
 }
 
 QString EventDatabase::itemName(int n) const
