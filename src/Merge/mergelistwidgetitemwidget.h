@@ -19,8 +19,7 @@ signals:
 
 private:
     MergeItem* m_mergeItem;
-    QComboBox* makeComboBox(MergeItem::Type type);
-    QPushButton* makePushButton();
+    QWidget* makeButton();
 
 
 };

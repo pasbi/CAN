@@ -67,15 +67,14 @@ void MergeItem::setAction(Action action)
 
 QString MergeItem::label() const
 {
-    //TODO use icons, not "add" "remove" and "modify"
     switch (type())
     {
     case Add:
-        return QObject::tr("MASTER: %1").arg(slave()->label());
+        return slave()->label();
     case Remove:
-        return QObject::tr("SLAVE:  %1").arg(master()->label());
+        return master()->label();
     case Modify:
-        return QObject::tr("BOTH:   %1 -> %2").arg(master()->label(), slave()->label());
+        return QString("%1 -> %2").arg(master()->label(), slave()->label());
     default:
         Q_UNREACHABLE();
         return "";

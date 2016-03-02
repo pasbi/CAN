@@ -34,6 +34,8 @@ private:
     bool canDrop(const MergeItem *item, const QMimeData *data, Qt::DropAction action) const;
     void split(QListWidgetItem* oldItemWidget);
     void join(QListWidgetItem *masterItem, QListWidgetItem *slaveItem);
+    QListWidgetItem* initListWidgetItem(MergeItem* mergeItem, QListWidgetItem* recycle = nullptr);
+
 
 signals:
     //void combineItemDialogRequest(MergeItem*);

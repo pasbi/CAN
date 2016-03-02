@@ -141,6 +141,33 @@ int MergeListWidget::sizeHintForColumn(int column) const
     }
 }
 
+QListWidgetItem* MergeListWidget::initListWidgetItem(MergeItem* mergeItem, QListWidgetItem* recycle)
+{
+    if (!recycle)
+    {
+        recycle = new QListWidgetItem(this);
+    }
+    setItemWidget(recycle, new MergeListWidgetItemWidget(mergeItem));
+    m_listWidgetItems.insert(recycle, mergeItem);
+
+    QString toolTip;
+    switch (mergeItem->type())
+    {
+    case MergeItem::Add:
+        toolTip = tr("From master project");
+        break;
+    case MergeItem::Remove:
+        toolTip = tr("From other project");
+        break;
+    case MergeItem::Modify:
+        toolTip = tr("Combination from both projects");
+        break;
+    }
+
+    recycle->setToolTip(toolTip);
+    return recycle;
+}
+
 void MergeListWidget::join(QListWidgetItem* itemA, QListWidgetItem* itemB)
 {
     QModelIndex indexB = QListWidget::indexFromItem(itemB);
@@ -155,8 +182,7 @@ void MergeListWidget::join(QListWidgetItem* itemA, QListWidgetItem* itemB)
     mergeItemA = nullptr;
     mergeItemB = nullptr;
 
-    setItemWidget(itemA, new MergeListWidgetItemWidget(joinedItem));
-    m_listWidgetItems.insert(itemA, joinedItem);
+    initListWidgetItem(joinedItem, itemA);
     delete takeItem(indexB.row());
 }
 
@@ -170,16 +196,11 @@ void MergeListWidget::split(QListWidgetItem *item)
     mergeItem = nullptr;
 
     //recycle the item
-    QListWidgetItem* masterListWidgetItem = item;
-    setItemWidget(masterListWidgetItem, new MergeListWidgetItemWidget(masterSlaveMergeItem.first));
-    m_listWidgetItems.insert(masterListWidgetItem, masterSlaveMergeItem.first);
+    initListWidgetItem(masterSlaveMergeItem.first, item);
 
     // for the slave item, create a new one.
-    QListWidgetItem* slaveListWidgetItem = new QListWidgetItem(this);
-    insertItem(index.row() + 1, slaveListWidgetItem);
-    setItemWidget(slaveListWidgetItem, new MergeListWidgetItemWidget(masterSlaveMergeItem.second));
-    m_listWidgetItems.insert(slaveListWidgetItem, masterSlaveMergeItem.second);
-
+    QListWidgetItem* newListWidgetItem = initListWidgetItem(masterSlaveMergeItem.second, nullptr);
+    insertItem(index.row() + 1, newListWidgetItem);
 }
 
 void MergeListWidget::createContextMenu(const QPoint &pos)
@@ -214,10 +235,8 @@ void MergeListWidget::setDatabaseMerger(DatabaseMerger *merger)
 
     for (MergeItem* mergeItem : m_databaseMerger->mergeItems())
     {
-        QListWidgetItem* listWidgetItem = new QListWidgetItem(this);
+        QListWidgetItem* listWidgetItem = initListWidgetItem(mergeItem);
         addItem(listWidgetItem);
-        setItemWidget(listWidgetItem, new MergeListWidgetItemWidget(mergeItem));
-        m_listWidgetItems.insert(listWidgetItem, mergeItem);
     }
 
 }
