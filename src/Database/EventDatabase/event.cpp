@@ -87,19 +87,7 @@ QString Event::attributeDisplay(const QString &key) const
     return "";
 }
 
-QDataStream& operator <<(QDataStream& out, const Event::Type& type)
-{
-    out << static_cast<EnumSurrogate_t>(type);
-    return out;
-}
-
-QDataStream& operator >>(QDataStream& in,        Event::Type& type)
-{
-    EnumSurrogate_t ftype;
-    in >> ftype;
-    type = static_cast<Event::Type>(ftype);
-    return in;
-}
+DEFINE_ENUM_STREAM_OPERATORS(Event::Type)
 
 
 

@@ -46,8 +46,7 @@ private:
 
 Q_DECLARE_METATYPE(Event::Type)
 REGISTER_META_TYPE_STREAM_OPERATORS(Event::Type, EventType)
-QDataStream& operator <<(QDataStream& out, const Event::Type& type);
-QDataStream& operator >>(QDataStream& in,        Event::Type& type);
+DECLARE_ENUM_STREAM_OPERATORS(Event::Type)
 
 
 #endif // DATE_H

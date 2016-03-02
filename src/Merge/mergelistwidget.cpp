@@ -7,8 +7,9 @@
 #include <QMenu>
 #include "mergelistwidgetitemwidget.h"
 #include "merge.h"
-#include "combinesongsdialog.h"
+#include "combinedatabaseitemsdialog.h"
 #include "mergelistwidgetselectionmodel.h"
+#include <QDrag>
 
 
 MergeListWidget::MergeListWidget(QWidget *parent) :
@@ -17,13 +18,24 @@ MergeListWidget::MergeListWidget(QWidget *parent) :
 {
     setAcceptDrops(true);
     setDropIndicatorShown(true);
-    setDragDropMode(DragDrop);
+    setDragDropMode(DropOnly);  // implement drag manually
     setSelectionBehavior(QAbstractItemView::SelectRows);
-    setSelectionMode(QAbstractItemView::SingleSelection); // does not work properly
+    setSelectionMode(QAbstractItemView::NoSelection); // does not work properly
     selectionModel()->deleteLater();
     setSelectionModel(new MergeListWidgetSelectionModel(model()));
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(createContextMenu(QPoint)));
+
+    setStyleSheet(
+                "QWidget:item:hover"
+                "{"
+                "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #000000FF, stop: 1 #000000FF);"
+                "}"
+                "QWidget:item:select"
+                "{"
+                "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #00000000, stop: 1 #00000000);"
+                "}"
+                );
 }
 
 MergeListWidget::~MergeListWidget()
@@ -143,13 +155,20 @@ int MergeListWidget::sizeHintForColumn(int column) const
 
 QListWidgetItem* MergeListWidget::initListWidgetItem(MergeItem* mergeItem, QListWidgetItem* recycle)
 {
+    // create new item if recycling is inactive
     if (!recycle)
     {
         recycle = new QListWidgetItem(this);
     }
-    setItemWidget(recycle, new MergeListWidgetItemWidget(mergeItem));
+
+    // build the widget and register the item with the mergeItem
+    MergeListWidgetItemWidget* mergeListWidgetItemWidget = new MergeListWidgetItemWidget(mergeItem);
+    setItemWidget(recycle, mergeListWidgetItemWidget);
+    connect(mergeListWidgetItemWidget, SIGNAL(clicked(MergeItem*)), this, SLOT(openCombineItemDialog(MergeItem*)));
     m_listWidgetItems.insert(recycle, mergeItem);
 
+
+    // set tool tip
     QString toolTip;
     switch (mergeItem->type())
     {
@@ -165,6 +184,8 @@ QListWidgetItem* MergeListWidget::initListWidgetItem(MergeItem* mergeItem, QList
     }
 
     recycle->setToolTip(toolTip);
+
+    // return item
     return recycle;
 }
 
@@ -239,4 +260,37 @@ void MergeListWidget::setDatabaseMerger(DatabaseMerger *merger)
         addItem(listWidgetItem);
     }
 
+}
+
+void MergeListWidget::openCombineItemDialog(MergeItem *mergeItem)
+{
+    Q_ASSERT(mergeItem->type() == MergeItem::Modify);
+    CombineDatabaseItemsDialog dialog(mergeItem, this);
+    dialog.exec();
+}
+
+void MergeListWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        m_startPos = event->pos();
+    }
+    QListWidget::mousePressEvent(event);
+}
+
+void MergeListWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    if (   event->buttons() & Qt::LeftButton
+        && (m_startPos - event->pos()).manhattanLength() >= QApplication::startDragDistance())
+    {
+        QListWidgetItem* item = itemAt(m_startPos);
+        if (item)
+        {
+            QDrag* drag = new QDrag(this);
+            QMimeData* mimeData = MergeListWidget::mimeData({ item });
+            drag->setMimeData(mimeData);
+            drag->exec(Qt::LinkAction);
+        }
+    }
+    QListWidget::mouseMoveEvent(event);
 }

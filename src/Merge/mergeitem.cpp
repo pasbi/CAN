@@ -8,6 +8,7 @@ MergeItem::MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave) :
     m_master(master),
     m_slave(slave)
 {
+    setupModifyDetails();
 }
 
 MergeItem::MergeItem(DatabaseItemBase* item, Type type, Action action) :
@@ -65,6 +66,35 @@ void MergeItem::setAction(Action action)
     m_action = action;
 }
 
+QList<MergeItem::ModifyDetail> MergeItem::modifyDetails() const
+{
+    return m_modifyDetails;
+}
+
+// very custom QList::indexOf surrogate. We could do this with overriding MergeItem::ModifyDetail::operator==, but
+// in this context, equality means having the same key. It is probably a bad idea to express this with the operator==.
+int findModifyDetail(const QList<MergeItem::ModifyDetail>& list, const MergeItem::ModifyDetail& md)
+{
+    for (int i = 0; i < list.length(); ++i)
+    {
+        if (list[i].key() == md.key())
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void MergeItem::updateModifyDetails(const QList<ModifyDetail> modifyDetails)
+{
+    for (const ModifyDetail& modifyDetail : modifyDetails)
+    {
+        int i = findModifyDetail(m_modifyDetails, modifyDetail);
+        Q_ASSERT(i >= 0);   // assert modifyDetail is contained in m_modifyDetails
+        m_modifyDetails.replace(i, modifyDetail);
+    }
+}
+
 QString MergeItem::label() const
 {
     switch (type())
@@ -80,3 +110,21 @@ QString MergeItem::label() const
         return "";
     }
 }
+
+void MergeItem::setupModifyDetails()
+{
+    Q_ASSERT(master()->attributeKeys() == slave()->attributeKeys());
+    for (const QString& key : master()->attributeKeys())
+    {
+        if (master()->attribute(key) != slave()->attribute(key))
+        {
+            qDebug() << "add modify detail " << key;
+            m_modifyDetails << ModifyDetail(key, preference<MergeItem::Decision>("defaultActionMergeModify"));
+        }
+    }
+}
+
+
+DEFINE_ENUM_STREAM_OPERATORS(MergeItem::Action)
+DEFINE_ENUM_STREAM_OPERATORS(MergeItem::Decision)
+

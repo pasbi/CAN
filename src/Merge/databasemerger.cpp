@@ -1,8 +1,14 @@
 #include "databasemerger.h"
+#include "global.h"
 
 DatabaseMerger::DatabaseMerger(const QList<DatabaseItemBase*> &masterItems, const QList<DatabaseItemBase*> &slaveItems)
 {
     init(masterItems, slaveItems);
+}
+
+DatabaseMerger::~DatabaseMerger()
+{
+
 }
 
 // we need a copy of the lists to work on.
@@ -141,9 +147,18 @@ bool DatabaseMerger::sortMasterSlaveItem(MergeItem*& masterItem, MergeItem*& sla
     return false;   //two add or two remove types cannot be corrected.
 }
 
-MergeItem::Action DatabaseMerger::defaultAction(MergeItem::Type) const
+MergeItem::Action DatabaseMerger::defaultAction(MergeItem::Type type) const
 {
-    // default action is to keep the item, if it comes from master or slave project.
-    return MergeItem::AddAction;
+    switch (type)
+    {
+    case MergeItem::Add:
+        return preference<MergeItem::Action>("defaultActionMergeAdd");
+    case MergeItem::Remove:
+        return preference<MergeItem::Action>("defaultActionMergeRemove");
+    case MergeItem::Modify:
+    default:
+        Q_UNREACHABLE();
+        return MergeItem::AddAction;
+    }
 }
 

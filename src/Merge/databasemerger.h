@@ -10,6 +10,7 @@ public:
     enum CompareResult { Unequal, Equal, Similar };
 
     DatabaseMerger(const QList<DatabaseItemBase*> &masterItems, const QList<DatabaseItemBase*> &slaveItems);
+    virtual ~DatabaseMerger();
 
     // we need a copy of the lists to work on.
     void init(QList<DatabaseItemBase*> masterItems, QList<DatabaseItemBase*> slaveItems);
@@ -24,7 +25,7 @@ private:
     QList<MergeItem*> m_mergeItems;
 
     static bool sortMasterSlaveItem(MergeItem*& masterItem, MergeItem*& slaveItem);
-    MergeItem::Action defaultAction(MergeItem::Type) const;
+    MergeItem::Action defaultAction(MergeItem::Type type) const;
 
 };
 

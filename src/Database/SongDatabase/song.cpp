@@ -153,31 +153,5 @@ QString Song::label() const
     return QString("%1 -- %2").arg(attributeDisplay("title"), attributeDisplay("artist"));
 }
 
-
-QDataStream& operator <<(QDataStream& out, const Song::State& state)
-{
-    out << static_cast<EnumSurrogate_t>(state);
-    return out;
-}
-
-QDataStream& operator >>(QDataStream& in,        Song::State& state)
-{
-    EnumSurrogate_t fstate;
-    in >> fstate;
-    state = static_cast<Song::State>(fstate);
-    return in;
-}
-
-QDataStream& operator <<(QDataStream& out, const Song::Label& label)
-{
-    out << static_cast<qint32>(label);
-    return out;
-}
-
-QDataStream& operator >>(QDataStream& in,        Song::Label& label)
-{
-    qint32 flabel;
-    in >> flabel;
-    label = static_cast<Song::Label>(flabel);
-    return in;
-}
+DEFINE_ENUM_STREAM_OPERATORS(Song::State)
+DEFINE_ENUM_STREAM_OPERATORS(Song::Label)

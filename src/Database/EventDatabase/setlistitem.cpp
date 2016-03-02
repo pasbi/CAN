@@ -110,17 +110,4 @@ QString SetlistItem::label() const
     return attributeDisplay("label");
 }
 
-
-QDataStream& operator<<(QDataStream& out, const SetlistItem::Type& type)
-{
-    out << static_cast<EnumSurrogate_t>(type);
-    return out;
-}
-
-QDataStream& operator>>(QDataStream& in,        SetlistItem::Type& type)
-{
-    EnumSurrogate_t ftype;
-    in >> ftype;
-    type = static_cast<SetlistItem::Type>(ftype);
-    return in;
-}
+DEFINE_ENUM_STREAM_OPERATORS(SetlistItem::Type)

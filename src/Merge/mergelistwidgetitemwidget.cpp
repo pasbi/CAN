@@ -55,27 +55,24 @@ QWidget* MergeListWidgetItemWidget::makeButton()
     case MergeItem::Remove:
         connect(button, &OptionPushButton::currentIndexChanged, [this](int index)
         {
-            MergeItem::Action action;
             if (index == 0)
             {
-                action = MergeItem::AddAction;
+                m_mergeItem->setAction(MergeItem::AddAction);
             }
             else if (index == 1)
             {
-                action = MergeItem::RemoveAction;
+                m_mergeItem->setAction(MergeItem::RemoveAction);
             }
             else
             {
                 Q_UNREACHABLE();
             }
-            m_mergeItem->setAction(action);
-            emit indexChanged(action);
         });
         break;
     case MergeItem::Modify:
         connect(button, &QPushButton::clicked, [this]()
         {
-            emit clicked();
+            emit clicked(m_mergeItem);
         });
         break;
     }

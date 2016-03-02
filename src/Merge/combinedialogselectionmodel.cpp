@@ -13,6 +13,7 @@ void CombineDialogSelectionModel::select(const QModelIndex &index, SelectionFlag
 
 void CombineDialogSelectionModel::select(const QItemSelection &selection, QItemSelectionModel::SelectionFlags command)
 {
+    QSignalBlocker(this);
     if (command & Select)
     {
         for (const QModelIndex& selected : selection.indexes())

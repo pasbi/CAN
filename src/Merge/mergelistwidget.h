@@ -27,6 +27,8 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
     void dragLeaveEvent(QDragLeaveEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
     int sizeHintForColumn(int column) const;
 
 private:
@@ -35,13 +37,11 @@ private:
     void split(QListWidgetItem* oldItemWidget);
     void join(QListWidgetItem *masterItem, QListWidgetItem *slaveItem);
     QListWidgetItem* initListWidgetItem(MergeItem* mergeItem, QListWidgetItem* recycle = nullptr);
-
-
-signals:
-    //void combineItemDialogRequest(MergeItem*);
+    QPoint m_startPos;
 
 
 private slots:
+    void openCombineItemDialog(MergeItem*mergeItem);
     void createContextMenu(const QPoint& pos);
 
 private:

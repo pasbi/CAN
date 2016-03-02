@@ -5,6 +5,8 @@
 
 class CombineDialogSelectionModel : public QItemSelectionModel
 {
+    // note: overriding of select is not very proper,
+    // so CombineDialogSelectionModel::itemSelectionChanged may not work as expected.
     Q_OBJECT
 public:
     explicit CombineDialogSelectionModel(QAbstractItemModel *parent = 0);

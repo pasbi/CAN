@@ -146,11 +146,11 @@ SOURCES += main.cpp\
     Merge/mergelistwidget.cpp \
     Merge/mergeitem.cpp \
     Merge/mergelistwidgetitemwidget.cpp \
-    Merge/combinesongsdialog.cpp \
     Merge/combinedialogselectionmodel.cpp \
     Merge/mergelistwidgetselectionmodel.cpp \
     Database/databaseitem.cpp \
-    optionpushbutton.cpp
+    optionpushbutton.cpp \
+    Merge/combinedatabaseitemsdialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -272,12 +272,12 @@ HEADERS  += mainwindow.h \
     Merge/mergelistwidget.h \
     Merge/mergeitem.h \
     Merge/mergelistwidgetitemwidget.h \
-    Merge/combinesongsdialog.h \
     Merge/combineitems.h \
     Merge/combinedialogselectionmodel.h \
     Merge/mergelistwidgetselectionmodel.h \
     map.h \
-    optionpushbutton.h
+    optionpushbutton.h \
+    Merge/combinedatabaseitemsdialog.h
 
 
 FORMS    += mainwindow.ui \

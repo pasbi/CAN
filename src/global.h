@@ -54,4 +54,25 @@ typedef qint32 EnumSurrogate_t;
 #define DEFINE_NONSENSE_SMALLER_OPERATOR(TYPE) \
     bool operator <(const TYPE&) const { return false; }
 
+#define DECLARE_ENUM_STREAM_OPERATORS(TYPE) \
+    QDataStream& operator<<(QDataStream& out, const TYPE& e); \
+    QDataStream& operator>>(QDataStream& in,        TYPE& e); \
+
+#define DEFINE_ENUM_STREAM_OPERATORS(TYPE) \
+    QDataStream& operator<<(QDataStream& out, const TYPE& e) \
+    { \
+        out << static_cast<EnumSurrogate_t>(e); \
+        return out; \
+    } \
+    \
+    QDataStream& operator>>(QDataStream& in,        TYPE& e) \
+    { \
+        EnumSurrogate_t es; \
+        in >> es; \
+        e = static_cast<TYPE>(es); \
+        return in; \
+    }
+
+
+
 #endif // GLOBAL_H

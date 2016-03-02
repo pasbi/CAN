@@ -38,7 +38,6 @@ private:
 Q_DECLARE_METATYPE(SetlistItem*)
 Q_DECLARE_METATYPE(SetlistItem::Type)
 REGISTER_META_TYPE_STREAM_OPERATORS(SetlistItem::Type, SetlistItemType)
-QDataStream& operator<<(QDataStream& out, const SetlistItem::Type& type);
-QDataStream& operator>>(QDataStream& in,        SetlistItem::Type& type);
+DECLARE_ENUM_STREAM_OPERATORS(SetlistItem::Type)
 
 #endif // SETLISTITEM_H
