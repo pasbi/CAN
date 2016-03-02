@@ -1,203 +1,83 @@
 #include "mergeitem.h"
+#include "Database/databaseitem.h"
+#include <QObject>
 
-MergeItemBase::MergeItemBase(Origin origin, Type type, void *pointer, const QString &baseLabel) :
+MergeItem::MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave) :
+    m_type(Modify),
+    m_action(ModifyAction),
+    m_master(master),
+    m_slave(slave)
+{
+}
+
+MergeItem::MergeItem(DatabaseItemBase* item, Type type, Action action) :
     m_type(type),
-    m_origin(origin),
-    m_pointer(pointer),
-    m_masterPointer(nullptr),
-    m_slavePointer(nullptr),
-    m_baseLabel(baseLabel),
-    m_combinationPointer(nullptr)
+    m_action(action),
+    m_master(nullptr),
+    m_slave(nullptr)
 {
-    switch (origin)
+    Q_ASSERT(action != ModifyAction);
+
+    switch (type)
     {
-    case MasterProject:
-        m_action = AddItemAction;
+    case Add:
+        m_slave = item;
         break;
-    case SlaveProject:
-        m_action = DeleteItemAction;
+    case Remove:
+        m_master = item;
         break;
-    case BothProjects:
-        m_action = ModifyItemAction;
-        break;
+    case Modify:
     default:
-        m_action = NoAction;
-    }
-}
-
-MergeItemBase::~MergeItemBase()
-{
-}
-
-MergeItemBase::MergeItemBase() :
-    MergeItemBase(NoProject, NoType, nullptr, "")
-{
-}
-
-bool MergeItemBase::operator==(const MergeItemBase& other) const
-{
-    if (       m_action == other.m_action
-            && m_type == other.m_type
-            && m_origin == other.m_origin )
-    {
-        switch (m_type)
-        {
-        case MasterProject:
-        case SlaveProject:
-            return m_pointer == other.m_pointer
-                    && m_baseLabel == other.m_baseLabel;
-        case BothProjects:
-            return m_masterPointer == other.m_masterPointer
-                    && m_slavePointer == other.m_slavePointer
-                    && m_masterBaseLabel == other.m_masterBaseLabel
-                    && m_slaveBaseLabel == other.m_slaveBaseLabel;
-        case NoProject:
-            return true;
-        }
-    }
-
-    return false;
-}
-
-MergeItemBase::Action MergeItemBase::action() const
-{
-    if (origin() == MasterProject)
-    {
-        if (m_action == AddItemAction)
-        {
-            // master already contains this item
-            return NoAction;
-        }
-        else if (m_action == DeleteItemAction)
-        {
-            // this item has to be deleted from master
-            return DeleteItemAction;
-        }
+        // use othe constructor!
         Q_UNREACHABLE();
+        break;
     }
-    else if (origin() == SlaveProject)
-    {
-        if (m_action == AddItemAction)
-        {
-            // this item has to be added to master
-            return AddItemAction;
-        }
-        else if (m_action == DeleteItemAction)
-        {
-            // master never contained this item, so do nothing.
-            return NoAction;
-        }
-        Q_UNREACHABLE();
-    }
-    else if (origin() == BothProjects)
-    {
-        if (m_action == ModifyItemAction)
-        {
-            // i.e. neither keep master nor slave object, but keep combination of both.
-            // how this combination looks will be specified somewhere else.
-            return ModifyItemAction;
-        }
-        // there should not be any other option than how to combine them.
-        Q_UNREACHABLE();
-    }
-    Q_UNREACHABLE();
-    return NoAction;
 }
 
-void MergeItemBase::setAction(Action a)
+DatabaseItemBase* MergeItem::master() const
 {
-    m_action = a;
+    Q_ASSERT(type() == Remove || type() == Modify);
+    return m_master;
 }
 
-void MergeItemBase::setPointer(void* dataPointer)
+DatabaseItemBase* MergeItem::slave() const
 {
-    m_pointer = dataPointer;
+    Q_ASSERT(type() == Add || type() == Modify);
+    return m_slave;
 }
 
-void MergeItemBase::setMasterSlavePointer(void* masterPointer, void* slavePointer)
+
+MergeItem::Type MergeItem::type() const
 {
-    m_masterPointer = masterPointer;
-    m_slavePointer = slavePointer;
+    return m_type;
 }
 
-void MergeItemBase::setMasterSlaveLabel(const QString& masterLabel, const QString& slaveLabel)
+MergeItem::Action MergeItem::action() const
 {
-    m_masterBaseLabel = masterLabel;
-    m_slaveBaseLabel = slaveLabel;
+    return m_action;
 }
 
-QString MergeItemBase::label() const
+void MergeItem::setAction(Action action)
 {
-    if (origin() == BothProjects)
-    {
-        return QString(QObject::tr("Modified: %2 -> %3")).arg(masterBaseLabel(), slaveBaseLabel());
-    }
-    else if (origin() == SlaveProject)
-    {
-        return QString(QObject::tr("Added: %2")).arg(baseLabel());
-    }
-    else if (origin() == MasterProject)
-    {
-        return QString(QObject::tr("Deleted: %2")).arg(baseLabel());
-    }
-
-    Q_UNREACHABLE();
-    return "";
+    // we are only allowed to change AddAction to RemoveAction and vice versa.222
+    Q_ASSERT(m_action != ModifyAction);
+    Q_ASSERT(action != ModifyAction);
+    m_action = action;
 }
 
-void MergeItemBase::setOrigin(Origin origin)
+QString MergeItem::label() const
 {
-    m_origin = origin;
-}
-
-void MergeItemBase::setLabel(const QString &label)
-{
-    m_baseLabel = label;
-}
-
-void MergeItemBase::setCombinationPointer(void *combinationPointer)
-{
-    m_combinationPointer = combinationPointer;
-}
-
-void MergeItemBase::initializeCombinationObject()
-{
+    //TODO use icons, not "add" "remove" and "modify"
     switch (type())
     {
-    case SongType:
-        setCombinationPointer(masterPointer<Song>()->copy());
-        break;
-    case EventType:
-        setCombinationPointer(masterPointer<Event>()->copy());
-        break;
-    case AttachmentType:
-        setCombinationPointer(masterPointer<Attachment>()->copy());
-        break;
+    case Add:
+        return QObject::tr("MASTER: %1").arg(slave()->label());
+    case Remove:
+        return QObject::tr("SLAVE:  %1").arg(master()->label());
+    case Modify:
+        return QObject::tr("BOTH:   %1 -> %2").arg(master()->label(), slave()->label());
     default:
         Q_UNREACHABLE();
+        return "";
     }
 }
-
-void MergeItemBase::deleteCombinationObject()
-{
-    if (m_combinationPointer)
-    {
-        //TODO ??
-    }
-    switch (type())
-    {
-    case SongType:
-        delete combinationPointer<Song>();
-        break;
-    case EventType:
-        delete combinationPointer<Event>();
-        break;
-    case AttachmentType:
-        delete combinationPointer<Attachment>();
-        break;
-    default:
-        Q_ASSERT(m_combinationPointer == nullptr);
-    }
-    setCombinationPointer(nullptr);
-}
-

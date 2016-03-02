@@ -34,6 +34,8 @@ public:
     static QString eventTypeName(Type type);
     static const QStringList ATTRIBUTE_KEYS;
 
+    QString label() const;
+
 protected:
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);

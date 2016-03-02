@@ -37,4 +37,21 @@ typedef qint32 EnumSurrogate_t;
         } \
     } NAME##RegisterMetaTypeStreamOperators;
 
+#define REGISTER_META_TYPE_COMPARE_OPERATORS(TYPE, NAME) \
+    static struct NAME##RegisterMetaTypeCompareOperators_t \
+    { \
+        NAME##RegisterMetaTypeCompareOperators_t() \
+        { \
+            if (!QMetaType::hasRegisteredComparators<TYPE>()) \
+            { \
+                QMetaType::registerComparators<TYPE>(); \
+            } \
+        } \
+    } NAME##RegisterMetaTypeCompareOperators;
+
+// this operator is non sense and you should never use it.
+// however, QMetaType::registerComparators() needs an implementation.
+#define DEFINE_NONSENSE_SMALLER_OPERATOR(TYPE) \
+    bool operator <(const TYPE&) const { return false; }
+
 #endif // GLOBAL_H

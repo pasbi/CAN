@@ -3,9 +3,12 @@
 
 #include <QListWidget>
 #include "mergeitem.h"
+#include "Database/databaseitem.h"
+#include "databasemerger.h"
 
 class Merge;
 
+// for DatabaseItemBase
 class MergeListWidget : public QListWidget
 {
     Q_OBJECT
@@ -17,10 +20,8 @@ public:
     QMimeData* mimeData(const QList<QListWidgetItem *> items) const;
     Qt::DropActions supportedDropActions() const { return Qt::LinkAction; }
     Qt::DropAction defaultDropAction() const { return Qt::LinkAction; }
-    void setMergeItems(const QList<MergeItemBase *> &items);
-    QList<MergeItemBase *> mergeItems() const;
-    Merge* merge() const { return m_merge; }
-    void setMerge(Merge* merge, QList<MergeItemBase*> mergItems);
+
+    void setDatabaseMerger(DatabaseMerger* m_databaseMerger);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -30,19 +31,20 @@ protected:
 
 private:
     bool canDrop(QListWidgetItem *item, const QMimeData* data, Qt::DropAction action) const;
-    bool canDrop(const MergeItemBase *item, const QMimeData *data, Qt::DropAction action) const;
+    bool canDrop(const MergeItem *item, const QMimeData *data, Qt::DropAction action) const;
     void split(QListWidgetItem* oldItemWidget);
-    void join(QListWidgetItem* targetWidgetItem, QListWidgetItem* sourceWidgetItem);
+    void join(QListWidgetItem *masterItem, QListWidgetItem *slaveItem);
 
 signals:
-    void combineItemDialogRequest(MergeItemBase*);
+    //void combineItemDialogRequest(MergeItem*);
 
 
 private slots:
     void createContextMenu(const QPoint& pos);
+
 private:
-    QMap<QListWidgetItem*, MergeItemBase*> m_mergeItems;
-    Merge* m_merge;
+    DatabaseMerger* m_databaseMerger;
+    QMap<QListWidgetItem*, MergeItem*> m_listWidgetItems;
 };
 
 

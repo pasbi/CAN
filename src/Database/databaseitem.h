@@ -3,7 +3,7 @@
 
 #include "persistentobject.h"
 #include <QObject>
-#include "pedanticmap.h"
+#include "map.h"
 
 class DatabaseItemBase : public QObject, public PersistentObject
 {
@@ -15,6 +15,7 @@ public:
     void setAttribute(const QString& key, const QVariant& value);
     virtual QString attributeDisplay(const QString& key) const = 0;
     QStringList attributeKeys() const;
+    virtual QString label() const = 0;
 
 protected:
     virtual QStringList skipSerializeAttributes() const { return QStringList(); }

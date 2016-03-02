@@ -2,38 +2,32 @@
 #define DATABASEMERGER_H
 
 #include "Database/database.h"
-#include "Database/EventDatabase/event.h"
-#include "Database/SongDatabase/song.h"
 #include "mergeitem.h"
 
-
-class DatabaseMergerPrivate
-{
-public:
-    enum CompareResult { Unequal, Equal, Similar };
-};
-
-template<class T> class MergeTreeItem;
-
-template<class T>
 class DatabaseMerger
 {
 public:
-    DatabaseMerger(Database<T>* master, Database<T>* slave)
-    {
-        m_master = master;
-        m_slave = slave;
-    }
+    enum CompareResult { Unequal, Equal, Similar };
 
-    QList<MergeItemBase *> createItems() const;
+    DatabaseMerger(const QList<DatabaseItemBase*> &masterItems, const QList<DatabaseItemBase*> &slaveItems);
 
-    Database<T>* master() const { return m_master; }
-    Database<T>* slave() const { return m_slave; }
+    // we need a copy of the lists to work on.
+    void init(QList<DatabaseItemBase*> masterItems, QList<DatabaseItemBase*> slaveItems);
+    virtual CompareResult compare(const DatabaseItemBase*, const DatabaseItemBase*) const { return Unequal; }   //TODO make pure virtual
+    MergeItem *join(MergeItem *itemA, MergeItem *itemB);
+    QPair<MergeItem *, MergeItem *> split(MergeItem* mergeItem);
+    QList<MergeItem*> mergeItems() const;
+    MergeItem *decodeMimeData(const QMimeData* mimeData) const;
+    QMimeData* encodeMimeData(const MergeItem *mergeItemBase) const;
 
 private:
-    Database<T>* m_master;
-    Database<T>* m_slave;
+    QList<MergeItem*> m_mergeItems;
+
+    static bool sortMasterSlaveItem(MergeItem*& masterItem, MergeItem*& slaveItem);
+    MergeItem::Action defaultAction(MergeItem::Type) const;
+
 };
+
 
 
 #endif // DATABASEMERGER_H

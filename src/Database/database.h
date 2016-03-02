@@ -14,6 +14,8 @@
 #include "Database/EventDatabase/setlistitem.h"
 
 #include "util.h"
+#include "SongDatabase/song.h"
+
 
 class DatabaseBase : public QAbstractTableModel, public PersistentObject
 {
@@ -37,8 +39,6 @@ signals:
     void reseted();
 };
 
-
-#include "SongDatabase/song.h"
 template<typename T>
 class Database : public DatabaseBase
 {

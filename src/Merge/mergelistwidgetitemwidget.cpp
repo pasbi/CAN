@@ -4,19 +4,19 @@
 #include <QPushButton>
 #include <QLabel>
 
-MergeListWidgetItemWidget::MergeListWidgetItemWidget(MergeItemBase *mergeItem) :
+MergeListWidgetItemWidget::MergeListWidgetItemWidget(MergeItem *mergeItem) :
     QWidget(nullptr),
     m_mergeItem(mergeItem)
 {
     QLabel* label = new QLabel(mergeItem->label(), this);
     QWidget* controlWidget = nullptr;
 
-    switch (mergeItem->origin()) {
-    case MergeItemBase::MasterProject:
-    case MergeItemBase::SlaveProject:
-        controlWidget = makeComboBox(mergeItem->origin());
+    switch (mergeItem->type()) {
+    case MergeItem::Add:
+    case MergeItem::Remove:
+        controlWidget = makeComboBox(mergeItem->type());
         break;
-    case MergeItemBase::BothProjects:
+    case MergeItem::Modify:
         controlWidget = makePushButton();
         break;
     default:
@@ -31,16 +31,16 @@ MergeListWidgetItemWidget::MergeListWidgetItemWidget(MergeItemBase *mergeItem) :
     controlWidget->setFixedWidth(250);
 }
 
-QWidget* createCellWidget(MergeItemBase* item)
+QWidget* createCellWidget(MergeItem* item)
 {
     QComboBox* box = new QComboBox();
 
-    if (item->origin() == MergeItemBase::SlaveProject)
+    if (item->type() == MergeItem::Add)
     {
         box->addItems( { QWidget::tr("Add to master project"),
                          QWidget::tr("Do not add to master project") } );
     }
-    else if (item->origin() == MergeItemBase::MasterProject)
+    else if (item->type() == MergeItem::Remove)
     {
         box->addItems( { QWidget::tr("Keep in master project"),
                          QWidget::tr("Remove from master project") } );
@@ -50,11 +50,11 @@ QWidget* createCellWidget(MergeItemBase* item)
     {
         if (index == 0)
         {
-            item->setAction(MergeItemBase::AddItemAction);
+            item->setAction(MergeItem::AddAction);
         }
         else
         {
-            item->setAction(MergeItemBase::DeleteItemAction);
+            item->setAction(MergeItem::RemoveAction);
         }
     };
     QObject::connect(box, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), on_indexChanged);
@@ -63,40 +63,45 @@ QWidget* createCellWidget(MergeItemBase* item)
     return box;
 }
 
-QComboBox* MergeListWidgetItemWidget::makeComboBox(MergeItemBase::Origin origin)
+QComboBox* MergeListWidgetItemWidget::makeComboBox(MergeItem::Type type)
 {
     QComboBox* box = new QComboBox(this);
-    switch (origin)
+    switch (type)
     {
-    case MergeItemBase::SlaveProject:
+    case MergeItem::Add:
         box->addItem( tr("Add to master project") );
         box->addItem( tr("Do not add to master project") );
         break;
-    case MergeItemBase::MasterProject:
+    case MergeItem::Remove:
         box->addItem( tr("Keep in master project") );
         box->addItem( tr("Remove from master project") );
         break;
-    case MergeItemBase::BothProjects:
-        // see makePushButton
-    case MergeItemBase::NoProject:
+    case MergeItem::Modify:
+    default:
         Q_UNREACHABLE();
+        return nullptr;
     }
 
     connect(box, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int index)
     {
+        MergeItem::Action action;
         if (index == 0)
         {
-            m_mergeItem->setAction(MergeItemBase::AddItemAction);
-            emit indexChanged(MergeItemBase::AddItemAction);
+            action = MergeItem::AddAction;
+        }
+        else if (index == 1)
+        {
+            action = MergeItem::RemoveAction;
         }
         else
         {
-            m_mergeItem->setAction(MergeItemBase::DeleteItemAction);
-            emit indexChanged(MergeItemBase::DeleteItemAction);
+            Q_UNREACHABLE();
         }
+        m_mergeItem->setAction(action);
+        emit indexChanged(action);
     });
 
-    m_mergeItem->setAction(MergeItemBase::AddItemAction);
+    m_mergeItem->setAction(m_mergeItem->action());
     return box;
 }
 

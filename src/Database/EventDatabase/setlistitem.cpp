@@ -54,11 +54,6 @@ void SetlistItem::setSong(const Song *song)
     });
 }
 
-QString SetlistItem::labelSong(const Song *song)
-{
-    return QString("%1 - %2").arg(song->attribute("title").toString(), song->attribute("artist").toString());
-}
-
 void SetlistItem::serialize(QDataStream &out) const
 {
     DatabaseItem::serialize(out);
@@ -94,7 +89,7 @@ QString SetlistItem::attributeDisplay(const QString &key) const
         switch (attribute("type").value<Type>())
         {
         case SongType:
-            return labelSong(attribute("song").value<const Song*>());
+            return attribute("song").value<const Song*>()->label();
         case LabelType:
             return attribute("label").toString();
         }
@@ -108,6 +103,11 @@ QString SetlistItem::attributeDisplay(const QString &key) const
 QStringList SetlistItem::skipSerializeAttributes() const
 {
     return QStringList({"song"});
+}
+
+QString SetlistItem::label() const
+{
+    return attributeDisplay("label");
 }
 
 

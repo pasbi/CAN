@@ -1,8 +1,37 @@
-#ifndef PEDANTICMAP_H
-#define PEDANTICMAP_H
+#ifndef MAP_H
+#define MAP_H
 
 #include <QObject>
 #include <QVariantMap>
+
+
+template<class Key, class T>
+class SortedMap
+{
+public:
+    SortedMap() {}
+
+    void append(const Key& key, const T& value)
+    {
+        m_keys.append(key);
+        m_map.insert(key, value);
+    }
+
+    QList<Key> keys() const
+    {
+        return m_keys;
+    }
+
+    T value(const QString& key) const
+    {
+        return m_map(key);
+    }
+
+private:
+    QList<Key> m_keys;
+    QMap<Key, T> m_map;
+};
+
 
 template<class Key, class T>
 class PedanticMap
@@ -76,4 +105,4 @@ QDataStream& operator >> (QDataStream& in, PedanticMap<Key, T>& map)
 
 typedef PedanticMap<QString, QVariant> PedanticVariantMap;
 
-#endif // PEDANTICMAP_H
+#endif // MAP_H

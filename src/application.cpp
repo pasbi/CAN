@@ -162,5 +162,7 @@ void Application::initPreferences()
     m_preferences.registerPreference( "maxZoom", new Preference(0.75) );
     m_preferences.registerPreference( "View", new Preference(0) );
     m_preferences.registerPreference( "HideInactived", new Preference(false) );
+    m_preferences.registerPreference( "durationFormat", new Preference(tr("mm:ss")) );
+    m_preferences.registerPreference( "dateTimeFormat", new Preference(tr("MM/dd/yy hh:mm ap")) );
 
 }

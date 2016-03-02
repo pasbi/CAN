@@ -1,131 +1,149 @@
 #include "databasemerger.h"
-#include "Database/SongDatabase/song.h"
-#include "Database/EventDatabase/event.h"
-#include "Database/EventDatabase/setlist.h"
-#include "Attachments/attachment.h"
-#include "mergeitem.h"
 
-template<class T> DatabaseMergerPrivate::CompareResult compare(const T*, const T*)
+DatabaseMerger::DatabaseMerger(const QList<DatabaseItemBase*> &masterItems, const QList<DatabaseItemBase*> &slaveItems)
 {
-    Q_UNREACHABLE();
-    return DatabaseMergerPrivate::Unequal;
+    init(masterItems, slaveItems);
 }
 
-// make this member functions of song, event, attachment? return score (0 = equal, inf = different)
-template<> DatabaseMergerPrivate::CompareResult compare(const Attachment*, const Attachment*)
+// we need a copy of the lists to work on.
+void DatabaseMerger::init(QList<DatabaseItemBase*> masterItems, QList<DatabaseItemBase*> slaveItems)
 {
-    return DatabaseMergerPrivate::Equal;
-}
+    // we want to classify the items in m_onlyMaster, m_onlySlave and m_both and to drop all
+    // items that are equal both in master and slave list.
 
-template<> DatabaseMergerPrivate::CompareResult compare(const Song* master, const Song* slave)
-{
-    //TODO recognize renamings
-    for (const QString& key : Song::ATTRIBUTE_KEYS)
+    QMutableListIterator<DatabaseItemBase*> masterIterator(masterItems);
+    while (masterIterator.hasNext())
     {
-        if (master->attribute(key) != slave->attribute(key))
+        DatabaseItemBase* masterItem = masterIterator.next();
+        bool found = false;
+        QMutableListIterator<DatabaseItemBase*> slaveIterator(slaveItems);
+        while(slaveIterator.hasNext() && !found)
         {
-            return DatabaseMergerPrivate::Unequal;
-        }
-    }
-
-    if (master->attachments().length() != slave->attachments().length())
-    {
-        return DatabaseMergerPrivate::Unequal;
-    }
-
-    for (int i = 0; i < master->attachments().length(); ++i)
-    {
-        switch (compare(master->attachment(i), slave->attachment(i)))
-        {
-        case DatabaseMergerPrivate::Unequal:
-            return DatabaseMergerPrivate::Unequal;
-        default:
-            ;
-        }
-    }
-    return DatabaseMergerPrivate::Equal;
-}
-
-template<> DatabaseMergerPrivate::CompareResult compare(const Event* master, const Event* slave)
-{
-    //TODO recognize renamings
-    for (const QString& key : Event::ATTRIBUTE_KEYS)
-    {
-        if (master->attribute(key) != slave->attribute(key))
-        {
-            return DatabaseMergerPrivate::Unequal;
-        }
-    }
-
-    //TODO check setlist
-
-    return DatabaseMergerPrivate::Equal;
-}
-
-template<class T> QString labelItem(const T*)
-{
-    Q_UNREACHABLE();
-}
-
-template<> QString labelItem(const Song* song)
-{
-    return song->attribute("title").toString();
-}
-
-
-template<> QString labelItem(const Event* event)
-{
-    return event->description();
-}
-
-
-template<> QString labelItem(const Attachment* attachment)
-{
-    return attachment->name();
-}
-
-template<class T>
-QList<MergeItemBase*> DatabaseMerger<T>::createItems() const
-{
-    QList<MergeItemBase*> items;
-
-    // get all items
-    QList<T*> masterItems = m_master->items();
-    QList<T*> slaveItems = m_slave->items();
-
-    // remove items that are in master-list and in slave list (nothing changed there!)
-    QMutableListIterator<T*> mi(masterItems);
-    while (mi.hasNext())
-    {
-        const T* item = mi.next();
-        bool buddyFound = false;
-        for (int si = 0; si < slaveItems.length() && !buddyFound; ++si)
-        {
-            if (compare(item, slaveItems[si]) == DatabaseMergerPrivate::Equal)
+            DatabaseItemBase* slaveItem = slaveIterator.next();
+            switch (compare(masterItem, slaveItem))
             {
-                mi.remove();
-                slaveItems.removeAt(si);
-                buddyFound = true;
+            case Similar:
+                // move them to a special list.
+                found = true;
+                m_mergeItems.append(new MergeItem(masterIterator.value(), slaveIterator.value()));
+                masterIterator.remove();
+                slaveIterator.remove();
+                break;
+            case Equal:
+                // we don't consider equal items here, remove them.
+                found = true;
+                masterIterator.remove();
+                slaveIterator.remove();
+                break;
+            case Unequal:
+                // do nothing, i.e. keep them in list.
+                break;
             }
         }
     }
 
-    //TODO filter those songs, where an attachment was deleted / added
-
-    for (T* masterItem : masterItems)
+    for (DatabaseItemBase* item : slaveItems)
     {
-        items << new MergeItem<T>( MergeItemBase::MasterProject, masterItem, labelItem(masterItem) );
+        m_mergeItems << new MergeItem(item, MergeItem::Add, defaultAction(MergeItem::Add));
     }
 
-    for (T* slaveItem : slaveItems)
+    for (DatabaseItemBase* item : masterItems)
     {
-        items << new MergeItem<T>( MergeItemBase::SlaveProject, slaveItem, labelItem(slaveItem) );
+        m_mergeItems << new MergeItem(item, MergeItem::Remove, defaultAction(MergeItem::Add));
     }
-
-    return items;
 }
 
 
+MergeItem* DatabaseMerger::join(MergeItem* itemA, MergeItem* itemB)
+{
+    Q_ASSERT(m_mergeItems.contains(itemA));
+    Q_ASSERT(m_mergeItems.contains(itemB));
 
-template QList<MergeItemBase*> DatabaseMerger<Song>::createItems() const;
-template QList<MergeItemBase*> DatabaseMerger<Event>::createItems() const;
+    // keep ordering
+    m_mergeItems.removeOne(itemB);
+    int index = m_mergeItems.indexOf(itemA);
+    m_mergeItems.removeOne(itemA);
+
+    MergeItem* masterItem = itemA;
+    MergeItem* slaveItem = itemB;
+    sortMasterSlaveItem(masterItem, slaveItem);
+
+    MergeItem* joinedItem = new MergeItem(masterItem->master(), slaveItem->slave());
+    m_mergeItems.insert(index, joinedItem);
+
+    delete itemA;
+    delete itemB;
+    itemA = nullptr;
+    itemB = nullptr;
+    masterItem = nullptr;
+    slaveItem = nullptr;
+
+    return joinedItem;
+}
+
+QPair<MergeItem*, MergeItem*> DatabaseMerger::split(MergeItem* mergeItem)
+{
+    Q_ASSERT(m_mergeItems.contains(mergeItem));
+    int index = m_mergeItems.indexOf(mergeItem);
+    m_mergeItems.removeOne(mergeItem);
+    MergeItem* masterItem = new MergeItem(mergeItem->master(), MergeItem::Remove, defaultAction(MergeItem::Remove));
+    MergeItem* slaveItem = new MergeItem(mergeItem->slave(), MergeItem::Add, defaultAction(MergeItem::Remove));
+    m_mergeItems.insert(index, masterItem);
+    m_mergeItems.insert(index + 1, slaveItem);
+
+    delete mergeItem;
+    mergeItem = nullptr;
+
+    return qMakePair(masterItem, slaveItem);
+}
+
+QList<MergeItem*> DatabaseMerger::mergeItems() const
+{
+    return m_mergeItems;
+}
+
+MergeItem *DatabaseMerger::decodeMimeData(const QMimeData* mimeData) const
+{
+    Q_ASSERT(mimeData->hasFormat("merge"));
+    QDataStream stream(mimeData->data("merge"));
+    quintptr intptr;
+    stream >> intptr;
+    MergeItem* mergeItem = static_cast<MergeItem*>(reinterpret_cast<void*>(intptr));
+    Q_ASSERT( m_mergeItems.contains(mergeItem) );
+    return mergeItem;
+}
+
+QMimeData* DatabaseMerger::encodeMimeData(const MergeItem *mergeItemBase) const
+{
+    Q_ASSERT(m_mergeItems.contains(const_cast<MergeItem*>(mergeItemBase)));
+    quintptr intptr;
+    intptr = reinterpret_cast<quintptr>(mergeItemBase);
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << intptr;
+    QMimeData* mimeData = new QMimeData();
+    mimeData->setData("merge", data);
+    return mimeData;
+}
+
+
+bool DatabaseMerger::sortMasterSlaveItem(MergeItem*& masterItem, MergeItem*& slaveItem)
+{
+    if (masterItem->type() == MergeItem::Remove && slaveItem->type() == MergeItem::Add)
+    {
+        return true; // correct order
+    }
+    if (masterItem->type() == MergeItem::Add && slaveItem->type() == MergeItem::Remove)
+    {
+        qSwap(masterItem, slaveItem);
+        return true; // correct order after swap
+    }
+    return false;   //two add or two remove types cannot be corrected.
+}
+
+MergeItem::Action DatabaseMerger::defaultAction(MergeItem::Type) const
+{
+    // default action is to keep the item, if it comes from master or slave project.
+    return MergeItem::AddAction;
+}
+

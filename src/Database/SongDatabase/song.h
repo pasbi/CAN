@@ -11,6 +11,7 @@
 class SongDatabase;
 class Attachment;
 template<typename T> class Database;
+
 class Song : public DatabaseItem<Song>
 {
     Q_OBJECT
@@ -73,6 +74,7 @@ protected:
 public:
     static QStringList stateNames();
     static QStringList labelNames();
+    QString label() const;
 
 };
 

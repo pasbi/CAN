@@ -69,6 +69,7 @@ void installTranslator()
     }
 }
 
+
 int main(int argc, char *argv[])
 {
 

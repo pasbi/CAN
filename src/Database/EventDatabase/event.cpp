@@ -48,6 +48,16 @@ void Event::deserialize(QDataStream &in)
 
 }
 
+QString Event::label() const
+{
+    QString label = attributeDisplay("label");
+    if (!label.isEmpty())
+    {
+        label = attributeDisplay("type");
+    }
+    return QString("%1 (%2)").arg(label, attributeDisplay("beginning"));
+}
+
 QStringList Event::eventTypeNames()
 {
     return QStringList({ app().translate("Event", "Rehearsal"), app().translate("Event", "Gig"), app().translate("Event", "Other") });
@@ -58,9 +68,8 @@ QString Event::attributeDisplay(const QString &key) const
     QVariant attribute = DatabaseItem::attribute(key);
     if (key == "beginning" || key == "creationDateTime")
     {
-        const QString format = tr("MM/dd/yy hh:mm ap");
-        return attribute.toDateTime().toString(format);
-        return attribute.toDateTime().toString(format);
+        return attribute.toDateTime().toString(preference<QString>("dateTimeFormat"));
+        return attribute.toDateTime().toString(preference<QString>("dateTimeFormat"));
     }
     if (key == "type")
     {

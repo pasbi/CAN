@@ -44,7 +44,7 @@ void SetlistViewItemDelegate::setEditorData(QWidget *editor, const QModelIndex &
         QStringList songLabels;
         for (const Song* song : availableSongs)
         {
-            songLabels << SetlistItem::labelSong(song);
+            songLabels << song->label();
         }
         comboBox->addItems(songLabels);
         comboBox->setEditable(true);

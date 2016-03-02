@@ -18,7 +18,6 @@ public:
     SetlistItem( Database<SetlistItem>* setlist, const Song* song );
     virtual ~SetlistItem();
 
-    static QString labelSong(const Song* song);
 
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);
@@ -29,6 +28,9 @@ public:
 
     static const QStringList ATTRIBUTE_KEYS;
     QStringList skipSerializeAttributes() const;
+
+    QString label() const;
+
 private:
     QMetaObject::Connection m_updateSongLabelConnection;
 };

@@ -274,8 +274,8 @@ HEADERS  += mainwindow.h \
     Merge/combinesongsdialog.h \
     Merge/combineitems.h \
     Merge/combinedialogselectionmodel.h \
-    pedanticmap.h \
-    Merge/mergelistwidgetselectionmodel.h
+    Merge/mergelistwidgetselectionmodel.h \
+    map.h
 
 
 FORMS    += mainwindow.ui \

@@ -19,7 +19,6 @@ class CombineSongsDialog : public QDialog, public CombineItems<Song>
 public:
     explicit CombineSongsDialog(const Song* masterSong, const Song* slaveSong, QWidget *parent = 0);
     ~CombineSongsDialog();
-    void assembleCombination(Song *result);
 
 protected:
     void resizeEvent(QResizeEvent *e);
@@ -29,14 +28,6 @@ private:
     Ui::CombineSongsDialog *ui;
     void init();
 
-    QString m_title;
-    QString m_artist;
-    Song::Label m_label;
-    Song::State m_state;
-    Chord m_key;
-    QStringList m_singers;
-    QStringList m_soloPlayers;
-    QString m_comments;
     void updateHeaderWidths();
     void addTableWidgetItem(const QString& master, const QString& slave, const QString &name);
     bool useSlaveValue(const QString& key) const;

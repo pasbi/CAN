@@ -116,7 +116,11 @@ QString Song::attributeDisplay(const QString &key) const
     }
     if (key == "duration")
     {
-        return attribute.toTime().toString(tr("mm:ss"));
+        return attribute.toTime().toString(preference<QString>("durationFormat"));
+    }
+    if (key == "creationDateTime")
+    {
+        return attribute.toDateTime().toString(preference<QString>("dateTimeFormat"));
     }
     if (attribute.canConvert(QVariant::StringList))
     {
@@ -142,6 +146,11 @@ QStringList Song::labelNames()
 QStringList Song::stateNames()
 {
     return QStringList({ tr(""), tr("Inactive"), tr("Needs Practice"), tr("Works") });
+}
+
+QString Song::label() const
+{
+    return QString("%1 -- %2").arg(attributeDisplay("title"), attributeDisplay("artist"));
 }
 
 

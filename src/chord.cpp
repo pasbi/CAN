@@ -274,12 +274,19 @@ QString Chord::key() const
 
 bool Chord::operator ==(const Chord& other) const
 {
-    return m_before == other.m_before
-    && m_after == other.m_after
-    && m_base == other.m_base
-    && m_attachment == other.m_attachment
-    && m_isValid == other.m_isValid
-    && m_isMinor == other.m_isMinor;
+    if (!m_isValid && !other.m_isValid)
+    {
+        return true;
+    }
+    else
+    {
+        return m_isValid == other.m_isValid
+        && m_before == other.m_before
+        && m_after == other.m_after
+        && m_base == other.m_base
+        && m_attachment == other.m_attachment
+        && m_isMinor == other.m_isMinor;
+    }
 }
 
 

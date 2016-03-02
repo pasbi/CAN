@@ -30,8 +30,8 @@ void MergeDialog::setMerger(Merge *merger)
 {
     m_merger = merger;
 
-    ui->songWidget->setMerge(m_merger, m_merger->songMergeItems());
-    ui->eventWidget->setMerge(m_merger, m_merger->eventMergeItems());
+    ui->songWidget->setDatabaseMerger( merger->songDatabaseMerger() );
+    ui->eventWidget->setDatabaseMerger( merger->eventDatabaseMerger() );
 }
 
 void MergeDialog::on_buttonNext_clicked()

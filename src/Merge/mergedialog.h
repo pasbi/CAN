@@ -18,8 +18,6 @@ public:
     explicit MergeDialog(Merge* merge, QWidget *parent = 0);
     ~MergeDialog();
 
-    QMap<Song*, MergeItemBase*> attachmentMergeItems() const { Q_UNIMPLEMENTED(); return QMap<Song*, MergeItemBase*>(); }
-
 private slots:
     void on_buttonNext_clicked();
     void on_buttonPrevious_clicked();

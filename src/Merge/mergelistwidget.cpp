@@ -13,7 +13,7 @@
 
 MergeListWidget::MergeListWidget(QWidget *parent) :
     QListWidget(parent),
-    m_merge(nullptr)
+    m_databaseMerger(nullptr)
 {
     setAcceptDrops(true);
     setDropIndicatorShown(true);
@@ -33,14 +33,15 @@ MergeListWidget::~MergeListWidget()
 QMimeData* MergeListWidget::mimeData(const QList<QListWidgetItem *> items) const
 {
     Q_ASSERT(items.length() == 1);
-    return merge()->encodeMimeData( m_mergeItems.value(items.first()) );
+    MergeItem* item = m_listWidgetItems.value(items.first());
+    return m_databaseMerger->encodeMimeData(item);
 }
 
 bool MergeListWidget::canDrop(QListWidgetItem *item, const QMimeData *data, Qt::DropAction action) const
 {
     if (item)
     {
-        return canDrop(m_mergeItems.value(item), data, action);
+        return canDrop(m_listWidgetItems.value(item), data, action);
     }
     else
     {
@@ -48,7 +49,7 @@ bool MergeListWidget::canDrop(QListWidgetItem *item, const QMimeData *data, Qt::
     }
 }
 
-bool MergeListWidget::canDrop(const MergeItemBase* item, const QMimeData *data, Qt::DropAction action) const
+bool MergeListWidget::canDrop(const MergeItem *itemA, const QMimeData *data, Qt::DropAction action) const
 {
     // we only support link actions
     if (action != Qt::LinkAction)
@@ -56,26 +57,11 @@ bool MergeListWidget::canDrop(const MergeItemBase* item, const QMimeData *data, 
         return false;
     }
 
-    // combine only same-type items
-    Q_ASSERT(data->formats().length() == 1);
-    QString mimeFormat = data->formats().first();
-    if (       (item->type() == MergeItemBase::SongType        && mimeFormat != "merge")
-            && (item->type() == MergeItemBase::AttachmentType  && mimeFormat != "merge")
-            && (item->type() == MergeItemBase::EventType       && mimeFormat != "merge")          )
-    {
-        return false;
-    }
-
     // combine only add with delete and vice versa
-    MergeItemBase* itemB = merge()->decodeMimeData(data);
+    MergeItem* itemB = m_databaseMerger->decodeMimeData(data);
 
-    if (    !(item->origin() == MergeItemBase::MasterProject  && itemB->origin() == MergeItemBase::SlaveProject  )
-         && !(item->origin() == MergeItemBase::SlaveProject   && itemB->origin() == MergeItemBase::MasterProject ) )
-    {
-        return false;
-    }
-
-    if (item->type() != itemB->type())
+    if (    !(itemA->type() == MergeItem::Add    && itemB->type() == MergeItem::Remove  )
+         && !(itemA->type() == MergeItem::Remove && itemB->type() == MergeItem::Add     ) )
     {
         return false;
     }
@@ -92,17 +78,19 @@ bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAct
         return false;
     }
 
-    QListWidgetItem* item = MergeListWidget::item(index);
-    if(!canDrop(item, data, action))
+    QListWidgetItem* itemA = MergeListWidget::item(index);
+
+    if (!canDrop(itemA, data, action))
     {
         // it is not guaranteed that dropMimeData is only called when canDrop returns true.
         return false;
     }
 
     Q_ASSERT(data->formats().length() == 1);
-    MergeItemBase* source = merge()->decodeMimeData(data);
+    MergeItem* mergeItemB = m_databaseMerger->decodeMimeData(data);
+    QListWidgetItem* itemB = m_listWidgetItems.key(mergeItemB);
 
-    join(item, m_mergeItems.key(source));
+    join(itemA, itemB);
 
     return true;
 }
@@ -153,115 +141,45 @@ int MergeListWidget::sizeHintForColumn(int column) const
     }
 }
 
-void MergeListWidget::join(QListWidgetItem* targetWidgetItem, QListWidgetItem *sourceWidgetItem)
+void MergeListWidget::join(QListWidgetItem* itemA, QListWidgetItem* itemB)
 {
-    MergeItemBase* targetMergeItem = m_mergeItems[targetWidgetItem];
-    const MergeItemBase* sourceMergeItem = m_mergeItems[sourceWidgetItem];
+    QModelIndex indexB = QListWidget::indexFromItem(itemB);
 
-    Q_ASSERT(targetMergeItem->type() == sourceMergeItem->type());
+    MergeItem* mergeItemA = m_listWidgetItems.value(itemA);
+    MergeItem* mergeItemB = m_listWidgetItems.value(itemB);
+    MergeItem* joinedItem = m_databaseMerger->join(mergeItemA, mergeItemB);
 
-    // find master and slave pointers and labels
-    void* masterPointer = nullptr;
-    void* slavePointer = nullptr;
-    QString masterLabel, slaveLabel;
-    if (sourceMergeItem->origin() == MergeItemBase::MasterProject)
-    {
-        masterPointer = sourceMergeItem->pointer();
-        slavePointer = targetMergeItem->pointer();
-        masterLabel = sourceMergeItem->baseLabel();
-        slaveLabel = targetMergeItem->baseLabel();
-    }
-    else if (sourceMergeItem->origin() == MergeItemBase::SlaveProject)
-    {
-        masterPointer = targetMergeItem->pointer();
-        slavePointer = sourceMergeItem->pointer();
-        masterLabel = targetMergeItem->baseLabel();
-        slaveLabel = sourceMergeItem->baseLabel();
-    }
-    else
-    {
-        // only master/slave items can be joined. Both/No items cannot be joined.
-        Q_UNREACHABLE();
-    }
+    // DatabaseMerger::join has deleted mergeItem{A,B}
+    m_listWidgetItems.remove(itemA);
+    m_listWidgetItems.remove(itemB);
+    mergeItemA = nullptr;
+    mergeItemB = nullptr;
 
-    // update target fields
-    targetMergeItem->setMasterSlavePointer(masterPointer, slavePointer);
-    targetMergeItem->setMasterSlaveLabel(masterLabel, slaveLabel);
-    targetMergeItem->setOrigin(MergeItemBase::BothProjects);
-    targetMergeItem->setAction(MergeItemBase::ModifyItemAction);
-    targetMergeItem->initializeCombinationObject();  // copy master object to combination object
-
-    // update target item widget
-    MergeListWidgetItemWidget* itemWidget = new MergeListWidgetItemWidget(targetMergeItem);
-    connect(itemWidget, &MergeListWidgetItemWidget::clicked, [this, targetMergeItem]()
-    {
-        switch (targetMergeItem->type())
-        {
-        case MergeItemBase::SongType:
-        {
-            CombineSongsDialog dialog(targetMergeItem->masterPointer<Song>(),
-                                      targetMergeItem->slavePointer<Song>(), this);
-
-            if (dialog.exec() == QDialog::Accepted)
-            {
-                targetMergeItem->deleteCombinationObject();
-                targetMergeItem->setCombinationPointer(dialog.combination());
-            }
-            break;
-        }
-        case MergeItemBase::EventType:
-            Q_UNIMPLEMENTED();
-            break;
-        case MergeItemBase::AttachmentType:
-            Q_UNIMPLEMENTED();
-            break;
-        default:
-            Q_UNREACHABLE();
-            break;
-        }
-    });
-    setItemWidget(targetWidgetItem, itemWidget);
-
-    // remove source item widget
-    takeItem(row(sourceWidgetItem));
-    m_mergeItems.remove(sourceWidgetItem);
-    merge()->removeMergeItem(sourceMergeItem);
-    delete sourceMergeItem;
-    sourceMergeItem = nullptr;
-    delete sourceWidgetItem;
-    sourceWidgetItem = nullptr;
+    setItemWidget(itemA, new MergeListWidgetItemWidget(joinedItem));
+    m_listWidgetItems.insert(itemA, joinedItem);
+    delete takeItem(indexB.row());
 }
 
-void MergeListWidget::split(QListWidgetItem *oldItemWidget)
+void MergeListWidget::split(QListWidgetItem *item)
 {
-    // add a new item
-    QListWidgetItem *newItemWidget = new QListWidgetItem();
-    insertItem(row(oldItemWidget) + 1, newItemWidget);
+    QModelIndex index = QListWidget::indexFromItem(item);
+    MergeItem* mergeItem = m_listWidgetItems.value(item);
+    QPair<MergeItem*, MergeItem*> masterSlaveMergeItem = m_databaseMerger->split(mergeItem);
 
-    // update the merge items
-    MergeItemBase* oldMergeItem = m_mergeItems[oldItemWidget];
-    MergeItemBase* newMergeItem = new MergeItemBase( MergeItemBase::SlaveProject,
-                                                     oldMergeItem->type(),
-                                                     oldMergeItem->slavePointer(),
-                                                     oldMergeItem->slaveBaseLabel() );
+    m_listWidgetItems.remove(item);
+    mergeItem = nullptr;
 
-    newMergeItem->setAction( MergeItemBase::AddItemAction );
+    //recycle the item
+    QListWidgetItem* masterListWidgetItem = item;
+    setItemWidget(masterListWidgetItem, new MergeListWidgetItemWidget(masterSlaveMergeItem.first));
+    m_listWidgetItems.insert(masterListWidgetItem, masterSlaveMergeItem.first);
 
-    oldMergeItem->setOrigin( MergeItemBase::MasterProject );
-    oldMergeItem->setAction( MergeItemBase::AddItemAction );
-    oldMergeItem->setPointer( oldMergeItem->masterPointer() );
-    oldMergeItem->setLabel( oldMergeItem->masterBaseLabel() );
+    // for the slave item, create a new one.
+    QListWidgetItem* slaveListWidgetItem = new QListWidgetItem(this);
+    insertItem(index.row() + 1, slaveListWidgetItem);
+    setItemWidget(slaveListWidgetItem, new MergeListWidgetItemWidget(masterSlaveMergeItem.second));
+    m_listWidgetItems.insert(slaveListWidgetItem, masterSlaveMergeItem.second);
 
-    // we don't need the combination object anymore
-    oldMergeItem->deleteCombinationObject();
-
-    m_mergeItems.insert(newItemWidget, newMergeItem);
-    merge()->addMergeItem(newMergeItem);
-
-
-    // update the widgets
-    setItemWidget(oldItemWidget, new MergeListWidgetItemWidget(m_mergeItems[oldItemWidget]) );
-    setItemWidget(newItemWidget, new MergeListWidgetItemWidget(m_mergeItems[newItemWidget]) );
 }
 
 void MergeListWidget::createContextMenu(const QPoint &pos)
@@ -271,8 +189,9 @@ void MergeListWidget::createContextMenu(const QPoint &pos)
     {
         return;
     }
-    MergeItemBase* mib = m_mergeItems.value(item);
-    if (mib->origin() == MergeItemBase::BothProjects)
+
+    MergeItem* mergeItem = m_listWidgetItems.value(item);
+    if (mergeItem->type() == MergeItem::Modify)
     {
         QMenu* menu = new QMenu();
         connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
@@ -288,26 +207,17 @@ void MergeListWidget::createContextMenu(const QPoint &pos)
     }
 }
 
-void MergeListWidget::setMergeItems(const QList<MergeItemBase*> &items)
+void MergeListWidget::setDatabaseMerger(DatabaseMerger *merger)
 {
-    for (MergeItemBase* item : items)
+    Q_ASSERT(m_databaseMerger == nullptr);
+    m_databaseMerger = merger;
+
+    for (MergeItem* mergeItem : m_databaseMerger->mergeItems())
     {
-        QListWidgetItem* listWidgetItem = new QListWidgetItem();
+        QListWidgetItem* listWidgetItem = new QListWidgetItem(this);
         addItem(listWidgetItem);
-        m_mergeItems.insert(listWidgetItem, item);
-        setItemWidget(listWidgetItem, new MergeListWidgetItemWidget(m_mergeItems[listWidgetItem]));
+        setItemWidget(listWidgetItem, new MergeListWidgetItemWidget(mergeItem));
+        m_listWidgetItems.insert(listWidgetItem, mergeItem);
     }
-}
 
-QList<MergeItemBase*> MergeListWidget::mergeItems() const
-{
-    return m_mergeItems.values();
 }
-
-void MergeListWidget::setMerge(Merge* merge, QList<MergeItemBase*> mergeItems)
-{
-    Q_ASSERT(!m_merge);
-    m_merge = merge;
-    setMergeItems(mergeItems);
-}
-

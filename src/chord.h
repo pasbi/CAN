@@ -63,6 +63,9 @@ public:
 
     bool operator ==(const Chord& other) const;
     bool operator !=(const Chord& other) const { return !(*this == other); }
+    DEFINE_NONSENSE_SMALLER_OPERATOR(Chord)
+
+
 
 private:
     QString m_before, m_after;
@@ -98,5 +101,6 @@ QDebug& operator<<(QDebug& dbg, const Chord& chord);
 
 Q_DECLARE_METATYPE(Chord)
 REGISTER_META_TYPE_STREAM_OPERATORS(Chord, Chord)
+REGISTER_META_TYPE_COMPARE_OPERATORS(Chord, Chord)
 
 #endif // CHORD_H

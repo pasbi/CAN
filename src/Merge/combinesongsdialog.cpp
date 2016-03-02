@@ -55,23 +55,6 @@ bool CombineSongsDialog::useSlaveValue(const QString& key) const
     return false;
 }
 
-void CombineSongsDialog::assembleCombination(Song *result)
-{
-    for (const QString& key : Song::ATTRIBUTE_KEYS)
-    {
-        QVariant value;
-        if (useSlaveValue(key))
-        {
-            value = slave()->attribute(key);
-        }
-        else
-        {
-            value = master()->attribute(key);
-        }
-        result->setAttribute(key, value);
-    }
-}
-
 void CombineSongsDialog::addTableWidgetItem(const QString& master, const QString& slave, const QString& key)
 {
     int row = ui->tableWidget->rowCount();
@@ -99,17 +82,48 @@ void CombineSongsDialog::init()
     int row = 0;
     for (const QString& key : Song::ATTRIBUTE_KEYS)
     {
-        if (key == "creationDateTime")
-        {
-            continue;
-        }
+        //TODO hide some attributes, like creationDateTime etc.
         if (master()->attribute(key) != slave()->attribute(key))
         {
-            ui->tableWidget->setVerticalHeaderItem(row, new QTableWidgetItem(key));
-            addTableWidgetItem(master()->attributeDisplay(key), slave()->attributeDisplay(key), key);
+            MergeAtom atom(master(), slave(), key);
+            addItem(key, atom);
+
+            QTableWidgetItem* masterItem = new QTableWidgetItem();
+            masterItem->setFlags(masterItem->flags() & ~Qt::ItemIsEditable);
+            masterItem->setFlags(masterItem->flags() | Qt::ItemIsSelectable);
+            masterItem->setText(master()->attributeDisplay(key));
+
+            QTableWidgetItem* slaveItem = new QTableWidgetItem();
+            slaveItem->setFlags(slaveItem->flags() & ~Qt::ItemIsEditable);
+            slaveItem->setFlags(slaveItem->flags() | Qt::ItemIsSelectable);
+            slaveItem->setText(slave()->attributeDisplay(key));
+
+            QTableWidgetItem* headerItem = new QTableWidgetItem();
+            headerItem->setText(key);
+
+            ui->tableWidget->insertRow(row);
+            ui->tableWidget->setItem(row, 0, masterItem);
+            ui->tableWidget->setItem(row, 1, slaveItem);
+            ui->tableWidget->setVerticalHeaderItem(row, headerItem);
             row++;
         }
     }
+
+
+//    int row = 0;
+//    for (const QString& key : Song::ATTRIBUTE_KEYS)
+//    {
+//        if (key == "creationDateTime")
+//        {
+//            continue;
+//        }
+//        if (master()->attribute(key) != slave()->attribute(key))
+//        {
+//            ui->tableWidget->setVerticalHeaderItem(row, new QTableWidgetItem(key));
+//            addTableWidgetItem(master()->attributeDisplay(key), slave()->attributeDisplay(key), key);
+//            row++;
+//        }
+//    }
 
     //TODO attachments
 }
