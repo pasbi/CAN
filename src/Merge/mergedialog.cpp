@@ -4,8 +4,6 @@
 #include "Database/EventDatabase/eventdatabase.h"
 #include "mergeitem.h"
 
-//TODO merge must be specified by an abstract description, not by the final object.
-
 const QStringList MergeDialog::BUTTON_TEXT = QStringList({ MergeDialog::tr(""),
                                                            MergeDialog::tr("&Songs"),
                                                            MergeDialog::tr("&Events"),

@@ -272,7 +272,6 @@ HEADERS  += mainwindow.h \
     Merge/mergelistwidget.h \
     Merge/mergeitem.h \
     Merge/mergelistwidgetitemwidget.h \
-    Merge/combineitems.h \
     Merge/combinedialogselectionmodel.h \
     Merge/mergelistwidgetselectionmodel.h \
     map.h \

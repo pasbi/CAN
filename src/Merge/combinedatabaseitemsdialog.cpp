@@ -2,6 +2,7 @@
 #include "ui_combinesongsdialog.h"
 #include "combinedialogselectionmodel.h"
 #include "mergeitem.h"
+#include "Database/databaseitem.h"
 
 CombineDatabaseItemsDialog::CombineDatabaseItemsDialog(MergeItem* mergeItem, QWidget* parent) :
     QDialog(parent),

@@ -118,7 +118,6 @@ void MergeItem::setupModifyDetails()
     {
         if (master()->attribute(key) != slave()->attribute(key))
         {
-            qDebug() << "add modify detail " << key;
             m_modifyDetails << ModifyDetail(key, preference<MergeItem::Decision>("defaultActionMergeModify"));
         }
     }

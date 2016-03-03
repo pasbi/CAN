@@ -8,7 +8,6 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Attachments/attachment.h"
 
-//TODO creating new event and opening project results in crash
 //TODO build combineEventDIalog
 
 template<typename T>

@@ -2,7 +2,6 @@
 #define COMBINEDATABASEITEMSDIALOG_H
 
 #include <QDialog>
-#include "combineitems.h"
 #include "QItemSelection"
 #include "mergeitem.h"
 
