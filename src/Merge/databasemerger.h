@@ -61,10 +61,10 @@ public:
              slaveDatabase->items() );
     }
 
-    void performMerge(NewPointerTable& updatePointers)
+    void performMerge(NewPointerTable& updatePointers, QList<T*>& undeletableItems)
     {
         // do not reuse this DatabaseMerge class.
-        Q_ASSERT(m_problematicItems.isEmpty());
+        Q_ASSERT(undeletableItems.isEmpty());
 
         for (const MergeItem* mergeItem : mergeItems())
         {
@@ -89,7 +89,7 @@ public:
                     }
                     else
                     {
-                        m_problematicItems << mergeItem;
+                        undeletableItems << masterItem;
                     }
                 }
                 else
@@ -112,6 +112,10 @@ public:
                         m_masterDatabase->removeItem(newItem);
                         delete newItem;
                         newItem = nullptr;
+                    }
+                    else
+                    {
+                        undeletableItems << newItem;
                     }
                 }
                 else if (action == MergeItem::AddAction)
@@ -220,7 +224,6 @@ protected:
     double similarity(const T*, const T*) const;
 
 private:
-    QList<const MergeItem*> m_problematicItems;
     Database<T>* m_masterDatabase;
     Database<T>* m_slaveDatabase;
 

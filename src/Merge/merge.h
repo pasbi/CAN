@@ -37,7 +37,7 @@ private:
     void warning(const QString& message);
 
     bool openMergeDialog();
-    void performMerge();
+    void performMerge(QList<Song *> &undeletableSongs);
 
     DatabaseMerger<Song>* m_songMerger;
     DatabaseMerger<Event>* m_eventMerger;

@@ -21,7 +21,29 @@ Merge::Merge(Project* masterProject, const QString &slaveFilename, QWidget* dial
 {
     if (openMergeDialog())
     {
-        performMerge();
+        QList<Song*> undeletableSongs;
+        performMerge(undeletableSongs);
+        if (undeletableSongs.isEmpty())
+        {
+            QMessageBox::information( dialogParent,
+                                      app().applicationName(),
+                                      QWidget::tr("Merge successfull"),
+                                      QMessageBox::Ok );
+        }
+        else
+        {
+            QStringList warningString;
+            warningString << QWidget::tr("Some Songs could not be removed since they are used.");
+            warningString << QWidget::tr("Please try to remove them manually.");
+            for (const Song* song : undeletableSongs)
+            {
+                warningString << "\n" + song->label();
+            }
+            QMessageBox::warning( dialogParent,
+                                  app().applicationName(),
+                                  warningString.join("\n"),
+                                  QMessageBox::Ok );
+        }
     }
 }
 
@@ -94,15 +116,17 @@ bool Merge::openMergeDialog()
     return code == QDialog::Accepted;
 }
 
-void Merge::performMerge()
+void Merge::performMerge(QList<Song*>& undeletableSongs)
 {
     // very important to perform event merge before song merge
 
     DatabaseMergerBase::NewPointerTable updatePointers;
 
-    m_eventMerger->performMerge( updatePointers);
+    QList<Event*> undeletableEvents;
+    m_eventMerger->performMerge( updatePointers, undeletableEvents );
+    Q_ASSERT(undeletableEvents.isEmpty());  // all events should be deleteable
 
-    m_songMerger->performMerge( updatePointers);
+    m_songMerger->performMerge( updatePointers, undeletableSongs );
 
     for (Event* event : masterProject()->eventDatabase()->items())
     {
@@ -125,7 +149,6 @@ void Merge::performMerge()
     }
 }
 
-//TODO recognize similar/other/same
 //TODO handle attachments
 
 
