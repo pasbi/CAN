@@ -150,7 +150,7 @@ SOURCES += main.cpp\
     Merge/mergelistwidgetselectionmodel.cpp \
     Database/databaseitem.cpp \
     optionpushbutton.cpp \
-    Merge/combinedatabaseitemsdialog.cpp
+    Merge/combinedatabaseitemsdialog.cpp \
 
 
 HEADERS  += mainwindow.h \
@@ -276,7 +276,7 @@ HEADERS  += mainwindow.h \
     Merge/mergelistwidgetselectionmodel.h \
     map.h \
     optionpushbutton.h \
-    Merge/combinedatabaseitemsdialog.h
+    Merge/combinedatabaseitemsdialog.h \
 
 
 FORMS    += mainwindow.ui \

@@ -21,11 +21,12 @@ public:
     Project* masterProject() const { return m_masterProject; }
     Project* slaveProject() const { return m_slaveProject; }
 
-    DatabaseMerger* songDatabaseMerger() const { return m_songMerger; }
-    DatabaseMerger* eventDatabaseMerger() const { return m_eventMerger; }
+    DatabaseMerger<Song>* songDatabaseMerger() const { return m_songMerger; }
+    DatabaseMerger<Event>* eventDatabaseMerger() const { return m_eventMerger; }
 
     MergeItem* decodeMimeData(const QMimeData* mimeData) const;
     QMimeData* encodeMimeData(const MergeItem* mergeItemBase) const;
+
 
 private:
     Project* m_masterProject;
@@ -36,9 +37,10 @@ private:
     void warning(const QString& message);
 
     bool openMergeDialog();
+    void performMerge();
 
-    DatabaseMerger* m_songMerger;
-    DatabaseMerger* m_eventMerger;
+    DatabaseMerger<Song>* m_songMerger;
+    DatabaseMerger<Event>* m_eventMerger;
 };
 
 #endif // MERGE_H

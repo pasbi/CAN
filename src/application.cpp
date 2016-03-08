@@ -165,8 +165,9 @@ void Application::initPreferences()
     m_preferences.registerPreference( "HideInactived", new Preference(false) );
     m_preferences.registerPreference( "durationFormat", new Preference(tr("mm:ss")) );
     m_preferences.registerPreference( "dateTimeFormat", new Preference(tr("MM/dd/yy hh:mm ap")) );
-    m_preferences.registerPreference( "defaultActionMergeAdd", new Preference(QVariant::fromValue(MergeItem::AddAction)));
-    m_preferences.registerPreference( "defaultActionMergeRemove", new Preference(QVariant::fromValue(MergeItem::AddAction)));
+    m_preferences.registerPreference( "defaultActionMergeMaster", new Preference(QVariant::fromValue(MergeItem::AddAction)));
+    m_preferences.registerPreference( "defaultActionMergeSlave", new Preference(QVariant::fromValue(MergeItem::AddAction)));
     m_preferences.registerPreference( "defaultActionMergeModify", new Preference(QVariant::fromValue(MergeItem::UseMaster)));
+    m_preferences.registerPreference( "MergeSimilarityThreshold", new Preference(0.9));
 
 }

@@ -21,7 +21,7 @@ public:
     Qt::DropActions supportedDropActions() const { return Qt::LinkAction; }
     Qt::DropAction defaultDropAction() const { return Qt::LinkAction; }
 
-    void setDatabaseMerger(DatabaseMerger* m_databaseMerger);
+    void setDatabaseMerger(DatabaseMergerBase* m_databaseMerger);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -45,7 +45,7 @@ private slots:
     void createContextMenu(const QPoint& pos);
 
 private:
-    DatabaseMerger* m_databaseMerger;
+    DatabaseMergerBase* m_databaseMerger;
     QMap<QListWidgetItem*, MergeItem*> m_listWidgetItems;
 };
 

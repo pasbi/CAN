@@ -51,12 +51,31 @@ private:
 
     virtual ~Database()
     {
+        qDeleteAll(m_items);
+        m_items.clear();
     }
 
 public:
     QList<T*> items() const
     {
         return m_items;
+    }
+
+    /**
+     * @brief item returns the item that has pointer ptr.
+     * @note return nullptr if database does not has any such item.
+     * @note equivalent code: T* t = static_cast<T*>(const_cast<void*>(ptr)); return items().contains(t)?t:nullptr;
+     */
+    T* item(const void* ptr) const
+    {
+        for (T* t : items())
+        {
+            if (t == ptr)
+            {
+                return t;
+            }
+        }
+        return nullptr;
     }
 
     void insertItem(T* item, int row = -1)
@@ -148,7 +167,8 @@ public:
             typedef typename DatabaseMimeData<T>::IndexedItem IndexedItem;
             for (IndexedItem item : itemData->indexedItems())
             {
-                pushCommand( new DatabaseNewItemCommand<T>( this, item.item->copy(this), row + i ) );
+                Q_ASSERT(item.item->database() == this); // we cannot drop to a different database.
+                pushCommand( new DatabaseNewItemCommand<T>( this, item.item->copy(), row + i ) );
                 i++;
             }
             app().endMacro();

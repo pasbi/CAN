@@ -4,6 +4,11 @@
 #include "persistentobject.h"
 #include <QObject>
 #include "map.h"
+#include "type_traits"
+
+
+template<typename T> class Database;
+class DatabaseBase;
 
 class DatabaseItemBase : public QObject, public PersistentObject
 {
@@ -17,6 +22,9 @@ public:
     QStringList attributeKeys() const;
     virtual QString label() const = 0;
 
+    virtual bool canRemove() const;
+
+
 protected:
     virtual QStringList skipSerializeAttributes() const { return QStringList(); }
 
@@ -27,8 +35,6 @@ protected:
 private:
     PedanticVariantMap m_attributes;
 };
-
-template<typename T> class Database;
 
 template<typename T> class DatabaseItem : public DatabaseItemBase
 {
@@ -45,22 +51,27 @@ protected:
 
     }
 
-public:
-    virtual Database<T>* database() const { return m_database; }
 
-    T* copy() const
+public:
+    virtual void setDatabase(Database<T>* database)
     {
-        return copy(database());
+        //TODO properly (dis)connect old/new database
+        m_database = database;
     }
 
-    T* copy(Database<T>* database) const
+    virtual Database<T>* database() const
+    {
+        return m_database;
+    }
+
+    T* copy() const
     {
         QByteArray buffer;
         QDataStream writeStream(&buffer, QIODevice::WriteOnly);
         writeStream << this;
 
         QDataStream readStream(buffer);
-        T* copy = new T(database);
+        T* copy = new T(database());
         readStream >> copy;
 
         return copy;

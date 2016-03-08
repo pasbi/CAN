@@ -7,32 +7,21 @@
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Attachments/attachment.h"
-
-//TODO build combineEventDIalog
-
-template<typename T>
-QList<DatabaseItemBase*> convertDatabaseItems(const QList<T*>& items)
-{
-    QList<DatabaseItemBase*> databaseItems;
-    for (T* item : items)
-    {
-        databaseItems << dynamic_assert_cast<DatabaseItemBase*>(item);
-    }
-    return databaseItems;
-}
+#include "Database/EventDatabase/setlist.h"
+#include "Database/EventDatabase/setlistitem.h"
 
 Merge::Merge(Project* masterProject, const QString &slaveFilename, QWidget* dialogParent) :
     m_masterProject(masterProject),
     m_slaveProject(openProject(slaveFilename)),
     m_dialogParent(dialogParent),
-    m_songMerger( new DatabaseMerger( convertDatabaseItems(masterProject->songDatabase()->items()),
-                                      convertDatabaseItems(slaveProject()->songDatabase()->items()) ) ),
-    m_eventMerger(new DatabaseMerger( convertDatabaseItems(masterProject->eventDatabase()->items()),
-                                      convertDatabaseItems(slaveProject()->eventDatabase()->items()) ) )
+    m_songMerger( new DatabaseMerger<Song>( masterProject->songDatabase(),
+                                            slaveProject()->songDatabase() ) ),
+    m_eventMerger(new DatabaseMerger<Event>( masterProject->eventDatabase(),
+                                             slaveProject()->eventDatabase() ) )
 {
     if (openMergeDialog())
     {
-//        performMerge();
+        performMerge();
     }
 }
 
@@ -104,4 +93,41 @@ bool Merge::openMergeDialog()
 
     return code == QDialog::Accepted;
 }
+
+void Merge::performMerge()
+{
+    // very important to perform event merge before song merge
+
+    DatabaseMergerBase::NewPointerTable updatePointers;
+
+    m_eventMerger->performMerge( updatePointers);
+
+    m_songMerger->performMerge( updatePointers);
+
+    for (Event* event : masterProject()->eventDatabase()->items())
+    {
+        for (SetlistItem* setlistItem : event->setlist()->items())
+        {
+            for (const DatabaseMergerBase::NewPointerTableItem& item: updatePointers)
+            {
+                const void* master = item.master;
+                const void* slave = item.slave;
+
+                if (setlistItem->attribute("song").value<const Song*>() == slave)
+                {
+                    setlistItem->setAttribute("song", QVariant::fromValue<const Song*>(nullptr));    // set nullptr silently to prevent usage of maybe-deleted old song ptr.
+                    Song* song = event->database()->project()->songDatabase()->item(master);
+                    Q_ASSERT(song);
+                    setlistItem->setSong(song);
+                }
+            }
+        }
+    }
+}
+
+//TODO recognize similar/other/same
+//TODO handle attachments
+
+
+
 

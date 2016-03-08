@@ -135,7 +135,7 @@ public:
         }
         else
         {
-            assert(false);
+            Q_UNREACHABLE();
             return nullptr;
         }
     }

@@ -6,6 +6,7 @@
 #include "Database/SongDatabase/song.h"
 
 class Song;
+class Event;
 class Setlist;
 template<typename T> class Database;
 class SetlistItem : public DatabaseItem<SetlistItem>
@@ -13,9 +14,9 @@ class SetlistItem : public DatabaseItem<SetlistItem>
     Q_OBJECT
 public:
     enum Type { SongType, LabelType };
-    SetlistItem( Database<SetlistItem>* setlist, const QString & label );
-    SetlistItem( Database<SetlistItem>* setlist );
-    SetlistItem( Database<SetlistItem>* setlist, const Song* song );
+    SetlistItem(Database<SetlistItem> *setlist, const QString & label );
+    SetlistItem(Database<SetlistItem> *setlist );
+    SetlistItem(Database<SetlistItem> *setlist, const Song* song );
     virtual ~SetlistItem();
 
 

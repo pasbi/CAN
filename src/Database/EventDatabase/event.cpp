@@ -87,6 +87,19 @@ QString Event::attributeDisplay(const QString &key) const
     return "";
 }
 
+bool Event::needsSong(const Song *song) const
+{
+    for (SetlistItem* item : setlist()->items())
+    {
+        if (item->attribute("song").value<const Song*>() == song)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 DEFINE_ENUM_STREAM_OPERATORS(Event::Type)
 
 

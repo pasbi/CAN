@@ -27,21 +27,21 @@ QWidget* MergeListWidgetItemWidget::makeButton()
     OptionPushButton* button = new OptionPushButton(this);
 
     // setup the button
-    switch (m_mergeItem->type())
+    switch (m_mergeItem->origin())
     {
-    case MergeItem::Add:
+    case MergeItem::Slave:
         button->setOptions( {
                                 OptionPushButton::Option(":/icons/icons/plus44.png", tr("Add to master project")),
                                 OptionPushButton::Option(":/icons/icons/cross56.png", tr("Don't add to master project"))
                             } );
         break;
-    case MergeItem::Remove:
+    case MergeItem::Master:
         button->setOptions( {
                                 OptionPushButton::Option(":/icons/icons/anchor25.png", tr("Keep in master project")),
                                 OptionPushButton::Option(":/icons/icons/minus38.png", tr("Remove from master project"))
                             } );
         break;
-    case MergeItem::Modify:
+    case MergeItem::Both:
         button->setOptions( {
                                 OptionPushButton::Option(":/icons/icons/three91.png", tr("Edit details ..."))
                             });
@@ -49,10 +49,10 @@ QWidget* MergeListWidgetItemWidget::makeButton()
     }
 
     // make connections
-    switch (m_mergeItem->type())
+    switch (m_mergeItem->origin())
     {
-    case MergeItem::Add:
-    case MergeItem::Remove:
+    case MergeItem::Master:
+    case MergeItem::Slave:
         connect(button, &OptionPushButton::currentIndexChanged, [this](int index)
         {
             if (index == 0)
@@ -69,7 +69,7 @@ QWidget* MergeListWidgetItemWidget::makeButton()
             }
         });
         break;
-    case MergeItem::Modify:
+    case MergeItem::Both:
         connect(button, &QPushButton::clicked, [this]()
         {
             emit clicked(m_mergeItem);

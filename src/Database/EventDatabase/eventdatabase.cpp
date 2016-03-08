@@ -3,6 +3,7 @@
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include <QJsonDocument>
 #include "Database/databasemimedata.h"
+#include "Database/EventDatabase/setlist.h"
 
 EventDatabase::EventDatabase(Project *project) :
     Database(project)
@@ -39,5 +40,3 @@ QString EventDatabase::itemName(int n) const
 {
     return tr("Event(s)", "", n);
 }
-
-

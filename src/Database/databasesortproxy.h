@@ -43,6 +43,7 @@ public:
         DatabaseSortProxyBase::setSourceModel(sourceModel);
     }
 
+//TODO replace assert with Q_ASSERT
     T* itemAtIndex(const QModelIndex& index) const
     {
         assert(index.model() == this);

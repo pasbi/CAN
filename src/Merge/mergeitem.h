@@ -11,16 +11,16 @@ class DatabaseItemBase;
 class MergeItem
 {
 public:
-    enum Type { Add, Remove, Modify };
-    enum Action { AddAction, RemoveAction, ModifyAction };
+    enum Origin { Master = 0x1, Slave = 0x2, Both = 0x3 };
+    enum Action { AddAction, RemoveAction, ModifyAction, NoAction };
     enum Decision { UseMaster, UseSlave, /*UseUserValue*/ };
-    MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave);
-    MergeItem(DatabaseItemBase* item, Type type, Action action);
+    MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave, Action action);
+    MergeItem(DatabaseItemBase* item, Origin origin, Action action);
 
     DatabaseItemBase* master() const;
     DatabaseItemBase* slave() const;
     QString label() const;
-    Type type() const;
+    Origin origin() const;
     Action action() const;
     void setAction(Action action);
 
@@ -48,8 +48,14 @@ public:
 
     void updateModifyDetails(const QList<ModifyDetail> modifyDetails);
 
+    /**
+     * @brief performModification modify the master item according to modifyDetails.
+     */
+    void performModification() const;
+
+
 private:
-    Type m_type;
+    Origin m_origin;
     Action m_action;
     DatabaseItemBase* m_master;
     DatabaseItemBase* m_slave;

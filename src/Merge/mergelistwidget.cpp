@@ -72,8 +72,8 @@ bool MergeListWidget::canDrop(const MergeItem *itemA, const QMimeData *data, Qt:
     // combine only add with delete and vice versa
     MergeItem* itemB = m_databaseMerger->decodeMimeData(data);
 
-    if (    !(itemA->type() == MergeItem::Add    && itemB->type() == MergeItem::Remove  )
-         && !(itemA->type() == MergeItem::Remove && itemB->type() == MergeItem::Add     ) )
+    if (    !(itemA->origin() == MergeItem::Slave  && itemB->origin() == MergeItem::Master  )
+         && !(itemA->origin() == MergeItem::Master && itemB->origin() == MergeItem::Slave   ) )
     {
         return false;
     }
@@ -170,15 +170,15 @@ QListWidgetItem* MergeListWidget::initListWidgetItem(MergeItem* mergeItem, QList
 
     // set tool tip
     QString toolTip;
-    switch (mergeItem->type())
+    switch (mergeItem->origin())
     {
-    case MergeItem::Add:
+    case MergeItem::Master:
         toolTip = tr("From master project");
         break;
-    case MergeItem::Remove:
+    case MergeItem::Slave:
         toolTip = tr("From other project");
         break;
-    case MergeItem::Modify:
+    case MergeItem::Both:
         toolTip = tr("Combination from both projects");
         break;
     }
@@ -233,7 +233,7 @@ void MergeListWidget::createContextMenu(const QPoint &pos)
     }
 
     MergeItem* mergeItem = m_listWidgetItems.value(item);
-    if (mergeItem->type() == MergeItem::Modify)
+    if (mergeItem->origin() == MergeItem::Both)
     {
         QMenu* menu = new QMenu();
         connect(menu, SIGNAL(aboutToHide()), menu, SLOT(deleteLater()));
@@ -249,7 +249,7 @@ void MergeListWidget::createContextMenu(const QPoint &pos)
     }
 }
 
-void MergeListWidget::setDatabaseMerger(DatabaseMerger *merger)
+void MergeListWidget::setDatabaseMerger(DatabaseMergerBase *merger)
 {
     Q_ASSERT(m_databaseMerger == nullptr);
     m_databaseMerger = merger;
@@ -264,7 +264,7 @@ void MergeListWidget::setDatabaseMerger(DatabaseMerger *merger)
 
 void MergeListWidget::openCombineItemDialog(MergeItem *mergeItem)
 {
-    Q_ASSERT(mergeItem->type() == MergeItem::Modify);
+    Q_ASSERT(mergeItem->origin() == MergeItem::Both);
     CombineDatabaseItemsDialog dialog(mergeItem, this);
     dialog.exec();
 }

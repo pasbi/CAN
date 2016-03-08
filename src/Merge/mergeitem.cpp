@@ -2,8 +2,8 @@
 #include "Database/databaseitem.h"
 #include <QObject>
 
-MergeItem::MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave) :
-    m_type(Modify),
+MergeItem::MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave, Action action) :
+    m_origin(Both),
     m_action(ModifyAction),
     m_master(master),
     m_slave(slave)
@@ -11,23 +11,23 @@ MergeItem::MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave) :
     setupModifyDetails();
 }
 
-MergeItem::MergeItem(DatabaseItemBase* item, Type type, Action action) :
-    m_type(type),
+MergeItem::MergeItem(DatabaseItemBase* item, Origin origin, Action action) :
+    m_origin(origin),
     m_action(action),
     m_master(nullptr),
     m_slave(nullptr)
 {
     Q_ASSERT(action != ModifyAction);
 
-    switch (type)
+    switch (origin)
     {
-    case Add:
+    case Slave:
         m_slave = item;
         break;
-    case Remove:
+    case Master:
         m_master = item;
         break;
-    case Modify:
+    case Both:
     default:
         // use othe constructor!
         Q_UNREACHABLE();
@@ -37,20 +37,20 @@ MergeItem::MergeItem(DatabaseItemBase* item, Type type, Action action) :
 
 DatabaseItemBase* MergeItem::master() const
 {
-    Q_ASSERT(type() == Remove || type() == Modify);
+    Q_ASSERT(origin() & Master);
     return m_master;
 }
 
 DatabaseItemBase* MergeItem::slave() const
 {
-    Q_ASSERT(type() == Add || type() == Modify);
+    Q_ASSERT(origin() & Slave);
     return m_slave;
 }
 
 
-MergeItem::Type MergeItem::type() const
+MergeItem::Origin MergeItem::origin() const
 {
-    return m_type;
+    return m_origin;
 }
 
 MergeItem::Action MergeItem::action() const
@@ -97,13 +97,13 @@ void MergeItem::updateModifyDetails(const QList<ModifyDetail> modifyDetails)
 
 QString MergeItem::label() const
 {
-    switch (type())
+    switch (origin())
     {
-    case Add:
-        return slave()->label();
-    case Remove:
+    case Master:
         return master()->label();
-    case Modify:
+    case Slave:
+        return slave()->label();
+    case Both:
         return QString("%1 -> %2").arg(master()->label(), slave()->label());
     default:
         Q_UNREACHABLE();
@@ -120,6 +120,29 @@ void MergeItem::setupModifyDetails()
         {
             m_modifyDetails << ModifyDetail(key, preference<MergeItem::Decision>("defaultActionMergeModify"));
         }
+    }
+}
+
+void MergeItem::performModification() const
+{
+    Q_ASSERT(origin() == Both && action() == ModifyAction);
+    for (const ModifyDetail& detail : m_modifyDetails)
+    {
+        const QString key = detail.key();
+        QVariant value;
+        switch (detail.decision())
+        {
+        case UseMaster:
+            value = master()->attribute(key);
+            break;
+        case UseSlave:
+            value = slave()->attribute(key);
+            break;
+        default:
+            Q_UNREACHABLE();
+        }
+
+        master()->setAttribute(detail.key(), value);
     }
 }
 

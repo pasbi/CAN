@@ -646,29 +646,12 @@ void MainWindow::on_actionOpen_triggered()
     open(filename);
 }
 
-bool MainWindow::canRemoveSong(Song *song)
-{
-    // check if song is used in setlist
-    for (Event* event: m_project.eventDatabase()->items())
-    {
-        for (SetlistItem* item : event->setlist()->items())
-        {
-            if (item->attribute("song").value<const Song*>() == song)
-            {
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
 void MainWindow::my_on_actionDelete_Song_triggered()
 {
     Song* song = currentSong();
     if (song)
     {
-        if (canRemoveSong( song ))
+        if (song->canRemove())
         {
             pushCommand( new DatabaseRemoveItemCommand<Song>( m_project.songDatabase(), song ) );
         }

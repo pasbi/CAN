@@ -11,7 +11,7 @@ CombineDatabaseItemsDialog::CombineDatabaseItemsDialog(MergeItem* mergeItem, QWi
 {
     ui->setupUi(this);
 
-    Q_ASSERT(mergeItem->type() == MergeItem::Modify);
+    Q_ASSERT(mergeItem->origin() == MergeItem::Both);
 
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Fixed);

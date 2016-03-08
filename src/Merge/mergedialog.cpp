@@ -23,7 +23,7 @@ MergeDialog::~MergeDialog()
 {
     delete ui;
 }
-
+//TODO view is displayed always in event mode?
 void MergeDialog::setMerger(Merge *merger)
 {
     m_merger = merger;

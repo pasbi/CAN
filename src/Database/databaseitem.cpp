@@ -39,3 +39,8 @@ void DatabaseItemBase::serialize(QDataStream & out) const
     }
     out << copy;
 }
+
+bool DatabaseItemBase::canRemove() const
+{
+    return true;
+}

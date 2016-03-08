@@ -2,6 +2,7 @@
 #include "Project/project.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/setlist.h"
+#include "Database/EventDatabase/event.h"
 
 const QStringList SetlistItem::ATTRIBUTE_KEYS = { "type", "label", "song" };
 
@@ -10,19 +11,22 @@ SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString & label )
 {
     setAttribute("type", QVariant::fromValue(LabelType));
     setAttribute("label", label);
+    setAttribute("song", QVariant::fromValue<const Song*>(nullptr));
 }
 
-SetlistItem::SetlistItem( Database<SetlistItem>* setlist ) :
+SetlistItem::SetlistItem(Database<SetlistItem>* setlist ) :
     DatabaseItem(ATTRIBUTE_KEYS, setlist)
 {
     setAttribute("type", QVariant::fromValue(LabelType));
     setAttribute("label", QObject::tr("Unnamed"));
+    setAttribute("song", QVariant::fromValue<const Song*>(nullptr));
 }
 
-SetlistItem::SetlistItem( Database<SetlistItem>* setlist, const Song* song ) :
+SetlistItem::SetlistItem(Database<SetlistItem>* setlist, const Song* song ) :
     DatabaseItem(ATTRIBUTE_KEYS, setlist)
 {
     setAttribute("type", QVariant::fromValue(SongType));
+    setAttribute("label", QString());
     setAttribute("song", QVariant::fromValue(song));
 }
 
@@ -73,7 +77,8 @@ void SetlistItem::deserialize(QDataStream &in)
     {
         qint32 id;
         in >> id;
-        setSong( app().project()->songDatabase()->retrieveItem(id) );
+        //we cannot guarantee that the project is app().project().
+        setSong( database()->project()->songDatabase()->retrieveItem(id) );
     }
 }
 
@@ -109,5 +114,6 @@ QString SetlistItem::label() const
 {
     return attributeDisplay("label");
 }
+
 
 DEFINE_ENUM_STREAM_OPERATORS(SetlistItem::Type)

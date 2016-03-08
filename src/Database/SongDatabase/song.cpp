@@ -3,6 +3,8 @@
 #include "global.h"
 #include <QJsonDocument>
 #include "Attachments/attachment.h"
+#include "Database/EventDatabase/event.h"
+#include "Database/EventDatabase/eventdatabase.h"
 
 const QStringList Song::ATTRIBUTE_KEYS = {"title", "artist", "duration", "key", "label", "state", "singers", "soloPlayers", "comments", "creationDateTime"};
 
@@ -151,6 +153,20 @@ QStringList Song::stateNames()
 QString Song::label() const
 {
     return QString("%1 -- %2").arg(attributeDisplay("title"), attributeDisplay("artist"));
+}
+
+bool Song::canRemove() const
+{
+    // check if song is used in setlist
+    for (Event* event: database()->project()->eventDatabase()->items())
+    {
+        if (event->needsSong(this))
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 DEFINE_ENUM_STREAM_OPERATORS(Song::State)

@@ -9,6 +9,7 @@
 #include "Database/databaseitem.h"
 
 class Setlist;
+class Song;
 template<typename T> class Database;
 class Event : public DatabaseItem<Event>
 {
@@ -35,6 +36,8 @@ public:
     static const QStringList ATTRIBUTE_KEYS;
 
     QString label() const;
+
+    bool needsSong(const Song* song) const;
 
 protected:
     void serialize(QDataStream &out) const;

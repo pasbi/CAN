@@ -50,7 +50,7 @@ bool EventTableView::showDateTimeDialog(QModelIndex index)
     if (index.column() == 1)
     {
         DateTimeDialog dialog;
-        QDateTime currentDateTime = proxyModel()->itemAtIndex(index)->attribute("beginning").toDateTime();
+        QDateTime currentDateTime = itemAtIndex(index)->attribute("beginning").toDateTime();
         dialog.setDateTime( currentDateTime );
         if (dialog.exec() == QDialog::Accepted)
         {

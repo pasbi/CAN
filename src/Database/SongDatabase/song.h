@@ -76,6 +76,8 @@ public:
     static QStringList labelNames();
     QString label() const;
 
+    bool canRemove() const;
+
 };
 
 Q_DECLARE_METATYPE(const Song*)

@@ -192,11 +192,20 @@ void Setlist::copyItems(const DatabaseMimeData<SetlistItem>* setlistData, int ta
         int i = 0;
         for (DatabaseMimeData<SetlistItem>::IndexedItem item : setlistData->indexedItems())
         {
-            // create a new setlist item and link `song` with it
-            SetlistItem* newItem = item.item->copy(this);
-            pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ));
-            indexes << index(rowOf(newItem), 0);
-            i++;
+            if (item.item->database() == this)
+            {
+                // create a new setlist item and link `song` with it
+                SetlistItem* newItem = item.item->copy();
+                pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ));
+                indexes << index(rowOf(newItem), 0);
+                i++;
+            }
+            else
+            {
+                //TODO this is not allowed because copying to other databases is not a good idea in general.
+                // however, here it might be usefull and super safe, given that the project is still the same.
+                qWarning() << "Cannot drop to different database.";
+            }
         }
         app().endMacro();
     }
@@ -277,3 +286,4 @@ QString Setlist::itemName(int n) const
 {
     return tr("SetlistItem", nullptr, n);
 }
+
