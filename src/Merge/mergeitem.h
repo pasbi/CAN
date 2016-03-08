@@ -41,7 +41,6 @@ public:
     private:
         QString m_key;
         Decision m_decision;
-        //TODO user edited value
     };
 
     QList<ModifyDetail> modifyDetails() const;

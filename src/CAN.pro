@@ -122,7 +122,6 @@ SOURCES += main.cpp\
     Commands/SetlistCommands/setlistitemchangesongcommand.cpp \
     Database/EventDatabase/setlistproxy.cpp \
     Commands/DatabaseCommands/databaseeditcommand.cpp \
-    Database/database.cpp \
     Dialogs/IndexedFileChooseDialog/filefilter.cpp \
     DatabaseView/ItemDelegates/editablecomboboxdelegate.cpp \
     Dialogs/overlaylabel.cpp \
@@ -151,6 +150,8 @@ SOURCES += main.cpp\
     Database/databaseitem.cpp \
     optionpushbutton.cpp \
     Merge/combinedatabaseitemsdialog.cpp \
+    Database/databasebase.cpp \
+    Database/database.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -277,6 +278,7 @@ HEADERS  += mainwindow.h \
     map.h \
     optionpushbutton.h \
     Merge/combinedatabaseitemsdialog.h \
+    Database/databasebase.h
 
 
 FORMS    += mainwindow.ui \
