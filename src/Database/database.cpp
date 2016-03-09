@@ -263,7 +263,8 @@ template<> void Database<Attachment>::deserialize(QDataStream& in)
         QString typeName;
         in >> typeName;
 
-        Attachment* attachment = Attachment::create(typeName, song);
+        Attachment* attachment = Attachment::create(typeName);
+        attachment->setSong(song);
         in >> attachment;
         m_items << attachment;
     }

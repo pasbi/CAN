@@ -52,35 +52,16 @@ void Attachment::makeNameUnique()
     setName( newName );
 }
 
-Attachment* Attachment::create(const QString& classname, Song* song)
+Attachment* Attachment::create(const QString& classname)
 {
     Attachment* attachment = Creatable::create<Attachment>( classname );
     Q_ASSERT(attachment);
-    attachment->setSong( song );
     return attachment;
 }
 
 QString Attachment::label() const
 {
     return name();
-}
-
-Attachment* Attachment::copy() const
-{
-    return copy(song());
-}
-
-Attachment* Attachment::copy(Song* song) const
-{
-    QBuffer buffer;
-    buffer.open(QIODevice::ReadWrite);
-    QDataStream stream(&buffer);
-    stream << this;
-
-    Attachment* copy = create(type(), song);
-    stream >> copy;
-
-    return copy;
 }
 
 void Attachment::paint(PDFCreator*)

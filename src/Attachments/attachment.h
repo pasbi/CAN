@@ -25,15 +25,12 @@ public:
 
     void makeNameUnique();
 
-    static Attachment* create(const QString& classname, Song *song);
+    static Attachment* create(const QString& classname);
 
     // see Creatable
     virtual QString type() const = 0;
 
     QString label() const;
-
-    Attachment* copy(Song *song) const;
-    Attachment* copy() const;
 
     virtual bool isPaintable() const { return false; }
 

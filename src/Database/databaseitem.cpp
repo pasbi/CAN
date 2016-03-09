@@ -1,56 +1,60 @@
 #include "databaseitem.h"
+#include "Database/SongDatabase/song.h"
+#include "Attachments/attachment.h"
+#include "Database/EventDatabase/event.h"
+#include "Database/EventDatabase/setlistitem.h"
 
-DatabaseItemBase::DatabaseItemBase(const QStringList &attributeKeys) :
-    m_attributes(attributeKeys)
+template<class T> DatabaseItem<T>::DatabaseItem(const QStringList& attributeKeys, Database<T>* database) :
+    DatabaseItemBase(attributeKeys),
+    m_database(database)
 {
 
 }
 
-void DatabaseItemBase::setAttribute(const QString &key, const QVariant &value)
+template<class T> DatabaseItem<T>::~DatabaseItem()
 {
-    m_attributes.set(key, value);
-}
 
-QVariant DatabaseItemBase::attribute(const QString& key) const
-{
-    return m_attributes[key];
-}
-
-QStringList DatabaseItemBase::attributeKeys() const
-{
-    return m_attributes.keys();
 }
 
 
-bool DatabaseItemBase::canRemove() const
+template<class T> void DatabaseItem<T>::setDatabase(Database<T>* database)
 {
-    return true;
+    m_database = database;
 }
 
-void DatabaseItemBase::serialize(QDataStream &out) const
+template<class T> Database<T>* DatabaseItem<T>::database() const
 {
-    PedanticVariantMap copy = m_attributes;
-    for (const QString& key : skipSerializeAttributes())
-    {
-        copy.take(key);
-    }
-    out << copy;
+    return m_database;
 }
 
-void DatabaseItemBase::deserialize(QDataStream &in)
+template<class T>  T* DatabaseItem<T>::copy() const
 {
-    in >> m_attributes;
+    QByteArray buffer;
+    QDataStream writeStream(&buffer, QIODevice::WriteOnly);
+    writeStream << this;
+
+    QDataStream readStream(buffer);
+    T* copy = new T(database());
+    readStream >> copy;
+
+    return copy;
 }
 
-
-QDataStream& operator<<(QDataStream& out, const DatabaseItemBase* item)
+template<>  Attachment* DatabaseItem<Attachment>::copy() const
 {
-    item->serialize(out);
-    return out;
+    QByteArray buffer;
+    QDataStream writeStream(&buffer, QIODevice::WriteOnly);
+    writeStream << this;
+
+    QDataStream readStream(buffer);
+    Attachment* copy = Attachment::create(static_cast<const Attachment*>(this)->type());
+    readStream >> copy;
+
+    return copy;
 }
 
-QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item)
-{
-    item->deserialize(in);
-    return in;
-}
+template class DatabaseItem<Song>;
+template class DatabaseItem<Event>;
+template class DatabaseItem<SetlistItem>;
+template class DatabaseItem<Attachment>;
+

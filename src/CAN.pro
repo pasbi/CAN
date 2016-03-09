@@ -151,7 +151,8 @@ SOURCES += main.cpp\
     Merge/combinedatabaseitemsdialog.cpp \
     Database/databasebase.cpp \
     Database/database.cpp \
-    Database/SongDatabase/attachmentdatabase.cpp
+    Database/SongDatabase/attachmentdatabase.cpp \
+    Database/databaseitembase.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -278,7 +279,8 @@ HEADERS  += mainwindow.h \
     optionpushbutton.h \
     Merge/combinedatabaseitemsdialog.h \
     Database/databasebase.h \
-    Database/SongDatabase/attachmentdatabase.h
+    Database/SongDatabase/attachmentdatabase.h \
+    Database/databaseitembase.h
 
 
 FORMS    += mainwindow.ui \
