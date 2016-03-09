@@ -1,15 +1,6 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include "persistentobject.h"
-#include "Project/project.h"
-#include "Database/databasemimedata.h"
-#include "application.h"
-#include "Commands/DatabaseCommands/databasenewitemcommand.h"
-#include "Database/EventDatabase/setlistitem.h"
-
-#include "util.h"
-#include "SongDatabase/song.h"
 #include "databasebase.h"
 
 template<typename T>
@@ -37,16 +28,19 @@ public:
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
     T* itemAtIndex(const QModelIndex& index) const;
     void notifiyDataChange(const T *item);
-    void serialize(QDataStream &out) const;
-    void deserialize(QDataStream &in);
     T* retrieveItem(qint32 id) const;
     int identifyItem(const T* item) const;
     QModelIndex indexOf(const T* item, int column = 0);
     virtual QVariant data(const QModelIndex &index, int role) const;
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role);
 
-protected:
+protected: //TODO private
     QList<T*> m_items;
+
+
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 
     // moving rows is a quite complicated task which is done completely in the comand.
     // thus it needs low level access to this.
@@ -55,9 +49,11 @@ protected:
     // Each template instanciation should be subclassed by _exactly_one_ class.
     // with this assumption, we can  static_cast  e.g. a  Database<Song>  safely to a  SongDatabase.
     // for this reason, constructors and destructors are private. All classes which are allowed to derive this template are listed below.
-    friend class SongDatabase;
-    friend class EventDatabase;
-    friend class Setlist;
+    friend class SongDatabase;          //Database<Song>
+    friend class EventDatabase;         //Database<Event>
+    friend class Setlist;               //Database<SetlistItem>
+    friend class AttachmentDatabase;    //Database<Attachment>
+
 };
 
 #endif // DATABASE_H

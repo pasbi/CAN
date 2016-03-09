@@ -10,6 +10,7 @@
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include "Commands/DatabaseCommands/databasemoverowscommand.h"
+#include "application.h"
 
 
 Setlist::Setlist(Event *event) :

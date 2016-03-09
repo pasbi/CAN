@@ -35,9 +35,6 @@ public:
 
     QStringList peoples() const;
 
-    void serialize(QDataStream &out) const;
-    void deserialize(QDataStream &in);
-
 private:
     QStringList m_peoples;
 
@@ -49,6 +46,9 @@ signals:
 
     friend class SongDatabaseSortProxy;
 
-};
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 
+};
 #endif // SONGDATABASE_H

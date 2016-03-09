@@ -5,6 +5,7 @@
 
 #include "Project/project.h"
 #include "Program/program.h"
+#include <QMap>
 
 
 namespace Ui {

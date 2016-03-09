@@ -21,11 +21,6 @@ public:
 
     void deactivate() { player().pause(); }
 
-protected:
-    void serialize(QDataStream &out) const;
-    void deserialize(QDataStream &in);
-
-
 public slots:
     void open();
 
@@ -33,6 +28,11 @@ private:
     SectionsModel * const m_sectionsModel;
     Player m_player;
     QString m_filename;
+
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
+
 };
 
 #endif // AUDIOATTACHMENT_H

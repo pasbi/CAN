@@ -2,7 +2,6 @@
 
 DatabaseBase::DatabaseBase(Project *project, QObject* parent) :
     QAbstractTableModel(parent),
-    PersistentObject(),
     m_project(project)
 {
 
@@ -26,4 +25,16 @@ Qt::DropActions DatabaseBase::supportedDropActions() const
 void DatabaseBase::reset()
 {
     emit reseted();
+}
+
+QDataStream& operator<<(QDataStream& out, const DatabaseBase* database)
+{
+    database->serialize(out);
+    return out;
+}
+
+QDataStream& operator>>(QDataStream& in, DatabaseBase* database)
+{
+    database->deserialize(in);
+    return in;
 }

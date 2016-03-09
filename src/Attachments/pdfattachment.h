@@ -28,8 +28,6 @@ private:
     Poppler::Document* m_document = nullptr;
 #endif
 
-
-
 };
 
 #endif // PDFATTACHMENT_H

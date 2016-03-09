@@ -6,11 +6,9 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-#include "persistentobject.h"
-
 class Project;
 
-class DatabaseBase : public QAbstractTableModel, public PersistentObject
+class DatabaseBase : public QAbstractTableModel
 {
     Q_OBJECT
 protected:
@@ -29,6 +27,15 @@ private:
 
 signals:
     void reseted();
+
+protected:
+    virtual void serialize(QDataStream& out) const = 0;
+    virtual void deserialize(QDataStream& in) = 0;
+
+    friend QDataStream& operator<<(QDataStream& out, const DatabaseBase* database);
+    friend QDataStream& operator>> (QDataStream& out, DatabaseBase* database);
 };
 
+QDataStream& operator<<(QDataStream& out, const DatabaseBase* database);
+QDataStream& operator>>(QDataStream& out, DatabaseBase* database);
 #endif // DATABASEBASE_H

@@ -1,6 +1,5 @@
 #include "setlistproxy.h"
-
-
+#include <QColor>
 
 SetlistProxy::SetlistProxy(QObject *parent) :
     DatabaseSortProxy(parent)

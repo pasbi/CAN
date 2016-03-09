@@ -5,11 +5,14 @@
 #include "Attachments/attachment.h"
 #include "Database/EventDatabase/event.h"
 #include "Database/EventDatabase/eventdatabase.h"
+#include "attachmentdatabase.h"
+#include "Project/project.h"
 
 const QStringList Song::ATTRIBUTE_KEYS = {"title", "artist", "duration", "key", "label", "state", "singers", "soloPlayers", "comments", "creationDateTime"};
 
 Song::Song(Database<Song> * database) :
-    DatabaseItem(ATTRIBUTE_KEYS, database)
+    DatabaseItem(ATTRIBUTE_KEYS, database),
+    m_attachmentDatabase(new AttachmentDatabase(this, database->project()))
 {
     setAttribute("creationDateTime", QDateTime::currentDateTime());
     setAttribute("label", NoLabel);
@@ -22,13 +25,14 @@ Song::Song(Database<Song> * database) :
 
 Song::~Song()
 {
-    qDeleteAll( m_attachments );
+    delete m_attachmentDatabase;
+    m_attachmentDatabase = 0;
 }
 
 QStringList Song::attachmentNames() const
 {
     QStringList akk;
-    for (const Attachment* a : m_attachments)
+    for (const Attachment* a : attachments())
     {
         akk << a->name();
     }
@@ -38,22 +42,22 @@ QStringList Song::attachmentNames() const
 
 int Song::removeAttachment( Attachment* attachment )
 {
-    int index = m_attachments.indexOf( attachment );
-    m_attachments.removeOne( attachment );
+    int index = m_attachmentDatabase->items().indexOf( attachment );
+    m_attachmentDatabase->removeRow(index);
     emit attachmentRemoved( index );
     return index;
 }
 
 void Song::addAttachment( Attachment* attachment )
 {
-    int index = m_attachments.length();
+    int index = attachments().length();
     insertAttachment( attachment, index );
 }
 
 void Song::insertAttachment(Attachment *attachment, int index)
 {
     assert( attachment->song() == this );
-    m_attachments.insert( index, attachment );
+    m_attachmentDatabase->insertItem( attachment, index );
     connectAttachment( attachment );
     emit attachmentAdded(index);
 }
@@ -66,41 +70,6 @@ void Song::connectAttachment(Attachment *attachment)
     });
 }
 
-
-void Song::deserialize(QDataStream &in)
-{
-    DatabaseItem::deserialize(in);
-
-    in >> &m_program;
-
-    qint32 n;
-    in >> n;
-    assert(m_attachments.isEmpty());
-    m_attachments.reserve(n);
-    for (int i = 0; i < n; ++i)
-    {
-        QString classname;
-        in >> classname;
-        Attachment* attachment = Attachment::create(classname, this);
-        in >> attachment;
-        m_attachments.append( attachment );
-        connectAttachment(attachment);
-    }
-
-}
-
-void Song::serialize(QDataStream &out) const
-{
-    DatabaseItem::serialize(out);
-
-    out << &m_program;
-    out << qint32(m_attachments.length());
-    for (const Attachment* a : m_attachments)
-    {
-        out << a->type();
-        out << a;
-    }
-}
 QString Song::attributeDisplay(const QString &key) const
 {
     QVariant attribute = Song::attribute(key);
@@ -167,6 +136,40 @@ bool Song::canRemove() const
     }
 
     return true;
+}
+
+QList<Attachment*> Song::attachments() const
+{
+    return m_attachmentDatabase->items();
+}
+
+Attachment* Song::attachment( int i ) const
+{
+    return m_attachmentDatabase->items()[i];
+}
+
+void Song::serialize(QDataStream &out) const
+{
+    DatabaseItem::serialize(out);
+    out << &m_program;
+    out << m_attachmentDatabase;
+}
+
+void Song::deserialize(QDataStream &in)
+{
+    DatabaseItem::deserialize(in);
+
+    in >> &m_program;
+    in >> m_attachmentDatabase;
+    for (Attachment* a : m_attachmentDatabase->items())
+    {
+        connectAttachment(a);
+    }
+}
+
+AttachmentDatabase* Song::attachmentDatabase() const
+{
+    return m_attachmentDatabase;
 }
 
 DEFINE_ENUM_STREAM_OPERATORS(Song::State)

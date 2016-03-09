@@ -1,21 +1,27 @@
 #include "attachment.h"
 #include "Database/SongDatabase/song.h"
 #include <QBuffer>
+#include "Database/SongDatabase/attachmentdatabase.h"
+
+const QStringList Attachment::ATTRIBUTE_KEYS = {};
 
 Attachment::Attachment() :
+    DatabaseItem(ATTRIBUTE_KEYS, nullptr),
     m_song(nullptr)
 {
+
 }
 
 Attachment::~Attachment()
 {
-
+    qDebug() << "delete attachmenT";
 }
 
 void Attachment::setSong(Song *song)
 {
     // set song, but do never overwrite.
     assert( !m_song );
+    setDatabase(song->attachmentDatabase());
 
     m_song = song;
     makeNameUnique();
@@ -49,23 +55,12 @@ void Attachment::makeNameUnique()
 Attachment* Attachment::create(const QString& classname, Song* song)
 {
     Attachment* attachment = Creatable::create<Attachment>( classname );
+    Q_ASSERT(attachment);
     attachment->setSong( song );
     return attachment;
 }
 
-void Attachment::serialize(QDataStream &out) const
-{
-    PersistentObject::serialize(out);
-    out << name();
-}
-
-void Attachment::deserialize(QDataStream &in)
-{
-    PersistentObject::deserialize(in);
-    in >> m_name;
-}
-
-QString Attachment::description() const
+QString Attachment::label() const
 {
     return name();
 }
@@ -93,11 +88,35 @@ void Attachment::paint(PDFCreator*)
     Q_UNIMPLEMENTED();
 }
 
+QString Attachment::attributeDisplay(const QString &key) const
+{
+    Q_UNUSED(key);
+    return "";
+}
 
+void Attachment::serialize(QDataStream& out) const
+{
+    DatabaseItem::serialize(out);
+    out << m_name;
+}
 
+void Attachment::deserialize(QDataStream& in)
+{
+    DatabaseItem::deserialize(in);
+    in >> m_name;
+}
 
+QDataStream& operator<<(QDataStream& out, const Attachment* attachment)
+{
+    attachment->serialize(out);
+    return out;
+}
 
-
+QDataStream& operator>>(QDataStream& in, Attachment* attachment)
+{
+    attachment->deserialize(in);
+    return in;
+}
 
 
 

@@ -40,22 +40,6 @@ QString replaceTabs(QString text)
     return lines.join("\n");
 }
 
-void ChordPatternAttachment::serialize(QDataStream &out) const
-{
-    AbstractChordPatternAttachment::serialize(out);
-    out << m_pattern;
-    out << static_cast<qreal>(m_scrollDownTempo);
-}
-
-void ChordPatternAttachment::deserialize(QDataStream &in)
-{
-    AbstractChordPatternAttachment::deserialize(in);
-    qreal tempo;
-    in >> m_pattern;
-    in >> tempo;
-    m_scrollDownTempo = static_cast<double>(tempo);
-}
-
 void ChordPatternAttachment::setPattern(const QString &pattern)
 {
     if (m_pattern != pattern)
@@ -102,5 +86,22 @@ void ChordPatternAttachment::setScrollDownTempo( double tempo )
         m_scrollDownTempo = tempo;
         pushCommand( nullptr ); // push empty command to indicate project changed.
     }
+}
+
+
+void ChordPatternAttachment::serialize(QDataStream& out) const
+{
+    AbstractChordPatternAttachment::serialize(out);
+    out << m_pattern;
+    out << static_cast<qreal>(m_scrollDownTempo);
+}
+
+void ChordPatternAttachment::deserialize(QDataStream& in)
+{
+    AbstractChordPatternAttachment::deserialize(in);
+    qreal tempo;
+    in >> m_pattern;
+    in >> tempo;
+    m_scrollDownTempo = static_cast<double>(tempo);
 }
 

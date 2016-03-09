@@ -48,7 +48,6 @@ SOURCES += main.cpp\
     Database/EventDatabase/eventdatabase.cpp \
     Database/SongDatabase/song.cpp \
     Attachments/attachment.cpp \
-    persistentobject.cpp \
     creatable.cpp \
     Attachments/ChordPatternAttachment/chordpatternattachment.cpp \
     Database/EventDatabase/event.cpp \
@@ -151,7 +150,8 @@ SOURCES += main.cpp\
     optionpushbutton.cpp \
     Merge/combinedatabaseitemsdialog.cpp \
     Database/databasebase.cpp \
-    Database/database.cpp
+    Database/database.cpp \
+    Database/SongDatabase/attachmentdatabase.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -161,7 +161,6 @@ HEADERS  += mainwindow.h \
     Database/database.h \
     Database/SongDatabase/song.h \
     Attachments/attachment.h \
-    persistentobject.h \
     creatable.h \
     Attachments/ChordPatternAttachment/chordpatternattachment.h \
     Database/EventDatabase/event.h \
@@ -278,7 +277,8 @@ HEADERS  += mainwindow.h \
     map.h \
     optionpushbutton.h \
     Merge/combinedatabaseitemsdialog.h \
-    Database/databasebase.h
+    Database/databasebase.h \
+    Database/SongDatabase/attachmentdatabase.h
 
 
 FORMS    += mainwindow.ui \

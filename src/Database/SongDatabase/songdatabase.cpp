@@ -1,14 +1,16 @@
 #include "songdatabase.h"
 
-#include <QJsonDocument>
 #include <QSize>
+#include <QPainter>
+#include <QIcon>
+#include <QDataStream>
+#include <QStringList>
 
 #include "Commands/DatabaseCommands/databasenewitemcommand.h"
 #include "Project/project.h"
 #include "songdatabasesortproxy.h"
 #include "Attachments/attachment.h"
 #include "Attachments/AudioAttachment/audioattachment.h"
-#include <QPainter>
 #include "chord.h"
 
 SongDatabase::SongDatabase(Project *project) :
@@ -180,18 +182,6 @@ QString SongDatabase::itemName(int n) const
     return tr("Song(s)", "", n);
 }
 
-void SongDatabase::serialize(QDataStream &out) const
-{
-    out << m_peoples;
-    Database::serialize(out);
-}
-
-void SongDatabase::deserialize(QDataStream &in)
-{
-    in >> m_peoples;
-    Database::deserialize(in);
-}
-
 QStringList SongDatabase::peoples() const
 {
     QStringList peoples;
@@ -202,4 +192,16 @@ QStringList SongDatabase::peoples() const
     }
     peoples.removeDuplicates();
     return peoples;
+}
+
+void SongDatabase::serialize(QDataStream& out) const
+{
+    out << m_peoples;
+    Database::serialize(out);
+}
+
+void SongDatabase::deserialize(QDataStream& in)
+{
+    in >> m_peoples;
+    Database::deserialize(in);
 }

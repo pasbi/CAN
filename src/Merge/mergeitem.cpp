@@ -4,7 +4,7 @@
 
 MergeItem::MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave, Action action) :
     m_origin(Both),
-    m_action(ModifyAction),
+    m_action(action),
     m_master(master),
     m_slave(slave)
 {

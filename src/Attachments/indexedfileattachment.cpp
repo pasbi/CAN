@@ -55,20 +55,6 @@ bool IndexedFileAttachment::setHash(QByteArray hash)
     }
 }
 
-void IndexedFileAttachment::deserialize(QDataStream &in)
-{
-    Attachment::deserialize(in);
-    in >> m_hash;
-}
-
-void IndexedFileAttachment::serialize(QDataStream &out) const
-{
-    Attachment::serialize(out);
-    out << m_hash;
-}
-
-
-
 IndexedFileAttachment::IndexedFileStatus IndexedFileAttachment::status() const
 {
     if (hash().isEmpty())
@@ -83,4 +69,16 @@ IndexedFileAttachment::IndexedFileStatus IndexedFileAttachment::status() const
     {
         return FileAvailable;
     }
+}
+
+void IndexedFileAttachment::serialize(QDataStream& out) const
+{
+    Attachment::serialize(out);
+    out << m_hash;
+}
+
+void IndexedFileAttachment::deserialize(QDataStream& in)
+{
+    Attachment::deserialize(in);
+    in >> m_hash;
 }

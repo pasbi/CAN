@@ -2,8 +2,9 @@
 #define DATABASESORTPROXY_H
 
 #include <QSortFilterProxyModel>
-#include "global.h"
 #include <QBitArray>
+
+#include "global.h"
 
 class DatabaseBase;
 class DatabaseSortProxyBase : public QSortFilterProxyModel

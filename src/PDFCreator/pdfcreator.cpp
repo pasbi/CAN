@@ -5,7 +5,6 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 
-
 #include "Attachments/ChordPatternAttachment/abstractchordpatternattachment.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 #include "Attachments/pdfattachment.h"
@@ -15,8 +14,8 @@
 #include "util.h"
 #include "chord.h"
 #include "Database/EventDatabase/setlist.h"
-
 #include "pdfcreatorconfig.h"
+#include "application.h"
 
 const QString PDFCreator::HYPHEN = QChar(0x2014);
 const int PDFCreator::ALIGN_SONGS__SEPARATE_PAGES = 5;

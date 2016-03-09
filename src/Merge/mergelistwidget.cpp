@@ -1,15 +1,18 @@
 #include "mergelistwidget.h"
 #include "mergeitem.h"
-#include <QMimeData>
 #include "global.h"
+
+#include <QMimeData>
 #include <QDragEnterEvent>
 #include <QPushButton>
 #include <QMenu>
+#include <QDrag>
+
 #include "mergelistwidgetitemwidget.h"
 #include "merge.h"
 #include "combinedatabaseitemsdialog.h"
 #include "mergelistwidgetselectionmodel.h"
-#include <QDrag>
+#include "application.h"
 
 
 MergeListWidget::MergeListWidget(QWidget *parent) :
@@ -281,7 +284,7 @@ void MergeListWidget::mousePressEvent(QMouseEvent *event)
 void MergeListWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (   event->buttons() & Qt::LeftButton
-        && (m_startPos - event->pos()).manhattanLength() >= QApplication::startDragDistance())
+        && (m_startPos - event->pos()).manhattanLength() >= Application::startDragDistance())
     {
         QListWidgetItem* item = itemAt(m_startPos);
         if (item)

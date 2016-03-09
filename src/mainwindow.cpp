@@ -11,6 +11,7 @@
 #include <QScrollArea>
 #include <QLabel>
 #include <QThread>
+#include <QMimeData>
 
 #include "ui_mainwindow.h"
 #include "util.h"
@@ -41,6 +42,8 @@
 #include "Attachments/indexedfileattachment.h"
 #include "preferencedialog.h"
 #include "Merge/merge.h"
+#include "application.h"
+#include "Database/databasemimedata.h"
 
 QString styleSheetContent()
 {
@@ -464,7 +467,7 @@ void MainWindow::updateWindowTitle()
     QString title = QString("%1%2 - %4")
             .arg( projectName() )
             .arg( star )
-            .arg( qApp->applicationName() );
+            .arg( app().applicationName() );
 
     setWindowTitle( title );
 }

@@ -22,16 +22,13 @@ QStringList DatabaseItemBase::attributeKeys() const
 }
 
 
-void DatabaseItemBase::deserialize(QDataStream & in)
+bool DatabaseItemBase::canRemove() const
 {
-    PersistentObject::deserialize(in);
-
-    in >> m_attributes;
+    return true;
 }
 
-void DatabaseItemBase::serialize(QDataStream & out) const
+void DatabaseItemBase::serialize(QDataStream &out) const
 {
-    PersistentObject::serialize(out);
     PedanticVariantMap copy = m_attributes;
     for (const QString& key : skipSerializeAttributes())
     {
@@ -40,7 +37,20 @@ void DatabaseItemBase::serialize(QDataStream & out) const
     out << copy;
 }
 
-bool DatabaseItemBase::canRemove() const
+void DatabaseItemBase::deserialize(QDataStream &in)
 {
-    return true;
+    in >> m_attributes;
+}
+
+
+QDataStream& operator<<(QDataStream& out, const DatabaseItemBase* item)
+{
+    item->serialize(out);
+    return out;
+}
+
+QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item)
+{
+    item->deserialize(in);
+    return in;
 }

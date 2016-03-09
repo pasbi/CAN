@@ -1,5 +1,4 @@
 #include "section.h"
-#include "persistentobject.h"
 #include <qmath.h>
 
 double timeToDouble(const QTime& time)

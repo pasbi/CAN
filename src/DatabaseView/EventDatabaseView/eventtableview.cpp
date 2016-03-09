@@ -1,18 +1,21 @@
 #include "eventtableview.h"
+
 #include <QHeaderView>
 #include <QItemDelegate>
 #include <QComboBox>
+#include <QMouseEvent>
+
 #include "global.h"
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Dialogs/datetimedialog.h"
-#include <QMouseEvent>
 #include "util.h"
 #include "Database/EventDatabase/eventdatabasesortproxy.h"
 #include "DatabaseView/ItemDelegates/typecomboboxdelegate.h"
 #include "DatabaseView/ItemDelegates/lineeditdelegate.h"
-#include "DatabaseView/ItemDelegates/lineeditdelegate.h"
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include "Database/database.h"
+#include "application.h"
+#include "Project/project.h"
 
 
 EventTableView::EventTableView(QWidget *parent) :

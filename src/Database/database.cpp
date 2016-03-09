@@ -2,6 +2,15 @@
 #include "Database/EventDatabase/event.h"
 #include "Attachments/attachment.h"
 
+#include "Project/project.h"
+#include "Database/databasemimedata.h"
+#include "application.h"
+#include "Commands/DatabaseCommands/databasenewitemcommand.h"
+#include "Database/EventDatabase/setlistitem.h"
+#include "SongDatabase/song.h"
+#include "util.h"
+#include "SongDatabase/attachmentdatabase.h"
+
 
 template<class T> Database<T>::Database(Project* project) :
     DatabaseBase(project)
@@ -156,30 +165,6 @@ template<class T> void Database<T>::notifiyDataChange(const T *item)
     emit dataChanged( index(row, 0), index(row, columnCount() - 1) );
 }
 
-template<class T> void Database<T>::serialize(QDataStream &out) const
-{
-    out << static_cast<qint32>(m_items.length());
-    for (T* item : m_items)
-    {
-        out << item;
-    }
-}
-
-template<class T> void Database<T>::deserialize(QDataStream &in)
-{
-    reset();
-    qint32 n;
-    in >> n;
-    beginResetModel();
-    for (int i = 0; i < n; ++i)
-    {
-        T* item = new T(this);
-        in >> item;
-        m_items << item;
-    }
-    endResetModel();
-}
-
 template<class T> T* Database<T>::retrieveItem(qint32 id) const
 {
     return m_items[id];
@@ -230,10 +215,64 @@ template<class T> bool Database<T>::setData(const QModelIndex &index, const QVar
     }
 }
 
+template<class T> void Database<T>::serialize(QDataStream &out) const
+{
+    out << static_cast<qint32>(m_items.length());
+    for (T* item : m_items)
+    {
+        out << item;
+    }
+}
+
+template<class T> void Database<T>::deserialize(QDataStream &in)
+{
+    reset();
+    qint32 n;
+    in >> n;
+    beginResetModel();
+    for (int i = 0; i < n; ++i)
+    {
+        T* item = new T(this);
+        in >> item;
+        m_items << item;
+    }
+    endResetModel();
+}
+
+template<> void Database<Attachment>::serialize(QDataStream& out) const
+{
+    // we need special treatment for Attachments
+    out << static_cast<qint32>(items().length());
+    for (const Attachment* a : items())
+    {
+        out << a->type();
+        out << a;
+    }
+}
+
+template<> void Database<Attachment>::deserialize(QDataStream& in)
+{
+    Song* song = static_cast<const AttachmentDatabase*>(this)->song();
+    // we need special treatment for Attachments
+    qint32 n;
+    in >> n;
+    reset();
+    beginResetModel();
+    for (int i = 0; i < n; ++i)
+    {
+        QString typeName;
+        in >> typeName;
+
+        Attachment* attachment = Attachment::create(typeName, song);
+        in >> attachment;
+        m_items << attachment;
+    }
+    endResetModel();
+}
 
 
 // instanciations
 template class Database<Song>;
 template class Database<Event>;
 template class Database<SetlistItem>;
-//template class Database<Attachment>;
+template class Database<Attachment>;

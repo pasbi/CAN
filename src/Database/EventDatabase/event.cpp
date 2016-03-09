@@ -1,5 +1,7 @@
 #include "event.h"
 #include "setlist.h"
+#include "application.h"
+#include "setlistitem.h"
 
 const QStringList Event::ATTRIBUTE_KEYS = { "type", "beginning", "label", "notices" };
 
@@ -33,19 +35,6 @@ QString Event::description() const
 QString Event::eventTypeName(Type type)
 {
     return eventTypeNames()[static_cast<int>(type)];
-}
-
-void Event::serialize(QDataStream &out) const
-{
-    DatabaseItem::serialize(out);
-    out << m_setlist;
-}
-
-void Event::deserialize(QDataStream &in)
-{
-    DatabaseItem::deserialize(in);
-    in >> m_setlist;
-
 }
 
 QString Event::label() const
@@ -99,6 +88,17 @@ bool Event::needsSong(const Song *song) const
     return false;
 }
 
+void Event::serialize(QDataStream& out) const
+{
+    DatabaseItem::serialize(out);
+    out << m_setlist;
+}
+
+void Event::deserialize(QDataStream& in)
+{
+    DatabaseItem::deserialize(in);
+    in >> m_setlist;
+}
 
 DEFINE_ENUM_STREAM_OPERATORS(Event::Type)
 

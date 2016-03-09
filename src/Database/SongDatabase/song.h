@@ -10,9 +10,9 @@
 
 class SongDatabase;
 class Attachment;
-template<typename T> class Database;
+class AttachmentDatabase;
 
-class Song : public DatabaseItem<Song>
+class Song : public QObject, public DatabaseItem<Song>
 {
     Q_OBJECT
 public:
@@ -38,11 +38,12 @@ public:
     //
     /////////////////////////////////////////////////
 private:
-    QList<Attachment*> m_attachments;
+    AttachmentDatabase* m_attachmentDatabase;
     void connectAttachment(Attachment* attachment);
 public:
-    QList<Attachment*> attachments() const { return m_attachments; }
-    Attachment* attachment( int i ) const { return m_attachments[i]; }
+    AttachmentDatabase* attachmentDatabase() const;
+    QList<Attachment*> attachments() const;
+    Attachment* attachment( int i ) const;
     QStringList attachmentNames() const;
     int removeAttachment(Attachment *attachment );
     void addAttachment(Attachment *attachment );
@@ -64,12 +65,7 @@ public:
     Program program() const { return m_program; }
     void setProgram( const Program& program ) { m_program = program; }
 private:
-    Program m_program = Program();
-
-protected:
-    void serialize(QDataStream &out) const;
-    void deserialize(QDataStream &in);
-
+    Program m_program;
 
 public:
     static QStringList stateNames();
@@ -77,6 +73,10 @@ public:
     QString label() const;
 
     bool canRemove() const;
+
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 
 };
 

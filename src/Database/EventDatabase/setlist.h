@@ -7,6 +7,8 @@
 class Song;
 class Event;
 class SetlistItem;
+template<class T> class DatabaseMimeData;
+
 class Setlist : public Database<SetlistItem>
 {
     Q_OBJECT

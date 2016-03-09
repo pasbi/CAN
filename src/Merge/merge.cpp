@@ -9,6 +9,7 @@
 #include "Attachments/attachment.h"
 #include "Database/EventDatabase/setlist.h"
 #include "Database/EventDatabase/setlistitem.h"
+#include "application.h"
 
 Merge::Merge(Project* masterProject, const QString &slaveFilename, QWidget* dialogParent) :
     m_masterProject(masterProject),

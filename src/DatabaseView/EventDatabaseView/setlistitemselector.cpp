@@ -7,6 +7,7 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "DatabaseView/SongDatabaseView/songtableview.h"
 #include "Database/SongDatabase/songdatabasesortproxy.h"
+#include "application.h"
 
 SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
     QDialog(parent)

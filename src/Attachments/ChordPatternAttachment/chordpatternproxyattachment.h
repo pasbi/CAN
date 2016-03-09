@@ -26,10 +26,6 @@ public:
 
     const ChordPatternAttachment* source() const { return m_source; }
 
-protected:
-    void serialize(QDataStream &out) const;
-    void deserialize(QDataStream &in);
-
 private:
     void setChordPatternAttachment(const ChordPatternAttachment *source );
     const ChordPatternAttachment* m_source;
@@ -39,6 +35,9 @@ private:
 private slots:
     void adjustSourceTransposing(int sourceTransposing);
 
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 };
 
 #endif // CHORDPATTERNPROXYATTACHMENT_H

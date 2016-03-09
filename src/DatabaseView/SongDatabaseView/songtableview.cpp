@@ -13,6 +13,7 @@
 #include "Dialogs/peoplesdialog.h"
 #include <QHeaderView>
 #include "Dialogs/textdialog.h"
+#include "application.h"
 
 
 SongTableView::SongTableView(QWidget *parent) :

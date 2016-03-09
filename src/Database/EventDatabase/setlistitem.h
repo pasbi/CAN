@@ -11,17 +11,12 @@ class Setlist;
 template<typename T> class Database;
 class SetlistItem : public DatabaseItem<SetlistItem>
 {
-    Q_OBJECT
 public:
     enum Type { SongType, LabelType };
     SetlistItem(Database<SetlistItem> *setlist, const QString & label );
     SetlistItem(Database<SetlistItem> *setlist );
     SetlistItem(Database<SetlistItem> *setlist, const Song* song );
     virtual ~SetlistItem();
-
-
-    void serialize(QDataStream &out) const;
-    void deserialize(QDataStream &in);
 
     void setSong(const Song* song);
 
@@ -34,6 +29,10 @@ public:
 
 private:
     QMetaObject::Connection m_updateSongLabelConnection;
+
+protected:
+    void serialize(QDataStream &out) const;
+    void deserialize(QDataStream &in);
 };
 
 Q_DECLARE_METATYPE(SetlistItem*)

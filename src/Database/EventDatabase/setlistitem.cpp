@@ -58,30 +58,7 @@ void SetlistItem::setSong(const Song *song)
     });
 }
 
-void SetlistItem::serialize(QDataStream &out) const
-{
-    DatabaseItem::serialize(out);
-    if (attribute("type").value<Type>() == SongType)
-    {
-        out << static_cast<qint32>(app().project()->songDatabase()->identifyItem(attribute("song").value<const Song*>()));
-    }
-}
-
 //TODO setlist item, song editing should be more user friendly (i.e. typing artist etc. instead of just title);
-
-
-void SetlistItem::deserialize(QDataStream &in)
-{
-    DatabaseItem::deserialize(in); // see serialize
-    if (attribute("type").value<Type>() == SongType)
-    {
-        qint32 id;
-        in >> id;
-        //we cannot guarantee that the project is app().project().
-        setSong( database()->project()->songDatabase()->retrieveItem(id) );
-    }
-}
-
 QString SetlistItem::attributeDisplay(const QString &key) const
 {
     if (key == "song" || key == "type")
@@ -115,5 +92,25 @@ QString SetlistItem::label() const
     return attributeDisplay("label");
 }
 
+void SetlistItem::serialize(QDataStream& out) const
+{
+    DatabaseItem::serialize(out);
+    if (attribute("type").value<Type>() == SongType)
+    {
+        out << static_cast<qint32>(database()->project()->songDatabase()->identifyItem(attribute("song").value<const Song*>()));
+    }
+}
+
+void SetlistItem::deserialize(QDataStream& in)
+{
+    DatabaseItem::deserialize(in);
+    if (attribute("type").value<Type>() == SongType)
+    {
+        qint32 id;
+        in >> id;
+        //we cannot guarantee that the project is app().project().
+        setSong( database()->project()->songDatabase()->retrieveItem(id) );
+    }
+}
 
 DEFINE_ENUM_STREAM_OPERATORS(SetlistItem::Type)

@@ -1,7 +1,6 @@
 #ifndef DATABASEITEM_H
 #define DATABASEITEM_H
 
-#include "persistentobject.h"
 #include <QObject>
 #include "map.h"
 #include "type_traits"
@@ -10,7 +9,7 @@
 template<typename T> class Database;
 class DatabaseBase;
 
-class DatabaseItemBase : public QObject, public PersistentObject
+class DatabaseItemBase
 {
 protected:
     explicit DatabaseItemBase(const QStringList& attributeKeys);
@@ -24,17 +23,22 @@ public:
 
     virtual bool canRemove() const;
 
+    virtual void serialize(QDataStream& out) const;
+    virtual void deserialize(QDataStream& in);
+
 
 protected:
     virtual QStringList skipSerializeAttributes() const { return QStringList(); }
 
-protected:
-    virtual void deserialize(QDataStream & in);
-    virtual void serialize(QDataStream & out) const;
-
 private:
     PedanticVariantMap m_attributes;
+
+    friend QDataStream& operator<<(QDataStream& out, const DatabaseItemBase* item);
+    friend QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item);
 };
+
+QDataStream& operator<<(QDataStream& out, const DatabaseItemBase* item);
+QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item);
 
 template<typename T> class DatabaseItem : public DatabaseItemBase
 {
@@ -55,7 +59,6 @@ protected:
 public:
     virtual void setDatabase(Database<T>* database)
     {
-        //TODO properly (dis)connect old/new database
         m_database = database;
     }
 

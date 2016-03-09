@@ -13,7 +13,6 @@ class Song;
 template<typename T> class Database;
 class Event : public DatabaseItem<Event>
 {
-    Q_OBJECT
 public:
     enum Type { Rehearsal, Gig, Other };
 
@@ -45,6 +44,7 @@ protected:
 
 private:
     Setlist* m_setlist;
+
 };
 
 Q_DECLARE_METATYPE(Event::Type)

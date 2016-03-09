@@ -77,14 +77,20 @@ void ChordPatternProxyAttachment::setScrollDownTempo(double)
     qWarning() << "cannot set scroll down tempo of ChordPatternProxyAttachment as it would change the scroll down tempo of the original.";
 }
 
-void ChordPatternProxyAttachment::serialize(QDataStream &out) const
+void ChordPatternProxyAttachment::adjustSourceTransposing(int sourceTransposing)
+{
+    transpose( -sourceTransposing );
+}
+
+
+void ChordPatternProxyAttachment::serialize(QDataStream& out) const
 {
     AbstractChordPatternAttachment::serialize(out);
     out << static_cast<qint32>(song()->attachments().indexOf(const_cast<ChordPatternAttachment*>(m_source)));
     out << static_cast<qint32>(m_transpose);
 }
 
-void ChordPatternProxyAttachment::deserialize(QDataStream &in)
+void ChordPatternProxyAttachment::deserialize(QDataStream& in)
 {
     AbstractChordPatternAttachment::deserialize(in);
     qint32 index, transpose;
@@ -101,10 +107,5 @@ void ChordPatternProxyAttachment::deserialize(QDataStream &in)
     }
     m_transpose = transpose;
     updateCache();
-}
-
-void ChordPatternProxyAttachment::adjustSourceTransposing(int sourceTransposing)
-{
-    transpose( -sourceTransposing );
 }
 

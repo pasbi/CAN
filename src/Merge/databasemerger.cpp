@@ -5,6 +5,8 @@
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Attachments/attachment.h"
 
+#include <QMimeData>
+
 DatabaseMergerBase::DatabaseMergerBase()
 {
 }
