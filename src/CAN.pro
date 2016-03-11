@@ -154,8 +154,10 @@ SOURCES += main.cpp\
     Database/SongDatabase/attachmentdatabase.cpp \
     Database/databaseitembase.cpp \
     Merge/databasemergerbase.cpp \
-    Merge/combineattachmentsdialog.cpp
-
+    Merge/AttachmentMergeWidgets/combineattachmentsdialog.cpp \
+    Merge/AttachmentMergeWidgets/chordpatternattachmentmergewidget.cpp \
+    Merge/AttachmentMergeWidgets/attachmentmergewidget.cpp \
+    Merge/AttachmentMergeWidgets/attachmentmergewidgetbase.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -284,7 +286,10 @@ HEADERS  += mainwindow.h \
     Database/SongDatabase/attachmentdatabase.h \
     Database/databaseitembase.h \
     Merge/databasemergerbase.h \
-    Merge/combineattachmentsdialog.h
+    Merge/AttachmentMergeWidgets/combineattachmentsdialog.h \
+    Merge/AttachmentMergeWidgets/chordpatternattachmentmergewidget.h \
+    Merge/AttachmentMergeWidgets/attachmentmergewidget.h \
+    Merge/AttachmentMergeWidgets/attachmentmergewidgetbase.h
 
 
 FORMS    += mainwindow.ui \
@@ -308,9 +313,7 @@ FORMS    += mainwindow.ui \
     playerwidget.ui \
     Dialogs/peoplesdialog.ui \
     Dialogs/textdialog.ui \
-    Merge/mergedialog.ui \
-    Merge/combinedatabaseitemsdialog.ui \
-    Merge/combineattachmentsdialog.ui
+    Merge/mergedialog.ui
 
 
 RESOURCES += \

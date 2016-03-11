@@ -1,14 +1,17 @@
 #include "chordpatternedit.h"
-#include "global.h"
+
 #include <QKeyEvent>
 #include <QAction>
-#include "application.h"
 #include <QMenu>
 #include <QDesktopWidget>
 #include <QRect>
 #include <QMimeData>
 #include <QScrollBar>
 #include <QClipboard>
+
+#include "global.h"
+#include "application.h"
+#include "chord.h"
 #include "looselines.h"
 
 
@@ -30,8 +33,7 @@ ChordPatternEdit::ChordPatternEdit(QWidget *parent) :
 
     setContextMenuPolicy( Qt::DefaultContextMenu );
 
-    installEventFilter( this );
-
+    connect(this, SIGNAL(textChanged()), this, SLOT(updateChords()));
 }
 
 
@@ -454,4 +456,48 @@ QString ChordPatternEdit::pasteLooseLines(const QString &base, const LooseLines 
     newCursorPosition -= 1; // last `\n` charachter was too much.
 
     return lines.join("\n");
+}
+
+void ChordPatternEdit::setChordPattern(const QString &text)
+{
+    if (toPlainText() != text)
+    {
+        setPlainText(text);
+    }
+    updateChords();
+}
+
+void ChordPatternEdit::updateChords()
+{
+    blockSignals(true);
+    int cursorPosition = textCursor().position();
+    int scrollbarPosition = verticalScrollBar()->value();
+
+    QTextCursor cursor(document());
+    cursor.setPosition(cursorPosition);
+    setTextCursor(cursor);
+    verticalScrollBar()->setValue(scrollbarPosition);
+
+    QList<QTextEdit::ExtraSelection> highlights;
+    int i = 0;
+    for (QString line : toPlainText().split("\n")) {
+        QStringList chords, tokens;
+        bool isChordLine = Chord::parseLine( line, chords, tokens );
+        for ( const QString & token : tokens )
+        {
+            if (Chord(token).isValid() && isChordLine) {
+                QTextCursor cursor(document());
+                cursor.setPosition(i);
+                cursor.setPosition(i + token.length(), QTextCursor::KeepAnchor);
+                QTextEdit::ExtraSelection highlight;
+                highlight.cursor = cursor;
+                highlight.format.setFontUnderline(true);
+                highlight.format.setUnderlineColor( QColor(255, 128, 0) );
+                highlights << highlight;
+            }
+            i += token.length() + 1;
+        }
+    }
+    setExternalExtraSelections(highlights);
+    blockSignals(false);
 }

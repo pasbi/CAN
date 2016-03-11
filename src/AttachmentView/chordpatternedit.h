@@ -11,6 +11,10 @@ public:
     explicit ChordPatternEdit(QWidget *parent = 0);
 
 public slots:
+    void updateChords();
+
+public:
+    void setChordPattern(const QString& text);
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);

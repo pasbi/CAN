@@ -92,7 +92,6 @@ void ChordPatternAttachment::setScrollDownTempo( double tempo )
 void ChordPatternAttachment::serialize(QDataStream& out) const
 {
     AbstractChordPatternAttachment::serialize(out);
-    qDebug() << "stream CPA:" << m_pattern << static_cast<qreal>(m_scrollDownTempo);
     out << m_pattern;
     out << static_cast<qreal>(m_scrollDownTempo);
 }

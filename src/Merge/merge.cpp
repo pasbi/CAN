@@ -150,7 +150,6 @@ void Merge::performMerge(QList<Song*>& undeletableSongs)
     }
 }
 
-//TODO handle attachments
 
 
 

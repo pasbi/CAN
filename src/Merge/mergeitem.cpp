@@ -197,6 +197,20 @@ bool MergeItem::canJoin(const MergeItem *other) const
     }
 }
 
+bool MergeItem::inherits(const QStringList& classnames) const
+{
+    Q_ASSERT(QString(master()->metaObject()->className()) == QString(slave()->metaObject()->className()));
+
+    for (const QString& classname : classnames)
+    {
+        if (master()->inherits(classname.toStdString().c_str()))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 DEFINE_ENUM_STREAM_OPERATORS(MergeItem::Action)
 DEFINE_ENUM_STREAM_OPERATORS(MergeItem::Decision)

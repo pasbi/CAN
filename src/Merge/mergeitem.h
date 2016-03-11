@@ -24,6 +24,8 @@ public:
     void setAction(Action action);
     bool canJoin(const MergeItem* other) const;
 
+    bool inherits(const QStringList& classnames) const;
+
 
     struct ModifyDetail
     {

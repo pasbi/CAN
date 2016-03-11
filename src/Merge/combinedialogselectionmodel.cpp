@@ -4,6 +4,7 @@
 CombineDialogSelectionModel::CombineDialogSelectionModel(QAbstractItemModel *parent) :
     QItemSelectionModel(parent)
 {
+
 }
 
 void CombineDialogSelectionModel::select(const QModelIndex &index, SelectionFlags command)

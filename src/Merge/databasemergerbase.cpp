@@ -35,7 +35,6 @@ MergeItem* DatabaseMergerBase::join(MergeItem* itemA, MergeItem* itemB)
 
     if (DatabaseMergerBase* child = childDatabaseMerger(joinedItem->master(), joinedItem->slave()))
     {
-        qDebug() << "insert child database";
         m_children.insert( joinedItem, child );
     }
 

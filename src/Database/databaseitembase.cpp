@@ -35,7 +35,6 @@ void DatabaseItemBase::serialize(QDataStream &out) const
     {
         copy.take(key);
     }
-    qDebug() << "DatabaseItemBase:" << copy.keys() << copy;
     out << copy;
 }
 
@@ -65,10 +64,6 @@ bool DatabaseItemBase::operator ==(const DatabaseItemBase& other) const
 
     aStream << this;
     bStream << &other;
-
-    qDebug() << ".......................";
-    qDebug() << "a: " << a.toHex();
-    qDebug() << "b: " << b.toHex();
 
     return a == b;
 }

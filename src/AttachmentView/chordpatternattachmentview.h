@@ -18,8 +18,6 @@ class ChordPatternAttachmentView : public AttachmentView
 public:
     explicit ChordPatternAttachmentView(QWidget *parent = 0);
     ~ChordPatternAttachmentView();
-
-    static void highlightTextEdit(ChordPatternEdit *edit , const QString &text);
     void updateViewIcon();
 
 protected:
@@ -31,7 +29,7 @@ private:
 
 private slots:
     void updateText();
-    void textEdited();
+//    void textEdited();
 
     void on_buttonUp_clicked();
     void on_buttonDown_clicked();

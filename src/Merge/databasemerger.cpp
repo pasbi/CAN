@@ -166,23 +166,12 @@ template<class T> void DatabaseMerger<T>::init(QList<T*> masterItems, QList<T*> 
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
 template<class T> DatabaseMergerBase::CompareResult DatabaseMerger<T>::compare(const T *a, const T *b) const
 {
-    if (a->metaObject()->className() == QString("ChordPatternAttachment") && b->metaObject()->className() == QString("ChordPatternAttachment"))
-    {
-        const ChordPatternAttachment* cpaa = qobject_cast<const ChordPatternAttachment*>(a);
-        const ChordPatternAttachment* cpab = qobject_cast<const ChordPatternAttachment*>(b);
-        qDebug() << "Compare chord pattern attachments";
-        qDebug() << "Pattern a: " << cpaa->scrollDownTempo() << cpaa->chordPattern() << cpaa->name();
-        qDebug() << "Pattern b: " << cpab->scrollDownTempo() << cpab->chordPattern() << cpab->name();
-    }
-
     if (*a == *b)
     {
-        qDebug() << "EQUAL: " << a << b;
         return DatabaseMergerBase::Equal;
     }
     else
     {
-        qDebug() << "UNEQUAL: " << a << b;
         return DatabaseMergerBase::Unequal;
     }
 }

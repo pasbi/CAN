@@ -14,7 +14,6 @@ Attachment::Attachment() :
 
 Attachment::~Attachment()
 {
-    qDebug() << "delete " << this;
 }
 
 void Attachment::setSong(Song *song)
@@ -78,7 +77,6 @@ QString Attachment::attributeDisplay(const QString &key) const
 void Attachment::serialize(QDataStream& out) const
 {
     DatabaseItem::serialize(out);
-    qDebug() << "Stream Attachment: " << m_name;
     out << m_name;
 }
 

@@ -13,8 +13,7 @@
 #include "combinedatabaseitemsdialog.h"
 #include "mergelistwidgetselectionmodel.h"
 #include "application.h"
-#include "combineattachmentsdialog.h"
-
+#include "AttachmentMergeWidgets/combineattachmentsdialog.h"
 
 MergeListWidget::MergeListWidget(QWidget *parent) :
     QListWidget(parent),
@@ -262,19 +261,6 @@ void MergeListWidget::setDatabaseMerger(DatabaseMergerBase *databaseMerger)
 
 }
 
-bool MergeListWidget::inherits(const MergeItem* item, const QStringList& classnames)
-{
-    Q_ASSERT(QString(item->master()->metaObject()->className()) == QString(item->master()->metaObject()->className()));
-
-    for (const QString& classname : classnames)
-    {
-        if (item->master()->inherits(classname.toStdString().c_str()))
-        {
-            return true;
-        }
-    }
-    return false;
-}
 
 void MergeListWidget::openCombineItemDialog(MergeItem *mergeItem)
 {
@@ -282,15 +268,15 @@ void MergeListWidget::openCombineItemDialog(MergeItem *mergeItem)
 
     QDialog* dialog = nullptr;
 
-    if (inherits(mergeItem, { "Attachment" }))
+    if (mergeItem->inherits({ "Attachment" }))
     {
         dialog = new CombineAttachmentsDialog(mergeItem, this);
     }
-    else if (inherits(mergeItem, { "SetlistItem" }))
+    else if (mergeItem->inherits({ "SetlistItem" }))
     {
         Q_UNIMPLEMENTED();
     }
-    else if (inherits(mergeItem, { "Song", "Event" }))
+    else if (mergeItem->inherits({ "Song", "Event" }))
     {
         dialog = new CombineDatabaseItemsDialog(m_databaseMerger, mergeItem, this);
     }
@@ -300,6 +286,7 @@ void MergeListWidget::openCombineItemDialog(MergeItem *mergeItem)
     }
 
     dialog->exec();
+
     delete dialog;
     dialog = nullptr;
 }

@@ -24,57 +24,22 @@ ChordPatternAttachmentView::~ChordPatternAttachmentView()
     delete ui;
 }
 
-void ChordPatternAttachmentView::highlightTextEdit(ChordPatternEdit *edit, const QString& text)
-{
-    edit->blockSignals(true);
-    int cursorPosition = edit->textCursor().position();
-    int scrollbarPosition = edit->verticalScrollBar()->value();
-    edit->setText( text );
-    QTextCursor cursor(edit->document());
-    cursor.setPosition(cursorPosition);
-    edit->setTextCursor(cursor);
-    edit->verticalScrollBar()->setValue(scrollbarPosition);
-
-    QList<QTextEdit::ExtraSelection> highlights;
-    int i = 0;
-    for (QString line : text.split("\n")) {
-        QStringList chords, tokens;
-        bool isChordLine = Chord::parseLine( line, chords, tokens );
-        for ( const QString & token : tokens )
-        {
-            if (Chord(token).isValid() && isChordLine) {
-                QTextCursor cursor(edit->document());
-                cursor.setPosition(i);
-                cursor.setPosition(i + token.length(), QTextCursor::KeepAnchor);
-                QTextEdit::ExtraSelection highlight;
-                highlight.cursor = cursor;
-                highlight.format.setFontUnderline(true);
-                highlight.format.setUnderlineColor( QColor(255, 128, 0) );
-                highlights << highlight;
-            }
-            i += token.length() + 1;
-        }
-    }
-    edit->setExternalExtraSelections(highlights);
-    edit->blockSignals(false);
-
-}
 
 void ChordPatternAttachmentView::updateText()
 {
-    highlightTextEdit( ui->textEdit, attachment<ChordPatternAttachment>()->chordPattern() );
+    ui->textEdit->setChordPattern( attachment<ChordPatternAttachment>()->chordPattern() );
 }
 
-#include "Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h"
-void ChordPatternAttachmentView::textEdited()
-{
-    pushCommand( new ChordPatternAttachmentEditPatternCommand( attachment<ChordPatternAttachment>(), ui->textEdit->toPlainText() ) );
-}
+//#include "Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h"
+//void ChordPatternAttachmentView::textEdited()
+//{
+//    pushCommand( new ChordPatternAttachmentEditPatternCommand( attachment<ChordPatternAttachment>(), ui->textEdit->toPlainText() ) );
+//}
 
 void ChordPatternAttachmentView::polish()
 {
     updateText();
-    connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(textEdited()));
+//    connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(textEdited()));
     connect(attachment<ChordPatternAttachment>(), SIGNAL(changed()), this, SLOT(updateText()));
     connect( ui->textEdit, SIGNAL(pasted()), attachment<ChordPatternAttachment>(), SLOT(transpose()) );
     updateViewIcon();

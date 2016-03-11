@@ -60,7 +60,7 @@ void ChordPatternProxyAttachmentView::updateText()
     const ChordPatternAttachment* source = a ? a->source() : nullptr;
     if (a)
     {
-        ChordPatternAttachmentView::highlightTextEdit( ui->textEdit, a->chordPattern() );
+        ui->textEdit->setChordPattern( a->chordPattern() );
     }
     else
     {

@@ -3,21 +3,18 @@
 
 #include <QDialog>
 
-namespace Ui {
-class CombineAttachmentsDialog;
-}
-
 class MergeItem;
+
 class CombineAttachmentsDialog : public QDialog
 {
     Q_OBJECT
-
 public:
-    explicit CombineAttachmentsDialog(MergeItem* mergeItem, QWidget *parent = 0);
-    ~CombineAttachmentsDialog();
+    explicit CombineAttachmentsDialog(MergeItem *item, QWidget *parent = 0);
 
-private:
-    Ui::CombineAttachmentsDialog *ui;
+signals:
+
+public slots:
+
 };
 
 #endif // COMBINEATTACHMENTSDIALOG_H
