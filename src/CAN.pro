@@ -152,7 +152,9 @@ SOURCES += main.cpp\
     Database/databasebase.cpp \
     Database/database.cpp \
     Database/SongDatabase/attachmentdatabase.cpp \
-    Database/databaseitembase.cpp
+    Database/databaseitembase.cpp \
+    Merge/databasemergerbase.cpp \
+    Merge/combineattachmentsdialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -280,7 +282,9 @@ HEADERS  += mainwindow.h \
     Merge/combinedatabaseitemsdialog.h \
     Database/databasebase.h \
     Database/SongDatabase/attachmentdatabase.h \
-    Database/databaseitembase.h
+    Database/databaseitembase.h \
+    Merge/databasemergerbase.h \
+    Merge/combineattachmentsdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -305,7 +309,8 @@ FORMS    += mainwindow.ui \
     Dialogs/peoplesdialog.ui \
     Dialogs/textdialog.ui \
     Merge/mergedialog.ui \
-    Merge/combinesongsdialog.ui
+    Merge/combinedatabaseitemsdialog.ui \
+    Merge/combineattachmentsdialog.ui
 
 
 RESOURCES += \

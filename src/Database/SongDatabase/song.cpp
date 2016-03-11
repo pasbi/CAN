@@ -42,8 +42,9 @@ QStringList Song::attachmentNames() const
 
 int Song::removeAttachment( Attachment* attachment )
 {
+    Q_ASSERT(m_attachmentDatabase->items().contains(attachment));
     int index = m_attachmentDatabase->items().indexOf( attachment );
-    m_attachmentDatabase->removeRow(index);
+    m_attachmentDatabase->removeItem(attachment);
     emit attachmentRemoved( index );
     return index;
 }

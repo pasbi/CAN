@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QVariantMap>
-
+#include <QDebug>
 
 template<class Key, class T>
 class SortedMap
@@ -100,7 +100,32 @@ QDataStream& operator >> (QDataStream& in, PedanticMap<Key, T>& map)
 {
     in >> map.m_keys;
     in >> map.m_map;
+
+    //TODO theoretically, this check is not required. See Q_ASSERT below.
+    if (map.keys().toSet().size() != map.keys().length())
+    {
+        map.m_keys.clear();
+        map.m_map.clear();
+    }
+
+    // map.m_keys shall be unique
+    Q_ASSERT (map.keys().toSet().size() == map.keys().length());
+
     return in;
+}
+
+template <class Key, class T>
+inline QDebug operator<<(QDebug debug, const PedanticMap<Key, T> &map)
+{
+    const bool oldSetting = debug.autoInsertSpaces();
+    debug.nospace() << "PedanticMap(";
+    for (const Key& key : map.keys())
+    {
+        debug << "(" << key << ", " << map[key] << ")";
+    }
+    debug << ')';
+    debug.setAutoInsertSpaces(oldSetting);
+    return debug.maybeSpace();
 }
 
 typedef PedanticMap<QString, QVariant> PedanticVariantMap;

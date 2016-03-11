@@ -12,7 +12,7 @@ class SongDatabase;
 class Attachment;
 class AttachmentDatabase;
 
-class Song : public QObject, public DatabaseItem<Song>
+class Song : public DatabaseItem<Song>
 {
     Q_OBJECT
 public:

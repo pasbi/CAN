@@ -1,4 +1,5 @@
 #include "databaseitembase.h"
+#include "global.h"
 
 DatabaseItemBase::DatabaseItemBase(const QStringList &attributeKeys) :
     m_attributes(attributeKeys)
@@ -34,6 +35,7 @@ void DatabaseItemBase::serialize(QDataStream &out) const
     {
         copy.take(key);
     }
+    qDebug() << "DatabaseItemBase:" << copy.keys() << copy;
     out << copy;
 }
 
@@ -53,4 +55,20 @@ QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item)
 {
     item->deserialize(in);
     return in;
+}
+
+bool DatabaseItemBase::operator ==(const DatabaseItemBase& other) const
+{
+    QByteArray a, b;
+    QDataStream aStream(&a, QIODevice::WriteOnly);
+    QDataStream bStream(&b, QIODevice::WriteOnly);
+
+    aStream << this;
+    bStream << &other;
+
+    qDebug() << ".......................";
+    qDebug() << "a: " << a.toHex();
+    qDebug() << "b: " << b.toHex();
+
+    return a == b;
 }

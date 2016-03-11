@@ -8,7 +8,7 @@
 template<typename T> class Database;
 class DatabaseBase;
 
-class DatabaseItemBase
+class DatabaseItemBase : public QObject
 {
 protected:
     explicit DatabaseItemBase(const QStringList& attributeKeys);
@@ -25,6 +25,7 @@ public:
     virtual void serialize(QDataStream& out) const;
     virtual void deserialize(QDataStream& in);
 
+    bool operator==(const DatabaseItemBase& other) const;
 
 protected:
     virtual QStringList skipSerializeAttributes() const { return QStringList(); }

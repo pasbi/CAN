@@ -6,8 +6,6 @@
 
 class DatabaseItemBase;
 
-
-
 class MergeItem
 {
 public:
@@ -16,6 +14,7 @@ public:
     enum Decision { UseMaster, UseSlave, /*UseUserValue*/ };
     MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave, Action action);
     MergeItem(DatabaseItemBase* item, Origin origin, Action action);
+    ~MergeItem();
 
     DatabaseItemBase* master() const;
     DatabaseItemBase* slave() const;
@@ -23,6 +22,7 @@ public:
     Origin origin() const;
     Action action() const;
     void setAction(Action action);
+    bool canJoin(const MergeItem* other) const;
 
 
     struct ModifyDetail
@@ -64,9 +64,16 @@ private:
     void setupModifyDetails();
 
 
+
     //disable copy
     MergeItem(const MergeItem& other) = delete;
     MergeItem& operator=(const MergeItem& other) = delete;
+
+public:
+    static bool sortMasterSlaveItem(MergeItem*& masterItem, MergeItem*& slaveItem);
+    static bool sortMasterSlaveItem(const MergeItem*& masterItem, const MergeItem*& slaveItem);
+
+
 };
 
 DECLARE_ENUM_STREAM_OPERATORS(MergeItem::Action)

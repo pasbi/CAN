@@ -11,6 +11,7 @@ class Setlist;
 template<typename T> class Database;
 class SetlistItem : public DatabaseItem<SetlistItem>
 {
+    Q_OBJECT
 public:
     enum Type { SongType, LabelType };
     SetlistItem(Database<SetlistItem> *setlist, const QString & label );

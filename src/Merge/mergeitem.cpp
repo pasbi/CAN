@@ -11,6 +11,11 @@ MergeItem::MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave, Action a
     setupModifyDetails();
 }
 
+MergeItem::~MergeItem()
+{
+
+}
+
 MergeItem::MergeItem(DatabaseItemBase* item, Origin origin, Action action) :
     m_origin(origin),
     m_action(action),
@@ -143,6 +148,52 @@ void MergeItem::performModification() const
         }
 
         master()->setAttribute(detail.key(), value);
+    }
+}
+
+bool MergeItem::sortMasterSlaveItem(MergeItem *&masterItem, MergeItem *&slaveItem)
+{
+    const MergeItem* &masterItemNonConst = const_cast<const MergeItem*&>(masterItem);
+    const MergeItem* &slaveItemNonconst = const_cast<const MergeItem*&>(slaveItem);
+    return sortMasterSlaveItem(masterItemNonConst, slaveItemNonconst);
+}
+
+
+bool MergeItem::sortMasterSlaveItem(const MergeItem*& masterItem, const MergeItem*& slaveItem)
+{
+    if (masterItem->origin() == Master && slaveItem->origin() == Slave)
+    {
+        return true; // correct order
+    }
+    if (masterItem->origin() == Slave && slaveItem->origin() == Master)
+    {
+        qSwap(masterItem, slaveItem);
+        return true; // correct order after swap
+    }
+    return false;   //two add or two remove types cannot be corrected.
+}
+
+bool MergeItem::canJoin(const MergeItem *other) const
+{
+    const MergeItem* masterItem = this;
+    const MergeItem* slaveItem = other;
+    if (!sortMasterSlaveItem(masterItem, slaveItem))
+    {
+        // we need exactly one master and one slave item
+        return false;
+    }
+    else
+    {
+        QString masterClassname = masterItem->master()->metaObject()->className();
+        QString slaveClassame = slaveItem->slave()->metaObject()->className();
+        if (masterClassname != slaveClassame)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
 

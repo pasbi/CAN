@@ -6,7 +6,7 @@
 
 class PDFCreator;
 class Song;
-class Attachment :  public QObject, public DatabaseItem<Attachment>, public Creatable
+class Attachment : public DatabaseItem<Attachment>, public Creatable
 {
     Q_OBJECT
 public:

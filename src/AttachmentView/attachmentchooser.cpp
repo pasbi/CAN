@@ -92,6 +92,7 @@ void AttachmentChooser::setAttachment(int index)
     {
         ui->comboBox->blockSignals(true);
         ui->comboBox->clear();
+
         ui->comboBox->addItems( m_currentSong->attachmentNames() );
 
         index = qBound( 0, index, song()->attachments().length() - 1);

@@ -13,6 +13,7 @@
 #include "combinedatabaseitemsdialog.h"
 #include "mergelistwidgetselectionmodel.h"
 #include "application.h"
+#include "combineattachmentsdialog.h"
 
 
 MergeListWidget::MergeListWidget(QWidget *parent) :
@@ -74,14 +75,7 @@ bool MergeListWidget::canDrop(const MergeItem *itemA, const QMimeData *data, Qt:
 
     // combine only add with delete and vice versa
     MergeItem* itemB = m_databaseMerger->decodeMimeData(data);
-
-    if (    !(itemA->origin() == MergeItem::Slave  && itemB->origin() == MergeItem::Master  )
-         && !(itemA->origin() == MergeItem::Master && itemB->origin() == MergeItem::Slave   ) )
-    {
-        return false;
-    }
-
-    return true;
+    return itemB->canJoin(itemA);
 }
 
 bool MergeListWidget::dropMimeData(int index, const QMimeData *data, Qt::DropAction action)
@@ -252,24 +246,62 @@ void MergeListWidget::createContextMenu(const QPoint &pos)
     }
 }
 
-void MergeListWidget::setDatabaseMerger(DatabaseMergerBase *merger)
+void MergeListWidget::setDatabaseMerger(DatabaseMergerBase *databaseMerger)
 {
     Q_ASSERT(m_databaseMerger == nullptr);
-    m_databaseMerger = merger;
+    m_databaseMerger = databaseMerger;
 
     for (MergeItem* mergeItem : m_databaseMerger->mergeItems())
     {
-        QListWidgetItem* listWidgetItem = initListWidgetItem(mergeItem);
-        addItem(listWidgetItem);
+        if (!ignoreMergeItem(mergeItem))
+        {
+            QListWidgetItem* listWidgetItem = initListWidgetItem(mergeItem);
+            addItem(listWidgetItem);
+        }
     }
 
+}
+
+bool MergeListWidget::inherits(const MergeItem* item, const QStringList& classnames)
+{
+    Q_ASSERT(QString(item->master()->metaObject()->className()) == QString(item->master()->metaObject()->className()));
+
+    for (const QString& classname : classnames)
+    {
+        if (item->master()->inherits(classname.toStdString().c_str()))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void MergeListWidget::openCombineItemDialog(MergeItem *mergeItem)
 {
     Q_ASSERT(mergeItem->origin() == MergeItem::Both);
-    CombineDatabaseItemsDialog dialog(mergeItem, this);
-    dialog.exec();
+
+    QDialog* dialog = nullptr;
+
+    if (inherits(mergeItem, { "Attachment" }))
+    {
+        dialog = new CombineAttachmentsDialog(mergeItem, this);
+    }
+    else if (inherits(mergeItem, { "SetlistItem" }))
+    {
+        Q_UNIMPLEMENTED();
+    }
+    else if (inherits(mergeItem, { "Song", "Event" }))
+    {
+        dialog = new CombineDatabaseItemsDialog(m_databaseMerger, mergeItem, this);
+    }
+    else
+    {
+        Q_UNREACHABLE();
+    }
+
+    dialog->exec();
+    delete dialog;
+    dialog = nullptr;
 }
 
 void MergeListWidget::mousePressEvent(QMouseEvent *event)
@@ -296,4 +328,26 @@ void MergeListWidget::mouseMoveEvent(QMouseEvent *event)
         }
     }
     QListWidget::mouseMoveEvent(event);
+}
+
+bool MergeListWidget::ignoreMergeItem(const MergeItem *mergeItem)
+{
+    switch (mergeItem->origin())
+    {
+    case MergeItem::Master:
+    case MergeItem::Slave:
+        return false;
+    case MergeItem::Both:
+        if (mergeItem->action() == MergeItem::ModifyAction)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    default:
+        Q_UNREACHABLE();
+        return false;
+    }
 }

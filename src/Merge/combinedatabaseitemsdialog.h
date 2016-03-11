@@ -4,9 +4,10 @@
 #include <QDialog>
 #include "QItemSelection"
 #include "mergeitem.h"
+#include "mergelistwidget.h"
 
 namespace Ui {
-class CombineSongsDialog;
+class CombineDatabaseItemsDialog;
 }
 
 class QTableWidgetItem;
@@ -15,7 +16,7 @@ class CombineDatabaseItemsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CombineDatabaseItemsDialog(MergeItem* mergeItem, QWidget* parent = nullptr);
+    explicit CombineDatabaseItemsDialog(DatabaseMergerBase *mergeBase, MergeItem* mergeItem, QWidget* parent = nullptr);
     ~CombineDatabaseItemsDialog();
 
     void accept();
@@ -23,12 +24,13 @@ public:
 protected:
     void resizeEvent(QResizeEvent *e);
     void showEvent(QShowEvent *e);
+    MergeListWidget* detailsMergeListWidget() const;
 
 private slots:
     void onSelectionChange();
 
 private:
-    Ui::CombineSongsDialog *ui;
+    Ui::CombineDatabaseItemsDialog *ui;
     void initItems();
 
     void updateHeaderWidths();
