@@ -9,6 +9,7 @@
 #include "Commands/AttachmentCommands/abstractchordpatternattachmenttransposecommand.h"
 #include "Dialogs/chordpatternviewer.h"
 #include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
+#include "Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h"
 
 DEFN_CREATABLE(ChordPatternAttachmentView, AttachmentView);
 
@@ -30,16 +31,15 @@ void ChordPatternAttachmentView::updateText()
     ui->textEdit->setChordPattern( attachment<ChordPatternAttachment>()->chordPattern() );
 }
 
-//#include "Commands/AttachmentCommands/chordpatternattachmenteditpatterncommand.h"
-//void ChordPatternAttachmentView::textEdited()
-//{
-//    pushCommand( new ChordPatternAttachmentEditPatternCommand( attachment<ChordPatternAttachment>(), ui->textEdit->toPlainText() ) );
-//}
+void ChordPatternAttachmentView::textEdited()
+{
+    pushCommand( new ChordPatternAttachmentEditPatternCommand( attachment<ChordPatternAttachment>(), ui->textEdit->toPlainText() ) );
+}
 
 void ChordPatternAttachmentView::polish()
 {
     updateText();
-//    connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(textEdited()));
+    connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(textEdited()));
     connect(attachment<ChordPatternAttachment>(), SIGNAL(changed()), this, SLOT(updateText()));
     connect( ui->textEdit, SIGNAL(pasted()), attachment<ChordPatternAttachment>(), SLOT(transpose()) );
     updateViewIcon();

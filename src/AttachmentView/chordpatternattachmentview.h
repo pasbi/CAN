@@ -29,7 +29,7 @@ private:
 
 private slots:
     void updateText();
-//    void textEdited();
+    void textEdited();
 
     void on_buttonUp_clicked();
     void on_buttonDown_clicked();
