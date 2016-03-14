@@ -9,7 +9,7 @@ DeleteSectionCommand::DeleteSectionCommand(SectionsModel *model, int row) :
 
 void DeleteSectionCommand::redo()
 {
-    m_section = model()->section( m_row );
+    m_section = model()->sections()[ m_row ];
     model()->removeRows( m_row, 1, QModelIndex() );
 }
 

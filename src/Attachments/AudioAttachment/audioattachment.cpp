@@ -6,6 +6,7 @@ DEFN_CREATABLE_NAME(AudioAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", 
 AudioAttachment::AudioAttachment() :
     m_sectionsModel( new SectionsModel(this ) )
 {
+    addAttributeKey("sections");
     setName( tr("Audio Attachment") );
     connect(this, SIGNAL(hashChanged(QByteArray)), this, SLOT(open()));
 }
@@ -39,6 +40,38 @@ void AudioAttachment::deserialize(QDataStream &in)
     }
     else
     {
-        m_player.setCurrentSection( sectionsModel()->section(index) );
+        m_player.setCurrentSection( sectionsModel()->sections()[index] );
+    }
+}
+
+QStringList AudioAttachment::skipSerializeAttributes() const
+{
+    QStringList skipped = IndexedFileAttachment::skipSerializeAttributes();
+    skipped << "sections";
+    return skipped;
+}
+
+QVariant AudioAttachment::attribute(const QString &key) const
+{
+    if (key == "sections")
+    {
+        return QVariant::fromValue(m_sectionsModel->sections());
+    }
+    else
+    {
+        return IndexedFileAttachment::attribute(key);
+    }
+}
+
+void AudioAttachment::setAttribute(const QString &key, const QVariant &value)
+{
+    if (key == "sections")
+    {
+        // use sectionsModel() to add/remove/change sections.
+        Q_UNREACHABLE();
+    }
+    else
+    {
+        IndexedFileAttachment::setAttribute(key, value);
     }
 }

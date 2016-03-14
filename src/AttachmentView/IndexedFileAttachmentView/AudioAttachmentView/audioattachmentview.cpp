@@ -85,7 +85,7 @@ void AudioAttachmentView::polish()
     });
     connect( a->sectionsModel(), &QAbstractTableModel::rowsInserted, [this, a](const QModelIndex&, int index)
     {
-        a->player().setCurrentSection( a->sectionsModel()->section(index) );
+        a->player().setCurrentSection( a->sectionsModel()->sections()[index] );
     });
 
 #endif
@@ -146,7 +146,7 @@ void AudioAttachmentView::restoreCurrentSection()
     QModelIndexList indexes = ui->sectionView->selectionModel()->selectedRows();
     if (!indexes.isEmpty() && indexes.first().isValid())
     {
-        section = attachment<AudioAttachment>()->sectionsModel()->section( indexes.first().row() );
+        section = attachment<AudioAttachment>()->sectionsModel()->sections()[ indexes.first().row() ];
     }
     attachment<AudioAttachment>()->player().setCurrentSection( section );
 }

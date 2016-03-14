@@ -14,8 +14,11 @@ protected:
     explicit DatabaseItemBase();
 
 public:
-    QVariant attribute(const QString& key) const;
-    void setAttribute(const QString& key, const QVariant& value);
+    // they are virtual, since it may be inconvenient/impossible to store some attributes in the
+    // map. Instead, store them as a explicit member and overwrite attribute() and setAttribute()
+    virtual QVariant attribute(const QString& key) const;
+    virtual void setAttribute(const QString& key, const QVariant& value);
+
     virtual QString attributeDisplay(const QString& key) const = 0;
     QStringList attributeKeys() const;
     virtual QString label() const = 0;

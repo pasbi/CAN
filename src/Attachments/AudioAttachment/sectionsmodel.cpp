@@ -113,9 +113,9 @@ void SectionsModel::insertSection(Section section, int i)
     endInsertRows();
 }
 
-Section SectionsModel::section(int index) const
+QList<Section> SectionsModel::sections() const
 {
-    return m_sections[index];
+    return m_sections;
 }
 
 int SectionsModel::indexOf(Section section) const

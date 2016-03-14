@@ -21,6 +21,11 @@ public:
 
     void deactivate() { player().pause(); }
 
+    QStringList skipSerializeAttributes() const;
+
+    QVariant attribute(const QString &key) const;
+    void setAttribute(const QString &key, const QVariant &value);
+
 public slots:
     void open();
 
@@ -29,6 +34,7 @@ private:
     SectionsModel * const m_sectionsModel;
     Player m_player;
     QString m_filename;
+
 
 protected:
     void serialize(QDataStream &out) const;

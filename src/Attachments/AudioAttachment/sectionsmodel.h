@@ -23,7 +23,7 @@ public:
     void removeSection( int i );
     void insertSection(Section section, int i);
 
-    Section section( int index ) const;
+    QList<Section> sections() const;
 
     int indexOf(Section section ) const;
 private:

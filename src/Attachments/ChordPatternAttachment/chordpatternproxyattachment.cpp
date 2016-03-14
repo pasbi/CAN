@@ -108,7 +108,6 @@ QStringList ChordPatternProxyAttachment::skipSerializeAttributes() const
 void ChordPatternProxyAttachment::serialize(QDataStream& out) const
 {
     AbstractChordPatternAttachment::serialize(out);
-    qDebug() << "index ="  << static_cast<qint32>(song()->attachments().indexOf(const_cast<ChordPatternAttachment*>(source())));;
     out << static_cast<qint32>(song()->attachments().indexOf(const_cast<ChordPatternAttachment*>(source())));
     out << static_cast<qint32>(transpose());
 }
