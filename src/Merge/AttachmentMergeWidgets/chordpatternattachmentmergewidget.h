@@ -16,8 +16,6 @@ public:
     ~ChordPatternAttachmentMergeWidget();
 
 protected:
-    void apply();
-
     QDoubleSpinBox* m_masterTempoSpinBox;
     QDoubleSpinBox* m_slaveTempoSpinBox;
     ChordPatternEdit* m_masterTextEdit;

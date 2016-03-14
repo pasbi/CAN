@@ -28,7 +28,6 @@ public:
     //
     /////////////////////////////////////////////////
 public:
-    static const QStringList ATTRIBUTE_KEYS;
     QString attributeDisplay(const QString& key) const;
 
 

@@ -4,6 +4,8 @@
 #include "map.h"
 #include "global.h"
 
+class DatabaseMergerBase;
+
 class DatabaseItemBase;
 
 class MergeItem
@@ -46,6 +48,7 @@ public:
     };
 
     QList<ModifyDetail> modifyDetails() const;
+    ModifyDetail modifyDetail(const QString& key) const;
 
     void updateModifyDetails(const QList<ModifyDetail> modifyDetails);
 
@@ -53,6 +56,11 @@ public:
      * @brief performModification modify the master item according to modifyDetails.
      */
     void performModification() const;
+
+    void setChildMerger(DatabaseMergerBase* childMerger);
+
+    // ownership is transfered to caller
+    DatabaseMergerBase* childMerger() const;
 
 
 private:
@@ -65,6 +73,7 @@ private:
     QList<ModifyDetail> m_modifyDetails;
     void setupModifyDetails();
 
+    DatabaseMergerBase* m_childMerger;
 
 
     //disable copy

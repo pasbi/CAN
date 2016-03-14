@@ -32,7 +32,6 @@ public:
 
     static QStringList eventTypeNames();
     static QString eventTypeName(Type type);
-    static const QStringList ATTRIBUTE_KEYS;
 
     QString label() const;
 

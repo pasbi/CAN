@@ -6,18 +6,19 @@
 IndexedFileAttachment::IndexedFileAttachment() :
     Attachment()
 {
-
+    addAttributeKey("hash");
 }
 
 QString IndexedFileAttachment::filename() const
 {
-    if (m_hash.isEmpty())
+    QByteArray hash = attribute("hash").toByteArray();
+    if (hash.isEmpty())
     {
         return "";
     }
     else
     {
-        return app().fileIndex()->filename( m_hash );
+        return app().fileIndex()->filename( hash );
     }
 }
 
@@ -25,7 +26,7 @@ bool IndexedFileAttachment::setFilename(QString filename)
 {
     if ( app().fileIndex()->contains( filename ) )
     {
-        m_hash = app().fileIndex()->hash( filename );
+        setAttribute("hash", app().fileIndex()->hash( filename ));
         open();
         return true;
     }
@@ -38,13 +39,14 @@ bool IndexedFileAttachment::setFilename(QString filename)
 
 bool IndexedFileAttachment::setHash(QByteArray hash)
 {
+    QByteArray oldHash = attribute("hash").toByteArray();
     if ( app().fileIndex()->contains( hash ) || hash.isEmpty() )
     {
-        if (hash != m_hash)
+        if (hash != oldHash)
         {
-            m_hash = hash;
+            setAttribute("hash", hash);
             open();
-            emit hashChanged( m_hash );
+            emit hashChanged( hash );
         }
         return true;
     }
@@ -53,6 +55,11 @@ bool IndexedFileAttachment::setHash(QByteArray hash)
         qWarning() << "Cannot set file since index does not contain " << QString::fromLatin1( hash.toHex() ) << ".";
         return false;
     }
+}
+
+QByteArray IndexedFileAttachment::hash() const
+{
+    return attribute("hash").toByteArray();
 }
 
 IndexedFileAttachment::IndexedFileStatus IndexedFileAttachment::status() const
@@ -69,16 +76,4 @@ IndexedFileAttachment::IndexedFileStatus IndexedFileAttachment::status() const
     {
         return FileAvailable;
     }
-}
-
-void IndexedFileAttachment::serialize(QDataStream& out) const
-{
-    Attachment::serialize(out);
-    out << m_hash;
-}
-
-void IndexedFileAttachment::deserialize(QDataStream& in)
-{
-    Attachment::deserialize(in);
-    in >> m_hash;
 }

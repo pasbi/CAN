@@ -15,7 +15,7 @@ public:
     virtual ~Attachment();
 
     void setName( const QString & name );
-    QString name() const { return m_name; }
+    QString name() const;
 
     void setSong( Song* song );
     Song* song() const { return m_song; }
@@ -37,24 +37,13 @@ public:
     // this method cannot be pure virtual since an Attachment must not implement this.
     virtual void paint(PDFCreator *);
 
-    static const QStringList ATTRIBUTE_KEYS;
     QString attributeDisplay(const QString &key) const;
 
 signals:
     void attachmentRenamed(QString);
 private:
     Song* m_song = nullptr;
-    QString m_name;
 
-protected:
-    virtual void serialize(QDataStream& out) const;
-    virtual void deserialize(QDataStream& in);
-
-    friend QDataStream& operator<<(QDataStream& out, const Attachment* attachment);
-    friend QDataStream& operator>>(QDataStream& in, Attachment* attachment);
 };
-
-QDataStream& operator<<(QDataStream& out, const Attachment* attachment);
-QDataStream& operator>>(QDataStream& in, Attachment* attachment);
 
 #endif // ATTACHMENT_H

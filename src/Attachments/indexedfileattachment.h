@@ -21,7 +21,7 @@ public:
     IndexedFileStatus status() const;
 
     QString filename() const;
-    QByteArray hash() const { return m_hash; }
+    QByteArray hash() const;
 
 public:
     virtual QStringList acceptedEndings() const = 0;
@@ -31,15 +31,8 @@ public slots:
     bool setFilename(QString filename );
     virtual void open() = 0;
 
-protected:
-    void serialize(QDataStream &out) const;
-    void deserialize(QDataStream &in);
-
 signals:
     void hashChanged( QByteArray hash );
-
-private:
-    QByteArray m_hash;
 
 };
 

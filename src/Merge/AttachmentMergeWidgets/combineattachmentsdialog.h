@@ -4,16 +4,18 @@
 #include <QDialog>
 
 class MergeItem;
-
+class AttachmentMergeWidgetBase;
 class CombineAttachmentsDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit CombineAttachmentsDialog(MergeItem *item, QWidget *parent = 0);
 
-signals:
+    void accept();
 
-public slots:
+private:
+    AttachmentMergeWidgetBase* m_attachmentMergeWidget;
+    MergeItem* m_mergeItem;
 
 };
 

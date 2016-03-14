@@ -9,7 +9,7 @@
 template<typename T> class DatabaseItem : public DatabaseItemBase
 {
 protected:
-    DatabaseItem(const QStringList& attributeKeys, Database<T>* database);
+    DatabaseItem(Database<T>* database);
     virtual ~DatabaseItem();
 
 public:

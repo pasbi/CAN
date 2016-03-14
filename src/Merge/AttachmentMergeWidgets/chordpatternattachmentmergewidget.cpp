@@ -16,7 +16,7 @@ ChordPatternAttachmentMergeWidget::ChordPatternAttachmentMergeWidget(MergeItem* 
         m_masterTextEdit = new ChordPatternEdit(this);
         m_slaveTextEdit = new ChordPatternEdit(this);
         connect(m_masterTextEdit, SIGNAL(textChanged()), m_masterTextEdit, SLOT(update()));
-        addEditorWidget(m_masterTextEdit, m_slaveTextEdit);
+        addEditorWidget(m_masterTextEdit, m_slaveTextEdit, "chordPattern");
         m_masterTextEdit->setChordPattern(cpaMaster->chordPattern());
         m_slaveTextEdit->setChordPattern(cpaSlave->chordPattern());
     }
@@ -25,18 +25,12 @@ ChordPatternAttachmentMergeWidget::ChordPatternAttachmentMergeWidget(MergeItem* 
     {
         m_masterTempoSpinBox = new QDoubleSpinBox(this);
         m_slaveTempoSpinBox = new QDoubleSpinBox(this);
-        addEditorWidget(m_masterTempoSpinBox, m_slaveTempoSpinBox, tr("Tempo"));
+        addEditorWidget(m_masterTempoSpinBox, m_slaveTempoSpinBox, "scrollDownTempo", tr("Tempo"));
         m_masterTempoSpinBox->setValue(cpaMaster->scrollDownTempo());
         m_slaveTempoSpinBox->setValue(cpaSlave->scrollDownTempo());
     }
-
 }
 
 ChordPatternAttachmentMergeWidget::~ChordPatternAttachmentMergeWidget()
 {
-}
-
-void ChordPatternAttachmentMergeWidget::apply()
-{
-    //TODO
 }

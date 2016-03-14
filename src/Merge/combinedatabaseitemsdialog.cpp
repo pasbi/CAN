@@ -27,7 +27,7 @@ CombineDatabaseItemsDialog::CombineDatabaseItemsDialog(DatabaseMergerBase* merge
 
     ui->attributesTable->verticalHeader()->hide();
 
-    DatabaseMergerBase* childMerger =  merger->childDatabaseMerger(mergeItem->master(), mergeItem->slave());
+    DatabaseMergerBase* childMerger = merger->child(mergeItem);
     Q_ASSERT(childMerger);
     ui->detailsTable->setDatabaseMerger( childMerger );
 }
@@ -66,6 +66,7 @@ void CombineDatabaseItemsDialog::initItems()
         masterItem->setSelected(modifyDetail.decision() == MergeItem::UseMaster);
         slaveItem->setSelected(modifyDetail.decision() == MergeItem::UseSlave);
 
+        // insert a copy. This allows us to neglect/apply the changes (if user presses cancel/Ok)
         m_modifyDetails << modifyDetail;
 
         row++;

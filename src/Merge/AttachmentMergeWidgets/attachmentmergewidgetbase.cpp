@@ -11,7 +11,7 @@ AttachmentMergeWidgetBase::AttachmentMergeWidgetBase(MergeItem* mergeItem, QWidg
     m_layout = new QVBoxLayout(this);
 }
 
-void AttachmentMergeWidgetBase::addEditorWidget(QWidget *masterWidget, QWidget *slaveWidget, const QString &label)
+void AttachmentMergeWidgetBase::addEditorWidget(QWidget *masterWidget, QWidget *slaveWidget, const QString &key, const QString &label)
 {
     QHBoxLayout* layout = new QHBoxLayout();
 
@@ -69,4 +69,47 @@ void AttachmentMergeWidgetBase::addEditorWidget(QWidget *masterWidget, QWidget *
     }
 
     m_layout->addLayout(layout);
+
+    m_modifyDetails << m_mergeItem->modifyDetail(key);  // copy merge item into list
+    MergeItem::ModifyDetail& modifyDetail = m_modifyDetails.last();
+    connect(buttonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*)>(&QButtonGroup::buttonClicked),
+            [masterButton, slaveButton, &modifyDetail](QAbstractButton* clickedButton)
+    {
+        if (clickedButton == masterButton)
+        {
+            modifyDetail.setDecision( MergeItem::UseMaster );
+        }
+        else if (clickedButton == slaveButton)
+        {
+            modifyDetail.setDecision( MergeItem::UseSlave );
+        }
+        else
+        {
+            Q_UNREACHABLE();
+        }
+    });
+
+    switch (modifyDetail.decision())
+    {
+    case MergeItem::UseMaster:
+        masterButton->setChecked(true);
+        break;
+    case MergeItem::UseSlave:
+        slaveButton->setChecked(true);
+        break;
+    default:
+        Q_UNREACHABLE();
+    }
 }
+
+QList<MergeItem::ModifyDetail> AttachmentMergeWidgetBase::modifyDetails() const
+{
+    return m_modifyDetails;
+}
+
+
+
+
+
+
+

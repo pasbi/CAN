@@ -25,9 +25,6 @@ public:
 
     bool isValid() const;
 
-    QJsonObject toJsonObject() const;
-    bool restoreFromJsonObject(const QJsonObject& object );
-
     bool operator==(const Section& other) const;
     bool operator!=(const Section& other) const;
 
@@ -45,5 +42,8 @@ private:
 
 QDataStream& operator<<(QDataStream& out, const Section& model);
 QDataStream& operator>>(QDataStream& in, Section& model);
+
+Q_DECLARE_METATYPE(Section)
+REGISTER_META_TYPE_STREAM_OPERATORS(Section, Section)
 
 #endif // SECTION_H

@@ -44,8 +44,8 @@ protected:
 
 
 public:
-    QMap<MergeItem*, DatabaseMergerBase*> children() const;
-    void addChild(DatabaseMergerBase* child);
+    DatabaseMergerBase* child(MergeItem* parent) const;
+
 private:
     QMap<MergeItem*, DatabaseMergerBase*>  m_children;
 };

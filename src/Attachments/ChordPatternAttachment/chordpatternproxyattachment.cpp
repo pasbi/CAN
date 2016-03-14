@@ -6,15 +6,18 @@
 DEFN_CREATABLE_NAME(ChordPatternProxyAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Chord Proxy Attachment"))
 
 ChordPatternProxyAttachment::ChordPatternProxyAttachment() :
-    AbstractChordPatternAttachment(),
-    m_source( nullptr )
+    AbstractChordPatternAttachment()
 {
     setName( tr("Proxy Pattern") );
 
-    const Attachment* a = app().currentAttachment();
+    addAttributeKey("sourceChordPatternAttachment");
+    addAttributeKey("transpose");
+    setAttribute("sourceChordPatternAttachment", QVariant::fromValue<void*>(nullptr));
+
+    Attachment* a = app().currentAttachment();
     if (a && a->inherits( "ChordPatternAttachment" ))
     {
-        setChordPatternAttachment( qobject_assert_cast<const ChordPatternAttachment*>( a ) );
+        setChordPatternAttachment( qobject_assert_cast<ChordPatternAttachment*>( a ) );
     }
     else
     {
@@ -24,30 +27,36 @@ ChordPatternProxyAttachment::ChordPatternProxyAttachment() :
 
 void ChordPatternProxyAttachment::transpose(int t)
 {
-    m_transpose += t;
-    m_transpose %= 12;
-    m_transpose += 12;
-    m_transpose %= 12;
+    t += attribute("transpose").toInt();
+    t %= 12;
+    t += 12;
+    t %= 12;
+    setAttribute("transpose", t);
     updateCache();
 }
 
-void ChordPatternProxyAttachment::setChordPatternAttachment( const ChordPatternAttachment *source )
+int ChordPatternProxyAttachment::transpose() const
 {
-    assert(!m_source);
-    if (source)
+    return attribute("transpose").toInt();
+}
+
+void ChordPatternProxyAttachment::setChordPatternAttachment( ChordPatternAttachment *newSource )
+{
+    assert(!source());
+    if (newSource)
     {
-        m_source = source;
+        setAttribute("sourceChordPatternAttachment", QVariant::fromValue<void*>(static_cast<void*>(newSource)));
         updateCache();
         emit changed();
-        connect(m_source, SIGNAL(transposed(int)), this, SLOT(adjustSourceTransposing(int)));
+        connect(source(), SIGNAL(transposed(int)), this, SLOT(adjustSourceTransposing(int)));
     }
 }
 
 void ChordPatternProxyAttachment::updateCache()
 {
-    if (m_source)
+    if (source())
     {
-        QString pattern = ChordPatternAttachment::process( m_source->chordPattern(), m_transpose );
+        QString pattern = ChordPatternAttachment::process( source()->chordPattern(), transpose() );
         if (pattern != m_patternCache)
         {
             m_patternCache = pattern;
@@ -60,11 +69,16 @@ void ChordPatternProxyAttachment::updateCache()
     }
 }
 
+ChordPatternAttachment* ChordPatternProxyAttachment::source() const
+{
+    return static_cast<ChordPatternAttachment*>(attribute("sourceChordPatternAttachment").value<void*>());
+}
+
 double ChordPatternProxyAttachment::scrollDownTempo() const
 {
-    if (m_source)
+    if (source())
     {
-        return m_source->scrollDownTempo();
+        return source()->scrollDownTempo();
     }
     else
     {
@@ -83,11 +97,20 @@ void ChordPatternProxyAttachment::adjustSourceTransposing(int sourceTransposing)
 }
 
 
+QStringList ChordPatternProxyAttachment::skipSerializeAttributes() const
+{
+    QStringList skip = AbstractChordPatternAttachment::skipSerializeAttributes();
+    skip << "sourceChordPatternAttachment";
+    return skip;
+}
+
+
 void ChordPatternProxyAttachment::serialize(QDataStream& out) const
 {
     AbstractChordPatternAttachment::serialize(out);
-    out << static_cast<qint32>(song()->attachments().indexOf(const_cast<ChordPatternAttachment*>(m_source)));
-    out << static_cast<qint32>(m_transpose);
+    qDebug() << "index ="  << static_cast<qint32>(song()->attachments().indexOf(const_cast<ChordPatternAttachment*>(source())));;
+    out << static_cast<qint32>(song()->attachments().indexOf(const_cast<ChordPatternAttachment*>(source())));
+    out << static_cast<qint32>(transpose());
 }
 
 void ChordPatternProxyAttachment::deserialize(QDataStream& in)
@@ -95,17 +118,18 @@ void ChordPatternProxyAttachment::deserialize(QDataStream& in)
     AbstractChordPatternAttachment::deserialize(in);
     qint32 index, transpose;
     in >> index >> transpose;
+
     if (index < 0)
     {
-        m_source = nullptr;
+        setAttribute("sourceChordPatternAttachment", QVariant::fromValue<void*>(nullptr));
     }
     else
     {
         // we can assume that the source is deserialized first, so it is already existent in song()->attachments()
         setChordPatternAttachment( qobject_assert_cast<ChordPatternAttachment*>(song()->attachments()[index]) );
-        assert(m_source);
+        assert(source());
     }
-    m_transpose = transpose;
+    setAttribute("transpose", transpose);
     updateCache();
 }
 

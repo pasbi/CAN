@@ -25,6 +25,7 @@ public slots:
     void open();
 
 private:
+    //TODO attributes shall contain QList<Section>
     SectionsModel * const m_sectionsModel;
     Player m_player;
     QString m_filename;
@@ -34,5 +35,7 @@ protected:
     void deserialize(QDataStream &in);
 
 };
+
+
 
 #endif // AUDIOATTACHMENT_H

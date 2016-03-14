@@ -6,7 +6,8 @@ MergeItem::MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave, Action a
     m_origin(Both),
     m_action(action),
     m_master(master),
-    m_slave(slave)
+    m_slave(slave),
+    m_childMerger(nullptr)
 {
     setupModifyDetails();
 }
@@ -209,6 +210,30 @@ bool MergeItem::inherits(const QStringList& classnames) const
         }
     }
     return false;
+}
+
+MergeItem::ModifyDetail MergeItem::modifyDetail(const QString &key) const
+{
+    for (const ModifyDetail& detail : m_modifyDetails)
+    {
+        if (detail.key() == key)
+        {
+            return detail;
+        }
+    }
+    Q_UNREACHABLE();
+    return m_modifyDetails[-1]; // return non existent item
+}
+
+void MergeItem::setChildMerger(DatabaseMergerBase *childMerger)
+{
+    Q_ASSERT(m_childMerger == nullptr);
+    m_childMerger = childMerger;
+}
+
+DatabaseMergerBase* MergeItem::childMerger() const
+{
+    return m_childMerger;
 }
 
 

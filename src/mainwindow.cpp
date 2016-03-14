@@ -184,7 +184,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else
     {
-        loadDefaultProject();
+//        loadDefaultProject();
     }
 
     connect( &m_project, &Project::songDatabaseCommandPushed, [this]()

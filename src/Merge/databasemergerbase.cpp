@@ -107,15 +107,10 @@ double DatabaseMergerBase::similarThreshold() const
     return preference<double>("MergeSimilarityThreshold");
 }
 
-//void DatabaseMergerBase::addChild(DatabaseMergerBase* child)
-//{
-//    m_children << child;
-//}
-
-QMap<MergeItem *, DatabaseMergerBase *> DatabaseMergerBase::children() const
+DatabaseMergerBase *DatabaseMergerBase::child(MergeItem *parent) const
 {
-//    return m_children;
-    return QMap<MergeItem *, DatabaseMergerBase *>();
+    Q_ASSERT(m_children.contains(parent));
+    return m_children.value(parent);
 }
 
 

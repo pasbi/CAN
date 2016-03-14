@@ -3,12 +3,15 @@
 #include "application.h"
 #include "setlistitem.h"
 
-const QStringList Event::ATTRIBUTE_KEYS = { "type", "beginning", "label", "notices" };
-
 Event::Event( Database<Event>* database, const QDateTime& beginning, Type type, const QString & label) :
-    DatabaseItem( ATTRIBUTE_KEYS, database ),
+    DatabaseItem(database),
     m_setlist( new Setlist(this) )
 {
+    addAttributeKey("type");
+    addAttributeKey("beginning");
+    addAttributeKey("label");
+    addAttributeKey("notices");
+
     setAttribute("beginning", beginning);
     setAttribute("type", type);
     setAttribute("label", label);

@@ -4,8 +4,8 @@
 #include "Database/EventDatabase/event.h"
 #include "Database/EventDatabase/setlistitem.h"
 
-template<class T> DatabaseItem<T>::DatabaseItem(const QStringList& attributeKeys, Database<T>* database) :
-    DatabaseItemBase(attributeKeys),
+template<class T> DatabaseItem<T>::DatabaseItem(Database<T>* database) :
+    DatabaseItemBase(),
     m_database(database)
 {
 

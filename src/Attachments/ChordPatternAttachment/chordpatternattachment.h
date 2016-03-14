@@ -13,31 +13,18 @@ class ChordPatternAttachment : public AbstractChordPatternAttachment
 public:
     ChordPatternAttachment();
 
-    QString chordPattern() const { return m_pattern; }
-
-    QJsonObject toJsonObject() const;
-    bool restoreFromJsonObject(const QJsonObject &object);
+    QString chordPattern() const;
 
     void setPattern(const QString & pattern);
 
     void copy(Attachment *&copied) const;
 
-    double scrollDownTempo() const { return m_scrollDownTempo; }
+    double scrollDownTempo() const;
     void setScrollDownTempo( double tempo );
     static QString process(QString text, int transpose = 0);
 
 public slots:
     void transpose( int transposing = 0 );
-
-
-private:
-    QString m_pattern;
-
-    double m_scrollDownTempo;
-
-protected:
-    void serialize(QDataStream &out) const;
-    void deserialize(QDataStream &in);
 };
 
 #endif // CHORDPATTERNATTACHMENT_H

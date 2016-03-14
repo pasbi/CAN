@@ -8,12 +8,21 @@
 #include "attachmentdatabase.h"
 #include "Project/project.h"
 
-const QStringList Song::ATTRIBUTE_KEYS = {"title", "artist", "duration", "key", "label", "state", "singers", "soloPlayers", "comments", "creationDateTime"};
-
 Song::Song(Database<Song> * database) :
-    DatabaseItem(ATTRIBUTE_KEYS, database),
+    DatabaseItem(database),
     m_attachmentDatabase(new AttachmentDatabase(this, database->project()))
 {
+    addAttributeKey("title");
+    addAttributeKey("artist");
+    addAttributeKey("duration");
+    addAttributeKey("key");
+    addAttributeKey("label");
+    addAttributeKey("state");
+    addAttributeKey("singers");
+    addAttributeKey("soloPlayers");
+    addAttributeKey("comments");
+    addAttributeKey("creationDateTime");
+
     setAttribute("creationDateTime", QDateTime::currentDateTime());
     setAttribute("label", NoLabel);
     setAttribute("state", NoState);

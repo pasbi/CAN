@@ -3,13 +3,12 @@
 #include <QBuffer>
 #include "Database/SongDatabase/attachmentdatabase.h"
 
-const QStringList Attachment::ATTRIBUTE_KEYS = {};
 
 Attachment::Attachment() :
-    DatabaseItem(ATTRIBUTE_KEYS, nullptr),
+    DatabaseItem(nullptr),
     m_song(nullptr)
 {
-
+    addAttributeKey("name");
 }
 
 Attachment::~Attachment()
@@ -28,10 +27,10 @@ void Attachment::setSong(Song *song)
 
 void Attachment::setName(const QString &name)
 {
-    if (name != m_name)
+    if (name != attribute("name").toString())
     {
-        m_name = name;
-        emit attachmentRenamed( m_name );
+        setAttribute("name", name);
+        emit attachmentRenamed( name );
     }
 }
 
@@ -74,30 +73,10 @@ QString Attachment::attributeDisplay(const QString &key) const
     return "";
 }
 
-void Attachment::serialize(QDataStream& out) const
+QString Attachment::name() const
 {
-    DatabaseItem::serialize(out);
-    out << m_name;
+    return attribute("name").toString();
 }
-
-void Attachment::deserialize(QDataStream& in)
-{
-    DatabaseItem::deserialize(in);
-    in >> m_name;
-}
-
-QDataStream& operator<<(QDataStream& out, const Attachment* attachment)
-{
-    attachment->serialize(out);
-    return out;
-}
-
-QDataStream& operator>>(QDataStream& in, Attachment* attachment)
-{
-    attachment->deserialize(in);
-    return in;
-}
-
 
 
 

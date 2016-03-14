@@ -11,7 +11,7 @@ class DatabaseBase;
 class DatabaseItemBase : public QObject
 {
 protected:
-    explicit DatabaseItemBase(const QStringList& attributeKeys);
+    explicit DatabaseItemBase();
 
 public:
     QVariant attribute(const QString& key) const;
@@ -28,10 +28,11 @@ public:
     bool operator==(const DatabaseItemBase& other) const;
 
 protected:
-    virtual QStringList skipSerializeAttributes() const { return QStringList(); }
+    virtual QStringList skipSerializeAttributes() const { return {}; }
+    void addAttributeKey(const QString& key);
+    PedanticVariantMap m_attributes; //TODO private
 
 private:
-    PedanticVariantMap m_attributes;
 
     friend QDataStream& operator<<(QDataStream& out, const DatabaseItemBase* item);
     friend QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item);

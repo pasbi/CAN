@@ -261,7 +261,6 @@ void MergeListWidget::setDatabaseMerger(DatabaseMergerBase *databaseMerger)
 
 }
 
-
 void MergeListWidget::openCombineItemDialog(MergeItem *mergeItem)
 {
     Q_ASSERT(mergeItem->origin() == MergeItem::Both);

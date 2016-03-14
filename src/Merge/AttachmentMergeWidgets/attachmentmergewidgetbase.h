@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "Merge/mergeitem.h"
+#include <functional>
 
 class QVBoxLayout;
 class AttachmentMergeWidgetBase : public QWidget
@@ -19,14 +20,18 @@ protected:
         return qobject_assert_cast<T>(m_mergeItem->slave());
     }
 
-    virtual void apply() = 0;
-
-    void addEditorWidget(QWidget* masterWidget, QWidget* slaveWidget, const QString& label = "");
+    void addEditorWidget(QWidget* masterWidget, QWidget* slaveWidget, const QString& key, const QString& label = "");
 
     MergeItem* m_mergeItem;
 
 private:
     QVBoxLayout* m_layout;
+    QList<MergeItem::ModifyDetail> m_modifyDetails;
+
+public:
+    QList<MergeItem::ModifyDetail> modifyDetails() const;
+
+
 };
 
 #endif // ATTACHMENTMERGEWIDGETBASE_H

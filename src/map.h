@@ -38,7 +38,7 @@ class PedanticMap
 {
 
 public:
-    explicit PedanticMap(const QList<Key>& keys) :
+    explicit PedanticMap(const QList<Key>& keys = QList<Key>()) :
         m_keys(keys)
     {
 
@@ -47,6 +47,12 @@ public:
     QList<Key> keys() const
     {
         return m_keys;
+    }
+
+    void addKey(const Key& key)
+    {
+        Q_ASSERT(!m_keys.contains(key));
+        m_keys.append(key);
     }
 
     void set(const Key& key, const T& value)
@@ -98,7 +104,8 @@ QDataStream& operator << (QDataStream& out, const PedanticMap<Key, T>& map)
 template<class Key, class T>
 QDataStream& operator >> (QDataStream& in, PedanticMap<Key, T>& map)
 {
-    in >> map.m_keys;
+    QStringList keys;
+    in >> keys; //TODO unused value
     in >> map.m_map;
 
     //TODO theoretically, this check is not required. See Q_ASSERT below.

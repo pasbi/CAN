@@ -17,20 +17,20 @@ public:
 
     void updateCache();
     void transpose( int t );
-    int transpose() const { return m_transpose; }
+    int transpose() const;
     double scrollDownTempo() const;
     void setScrollDownTempo(double);
 
     QString chordPattern() const { return m_patternCache; }
     void copy(Attachment *&copied) const;
 
-    const ChordPatternAttachment* source() const { return m_source; }
+    ChordPatternAttachment* source() const;
 
 private:
-    void setChordPatternAttachment(const ChordPatternAttachment *source );
-    const ChordPatternAttachment* m_source;
-    int m_transpose = 4;
+    void setChordPatternAttachment(ChordPatternAttachment *source );
     QString m_patternCache;
+
+    QStringList skipSerializeAttributes() const;
 
 private slots:
     void adjustSourceTransposing(int sourceTransposing);

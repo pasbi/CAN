@@ -4,30 +4,31 @@
 #include "Database/EventDatabase/setlist.h"
 #include "Database/EventDatabase/event.h"
 
-const QStringList SetlistItem::ATTRIBUTE_KEYS = { "type", "label", "song" };
+SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString &label, const Song *song, Type type) :
+    DatabaseItem(setlist)
+{
+    addAttributeKey("type");
+    addAttributeKey("label");
+    addAttributeKey("song");
+
+    setAttribute("type", QVariant::fromValue(type));
+    setAttribute("label", label);
+    setAttribute("song", QVariant::fromValue<const Song*>(song));
+}
 
 SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString & label ) :
-    DatabaseItem(ATTRIBUTE_KEYS, setlist)
+    SetlistItem(setlist, label, nullptr, LabelType)
 {
-    setAttribute("type", QVariant::fromValue(LabelType));
-    setAttribute("label", label);
-    setAttribute("song", QVariant::fromValue<const Song*>(nullptr));
 }
 
 SetlistItem::SetlistItem(Database<SetlistItem>* setlist ) :
-    DatabaseItem(ATTRIBUTE_KEYS, setlist)
+    SetlistItem(setlist, QObject::tr("Unnamed"), nullptr, LabelType )
 {
-    setAttribute("type", QVariant::fromValue(LabelType));
-    setAttribute("label", QObject::tr("Unnamed"));
-    setAttribute("song", QVariant::fromValue<const Song*>(nullptr));
 }
 
 SetlistItem::SetlistItem(Database<SetlistItem>* setlist, const Song* song ) :
-    DatabaseItem(ATTRIBUTE_KEYS, setlist)
+    SetlistItem(setlist, QString(), song, SongType)
 {
-    setAttribute("type", QVariant::fromValue(SongType));
-    setAttribute("label", QString());
-    setAttribute("song", QVariant::fromValue(song));
 }
 
 SetlistItem::~SetlistItem()

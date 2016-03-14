@@ -10,11 +10,14 @@ DEFN_CREATABLE_NAME(ChordPatternAttachment, Attachment, QT_TRANSLATE_NOOP("Creat
 const int TAB_WIDTH = 8;
 
 ChordPatternAttachment::ChordPatternAttachment() :
-    AbstractChordPatternAttachment(),
-    m_pattern( "" )
+    AbstractChordPatternAttachment()
 {
+    addAttributeKey("chordPattern");
+    addAttributeKey("scrollDownTempo");
+
     setName( tr("Chord Pattern") );
-    m_scrollDownTempo = 0;
+    setAttribute("chordPattern", "");
+    setAttribute("scrollDownTempo", 0);
 }
 
 QString white(int n)
@@ -42,16 +45,16 @@ QString replaceTabs(QString text)
 
 void ChordPatternAttachment::setPattern(const QString &pattern)
 {
-    if (m_pattern != pattern)
+    if (chordPattern() != pattern)
     {
-        m_pattern = pattern;
+        setAttribute("chordPattern", pattern);
         emit changed();
     }
 }
 
 void ChordPatternAttachment::transpose(int transposing)
 {
-    setPattern( process(m_pattern, transposing) );
+    setPattern( process(chordPattern(), transposing) );
     emit transposed(transposing);
 }
 
@@ -79,29 +82,21 @@ QString ChordPatternAttachment::process(QString text, int transpose)
     return replaceTabs(text);
 }
 
+double ChordPatternAttachment::scrollDownTempo() const
+{
+    return attribute("scrollDownTempo").toDouble();
+}
+
+QString ChordPatternAttachment::chordPattern() const
+{
+    return attribute("chordPattern").toString();
+}
+
 void ChordPatternAttachment::setScrollDownTempo( double tempo )
 {
-    if (m_scrollDownTempo != tempo)
+    if (scrollDownTempo() != tempo)
     {
-        m_scrollDownTempo = tempo;
+        setAttribute("scrollDownTempo", tempo);
         pushCommand( nullptr ); // push empty command to indicate project changed.
     }
 }
-
-
-void ChordPatternAttachment::serialize(QDataStream& out) const
-{
-    AbstractChordPatternAttachment::serialize(out);
-    out << m_pattern;
-    out << static_cast<qreal>(m_scrollDownTempo);
-}
-
-void ChordPatternAttachment::deserialize(QDataStream& in)
-{
-    AbstractChordPatternAttachment::deserialize(in);
-    qreal tempo;
-    in >> m_pattern;
-    in >> tempo;
-    m_scrollDownTempo = static_cast<double>(tempo);
-}
-

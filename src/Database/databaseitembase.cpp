@@ -1,10 +1,8 @@
 #include "databaseitembase.h"
 #include "global.h"
 
-DatabaseItemBase::DatabaseItemBase(const QStringList &attributeKeys) :
-    m_attributes(attributeKeys)
+DatabaseItemBase::DatabaseItemBase()
 {
-
 }
 
 void DatabaseItemBase::setAttribute(const QString &key, const QVariant &value)
@@ -20,6 +18,11 @@ QVariant DatabaseItemBase::attribute(const QString& key) const
 QStringList DatabaseItemBase::attributeKeys() const
 {
     return m_attributes.keys();
+}
+
+void DatabaseItemBase::addAttributeKey(const QString &key)
+{
+    m_attributes.addKey(key);
 }
 
 
