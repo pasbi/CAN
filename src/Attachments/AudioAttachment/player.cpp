@@ -9,6 +9,7 @@ Player::Player()
 
 Player::~Player()
 {
+    stop();
     if (m_audioOutput)
     {
         m_audioOutput->stop();
