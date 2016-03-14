@@ -6,6 +6,7 @@
 #include <functional>
 
 class QVBoxLayout;
+class QAbstractButton;
 class AttachmentMergeWidgetBase : public QWidget
 {
 protected:
@@ -21,12 +22,14 @@ protected:
     }
 
     void addEditorWidget(QWidget* masterWidget, QWidget* slaveWidget, const QString& key, const QString& label = "");
+    void connectDecisions(const QString& keyA, const QString& keyB);
 
     MergeItem* m_mergeItem;
 
 private:
     QVBoxLayout* m_layout;
     QList<MergeItem::ModifyDetail> m_modifyDetails;
+    QMap<QString, QPair<QAbstractButton*, QAbstractButton*>> m_buttonMap;
 
 public:
     QList<MergeItem::ModifyDetail> modifyDetails() const;

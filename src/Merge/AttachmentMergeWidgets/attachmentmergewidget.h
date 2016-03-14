@@ -5,7 +5,7 @@
 #include "attachmentmergewidgetbase.h"
 
 class QLineEdit;
-class AttachmentMergeWidget : private AttachmentMergeWidgetBase
+class AttachmentMergeWidget : public AttachmentMergeWidgetBase
 {
     Q_OBJECT
 

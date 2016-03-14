@@ -157,7 +157,10 @@ SOURCES += main.cpp\
     Merge/AttachmentMergeWidgets/combineattachmentsdialog.cpp \
     Merge/AttachmentMergeWidgets/chordpatternattachmentmergewidget.cpp \
     Merge/AttachmentMergeWidgets/attachmentmergewidget.cpp \
-    Merge/AttachmentMergeWidgets/attachmentmergewidgetbase.cpp
+    Merge/AttachmentMergeWidgets/attachmentmergewidgetbase.cpp \
+    Merge/AttachmentMergeWidgets/indexedfileattachmentmergewidget.cpp \
+    Merge/AttachmentMergeWidgets/audioattachmentmergewidget.cpp \
+    Merge/AttachmentMergeWidgets/chordpatternproxyattachmentmergewidget.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -289,7 +292,10 @@ HEADERS  += mainwindow.h \
     Merge/AttachmentMergeWidgets/combineattachmentsdialog.h \
     Merge/AttachmentMergeWidgets/chordpatternattachmentmergewidget.h \
     Merge/AttachmentMergeWidgets/attachmentmergewidget.h \
-    Merge/AttachmentMergeWidgets/attachmentmergewidgetbase.h
+    Merge/AttachmentMergeWidgets/attachmentmergewidgetbase.h \
+    Merge/AttachmentMergeWidgets/indexedfileattachmentmergewidget.h \
+    Merge/AttachmentMergeWidgets/audioattachmentmergewidget.h \
+    Merge/AttachmentMergeWidgets/chordpatternproxyattachmentmergewidget.h
 
 
 FORMS    += mainwindow.ui \

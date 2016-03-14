@@ -26,6 +26,8 @@ public:
     QList<Section> sections() const;
 
     int indexOf(Section section ) const;
+
+    static QString timeToString(const QTime& time);
 private:
 
     QList<Section> m_sections;

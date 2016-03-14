@@ -13,9 +13,19 @@ AttachmentMergeWidget::AttachmentMergeWidget(MergeItem* mergeItem, QWidget *pare
     {
         m_masterEdit = new QLineEdit(this);
         m_slaveEdit = new QLineEdit(this);
+
+        m_masterEdit->setReadOnly(true);
+        m_slaveEdit->setReadOnly(true);
+
         m_masterEdit->setText(masterAttachment->name());
         m_slaveEdit->setText(slaveAttachment->name());
+
         addEditorWidget(m_masterEdit, m_slaveEdit, "name");
+    }
+    else
+    {
+        m_masterEdit = nullptr;
+        m_slaveEdit = nullptr;
     }
 }
 

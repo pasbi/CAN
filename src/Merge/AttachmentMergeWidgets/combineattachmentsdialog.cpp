@@ -1,10 +1,13 @@
 #include "combineattachmentsdialog.h"
 
 #include <QHBoxLayout>
+#include <QDialogButtonBox>
 
 #include "Merge/mergeitem.h"
 #include "chordpatternattachmentmergewidget.h"
-#include <QDialogButtonBox>
+#include "indexedfileattachmentmergewidget.h"
+#include "audioattachmentmergewidget.h"
+#include "chordpatternproxyattachmentmergewidget.h"
 
 CombineAttachmentsDialog::CombineAttachmentsDialog(MergeItem* item, QWidget *parent) :
     QDialog(parent),
@@ -15,9 +18,21 @@ CombineAttachmentsDialog::CombineAttachmentsDialog(MergeItem* item, QWidget *par
     {
         m_attachmentMergeWidget = new ChordPatternAttachmentMergeWidget(item, this);
     }
+    else if (item->inherits({"AudioAttachment"}))
+    {
+        m_attachmentMergeWidget = new AudioAttachmentMergeWidget(item, this);
+    }
+    else if (item->inherits({"IndexedFileAttachment"}))
+    {
+        m_attachmentMergeWidget = new IndexedFileAttachmentMergeWidget(item, this);
+    }
+    else if (item->inherits({"ChordPatternProxyAttachment"}))
+    {
+        m_attachmentMergeWidget = new ChordPatternProxyAttachmentMergeWidget(item, this);
+    }
     else
     {
-        Q_UNIMPLEMENTED();
+        Q_UNREACHABLE();
     }
     layout->addWidget(m_attachmentMergeWidget);
 

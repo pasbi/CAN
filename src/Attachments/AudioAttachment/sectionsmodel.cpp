@@ -19,7 +19,7 @@ int SectionsModel::rowCount(const QModelIndex &parent) const
     return m_sections.length();
 }
 
-QString timeToString(const QTime& time)
+QString SectionsModel::timeToString(const QTime& time)
 {
     if (time.hour() > 0)
     {

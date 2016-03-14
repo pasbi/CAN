@@ -16,7 +16,6 @@ protected:
     IndexedFileAttachment();
 
 public:
-
     enum IndexedFileStatus { NoAudioAttachment = 0, NoFileSet = 1, FileNotAvailable = 2, FileAvailable = 3};
     IndexedFileStatus status() const;
 
@@ -28,7 +27,7 @@ public:
 
 public slots:
     bool setHash(QByteArray hash);
-    bool setFilename(QString filename );
+    bool setFilename(QString filename);
     virtual void open() = 0;
 
 signals:

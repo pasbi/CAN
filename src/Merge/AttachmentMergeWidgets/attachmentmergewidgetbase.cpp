@@ -27,10 +27,10 @@ void AttachmentMergeWidgetBase::addEditorWidget(QWidget *masterWidget, QWidget *
     masterButton->setText(label);
     slaveButton->setText(label);
 
-    QPushButton* resetMasterEdit = new QPushButton("R", this);
-    resetMasterEdit->setFixedWidth(resetMasterEdit->height());
-    QPushButton* resetSlaveEdit = new QPushButton("R", this);
-    resetSlaveEdit->setFixedWidth(resetSlaveEdit->height());
+//    QPushButton* resetMasterEdit = new QPushButton("R", this);
+//    resetMasterEdit->setFixedWidth(resetMasterEdit->height());
+//    QPushButton* resetSlaveEdit = new QPushButton("R", this);
+//    resetSlaveEdit->setFixedWidth(resetSlaveEdit->height());
 
     QHBoxLayout* layoutMaster = new QHBoxLayout();
     QHBoxLayout* layoutSlave = new QHBoxLayout();
@@ -40,13 +40,13 @@ void AttachmentMergeWidgetBase::addEditorWidget(QWidget *masterWidget, QWidget *
     if (widgetHeight > 100)
     {
         layoutMaster->addWidget(masterButton);
-        layoutMaster->addWidget(resetMasterEdit);
+//        layoutMaster->addWidget(resetMasterEdit);
         QVBoxLayout* vLayoutMaster = new QVBoxLayout();
         vLayoutMaster->addLayout(layoutMaster);
         vLayoutMaster->addWidget(masterWidget);
 
         layoutSlave->addWidget(slaveButton);
-        layoutSlave->addWidget(resetSlaveEdit);
+//        layoutSlave->addWidget(resetSlaveEdit);
         QVBoxLayout* vLayoutSlave = new QVBoxLayout();
         vLayoutSlave->addLayout(layoutSlave);
         vLayoutSlave->addWidget(slaveWidget);
@@ -58,11 +58,11 @@ void AttachmentMergeWidgetBase::addEditorWidget(QWidget *masterWidget, QWidget *
     {
         layoutMaster->addWidget(masterButton);
         layoutMaster->addWidget(masterWidget);
-        layoutMaster->addWidget(resetMasterEdit);
+//        layoutMaster->addWidget(resetMasterEdit);
 
         layoutSlave->addWidget(slaveButton);
         layoutSlave->addWidget(slaveWidget);
-        layoutSlave->addWidget(resetSlaveEdit);
+//        layoutSlave->addWidget(resetSlaveEdit);
 
         layout->addLayout(layoutMaster);
         layout->addLayout(layoutSlave);
@@ -100,6 +100,16 @@ void AttachmentMergeWidgetBase::addEditorWidget(QWidget *masterWidget, QWidget *
     default:
         Q_UNREACHABLE();
     }
+
+    m_buttonMap.insert(key, qMakePair(masterButton, slaveButton));
+}
+
+void AttachmentMergeWidgetBase::connectDecisions(const QString &keyA, const QString &keyB)
+{
+    connect(m_buttonMap[keyA].first, SIGNAL(toggled(bool)), m_buttonMap[keyB].first, SLOT(setChecked(bool)));
+    connect(m_buttonMap[keyA].second, SIGNAL(toggled(bool)), m_buttonMap[keyB].second, SLOT(setChecked(bool)));
+    connect(m_buttonMap[keyB].first, SIGNAL(toggled(bool)), m_buttonMap[keyA].first, SLOT(setChecked(bool)));
+    connect(m_buttonMap[keyB].second, SIGNAL(toggled(bool)), m_buttonMap[keyA].second, SLOT(setChecked(bool)));
 }
 
 QList<MergeItem::ModifyDetail> AttachmentMergeWidgetBase::modifyDetails() const
