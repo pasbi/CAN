@@ -22,9 +22,9 @@ Merge::Merge(Project* masterProject, const QString &slaveFilename, QWidget* dial
 {
     if (openMergeDialog())
     {
-        QList<Song*> undeletableSongs;
-        performMerge(undeletableSongs);
-        if (undeletableSongs.isEmpty())
+        QList<const void*> undeletableItems;
+        performMerge(undeletableItems);
+        if (undeletableItems.isEmpty())
         {
             QMessageBox::information( dialogParent,
                                       app().applicationName(),
@@ -36,9 +36,9 @@ Merge::Merge(Project* masterProject, const QString &slaveFilename, QWidget* dial
             QStringList warningString;
             warningString << QWidget::tr("Some Songs could not be removed since they are used.");
             warningString << QWidget::tr("Please try to remove them manually.");
-            for (const Song* song : undeletableSongs)
+            for (const void* item : undeletableItems)
             {
-                warningString << "\n" + song->label();
+                warningString << "\n" + label(item);
             }
             QMessageBox::warning( dialogParent,
                                   app().applicationName(),
@@ -60,6 +60,29 @@ Merge::~Merge()
     delete m_eventMerger;
     m_eventMerger = nullptr;
 
+}
+
+QString Merge::label(const void *item)
+{
+    // only Songs may be undeletable. So we can assume item is a SongDatabase member.
+    Song* song = nullptr;
+    QString origin;
+    Song* masterSong = songDatabaseMerger()->masterDatabase()->item(item);
+    Song* slaveSong = songDatabaseMerger()->slaveDatabase()->item(item);
+    if (masterSong)
+    {
+        Q_ASSERT(slaveSong == nullptr);
+        song = masterSong;
+        origin = QObject::tr("Master");
+    }
+    if (slaveSong)
+    {
+        Q_ASSERT(masterSong == nullptr);
+        song = slaveSong;
+        origin = QObject::tr("Other");
+    }
+
+    return QString("%1: %2").arg(origin).arg(song->label());
 }
 
 void Merge::warning(const QString &message)
@@ -117,13 +140,13 @@ bool Merge::openMergeDialog()
     return code == QDialog::Accepted;
 }
 
-void Merge::performMerge(QList<Song*>& undeletableSongs)
+void Merge::performMerge(QList<const void*>& undeletableSongs)
 {
     // very important to perform event merge before song merge
 
     DatabaseMergerBase::NewPointerTable updatePointers;
 
-    QList<Event*> undeletableEvents;
+    QList<const void*> undeletableEvents;
     m_eventMerger->performMerge( updatePointers, undeletableEvents );
     Q_ASSERT(undeletableEvents.isEmpty());  // all events should be deleteable
 

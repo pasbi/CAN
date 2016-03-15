@@ -16,7 +16,7 @@ template<class T> DatabaseMerger<T>::DatabaseMerger(Database<T>* masterDatabase,
          slaveDatabase->items() );
 }
 
-template<class T> void DatabaseMerger<T>::performMerge(NewPointerTable& updatePointers, QList<T*>& undeletableItems)
+template<class T> void DatabaseMerger<T>::performMerge(NewPointerTable& updatePointers, QList<const void *> &undeletableItems)
 {
     // do not reuse this DatabaseMerge class.
     Q_ASSERT(undeletableItems.isEmpty());
@@ -108,6 +108,14 @@ template<class T> void DatabaseMerger<T>::performMerge(NewPointerTable& updatePo
             }
         }
     }
+
+    for (MergeItem* mergeItem : mergeItems())
+    {
+        if (DatabaseMergerBase* child = DatabaseMerger::child(mergeItem))
+        {
+            child->performMerge(updatePointers, undeletableItems);
+        }
+    }
 }
 
 // we need a copy of the lists to work on.
@@ -186,7 +194,17 @@ template<class T> template<class S> QList<T> DatabaseMerger<T>::convertList(cons
     return convertedList;
 }
 
-template<class T> DatabaseMergerBase* DatabaseMerger<T>::childDatabaseMerger(DatabaseItemBase* masterItem, DatabaseItemBase* slaveItem) const
+template<class T> Database<T>* DatabaseMerger<T>::masterDatabase() const
+{
+    return m_masterDatabase;
+}
+
+template<class T> Database<T>* DatabaseMerger<T>::slaveDatabase() const
+{
+    return m_slaveDatabase;
+}
+
+template<class T> DatabaseMergerBase* DatabaseMerger<T>::createChildDatabaseMerger(DatabaseItemBase* masterItem, DatabaseItemBase* slaveItem) const
 {
     // child database is very specific and can hardly be implemented for general types.
     // However, only Song and Event need to have child mergers (for Attachment and SetlistItems).
@@ -196,13 +214,13 @@ template<class T> DatabaseMergerBase* DatabaseMerger<T>::childDatabaseMerger(Dat
     return nullptr;
 }
 
-template<> DatabaseMergerBase* DatabaseMerger<Song>::childDatabaseMerger(DatabaseItemBase* masterItem, DatabaseItemBase* slaveItem) const
+template<> DatabaseMergerBase* DatabaseMerger<Song>::createChildDatabaseMerger(DatabaseItemBase* masterItem, DatabaseItemBase* slaveItem) const
 {
     return new DatabaseMerger<Attachment>(static_cast<Song*>(masterItem)->attachmentDatabase(),
                                           static_cast<Song*>(slaveItem)->attachmentDatabase() );
 }
 
-template<> DatabaseMergerBase* DatabaseMerger<Event>::childDatabaseMerger(DatabaseItemBase* masterItem, DatabaseItemBase* slaveItem) const
+template<> DatabaseMergerBase* DatabaseMerger<Event>::createChildDatabaseMerger(DatabaseItemBase* masterItem, DatabaseItemBase* slaveItem) const
 {
     return new DatabaseMerger<SetlistItem>(static_cast<Event*>(masterItem)->setlist(),
                                            static_cast<Event*>(slaveItem)->setlist() );

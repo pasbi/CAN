@@ -33,11 +33,11 @@ MergeItem* DatabaseMergerBase::join(MergeItem* itemA, MergeItem* itemB)
     masterItem = nullptr;
     slaveItem = nullptr;
 
-    if (DatabaseMergerBase* child = childDatabaseMerger(joinedItem->master(), joinedItem->slave()))
+    if (DatabaseMergerBase* child = createChildDatabaseMerger(joinedItem->master(), joinedItem->slave()))
     {
+        //TODO is child ever deleted?j
         m_children.insert( joinedItem, child );
     }
-
 
     return joinedItem;
 }
@@ -109,8 +109,14 @@ double DatabaseMergerBase::similarThreshold() const
 
 DatabaseMergerBase *DatabaseMergerBase::child(MergeItem *parent) const
 {
-    Q_ASSERT(m_children.contains(parent));
-    return m_children.value(parent);
+    if (m_children.contains(parent))
+    {
+        return m_children.value(parent);
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 

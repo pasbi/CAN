@@ -15,18 +15,13 @@ public:
     int rowCount() const { return rowCount( QModelIndex() ); }
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-
     Qt::ItemFlags flags(const QModelIndex &index) const;
-
     bool setData(const QModelIndex &index, const QVariant &value, int role);
-
     void removeSection( int i );
     void insertSection(Section section, int i);
-
     QList<Section> sections() const;
-
+    void setSections(const QList<Section>& sections);
     int indexOf(Section section ) const;
-
     static QString timeToString(const QTime& time);
 private:
 

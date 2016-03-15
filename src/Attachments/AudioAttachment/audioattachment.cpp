@@ -67,8 +67,7 @@ void AudioAttachment::setAttribute(const QString &key, const QVariant &value)
 {
     if (key == "sections")
     {
-        // use sectionsModel() to add/remove/change sections.
-        Q_UNREACHABLE();
+        m_sectionsModel->setSections( value.value<QList<Section>>() );
     }
     else
     {

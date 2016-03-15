@@ -10,8 +10,11 @@ class DatabaseMerger : public DatabaseMergerBase
 {
 public:
     DatabaseMerger(Database<T>* masterDatabase, Database<T>* slaveDatabase);
-    void performMerge(NewPointerTable& updatePointers, QList<T*>& undeletableItems);
+    void performMerge(NewPointerTable &updatePointers, QList<const void *> &undeletableItems);
     void init(QList<T*> masterItems, QList<T*> slaveItems);
+
+    Database<T>* masterDatabase() const;
+    Database<T>* slaveDatabase() const;
 
 protected:
     // 1: Equal
@@ -19,7 +22,7 @@ protected:
     // smaller similarThreshold: Unequal
     // shall be >= 0, <= 1.
     DatabaseMergerBase::CompareResult compare(const T *a, const T *b) const;
-    DatabaseMergerBase* childDatabaseMerger(DatabaseItemBase *masterItem, DatabaseItemBase *slaveItem) const;
+    DatabaseMergerBase* createChildDatabaseMerger(DatabaseItemBase *masterItem, DatabaseItemBase *slaveItem) const;
 
 private:
     Database<T>* m_masterDatabase;

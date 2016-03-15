@@ -137,6 +137,13 @@ void SectionsModel::removeSection(int i)
     endRemoveRows();
 }
 
+void SectionsModel::setSections(const QList<Section>& sections)
+{
+    beginResetModel();
+    m_sections = sections;
+    endResetModel();
+}
+
 QDataStream& operator<<(QDataStream& out, const SectionsModel* model)
 {
     out << model->m_sections;
