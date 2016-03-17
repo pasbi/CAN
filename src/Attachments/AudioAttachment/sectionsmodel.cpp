@@ -9,13 +9,13 @@ SectionsModel::SectionsModel(QObject *parent) :
 
 int SectionsModel::columnCount(const QModelIndex &parent) const
 {
-    assert( !parent.isValid() );
+    Q_ASSERT( !parent.isValid() );
     return 3; // caption, begin, end
 }
 
 int SectionsModel::rowCount(const QModelIndex &parent) const
 {
-    assert( !parent.isValid() );
+    Q_ASSERT( !parent.isValid() );
     return m_sections.length();
 }
 
@@ -46,7 +46,7 @@ QVariant SectionsModel::data(const QModelIndex &index, int role) const
         case 2:
             return section.end();
         default:
-            assert( false );
+            Q_ASSERT( false );
             return QVariant();
         }
     case Qt::DisplayRole:
@@ -59,7 +59,7 @@ QVariant SectionsModel::data(const QModelIndex &index, int role) const
         case 2:
             return timeToString(section.end());
         default:
-            assert( false );
+            Q_ASSERT( false );
             return QVariant();
         }
     default:

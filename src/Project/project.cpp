@@ -1,12 +1,13 @@
 #include "project.h"
-#include <QThread>
+
+#include <QCryptographicHash>
+#include <QFile>
 
 #include "Commands/command.h"
 #include "global.h"
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/eventdatabase.h"
 #include "Database/EventDatabase/event.h"
-#include <QCryptographicHash>
 
 
 const QByteArray Project::SERIALIZE_KEY = "f24e693129d1b378d3496a42cb7096bd";
@@ -162,22 +163,37 @@ QDataStream& operator>>(QDataStream& in, Project& project)
     return in;
 }
 
-Project::ValidCode Project::isValid(const QByteArray& data)
+OpenError Project::openProject(const QString& filename)
 {
+    // try to open the file
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        return CannotReadFileError;
+    }
+
+    QByteArray data = file.readAll();
+
+    // try to read the file
+    {
     QDataStream stream(data);
     QByteArray key, projectHash, projectData;
     stream >> key >> projectHash >> projectData;
 
     if (key != Project::SERIALIZE_KEY)
     {
-        return Project::InvalidKey;
+        return InvalidFileFormatError;
     }
     else if (hash(projectData) != projectHash)
     {
-        return Project::InvalidHash;
+        return InvalidFileFormatError;
     }
     else
     {
-        return Project::Valid;
+        QDataStream stream(data);
+        stream >> *this;
+
+        return NoError;
+    }
     }
 }

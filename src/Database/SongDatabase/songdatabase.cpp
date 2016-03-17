@@ -20,7 +20,7 @@ SongDatabase::SongDatabase(Project *project) :
 
 int SongDatabase::columnCount(const QModelIndex &parent) const
 {
-    assert(!parent.isValid());
+    Q_ASSERT(!parent.isValid());
     return 9;
 }
 

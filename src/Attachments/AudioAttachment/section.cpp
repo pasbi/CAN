@@ -16,8 +16,8 @@ Section::Section( const QString & caption, const QTime& begin, const QTime& end 
     m_begin( begin ),
     m_end( end )
 {
-    assert( begin.msecsTo(doubleToTime(timeToDouble(begin))) < 1000);
-    assert( end.msecsTo(doubleToTime(timeToDouble(end))) < 1000);
+    Q_ASSERT( begin.msecsTo(doubleToTime(timeToDouble(begin))) < 1000);
+    Q_ASSERT( end.msecsTo(doubleToTime(timeToDouble(end))) < 1000);
 
     if (m_begin > m_end)
     {
@@ -29,8 +29,8 @@ Section::Section( const QString & caption, const QTime& begin, const QTime& end 
 Section::Section( const QString & caption, double begin, double end ) :
     Section(caption, doubleToTime(begin), doubleToTime(end))
 {
-    assert( qFuzzyCompare(begin, timeToDouble(doubleToTime(begin))) );
-    assert( qFuzzyCompare(end, timeToDouble(doubleToTime(end))) );
+    Q_ASSERT( qFuzzyCompare(begin, timeToDouble(doubleToTime(begin))) );
+    Q_ASSERT( qFuzzyCompare(end, timeToDouble(doubleToTime(end))) );
 }
 
 

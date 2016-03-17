@@ -57,7 +57,7 @@ template<class T> void Database<T>::insertItem(T* item, int row)
 template<class T> void Database<T>::removeItem(T* item)
 {
     int row = m_items.indexOf(item);
-    assert(row >= 0);
+    Q_ASSERT(row >= 0);
     beginRemoveRows(QModelIndex(), row, row);
     m_items.removeAt(row);
     endRemoveRows();
@@ -70,7 +70,7 @@ template<class T> int Database<T>::rowOf(const T* item) const
 
 template<class T> int Database<T>::rowCount(const QModelIndex &parent) const
 {
-    assert(!parent.isValid());
+    Q_ASSERT(!parent.isValid());
     return m_items.length();
 }
 
@@ -147,7 +147,7 @@ template<class T> bool Database<T>::dropMimeData(const QMimeData *data, Qt::Drop
 
 template<class T> T* Database<T>::itemAtIndex(const QModelIndex& index) const
 {
-    assert( index.model() == this );
+    Q_ASSERT( index.model() == this );
 
     if (index.isValid())
     {
@@ -182,7 +182,7 @@ template<class T> QModelIndex Database<T>::indexOf(const T* item, int column)
 
 template<class T> QVariant Database<T>::data(const QModelIndex &index, int role) const
 {
-    assert(!index.parent().isValid());
+    Q_ASSERT(!index.parent().isValid());
     const T* item = m_items[index.row()];
     const QString key = item->attributeKeys()[index.column()];
     switch (role)
@@ -200,7 +200,7 @@ template<class T> QVariant Database<T>::data(const QModelIndex &index, int role)
 
 template<class T> bool Database<T>::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    assert(!index.parent().isValid());
+    Q_ASSERT(!index.parent().isValid());
     T* item = m_items[index.row()];
     const QString key = item->attributeKeys()[index.column()];
     if (role == Qt::EditRole)

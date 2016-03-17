@@ -18,7 +18,7 @@ Attachment::~Attachment()
 void Attachment::setSong(Song *song)
 {
     // set song, but do never overwrite.
-    assert( !m_song );
+    Q_ASSERT( !m_song );
     setDatabase(song->attachmentDatabase());
 
     m_song = song;
@@ -36,7 +36,7 @@ void Attachment::setName(const QString &name)
 
 void Attachment::makeNameUnique()
 {
-    assert( m_song );
+    Q_ASSERT( m_song );
 
     const QStringList names = m_song->attachmentNames();
 

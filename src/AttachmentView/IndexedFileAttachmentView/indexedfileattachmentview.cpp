@@ -26,7 +26,7 @@ IndexedFileAttachmentView::~IndexedFileAttachmentView()
 
 void IndexedFileAttachmentView::setWidget(QWidget *widget)
 {
-    assert( ui->stackedWidget->count() == 1 );
+    Q_ASSERT( ui->stackedWidget->count() == 1 );
     ui->stackedWidget->addWidget(widget);
 }
 

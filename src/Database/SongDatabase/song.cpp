@@ -66,7 +66,7 @@ void Song::addAttachment( Attachment* attachment )
 
 void Song::insertAttachment(Attachment *attachment, int index)
 {
-    assert( attachment->song() == this );
+    Q_ASSERT( attachment->song() == this );
     m_attachmentDatabase->insertItem( attachment, index );
     connectAttachment( attachment );
     emit attachmentAdded(index);

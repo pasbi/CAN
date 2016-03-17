@@ -41,7 +41,7 @@
 #include "AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.h"
 #include "Attachments/indexedfileattachment.h"
 #include "preferencedialog.h"
-#include "Merge/merge.h"
+#include "Merge/mergedialog.h"
 #include "application.h"
 #include "Database/databasemimedata.h"
 
@@ -49,7 +49,7 @@ QString styleSheetContent()
 {
     QFile file(":/style/styles/stylesheet.qss");
 
-    assert( file.open(QIODevice::ReadOnly ));
+    Q_ASSERT( file.open(QIODevice::ReadOnly ));
     return file.readAll();
 }
 
@@ -644,9 +644,10 @@ void MainWindow::on_actionOpen_triggered()
     {
         return; // user aborted opening
     }
-
-
-    open(filename);
+    else
+    {
+        open(filename);
+    }
 }
 
 void MainWindow::my_on_actionDelete_Song_triggered()
@@ -726,13 +727,13 @@ void MainWindow::on_actionRename_Attachment_triggered()
 void MainWindow::on_actionDuplicate_Attachment_triggered()
 {
     Song* cs = currentSong();
-    assert( cs );
+    Q_ASSERT( cs );
 
     int index = ui->songDatabaseWidget->attachmentChooser()->currentAttachmentIndex();
-    assert( index >= 0 );
+    Q_ASSERT( index >= 0 );
 
     Attachment* attachment = cs->attachments()[index];
-    assert( attachment );
+    Q_ASSERT( attachment );
 
     pushCommand( new SongNewAttachmentCommand( cs, attachment->copy() ) );
     updateActionsEnabled();
@@ -843,51 +844,24 @@ void MainWindow::my_on_actionEdit_Program_triggered()
 
 bool MainWindow::open(const QString &filename)
 {
-    bool success = false;
-    // 1. Check filename
-    if (!filename.isEmpty())
+    bool success;
+    OpenError error = m_project.openProject(filename);
+    if (error == NoError)
     {
-        // 2. Check file
-        QFile file(filename);
-        if (QFileInfo(filename).isReadable() && file.open(QIODevice::ReadOnly))
-        {
-            // 3. Check file content
-            QByteArray content = file.readAll();
-            switch (Project::isValid(content))
-            {
-            case Project::InvalidHash:
-            case Project::InvalidKey:
-                QMessageBox::warning( this,
-                                      QString(tr("Opening %1")).arg(filename),
-                                      QString(tr("Cannot open %1. Unknown file format.")).arg(filename),
-                                      QMessageBox::Ok
-                                      );
-                break;
-            case Project::Valid:
-                QDataStream stream(content);
-                stream >> m_project;
-                setCurrentPath(filename);
-                success = true;
-                break;
-            }
-        }
-        else
-        {
-            QMessageBox::warning( this,
-                                  QString(tr("Opening %1")).arg(filename),
-                                  QString(tr("Cannot open %1. Maybe the file does not exist or you have insufficient permissions.")).arg(filename),
-                                  QMessageBox::Ok
-                                  );
-            m_project.reset();
-            setCurrentPath("");
-            newProject();
-        }
-
-        updateWindowTitle();
-        updateActionsEnabled();
-        return success;
+        success = true;
+        setCurrentPath(filename);
     }
-    return false;
+    else
+    {
+        success = false;
+        m_project.reset();
+        setCurrentPath("");
+        app().handleProjectOpenError(error, filename);
+    }
+    updateWindowTitle();
+    updateActionsEnabled();
+
+    return success;
 }
 
 void MainWindow::createLanguageMenu()
@@ -1044,7 +1018,7 @@ QBitArray resize(QBitArray old, int n)
     // remove only false-bits
     for (int i = old.size(); i < n && i < old.size(); ++i)
     {
-        assert(!old.at(i));
+        Q_ASSERT(!old.at(i));
     }
     old.resize(n);
     return old;
@@ -1113,7 +1087,7 @@ void MainWindow::on_actionMerge_with_triggered()
         return; // user aborted opening
     }
 
-    Merge(&m_project, filename, this);
+    MergeDialog::performMerge(&m_project, filename, this);
 
 }
 

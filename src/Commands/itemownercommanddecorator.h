@@ -13,7 +13,7 @@ public:
 
     ~ItemOwnerCommandDecorator()
     {
-        // assert that the type of T is known, thus the correct destructor is called
+        // Q_ASSERT that the type of T is known, thus the correct destructor is called
         static_assert( sizeof(T) > 0, "Invalid use of incomplete type" );
         if (m_ownsItem)
         {

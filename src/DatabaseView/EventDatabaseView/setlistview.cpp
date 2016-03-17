@@ -48,7 +48,7 @@ SetlistView::SetlistView(QWidget *parent) :
 
 void SetlistView::setModel(Database<SetlistItem> *setlist)
 {
-    // implicitly assert that the old model was deleted from outside.
+    // implicitly Q_ASSERT that the old model was deleted from outside.
     // i.e. sourceModel() is a dangling pointer invalid.
     DatabaseView<SetlistItem>::setModel( setlist );
     if (setlist)

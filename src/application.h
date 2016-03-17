@@ -14,6 +14,7 @@ class Command;
 class Song;
 class Attachment;
 class FileIndex;
+
 class Application : public QApplication
 {
     Q_OBJECT
@@ -45,6 +46,8 @@ public:
 
     void setPreference(const QString& key, const QVariant& value);
     Preferences* preferences() { return &m_preferences; }
+
+    void handleProjectOpenError(OpenError error, const QString &filename);
 
 private:
     mutable FileIndex* m_fileIndex = nullptr;

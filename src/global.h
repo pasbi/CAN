@@ -25,6 +25,9 @@ template<typename T> T preference(const QString& key)
     return preference(key).value<T>();
 }
 
+enum OpenError { NoError, InvalidFileFormatError, CannotReadFileError };
+
+
 typedef qint32 EnumSurrogate_t;
 
 

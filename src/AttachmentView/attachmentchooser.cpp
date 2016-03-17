@@ -19,7 +19,7 @@ AttachmentChooser::AttachmentChooser(QWidget *parent) :
     ui->setupUi(this);
     connect( ui->comboBox, static_cast< void (QComboBox::*)(int) >(&QComboBox::currentIndexChanged), [this](int index)
     {
-        assert( m_currentSong || index < 0 );
+        Q_ASSERT( m_currentSong || index < 0 );
         setAttachment( index );
         app().mainWindow()->updateActionsEnabled();
     });

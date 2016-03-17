@@ -44,10 +44,9 @@ public:
         DatabaseSortProxyBase::setSourceModel(sourceModel);
     }
 
-//TODO replace assert with Q_ASSERT
     T* itemAtIndex(const QModelIndex& index) const
     {
-        assert(index.model() == this);
+        Q_ASSERT(index.model() == this);
         if (sourceModel())
         {
             return sourceModel()->itemAtIndex( mapToSource(index) );
@@ -62,7 +61,7 @@ public:
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
     {
-        assert(!source_parent.isValid());
+        Q_ASSERT(!source_parent.isValid());
         T* item = sourceModel()->items()[source_row];
 
         for (int column = 0; column < sourceModel()->columnCount(); ++column)

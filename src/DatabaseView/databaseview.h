@@ -83,7 +83,7 @@ public:
         {
             m_connection_updateSelection = connect( model, &QAbstractTableModel::rowsInserted, [this](QModelIndex index, int first, int last) {
                 clearSelection();
-                assert(!index.isValid());
+                Q_ASSERT(!index.isValid());
                 for (int i = first; i <= last; ++i)
                 {
                     selectRow( i );

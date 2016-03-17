@@ -14,7 +14,7 @@ public:
         ItemOwnerCommandDecorator<T>(item),
         m_index(database->rowOf(item))
     {
-        assert( item );
+        Q_ASSERT( item );
     }
 
     ~DatabaseRemoveItemCommand()

@@ -8,6 +8,7 @@
 #include "FileIndex/fileindex.h"
 #include "Merge/mergeitem.h"
 #include <QDir>
+#include <QMessageBox>
 
 
 Application::Application(int &argc, char **argv) :
@@ -170,4 +171,28 @@ void Application::initPreferences()
     m_preferences.registerPreference( "defaultActionMergeModify", new Preference(QVariant::fromValue(MergeItem::UseMaster)));
     m_preferences.registerPreference( "MergeSimilarityThreshold", new Preference(0.9));
 
+}
+
+
+void Application::handleProjectOpenError(OpenError error, const QString& filename)
+{
+    QString text;
+    QString title = applicationName();
+    if (error == NoError)
+    {
+        text = "Loading successfull.";
+        QMessageBox::information(m_mainWindow, title, text, QMessageBox::Ok, QMessageBox::Ok );
+    }
+    else
+    {
+        if (error == CannotReadFileError)
+        {
+            text = tr("Cannot open file %1 for reading").arg(filename);
+        }
+        else if (error == InvalidFileFormatError)
+        {
+            text = tr("Invalid file: %1").arg(filename);
+        }
+        QMessageBox::warning(m_mainWindow, title, text, QMessageBox::Ok, QMessageBox::Ok );
+    }
 }

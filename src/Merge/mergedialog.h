@@ -17,6 +17,7 @@ class MergeDialog : public QDialog
 public:
     explicit MergeDialog(Merge* merge, QWidget *parent = 0);
     ~MergeDialog();
+    static bool performMerge(Project* master, const QString& slaveFilename, QWidget *parent = nullptr);
 
 private slots:
     void on_buttonNext_clicked();
@@ -28,6 +29,8 @@ private:
     Merge* m_merger;
     void setMerger(Merge* merger);
     void updateButtonText();
+    QString labelItem(const void *item);
+
 
     static const QStringList BUTTON_TEXT;
     int buttonWidth();

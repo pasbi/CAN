@@ -137,7 +137,7 @@ void FileIndex::restore()
 
 void FileIndex::addDirectory(const QString & path)
 {
-    assert( !m_indexer );
+    Q_ASSERT( !m_indexer );
     m_sources << path;
     m_indexer = new Indexer( path,
                              FileIndex::acceptedEndings(),

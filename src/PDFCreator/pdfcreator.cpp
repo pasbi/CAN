@@ -49,7 +49,7 @@ void PDFCreator::newPage(Page::Flags flags, const QString& title, int index )
 
 void PDFCreator::activatePage( int i )
 {
-    assert( i >= 0 && i < m_pages.length() );
+    Q_ASSERT( i >= 0 && i < m_pages.length() );
     m_currentIndex = i;
 }
 
@@ -541,7 +541,7 @@ void PDFCreator::paintAndSaveDocument( const Document& document, const QString& 
 
         if (i != 0) // weird position, but this is correct.
         {
-            assert( writer.newPage() );
+            Q_ASSERT( writer.newPage() );
         }
 
         painter.drawPicture( QPoint(0, 0), document.pages[i]->picture() );

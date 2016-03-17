@@ -18,7 +18,7 @@ Qt::DropActions EventDatabase::supportedDragActions() const
 int EventDatabase::columnCount(const QModelIndex &parent) const
 {
     //    Type | Beginning | Label
-    assert( !parent.isValid() );
+    Q_ASSERT( !parent.isValid() );
     return 3;
 }
 

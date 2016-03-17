@@ -11,120 +11,23 @@
 #include "Database/EventDatabase/setlistitem.h"
 #include "application.h"
 
-Merge::Merge(Project* masterProject, const QString &slaveFilename, QWidget* dialogParent) :
+Merge::Merge(Project* masterProject, Project *slaveProject) :
     m_masterProject(masterProject),
-    m_slaveProject(openProject(slaveFilename)),
-    m_dialogParent(dialogParent),
+    m_slaveProject(slaveProject),
     m_songMerger( new DatabaseMerger<Song>( masterProject->songDatabase(),
-                                            slaveProject()->songDatabase() ) ),
+                                            slaveProject->songDatabase() ) ),
     m_eventMerger(new DatabaseMerger<Event>( masterProject->eventDatabase(),
-                                             slaveProject()->eventDatabase() ) )
+                                             slaveProject->eventDatabase() ) )
 {
-    if (openMergeDialog())
-    {
-        QList<const void*> undeletableItems;
-        performMerge(undeletableItems);
-        if (undeletableItems.isEmpty())
-        {
-            QMessageBox::information( dialogParent,
-                                      app().applicationName(),
-                                      QWidget::tr("Merge successfull"),
-                                      QMessageBox::Ok );
-        }
-        else
-        {
-            QStringList warningString;
-            warningString << QWidget::tr("Some Songs could not be removed since they are used.");
-            warningString << QWidget::tr("Please try to remove them manually.");
-            for (const void* item : undeletableItems)
-            {
-                warningString << "\n" + label(item);
-            }
-            QMessageBox::warning( dialogParent,
-                                  app().applicationName(),
-                                  warningString.join("\n"),
-                                  QMessageBox::Ok );
-        }
-    }
 }
 
 Merge::~Merge()
 {
-    // slave project is owned.
-    delete m_slaveProject;
-    m_slaveProject = nullptr;
-
     delete m_songMerger;
     m_songMerger = nullptr;
 
     delete m_eventMerger;
     m_eventMerger = nullptr;
-
-}
-
-QString Merge::label(const void *item)
-{
-    // only Songs may be undeletable. So we can assume item is a SongDatabase member.
-    Song* song = nullptr;
-    QString origin;
-    Song* masterSong = songDatabaseMerger()->masterDatabase()->item(item);
-    Song* slaveSong = songDatabaseMerger()->slaveDatabase()->item(item);
-    if (masterSong)
-    {
-        Q_ASSERT(slaveSong == nullptr);
-        song = masterSong;
-        origin = QObject::tr("Master");
-    }
-    if (slaveSong)
-    {
-        Q_ASSERT(masterSong == nullptr);
-        song = slaveSong;
-        origin = QObject::tr("Other");
-    }
-
-    return QString("%1: %2").arg(origin).arg(song->label());
-}
-
-void Merge::warning(const QString &message)
-{
-    if (m_dialogParent)
-    {
-        QMessageBox::warning(m_dialogParent, QWidget::tr("Merge error"), message, QMessageBox::Ok, QMessageBox::Ok);
-    }
-    else
-    {
-        qWarning() << "Merge error: " << message;
-    }
-}
-
-Project* Merge::openProject(const QString& filename)
-{
-    QFile file(filename);
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        warning(QString("Cannot open file %1 for reading").arg(filename));
-        return nullptr;
-    }
-    else
-    {
-        QByteArray data = file.readAll();
-
-        switch (Project::isValid(data))
-        {
-        case Project::Valid:
-        {
-            QDataStream stream(data);
-            Project* project = new Project();
-            stream >> *project;
-            return project;
-        }
-        case Project::InvalidHash:
-        case Project::InvalidKey:
-        default:
-            warning(QString(QWidget::tr("Cannot open %1. Unknown file format.")).arg(filename));
-            return nullptr;
-        }
-    }
 }
 
 bool Merge::isValid() const
@@ -132,15 +35,7 @@ bool Merge::isValid() const
     return m_masterProject && m_slaveProject;
 }
 
-bool Merge::openMergeDialog()
-{
-    MergeDialog dialog(this, m_dialogParent);
-    int code = dialog.exec();
-
-    return code == QDialog::Accepted;
-}
-
-void Merge::performMerge(QList<const void*>& undeletableSongs)
+void Merge::performMerge(QList<const void*>& undeletableItems)
 {
     // very important to perform event merge before song merge
 
@@ -150,7 +45,7 @@ void Merge::performMerge(QList<const void*>& undeletableSongs)
     m_eventMerger->performMerge( updatePointers, undeletableEvents );
     Q_ASSERT(undeletableEvents.isEmpty());  // all events should be deleteable
 
-    m_songMerger->performMerge( updatePointers, undeletableSongs );
+    m_songMerger->performMerge( updatePointers, undeletableItems );
 
     for (Event* event : masterProject()->eventDatabase()->items())
     {
@@ -171,6 +66,31 @@ void Merge::performMerge(QList<const void*>& undeletableSongs)
             }
         }
     }
+}
+
+
+
+QString Merge::labelItem(const void *item)
+{
+    // only Songs may be undeletable. So we can assume item is a SongDatabase member.
+    Song* song = nullptr;
+    QString origin;
+    Song* masterSong = songDatabaseMerger()->masterDatabase()->item(item);
+    Song* slaveSong = songDatabaseMerger()->slaveDatabase()->item(item);
+    if (masterSong)
+    {
+        Q_ASSERT(slaveSong == nullptr);
+        song = masterSong;
+        origin = QObject::tr("Master");
+    }
+    if (slaveSong)
+    {
+        Q_ASSERT(masterSong == nullptr);
+        song = slaveSong;
+        origin = QObject::tr("Other");
+    }
+
+    return QString("%1: %2").arg(origin).arg(song->label());
 }
 
 

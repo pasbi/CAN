@@ -13,7 +13,7 @@ class QMimeData;
 class Merge
 {
 public:
-    Merge(Project *masterProject, const QString& slaveFilename, QWidget *dialogParent);
+    Merge(Project *masterProject, Project* slaveProject);
     ~Merge();
 
     bool isValid() const;
@@ -26,20 +26,14 @@ public:
 
     MergeItem* decodeMimeData(const QMimeData* mimeData) const;
     QMimeData* encodeMimeData(const MergeItem* mergeItemBase) const;
-
+    void performMerge(QList<const void *> &undeletableItems);
+    QString labelItem(const void *item);
 
 private:
     Project* m_masterProject;
     Project* m_slaveProject;
 
-    Project* openProject(const QString& filename);
-    QWidget* m_dialogParent;
-    void warning(const QString& message);
-
-    bool openMergeDialog();
-    void performMerge(QList<const void *> &undeletableSongs);
-    QString label(const void* item);
-
+    // those members are owned
     DatabaseMerger<Song>* m_songMerger;
     DatabaseMerger<Event>* m_eventMerger;
 };

@@ -33,9 +33,9 @@ public:
 protected:
     virtual QStringList skipSerializeAttributes() const { return {}; }
     void addAttributeKey(const QString& key);
-    PedanticVariantMap m_attributes; //TODO private
 
 private:
+    PedanticVariantMap m_attributes; //TODO private
 
     friend QDataStream& operator<<(QDataStream& out, const DatabaseItemBase* item);
     friend QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item);

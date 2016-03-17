@@ -7,7 +7,7 @@ FilterWidget::FilterWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FilterWidget)
 {
-    assert(false);
+    Q_ASSERT(false);
     ui->setupUi(this);
 
     connect(ui->comboBox, SIGNAL(currentTextChanged(QString)), this, SIGNAL(filterChanged(QString)));

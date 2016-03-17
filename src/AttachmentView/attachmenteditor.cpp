@@ -29,7 +29,7 @@ AttachmentView* createAttachmentView(Attachment* attachment)
     QString classname = attachment->type();
     classname = classname.append("View");
 
-    assert( Creatable::category(classname) == "AttachmentView" );
+    Q_ASSERT( Creatable::category(classname) == "AttachmentView" );
 
     AttachmentView* attachmentView = Creatable::create<AttachmentView>( classname );
     attachmentView->setAttachment( attachment );

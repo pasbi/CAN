@@ -2,6 +2,7 @@
 #define PROJECT_H
 
 #include <QUndoStack>
+#include "global.h"
 
 
 class SongDatabase;
@@ -45,8 +46,7 @@ private:
 public:
     bool canClose() const;
     void setCanClose( bool b );
-    enum ValidCode { Valid, InvalidKey, InvalidHash };
-    static ValidCode isValid(const QByteArray &data);
+    OpenError openProject(const QString& filename);
 private:
     friend QDataStream& operator<<(QDataStream& out, const Project& project);
     friend QDataStream& operator>>(QDataStream& in, Project& project);

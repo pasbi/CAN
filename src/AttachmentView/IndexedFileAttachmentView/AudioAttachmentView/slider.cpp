@@ -35,7 +35,7 @@ void Slider::setValue( double value )
 
 void Slider::setMaximum( double max )
 {
-    assert( SLIDER_MULTIPLIER * max >= 0 );
+    Q_ASSERT( SLIDER_MULTIPLIER * max >= 0 );
     QSlider::setMaximum( SLIDER_MULTIPLIER * max );
     QSlider::setMinimum(0);
 }
@@ -205,17 +205,17 @@ void Slider::setRange(int min, int max)
 {
     Q_UNUSED(min);
     Q_UNUSED(max);
-    UNIMPLEMENTED
+    Q_UNIMPLEMENTED();
 }
 
 void Slider::setMinimum(int min)
 {
     Q_UNUSED(min);
-    UNIMPLEMENTED
+    Q_UNIMPLEMENTED();
 }
 
 void Slider::setMaximum(int max)
 {
     Q_UNUSED(max);
-    UNIMPLEMENTED
+    Q_UNIMPLEMENTED();
 }

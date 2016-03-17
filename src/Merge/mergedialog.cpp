@@ -3,6 +3,8 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/eventdatabase.h"
 #include "mergeitem.h"
+#include "application.h"
+#include <QMessageBox>
 
 const QStringList MergeDialog::BUTTON_TEXT = QStringList({ MergeDialog::tr(""),
                                                            MergeDialog::tr("&Songs"),
@@ -81,4 +83,60 @@ void MergeDialog::updateButtonText()
     ui->buttonNext->setText(BUTTON_TEXT[i + 2]);
     ui->buttonNext->setFixedWidth(buttonWidth);
     ui->buttonCancel->setFixedWidth(buttonWidth);
+}
+
+bool MergeDialog::performMerge(Project *master, const QString &slaveFilename, QWidget* parent)
+{
+    // try to open the slave project
+    bool success;
+    Project* slave = new Project();
+    OpenError error = slave->openProject(slaveFilename);
+    if (error != NoError)
+    {
+        app().handleProjectOpenError(error, slaveFilename);
+        success = false;
+    }
+    else
+    {
+        // create merger
+        Merge merge(master, slave);
+
+        // create dialog
+        MergeDialog dialog(&merge, parent);
+
+        // perform the merger
+        if ( dialog.exec() == QDialog::Accepted )
+        {
+            QList<const void*> undeletableItems;
+            merge.performMerge(undeletableItems);
+            if (undeletableItems.isEmpty())
+            {
+                QMessageBox::information( parent,
+                                          app().applicationName(),
+                                          QWidget::tr("Merge successfull"),
+                                          QMessageBox::Ok );
+                success = true;
+            }
+            else
+            {
+                QStringList warningString;
+                warningString << QWidget::tr("Some Songs could not be removed since they are used.");
+                warningString << QWidget::tr("Please try to remove them manually.");
+                for (const void* item : undeletableItems)
+                {
+                    warningString << "\n" + merge.labelItem(item);
+                }
+                QMessageBox::warning( parent,
+                                      app().applicationName(),
+                                      warningString.join("\n"),
+                                      QMessageBox::Ok );
+                success = true;
+            }
+        }
+    }
+
+    delete slave;
+    slave = nullptr;
+
+    return success;
 }

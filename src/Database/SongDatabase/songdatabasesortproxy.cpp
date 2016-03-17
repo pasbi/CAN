@@ -13,7 +13,7 @@ SongDatabaseSortProxy::SongDatabaseSortProxy(QObject *parent) :
 
 bool SongDatabaseSortProxy::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-    assert(!source_parent.isValid());
+    Q_ASSERT(!source_parent.isValid());
     if (acceptSong(sourceModel()->items()[source_row]))
     {
         return Super::filterAcceptsRow(source_row, source_parent);

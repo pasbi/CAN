@@ -448,7 +448,7 @@ bool Buffer::Decoder::decode()
             }
             else
             {
-                assert( false );
+                Q_ASSERT( false );
             }
 
         }

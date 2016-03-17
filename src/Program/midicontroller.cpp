@@ -74,7 +74,7 @@ void MidiController::initFileSystemWatcher()
 {
     QString dirname  = QFileInfo(MIDI_DEVICE_FILENAME).path();
 
-    assert(m_midiDeviceWatcher.addPath(dirname));
+    Q_ASSERT(m_midiDeviceWatcher.addPath(dirname));
     QObject::connect( &m_midiDeviceWatcher, &QFileSystemWatcher::directoryChanged, [this](QString)
     {
         if (QFileInfo(MIDI_DEVICE_FILENAME).exists())

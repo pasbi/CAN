@@ -109,7 +109,7 @@ void BrowseAttachmentButtonBox::setSong(const Song * song)
         for (Attachment* attachment : song->attachments())
         {
             QMenu* menu = m_menus[typeMap(attachment->type())];
-            assert(menu);
+            Q_ASSERT(menu);
 
             QAction* action = menu->addAction(attachment->name());
             m_attachmentMap[action] = attachment;
