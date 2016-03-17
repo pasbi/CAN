@@ -33,6 +33,8 @@ public:
     QString fileNameBase() const { return "SetlistItem"; }
     QString itemName(int n) const;
 
+    void setSetlistItems(const QList<SetlistItem*>& items);
+
 signals:
     void selectionRequest(QModelIndexList);
 

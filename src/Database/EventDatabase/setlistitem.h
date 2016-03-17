@@ -14,9 +14,8 @@ class SetlistItem : public DatabaseItem<SetlistItem>
     Q_OBJECT
 public:
     enum Type { SongType, LabelType };
-private:
-    SetlistItem(Database<SetlistItem> *setlist, const QString & label, const Song* song, Type type );
 public:
+    SetlistItem(Database<SetlistItem> *setlist, const QString & label, const Song* song );
     SetlistItem(Database<SetlistItem> *setlist, const QString & label );
     SetlistItem(Database<SetlistItem> *setlist );
     SetlistItem(Database<SetlistItem> *setlist, const Song* song );

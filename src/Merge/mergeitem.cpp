@@ -66,13 +66,13 @@ MergeItem::Action MergeItem::action() const
 
 void MergeItem::setAction(Action action)
 {
-    // we are only allowed to change AddAction to RemoveAction and vice versa.222
+    // we are only allowed to change AddAction to RemoveAction and vice versa.
     Q_ASSERT(m_action != ModifyAction);
     Q_ASSERT(action != ModifyAction);
     m_action = action;
 }
 
-QList<MergeItem::ModifyDetail> MergeItem::modifyDetails() const
+QMap<QString, MergeItem::ModifyDetail> MergeItem::modifyDetails() const
 {
     return m_modifyDetails;
 }
@@ -91,13 +91,18 @@ int findModifyDetail(const QList<MergeItem::ModifyDetail>& list, const MergeItem
     return -1;
 }
 
+void MergeItem::insertModifyDetail(const ModifyDetail &detail)
+{
+    Q_ASSERT(!m_modifyDetails.contains(detail.key()));
+    m_modifyDetails.insert(detail.key(), detail);
+}
+
 void MergeItem::updateModifyDetails(const QList<ModifyDetail> modifyDetails)
 {
     for (const ModifyDetail& modifyDetail : modifyDetails)
     {
-        int i = findModifyDetail(m_modifyDetails, modifyDetail);
-        Q_ASSERT(i >= 0);   // assert modifyDetail is contained in m_modifyDetails
-        m_modifyDetails.replace(i, modifyDetail);
+        Q_ASSERT(m_modifyDetails.contains(modifyDetail.key()));
+        m_modifyDetails.insert(modifyDetail.key(), modifyDetail);
     }
 }
 
@@ -124,7 +129,7 @@ void MergeItem::setupModifyDetails()
     {
         if (master()->attribute(key) != slave()->attribute(key))
         {
-            m_modifyDetails << ModifyDetail(key, preference<MergeItem::Decision>("defaultActionMergeModify"));
+            m_modifyDetails.insert(key, ModifyDetail(key));
         }
     }
 }
@@ -135,20 +140,23 @@ void MergeItem::performModification() const
     for (const ModifyDetail& detail : m_modifyDetails)
     {
         const QString key = detail.key();
-        QVariant value;
-        switch (detail.decision())
+        if (master()->attributeKeys().contains(key) && slave()->attributeKeys().contains(key))
         {
-        case UseMaster:
-            value = master()->attribute(key);
-            break;
-        case UseSlave:
-            value = slave()->attribute(key);
-            break;
-        default:
-            Q_UNREACHABLE();
-        }
+            QVariant value;
+            switch (detail.decision())
+            {
+            case UseMaster:
+                value = master()->attribute(key);
+                break;
+            case UseSlave:
+                value = slave()->attribute(key);
+                break;
+            default:
+                Q_UNREACHABLE();
+            }
 
-        master()->setAttribute(detail.key(), value);
+            master()->setAttribute(detail.key(), value);
+        }
     }
 }
 
@@ -198,32 +206,20 @@ bool MergeItem::canJoin(const MergeItem *other) const
     }
 }
 
-bool MergeItem::inherits(const QStringList& classnames) const
+bool MergeItem::inherits(const QString& classname) const
 {
     Q_ASSERT(QString(master()->metaObject()->className()) == QString(slave()->metaObject()->className()));
 
-    for (const QString& classname : classnames)
+    if (master()->inherits(classname.toStdString().c_str()))
     {
-        if (master()->inherits(classname.toStdString().c_str()))
-        {
-            return true;
-        }
+        return true;
     }
-    return false;
+    else
+    {
+        return false;
+    }
 }
 
-MergeItem::ModifyDetail MergeItem::modifyDetail(const QString &key) const
-{
-    for (const ModifyDetail& detail : m_modifyDetails)
-    {
-        if (detail.key() == key)
-        {
-            return detail;
-        }
-    }
-    Q_UNREACHABLE();
-    return m_modifyDetails[-1]; // return non existent item
-}
 
 void MergeItem::setChildMerger(DatabaseMergerBase *childMerger)
 {

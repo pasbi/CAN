@@ -35,7 +35,7 @@ MergeItem* DatabaseMergerBase::join(MergeItem* itemA, MergeItem* itemB)
 
     if (DatabaseMergerBase* child = createChildDatabaseMerger(joinedItem->master(), joinedItem->slave()))
     {
-        //TODO is child ever deleted?j
+        //TODO is child ever deleted?
         m_children.insert( joinedItem, child );
     }
 

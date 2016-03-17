@@ -16,7 +16,7 @@ template<class T> DatabaseMerger<T>::DatabaseMerger(Database<T>* masterDatabase,
          slaveDatabase->items() );
 }
 
-template<class T> void DatabaseMerger<T>::performMerge(NewPointerTable& updatePointers, QList<const void *> &undeletableItems)
+template<class T> void DatabaseMerger<T>::performMergePrivate(NewPointerTable& updatePointers, QList<const void *> &undeletableItems)
 {
     // do not reuse this DatabaseMerge class.
     Q_ASSERT(undeletableItems.isEmpty());
@@ -114,6 +114,30 @@ template<class T> void DatabaseMerger<T>::performMerge(NewPointerTable& updatePo
         if (DatabaseMergerBase* child = DatabaseMerger::child(mergeItem))
         {
             child->performMerge(updatePointers, undeletableItems);
+        }
+    }
+}
+
+template<class T> void DatabaseMerger<T>::performMerge(NewPointerTable& updatePointers, QList<const void *> &undeletableItems)
+{
+    performMergePrivate(updatePointers, undeletableItems);
+}
+
+template<> void DatabaseMerger<Event>::performMerge(NewPointerTable& updatePointers, QList<const void *> &undeletableItems)
+{
+    performMergePrivate(updatePointers, undeletableItems);
+    for (MergeItem* item : mergeItems())
+    {
+        if (item->modifyDetails().contains("setlist"))
+        {
+            Event* masterEvent = static_cast<Event*>(item->master());
+            Event* slaveEvent = static_cast<Event*>(item->slave());
+
+            masterEvent->setSetlist(slaveEvent->setlist());
+        }
+        else
+        {
+            // keep master setlist
         }
     }
 }
@@ -218,12 +242,6 @@ template<> DatabaseMergerBase* DatabaseMerger<Song>::createChildDatabaseMerger(D
 {
     return new DatabaseMerger<Attachment>(static_cast<Song*>(masterItem)->attachmentDatabase(),
                                           static_cast<Song*>(slaveItem)->attachmentDatabase() );
-}
-
-template<> DatabaseMergerBase* DatabaseMerger<Event>::createChildDatabaseMerger(DatabaseItemBase* masterItem, DatabaseItemBase* slaveItem) const
-{
-    return new DatabaseMerger<SetlistItem>(static_cast<Event*>(masterItem)->setlist(),
-                                           static_cast<Event*>(slaveItem)->setlist() );
 }
 
 

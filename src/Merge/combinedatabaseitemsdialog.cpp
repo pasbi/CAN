@@ -1,13 +1,15 @@
 #include "combinedatabaseitemsdialog.h"
+
 #include "ui_combinedatabaseitemsdialog.h"
 #include "combinedialogselectionmodel.h"
-#include "mergeitem.h"
-#include "Database/databaseitem.h"
+#include "Database/databaseitembase.h"
+#include <QTimer>
 
-CombineDatabaseItemsDialog::CombineDatabaseItemsDialog(DatabaseMergerBase* merger, MergeItem* mergeItem, QWidget* parent) :
+CombineDatabaseItemsDialog::CombineDatabaseItemsDialog(DatabaseMergerBase *merger, MergeItem *mergeItem, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CombineDatabaseItemsDialog),
-    m_mergeItem(mergeItem)
+    ui( new Ui::CombineDatabaseItemsDialog ),
+    m_mergeItem(mergeItem),
+    m_databaseMerger(merger)
 {
     ui->setupUi(this);
 
@@ -26,15 +28,64 @@ CombineDatabaseItemsDialog::CombineDatabaseItemsDialog(DatabaseMergerBase* merge
     connect(ui->attributesTable, SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(onSelectionChange()));
 
     ui->attributesTable->verticalHeader()->hide();
+    ui->attributesTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Master")));
+    ui->attributesTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Other")));
+    ui->attributesTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    QTimer::singleShot(0, this, SIGNAL(updateHeaderWidths()));
 
-    DatabaseMergerBase* childMerger = merger->child(mergeItem);
-    Q_ASSERT(childMerger);
-    ui->detailsTable->setDatabaseMerger( childMerger );
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 CombineDatabaseItemsDialog::~CombineDatabaseItemsDialog()
 {
-    delete ui;
+
+}
+
+
+void CombineDatabaseItemsDialog::updateHeaderWidths()
+{
+    int viewportWidth = ui->attributesTable->viewport()->width();
+
+    ui->attributesTable->horizontalHeader()->resizeSection(0, viewportWidth/2);
+    ui->attributesTable->horizontalHeader()->resizeSection(1, viewportWidth - viewportWidth/2);
+}
+
+void CombineDatabaseItemsDialog::showEvent(QShowEvent *e)
+{
+    QDialog::showEvent(e);
+    updateHeaderWidths();
+}
+
+void CombineDatabaseItemsDialog::resizeEvent(QResizeEvent *e)
+{
+    QDialog::resizeEvent(e);
+    updateHeaderWidths();
+}
+
+void CombineDatabaseItemsDialog::accept()
+{
+    m_mergeItem->updateModifyDetails(m_modifyDetails);
+    QDialog::accept();
+}
+
+QWidget* CombineDatabaseItemsDialog::detailsPage() const
+{
+    return ui->tabWidget->widget(1);
+}
+
+void CombineDatabaseItemsDialog::onSelectionChange()
+{
+    for (int row = 0; row < ui->attributesTable->rowCount(); ++row)
+    {
+        if (ui->attributesTable->item(row, 0)->isSelected())
+        {
+            m_modifyDetails[row].setDecision(MergeItem::UseMaster);
+        }
+        else
+        {
+            m_modifyDetails[row].setDecision(MergeItem::UseSlave);
+        }
+    }
 }
 
 QTableWidgetItem* newTableWidgetItem(const QString& label)
@@ -73,50 +124,18 @@ void CombineDatabaseItemsDialog::initItems()
     }
 }
 
-void CombineDatabaseItemsDialog::updateHeaderWidths()
+DatabaseMergerBase* CombineDatabaseItemsDialog::databaseMerger() const
 {
-    int viewportWidth = ui->attributesTable->viewport()->width();
-
-    ui->attributesTable->horizontalHeader()->resizeSection(0, viewportWidth/2);
-    ui->attributesTable->horizontalHeader()->resizeSection(1, viewportWidth - viewportWidth/2);
-    ui->attributesTable->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Master")));
-    ui->attributesTable->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("Other")));
+    return m_databaseMerger;
 }
 
-void CombineDatabaseItemsDialog::showEvent(QShowEvent *e)
+void CombineDatabaseItemsDialog::setDetailsPage(QWidget* page, const QString &title)
 {
-    QDialog::showEvent(e);
-    updateHeaderWidths();
+    ui->tabWidget->widget(1)->layout()->addWidget(page);
+    ui->tabWidget->setTabText(1, title);
 }
 
-void CombineDatabaseItemsDialog::resizeEvent(QResizeEvent *e)
+MergeItem* CombineDatabaseItemsDialog::mergeItem() const
 {
-    QDialog::resizeEvent(e);
-    updateHeaderWidths();
-}
-
-void CombineDatabaseItemsDialog::accept()
-{
-    m_mergeItem->updateModifyDetails(m_modifyDetails);
-    QDialog::accept();
-}
-
-void CombineDatabaseItemsDialog::onSelectionChange()
-{
-    for (int row = 0; row < ui->attributesTable->rowCount(); ++row)
-    {
-        if (ui->attributesTable->item(row, 0)->isSelected())
-        {
-            m_modifyDetails[row].setDecision(MergeItem::UseMaster);
-        }
-        else
-        {
-            m_modifyDetails[row].setDecision(MergeItem::UseSlave);
-        }
-    }
-}
-
-MergeListWidget* CombineDatabaseItemsDialog::detailsMergeListWidget() const
-{
-    return ui->detailsTable;
+    return m_mergeItem;
 }

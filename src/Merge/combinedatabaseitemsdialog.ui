@@ -16,9 +16,12 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
      <widget class="QWidget" name="attributeTab">
       <attribute name="title">
-       <string>Attributes</string>
+       <string>&amp;Attributes</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
@@ -69,9 +72,6 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item>
-        <widget class="MergeListWidget" name="detailsTable"/>
-       </item>
       </layout>
      </widget>
     </widget>
@@ -105,13 +105,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>MergeListWidget</class>
-   <extends>QListWidget</extends>
-   <header>Merge/mergelistwidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>

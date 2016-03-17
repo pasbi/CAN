@@ -148,7 +148,6 @@ SOURCES += main.cpp\
     Merge/mergelistwidgetselectionmodel.cpp \
     Database/databaseitem.cpp \
     optionpushbutton.cpp \
-    Merge/combinedatabaseitemsdialog.cpp \
     Database/databasebase.cpp \
     Database/database.cpp \
     Database/SongDatabase/attachmentdatabase.cpp \
@@ -160,7 +159,10 @@ SOURCES += main.cpp\
     Merge/AttachmentMergeWidgets/attachmentmergewidgetbase.cpp \
     Merge/AttachmentMergeWidgets/indexedfileattachmentmergewidget.cpp \
     Merge/AttachmentMergeWidgets/audioattachmentmergewidget.cpp \
-    Merge/AttachmentMergeWidgets/chordpatternproxyattachmentmergewidget.cpp
+    Merge/AttachmentMergeWidgets/chordpatternproxyattachmentmergewidget.cpp \
+    Merge/combinesongsdialog.cpp \
+    Merge/combinedatabaseitemsdialog.cpp \
+    Merge/combineeventsdialog.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -284,7 +286,6 @@ HEADERS  += mainwindow.h \
     Merge/mergelistwidgetselectionmodel.h \
     map.h \
     optionpushbutton.h \
-    Merge/combinedatabaseitemsdialog.h \
     Database/databasebase.h \
     Database/SongDatabase/attachmentdatabase.h \
     Database/databaseitembase.h \
@@ -295,7 +296,10 @@ HEADERS  += mainwindow.h \
     Merge/AttachmentMergeWidgets/attachmentmergewidgetbase.h \
     Merge/AttachmentMergeWidgets/indexedfileattachmentmergewidget.h \
     Merge/AttachmentMergeWidgets/audioattachmentmergewidget.h \
-    Merge/AttachmentMergeWidgets/chordpatternproxyattachmentmergewidget.h
+    Merge/AttachmentMergeWidgets/chordpatternproxyattachmentmergewidget.h \
+    Merge/combinesongsdialog.h \
+    Merge/combinedatabaseitemsdialog.h \
+    Merge/combineeventsdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -319,7 +323,9 @@ FORMS    += mainwindow.ui \
     playerwidget.ui \
     Dialogs/peoplesdialog.ui \
     Dialogs/textdialog.ui \
-    Merge/mergedialog.ui
+    Merge/mergedialog.ui \
+    Merge/combinedatabaseitemsdialog.ui \
+    Merge/combineeventsdialog.ui
 
 
 RESOURCES += \

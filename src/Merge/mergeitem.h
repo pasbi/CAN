@@ -16,6 +16,7 @@ public:
     enum Decision { UseMaster, UseSlave, /*UseUserValue*/ };
     MergeItem(DatabaseItemBase* master, DatabaseItemBase* slave, Action action);
     MergeItem(DatabaseItemBase* item, Origin origin, Action action);
+    MergeItem();
     ~MergeItem();
 
     DatabaseItemBase* master() const;
@@ -26,7 +27,7 @@ public:
     void setAction(Action action);
     bool canJoin(const MergeItem* other) const;
 
-    bool inherits(const QStringList& classnames) const;
+    bool inherits(const QString &classname) const;
 
 
     struct ModifyDetail
@@ -34,6 +35,13 @@ public:
         ModifyDetail(const QString& key, Decision initialDecision) :
             m_key(key),
             m_decision(initialDecision)
+        {
+
+        }
+
+        ModifyDetail(const QString& key = "") :
+            m_key(key),
+            m_decision( preference<MergeItem::Decision>("defaultActionMergeModify") )
         {
 
         }
@@ -47,10 +55,10 @@ public:
         Decision m_decision;
     };
 
-    QList<ModifyDetail> modifyDetails() const;
-    ModifyDetail modifyDetail(const QString& key) const;
+    QMap<QString, ModifyDetail> modifyDetails() const;
 
     void updateModifyDetails(const QList<ModifyDetail> modifyDetails);
+    void insertModifyDetail(const ModifyDetail& detail);
 
     /**
      * @brief performModification modify the master item according to modifyDetails.
@@ -70,7 +78,7 @@ private:
     DatabaseItemBase* m_slave;
 
     // if type is Modify, use this map.
-    QList<ModifyDetail> m_modifyDetails;
+    QMap<QString, ModifyDetail> m_modifyDetails;
     void setupModifyDetails();
 
     DatabaseMergerBase* m_childMerger;

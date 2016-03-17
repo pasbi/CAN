@@ -30,6 +30,8 @@ private:
 
     template<class S> static QList<T> convertList(const QList<S>& list);
 
+    void performMergePrivate(NewPointerTable &updatePointers, QList<const void *> &undeletableItems);
+
 };
 
 

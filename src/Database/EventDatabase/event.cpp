@@ -91,6 +91,11 @@ bool Event::needsSong(const Song *song) const
     return false;
 }
 
+void Event::setSetlist(const Setlist* newSetlist)
+{
+    setlist()->setSetlistItems(newSetlist->items());
+}
+
 void Event::serialize(QDataStream& out) const
 {
     DatabaseItem::serialize(out);
@@ -102,6 +107,7 @@ void Event::deserialize(QDataStream& in)
     DatabaseItem::deserialize(in);
     in >> m_setlist;
 }
+
 
 DEFINE_ENUM_STREAM_OPERATORS(Event::Type)
 

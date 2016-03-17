@@ -4,12 +4,16 @@
 #include "Database/EventDatabase/setlist.h"
 #include "Database/EventDatabase/event.h"
 
-SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString &label, const Song *song, Type type) :
+SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString &label, const Song *song) :
     DatabaseItem(setlist)
 {
+    Q_ASSERT( label.isEmpty() != (song == nullptr) );
+    Type type = label.isEmpty() ? SongType : LabelType;
+
     addAttributeKey("type");
     addAttributeKey("label");
     addAttributeKey("song");
+
 
     setAttribute("type", QVariant::fromValue(type));
     setAttribute("label", label);
@@ -17,17 +21,17 @@ SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString &label, c
 }
 
 SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString & label ) :
-    SetlistItem(setlist, label, nullptr, LabelType)
+    SetlistItem(setlist, label, nullptr)
 {
 }
 
 SetlistItem::SetlistItem(Database<SetlistItem>* setlist ) :
-    SetlistItem(setlist, QObject::tr("Unnamed"), nullptr, LabelType )
+    SetlistItem(setlist, QObject::tr("Unnamed"), nullptr )
 {
 }
 
 SetlistItem::SetlistItem(Database<SetlistItem>* setlist, const Song* song ) :
-    SetlistItem(setlist, QString(), song, SongType)
+    SetlistItem(setlist, QString(), song)
 {
 }
 

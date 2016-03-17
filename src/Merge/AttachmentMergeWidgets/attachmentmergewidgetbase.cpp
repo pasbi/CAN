@@ -70,7 +70,7 @@ void AttachmentMergeWidgetBase::addEditorWidget(QWidget *masterWidget, QWidget *
 
     m_layout->addLayout(layout);
 
-    m_modifyDetails << m_mergeItem->modifyDetail(key);  // copy merge item into list
+    m_modifyDetails << m_mergeItem->modifyDetails().value(key);  // copy merge item into list
     MergeItem::ModifyDetail& modifyDetail = m_modifyDetails.last();
     connect(buttonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton*)>(&QButtonGroup::buttonClicked),
             [masterButton, slaveButton, &modifyDetail](QAbstractButton* clickedButton)

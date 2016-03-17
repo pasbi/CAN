@@ -2,43 +2,49 @@
 #define COMBINEDATABASEITEMSDIALOG_H
 
 #include <QDialog>
-#include "QItemSelection"
+
+#include <QTableWidget>
+
 #include "mergeitem.h"
-#include "mergelistwidget.h"
 
 namespace Ui {
-class CombineDatabaseItemsDialog;
+    class CombineDatabaseItemsDialog;
 }
 
-class QTableWidgetItem;
 class CombineDatabaseItemsDialog : public QDialog
 {
     Q_OBJECT
-
 public:
-    explicit CombineDatabaseItemsDialog(DatabaseMergerBase *mergeBase, MergeItem* mergeItem, QWidget* parent = nullptr);
-    ~CombineDatabaseItemsDialog();
+    CombineDatabaseItemsDialog(DatabaseMergerBase *merger, MergeItem* mergeItem, QWidget *parent = 0);
+    virtual ~CombineDatabaseItemsDialog();
 
     void accept();
 
 protected:
     void resizeEvent(QResizeEvent *e);
     void showEvent(QShowEvent *e);
-    MergeListWidget* detailsMergeListWidget() const;
+    QWidget *detailsPage() const;
+    DatabaseMergerBase* databaseMerger() const;
+    void setDetailsPage(QWidget* page, const QString& title);
+    MergeItem* mergeItem() const;
+
+private:
+    void initItems();
 
 private slots:
+    void updateHeaderWidths();
     void onSelectionChange();
 
 private:
-    Ui::CombineDatabaseItemsDialog *ui;
-    void initItems();
-
-    void updateHeaderWidths();
-
+    Ui::CombineDatabaseItemsDialog* ui;
     MergeItem* m_mergeItem;
+    DatabaseMergerBase* m_databaseMerger;
     QList<MergeItem::ModifyDetail> m_modifyDetails;
-    QStringList m_keys;
 
+
+signals:
+
+public slots:
 
 };
 

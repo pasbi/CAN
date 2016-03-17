@@ -13,6 +13,7 @@ class Song;
 template<typename T> class Database;
 class Event : public DatabaseItem<Event>
 {
+    Q_OBJECT
 public:
     enum Type { Rehearsal, Gig, Other };
 
@@ -26,6 +27,7 @@ public:
     QString description() const;
 
     const Setlist* setlist() const { return m_setlist; }
+    void setSetlist(const Setlist *newSetlist);
     Setlist* setlist() { return m_setlist; }
 
     QString attributeDisplay(const QString &key) const;

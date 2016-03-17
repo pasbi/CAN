@@ -288,3 +288,18 @@ QString Setlist::itemName(int n) const
     return tr("SetlistItem", nullptr, n);
 }
 
+void Setlist::setSetlistItems(const QList<SetlistItem*>& items)
+{
+    beginResetModel();
+
+    qDeleteAll(m_items);
+    m_items.clear();
+
+    for (const SetlistItem* item : items)
+    {
+        m_items << new SetlistItem(this, item->label(), item->attribute("song").value<Song*>());
+    }
+
+    endResetModel();
+    emit reseted();
+}

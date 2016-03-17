@@ -10,7 +10,8 @@
 
 #include "mergelistwidgetitemwidget.h"
 #include "merge.h"
-#include "combinedatabaseitemsdialog.h"
+#include "combineeventsdialog.h"
+#include "combinesongsdialog.h"
 #include "mergelistwidgetselectionmodel.h"
 #include "application.h"
 #include "AttachmentMergeWidgets/combineattachmentsdialog.h"
@@ -247,6 +248,7 @@ void MergeListWidget::createContextMenu(const QPoint &pos)
 
 void MergeListWidget::setDatabaseMerger(DatabaseMergerBase *databaseMerger)
 {
+    qDebug() << "set Database Merger " << databaseMerger;
     Q_ASSERT(m_databaseMerger == nullptr);
     m_databaseMerger = databaseMerger;
 
@@ -271,13 +273,13 @@ void MergeListWidget::openCombineItemDialog(MergeItem *mergeItem)
     {
         dialog = new CombineAttachmentsDialog(mergeItem, this);
     }
-    else if (mergeItem->inherits({ "SetlistItem" }))
+    else if (mergeItem->inherits({ "Song" }))
     {
-        Q_UNIMPLEMENTED();
+        dialog = new CombineSongsDialog(m_databaseMerger, mergeItem, this);
     }
-    else if (mergeItem->inherits({ "Song", "Event" }))
+    else if (mergeItem->inherits({ "Event" }))
     {
-        dialog = new CombineDatabaseItemsDialog(m_databaseMerger, mergeItem, this);
+        dialog = new CombineEventsDialog(m_databaseMerger, mergeItem, this);
     }
     else
     {
