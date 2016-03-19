@@ -2,7 +2,7 @@
 #include "Database/EventDatabase/setlist.h"
 
 #include <QLineEdit>
-#include <QComboBox>
+#include "setlistitemcombobox.h"
 #include "Database/EventDatabase/event.h"
 #include "Database/SongDatabase/songdatabase.h"
 
@@ -11,6 +11,9 @@
 #include "Commands/DatabaseCommands/databaseeditcommand.h"
 #include "Database/EventDatabase/setlistitem.h"
 #include "Project/project.h"
+
+
+#include <QTableView>
 
 SetlistViewItemDelegate::SetlistViewItemDelegate(QObject *parent) :
     QItemDelegate(parent)
@@ -24,7 +27,11 @@ QWidget* SetlistViewItemDelegate::createEditor(QWidget *parent, const QStyleOpti
     switch (itemFromIndex(index)->attribute("type").value<SetlistItem::Type>())
     {
     case SetlistItem::SongType:
-        return new QComboBox(parent);
+    {
+        SetlistItemComboBox* box = new SetlistItemComboBox(parent);
+//        box->setView(new QTableView(box));
+        return box;
+    }
     case SetlistItem::LabelType:
         return new QLineEdit(parent);
     default:
@@ -40,7 +47,7 @@ void SetlistViewItemDelegate::setEditorData(QWidget *editor, const QModelIndex &
     {
     case SetlistItem::SongType:
     {
-        QComboBox* comboBox = qobject_assert_cast<QComboBox*>(editor);
+        SetlistItemComboBox* comboBox = qobject_assert_cast<SetlistItemComboBox*>(editor);
         QList<Song*> availableSongs = item->database()->project()->songDatabase()->items();
         QStringList songLabels;
         for (const Song* song : availableSongs)
@@ -48,12 +55,10 @@ void SetlistViewItemDelegate::setEditorData(QWidget *editor, const QModelIndex &
             songLabels << song->label();
         }
         comboBox->addItems(songLabels);
-        comboBox->setEditable(true);
-        comboBox->setInsertPolicy(QComboBox::NoInsert);
 
         int index = availableSongs.indexOf(const_cast<Song*>(item->attribute("song").value<const Song*>()));
         comboBox->setCurrentIndex(index);
-        comboBox->lineEdit()->selectAll();
+        comboBox->selectAll();
     }
         break;
     case SetlistItem::LabelType:
@@ -73,13 +78,14 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
     {
     case SetlistItem::SongType:
     {
-        QComboBox* comboBox = qobject_assert_cast<QComboBox*>(editor);
+        SetlistItemComboBox* comboBox = qobject_assert_cast<SetlistItemComboBox*>(editor);
         QList<Song*> availableSongs = item->database()->project()->songDatabase()->items();
 
         int comboBoxIndex = comboBox->currentIndex();
         if (comboBoxIndex >= 0)
         {
             const Song* song = availableSongs[comboBoxIndex];
+            qDebug() << "set song" << song->attribute("title").toString() << song->attribute("artist").toString();
             if (item->attribute("song").value<const Song*>() != song)
             {
                 pushCommand( new SetlistItemChangeSongCommand(item, song));

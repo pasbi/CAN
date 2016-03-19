@@ -162,7 +162,8 @@ SOURCES += main.cpp\
     Merge/AttachmentMergeWidgets/chordpatternproxyattachmentmergewidget.cpp \
     Merge/combinesongsdialog.cpp \
     Merge/combinedatabaseitemsdialog.cpp \
-    Merge/combineeventsdialog.cpp
+    Merge/combineeventsdialog.cpp \
+    DatabaseView/ItemDelegates/setlistitemcombobox.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -299,7 +300,8 @@ HEADERS  += mainwindow.h \
     Merge/AttachmentMergeWidgets/chordpatternproxyattachmentmergewidget.h \
     Merge/combinesongsdialog.h \
     Merge/combinedatabaseitemsdialog.h \
-    Merge/combineeventsdialog.h
+    Merge/combineeventsdialog.h \
+    DatabaseView/ItemDelegates/setlistitemcombobox.h
 
 
 FORMS    += mainwindow.ui \

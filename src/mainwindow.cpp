@@ -1013,17 +1013,6 @@ void MainWindow::on_actionCopy_Indexed_Attachments_triggered()
     }
 }
 
-QBitArray resize(QBitArray old, int n)
-{
-    // remove only false-bits
-    for (int i = old.size(); i < n && i < old.size(); ++i)
-    {
-        Q_ASSERT(!old.at(i));
-    }
-    old.resize(n);
-    return old;
-}
-
 void MainWindow::on_actionEvents_triggered()
 {
     activateView(EventView);
@@ -1086,9 +1075,16 @@ void MainWindow::on_actionMerge_with_triggered()
     {
         return; // user aborted opening
     }
-
-    MergeDialog::performMerge(&m_project, filename, this);
-
+    else if ( !MergeDialog::performMerge(&m_project, filename, this) )
+    {
+        return; // user aborted merging
+    }
+    else
+    {
+        // merge was done.
+        m_project.setCanClose(false);
+        m_project.QUndoStack::clear();
+    }
 }
 
 
