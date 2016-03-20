@@ -58,13 +58,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    //TODO outsource load, save, etc. stuff into separate object that is handled by Application
+
     setWindowIcon( QIcon(":/icons/icons/01-elephant-icon.png") );
     app().setMainWindow( this );
     app().setProject( &m_project );
     createAttachmentActions();
 
     ui->setupUi(this);
+
+    QActionGroup* viewGroup = new QActionGroup(this);
+    viewGroup->addAction(ui->actionSongs);
+    viewGroup->addAction(ui->actionSong_Details);
+    viewGroup->addAction(ui->actionEvents);
+
     createLanguageMenu();
 
     QSettings settings;
@@ -197,6 +203,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( &m_project, &Project::eventDatabaseCommandPushed, [this]()
     {
         activateView(EventView);
+    });
+    connect( ui->viewSwitchWidget, &SwitchWidget::currentIndexChanged, [this](int index)
+    {
+        activateView(static_cast<View>(index));
     });
     activateView(static_cast<View>(preference<int>("View")));
 
@@ -1034,17 +1044,23 @@ void MainWindow::activateView(View view)
     if (view == SongView)
     {
         ui->stackedWidget->setCurrentIndex(0);
+        ui->actionSongs->setChecked(true);
+        ui->viewSwitchWidget->setCurrentIndex(0);
         static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setDetailedView(false);
     }
     else if (view ==  DetailedSongView)
     {
         ui->stackedWidget->setCurrentIndex(0);
+        ui->actionSong_Details->setChecked(true);
+        ui->viewSwitchWidget->setCurrentIndex(1);
         static_cast<SongTableView*>(ui->songDatabaseWidget->databaseView())->setDetailedView(true);
 
     }
     else if (view == EventView)
     {
+        ui->actionEvents->setChecked(true);
         ui->stackedWidget->setCurrentIndex(1);
+        ui->viewSwitchWidget->setCurrentIndex(2);
     }
 }
 

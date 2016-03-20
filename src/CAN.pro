@@ -163,7 +163,8 @@ SOURCES += main.cpp\
     Merge/combinesongsdialog.cpp \
     Merge/combinedatabaseitemsdialog.cpp \
     Merge/combineeventsdialog.cpp \
-    DatabaseView/ItemDelegates/setlistitemcombobox.cpp
+    DatabaseView/ItemDelegates/setlistitemcombobox.cpp \
+    switchwidget.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -301,7 +302,8 @@ HEADERS  += mainwindow.h \
     Merge/combinesongsdialog.h \
     Merge/combinedatabaseitemsdialog.h \
     Merge/combineeventsdialog.h \
-    DatabaseView/ItemDelegates/setlistitemcombobox.h
+    DatabaseView/ItemDelegates/setlistitemcombobox.h \
+    switchwidget.h
 
 
 FORMS    += mainwindow.ui \

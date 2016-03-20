@@ -31,7 +31,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QWidget" name="widget" native="true">
+     <widget class="SwitchWidget" name="viewSwitchWidget" native="true">
       <property name="minimumSize">
        <size>
         <width>0</width>
@@ -450,16 +450,25 @@
    </property>
   </action>
   <action name="actionEvents">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Events</string>
    </property>
   </action>
   <action name="actionSongs">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Songs</string>
    </property>
   </action>
   <action name="actionSong_Details">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Song Details</string>
    </property>
@@ -506,6 +515,12 @@
    <class>EventDatabaseWidget</class>
    <extends>QWidget</extends>
    <header>DatabaseView/EventDatabaseView/eventdatabasewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SwitchWidget</class>
+   <extends>QWidget</extends>
+   <header>switchwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
