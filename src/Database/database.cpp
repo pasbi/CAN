@@ -70,6 +70,7 @@ template<class T> int Database<T>::rowOf(const T* item) const
 
 template<class T> int Database<T>::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     Q_ASSERT(!parent.isValid());
     return m_items.length();
 }

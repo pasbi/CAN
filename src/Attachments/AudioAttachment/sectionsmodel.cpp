@@ -9,12 +9,14 @@ SectionsModel::SectionsModel(QObject *parent) :
 
 int SectionsModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     Q_ASSERT( !parent.isValid() );
     return 3; // caption, begin, end
 }
 
 int SectionsModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     Q_ASSERT( !parent.isValid() );
     return m_sections.length();
 }

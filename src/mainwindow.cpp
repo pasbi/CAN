@@ -48,8 +48,10 @@
 QString styleSheetContent()
 {
     QFile file(":/style/styles/stylesheet.qss");
+    bool openFailed = !file.open(QIODevice::ReadOnly);
 
-    Q_ASSERT( file.open(QIODevice::ReadOnly ));
+    Q_UNUSED( openFailed );
+    Q_ASSERT( !openFailed );
     return file.readAll();
 }
 

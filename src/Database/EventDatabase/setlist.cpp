@@ -25,6 +25,7 @@ Setlist::~Setlist()
 
 int Setlist::columnCount( const QModelIndex& parent ) const
 {
+    Q_UNUSED(parent);
     Q_ASSERT( !parent.isValid());
     return 2;
 }
