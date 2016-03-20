@@ -13,6 +13,11 @@ CombineDatabaseItemsDialog::CombineDatabaseItemsDialog(DatabaseMergerBase *merge
 {
     ui->setupUi(this);
 
+    setWindowTitle(tr("Combine <%1> with <%2>")
+                    .arg(mergeItem->master()->label())
+                    .arg(mergeItem->slave()->label()) );
+
+
     Q_ASSERT(mergeItem->origin() == MergeItem::Both);
 
     ui->attributesTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);

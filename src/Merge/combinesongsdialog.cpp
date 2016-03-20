@@ -15,7 +15,7 @@ CombineSongsDialog::CombineSongsDialog(DatabaseMergerBase* merger, MergeItem* me
     Q_ASSERT(childMerger);
     m_mergeListWidget->setDatabaseMerger( childMerger );
 
-    setDetailsPage(m_mergeListWidget, "&Attachments");
+    setDetailsPage(m_mergeListWidget, tr("&Attachments"));
 }
 
 CombineSongsDialog::~CombineSongsDialog()

@@ -187,7 +187,7 @@ void Application::handleProjectOpenError(OpenError error, const QString& filenam
     {
         if (error == CannotReadFileError)
         {
-            text = tr("Cannot open file %1 for reading").arg(filename);
+            text = tr("Cannot open file %1 for reading.").arg(filename);
         }
         else if (error == InvalidFileFormatError)
         {

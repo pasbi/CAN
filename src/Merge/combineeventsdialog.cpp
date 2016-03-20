@@ -13,7 +13,7 @@ CombineEventsDialog::CombineEventsDialog(DatabaseMergerBase *databaseMerger, Mer
 {
     QWidget* widget = new QWidget(this);
     ui->setupUi(widget);
-    setDetailsPage(widget, "&Setlist");
+    setDetailsPage(widget, tr("&Setlist"));
 
     mergeItem()->insertModifyDetail(MergeItem::ModifyDetail("setlist"));
 
