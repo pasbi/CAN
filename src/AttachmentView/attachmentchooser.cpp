@@ -14,7 +14,8 @@
 
 AttachmentChooser::AttachmentChooser(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AttachmentChooser)
+    ui(new Ui::AttachmentChooser),
+    m_currentSong(nullptr)
 {
     ui->setupUi(this);
     connect( ui->comboBox, static_cast< void (QComboBox::*)(int) >(&QComboBox::currentIndexChanged), [this](int index)

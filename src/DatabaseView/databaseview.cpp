@@ -8,7 +8,8 @@
 
 DatabaseViewBase::DatabaseViewBase(QWidget* parent) :
     Super(parent),
-    m_hud( new OverlayDecorator(this, 1000, this) )
+    m_hud( new OverlayDecorator(this, 1000, this) ),
+    m_filterEditMode(AppendFilter)
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);

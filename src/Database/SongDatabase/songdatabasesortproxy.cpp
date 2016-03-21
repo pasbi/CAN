@@ -2,7 +2,8 @@
 
 
 SongDatabaseSortProxy::SongDatabaseSortProxy(QObject *parent) :
-    Super(parent)
+    Super(parent),
+    m_hideInactives(false)
 {
     // filter all columns
     setFilterKeyColumn(-1);

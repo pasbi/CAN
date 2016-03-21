@@ -6,7 +6,8 @@
 #include "global.h"
 
 SwitchWidget::SwitchWidget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    m_currentIndex(0)
 {
     m_songLabel = tr("Songs");
     m_eventLabel = tr("Events");
