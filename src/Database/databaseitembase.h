@@ -35,7 +35,7 @@ protected:
     void addAttributeKey(const QString& key);
 
 private:
-    PedanticVariantMap m_attributes; //TODO private
+    PedanticVariantMap m_attributes;
 
     friend QDataStream& operator<<(QDataStream& out, const DatabaseItemBase* item);
     friend QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item);

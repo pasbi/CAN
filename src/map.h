@@ -105,10 +105,9 @@ template<class Key, class T>
 QDataStream& operator >> (QDataStream& in, PedanticMap<Key, T>& map)
 {
     QStringList keys;
-    in >> keys; //TODO unused value
+    in >> keys;
     in >> map.m_map;
 
-    //TODO theoretically, this check is not required. See Q_ASSERT below.
     if (map.keys().toSet().size() != map.keys().length())
     {
         map.m_keys.clear();

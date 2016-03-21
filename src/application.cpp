@@ -170,6 +170,8 @@ void Application::initPreferences()
     m_preferences.registerPreference( "defaultActionMergeSlave", new Preference(QVariant::fromValue(MergeItem::AddAction)));
     m_preferences.registerPreference( "defaultActionMergeModify", new Preference(QVariant::fromValue(MergeItem::UseMaster)));
     m_preferences.registerPreference( "MergeSimilarityThreshold", new Preference(0.9));
+    m_preferences.registerPreference( "setlistItemComboBoxHeight", new Preference(150));
+
 
 }
 

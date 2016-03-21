@@ -63,7 +63,6 @@ void SetlistItem::setSong(const Song *song)
     });
 }
 
-//TODO setlist item, song editing should be more user friendly (i.e. typing artist etc. instead of just title);
 QString SetlistItem::attributeDisplay(const QString &key) const
 {
     if (key == "song" || key == "type")

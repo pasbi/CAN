@@ -135,7 +135,7 @@ void SetlistItemComboBox::updatePopupSize()
         width = qMax(width, m_popupWidget->sizeHintForIndex(index).width());
     }
 
-    height = qMin(height, 150); //TODO preferences
+    height = qMin(height, preference<int>("setlistItemComboBoxHeight"));
 
     width += 20;
     m_popupWidget->setFixedSize(width, height);

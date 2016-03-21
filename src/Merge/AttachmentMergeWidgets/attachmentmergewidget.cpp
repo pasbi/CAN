@@ -32,9 +32,3 @@ AttachmentMergeWidget::AttachmentMergeWidget(MergeItem* mergeItem, QWidget *pare
 AttachmentMergeWidget::~AttachmentMergeWidget()
 {
 }
-
-
-void AttachmentMergeWidget::apply()
-{
-    //TODO
-}
