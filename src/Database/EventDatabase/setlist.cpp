@@ -194,10 +194,11 @@ void Setlist::copyItems(const DatabaseMimeData<SetlistItem>* setlistData, int ta
         int i = 0;
         for (DatabaseMimeData<SetlistItem>::IndexedItem item : setlistData->indexedItems())
         {
-            if (item.item->database() == this)
+            if (true || item.item->database() == this)
             {
                 // create a new setlist item and link `song` with it
                 SetlistItem* newItem = item.item->copy();
+                newItem->setDatabase(this);
                 pushCommand( new DatabaseNewItemCommand<SetlistItem>( this, newItem, targetRow + i ));
                 indexes << index(rowOf(newItem), 0);
                 i++;

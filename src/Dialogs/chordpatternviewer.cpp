@@ -436,3 +436,9 @@ void ChordPatternViewer::showEvent(QShowEvent *e)
 
     QDialog::showEvent(e);
 }
+
+void ChordPatternViewer::hideEvent(QHideEvent *e)
+{
+    Player::stopActivePlayer();
+    QDialog::hideEvent(e);
+}

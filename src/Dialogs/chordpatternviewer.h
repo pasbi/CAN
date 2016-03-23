@@ -62,6 +62,7 @@ protected:
     void wheelEvent(QWheelEvent *e);
     void keyPressEvent(QKeyEvent *e);
     void showEvent(QShowEvent *e);
+    void hideEvent(QHideEvent *e);
 };
 
 
