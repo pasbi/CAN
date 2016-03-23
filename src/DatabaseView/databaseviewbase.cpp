@@ -27,6 +27,7 @@ DatabaseViewBase::DatabaseViewBase(QWidget* parent) :
     {
         m_filterEditMode = OverwriteFilter;
     });
+
 }
 
 void DatabaseViewBase::mousePressEvent(QMouseEvent *event)
@@ -162,7 +163,6 @@ void DatabaseViewBase::enterEvent(QEvent *event)
 void DatabaseViewBase::setModel(QAbstractItemModel *model)
 {
     QAbstractItemModel* oldModel = Super::model();
-
     reConnect(oldModel, model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),              this, SIGNAL(changed()));
     reConnect(oldModel, model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),    this, SIGNAL(changed()));
     reConnect(oldModel, model, SIGNAL(rowsRemoved(QModelIndex,int,int)),                  this, SIGNAL(changed()));
@@ -171,5 +171,10 @@ void DatabaseViewBase::setModel(QAbstractItemModel *model)
     reConnect(oldModel, model, SIGNAL(columnsRemoved(QModelIndex,int,int)),               this, SIGNAL(changed()));
     reConnect(oldModel, model, SIGNAL(columnsInserted(QModelIndex,int,int)),              this, SIGNAL(changed()));
     reConnect(oldModel, model, SIGNAL(modelReset()), this, SIGNAL(changed()));
+    connect(model, &QAbstractItemModel::modelReset, [this]()
+    {
+        setFilter("");
+    });
+
     Super::setModel(model);
 }

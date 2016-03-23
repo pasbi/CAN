@@ -114,7 +114,6 @@ SOURCES += main.cpp\
     Commands/timerdecorator.cpp \
     Attachments/AudioAttachment/section.cpp \
     Program/midicommand.cpp \
-    DatabaseView/databaseview.cpp \
     Database/databasesortproxy.cpp \
     DatabaseView/databasewidget.cpp \
     DatabaseView/ItemDelegates/setlistviewitemdelegate.cpp \
@@ -164,7 +163,8 @@ SOURCES += main.cpp\
     Merge/combinedatabaseitemsdialog.cpp \
     Merge/combineeventsdialog.cpp \
     DatabaseView/ItemDelegates/setlistitemcombobox.cpp \
-    switchwidget.cpp
+    switchwidget.cpp \
+    DatabaseView/databaseviewbase.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -303,7 +303,8 @@ HEADERS  += mainwindow.h \
     Merge/combinedatabaseitemsdialog.h \
     Merge/combineeventsdialog.h \
     DatabaseView/ItemDelegates/setlistitemcombobox.h \
-    switchwidget.h
+    switchwidget.h \
+    DatabaseView/databaseviewbase.h
 
 
 FORMS    += mainwindow.ui \
