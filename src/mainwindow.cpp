@@ -383,6 +383,7 @@ void MainWindow::updateRecentProjects()
             }
         });
     }
+}
 
 void MainWindow::setCurrentPath(const QString &path)
 {
