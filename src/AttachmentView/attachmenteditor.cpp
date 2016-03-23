@@ -2,6 +2,8 @@
 
 #include <QHBoxLayout>
 #include <QScrollArea>
+#include <QPaintEvent>
+#include <QPainter>
 
 #include "Attachments/attachment.h"
 #include "attachmentview.h"
@@ -21,7 +23,7 @@ AttachmentEditor::AttachmentEditor(QWidget *parent) :
     m_scrollArea->setLayout( scrollAreaLayout );
     setAttachment( nullptr );
 
-
+    m_scrollArea->hide();
 }
 
 AttachmentView* createAttachmentView(Attachment* attachment)
@@ -60,10 +62,12 @@ void AttachmentEditor::setAttachment(Attachment *attachment)
             m_currentView = m_attachmentViews[attachment];
         }
         m_currentView->show();
+        m_scrollArea->show();
     }
     else
     {
         m_currentView = nullptr;
+        m_scrollArea->hide();
     }
 }
 
@@ -91,4 +95,10 @@ void AttachmentEditor::deactivateAttachmentView(const Attachment *attachment)
 AttachmentView* AttachmentEditor::currentAttachmentView() const
 {
     return m_currentView;
+}
+
+void AttachmentEditor::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+    painter.drawText(rect(), Qt::AlignCenter, tr("Please select a song."));
 }

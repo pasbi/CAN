@@ -28,6 +28,8 @@ private:
 signals:
     void focusAttachment( const Attachment* );
 
+protected:
+    void paintEvent(QPaintEvent *);
 };
 
 #endif // ATTACHMENTEDITOR_H

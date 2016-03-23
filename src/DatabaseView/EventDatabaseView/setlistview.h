@@ -31,6 +31,9 @@ private:
 protected:
     QAbstractItemDelegate* itemDelegate(const QModelIndex &index) const;
 
+protected:
+    void paintEvent(QPaintEvent *e);
+
 };
 
 #endif // SETLISTVIEW_H

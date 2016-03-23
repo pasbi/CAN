@@ -189,3 +189,16 @@ void SetlistView::select(QModelIndexList indexes)
         }
     }
 }
+
+void SetlistView::paintEvent(QPaintEvent *e)
+{
+    if (!sourceModel())
+    {
+        QPainter painter(this->viewport());
+        painter.drawText(rect(), Qt::AlignCenter, tr("Please select an event."));
+    }
+    else
+    {
+        DatabaseView::paintEvent(e);
+    }
+}

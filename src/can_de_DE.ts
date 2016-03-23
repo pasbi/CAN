@@ -320,6 +320,15 @@
     </message>
 </context>
 <context>
+    <name>AttachmentEditor</name>
+    <message>
+        <location filename="AttachmentView/attachmenteditor.cpp" line="103"/>
+        <source>Please select a song.</source>
+        <oldsource>Please select a song</oldsource>
+        <translation>Bitte wähle einen Song aus.</translation>
+    </message>
+</context>
+<context>
     <name>AudioAttachment</name>
     <message>
         <location filename="Attachments/AudioAttachment/audioattachment.cpp" line="10"/>
@@ -662,7 +671,7 @@ Do you want to keep it?</source>
 <context>
     <name>DatabaseViewBase</name>
     <message>
-        <location filename="DatabaseView/databaseview.cpp" line="77"/>
+        <location filename="DatabaseView/databaseviewbase.cpp" line="78"/>
         <source>Omit %1 %2</source>
         <translation>Verstecke %1 %2</translation>
     </message>
@@ -1224,59 +1233,59 @@ Think twice before you replace it.
     </message>
     <message>
         <location filename="mainwindow.ui" line="261"/>
-        <location filename="mainwindow.cpp" line="417"/>
+        <location filename="mainwindow.cpp" line="419"/>
         <source>Save As ...</source>
         <translation>Speichern unter ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="478"/>
+        <location filename="mainwindow.cpp" line="480"/>
         <source>Really close %1</source>
         <translation>%1 wirklich schließen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="479"/>
+        <location filename="mainwindow.cpp" line="481"/>
         <source>There are unsaved changes.</source>
         <translation>Es gibt ungespeicherte Änderungen.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="276"/>
-        <location filename="mainwindow.cpp" line="673"/>
-        <location filename="mainwindow.cpp" line="1110"/>
+        <location filename="mainwindow.cpp" line="674"/>
+        <location filename="mainwindow.cpp" line="1111"/>
         <source>Open ...</source>
         <translation>Öffnen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="698"/>
+        <location filename="mainwindow.cpp" line="699"/>
         <source>Song cannot be removed</source>
         <translation>Song kann nicht entfernt werden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="699"/>
+        <location filename="mainwindow.cpp" line="700"/>
         <source>This song is currently in use and can thus not be removed.</source>
         <translation>Diese Song wird momentan benutzt und kann deshalb nicht entfernt werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="710"/>
+        <location filename="mainwindow.cpp" line="711"/>
         <source>Add to index ...</source>
         <translation>Ordner zum Index hinzufügen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="962"/>
+        <location filename="mainwindow.cpp" line="963"/>
         <source>Remove Setlist Items</source>
         <translation>Entferne Setlist Einträge</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1005"/>
+        <location filename="mainwindow.cpp" line="1006"/>
         <source>Nothing copied</source>
         <translation>Nichts kopiert</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1005"/>
+        <location filename="mainwindow.cpp" line="1006"/>
         <source>You have not selected any file.</source>
         <translation>Du hast keine Datei ausgewählt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1040"/>
+        <location filename="mainwindow.cpp" line="1041"/>
         <source>Copying finished.
   Successfull:	%1
   Not overwritten:	%2
@@ -1297,12 +1306,12 @@ Think twice before you replace it.
         <translation>%1 &amp;wiederholen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="937"/>
+        <location filename="mainwindow.cpp" line="938"/>
         <source>All songs</source>
         <translation>Alle Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="785"/>
+        <location filename="mainwindow.cpp" line="786"/>
         <source>File index information</source>
         <translation>Informationen über Dateiindex</translation>
     </message>
@@ -1312,28 +1321,28 @@ Think twice before you replace it.
         <translation>CAN Dateien (*.can)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="438"/>
+        <location filename="mainwindow.cpp" line="440"/>
         <source>Save as ...</source>
         <translation>Speichern unter ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="439"/>
+        <location filename="mainwindow.cpp" line="441"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 existiert bereits. Möchtest du sie überschreiben?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="786"/>
+        <location filename="mainwindow.cpp" line="787"/>
         <source>Files: %1</source>
         <translation>Dateien: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="917"/>
+        <location filename="mainwindow.cpp" line="918"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="918"/>
+        <location filename="mainwindow.cpp" line="919"/>
         <source>Language changes will apply on next start.</source>
         <translation>Sprache ändert sich beim nächsten Start.</translation>
     </message>
@@ -1770,6 +1779,15 @@ Do you want to replace it?</source>
         <location filename="DatabaseView/EventDatabaseView/setlistitemselector.cpp" line="22"/>
         <source>Close</source>
         <translation>Schließen</translation>
+    </message>
+</context>
+<context>
+    <name>SetlistView</name>
+    <message>
+        <location filename="DatabaseView/EventDatabaseView/setlistview.cpp" line="198"/>
+        <source>Please select an event.</source>
+        <oldsource>Please select an event</oldsource>
+        <translation>Bitte wähle eine Event aus.</translation>
     </message>
 </context>
 <context>
