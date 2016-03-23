@@ -8,7 +8,7 @@
 KeyEditor::KeyEditor(QWidget *parent) :
     QLineEdit(parent)
 {
-    connect(this, &KeyEditor::textChanged, [this]()
+    connect(this, &KeyEditor::editingFinished, [this]()
     {
         setKey(Chord(text()));
     });
