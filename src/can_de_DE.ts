@@ -284,13 +284,13 @@
         <translation>dd.MM.yy HH:mm</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="190"/>
+        <location filename="application.cpp" line="194"/>
         <source>Cannot open file %1 for reading.</source>
         <oldsource>Cannot open file %1 for reading</oldsource>
         <translation>Kann %1 nicht um lesen öffnen.</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="194"/>
+        <location filename="application.cpp" line="198"/>
         <source>Invalid file: %1</source>
         <translation>Ungültige Datei: %1</translation>
     </message>
@@ -303,7 +303,7 @@
         <translation>Wähle Anlage.</translation>
     </message>
     <message>
-        <location filename="AttachmentView/attachmentchooser.cpp" line="26"/>
+        <location filename="AttachmentView/attachmentchooser.cpp" line="27"/>
         <source>No Attachment</source>
         <translation>Keine Anlage</translation>
     </message>
@@ -654,7 +654,7 @@ Do you want to keep it?</source>
 <context>
     <name>DatabaseBase</name>
     <message>
-        <location filename="Database/database.cpp" line="129"/>
+        <location filename="Database/database.cpp" line="130"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
@@ -662,7 +662,7 @@ Do you want to keep it?</source>
 <context>
     <name>DatabaseViewBase</name>
     <message>
-        <location filename="DatabaseView/databaseview.cpp" line="76"/>
+        <location filename="DatabaseView/databaseview.cpp" line="77"/>
         <source>Omit %1 %2</source>
         <translation>Verstecke %1 %2</translation>
     </message>
@@ -696,7 +696,7 @@ Do you want to keep it?</source>
 <context>
     <name>EventDatabase</name>
     <message numerus="yes">
-        <location filename="Database/EventDatabase/eventdatabase.cpp" line="41"/>
+        <location filename="Database/EventDatabase/eventdatabase.cpp" line="42"/>
         <source>Event(s)</source>
         <oldsource>%n Event(s)</oldsource>
         <translation>
@@ -810,473 +810,473 @@ Think twice before you replace it.
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="131"/>
+        <location filename="mainwindow.ui" line="132"/>
         <source>Tools.</source>
         <translation>Werkzeuge.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="134"/>
+        <location filename="mainwindow.ui" line="135"/>
         <source>&amp;Tools</source>
         <translation>&amp;Werkzeuge</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="142"/>
+        <location filename="mainwindow.ui" line="143"/>
         <source>Attachment related stuff.</source>
         <translation>Anhänge.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="145"/>
+        <location filename="mainwindow.ui" line="146"/>
         <source>&amp;Attachments</source>
         <translation>&amp;Anhänge</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="157"/>
+        <location filename="mainwindow.ui" line="158"/>
         <source>Edit.</source>
         <translation>Bearbeiten.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="160"/>
+        <location filename="mainwindow.ui" line="161"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="171"/>
+        <location filename="mainwindow.ui" line="172"/>
         <source>File index related stuff.</source>
         <translation>Dateiindex.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="174"/>
+        <location filename="mainwindow.ui" line="175"/>
         <source>F&amp;ile Index</source>
         <translation>Datei&amp;index</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="183"/>
+        <location filename="mainwindow.ui" line="184"/>
         <source>Event related stuff.</source>
         <translation>Events.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="186"/>
+        <location filename="mainwindow.ui" line="187"/>
         <source>E&amp;vents</source>
         <translation>E&amp;vents</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="194"/>
+        <location filename="mainwindow.ui" line="195"/>
         <source>Song related stuff.</source>
         <translation>Songs.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="197"/>
+        <location filename="mainwindow.ui" line="198"/>
         <source>&amp;Songs</source>
         <translation>&amp;Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="205"/>
+        <location filename="mainwindow.ui" line="206"/>
         <source>&amp;Language</source>
         <translation>&amp;Sprache</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="210"/>
+        <location filename="mainwindow.ui" line="211"/>
         <source>View</source>
         <translation>Ansicht</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="230"/>
+        <location filename="mainwindow.ui" line="231"/>
         <source>&amp;New Project</source>
         <translation>&amp;Neues Projekt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="233"/>
+        <location filename="mainwindow.ui" line="234"/>
         <source>Create a new empty project.</source>
         <translation>Erzeuge neues leeres Projekt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="245"/>
+        <location filename="mainwindow.ui" line="246"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="248"/>
+        <location filename="mainwindow.ui" line="249"/>
         <source>Save the current project.</source>
         <translation>Speichere dieses Project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="502"/>
+        <location filename="mainwindow.ui" line="507"/>
         <source>Merge with ...</source>
         <translation>Vereinige mit ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="263"/>
+        <location filename="mainwindow.ui" line="264"/>
         <source>Save the current project as.</source>
         <translation>Speichere dieses Projekt als ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="278"/>
+        <location filename="mainwindow.ui" line="279"/>
         <source>Open an existing project.</source>
         <translation>Öffne ein existierendes Projekt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="286"/>
+        <location filename="mainwindow.ui" line="287"/>
         <source>Index Info ...</source>
         <oldsource>Index Info</oldsource>
         <translation>Index Info ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="289"/>
+        <location filename="mainwindow.ui" line="290"/>
         <source>Information about the file index.</source>
         <translation>Informationen über den Index anzeigen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="297"/>
+        <location filename="mainwindow.ui" line="298"/>
         <source>Add Folder ...</source>
         <oldsource>Add Folder</oldsource>
         <translation>Ordner hinzufügen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="300"/>
+        <location filename="mainwindow.ui" line="301"/>
         <source>Add Folder to the file index.</source>
         <translation>Ordner zum Index hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="308"/>
+        <location filename="mainwindow.ui" line="309"/>
         <source>Clear Index</source>
         <translation>Index löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="311"/>
+        <location filename="mainwindow.ui" line="312"/>
         <source>Remove all files from file index.</source>
         <translation>Alle Dateien vom Index entfernen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="323"/>
+        <location filename="mainwindow.ui" line="324"/>
         <source>Delete Attachment</source>
         <oldsource>New Attachment </oldsource>
         <translation>Anlage löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="326"/>
+        <location filename="mainwindow.ui" line="327"/>
         <source>Delete Attachment selected attachment.</source>
         <oldsource>Add new attachment to a song.</oldsource>
         <translation>Lösche ausgewählte Anlage.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="444"/>
+        <location filename="mainwindow.ui" line="445"/>
         <source>Copy Indexed Attachments ...</source>
         <translation>Kopiere Dateien aus Attachments ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="449"/>
+        <location filename="mainwindow.ui" line="450"/>
         <source>Open recent ...</source>
         <translation>Zuletzt geöffnet ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="457"/>
+        <location filename="mainwindow.ui" line="458"/>
         <source>Events</source>
         <translation>Events</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="465"/>
+        <location filename="mainwindow.ui" line="466"/>
         <source>Songs</source>
         <translation>Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="473"/>
+        <location filename="mainwindow.ui" line="474"/>
         <source>Song Details</source>
         <translation>Song Details</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="481"/>
+        <location filename="mainwindow.ui" line="482"/>
         <source>Acoustic</source>
         <translation>Akustisch</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="489"/>
+        <location filename="mainwindow.ui" line="490"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="497"/>
+        <location filename="mainwindow.ui" line="498"/>
         <source>Hide inactives</source>
         <translation>Verstecke Inaktive</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="112"/>
-        <location filename="mainwindow.cpp" line="115"/>
+        <location filename="mainwindow.cpp" line="116"/>
+        <location filename="mainwindow.cpp" line="119"/>
         <source>&amp;Undo</source>
         <oldsource>Undo</oldsource>
         <translation>&amp;Rückgängig</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="341"/>
+        <location filename="mainwindow.ui" line="342"/>
         <source>Undo the last action.</source>
         <translation>Letze Änderung rückgängig machen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="113"/>
-        <location filename="mainwindow.cpp" line="116"/>
+        <location filename="mainwindow.cpp" line="117"/>
+        <location filename="mainwindow.cpp" line="120"/>
         <source>&amp;Redo</source>
         <oldsource>Redo</oldsource>
         <translation>&amp;Wiederholen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="356"/>
+        <location filename="mainwindow.ui" line="357"/>
         <source>Redo the last undone action.</source>
         <translation>Zuletzt rückgängig gemachte Änderung wiederholen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="368"/>
+        <location filename="mainwindow.ui" line="369"/>
         <source>Clone ...</source>
         <translation>Klonen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="371"/>
+        <location filename="mainwindow.ui" line="372"/>
         <source>Clone a repository.</source>
         <translation>Klone ein Repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="379"/>
+        <location filename="mainwindow.ui" line="380"/>
         <source>Open terminal</source>
         <translation>Terminal öffnen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="391"/>
+        <location filename="mainwindow.ui" line="392"/>
         <source>Rename Attachment ...</source>
         <translation>Anlage umbenennen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="439"/>
+        <location filename="mainwindow.ui" line="440"/>
         <source>&amp;Export all songs</source>
         <translation>&amp;Exportiere alle Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="394"/>
+        <location filename="mainwindow.ui" line="395"/>
         <source>Rename selected attachment.</source>
         <translation>Diese Anlage umbennen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="406"/>
+        <location filename="mainwindow.ui" line="407"/>
         <source>Duplicate Attachment</source>
         <translation>Anlage duplizieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="409"/>
+        <location filename="mainwindow.ui" line="410"/>
         <source>Duplicate selected attachment.</source>
         <translation>Diese Anlage duplizieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="417"/>
+        <location filename="mainwindow.ui" line="418"/>
         <source>Identites ...</source>
         <translation>Identitäten ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="420"/>
+        <location filename="mainwindow.ui" line="421"/>
         <source>Manage identities.</source>
         <translation>Identitäten verwalten.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="428"/>
+        <location filename="mainwindow.ui" line="429"/>
         <source>Preferences ...</source>
         <translation>Einstellungen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="431"/>
+        <location filename="mainwindow.ui" line="432"/>
         <source>Settings.</source>
         <translation>Einstellungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="121"/>
+        <location filename="mainwindow.cpp" line="125"/>
         <source>&amp;New Song</source>
         <translation>&amp;Neuer Song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="121"/>
+        <location filename="mainwindow.cpp" line="125"/>
         <source>Add a new song.</source>
         <translation>Neuen Song hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="122"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>&amp;Remove Song</source>
         <translation>Song &amp;löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="122"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>Remove selected song.</source>
         <translation>Lösche ausgewählten Song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="123"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>&amp;Copy Song</source>
         <translation>Song &amp;kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="123"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>Copy selected song.</source>
         <translation>Ausgewählten Song kopieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="124"/>
+        <location filename="mainwindow.cpp" line="128"/>
         <source>&amp;Paste Song</source>
         <translation>Song &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="124"/>
+        <location filename="mainwindow.cpp" line="128"/>
         <source>Paste song.</source>
         <translation>Song einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="127"/>
+        <location filename="mainwindow.cpp" line="131"/>
         <source>&amp;Edit Program</source>
         <translation>&amp;Program bearbeiten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="127"/>
+        <location filename="mainwindow.cpp" line="131"/>
         <source>Edit program.</source>
         <translation>Bearbeite das Program dieses Songs.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="130"/>
+        <location filename="mainwindow.cpp" line="134"/>
         <source>&amp;New Event</source>
         <translation>&amp;Neues Event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="130"/>
+        <location filename="mainwindow.cpp" line="134"/>
         <source>Add a new event.</source>
         <translation>Neues Event hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="131"/>
+        <location filename="mainwindow.cpp" line="135"/>
         <source>&amp;Remove Event</source>
         <translation>Event &amp;Löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="131"/>
+        <location filename="mainwindow.cpp" line="135"/>
         <source>Remove selected event.</source>
         <translation>Ausgewähltes Event löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="132"/>
+        <location filename="mainwindow.cpp" line="136"/>
         <source>&amp;Copy Event</source>
         <translation>Event &amp;Kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="132"/>
+        <location filename="mainwindow.cpp" line="136"/>
         <source>Copy selected event.</source>
         <translation>Kopiere selektiertes Event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="133"/>
+        <location filename="mainwindow.cpp" line="137"/>
         <source>&amp;Paste Event</source>
         <translation>Event &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="133"/>
+        <location filename="mainwindow.cpp" line="137"/>
         <source>Paste event.</source>
         <translation>Event einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="135"/>
+        <location filename="mainwindow.cpp" line="139"/>
         <source>&amp;New Item</source>
         <translation>&amp;Neues Element</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="135"/>
+        <location filename="mainwindow.cpp" line="139"/>
         <source>Insert new item</source>
         <translation>Neues Element einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="136"/>
+        <location filename="mainwindow.cpp" line="140"/>
         <source>&amp;Remove Item</source>
         <translation>Elemente &amp;entfernen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="136"/>
+        <location filename="mainwindow.cpp" line="140"/>
         <source>Delete selected items</source>
         <translation>Selektierte Elemente löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="137"/>
+        <location filename="mainwindow.cpp" line="141"/>
         <source>&amp;Copy Items</source>
         <translation>Elemente &amp;kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="137"/>
+        <location filename="mainwindow.cpp" line="141"/>
         <source>Copy selected items</source>
         <translation>Selektierte Elemente kopieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="138"/>
+        <location filename="mainwindow.cpp" line="142"/>
         <source>&amp;Paste Items</source>
         <translation>Elemente &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="138"/>
+        <location filename="mainwindow.cpp" line="142"/>
         <source>Paste items</source>
         <translation>Elemente einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="245"/>
+        <location filename="mainwindow.cpp" line="249"/>
         <source>New %1</source>
         <translation>Neues %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="311"/>
+        <location filename="mainwindow.cpp" line="315"/>
         <source>Unnamed</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="260"/>
-        <location filename="mainwindow.cpp" line="412"/>
+        <location filename="mainwindow.ui" line="261"/>
+        <location filename="mainwindow.cpp" line="417"/>
         <source>Save As ...</source>
         <translation>Speichern unter ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="455"/>
+        <location filename="mainwindow.cpp" line="478"/>
         <source>Really close %1</source>
         <translation>%1 wirklich schließen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="456"/>
+        <location filename="mainwindow.cpp" line="479"/>
         <source>There are unsaved changes.</source>
         <translation>Es gibt ungespeicherte Änderungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="275"/>
-        <location filename="mainwindow.cpp" line="650"/>
-        <location filename="mainwindow.cpp" line="1087"/>
+        <location filename="mainwindow.ui" line="276"/>
+        <location filename="mainwindow.cpp" line="673"/>
+        <location filename="mainwindow.cpp" line="1110"/>
         <source>Open ...</source>
         <translation>Öffnen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="675"/>
+        <location filename="mainwindow.cpp" line="698"/>
         <source>Song cannot be removed</source>
         <translation>Song kann nicht entfernt werden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="676"/>
+        <location filename="mainwindow.cpp" line="699"/>
         <source>This song is currently in use and can thus not be removed.</source>
         <translation>Diese Song wird momentan benutzt und kann deshalb nicht entfernt werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="687"/>
+        <location filename="mainwindow.cpp" line="710"/>
         <source>Add to index ...</source>
         <translation>Ordner zum Index hinzufügen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="939"/>
+        <location filename="mainwindow.cpp" line="962"/>
         <source>Remove Setlist Items</source>
         <translation>Entferne Setlist Einträge</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="982"/>
+        <location filename="mainwindow.cpp" line="1005"/>
         <source>Nothing copied</source>
         <translation>Nichts kopiert</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="982"/>
+        <location filename="mainwindow.cpp" line="1005"/>
         <source>You have not selected any file.</source>
         <translation>Du hast keine Datei ausgewählt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1017"/>
+        <location filename="mainwindow.cpp" line="1040"/>
         <source>Copying finished.
   Successfull:	%1
   Not overwritten:	%2
@@ -1287,44 +1287,59 @@ Think twice before you replace it.
   Fehler:		%3</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="102"/>
+        <location filename="mainwindow.cpp" line="106"/>
         <source>&amp;Undo %1</source>
         <translation>%1 &amp;rückgängig machen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="103"/>
+        <location filename="mainwindow.cpp" line="107"/>
         <source>&amp;Redo %1</source>
         <translation>%1 &amp;wiederholen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="914"/>
+        <location filename="mainwindow.cpp" line="937"/>
         <source>All songs</source>
         <translation>Alle Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="762"/>
+        <location filename="mainwindow.cpp" line="785"/>
         <source>File index information</source>
         <translation>Informationen über Dateiindex</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="763"/>
+        <location filename="mainwindow.cpp" line="48"/>
+        <source>CAN files (*.can)</source>
+        <translation>CAN Dateien (*.can)</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="438"/>
+        <source>Save as ...</source>
+        <translation>Speichern unter ...</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="439"/>
+        <source>%1 already exists.
+Do you want to replace it?</source>
+        <translation>%1 existiert bereits. Möchtest du sie überschreiben?</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="786"/>
         <source>Files: %1</source>
         <translation>Dateien: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="894"/>
+        <location filename="mainwindow.cpp" line="917"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="895"/>
+        <location filename="mainwindow.cpp" line="918"/>
         <source>Language changes will apply on next start.</source>
         <translation>Sprache ändert sich beim nächsten Start.</translation>
     </message>
     <message>
-        <location filename="mainwindow.h" line="57"/>
         <source>All files (*);;CAN files (*.can)</source>
-        <translation>Alle Dateien (*);;CAN Dateien (*.can)</translation>
+        <translation type="vanished">Alle Dateien (*);;CAN Dateien (*.can)</translation>
     </message>
 </context>
 <context>
@@ -1716,17 +1731,17 @@ Do you want to replace it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="116"/>
+        <location filename="Merge/mergedialog.cpp" line="115"/>
         <source>Merge successfull</source>
         <translation>Vereinigung erfolgreich</translation>
     </message>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="123"/>
+        <location filename="Merge/mergedialog.cpp" line="122"/>
         <source>Some Songs could not be removed since they are used.</source>
         <translation>Einige Songs konnten nicht entfernt werden weil sie noch benutzt werden.</translation>
     </message>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="124"/>
+        <location filename="Merge/mergedialog.cpp" line="123"/>
         <source>Please try to remove them manually.</source>
         <translation>Versuche sie manuell zu entfernen.</translation>
     </message>
@@ -1734,17 +1749,17 @@ Do you want to replace it?</source>
 <context>
     <name>Setlist</name>
     <message>
-        <location filename="Database/EventDatabase/setlist.cpp" line="157"/>
+        <location filename="Database/EventDatabase/setlist.cpp" line="158"/>
         <source>New Setlist Item</source>
         <translation>Neuen Setlist Eintrag</translation>
     </message>
     <message>
-        <location filename="Database/EventDatabase/setlist.cpp" line="192"/>
+        <location filename="Database/EventDatabase/setlist.cpp" line="193"/>
         <source>Copy Items</source>
         <translation>Einträge kopieren</translation>
     </message>
     <message>
-        <location filename="Database/EventDatabase/setlist.cpp" line="288"/>
+        <location filename="Database/EventDatabase/setlist.cpp" line="290"/>
         <source>SetlistItem</source>
         <translation>Setlist Item</translation>
     </message>
@@ -1821,52 +1836,52 @@ Do you want to replace it?</source>
 <context>
     <name>SongDatabase</name>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="91"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="92"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="93"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="94"/>
         <source>Artist</source>
         <translation>Artist</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="95"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="96"/>
         <source>Duration</source>
         <translation>Dauer</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="97"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="98"/>
         <source>Key</source>
         <translation>Tonart</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="99"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="100"/>
         <source>Labels</source>
         <translation>Label</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="101"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="102"/>
         <source>State</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="103"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="104"/>
         <source>Solos</source>
         <translation>Solos</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="105"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="106"/>
         <source>Singers</source>
         <translation>Sänger</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="107"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="108"/>
         <source>Comments</source>
         <translation>Kommentare</translation>
     </message>
     <message numerus="yes">
-        <location filename="Database/SongDatabase/songdatabase.cpp" line="182"/>
+        <location filename="Database/SongDatabase/songdatabase.cpp" line="183"/>
         <source>Song(s)</source>
         <translation>
             <numerusform>Song</numerusform>
@@ -1905,12 +1920,12 @@ Do you want to replace it?</source>
 <context>
     <name>SwitchWidget</name>
     <message>
-        <location filename="switchwidget.cpp" line="11"/>
+        <location filename="switchwidget.cpp" line="12"/>
         <source>Songs</source>
         <translation>Songs</translation>
     </message>
     <message>
-        <location filename="switchwidget.cpp" line="12"/>
+        <location filename="switchwidget.cpp" line="13"/>
         <source>Events</source>
         <translation>Events</translation>
     </message>

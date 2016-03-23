@@ -45,6 +45,8 @@
 #include "application.h"
 #include "Database/databasemimedata.h"
 
+const QString MainWindow::PROJECT_FILE_FILTER = MainWindow::tr("CAN files (*.can)");
+
 QString styleSheetContent()
 {
     QFile file(":/style/styles/stylesheet.qss");
@@ -409,22 +411,41 @@ QString MainWindow::proposedPath() const
 
 bool MainWindow::saveProjectAs()
 {
+
     QString filename =
     QFileDialog::getSaveFileName( this,
                                   tr("Save As ..."),
                                   proposedPath(),
-                                  filter()          );
+                                  PROJECT_FILE_FILTER,
+                                  nullptr,
+                                  QFileDialog::DontConfirmOverwrite ); // we implement own overwrite-check below.
     if (filename.isEmpty())
     {
         return false;
     }
     else
     {
-        QString ending = QString(".%1").arg(m_project.ending());
-        if (!filename.endsWith( ending ))
+        QString ending = "." + m_project.ending();
+        if (!filename.endsWith(ending))
         {
             filename.append(ending);
         }
+
+        if (QFileInfo(filename).exists())
+        {
+            QMessageBox::Button result =
+            QMessageBox::warning( this,
+                                  tr("Save as ..."),
+                                  tr("%1 already exists.\nDo you want to replace it?").arg(QFileInfo(filename).fileName()),
+                                  QMessageBox::Yes | QMessageBox::No,
+                                  QMessageBox::No );
+            if (result != QMessageBox::Yes)
+            {
+                // begin from start
+                return saveProjectAs();
+            }
+        }
+        // if  filename  does not exist or if we have permission to overwrite
         setCurrentPath(filename);
         return saveProject();
     }
@@ -651,7 +672,7 @@ void MainWindow::on_actionOpen_triggered()
     QFileDialog::getOpenFileName( this,
                                   tr("Open ..."),
                                   proposedPath(),
-                                  filter()              );
+                                  PROJECT_FILE_FILTER           );
     if (filename.isEmpty())
     {
         return; // user aborted opening
@@ -1088,7 +1109,7 @@ void MainWindow::on_actionMerge_with_triggered()
     QFileDialog::getOpenFileName( this,
                                   tr("Open ..."),
                                   proposedPath(),
-                                  filter()              );
+                                  PROJECT_FILE_FILTER  );
     if (filename.isEmpty())
     {
         return; // user aborted opening

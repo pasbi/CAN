@@ -54,7 +54,7 @@ private:
     bool canProjectClose();
     QString projectName() const;
     void setCurrentPath( const QString & path );
-    QString filter() const { return tr("All files (*);;CAN files (*.can)"); }
+    static const QString PROJECT_FILE_FILTER;
     QString proposedPath() const;
     QString m_currentPath;
     bool saveProject();
