@@ -344,10 +344,8 @@ bool MainWindow::saveProject()
     }
 }
 
-void MainWindow::setCurrentPath(const QString &path)
+void MainWindow::updateRecentProjects()
 {
-    m_currentPath = path;
-
     // get list of recent projects, update it and set it.
     QStringList recentProjects = preference<QStringList>("RecentProjects");
 
@@ -369,11 +367,11 @@ void MainWindow::setCurrentPath(const QString &path)
     {
         ui->actionOpen_recent->setMenu( new QMenu(this) );
     }
+
     ui->actionOpen_recent->menu()->clear();
     for (const QString& filename : recentProjects)
     {
-        QString name = QFileInfo(filename).baseName();
-        QAction* action = ui->actionOpen_recent->menu()->addAction(name);
+        QAction* action = ui->actionOpen_recent->menu()->addAction(filename);
         connect(action, &QAction::triggered, [filename, this, action]()
         {
             if (!this->open(filename))
@@ -381,12 +379,15 @@ void MainWindow::setCurrentPath(const QString &path)
                 QStringList recentProjects = preference<QStringList>("RecentProjects");
                 recentProjects.removeAll(filename);
                 setPreference("RecentProjects", recentProjects);
-                ui->actionOpen_recent->menu()->removeAction(action);
+                updateRecentProjects();
             }
         });
     }
 
-    ui->actionOpen_recent->setEnabled( ui->actionOpen_recent->menu() && ui->actionOpen_recent->menu()->actions().length() > 0 );
+void MainWindow::setCurrentPath(const QString &path)
+{
+    m_currentPath = path;
+    updateRecentProjects();
 }
 
 QString MainWindow::proposedPath() const
@@ -521,10 +522,9 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::loadDefaultProject()
 {
     QStringList recentProjects = preference<QStringList>("RecentProjects");
-    if (!recentProjects.isEmpty())
+    if (recentProjects.isEmpty() || !open(recentProjects.first()))
     {
-        setCurrentPath(recentProjects.first());
-        open( m_currentPath );
+        setCurrentPath("");
     }
 }
 

@@ -42,8 +42,8 @@ private slots:
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
     void on_actionDelete_Attachment_triggered();
-
     void on_actionNew_Project_triggered();
+    void updateRecentProjects();
 
 private:
     Ui::MainWindow *ui;
