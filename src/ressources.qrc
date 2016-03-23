@@ -50,6 +50,7 @@
         <file>icons/number41.png</file>
         <file>icons/songNoFile.png</file>
         <file>icons/songNotAvailable.png</file>
+        <file>icons/merge.png</file>
     </qresource>
     <qresource prefix="/translations">
         <file>can_de_DE.qm</file>
