@@ -248,7 +248,6 @@ void MergeListWidget::createContextMenu(const QPoint &pos)
 
 void MergeListWidget::setDatabaseMerger(DatabaseMergerBase *databaseMerger)
 {
-    qDebug() << "set Database Merger " << databaseMerger;
     Q_ASSERT(m_databaseMerger == nullptr);
     m_databaseMerger = databaseMerger;
 

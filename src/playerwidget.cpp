@@ -29,8 +29,6 @@ PlayerWidget::~PlayerWidget()
 
 void PlayerWidget::setPlayer(Player *player)
 {
-    qDebug() << "set player: " << (void*) player;
-    qDebug() << "set player: " << player;
     reConnect(m_player, player, SIGNAL(paused()), this, SLOT(pause()));
     reConnect(m_player, player, SIGNAL(started()), this, SLOT(start()));
     reConnect(m_player, player, SIGNAL(stopped()), this, SLOT(stop()));

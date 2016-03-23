@@ -85,7 +85,6 @@ void SetlistViewItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *
         if (comboBoxIndex >= 0)
         {
             const Song* song = availableSongs[comboBoxIndex];
-            qDebug() << "set song" << song->attribute("title").toString() << song->attribute("artist").toString();
             if (item->attribute("song").value<const Song*>() != song)
             {
                 pushCommand( new SetlistItemChangeSongCommand(item, song));

@@ -205,12 +205,10 @@ int SetlistItemComboBox::currentIndex() const
     if (!indexList.isEmpty())
     {
         int row = indexList.first().row();
-        qDebug() << "current index: " << row;
         return m_indexMap[row];
     }
     else
     {
-        qDebug() << "current index: null";
         return m_indexMap[0];
     }
 }
