@@ -79,12 +79,10 @@ protected:
 
 };
 
-Q_DECLARE_METATYPE(const Song*)
 //Do not register Song-stream operators. We never want to save song via QVariant!
+Q_DECLARE_METATYPE(const Song*)
 Q_DECLARE_METATYPE(Song::Label)
-REGISTER_META_TYPE_STREAM_OPERATORS(Song::Label, SongLabel)
 Q_DECLARE_METATYPE(Song::State)
-REGISTER_META_TYPE_STREAM_OPERATORS(Song::State, SongState)
 
 DECLARE_ENUM_STREAM_OPERATORS(Song::State)
 DECLARE_ENUM_STREAM_OPERATORS(Song::Label)

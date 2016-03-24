@@ -95,13 +95,12 @@ public:
 
 };
 
+Q_DECLARE_METATYPE(MergeItem::Action)
+Q_DECLARE_METATYPE(MergeItem::Decision)
+
 DECLARE_ENUM_STREAM_OPERATORS(MergeItem::Action)
 DECLARE_ENUM_STREAM_OPERATORS(MergeItem::Decision)
 
-Q_DECLARE_METATYPE(MergeItem::Action)
-Q_DECLARE_METATYPE(MergeItem::Decision)
-REGISTER_META_TYPE_STREAM_OPERATORS(MergeItem::Action, MergeItemAction)
-REGISTER_META_TYPE_STREAM_OPERATORS(MergeItem::Decision, MergeItemDecision)
 
 
 #endif // MERGEITEM_H

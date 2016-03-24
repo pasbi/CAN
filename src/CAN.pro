@@ -164,7 +164,8 @@ SOURCES += main.cpp\
     Merge/combineeventsdialog.cpp \
     DatabaseView/ItemDelegates/setlistitemcombobox.cpp \
     switchwidget.cpp \
-    DatabaseView/databaseviewbase.cpp
+    DatabaseView/databaseviewbase.cpp \
+    registermetatypes.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -304,7 +305,8 @@ HEADERS  += mainwindow.h \
     Merge/combineeventsdialog.h \
     DatabaseView/ItemDelegates/setlistitemcombobox.h \
     switchwidget.h \
-    DatabaseView/databaseviewbase.h
+    DatabaseView/databaseviewbase.h \
+    registermetatypes.h
 
 
 FORMS    += mainwindow.ui \

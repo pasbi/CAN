@@ -12,6 +12,19 @@ public:
 
     void setDetailedView(bool detailed);
     void setHideInactives(bool hide);
+
+protected:
+    void resizeEvent(QResizeEvent *event);
+    void hideEvent(QHideEvent* event);
+
+private slots:
+    void updateColumnWidths();
+    void restoreColumnWidths();
+    void storeColumnWidths();
+
+private:
+    bool m_detailsShown;
 };
+
 
 #endif // SONGTABLE_H

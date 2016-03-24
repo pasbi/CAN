@@ -31,31 +31,11 @@ enum OpenError { NoError, InvalidFileFormatError, CannotReadFileError };
 typedef qint32 EnumSurrogate_t;
 
 
-#define REGISTER_META_TYPE_STREAM_OPERATORS(TYPE, NAME) \
-    static struct NAME##RegisterMetaTypeStreamOperators_t \
-    { \
-        NAME##RegisterMetaTypeStreamOperators_t() \
-        { \
-            qRegisterMetaTypeStreamOperators<TYPE>(); \
-        } \
-    } NAME##RegisterMetaTypeStreamOperators;
-
-#define REGISTER_META_TYPE_COMPARE_OPERATORS(TYPE, NAME) \
-    static struct NAME##RegisterMetaTypeCompareOperators_t \
-    { \
-        NAME##RegisterMetaTypeCompareOperators_t() \
-        { \
-            if (!QMetaType::hasRegisteredComparators<TYPE>()) \
-            { \
-                QMetaType::registerComparators<TYPE>(); \
-            } \
-        } \
-    } NAME##RegisterMetaTypeCompareOperators;
 
 // this operator is non sense and you should never use it.
 // however, QMetaType::registerComparators() needs an implementation.
 #define DEFINE_NONSENSE_SMALLER_OPERATOR(TYPE) \
-    bool operator <(const TYPE&) const { return false; }
+    bool operator <(const TYPE&) const { Q_UNREACHABLE(); return false; }
 
 #define DECLARE_ENUM_STREAM_OPERATORS(TYPE) \
     QDataStream& operator<<(QDataStream& out, const TYPE& e); \

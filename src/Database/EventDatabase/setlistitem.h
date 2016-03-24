@@ -40,7 +40,7 @@ protected:
 
 Q_DECLARE_METATYPE(SetlistItem*)
 Q_DECLARE_METATYPE(SetlistItem::Type)
-REGISTER_META_TYPE_STREAM_OPERATORS(SetlistItem::Type, SetlistItemType)
+
 DECLARE_ENUM_STREAM_OPERATORS(SetlistItem::Type)
 
 #endif // SETLISTITEM_H

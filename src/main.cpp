@@ -1,3 +1,5 @@
+#include "registermetatypes.h"
+
 #include <QTranslator>
 #include <QMessageBox>
 #include <QLibraryInfo>
@@ -76,6 +78,8 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_WIN32
     ShowWindow( GetConsoleWindow(), SW_HIDE );
 #endif
+
+    RegisterMetaTypes();
 
     Application app( argc, argv );
 

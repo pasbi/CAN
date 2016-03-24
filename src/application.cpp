@@ -171,6 +171,7 @@ void Application::initPreferences()
     m_preferences.registerPreference( "defaultActionMergeModify", new Preference(QVariant::fromValue(MergeItem::UseMaster)));
     m_preferences.registerPreference( "MergeSimilarityThreshold", new Preference(0.9));
     m_preferences.registerPreference( "setlistItemComboBoxHeight", new Preference(150));
+    m_preferences.registerPreference( "songDetailColumnWidths", new Preference(QVariant::fromValue(QList<int>())));
 
     //TODO on Windows, qRegisterMetaTypeStreamOperators seems to have no effect if a derivation of QWidget
     // is used in the same project. Make sure that default preference is ((EnumType) 0)

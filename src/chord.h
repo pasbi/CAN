@@ -95,12 +95,11 @@ public:
     friend QDataStream& operator>>(QDataStream& in, Chord& chord);
 };
 
+Q_DECLARE_METATYPE(Chord)
+
 QDataStream& operator<<(QDataStream& out, const Chord& chord);
 QDataStream& operator>>(QDataStream& in, Chord& chord);
 QDebug& operator<<(QDebug& dbg, const Chord& chord);
 
-Q_DECLARE_METATYPE(Chord)
-REGISTER_META_TYPE_STREAM_OPERATORS(Chord, Chord)
-REGISTER_META_TYPE_COMPARE_OPERATORS(Chord, Chord)
 
 #endif // CHORD_H

@@ -49,7 +49,7 @@ private:
 };
 
 Q_DECLARE_METATYPE(Event::Type)
-REGISTER_META_TYPE_STREAM_OPERATORS(Event::Type, EventType)
+
 DECLARE_ENUM_STREAM_OPERATORS(Event::Type)
 
 
