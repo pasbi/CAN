@@ -284,13 +284,13 @@
         <translation>dd.MM.yy HH:mm</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="194"/>
+        <location filename="application.cpp" line="195"/>
         <source>Cannot open file %1 for reading.</source>
         <oldsource>Cannot open file %1 for reading</oldsource>
-        <translation>Kann %1 nicht um lesen öffnen.</translation>
+        <translation type="unfinished">Kann %1 nicht zum lesen öffnen.</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="198"/>
+        <location filename="application.cpp" line="199"/>
         <source>Invalid file: %1</source>
         <translation>Ungültige Datei: %1</translation>
     </message>

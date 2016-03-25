@@ -284,13 +284,13 @@
         <translation>MM/dd/yy hh:mm ap</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="194"/>
+        <location filename="application.cpp" line="195"/>
         <source>Cannot open file %1 for reading.</source>
         <oldsource>Cannot open file %1 for reading</oldsource>
         <translation>Cannot open file %1 for reading.</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="198"/>
+        <location filename="application.cpp" line="199"/>
         <source>Invalid file: %1</source>
         <translation>Invalid file: %1</translation>
     </message>
