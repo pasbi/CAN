@@ -65,6 +65,6 @@ void PDFAttachment::paint(PDFCreator* pdfCreator)
         doc->setRenderBackend( backendBefore );
     }
 #else
-    Q_UNUSED( attachment );
+    Q_UNUSED( pdfCreator );
 #endif
 }

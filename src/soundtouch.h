@@ -3,7 +3,9 @@
 
 #include <Qt>
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_ANDROID
+    //TODO
+#elif defined Q_OS_LINUX
     #include <soundtouch/SoundTouch.h>
     #define HAVE_SOUNDTOUCH
     extern "C"

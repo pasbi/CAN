@@ -4,6 +4,8 @@
 #
 #-------------------------------------------------
 
+message(CAN.pro)
+
 
 #1//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
@@ -20,26 +22,74 @@ TEMPLATE = app
 QMAKE_CXXFLAGS += -std=c++0x
 QMAKE_LFLAGS += -static-libgcc
 
-INCLUDEPATH += ../../Preferences/src
-unix {
+
+android {
+
+    #############
+    ## ANDROID
+    message(OS: Android)
+    INCLUDEPATH += ../../Preferences/src
+    CONFIG(debug, debug|release) {
+        LIBS += -L../../../../builds/Preferences/AndroidARM/Debug/
+    }
+    CONFIG(release, debug|release) {
+        LIBS += -L../../../../builds/Preferences/AndroidARM/Release/
+    }
+
+    ## Poppler
+    INCLUDEPATH += /usr/include/poppler/qt5/
     LIBS += -L/usr/local/lib -lpoppler-qt5
+
+    ## Soundtouch
     LIBS += -lavformat -lavcodec -lavutil -lpthread
     LIBS += -lSoundTouch
-}
 
-win32 {
-    INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
-    LIBS += -L../../lib -lpoppler-qt5
-    LIBS += -L../../bin -lavformat -lavcodec -lavutil
-    LIBS += -L../../bin -lsoundtouch
-}
+} else:unix {
 
-CONFIG(debug, debug|release) {
-    LIBS += -L../../Preferences/build-Preferences-Desktop-Debug/ -lPreferences
+    #############
+    ## UNIX
+    message(OS: Linux)
+
+    ## Preferences
+    INCLUDEPATH += ../../Preferences/src
+    CONFIG(debug, debug|release) {
+        LIBS += -L../../../../builds/Preferences/Linux64/Debug
+    }
+    CONFIG(release, debug|release) {
+        LIBS += -L../../../../builds/Preferences/Linux64/Release
+    }
+
+    ## Poppler
+    INCLUDEPATH += /usr/include/poppler/qt5/
+    LIBS += -L/usr/local/lib -lpoppler-qt5
+
+    ## Soundtouch
+    LIBS += -lavformat -lavcodec -lavutil -lpthread
+    LIBS += -lSoundTouch
+} else:windows {
+    message(OS: Windows)
+    CONFIG(debug, debug|release) {
+        LIBS += -L../../builds/Preferences/Win/Debug/
+    }
+    CONFIG(release, debug|release) {
+        LIBS += -L../../builds/Preferences/Win/Release/
+    }
+} else {
+    error(Unsupported OS)
 }
-CONFIG(release, debug|release) {
-    LIBS += -L../../Preferences/build-Preferences-Desktop-Release/ -lPreferences
-}
+LIBS += -lPreferences
+
+
+#unix:!android {
+#
+#}
+
+#win32 {
+#    INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
+#    LIBS += -L../../lib -lpoppler-qt5
+#    LIBS += -L../../bin -lavformat -lavcodec -lavutil
+#    LIBS += -L../../bin -lsoundtouch
+#}
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -344,3 +394,7 @@ RC_FILE = can.rc
 TRANSLATIONS += \
     can_en_US.ts \
     can_de_DE.ts
+
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_EXTRA_LIBS = /media/Volume/Safe/CAN-Project/CAN/src/../../builds/Preferences/AndroidARM/Release/libPreferences.so
+}
