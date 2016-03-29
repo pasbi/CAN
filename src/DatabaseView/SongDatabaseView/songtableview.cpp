@@ -57,8 +57,6 @@ SongTableView::SongTableView(QWidget *parent) :
     restoreColumnWidths();
     updateColumnWidths();
 
-
-
 }
 
 void SongTableView::setDetailedView(bool detailed)

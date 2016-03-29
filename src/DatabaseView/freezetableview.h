@@ -20,6 +20,7 @@ protected:
     void resizeEvent(QResizeEvent *event);
     QModelIndex moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers);
     void scrollTo(const QModelIndex &index, ScrollHint hint = EnsureVisible);
+    void actionEvent(QActionEvent *e);
 
 
 private:

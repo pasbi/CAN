@@ -18,11 +18,6 @@ public:
         m_proxy( proxyModel )
     {
         m_proxy->setParent(this);
-        setAutoScroll(true);
-        setContextMenuPolicy(Qt::ActionsContextMenu);
-        setAlternatingRowColors( true );
-        setEditTriggers( QAbstractItemView::DoubleClicked
-                       | QAbstractItemView::EditKeyPressed );
     }
 
     virtual ~DatabaseView()

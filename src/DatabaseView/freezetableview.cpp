@@ -1,6 +1,8 @@
 #include "freezetableview.h"
 #include <QHeaderView>
 #include <QScrollBar>
+#include "global.h"
+#include <QActionEvent>
 
 FreezeTableView::FreezeTableView(QWidget *parent) :
     Super(parent)
@@ -24,7 +26,6 @@ FreezeTableView::FreezeTableView(QWidget *parent) :
     setVerticalScrollMode(ScrollPerPixel);
     m_frozenTableView->setHorizontalScrollMode(ScrollPerPixel);
     m_frozenTableView->setVerticalScrollMode(ScrollPerPixel);
-    m_frozenTableView->setAlternatingRowColors(true);
     m_frozenTableView->horizontalHeader()->resize(width(), 100);
 
     m_frozenTableView->hide();
@@ -53,6 +54,13 @@ FreezeTableView::FreezeTableView(QWidget *parent) :
     {
         m_frozenTableView->horizontalHeader()->setSortIndicator(-1, Qt::DescendingOrder);
     });
+
+
+    setAutoScroll(true);
+    setAlternatingRowColors( true );
+    m_frozenTableView->setAlternatingRowColors(true);
+    setContextMenuPolicy(Qt::ActionsContextMenu);
+    m_frozenTableView->setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
 FreezeTableView::~FreezeTableView()
@@ -131,4 +139,22 @@ void FreezeTableView::setSelectionBehavior(SelectionBehavior behavior)
 {
     m_frozenTableView->setSelectionBehavior(behavior);
     Super::setSelectionBehavior(behavior);
+}
+
+void FreezeTableView::actionEvent(QActionEvent *e)
+{
+
+    if (e->type() == QEvent::ActionAdded)
+    {
+        m_frozenTableView->addAction(e->action());
+    }
+    else if (e->type() == QEvent::ActionRemoved)
+    {
+        m_frozenTableView->removeAction(e->action());
+    }
+    else
+    {
+        //Do nothing
+    }
+    Super::actionEvent(e);
 }
