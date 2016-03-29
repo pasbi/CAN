@@ -20,7 +20,7 @@ public slots:
     void open();
 
     bool isPaintable() const { return true; }
-    void paint(PDFCreator *pdfCreator);
+    void paint(AbstractRenderer *pdfCreator);
 
 
 private:

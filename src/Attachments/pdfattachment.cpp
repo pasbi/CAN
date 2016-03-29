@@ -31,7 +31,7 @@ void PDFAttachment::open()
 #endif
 }
 
-void PDFAttachment::paint(PDFCreator* pdfCreator)
+void PDFAttachment::paint(AbstractRenderer *pdfCreator)
 {
 #ifdef HAVE_POPPLER
     QPainter* painter = pdfCreator->currentPage()->painter();

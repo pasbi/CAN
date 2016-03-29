@@ -173,8 +173,14 @@ void Application::initPreferences()
     m_preferences.registerPreference( "setlistItemComboBoxHeight", new Preference(150));
     m_preferences.registerPreference( "songDetailColumnWidths", new Preference(QVariant::fromValue(QList<int>())));
 
+    //TODO make default value depend on screen resolution
+    m_preferences.registerPreference( "ImageRenderQuality", new Preference(InterfaceOptions(InterfaceOptions::SpinBox, tr("PDFCreator"), tr("Non PDF Quality")),
+                                                                           0.5, -2.0, 2.0, 0.1));
+
+
     //TODO on Windows, qRegisterMetaTypeStreamOperators seems to have no effect if a derivation of QWidget
     // is used in the same project. Make sure that default preference is ((EnumType) 0)
+    //TODO qRegisterMetaTypeStreamOperators has been moved. Check if this is still an issue.
 
 }
 

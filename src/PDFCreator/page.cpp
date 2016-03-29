@@ -1,5 +1,4 @@
 #include "page.h"
-#include "global.h"
 
 const double Page::MM_INCH = 25.4;
 

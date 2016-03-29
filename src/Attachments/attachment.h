@@ -4,7 +4,7 @@
 #include "creatable.h"
 #include "Database/databaseitem.h"
 
-class PDFCreator;
+class AbstractRenderer;
 class Song;
 class Attachment : public DatabaseItem<Attachment>, public Creatable
 {
@@ -35,7 +35,7 @@ public:
     virtual bool isPaintable() const { return false; }
 
     // this method cannot be pure virtual since an Attachment must not implement this.
-    virtual void paint(PDFCreator *);
+    virtual void paint(AbstractRenderer *);
 
     QString attributeDisplay(const QString &key) const;
 

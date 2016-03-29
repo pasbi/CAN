@@ -4,9 +4,6 @@
 #
 #-------------------------------------------------
 
-message(CAN.pro)
-
-
 #1//TODO pdfattachment seems to be rasterized before written in pdf.
 #       this is slow and stupid for obvious reasons.
 
@@ -27,7 +24,7 @@ android {
 
     #############
     ## ANDROID
-    message(OS: Android)
+    #message(OS: Android)
     INCLUDEPATH += ../../Preferences/src
     CONFIG(debug, debug|release) {
         LIBS += -L../../../../builds/Preferences/AndroidARM/Debug/
@@ -48,7 +45,7 @@ android {
 
     #############
     ## UNIX
-    message(OS: Linux)
+    #message(OS: Linux)
 
     ## Preferences
     INCLUDEPATH += ../../Preferences/src
@@ -67,7 +64,7 @@ android {
     LIBS += -lavformat -lavcodec -lavutil -lpthread
     LIBS += -lSoundTouch
 } else:windows {
-    message(OS: Windows)
+    #message(OS: Windows)
     CONFIG(debug, debug|release) {
         LIBS += -L../../builds/Preferences/Win/Debug/
     }
@@ -215,7 +212,8 @@ SOURCES += main.cpp\
     DatabaseView/ItemDelegates/setlistitemcombobox.cpp \
     switchwidget.cpp \
     DatabaseView/databaseviewbase.cpp \
-    registermetatypes.cpp
+    registermetatypes.cpp \
+    PDFCreator/abstractrenderer.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -356,7 +354,8 @@ HEADERS  += mainwindow.h \
     DatabaseView/ItemDelegates/setlistitemcombobox.h \
     switchwidget.h \
     DatabaseView/databaseviewbase.h \
-    registermetatypes.h
+    registermetatypes.h \
+    PDFCreator/abstractrenderer.h
 
 
 FORMS    += mainwindow.ui \

@@ -38,60 +38,26 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
     m_pos( 0 )
 {
     ui->setupUi(this);
+
+    // init timer and window
     m_playTimer = new QTimer( this );
     m_speed = attachment->scrollDownTempo();
     setWindowState( Qt::WindowFullScreen );
 
-#ifdef HAVE_POPPLER
-    Poppler::Document* document = nullptr;
-    { // open pdf document
-        QTemporaryFile file;
-        file.open();
-        PDFCreator::paintChordPatternAttachment( attachment, file.fileName() );
-        document = Poppler::Document::load( file.fileName() );
-    }
+    // render pixmap
+    m_pixmap = QPixmap::fromImage( AbstractRenderer::paintChordPatternAttachment(attachment) );
+    ui->label->setPixmap(m_pixmap);
 
-    { // display pdf
-    if (!document)
-    {
-        qWarning() << "document does not exist.";
-        return;
-    }
-
-    Poppler::Page* page;
-    if ( document->numPages() < 1 )
-    {
-        qWarning() << "no page in document.";
-        return;
-    }
-    else if (document->numPages() > 1)
-    {
-        qWarning() << "multiple pages in document. Displaying only first one.";
-    }
-
-    page = document->page( 0 );
-    m_pixmap = QPixmap::fromImage( page->renderToImage( 300, 300 ) );
-
-    ui->label->setPixmap( m_pixmap );
-    }
-
+    // apply zoom and speed
     m_zoom = preference<double>("ChordPatternViewZoom");
-
     QTimer::singleShot( 1, this, SLOT(applyZoom()) );
-
     applySpeed();
 
+    // start timer
     m_playTimer->setInterval( 50 );
     connect( m_playTimer, SIGNAL(timeout()), this, SLOT(on_playTimerTimeout()) );
 
-#else
-    QMessageBox::information( this,
-                              tr("Poppler is not available"),
-                              tr("It seems this application was build without poppler.\n"
-                                 "Thus, this feature is not available."));
-    QTimer::singleShot( 1, this, SLOT(reject()) );
-#endif
-
+    // send program
     int channel = preference<int>("Channel") - 1;
     if (channel >= 0)
     {

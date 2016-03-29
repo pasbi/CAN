@@ -62,7 +62,7 @@ QString Attachment::label() const
     return name();
 }
 
-void Attachment::paint(PDFCreator*)
+void Attachment::paint(AbstractRenderer*)
 {
     Q_UNIMPLEMENTED();
 }
