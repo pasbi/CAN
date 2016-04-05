@@ -12,6 +12,10 @@
 #include <windows.h>
 #endif
 
+#ifdef TEST_BUILD
+#include "tests/testbase.h"
+#endif
+
 
 void installTranslator()
 {
@@ -71,23 +75,45 @@ void installTranslator()
     }
 }
 
-
 int main(int argc, char *argv[])
 {
 
 #ifdef Q_OS_WIN32
     ShowWindow( GetConsoleWindow(), SW_HIDE );
 #endif
-
     RegisterMetaTypes();
-
     Application app( argc, argv );
 
-    installTranslator();
+    qDebug() << app.arguments();
 
-    MainWindow m;
-    m.show();
+#ifdef TEST_BUILD
+    bool runTests = (argc >= 2 && app.arguments().contains("--test"));
+    if (runTests)
+    {
+        Q_UNUSED(argc);
+        Q_UNUSED(argv);
+        TestBase::run();
+        return 0;
+    }
+#endif
 
-    return app.exec();
+#ifdef TEST_BUILD
+    if (!runTests)
+    {
+#endif
+
+    #ifdef RELEASE_BUILD // for debugging, it is inconvenient to see translated strings in the gui (cannot search those strings in code).
+            installTranslator();
+    #endif
+
+        MainWindow m;
+        m.show();
+        return app.exec();
+
+#ifdef TEST_BUILD
+    }
+#endif
+
+
 }
 

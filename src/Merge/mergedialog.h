@@ -18,6 +18,7 @@ public:
     explicit MergeDialog(Merge* merge, QWidget *parent = 0);
     ~MergeDialog();
     static bool performMerge(Project* master, const QString& slaveFilename, QWidget *parent = nullptr);
+    static bool performMerge(Project* master, Project* slave, QWidget *parent = nullptr);
 
 private slots:
     void on_buttonNext_clicked();

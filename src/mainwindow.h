@@ -109,6 +109,10 @@ private slots:
 
     void on_actionMerge_with_triggered();
 
+    void on_actionSync_triggered();
+
+    void on_actionOpen_cloud_file_triggered();
+
 private:
     void createLanguageMenu();
     void createAttachmentActions();

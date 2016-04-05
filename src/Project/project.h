@@ -4,7 +4,6 @@
 #include <QUndoStack>
 #include "global.h"
 
-
 class SongDatabase;
 class EventDatabase;
 class Command;
@@ -40,7 +39,6 @@ private:
     SongDatabase* m_songDatabase;
     EventDatabase* m_eventDatabase;
     bool m_canClose = true;
-    bool m_isSynchronized = false;
     bool m_commandFocalizesAffiliatedView;
 
 public:

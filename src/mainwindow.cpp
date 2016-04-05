@@ -12,6 +12,7 @@
 #include <QLabel>
 #include <QThread>
 #include <QMimeData>
+#include <QTemporaryFile>
 
 #include "ui_mainwindow.h"
 #include "util.h"
@@ -186,7 +187,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateActionsEnabled();
 
 
-    if (app().arguments().size() > 1)
+    if (app().arguments().size() > 1 && !app().arguments()[1].startsWith("--"))
     {
         QString filename = app().arguments()[1];
         setCurrentPath(filename);
@@ -216,6 +217,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     on_actionHide_inactives_triggered(preference<bool>("HideInactived"));
     ui->actionHide_inactives->setChecked(preference<bool>("HideInactived"));
+
+#ifdef ANDROID
+    ui->menuBar->hide();
+#endif
 
 }
 
@@ -349,10 +354,7 @@ void MainWindow::updateRecentProjects()
     // get list of recent projects, update it and set it.
     QStringList recentProjects = preference<QStringList>("RecentProjects");
 
-    if (!m_currentPath.isEmpty())
-    {
-        recentProjects.prepend(m_currentPath);
-    }
+    recentProjects.prepend(m_currentPath);
 
     recentProjects.removeDuplicates();
     while (recentProjects.length() > preference<int>("MaxRecentProjects"))
@@ -371,23 +373,27 @@ void MainWindow::updateRecentProjects()
     ui->actionOpen_recent->menu()->clear();
     for (const QString& filename : recentProjects)
     {
-        QAction* action = ui->actionOpen_recent->menu()->addAction(filename);
-        connect(action, &QAction::triggered, [filename, this, action]()
+        if (!filename.isEmpty())
         {
-            if (!this->open(filename))
+            QAction* action = ui->actionOpen_recent->menu()->addAction(filename);
+            connect(action, &QAction::triggered, [filename, this, action]()
             {
-                QStringList recentProjects = preference<QStringList>("RecentProjects");
-                recentProjects.removeAll(filename);
-                setPreference("RecentProjects", recentProjects);
-                updateRecentProjects();
-            }
-        });
+                if (!this->open(filename))
+                {
+                    QStringList recentProjects = preference<QStringList>("RecentProjects");
+                    recentProjects.removeAll(filename);
+                    setPreference("RecentProjects", recentProjects);
+                    updateRecentProjects();
+                }
+            });
+        }
     }
 }
 
 void MainWindow::setCurrentPath(const QString &path)
 {
     m_currentPath = path;
+
     updateRecentProjects();
 }
 
@@ -523,9 +529,22 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::loadDefaultProject()
 {
     QStringList recentProjects = preference<QStringList>("RecentProjects");
-    if (recentProjects.isEmpty() || !open(recentProjects.first()))
+
+    if (recentProjects.isEmpty())
     {
         setCurrentPath("");
+    }
+    else
+    {
+        QString filename = recentProjects.first();
+        if (filename.isEmpty() || !open(filename))
+        {
+            setCurrentPath("");
+        }
+        else
+        {
+            setCurrentPath(filename);
+        }
     }
 }
 
@@ -598,6 +617,7 @@ void MainWindow::updateActionsEnabled()
         m_actionPaste_SetlistItem->setEnabled( clipboard->hasFormat(DatabaseMimeData<SetlistItem>::mimeType())) ;
         m_actionPaste_Song->setEnabled( clipboard->hasFormat(DatabaseMimeData<Song>::mimeType()) );
     }
+
 }
 
 ////////////////////////////////////////////////
@@ -1125,6 +1145,16 @@ void MainWindow::on_actionMerge_with_triggered()
         m_project.setCanClose(false);
         m_project.QUndoStack::clear();
     }
+}
+
+void MainWindow::on_actionSync_triggered()
+{
+//TODO
+}
+
+void MainWindow::on_actionOpen_cloud_file_triggered()
+{
+//TODO
 }
 
 

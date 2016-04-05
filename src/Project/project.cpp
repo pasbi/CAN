@@ -158,6 +158,13 @@ QDataStream& operator>>(QDataStream& in, Project& project)
     stream >> project.m_songDatabase;
     stream >> project.m_eventDatabase;
 
+    if (!stream.atEnd()) //TODO  remove legacy check
+    {
+    }
+    else
+    {
+    }
+
     project.setCanClose(true);
 
     return in;

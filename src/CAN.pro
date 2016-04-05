@@ -9,7 +9,31 @@
 
 #//TODO crash when indexing
 
+CONFIG += test
+
 QT       += core gui multimedia
+
+android {
+    PLATFORM = AndroidARM
+} else:unix {
+    PLATFORM = Linux64
+} else:win32{
+    PLATFORM = Win
+}
+
+CONFIG(debug, debug|release) {
+    BUILD_CONFIG = Debug
+}
+CONFIG(release, debug|release) {
+    BUILD_CONFIG = Release
+}
+
+CONFIG(test) {
+    QT += testlib
+    DEFINES += TEST_BUILD
+    INCLUDEPATH += ../../builds/CAN/Linux64/Debug/ # we need to include the moc_*.cpp files
+}
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,19 +43,19 @@ TEMPLATE = app
 QMAKE_CXXFLAGS += -std=c++0x
 QMAKE_LFLAGS += -static-libgcc
 
+CONFIG(debug, debug|release) {
+    DEFINES += DEBUG_BUILD
+}
+CONFIG(release, debug|release) {
+    DEFINES += RELEASE_BUILD
+}
+
 
 android {
 
     #############
     ## ANDROID
     #message(OS: Android)
-    INCLUDEPATH += ../../Preferences/src
-    CONFIG(debug, debug|release) {
-        LIBS += -L../../../../builds/Preferences/AndroidARM/Debug/
-    }
-    CONFIG(release, debug|release) {
-        LIBS += -L../../../../builds/Preferences/AndroidARM/Release/
-    }
 
     ## Poppler
     INCLUDEPATH += /usr/include/poppler/qt5/
@@ -47,15 +71,6 @@ android {
     ## UNIX
     #message(OS: Linux)
 
-    ## Preferences
-    INCLUDEPATH += ../../Preferences/src
-    CONFIG(debug, debug|release) {
-        LIBS += -L../../../../builds/Preferences/Linux64/Debug
-    }
-    CONFIG(release, debug|release) {
-        LIBS += -L../../../../builds/Preferences/Linux64/Release
-    }
-
     ## Poppler
     INCLUDEPATH += /usr/include/poppler/qt5/
     LIBS += -L/usr/local/lib -lpoppler-qt5
@@ -64,31 +79,34 @@ android {
     LIBS += -lavformat -lavcodec -lavutil -lpthread
     LIBS += -lSoundTouch
 } else:windows {
-    #message(OS: Windows)
-    CONFIG(debug, debug|release) {
-        LIBS += -L../../builds/Preferences/Win/Debug/
-    }
-    CONFIG(release, debug|release) {
-        LIBS += -L../../builds/Preferences/Win/Release/
-    }
+
 } else {
     error(Unsupported OS)
 }
-LIBS += -lPreferences
+
+# Preferences
+INCLUDEPATH += ../../Preferences/src
+LIBS += -L../../../../builds/Preferences/$${PLATFORM}/$${BUILD_CONFIG} -lPreferences
+
+# libgit2
+INCLUDEPATH += ../libgit2/include
+LIBS += -L../../../../builds/libgit2/$${PLATFORM} -lgit2
 
 
-#unix:!android {
-#
-#}
+# Files
 
-#win32 {
-#    INCLUDEPATH += ../../libav-10.6-win32/win32/usr/include/
-#    LIBS += -L../../lib -lpoppler-qt5
-#    LIBS += -L../../bin -lavformat -lavcodec -lavutil
-#    LIBS += -L../../bin -lsoundtouch
-#}
+CONFIG(test) {
+    SOURCES += \
+        tests/testbase.cpp \
+        tests/gittest.cpp
 
-SOURCES += main.cpp\
+    HEADERS += \
+        tests/testbase.h \
+        tests/gittest.h
+}
+
+SOURCES += \
+    main.cpp \
     mainwindow.cpp \
     Project/project.cpp \
     Database/SongDatabase/songdatabase.cpp \
@@ -141,10 +159,6 @@ SOURCES += main.cpp\
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/audioslider.cpp \
     AttachmentView/IndexedFileAttachmentView/AudioAttachmentView/slider.cpp \
     Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.cpp \
-    combobox.cpp \
-    Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.cpp \
-    PDFCreator/page.cpp \
-    PDFCreator/pdfcreator.cpp \
     AttachmentView/looselines.cpp \
     Dialogs/chordpatternviewer.cpp \
     PDFCreator/orphantsetlist.cpp \
@@ -153,6 +167,10 @@ SOURCES += main.cpp\
     Attachments/ChordPatternAttachment/abstractchordpatternattachment.cpp \
     Dialogs/chordpatternviewerscrollarea.cpp \
     Dialogs/programdialog.cpp \
+    combobox.cpp \
+    Dialogs/IndexedFileChooseDialog/indexedfilechoosedialog.cpp \
+    PDFCreator/page.cpp \
+    PDFCreator/pdfcreator.cpp \
     Program/program.cpp \
     Commands/SongCommands/songeditprogramcommand.cpp \
     Program/midicontroller.cpp \
@@ -213,7 +231,8 @@ SOURCES += main.cpp\
     switchwidget.cpp \
     DatabaseView/databaseviewbase.cpp \
     registermetatypes.cpp \
-    PDFCreator/abstractrenderer.cpp
+    PDFCreator/abstractrenderer.cpp \
+    Project/githandler.cpp \
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -355,7 +374,8 @@ HEADERS  += mainwindow.h \
     switchwidget.h \
     DatabaseView/databaseviewbase.h \
     registermetatypes.h \
-    PDFCreator/abstractrenderer.h
+    PDFCreator/abstractrenderer.h \
+    Project/githandler.h \
 
 
 FORMS    += mainwindow.ui \

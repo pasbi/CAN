@@ -84,6 +84,49 @@ void MergeDialog::updateButtonText()
     ui->buttonCancel->setFixedWidth(buttonWidth);
 }
 
+bool MergeDialog::performMerge(Project *master, Project *slave, QWidget *parent)
+{
+    // create merger
+    Merge merge(master, slave);
+
+    // create dialog
+    MergeDialog dialog(&merge, parent);
+
+    // perform the merger
+    if ( dialog.exec() == QDialog::Accepted )
+    {
+        QList<const void*> undeletableItems;
+        merge.performMerge(undeletableItems);
+        if (undeletableItems.isEmpty())
+        {
+            QMessageBox::information( parent,
+                                      app().applicationName(),
+                                      QWidget::tr("Merge successfull"),
+                                      QMessageBox::Ok );
+            return true;
+        }
+        else
+        {
+            QStringList warningString;
+            warningString << QWidget::tr("Some Songs could not be removed since they are used.");
+            warningString << QWidget::tr("Please try to remove them manually.");
+            for (const void* item : undeletableItems)
+            {
+                warningString << "\n" + merge.labelItem(item);
+            }
+            QMessageBox::warning( parent,
+                                  app().applicationName(),
+                                  warningString.join("\n"),
+                                  QMessageBox::Ok );
+            return true;
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool MergeDialog::performMerge(Project *master, const QString &slaveFilename, QWidget* parent)
 {
     // try to open the slave project
@@ -97,41 +140,7 @@ bool MergeDialog::performMerge(Project *master, const QString &slaveFilename, QW
     }
     else
     {
-        // create merger
-        Merge merge(master, slave);
-
-        // create dialog
-        MergeDialog dialog(&merge, parent);
-
-        // perform the merger
-        if ( dialog.exec() == QDialog::Accepted )
-        {
-            QList<const void*> undeletableItems;
-            merge.performMerge(undeletableItems);
-            if (undeletableItems.isEmpty())
-            {
-                QMessageBox::information( parent,
-                                          app().applicationName(),
-                                          QWidget::tr("Merge successfull"),
-                                          QMessageBox::Ok );
-                success = true;
-            }
-            else
-            {
-                QStringList warningString;
-                warningString << QWidget::tr("Some Songs could not be removed since they are used.");
-                warningString << QWidget::tr("Please try to remove them manually.");
-                for (const void* item : undeletableItems)
-                {
-                    warningString << "\n" + merge.labelItem(item);
-                }
-                QMessageBox::warning( parent,
-                                      app().applicationName(),
-                                      warningString.join("\n"),
-                                      QMessageBox::Ok );
-                success = true;
-            }
-        }
+        success = performMerge(master, slave, parent);
     }
 
     delete slave;
