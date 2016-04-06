@@ -14,6 +14,7 @@ class GitHandler
     friend class GitTest;
 public:
     GitHandler();
+    ~GitHandler();
     void setURL(const QString& url);
     QString masterFilename() const;
     void setMasterFilename(const QString& filename);

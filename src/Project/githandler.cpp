@@ -6,6 +6,12 @@
 
 GitHandler::GitHandler()
 {
+    git_libgit2_init();
+}
+
+GitHandler::~GitHandler()
+{
+    git_libgit2_shutdown();
 }
 
 void GitHandler::setURL(const QString &url)
