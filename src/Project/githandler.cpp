@@ -2,7 +2,8 @@
 #include "git2.h"
 #include "global.h"
 
-#define EX_ASSERT( expr ) { int expressionErrorCode = (expr); Q_ASSERT(expressionErrorCode); Q_UNUSED(expressionErrorCode); }
+#define EX_ASSERT( expr ) { int code = (expr); Q_ASSERT(code); Q_UNUSED(code); }
+#define GIT_ASSERT( expr ) { int code = (expr); /*qDebug() << #expr << "terminated with code " << code; Q_ASSERT( code == 0 );*/ }
 
 GitHandler::GitHandler()
 {
@@ -55,25 +56,45 @@ QString GitHandler::remoteFilename(const QTemporaryDir& dir) const
     }
 }
 
-bool GitHandler::download()
+bool GitHandler::download(const QString& url, const QString& file, const QString& targetFilename)
 {
     QTemporaryDir dir;
     git_repository* repository = nullptr;
 
-    clone(repository, m_url, dir.path());
+    // clone the repo to a temp dir
+    clone(repository, url, dir.path());
 
-    if (QFileInfo(m_masterFilename).exists())
+    // try to delete target file if it exists.
+    if (QFileInfo(targetFilename).exists())
     {
-        if (!QFile(m_masterFilename).remove())
+        if (!QFile(targetFilename).remove())
         {
-            qWarning() << "cannot overwrite " << m_masterFilename;
+            qWarning() << "cannot overwrite " << targetFilename;
+
+            git_repository_free(repository);
+            repository = nullptr;
+
             return false;
         }
     }
 
-    if (!QFile(remoteFilename(dir)).copy(masterFilename()))
+    // check if source file exists
+    QString absoluteSourceFilepath = QDir(dir.path()).absoluteFilePath(file);
+    QFileInfo sourceFileInfo(absoluteSourceFilepath);
+    if (!sourceFileInfo.exists() || !sourceFileInfo.isFile())
     {
-        qWarning() << "cannot copy" << remoteFilename(dir) << "to" << masterFilename();
+        qWarning() << absoluteSourceFilepath << "is not a file.";
+
+        git_repository_free(repository);
+        repository = nullptr;
+
+        return false;
+    }
+
+    // copy the file
+    if (!QFile::copy(absoluteSourceFilepath, targetFilename))
+    {
+        qWarning() << "cannot copy" << remoteFilename(dir) << "->" << masterFilename();
         return false;
     }
 
@@ -108,7 +129,7 @@ int credential_cb( git_cred **out,
     QString loginName =  static_cast<const GitHandler::CredentialPayload*>(payload)->username;
     QString password  =  static_cast<const GitHandler::CredentialPayload*>(payload)->password;
 
-    EX_ASSERT(git_cred_userpass_plaintext_new( out, CSTR(loginName), CSTR(password) ) == 0);
+    GIT_ASSERT(git_cred_userpass_plaintext_new( out, CSTR(loginName), CSTR(password) ));
 
     return true;
 }
@@ -117,57 +138,82 @@ bool GitHandler::push(git_repository *repository, const QString& username, const
 {
     Q_ASSERT(repository);
 
-    git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
-    callbacks.credentials = credential_cb;
-
-    CredentialPayload payload(username, password);
-
-    callbacks.payload = &payload;
-
     git_remote* remote = nullptr;
     git_remote_lookup( &remote, repository, "origin" );
 
-    EX_ASSERT(git_remote_connect( remote, GIT_DIRECTION_PUSH, &callbacks, nullptr) == 0);
-
-    if (!git_remote_connected( remote ))
-    {
-        qWarning() << "connection not established.";
-
-        git_remote_free(remote);
-        remote = nullptr;
-
-        return false;
-    }
+    GIT_ASSERT(git_remote_connect( remote, GIT_DIRECTION_PUSH ));
 
     git_push_options options;
-    EX_ASSERT( git_push_init_options( &options, GIT_PUSH_OPTIONS_VERSION ) );
+    GIT_ASSERT( git_push_init_options( &options, GIT_PUSH_OPTIONS_VERSION ) );
 
-                           //"+refs/heads/*:refs/remotes/origin/*"
-                           //"refs/heads/master:refs/heads/master"
-    EX_ASSERT( git_remote_add_push( repository, "origin",  "refs/heads/master:refs/heads/master" ) );
+    GIT_ASSERT(git_remote_add_push( remote, "refs/heads/master:refs/heads/master" ) );
 
-    if (int error = git_remote_upload( remote, nullptr, &options ))
-    {
-        qWarning() << "Pushing failed: " << error;
+    git_signature* signature = nullptr;
+    GIT_ASSERT(git_signature_now(&signature, "name", "email"));
 
-        git_remote_free(remote);
-        remote = nullptr;
+    GIT_ASSERT(git_remote_push( remote, nullptr, &options, signature, "Push-Message"))
 
-        return false;
-    }
-    else
-    {
-        git_remote_free(remote);
-        remote = nullptr;
+    git_signature_free(signature);
+    signature = nullptr;
 
-        return true;
-    }
+    git_remote_free(remote);
+    remote = nullptr;
 
+    return true;
 }
 
-bool GitHandler::commit()
+bool GitHandler::commit(git_repository* repo, const QString& filename, const QString& message)
 {
+    // create tree
+    //create a tree from m_index
+    git_tree* tree = nullptr;
+    git_oid tree_id;
+    git_index* index = nullptr;
 
+    GIT_ASSERT(git_repository_index( &index, repo ));
+
+    if (QFileInfo(filename).isAbsolute())
+    {
+        qFatal("filename must be relative to repository root.");
+    }
+    GIT_ASSERT(git_index_add_bypath(index, CSTR(filename)));
+    GIT_ASSERT(git_index_write(index));
+
+    GIT_ASSERT(git_index_write_tree(&tree_id, index));
+    GIT_ASSERT(git_tree_lookup(&tree, repo, &tree_id));
+
+
+    git_signature *sig = nullptr;
+    GIT_ASSERT(git_signature_now(&sig, "Test-Commiter", "no@email.net"));
+
+    // look up parent
+    git_commit * parentCommit = nullptr;
+    git_oid oid_parent_commit;
+    GIT_ASSERT(git_reference_name_to_id(&oid_parent_commit, repo, "HEAD"));
+    GIT_ASSERT(git_commit_lookup( &parentCommit, repo, &oid_parent_commit));
+    Q_ASSERT(parentCommit);
+    const git_commit *parentCommits[] = {parentCommit};
+
+    git_oid new_commit_id;
+    GIT_ASSERT(git_commit_create(   &new_commit_id,
+                                    repo,
+                                    "HEAD",                      /* name of ref to update */
+                                    sig,                         /* author */
+                                    sig,                         /* committer */
+                                    "UTF-8",                     /* message encoding */
+                                    CSTR(message),               /* message */
+                                    tree,                        /* root tree */
+                                    1,                           /* parent count */
+                                    parentCommits                /* parents */   ) );
+
+
+
+
+    git_signature_free(sig);
+    git_commit_free(parentCommit);
+    git_tree_free(tree);
+
+    return true;
 }
 
 

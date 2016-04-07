@@ -40,7 +40,6 @@ template<class T> struct RegisterTest
 {
     RegisterTest()
     {
-        qDebug() << "register test";
         TestBase::registerTest<T>();
     }
 };

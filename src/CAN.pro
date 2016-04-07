@@ -89,8 +89,9 @@ INCLUDEPATH += ../../Preferences/src
 LIBS += -L../../../../builds/Preferences/$${PLATFORM}/$${BUILD_CONFIG} -lPreferences
 
 # libgit2
-INCLUDEPATH += ../libgit2/include
-LIBS += -L../../../../builds/libgit2/$${PLATFORM} -lgit2
+#INCLUDEPATH += ../libgit2/include
+#LIBS += -L../../../../builds/libgit2/$${PLATFORM}
+LIBS += -lgit2
 
 
 # Files

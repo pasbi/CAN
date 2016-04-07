@@ -25,7 +25,7 @@ public:
      * @brief download downloads (aka clones) the repository at url (@see setURL)
      * @return
      */
-    bool download();
+    bool download(const QString &url, const QString &file, const QString &targetFilename);
 
     /**
      * @brief sync performs pull, merge, commit, push.
@@ -40,10 +40,9 @@ private:
 
 //    bool pull(git_repository *repository);
     bool push(git_repository* repository, const QString &username, const QString &password);
-    bool commit();
+    bool commit(git_repository* repo, const QString& filename, const QString& message);
     bool merge();
     bool clone(git_repository *&repository, const QString& url, const QString& path);
-
 
 
 public:

@@ -84,8 +84,6 @@ int main(int argc, char *argv[])
     RegisterMetaTypes();
     Application app( argc, argv );
 
-    qDebug() << app.arguments();
-
 #ifdef TEST_BUILD
     bool runTests = (argc >= 2 && app.arguments().contains("--test"));
     if (runTests)
