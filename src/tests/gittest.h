@@ -12,15 +12,22 @@ class GitTest : public TestBase
 public:
     explicit GitTest();
 
-private slots:
+private:
     void clone();
     void download();
+private slots:
     void commitAndPush();
 
+
+    // helpers
 private:
     void download(GitHandler &git, const QString& url, const QString& path);
     static const QString URL;
     static const QString FILENAME;
+
+
+    static QString password();
+    static QString username();
 
 };
 

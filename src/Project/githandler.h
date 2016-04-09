@@ -3,6 +3,7 @@
 
 #include <QTemporaryDir>
 
+class git_cred;
 class git_repository;
 
 /**
@@ -25,7 +26,7 @@ public:
      * @brief download downloads (aka clones) the repository at url (@see setURL)
      * @return
      */
-    bool download(const QString &url, const QString &file, const QString &targetFilename);
+    bool download(const QString &url, const QString &file, const QString &targetFilename, const QString &username, const QString &password);
 
     /**
      * @brief sync performs pull, merge, commit, push.
@@ -40,9 +41,9 @@ private:
 
 //    bool pull(git_repository *repository);
     bool push(git_repository* repository, const QString &username, const QString &password);
-    bool commit(git_repository* repo, const QString& filename, const QString& message);
+    bool commit(git_repository* repo, const QString& filename, const QString &author, const QString &email, const QString& message);
     bool merge();
-    bool clone(git_repository *&repository, const QString& url, const QString& path);
+    bool clone(git_repository *&repository, const QString& url, const QString& path, const QString &username, const QString &password);
 
 
 public:
@@ -58,5 +59,6 @@ public:
         const QString password;
     };
 };
+
 
 #endif // GITHANDLER_H

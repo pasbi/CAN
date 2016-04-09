@@ -3,7 +3,7 @@
 #include "global.h"
 
 #define EX_ASSERT( expr ) { int code = (expr); Q_ASSERT(code); Q_UNUSED(code); }
-#define GIT_ASSERT( expr ) { int code = (expr); /*qDebug() << #expr << "terminated with code " << code; Q_ASSERT( code == 0 );*/ }
+#define GIT_ASSERT( expr ) { int code = (expr); qDebug() << #expr << "terminated with code " << code; Q_ASSERT( code == 0 ); }
 
 GitHandler::GitHandler()
 {
@@ -56,13 +56,13 @@ QString GitHandler::remoteFilename(const QTemporaryDir& dir) const
     }
 }
 
-bool GitHandler::download(const QString& url, const QString& file, const QString& targetFilename)
+bool GitHandler::download(const QString& url, const QString& file, const QString& targetFilename, const QString& username, const QString& password)
 {
     QTemporaryDir dir;
     git_repository* repository = nullptr;
 
     // clone the repo to a temp dir
-    clone(repository, url, dir.path());
+    clone(repository, url, dir.path(), username, password);
 
     // try to delete target file if it exists.
     if (QFileInfo(targetFilename).exists())
@@ -103,33 +103,46 @@ bool GitHandler::download(const QString& url, const QString& file, const QString
 
 #define CSTR(qstring) (qstring.toStdString().c_str())
 
-bool GitHandler::clone(git_repository* &repository, const QString &url, const QString &path)
-{
-    Q_ASSERT(repository == nullptr);
-
-    if (int error = git_clone( &repository, CSTR(url), CSTR(path), nullptr ))
-    {
-        qWarning() << "Clone error: " << error;
-        return false;
-    }
-
-    return true;
-}
-
-int credential_cb( git_cred **out,
-                   const char *url,
-                   const char *username_from_url,
-                   unsigned int allowed_types,
-                   void *payload                    )
+int credential_cb(git_cred **out, const char *url, const char *username_from_url, unsigned int allowed_types, void *payload)
 {
     Q_UNUSED( url );
     Q_UNUSED( username_from_url );
     Q_UNUSED( allowed_types );
+    Q_UNUSED( payload );
 
-    QString loginName =  static_cast<const GitHandler::CredentialPayload*>(payload)->username;
-    QString password  =  static_cast<const GitHandler::CredentialPayload*>(payload)->password;
+    QString username = static_cast<const GitHandler::CredentialPayload*>(payload)->username;
+    QString password = static_cast<const GitHandler::CredentialPayload*>(payload)->password;
 
-    GIT_ASSERT(git_cred_userpass_plaintext_new( out, CSTR(loginName), CSTR(password) ));
+    qDebug() << "use username and password: " << username << password;
+
+    GIT_ASSERT( git_cred_userpass_plaintext_new( out, CSTR(username), CSTR(password) ) );
+    return 0;
+}
+
+int transferProgress_cb(const git_transfer_progress *stats, void *payload)
+{
+    Q_UNUSED(payload);
+    qDebug() << "receiverd bytes: " << stats->received_bytes;
+    return 0;
+}
+
+bool GitHandler::clone(git_repository* &repository, const QString &url, const QString &path, const QString& username, const QString& password)
+{
+    qDebug() << "start clone... " << url << path << username << password;
+    Q_ASSERT(repository == nullptr);
+
+    CredentialPayload payload(username, password);
+
+    git_clone_options options = GIT_CLONE_OPTIONS_INIT;
+    options.fetch_opts.callbacks.credentials = credential_cb;
+    options.fetch_opts.callbacks.payload = &payload;
+    options.fetch_opts.callbacks.transfer_progress = transferProgress_cb;
+
+    if (int error = git_clone( &repository, CSTR(url), CSTR(path), &options ))
+    {
+        qWarning() << "Clone error: " << error;
+        return false;
+    }
 
     return true;
 }
@@ -141,20 +154,33 @@ bool GitHandler::push(git_repository *repository, const QString& username, const
     git_remote* remote = nullptr;
     git_remote_lookup( &remote, repository, "origin" );
 
-    GIT_ASSERT(git_remote_connect( remote, GIT_DIRECTION_PUSH ));
+    //setup callbacks
+    git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
+    callbacks.credentials = credential_cb;
+    CredentialPayload payload(username, password);
+    callbacks.payload = &payload;
+    callbacks.transfer_progress = &transferProgress_cb;
 
+    // setup options
     git_push_options options;
     GIT_ASSERT( git_push_init_options( &options, GIT_PUSH_OPTIONS_VERSION ) );
+    options.callbacks = callbacks;
 
-    GIT_ASSERT(git_remote_add_push( remote, "refs/heads/master:refs/heads/master" ) );
+    // setup refspecs
+    git_strarray refspecs;
+    refspecs.count = 1;
+    QString qrefspec("refs/heads/master:refs/heads/master");
+    char* refspec = new char[qrefspec.length()];
+    strcpy(refspec, qrefspec.toStdString().c_str());
+    refspecs.strings = &refspec;
 
-    git_signature* signature = nullptr;
-    GIT_ASSERT(git_signature_now(&signature, "name", "email"));
+//    delete[] refspec;
+//    refspec = nullptr;
+//    refspecs.strings = nullptr;
+//    refspecs.count = 0;
 
-    GIT_ASSERT(git_remote_push( remote, nullptr, &options, signature, "Push-Message"))
-
-    git_signature_free(signature);
-    signature = nullptr;
+    // do the push
+    GIT_ASSERT(git_remote_push( remote, &refspecs, &options));
 
     git_remote_free(remote);
     remote = nullptr;
@@ -162,7 +188,7 @@ bool GitHandler::push(git_repository *repository, const QString& username, const
     return true;
 }
 
-bool GitHandler::commit(git_repository* repo, const QString& filename, const QString& message)
+bool GitHandler::commit(git_repository* repo, const QString& filename, const QString& author, const QString& email, const QString& message)
 {
     // create tree
     //create a tree from m_index
@@ -184,7 +210,7 @@ bool GitHandler::commit(git_repository* repo, const QString& filename, const QSt
 
 
     git_signature *sig = nullptr;
-    GIT_ASSERT(git_signature_now(&sig, "Test-Commiter", "no@email.net"));
+    GIT_ASSERT(git_signature_now(&sig, CSTR(author), CSTR(email)));
 
     // look up parent
     git_commit * parentCommit = nullptr;
