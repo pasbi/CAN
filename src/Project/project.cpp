@@ -212,3 +212,8 @@ RemoteInfo Project::remoteInfo() const
 {
     return m_remoteInfo;
 }
+
+void Project::setRemoteInfo(const QString &url, const QString &filename)
+{
+    m_remoteInfo = RemoteInfo(url, filename);
+}

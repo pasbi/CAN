@@ -2,7 +2,8 @@
 #include "worker.h"
 
 Worker::Worker() :
-    QObject(nullptr)
+    QObject(nullptr),
+    m_error(false)
 {
     m_isFinished = false;
 }

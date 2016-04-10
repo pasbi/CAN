@@ -1151,31 +1151,35 @@ void MainWindow::on_actionMerge_with_triggered()
 
 void MainWindow::on_actionSync_triggered()
 {
-//    GitHandler git;
-//    RemoteInfo remote = m_project.remoteInfo();
+    GitHandler git;
+    RemoteInfo remote = m_project.remoteInfo();
 
-//    QString username = "username";
-//    QString password = "password";
+    //TODO ask for permission. abort otherwise.
+    saveProject();
 
-//    git.sync(remote.url(), remote.path(), m_currentPath, &m_project, username, password, this);
+
+    Q_ASSERT(remote.isValid());
+
+    if (GitDialog::sync(&git, remote.url(), remote.path(), m_currentPath, &m_project, this))
+    {
+        open(m_currentPath);    //reopen file
+    }
 }
 
 void MainWindow::on_actionOpen_cloud_file_triggered()
 {
     GitHandler git;
-    QString filename;
-    if (!GitDialog::download(&git, filename, this))
+    QString filename, url, saveFilename;
+    if (GitDialog::download(&git, url, filename, saveFilename, this))
     {
-        qDebug() << "download failed";
-        // error message is displayed in dialog.
-    }
-    else
-    {
-        qDebug() << "try to open " << filename;
-        if (!open(filename))
+        if (!open(saveFilename))
         {
-            QMessageBox::warning(this, qAppName(), tr("Could not open downloaded file: %1").arg(filename));
+            QMessageBox::warning(this, qAppName(), tr("Could not open downloaded file: %1").arg(saveFilename));
             newProject();
+        }
+        else
+        {
+            m_project.setRemoteInfo(url, filename);
         }
     }
 }

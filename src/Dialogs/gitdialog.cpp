@@ -2,11 +2,14 @@
 
 #include <QMessageBox>
 #include <QDateTime>
+#include <QTimer>
 
 #include "ui_gitdialog.h"
 #include "Project/githandler.h"
 #include "global.h"
 #include "git2.h"
+#include "Merge/mergedialog.h"
+#include "global.h"
 
 #define CSTR(qstring) (qstring.toStdString().c_str())
 #define EX_ASSERT( expr ) { int code = (expr); Q_ASSERT(code); Q_UNUSED(code); }
@@ -30,25 +33,14 @@ QString password()
 }
 
 
-GitDialog::GitDialog(Mode mode, GitHandler *git, QWidget *parent) :
+GitDialog::GitDialog(GitHandler *git, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GitDialog),
     m_git(git),
-    m_mode(mode),
     m_phase(Clone),
     m_numProgressDots(-1)
 {
     ui->setupUi(this);
-
-    if (mode == Sync)
-    {
-        ui->stackedWidget->setCurrentIndex(1);
-    }
-    else
-    {
-        ui->stackedWidget->setCurrentIndex(0);
-        connect(ui->downloadButton, SIGNAL(clicked()), this, SLOT(download()));
-    }
 
     connect(m_git, SIGNAL(bytesTransfered(qint64)), this, SLOT(updateBytesLabel(qint64)));
     connect(m_git, SIGNAL(objectsTransfered(uint,uint)), this, SLOT(updateObjectsLabel(uint,uint)));
@@ -62,6 +54,32 @@ GitDialog::GitDialog(Mode mode, GitHandler *git, QWidget *parent) :
     ui->usernameEdit->setText("oVooVo");
     ui->passwordEdit->setText(password());
 
+    ui->stackedWidget->setCurrentIndex(0);
+
+    connect(ui->downloadButton, SIGNAL(clicked()), this, SLOT(download()));
+}
+
+GitDialog::GitDialog(GitHandler *git, const QString& url, const QString& filename, const QString& masterFilename, Project* masterProject, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::GitDialog),
+    m_git(git),
+    m_phase(Clone),
+    m_numProgressDots(-1),
+    m_url(url),
+    m_filename(filename),
+    m_masterFilename(masterFilename),
+    m_masterProject(masterProject)
+{
+    ui->setupUi(this);
+
+    connect(m_git, SIGNAL(bytesTransfered(qint64)), this, SLOT(updateBytesLabel(qint64)));
+    connect(m_git, SIGNAL(objectsTransfered(uint,uint)), this, SLOT(updateObjectsLabel(uint,uint)));
+    updateBytesLabel(0);
+    updateObjectsLabel(0, 0);
+    ui->statusLabel->setText("");
+    ui->stackedWidget->setCurrentIndex(1);
+
+    QTimer::singleShot(1000, this, SLOT(sync()));
 }
 
 GitDialog::~GitDialog()
@@ -163,6 +181,105 @@ int pushTransferProgress_cb(unsigned int current, unsigned int total, size_t byt
     return 0;
 }
 
+bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, const QString& username, const QString& password, const QString& url)
+{
+    git_clone_options options = GIT_CLONE_OPTIONS_INIT;
+
+    options.fetch_opts.callbacks.credentials = credential_cb;
+    options.fetch_opts.callbacks.transfer_progress = transferProgress_cb;
+
+    GitHandler::Payload payload(m_git, username, password);
+    options.fetch_opts.callbacks.payload = &payload;
+
+    // clone the repo to a temp dir
+    qDebug() << "start clone: " << url << "--> " << tempDirPath;
+    m_git->startClone(repository, url, tempDirPath, &options);
+
+    m_numProgressDots = -1;
+    while (!m_git->isFinished() && !m_git->isAborted())
+    {
+        qDebug() << "clone loop";
+        qApp->processEvents();
+        ui->statusLabel->setText(tr("Downloading ") + progressDots());
+    }
+    m_git->killWorker();
+
+    bool success = true;
+
+    if (m_git->error())
+    {
+        ui->statusLabel->setText(tr("Cannot download ") + url);
+        qDebug() << "clone failed.";
+        success = false;
+    }
+
+    if (success && m_git->isAborted())
+    {
+        ui->statusLabel->setText(tr("Aborted by user"));
+        success = false;
+    }
+    else if (success)
+    {
+        Q_ASSERT(repository);
+    }
+
+    return success;
+}
+
+bool GitDialog::push(git_repository* repository)
+{
+    //setup callbacks
+    git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
+    callbacks.credentials = credential_cb;
+    GitHandler::Payload payload(m_git, "oVooVo", password());
+    callbacks.payload = &payload;
+    callbacks.push_transfer_progress = &pushTransferProgress_cb;
+
+    // setup options
+    git_push_options options;
+    GIT_ASSERT( git_push_init_options( &options, GIT_PUSH_OPTIONS_VERSION ) );
+    options.callbacks = callbacks;
+
+    // setup refspecs
+    git_strarray refspecs;
+    refspecs.count = 1;
+    QString qrefspec("refs/heads/master:refs/heads/master");
+    char* refspec = new char[qrefspec.length()];
+    strcpy(refspec, qrefspec.toStdString().c_str());
+    refspecs.strings = &refspec;
+
+    git_remote* remote = nullptr;
+    m_git->startPush(repository, remote, &refspecs, &options);
+
+    m_numProgressDots = -1;
+    while (!m_git->isFinished() && !m_git->isAborted())
+    {
+        qApp->processEvents();
+        ui->statusLabel->setText(tr("Uploading ") + progressDots());
+    }
+    m_git->killWorker();
+
+
+    bool success = true;
+
+    if (m_git->error())
+    {
+        ui->statusLabel->setText(tr("Cannot upload ") + m_url);
+        success = false;
+    }
+
+    if (success && m_git->isAborted())
+    {
+        ui->statusLabel->setText(tr("Aborted by user"));
+        success = false;
+    }
+
+    git_remote_free(remote);
+    remote = nullptr;
+
+    return success;
+}
+
 void GitDialog::download()
 {
     QString url = ui->urlEdit->text();
@@ -194,66 +311,24 @@ void GitDialog::download()
     QTemporaryDir dir;
     git_repository* repository = nullptr;
 
-    git_clone_options options = GIT_CLONE_OPTIONS_INIT;
-
-    options.fetch_opts.callbacks.credentials = credential_cb;
-    options.fetch_opts.callbacks.transfer_progress = transferProgress_cb;
-
-    GitHandler::Payload payload(m_git, ui->usernameEdit->text(), ui->passwordEdit->text());
-    options.fetch_opts.callbacks.payload = &payload;
-
-    // clone the repo to a temp dir
-    m_git->startClone(repository, url, dir.path(), &options);
-
-    m_numProgressDots = -1;
-    while (!m_git->isFinished() && !m_git->isAborted())
+    if (clone(repository, dir.path(), ui->usernameEdit->text(), ui->passwordEdit->text(), url))
     {
-        qApp->processEvents();
-        ui->statusLabel->setText(tr("Downloading ") + progressDots());
-    }
+        // copy file to correct place
+        QString absoluteSourceFilepath = QDir(dir.path()).absoluteFilePath(filename);
 
-
-    if (m_git->error())
-    {
-        ui->statusLabel->setText(tr("Cannot download ") + url);
-        if (repository)
+        if (!replaceFile(saveAs, absoluteSourceFilepath))
         {
-            git_repository_free(repository);
-            repository = nullptr;
+            ui->statusLabel->setText(tr("Cannot overwrite ") + saveAs);
         }
-        return;
-    }
-
-    if (m_git->isAborted())
-    {
-        if (repository)
+        else
         {
-            git_repository_free(repository);
-            repository = nullptr;
+            ui->statusLabel->setText(tr("Download finished."));
+            ui->buttonOk->setEnabled(true);
         }
-        return;
-    }
-    else
-    {
-        Q_ASSERT(repository);
-    }
-
-    m_git->killWorker();
-
-    // copy file to correct place
-    QString absoluteSourceFilepath = QDir(dir.path()).absoluteFilePath(filename);
-
-    if (!replaceFile(saveAs, absoluteSourceFilepath))
-    {
-        ui->statusLabel->setText(tr("Cannot overwrite ") + saveAs);
-        return;
     }
 
     git_repository_free(repository);
     repository = nullptr;
-
-    ui->statusLabel->setText(tr("Download finished."));
-    ui->buttonOk->setEnabled(true);
 }
 
 void GitDialog::updateBytesLabel(qint64 bytes)
@@ -290,18 +365,36 @@ void GitDialog::on_openFileDialog_clicked()
 
 }
 
-bool GitDialog::download(GitHandler *git, QString& filename, QWidget *parent)
+bool GitDialog::download(GitHandler *git, QString& url, QString& filename, QString& saveFilename, QWidget *parent)
 {
-    GitDialog dialog(Download, git, parent);
+    GitDialog dialog(git, parent);
     connect(dialog.ui->cancelTransferButton, SIGNAL(clicked()), git, SLOT(abort()));
     if (dialog.exec() == QDialog::Accepted)
     {
-        filename = dialog.ui->saveAsEdit->text();
+        saveFilename = dialog.ui->saveAsEdit->text();
+        url = dialog.ui->urlEdit->text();
+        filename = dialog.ui->filenameEdit->text();
         return !git->error();
     }
     else
     {
+        saveFilename = "";
+        url = "";
         filename = "";
+        return false;
+    }
+}
+
+bool GitDialog::sync(GitHandler *git, const QString& url, const QString& filename, const QString &masterFilename, Project *masterProject, QWidget *parent)
+{
+    GitDialog dialog(git, url, filename, masterFilename, masterProject, parent);
+    connect(dialog.ui->cancelTransferButton, SIGNAL(clicked()), git, SLOT(abort()));
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        return !git->error();
+    }
+    else
+    {
         return false;
     }
 }
@@ -339,4 +432,38 @@ void GitDialog::on_cancelTransferButton_clicked()
 {
     m_git->abort();
     reject();
+}
+
+void GitDialog::sync()
+{
+    QTemporaryDir dir;
+    git_repository* repository = nullptr;
+
+    if (clone(repository, dir.path(), "oVooVo", password(), m_url))
+    {
+        QString slaveFilename = QDir(dir.path()).absoluteFilePath(m_filename);
+        Q_ASSERT(QFileInfo(slaveFilename).isReadable());
+        if (MergeDialog::performMerge(m_masterProject, slaveFilename, this))
+        {
+            EX_ASSERT(replaceFile(slaveFilename, m_masterFilename));
+            EX_ASSERT( m_git->commit(repository, m_filename, "author", "author@email.com", "Commit-message") );
+
+            m_phase = Push;
+            if (push(repository))
+            {
+                if (!replaceFile(m_masterFilename, slaveFilename))
+                {
+                    ui->statusLabel->setText(tr("Cannot overwrite ") + m_masterFilename);
+                }
+                else
+                {
+                    ui->statusLabel->setText(tr("Download finished."));
+                    ui->buttonOk->setEnabled(true);
+                }
+            }
+        }
+    }
+
+    git_repository_free(repository);
+    repository = nullptr;
 }

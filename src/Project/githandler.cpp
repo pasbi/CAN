@@ -32,7 +32,6 @@ GitHandler::~GitHandler()
 
 void GitHandler::startClone(git_repository* &repository, const QString &url, const QString &path, const git_clone_options* options)
 {
-    m_error = false;
     m_abortFlag = false;
     Q_ASSERT(repository == nullptr);
 
@@ -43,42 +42,19 @@ void GitHandler::startClone(git_repository* &repository, const QString &url, con
     m_thread->start();
 }
 
-void GitHandler::startPush(git_repository *repository, git_remote* &remote, const QString& username, const QString& password)
+void GitHandler::startPush(git_repository *repository, git_remote* &remote, git_strarray* refspecs, const git_push_options* options)
 {
-//    Q_ASSERT(repository);
+    Q_ASSERT(repository);
 
-//    Q_ASSERT(remote == nullptr);
-//    git_remote_lookup( &remote, repository, "origin" );
+    Q_ASSERT(remote == nullptr);
+    git_remote_lookup( &remote, repository, "origin" );
 
-//    //setup callbacks
-//    git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
-//    callbacks.credentials = credential_cb;
-//    Payload payload(this, username, password);
-//    callbacks.payload = &payload;
-//    callbacks.push_transfer_progress = &pushTransferProgress_cb;
-
-//    // setup options
-//    git_push_options options;
-//    GIT_ASSERT( git_push_init_options( &options, GIT_PUSH_OPTIONS_VERSION ) );
-//    options.callbacks = callbacks;
-
-//    // setup refspecs
-//    git_strarray refspecs;
-//    refspecs.count = 1;
-//    QString qrefspec("refs/heads/master:refs/heads/master");
-//    char* refspec = new char[qrefspec.length()];
-//    strcpy(refspec, qrefspec.toStdString().c_str());
-//    refspecs.strings = &refspec;
-
-//    // do the push
-//    Q_ASSERT(m_worker == nullptr);
-//    m_worker = new PushWorker(remote, &refspecs, &options);
-////    m_worker->moveToThread(m_thread);
-////    QTimer::singleShot(1000, m_worker, SLOT(run()));
-////    connect(m_thread, SIGNAL(started()), m_worker, SLOT(run()));
-////    m_thread->start();
-
-//    //TODO free git_remote!
+    // do the push
+    Q_ASSERT(m_worker == nullptr);
+    m_worker = new PushWorker(remote, refspecs, options);
+    m_worker->moveToThread(m_thread);
+    connect(m_thread, SIGNAL(started()), m_worker, SLOT(run()));
+    m_thread->start();
 }
 
 bool GitHandler::commit(git_repository* repo, const QString& filename, const QString& author, const QString& email, const QString& message)
@@ -159,10 +135,10 @@ void GitHandler::killWorker()
 {
     if (m_worker)
     {
-//        abort();
         m_thread->exit();
         m_thread->wait();
 
+        m_error = m_worker->error();
         delete m_worker;
         m_worker = nullptr;
     }

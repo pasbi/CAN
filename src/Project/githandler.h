@@ -2,11 +2,8 @@
 #define GITHANDLER_H
 
 #include <QTemporaryDir>
+#include "git2.h" //TODO this should be implementation detail
 
-class git_cred;
-class git_repository;
-class git_clone_options;
-class git_remote;
 class Project;
 class Worker;
 
@@ -41,13 +38,11 @@ private:
     QThread* m_thread;
     Worker* m_worker;
     bool m_abortFlag;
-
-protected:
     bool m_error;
 
 public:
     bool commit(git_repository* repo, const QString& filename, const QString &author, const QString &email, const QString& message);
-    void startPush(git_repository* repository, git_remote* &remote, const QString &username, const QString &password);
+    void startPush(git_repository* repository, git_remote* &remote, git_strarray* refspecs, const git_push_options *options);
     void startClone(git_repository *&repository, const QString& url, const QString& path, const git_clone_options *options);
     bool isAborted() const;
     bool isFinished() const;

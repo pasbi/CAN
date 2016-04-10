@@ -24,6 +24,7 @@ public:
     QString ending() const { return "can"; }
 
     RemoteInfo remoteInfo() const;
+    void setRemoteInfo(const QString& url, const QString& filename);
 
 public slots:
     void pushCommand(Command* command);
