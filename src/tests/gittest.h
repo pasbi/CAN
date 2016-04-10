@@ -13,15 +13,16 @@ public:
     explicit GitTest();
 
 private:
-    void clone();
-    void download();
+//    void clone();
+//    void download();
+//    void commitAndPush();
 private slots:
-    void commitAndPush();
+//    void commitAndPushDetached();
 
 
     // helpers
 private:
-    void download(GitHandler &git, const QString& url, const QString& path);
+//    void download(GitHandler &git, const QString& url, const QString& path);
     static const QString URL;
     static const QString FILENAME;
 

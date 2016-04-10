@@ -45,6 +45,8 @@
 #include "Merge/mergedialog.h"
 #include "application.h"
 #include "Database/databasemimedata.h"
+#include "Project/githandler.h"
+#include "Dialogs/gitdialog.h"
 
 const QString MainWindow::PROJECT_FILE_FILTER = MainWindow::tr("CAN files (*.can)");
 
@@ -1149,12 +1151,33 @@ void MainWindow::on_actionMerge_with_triggered()
 
 void MainWindow::on_actionSync_triggered()
 {
-//TODO
+//    GitHandler git;
+//    RemoteInfo remote = m_project.remoteInfo();
+
+//    QString username = "username";
+//    QString password = "password";
+
+//    git.sync(remote.url(), remote.path(), m_currentPath, &m_project, username, password, this);
 }
 
 void MainWindow::on_actionOpen_cloud_file_triggered()
 {
-//TODO
+    GitHandler git;
+    QString filename;
+    if (!GitDialog::download(&git, filename, this))
+    {
+        qDebug() << "download failed";
+        // error message is displayed in dialog.
+    }
+    else
+    {
+        qDebug() << "try to open " << filename;
+        if (!open(filename))
+        {
+            QMessageBox::warning(this, qAppName(), tr("Could not open downloaded file: %1").arg(filename));
+            newProject();
+        }
+    }
 }
 
 

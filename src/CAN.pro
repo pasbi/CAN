@@ -234,6 +234,12 @@ SOURCES += \
     registermetatypes.cpp \
     PDFCreator/abstractrenderer.cpp \
     Project/githandler.cpp \
+    Project/remoteinfo.cpp \
+    Project/githandlerdetached.cpp \
+    Project/pushworker.cpp \
+    Project/cloneworker.cpp \
+    Project/worker.cpp \
+    Dialogs/gitdialog.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -377,6 +383,12 @@ HEADERS  += mainwindow.h \
     registermetatypes.h \
     PDFCreator/abstractrenderer.h \
     Project/githandler.h \
+    Project/remoteinfo.h \
+    Project/githandlerdetached.h \
+    Project/pushworker.h \
+    Project/cloneworker.h \
+    Project/worker.h \
+    Dialogs/gitdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -402,7 +414,8 @@ FORMS    += mainwindow.ui \
     Dialogs/textdialog.ui \
     Merge/mergedialog.ui \
     Merge/combinedatabaseitemsdialog.ui \
-    Merge/combineeventsdialog.ui
+    Merge/combineeventsdialog.ui \
+    Dialogs/gitdialog.ui
 
 
 RESOURCES += \

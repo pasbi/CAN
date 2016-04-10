@@ -131,6 +131,7 @@ QDataStream& operator<<(QDataStream& out, const Project& project)
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << project.m_songDatabase;
     stream << project.m_eventDatabase;
+    stream << project.m_remoteInfo;
 
     // stream KEY
     out << Project::SERIALIZE_KEY;
@@ -140,6 +141,7 @@ QDataStream& operator<<(QDataStream& out, const Project& project)
 
     // stream data itself
     out << data;
+
 
     return out;
 }
@@ -160,6 +162,7 @@ QDataStream& operator>>(QDataStream& in, Project& project)
 
     if (!stream.atEnd()) //TODO  remove legacy check
     {
+        stream >> project.m_remoteInfo;
     }
     else
     {
@@ -203,4 +206,9 @@ OpenError Project::openProject(const QString& filename)
         return NoError;
     }
     }
+}
+
+RemoteInfo Project::remoteInfo() const
+{
+    return m_remoteInfo;
 }

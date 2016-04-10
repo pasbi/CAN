@@ -5,56 +5,64 @@
 
 class git_cred;
 class git_repository;
+class git_clone_options;
+class git_remote;
+class Project;
+class Worker;
 
 /**
  * @brief The GitHandler class handles a remote git repository.
  *  download clones the repository to a temporary folder.
  */
-class GitHandler
+class GitHandler : public QObject
 {
-    friend class GitTest;
+    Q_OBJECT
+
 public:
+    enum Error { CannotConnect, User };
+
     GitHandler();
-    ~GitHandler();
-    void setURL(const QString& url);
-    QString masterFilename() const;
-    void setMasterFilename(const QString& filename);
-    QString remoteFilename(const QTemporaryDir& dir) const;
-    void setRemoteFilename(const QString& filename);
+    virtual ~GitHandler();
+    bool error() const;
 
-    /**
-     * @brief download downloads (aka clones) the repository at url (@see setURL)
-     * @return
-     */
-    bool download(const QString &url, const QString &file, const QString &targetFilename, const QString &username, const QString &password);
+public slots:
+    void abort();
+    void killWorker();
 
-    /**
-     * @brief sync performs pull, merge, commit, push.
-     * @return
-     */
-    bool sync();
+signals:
+    void bytesTransfered(qint64);
+    void objectsTransfered(uint, uint);
 
 private:
     QString m_url;
     QString m_masterFilename;
     QString m_remoteFilename;
 
-//    bool pull(git_repository *repository);
-    bool push(git_repository* repository, const QString &username, const QString &password);
-    bool commit(git_repository* repo, const QString& filename, const QString &author, const QString &email, const QString& message);
-    bool merge();
-    bool clone(git_repository *&repository, const QString& url, const QString& path, const QString &username, const QString &password);
+    QThread* m_thread;
+    Worker* m_worker;
+    bool m_abortFlag;
 
+protected:
+    bool m_error;
 
 public:
-    struct CredentialPayload
+    bool commit(git_repository* repo, const QString& filename, const QString &author, const QString &email, const QString& message);
+    void startPush(git_repository* repository, git_remote* &remote, const QString &username, const QString &password);
+    void startClone(git_repository *&repository, const QString& url, const QString& path, const git_clone_options *options);
+    bool isAborted() const;
+    bool isFinished() const;
+
+public:
+    struct Payload
     {
-        CredentialPayload(const QString& username, const QString& password) :
+        Payload(GitHandler* git, const QString& username, const QString& password) :
+            git(git),
             username(username),
             password(password)
         {
         }
 
+        GitHandler* git;
         const QString username;
         const QString password;
     };

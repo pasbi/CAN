@@ -1,5 +1,6 @@
 #include "gittest.h"
 #include "Project/githandler.h"
+#include "Project/githandlerdetached.h"
 
 DEFN_TEST(GitTest)
 
@@ -47,48 +48,48 @@ QString GitTest::username()
     return "oVooVo";
 }
 
-void GitTest::download(GitHandler &git, const QString &url, const QString &path)
-{
-    qint64 before = QDateTime::currentDateTime().toMSecsSinceEpoch();
-    QVERIFY( git.download(url, "test.can", path, username(), password()) );
-    qint64 after = QDateTime::currentDateTime().toMSecsSinceEpoch();
+//void GitTest::download(GitHandler &git, const QString &url, const QString &path)
+//{
+//    qint64 before = QDateTime::currentDateTime().toMSecsSinceEpoch();
+//    QVERIFY( git.download(url, "test.can", path, username(), password()) );
+//    qint64 after = QDateTime::currentDateTime().toMSecsSinceEpoch();
 
-    QFileInfo fileInfo(path);
+//    QFileInfo fileInfo(path);
 
-    QVERIFY(fileInfo.exists());
+//    QVERIFY(fileInfo.exists());
 
-    qint64 creationTimeStamp = fileInfo.created().toMSecsSinceEpoch();
-    // file timestamps have second-precision. So we cannot rely on milliseconds.
-    removeMilliseconds(creationTimeStamp);
-    removeMilliseconds(before);
-    removeMilliseconds(after);
-    QVERIFY(before <= creationTimeStamp && creationTimeStamp <= after);
-}
+//    qint64 creationTimeStamp = fileInfo.created().toMSecsSinceEpoch();
+//    // file timestamps have second-precision. So we cannot rely on milliseconds.
+//    removeMilliseconds(creationTimeStamp);
+//    removeMilliseconds(before);
+//    removeMilliseconds(after);
+//    QVERIFY(before <= creationTimeStamp && creationTimeStamp <= after);
+//}
 
-void GitTest::clone()
-{
-    QTemporaryDir tempDir;
-    QString tempDirPath = tempDir.path();
+//void GitTest::clone()
+//{
+////    QTemporaryDir tempDir;
+////    QString tempDirPath = tempDir.path();
 
-    GitHandler git;
+////    GitHandler git;
 
-    git_repository* repository = nullptr;
-    QVERIFY( git.clone(repository, URL, tempDirPath, username(), password()) );
+////    git_repository* repository = nullptr;
+////    QVERIFY( git.clone(repository, URL, tempDirPath, username(), password()) );
 
-    QFileInfo cloned(tempDirPath);
-    QVERIFY(cloned.exists());
-    QVERIFY(cloned.isDir());
-    QVERIFY(QDir(tempDirPath).entryList(QDir::Dirs | QDir::Hidden).contains(".git"));
-    QVERIFY(QDir(tempDirPath).entryList(QDir::Files).contains(FILENAME));
+////    QFileInfo cloned(tempDirPath);
+////    QVERIFY(cloned.exists());
+////    QVERIFY(cloned.isDir());
+////    QVERIFY(QDir(tempDirPath).entryList(QDir::Dirs | QDir::Hidden).contains(".git"));
+////    QVERIFY(QDir(tempDirPath).entryList(QDir::Files).contains(FILENAME));
 
-    tempDir.remove();
-}
+////    tempDir.remove();
+//}
 
-void GitTest::download()
-{
-    GitHandler git;
-    download(git, URL, QDir(PATH_PREFIX).absoluteFilePath(FILENAME));
-}
+//void GitTest::download()
+//{
+//    GitHandler git;
+//    download(git, URL, QDir(PATH_PREFIX).absoluteFilePath(FILENAME));
+//}
 
 void modifyFile(const QString& filename)
 {
@@ -98,22 +99,49 @@ void modifyFile(const QString& filename)
     file.close();
 }
 
-void GitTest::commitAndPush()
-{
-    GitHandler git;
-    QTemporaryDir dir;
+//void GitTest::commitAndPush()
+//{
+////    GitHandler git;
+////    QTemporaryDir dir;
 
-    qDebug() << dir.path();
+////    git_repository* repo = nullptr;
+////    QVERIFY(git.clone(repo, URL, dir.path(), username(), password()));
 
-    git_repository* repo = nullptr;
-    QVERIFY(git.clone(repo, URL, dir.path(), username(), password()));
+////    modifyFile(QDir(dir.path()).absoluteFilePath(FILENAME));
 
-    modifyFile(QDir(dir.path()).absoluteFilePath(FILENAME));
+////    QVERIFY(git.commit(repo, FILENAME, "testAuthor", "test@email.com", "test-commit"));
+////    QVERIFY(git.push(repo, username(), password()));
+//}
 
-    QVERIFY(git.commit(repo, FILENAME, "testAuthor", "test@email.com", "test-commit"));
-    QVERIFY(git.push(repo, username(), password()));
+//void GitTest::commitAndPushDetached()
+//{
+////    GitHandlerDetached git;
+////    QTemporaryDir dir;
 
-    qDebug() << "pushed!";
+////    git_repository* repo = nullptr;
+////    QVERIFY(git.clone(repo, URL, dir.path(), username(), password()));
 
-}
+////    while(!git.isFinished())
+////    {
+////        qDebug() << "wait for clone...";
+////        // run progress dialog
+////        QThread::msleep(200);
+////    }
+////    QVERIFY(!git.error());
+
+////    Q_ASSERT(repo);
+
+////    modifyFile(QDir(dir.path()).absoluteFilePath(FILENAME));
+
+////    QVERIFY(git.commit(repo, FILENAME, "testAuthor", "test@email.com", "test-commit"));
+////    QVERIFY(git.push(repo, username(), password()));
+
+////    qDebug() << "wait for push...";
+////    while (!git.isFinished())
+////    {
+////        QThread::msleep(200);
+////    }
+
+////    QVERIFY(!git.error());
+//}
 

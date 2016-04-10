@@ -3,6 +3,7 @@
 
 #include <QUndoStack>
 #include "global.h"
+#include "remoteinfo.h"
 
 class SongDatabase;
 class EventDatabase;
@@ -22,6 +23,8 @@ public:
 
     QString ending() const { return "can"; }
 
+    RemoteInfo remoteInfo() const;
+
 public slots:
     void pushCommand(Command* command);
     void reset();
@@ -40,6 +43,7 @@ private:
     EventDatabase* m_eventDatabase;
     bool m_canClose = true;
     bool m_commandFocalizesAffiliatedView;
+    RemoteInfo m_remoteInfo;
 
 public:
     bool canClose() const;
