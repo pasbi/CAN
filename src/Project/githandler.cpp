@@ -44,9 +44,10 @@ void GitHandler::startClone(git_repository* &repository, const QString &url, con
 
 void GitHandler::startPush(git_repository *repository, git_remote* &remote, git_strarray* refspecs, const git_push_options* options)
 {
-    Q_ASSERT(repository);
-
+    m_abortFlag = false;
+    Q_ASSERT(repository != nullptr);
     Q_ASSERT(remote == nullptr);
+
     git_remote_lookup( &remote, repository, "origin" );
 
     // do the push
@@ -126,7 +127,7 @@ bool GitHandler::isFinished() const
     return m_worker->isFinished();
 }
 
-void GitHandler::abort()
+void GitHandler::requestAbort()
 {
     m_abortFlag = true;
 }
@@ -143,6 +144,11 @@ void GitHandler::killWorker()
         delete m_worker;
         m_worker = nullptr;
     }
+}
+
+void GitHandler::abortPush(git_remote* remote)
+{
+    git_remote_stop(remote);
 }
 
 

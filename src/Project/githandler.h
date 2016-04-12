@@ -21,9 +21,10 @@ public:
     GitHandler();
     virtual ~GitHandler();
     bool error() const;
+    void abortPush(git_remote* remote);
 
 public slots:
-    void abort();
+    void requestAbort();
     void killWorker();
 
 signals:
@@ -42,7 +43,17 @@ private:
 
 public:
     bool commit(git_repository* repo, const QString& filename, const QString &author, const QString &email, const QString& message);
-    void startPush(git_repository* repository, git_remote* &remote, git_strarray* refspecs, const git_push_options *options);
+
+    /**
+     * @brief startPush starts the push in another thread.
+     *  Call @code isFinished to check if the pushing finished.
+     *  @code error returns whether an error occured.
+     * @param repository the repository
+     * @param[out] remote you must free the remote after the push finishes.
+     * @param refspecs
+     * @param options
+     */
+    void startPush(git_repository* repository, git_remote *&remote, git_strarray* refspecs, const git_push_options *options);
     void startClone(git_repository *&repository, const QString& url, const QString& path, const git_clone_options *options);
     bool isAborted() const;
     bool isFinished() const;
@@ -53,13 +64,15 @@ public:
         Payload(GitHandler* git, const QString& username, const QString& password) :
             git(git),
             username(username),
-            password(password)
+            password(password),
+            abortCloneRequested(false)
         {
         }
 
         GitHandler* git;
         const QString username;
         const QString password;
+        bool abortCloneRequested;
     };
 };
 

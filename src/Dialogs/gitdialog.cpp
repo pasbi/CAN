@@ -15,23 +15,32 @@
 #define EX_ASSERT( expr ) { int code = (expr); Q_ASSERT(code); Q_UNUSED(code); }
 #define GIT_ASSERT( expr ) { int code = (expr); Q_ASSERT( code == 0 ); }
 
-
-GitDialog::GitDialog(GitHandler *git, QWidget *parent) :
+GitDialog::GitDialog(GitHandler *git, Mode mode, const QString& url, const QString& filename, const QString& masterFilename, Project* masterProject, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GitDialog),
     m_git(git),
     m_phase(Clone),
-    m_mode(Download),
-    m_numProgressDots(-1)
+    m_mode(mode),
+    m_numProgressDots(-1),
+    m_url(url),
+    m_filename(filename),
+    m_masterFilename(masterFilename),
+    m_masterProject(masterProject)
 {
     ui->setupUi(this);
-
     connect(m_git, SIGNAL(bytesTransfered(qint64)), this, SLOT(updateBytesLabel(qint64)));
     connect(m_git, SIGNAL(objectsTransfered(uint,uint)), this, SLOT(updateObjectsLabel(uint,uint)));
     updateBytesLabel(0);
     updateObjectsLabel(0, 0);
-    ui->statusLabel->setText("");
 
+    ui->statusLabel->setText("");
+}
+
+GitDialog::GitDialog(GitHandler *git, QWidget *parent) :
+    GitDialog(git, Download, "", "", "", nullptr, parent)
+{
+
+    //TODO remove this
     ui->urlEdit->setText("https://github.com/oVooVo/Test");
     ui->filenameEdit->setText("test.can");
     ui->saveAsEdit->setText("/home/pascal/testfile.can");
@@ -44,29 +53,15 @@ GitDialog::GitDialog(GitHandler *git, QWidget *parent) :
 }
 
 GitDialog::GitDialog(GitHandler *git, const QString& url, const QString& filename, const QString& masterFilename, Project* masterProject, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::GitDialog),
-    m_git(git),
-    m_phase(Clone),
-    m_mode(Sync),
-    m_numProgressDots(-1),
-    m_url(url),
-    m_filename(filename),
-    m_masterFilename(masterFilename),
-    m_masterProject(masterProject)
+    GitDialog(git, Sync, url, filename, masterFilename, masterProject, parent )
 {
-    ui->setupUi(this);
-
-    connect(m_git, SIGNAL(bytesTransfered(qint64)), this, SLOT(updateBytesLabel(qint64)));
-    connect(m_git, SIGNAL(objectsTransfered(uint,uint)), this, SLOT(updateObjectsLabel(uint,uint)));
-    updateBytesLabel(0);
-    updateObjectsLabel(0, 0);
-    ui->statusLabel->setText("");
     ui->stackedWidget->setCurrentIndex(1);
 
     initUsernameComboBox();
     updateButtonStatus();
 }
+
+
 
 GitDialog::~GitDialog()
 {
@@ -129,20 +124,29 @@ int transferProgress_cb(const git_transfer_progress *stats, void *payload)
     static unsigned int oldTotal = 0;
     static size_t oldBytes = 0;
 
+    const GitHandler::Payload* payload_ = static_cast<const GitHandler::Payload*>(payload);
+
     if (oldBytes != stats->received_bytes)
     {
-        emit static_cast<const GitHandler::Payload*>(payload)->git->bytesTransfered(stats->received_bytes);
+        emit payload_->git->bytesTransfered(stats->received_bytes);
         oldBytes = stats->received_bytes;
     }
 
     if (oldCurrent != stats->received_objects || oldTotal != stats->total_objects)
     {
-        emit static_cast<const GitHandler::Payload*>(payload)->git->objectsTransfered(stats->received_objects, stats->total_objects);
+        emit payload_->git->objectsTransfered(stats->received_objects, stats->total_objects);
         oldCurrent = stats->received_objects;
         oldTotal = stats->total_objects;
     }
 
-    return 0;
+    if (payload_->abortCloneRequested)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 int pushTransferProgress_cb(unsigned int current, unsigned int total, size_t bytes, void* payload)
@@ -184,8 +188,12 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
     m_git->startClone(repository, url, tempDirPath, &options);
 
     m_numProgressDots = -1;
-    while (!m_git->isFinished() && !m_git->isAborted())
+    while (!m_git->isFinished())
     {
+        if (m_git->isAborted())
+        {
+            payload.abortCloneRequested = true;
+        }
         ui->statusLabel->setText(tr("Downloading ") + progressDots());
         qApp->processEvents();
     }
@@ -241,8 +249,12 @@ bool GitDialog::push(git_repository* repository)
     m_git->startPush(repository, remote, &refspecs, &options);
 
     m_numProgressDots = -1;
-    while (!m_git->isFinished() && !m_git->isAborted())
+    while (!m_git->isFinished())
     {
+        if (m_git->isAborted())
+        {
+            m_git->abortPush(remote);
+        }
         updateBytesLabel(0);
         updateObjectsLabel(0, 0);
         ui->statusLabel->setText(tr("Uploading ") + progressDots());
@@ -266,7 +278,6 @@ bool GitDialog::push(git_repository* repository)
     }
 
     git_remote_free(remote);
-    remote = nullptr;
 
     return success;
 }
@@ -334,6 +345,7 @@ void GitDialog::updateBytesLabel(qint64 bytes)
     {
         text = tr("Sent bytes: %1");
     }
+    qDebug() << "update label: " << text.arg(bytes);
     ui->transferedBytes->setText(text.arg(bytes));
 }
 
@@ -420,7 +432,7 @@ bool GitDialog::replaceFile(const QString& victim, const QString& newFile)
 
 void GitDialog::on_cancelButton_clicked()
 {
-    m_git->abort();
+    m_git->requestAbort();
     reject();
 }
 

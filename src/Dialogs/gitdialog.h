@@ -21,6 +21,9 @@ private:
     enum Mode { Download, Sync };
     GitDialog(GitHandler *git, QWidget *parent = 0);
     GitDialog(GitHandler *git, const QString& url, const QString& filename, const QString& masterFilename, Project* masterProject, QWidget *parent = 0);
+    GitDialog(GitHandler *git, Mode mode, const QString& url, const QString& filename, const QString& masterFilename, Project* masterProject, QWidget *parent);
+
+
 
 public:
     ~GitDialog();
