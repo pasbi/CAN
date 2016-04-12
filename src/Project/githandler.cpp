@@ -135,10 +135,11 @@ void GitHandler::killWorker()
 {
     if (m_worker)
     {
-        m_thread->exit();
+        m_thread->quit();
         m_thread->wait();
 
         m_error = m_worker->error();
+
         delete m_worker;
         m_worker = nullptr;
     }

@@ -235,7 +235,6 @@ SOURCES += \
     PDFCreator/abstractrenderer.cpp \
     Project/githandler.cpp \
     Project/remoteinfo.cpp \
-    Project/githandlerdetached.cpp \
     Project/pushworker.cpp \
     Project/cloneworker.cpp \
     Project/worker.cpp \
@@ -384,7 +383,6 @@ HEADERS  += mainwindow.h \
     PDFCreator/abstractrenderer.h \
     Project/githandler.h \
     Project/remoteinfo.h \
-    Project/githandlerdetached.h \
     Project/pushworker.h \
     Project/cloneworker.h \
     Project/worker.h \

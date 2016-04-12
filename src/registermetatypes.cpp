@@ -10,6 +10,9 @@
 
 Q_DECLARE_METATYPE(QList<int>)
 
+typedef QMap<QString, QString> QStringMap;
+Q_DECLARE_METATYPE(QStringMap)
+
 RegisterMetaTypes::RegisterMetaTypes()
 {
     qRegisterMetaTypeStreamOperators<Section>();
@@ -22,4 +25,7 @@ RegisterMetaTypes::RegisterMetaTypes()
     qRegisterMetaTypeStreamOperators<MergeItem::Decision>();
     qRegisterMetaTypeStreamOperators<Chord>();
     qRegisterMetaType<Chord>();
+
+    qRegisterMetaTypeStreamOperators<QStringMap>();
+
 }

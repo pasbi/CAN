@@ -17,7 +17,8 @@ class GitDialog : public QDialog
     Q_OBJECT
 
 private:
-    enum Phase { Clone, Push };
+    enum Phase { Clone, Push, Finished };
+    enum Mode { Download, Sync };
     GitDialog(GitHandler *git, QWidget *parent = 0);
     GitDialog(GitHandler *git, const QString& url, const QString& filename, const QString& masterFilename, Project* masterProject, QWidget *parent = 0);
 
@@ -34,12 +35,21 @@ private slots:
     void updateObjectsLabel(uint current, uint total);
     void updateBytesLabel(qint64 bytes);
     void on_openFileDialog_clicked();
+    void addCredentials();
+    void on_cancelButton_clicked();
+    void updateButtonStatus();
+    void on_nextButton_clicked();
+    void on_backButton_clicked();
+    void on_usernameComboBox_currentTextChanged(const QString &username);
 
-    void on_cancelTransferButton_clicked();
+    void on_deleteUserButton_clicked();
 
 private:
-    bool clone(git_repository *&repository, const QString& tempDirPath, const QString& username, const QString& password, const QString& url);
+    bool clone(git_repository *&repository, const QString& tempDirPath, const QString& url);
     bool push(git_repository* repository);
+
+    QString username() const;
+    QString password() const;
 
 private:
     Ui::GitDialog *ui;
@@ -47,6 +57,7 @@ private:
     QString m_bytesText;
     GitHandler* m_git;
     Phase m_phase;
+    Mode m_mode;
     void info(const QString& message);
     int m_numProgressDots;
     QString progressDots();
@@ -57,7 +68,7 @@ private:
     QString m_masterFilename;
     Project* m_masterProject;
 
-
+    void initUsernameComboBox();
     bool replaceFile(const QString& victim, const QString& newFile);
 };
 

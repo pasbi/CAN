@@ -15,29 +15,13 @@
 #define EX_ASSERT( expr ) { int code = (expr); Q_ASSERT(code); Q_UNUSED(code); }
 #define GIT_ASSERT( expr ) { int code = (expr); Q_ASSERT( code == 0 ); }
 
-QString password()
-{
-    // it is very likely for me to forget removing the password before commiting.
-    // Hence the password is stored in a file outside the repository. You must create
-    // this file manually or write the password into code.
-
-    QFile passwordFile("../../../../passwordfile");
-    bool canOpen = passwordFile.open(QIODevice::ReadOnly);
-    Q_ASSERT(canOpen);
-    QString password = passwordFile.readAll();
-    if (password.endsWith("\n"))
-    {
-        password = password.left(password.length() - 1);
-    }
-    return password;
-}
-
 
 GitDialog::GitDialog(GitHandler *git, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GitDialog),
     m_git(git),
     m_phase(Clone),
+    m_mode(Download),
     m_numProgressDots(-1)
 {
     ui->setupUi(this);
@@ -51,12 +35,12 @@ GitDialog::GitDialog(GitHandler *git, QWidget *parent) :
     ui->urlEdit->setText("https://github.com/oVooVo/Test");
     ui->filenameEdit->setText("test.can");
     ui->saveAsEdit->setText("/home/pascal/testfile.can");
-    ui->usernameEdit->setText("oVooVo");
-    ui->passwordEdit->setText(password());
 
     ui->stackedWidget->setCurrentIndex(0);
+    ui->usernameComboBox->lineEdit()->setPlaceholderText(tr("Username"));
 
-    connect(ui->downloadButton, SIGNAL(clicked()), this, SLOT(download()));
+    initUsernameComboBox();
+    updateButtonStatus();
 }
 
 GitDialog::GitDialog(GitHandler *git, const QString& url, const QString& filename, const QString& masterFilename, Project* masterProject, QWidget *parent) :
@@ -64,6 +48,7 @@ GitDialog::GitDialog(GitHandler *git, const QString& url, const QString& filenam
     ui(new Ui::GitDialog),
     m_git(git),
     m_phase(Clone),
+    m_mode(Sync),
     m_numProgressDots(-1),
     m_url(url),
     m_filename(filename),
@@ -79,7 +64,8 @@ GitDialog::GitDialog(GitHandler *git, const QString& url, const QString& filenam
     ui->statusLabel->setText("");
     ui->stackedWidget->setCurrentIndex(1);
 
-    QTimer::singleShot(1000, this, SLOT(sync()));
+    initUsernameComboBox();
+    updateButtonStatus();
 }
 
 GitDialog::~GitDialog()
@@ -181,26 +167,27 @@ int pushTransferProgress_cb(unsigned int current, unsigned int total, size_t byt
     return 0;
 }
 
-bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, const QString& username, const QString& password, const QString& url)
+bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, const QString& url)
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
     git_clone_options options = GIT_CLONE_OPTIONS_INIT;
+#pragma GCC diagnostic pop
 
     options.fetch_opts.callbacks.credentials = credential_cb;
     options.fetch_opts.callbacks.transfer_progress = transferProgress_cb;
 
-    GitHandler::Payload payload(m_git, username, password);
+    GitHandler::Payload payload(m_git, username(), password());
     options.fetch_opts.callbacks.payload = &payload;
 
     // clone the repo to a temp dir
-    qDebug() << "start clone: " << url << "--> " << tempDirPath;
     m_git->startClone(repository, url, tempDirPath, &options);
 
     m_numProgressDots = -1;
     while (!m_git->isFinished() && !m_git->isAborted())
     {
-        qDebug() << "clone loop";
-        qApp->processEvents();
         ui->statusLabel->setText(tr("Downloading ") + progressDots());
+        qApp->processEvents();
     }
     m_git->killWorker();
 
@@ -209,7 +196,6 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
     if (m_git->error())
     {
         ui->statusLabel->setText(tr("Cannot download ") + url);
-        qDebug() << "clone failed.";
         success = false;
     }
 
@@ -229,7 +215,10 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
 bool GitDialog::push(git_repository* repository)
 {
     //setup callbacks
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
     git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
+#pragma GCC diagnostic pop
     callbacks.credentials = credential_cb;
     GitHandler::Payload payload(m_git, "oVooVo", password());
     callbacks.payload = &payload;
@@ -254,8 +243,10 @@ bool GitDialog::push(git_repository* repository)
     m_numProgressDots = -1;
     while (!m_git->isFinished() && !m_git->isAborted())
     {
-        qApp->processEvents();
+        updateBytesLabel(0);
+        updateObjectsLabel(0, 0);
         ui->statusLabel->setText(tr("Uploading ") + progressDots());
+        qApp->processEvents();
     }
     m_git->killWorker();
 
@@ -304,14 +295,14 @@ void GitDialog::download()
     }
 
     ui->statusLabel->setText(tr("Start download ..."));
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(2);
 
 
 
     QTemporaryDir dir;
     git_repository* repository = nullptr;
 
-    if (clone(repository, dir.path(), ui->usernameEdit->text(), ui->passwordEdit->text(), url))
+    if (clone(repository, dir.path(), url))
     {
         // copy file to correct place
         QString absoluteSourceFilepath = QDir(dir.path()).absoluteFilePath(filename);
@@ -323,12 +314,13 @@ void GitDialog::download()
         else
         {
             ui->statusLabel->setText(tr("Download finished."));
-            ui->buttonOk->setEnabled(true);
+            m_phase = Finished;
         }
     }
 
     git_repository_free(repository);
     repository = nullptr;
+    updateButtonStatus();
 }
 
 void GitDialog::updateBytesLabel(qint64 bytes)
@@ -368,7 +360,6 @@ void GitDialog::on_openFileDialog_clicked()
 bool GitDialog::download(GitHandler *git, QString& url, QString& filename, QString& saveFilename, QWidget *parent)
 {
     GitDialog dialog(git, parent);
-    connect(dialog.ui->cancelTransferButton, SIGNAL(clicked()), git, SLOT(abort()));
     if (dialog.exec() == QDialog::Accepted)
     {
         saveFilename = dialog.ui->saveAsEdit->text();
@@ -388,7 +379,6 @@ bool GitDialog::download(GitHandler *git, QString& url, QString& filename, QStri
 bool GitDialog::sync(GitHandler *git, const QString& url, const QString& filename, const QString &masterFilename, Project *masterProject, QWidget *parent)
 {
     GitDialog dialog(git, url, filename, masterFilename, masterProject, parent);
-    connect(dialog.ui->cancelTransferButton, SIGNAL(clicked()), git, SLOT(abort()));
     if (dialog.exec() == QDialog::Accepted)
     {
         return !git->error();
@@ -428,7 +418,7 @@ bool GitDialog::replaceFile(const QString& victim, const QString& newFile)
     return true;
 }
 
-void GitDialog::on_cancelTransferButton_clicked()
+void GitDialog::on_cancelButton_clicked()
 {
     m_git->abort();
     reject();
@@ -439,7 +429,7 @@ void GitDialog::sync()
     QTemporaryDir dir;
     git_repository* repository = nullptr;
 
-    if (clone(repository, dir.path(), "oVooVo", password(), m_url))
+    if (clone(repository, dir.path(), m_url))
     {
         QString slaveFilename = QDir(dir.path()).absoluteFilePath(m_filename);
         Q_ASSERT(QFileInfo(slaveFilename).isReadable());
@@ -457,8 +447,8 @@ void GitDialog::sync()
                 }
                 else
                 {
-                    ui->statusLabel->setText(tr("Download finished."));
-                    ui->buttonOk->setEnabled(true);
+                    ui->statusLabel->setText(tr("Sync finished."));
+                    m_phase = Finished;
                 }
             }
         }
@@ -466,4 +456,162 @@ void GitDialog::sync()
 
     git_repository_free(repository);
     repository = nullptr;
+    updateButtonStatus();
+}
+
+void GitDialog::initUsernameComboBox()
+{
+    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+    for (const QString& username : creds.keys())
+    {
+        ui->usernameComboBox->addItem(username);
+    }
+
+    connect(ui->usernameComboBox, static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged), [creds, this](QString username)
+    {
+        if (creds.keys().contains(username))
+        {
+            ui->passwordEdit->setText(creds[username]);
+            setPreference("lastUsername", username);
+        }
+    });
+    connect(ui->usernameComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtonStatus()));
+}
+
+void GitDialog::addCredentials()
+{
+    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+    QString password = ui->passwordEdit->text();
+    QString username = ui->usernameComboBox->currentText();
+    if (password.isEmpty())
+    {
+        creds.remove(username);
+    }
+    else
+    {
+        creds.insert(username, password);
+    }
+    setPreference("credentials", creds);
+}
+
+void GitDialog::updateButtonStatus()
+{
+    ui->cancelButton->setText(tr("&Cancel"));
+    ui->backButton->setText(tr("&Back"));
+    int page = ui->stackedWidget->currentIndex();
+    switch (m_mode)
+    {
+    case Sync:
+        ui->backButton->setEnabled(false);
+        ui->nextButton->setEnabled(page == 1 || m_phase == Finished);
+        if (page == 0)
+        {
+            ui->nextButton->setText(tr("&Next"));
+        }
+        else if (page == 1)
+        {
+            ui->nextButton->setText(tr("&Synchronize"));
+        }
+        else
+        {
+            ui->nextButton->setText("&Ok");
+        }
+        break;
+    case Download:
+        ui->backButton->setEnabled(page == 1);
+        ui->nextButton->setEnabled(page == 0 || page == 1 || m_phase == Finished);
+        if (page == 0)
+        {
+            ui->nextButton->setText(tr("&Next"));
+        }
+        else if (page == 1)
+        {
+            ui->nextButton->setText(tr("&Download"));
+        }
+        else
+        {
+            ui->nextButton->setText("&Ok");
+        }
+        break;
+    }
+
+
+    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+    QString username = ui->usernameComboBox->currentText();
+    ui->deleteUserButton->setEnabled(creds.contains(username));
+}
+
+void GitDialog::on_nextButton_clicked()
+{
+    int index = ui->stackedWidget->currentIndex();
+    ui->stackedWidget->setCurrentIndex(index + 1);
+    updateButtonStatus();
+
+    if (index == 1) // old index!
+    {
+        if (ui->rememberCheckbox->isChecked())
+        {
+            addCredentials();
+        }
+        switch (m_mode)
+        {
+        case Download:
+            download();
+            break;
+        case Sync:
+            sync();
+            break;
+        }
+
+    }
+    else if (index == 2) // old index!
+    {
+        accept();
+    }
+
+}
+
+void GitDialog::on_backButton_clicked()
+{
+    int index = ui->stackedWidget->currentIndex();
+    Q_ASSERT(index > 0);
+    ui->stackedWidget->setCurrentIndex( index - 1 );
+    updateButtonStatus();
+}
+
+void GitDialog::on_usernameComboBox_currentTextChanged(const QString &username)
+{
+    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+
+    if (creds.keys().contains(username))
+    {
+        ui->passwordEdit->setText(creds[username]);
+        ui->rememberCheckbox->setChecked(true);
+    }
+    else
+    {
+        ui->passwordEdit->setText("");
+        ui->rememberCheckbox->setChecked(false);
+    }
+}
+
+void GitDialog::on_deleteUserButton_clicked()
+{
+    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+    QString username = ui->usernameComboBox->currentText();
+    creds.remove(username);
+    setPreference("credentials", creds);
+
+    ui->usernameComboBox->setCurrentText("");
+    ui->passwordEdit->setText("");
+}
+
+QString GitDialog::password() const
+{
+    return ui->passwordEdit->text();
+}
+
+QString GitDialog::username() const
+{
+    return ui->usernameComboBox->currentText();
 }

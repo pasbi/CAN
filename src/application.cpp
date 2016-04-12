@@ -172,6 +172,8 @@ void Application::initPreferences()
     m_preferences.registerPreference( "MergeSimilarityThreshold", new Preference(0.9));
     m_preferences.registerPreference( "setlistItemComboBoxHeight", new Preference(150));
     m_preferences.registerPreference( "songDetailColumnWidths", new Preference(QVariant::fromValue(QList<int>())));
+    m_preferences.registerPreference( "lastUsername", new Preference(QString()) );
+    m_preferences.registerPreference( "credentials", new Preference(QVariant::fromValue(QMap<QString, QString>())) );
 
     //TODO make default value depend on screen resolution
     m_preferences.registerPreference( "ImageRenderQuality", new Preference(InterfaceOptions(InterfaceOptions::SpinBox, tr("PDFCreator"), tr("Non PDF Quality")),

@@ -17,7 +17,6 @@ void CloneWorker::run()
 {
     int error = git_clone( &m_repository, CSTR(m_url), CSTR(m_path), m_options);
 
-    qDebug() << "clone error: " << error;
     m_error = (error != 0);
     m_isFinished = true;
 }

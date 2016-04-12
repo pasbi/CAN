@@ -1,6 +1,5 @@
 #include "gittest.h"
 #include "Project/githandler.h"
-#include "Project/githandlerdetached.h"
 
 DEFN_TEST(GitTest)
 
