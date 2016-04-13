@@ -51,6 +51,8 @@ CONFIG(release, debug|release) {
 }
 
 
+ROOT = $$PWD/../../
+
 android {
 
     #############
@@ -86,12 +88,11 @@ android {
 
 # Preferences
 INCLUDEPATH += ../../Preferences/src
-LIBS += -L../../../../builds/Preferences/$${PLATFORM}/$${BUILD_CONFIG} -lPreferences
+LIBS += -L$${ROOT}/builds/Preferences/$${PLATFORM}/$${BUILD_CONFIG} -lPreferences
 
 # libgit2
-INCLUDEPATH += ../libgit2/include
-LIBS += -L../../../../builds/libgit2/$${PLATFORM}
-LIBS += -lgit2
+INCLUDEPATH += $${ROOT}/libgit2/include
+LIBS += -L$${ROOT}/builds/libgit2/$${PLATFORM} -lgit2
 
 
 # Files
@@ -427,5 +428,5 @@ TRANSLATIONS += \
     can_de_DE.ts
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
-    ANDROID_EXTRA_LIBS = /media/Volume/Safe/CAN-Project/CAN/src/../../builds/Preferences/AndroidARM/Release/libPreferences.so
+    ANDROID_EXTRA_LIBS = $${ROOT}/builds/Preferences/AndroidARM/Release/libPreferences.so
 }
