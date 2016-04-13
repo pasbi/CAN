@@ -13,7 +13,7 @@
 #define CSTR(qstring) (qstring.toStdString().c_str())
 
 #define EX_ASSERT( expr ) { int code = (expr); Q_ASSERT(code); Q_UNUSED(code); }
-#define GIT_ASSERT( expr ) { int code = (expr); Q_ASSERT( code == 0 ); }
+#define GIT_ASSERT( expr ) { int code = (expr); Q_ASSERT( code == 0 ); Q_UNUSED(code); }
 
 GitHandler::GitHandler() :
     m_thread(new QThread(this)),
