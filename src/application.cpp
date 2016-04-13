@@ -10,6 +10,7 @@
 #include <QDir>
 #include <QMessageBox>
 
+const QString Application::PROJECT_FILE_FILTER = MainWindow::tr("CAN files (*.can)");
 
 Application::Application(int &argc, char **argv) :
     QApplication( argc, argv)

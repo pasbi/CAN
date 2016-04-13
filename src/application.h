@@ -49,6 +49,8 @@ public:
 
     void handleProjectOpenError(OpenError error, const QString &filename);
 
+    static const QString PROJECT_FILE_FILTER;
+
 private:
     mutable FileIndex* m_fileIndex = nullptr;
     QSettings m_settings;

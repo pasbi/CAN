@@ -54,7 +54,6 @@ private:
     bool canProjectClose();
     QString projectName() const;
     void setCurrentPath( const QString & path );
-    static const QString PROJECT_FILE_FILTER;
     QString proposedPath() const;
     QString m_currentPath;
     bool saveProject();

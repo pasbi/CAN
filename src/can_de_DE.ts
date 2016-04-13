@@ -2,6 +2,30 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>AbstractRenderer</name>
+    <message>
+        <location filename="PDFCreator/abstractrenderer.cpp" line="84"/>
+        <source>Table of contents</source>
+        <translation>Inhaltsverzeichnis</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/abstractrenderer.cpp" line="95"/>
+        <source>Align songs</source>
+        <translation>Songs ausrichten</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/abstractrenderer.cpp" line="119"/>
+        <source>Generate page numbers</source>
+        <translation>Erzeuge Seitenzahlen</translation>
+    </message>
+    <message>
+        <location filename="PDFCreator/abstractrenderer.cpp" line="183"/>
+        <source>Draw attachment %1 of song %2 ...</source>
+        <oldsource>Draw attachment %1 of song %2</oldsource>
+        <translation>Zeichne Anlage %1 von Song %2 ...</translation>
+    </message>
+</context>
+<context>
     <name>AddFilesToIndexDialog</name>
     <message>
         <location filename="Dialogs/addfilestoindexdialog.ui" line="14"/>
@@ -17,280 +41,286 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="application.cpp" line="109"/>
+        <location filename="application.cpp" line="110"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="109"/>
+        <location filename="application.cpp" line="110"/>
         <source>Quality</source>
         <translation>Qualität</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="109"/>
-        <location filename="application.cpp" line="158"/>
+        <location filename="application.cpp" line="110"/>
+        <location filename="application.cpp" line="159"/>
         <source>dpi</source>
         <translation>DPI</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="110"/>
         <location filename="application.cpp" line="111"/>
-        <location filename="application.cpp" line="144"/>
-        <location filename="application.cpp" line="152"/>
-        <location filename="application.cpp" line="155"/>
-        <location filename="application.cpp" line="157"/>
-        <location filename="application.cpp" line="159"/>
+        <location filename="application.cpp" line="112"/>
+        <location filename="application.cpp" line="145"/>
+        <location filename="application.cpp" line="153"/>
+        <location filename="application.cpp" line="156"/>
+        <location filename="application.cpp" line="158"/>
+        <location filename="application.cpp" line="160"/>
+        <location filename="application.cpp" line="180"/>
         <source>PDFCreator</source>
         <translation>PDF Export</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="110"/>
+        <location filename="application.cpp" line="111"/>
         <source>Title Page</source>
         <translation>Titelseite</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="111"/>
+        <location filename="application.cpp" line="112"/>
         <source>Page Size</source>
         <translation>Seitengröße</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="112"/>
+        <location filename="application.cpp" line="113"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="113"/>
+        <location filename="application.cpp" line="114"/>
         <source>A1</source>
         <translation>A1</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="114"/>
+        <location filename="application.cpp" line="115"/>
         <source>A2</source>
         <translation>A2</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="115"/>
+        <location filename="application.cpp" line="116"/>
         <source>A3</source>
         <translation>A3</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="116"/>
+        <location filename="application.cpp" line="117"/>
         <source>A4</source>
         <translation>A4</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="117"/>
+        <location filename="application.cpp" line="118"/>
         <source>A5</source>
         <translation>A5</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="118"/>
+        <location filename="application.cpp" line="119"/>
         <source>A6</source>
         <translation>A6</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="119"/>
+        <location filename="application.cpp" line="120"/>
         <source>A7</source>
         <translation>A7</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="120"/>
+        <location filename="application.cpp" line="121"/>
         <source>A8</source>
         <translation>A8</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="121"/>
+        <location filename="application.cpp" line="122"/>
         <source>A9</source>
         <translation>A9</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="122"/>
+        <location filename="application.cpp" line="123"/>
         <source>B0</source>
         <translation>B0</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="123"/>
+        <location filename="application.cpp" line="124"/>
         <source>B1</source>
         <translation>B1</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="124"/>
+        <location filename="application.cpp" line="125"/>
         <source>B2</source>
         <translation>B2</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="125"/>
+        <location filename="application.cpp" line="126"/>
         <source>B3</source>
         <translation>B3</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="126"/>
+        <location filename="application.cpp" line="127"/>
         <source>B4</source>
         <translation>B4</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="127"/>
+        <location filename="application.cpp" line="128"/>
         <source>B5</source>
         <translation>B5</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="128"/>
+        <location filename="application.cpp" line="129"/>
         <source>B6</source>
         <translation>B6</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="129"/>
+        <location filename="application.cpp" line="130"/>
         <source>B7</source>
         <translation>B7</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="130"/>
+        <location filename="application.cpp" line="131"/>
         <source>B8</source>
         <translation>B8</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="131"/>
+        <location filename="application.cpp" line="132"/>
         <source>B9</source>
         <translation>B9</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="132"/>
+        <location filename="application.cpp" line="133"/>
         <source>B10</source>
         <translation>B10</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="133"/>
+        <location filename="application.cpp" line="134"/>
         <source>C5E</source>
         <translation>C5E</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="134"/>
+        <location filename="application.cpp" line="135"/>
         <source>Comm10E</source>
         <translation>Comm10E</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="135"/>
+        <location filename="application.cpp" line="136"/>
         <source>DLE</source>
         <translation>DLE</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="136"/>
+        <location filename="application.cpp" line="137"/>
         <source>Executive</source>
         <translation>Executive</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="137"/>
+        <location filename="application.cpp" line="138"/>
         <source>Folio</source>
         <translation>Folio</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="138"/>
+        <location filename="application.cpp" line="139"/>
         <source>Ledger</source>
         <translation>Ledger</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="139"/>
+        <location filename="application.cpp" line="140"/>
         <source>Legal</source>
         <translation>Legal</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="140"/>
+        <location filename="application.cpp" line="141"/>
         <source>Letter</source>
         <translation>Letter</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="141"/>
+        <location filename="application.cpp" line="142"/>
         <source>Tabloid</source>
         <translation>Tabloid</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="144"/>
+        <location filename="application.cpp" line="145"/>
         <source>Align Songs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="application.cpp" line="145"/>
+        <location filename="application.cpp" line="146"/>
         <source>No alignment</source>
         <translation>Keine Ausrichtung</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="146"/>
+        <location filename="application.cpp" line="147"/>
         <source>Odd pages</source>
         <translation>Ungerade Seiten</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="147"/>
+        <location filename="application.cpp" line="148"/>
         <source>Even pages</source>
         <translation>Gerade Seiten</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="148"/>
+        <location filename="application.cpp" line="149"/>
         <source>Duplex</source>
         <translation>Duplex Druck</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="149"/>
+        <location filename="application.cpp" line="150"/>
         <source>Endless</source>
         <translation>Endlos</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="150"/>
+        <location filename="application.cpp" line="151"/>
         <source>Separate pages</source>
         <translation>Separate Seiten</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="152"/>
+        <location filename="application.cpp" line="153"/>
         <source>Table of Contents</source>
         <translation>Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="155"/>
+        <location filename="application.cpp" line="156"/>
         <source>Page Numbers</source>
         <translation>Seitenzahlen</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="157"/>
+        <location filename="application.cpp" line="158"/>
         <source>Resolution</source>
         <translation>Auflösung</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="159"/>
+        <location filename="application.cpp" line="160"/>
         <source>Show to-be-continued-hint</source>
         <translation>Fortsetzungs-Hinweis</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="161"/>
+        <location filename="application.cpp" line="162"/>
         <source>Midi</source>
         <translation>Midi</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="161"/>
+        <location filename="application.cpp" line="162"/>
         <source>Channel</source>
         <translation>Kanal</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="162"/>
+        <location filename="application.cpp" line="163"/>
         <source>Disable Midi</source>
         <translation>Midi deaktiviert</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="167"/>
+        <location filename="application.cpp" line="168"/>
         <source>mm:ss</source>
         <translation>mm:ss</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="168"/>
+        <location filename="application.cpp" line="169"/>
         <source>MM/dd/yy hh:mm ap</source>
         <translation>dd.MM.yy HH:mm</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="195"/>
-        <source>Cannot open file %1 for reading.</source>
-        <oldsource>Cannot open file %1 for reading</oldsource>
-        <translation type="unfinished">Kann %1 nicht zum lesen öffnen.</translation>
+        <location filename="application.cpp" line="180"/>
+        <source>Non PDF Quality</source>
+        <translation>Renderqualität (ausser PDF)</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="199"/>
+        <location filename="application.cpp" line="204"/>
+        <source>Cannot open file %1 for reading.</source>
+        <oldsource>Cannot open file %1 for reading</oldsource>
+        <translation>Kann %1 nicht zum lesen öffnen.</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="208"/>
         <source>Invalid file: %1</source>
         <translation>Ungültige Datei: %1</translation>
     </message>
@@ -528,24 +558,22 @@
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="89"/>
         <source>Poppler is not available</source>
-        <translation>Poppler ist nicht verfügbar.</translation>
+        <translation type="vanished">Poppler ist nicht verfügbar.</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="90"/>
         <source>It seems this application was build without poppler.
 Thus, this feature is not available.</source>
-        <translation>Scheinbar wurde die Anwendung ohne Poppler gebaut.
+        <translation type="vanished">Scheinbar wurde die Anwendung ohne Poppler gebaut.
 Deshalb ist dieses Feature nicht verfügbar.</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="132"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="98"/>
         <source>Apply new tempo?</source>
         <translation>Neues Tempo übernehmen?</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="133"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="99"/>
         <source>You changed the tempo of this chord pattern.
 Do you want to keep it?</source>
         <translation>Du hast das Tempo geändert. Übernehmen?</translation>
@@ -733,6 +761,199 @@ Do you want to keep it?</source>
     </message>
 </context>
 <context>
+    <name>GitDialog</name>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="41"/>
+        <source>&amp;URL:</source>
+        <translation>&amp;URL:</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="51"/>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="58"/>
+        <source>&amp;Filename:</source>
+        <translation>&amp;Dateiname:</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="68"/>
+        <source>Filename</source>
+        <translation>Dateiname</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="75"/>
+        <source>Save as:</source>
+        <translation>&amp;Speichern als:</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="96"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="124"/>
+        <source>&amp;Username:</source>
+        <translation>&amp;Benutzername:</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="156"/>
+        <source>&amp;Password:</source>
+        <translation>&amp;Passwort:</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="169"/>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="176"/>
+        <source>&amp;Rember me:</source>
+        <translation>&amp;Benutzer speichern:</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="193"/>
+        <source>Briefly describe your changes.</source>
+        <translation>Beschreibe kurz was du geändert hast.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="200"/>
+        <source>&amp;Message:</source>
+        <translation>&amp;Kommentar:</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.ui" line="305"/>
+        <source>Esc</source>
+        <translation>Esc</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="44"/>
+        <source>Download</source>
+        <translation>Download</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="46"/>
+        <source>Username</source>
+        <translation>Benutzername</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="58"/>
+        <source>Synchronize</source>
+        <translation>Synchronisieren</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="198"/>
+        <source>Downloading </source>
+        <translation>Am herunterladen</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="207"/>
+        <source>Cannot download %1</source>
+        <oldsource>Cannot download </oldsource>
+        <translation>Download fehlgeschlagen: %1</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="213"/>
+        <location filename="Dialogs/gitdialog.cpp" line="277"/>
+        <source>Aborted by user</source>
+        <translation>Vom Benutzer abgebrochen</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="261"/>
+        <source>Uploading </source>
+        <translation>Am hochladen</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="271"/>
+        <source>Cannot upload %1</source>
+        <oldsource>Cannot upload </oldsource>
+        <translation>Upload fehlgeschlagen: %1</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="291"/>
+        <source>URL must not be empty.</source>
+        <translation>URL kann nicht leer sein.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="298"/>
+        <source>Filename must not be empty.</source>
+        <translation>Dateiname darf nicht leer sein.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="305"/>
+        <source>Please provide a filename for saving.</source>
+        <translation>Bitte gib einen Dateinamen zum speichern an.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="309"/>
+        <source>Start download ...</source>
+        <translation>Starte download ...</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="324"/>
+        <location filename="Dialogs/gitdialog.cpp" line="471"/>
+        <source>Cannot overwrite %1</source>
+        <translation>Kann &quot;%1&quot; nicht überschreiben</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="328"/>
+        <source>Download finished.</source>
+        <translation>Download beendet.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="343"/>
+        <source>Received bytes: %1</source>
+        <translation>Empfangene Bytes: %1</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="347"/>
+        <source>Sent bytes: %1</source>
+        <translation>Gesendete Bytes: %1</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="358"/>
+        <source>Received objects: %1/%2</source>
+        <translation>Empfangene Objekte: %1/%2</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="362"/>
+        <source>Sent objects: %1/%2</source>
+        <translation>Gesendete Objekte: %1/%2</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="475"/>
+        <source>Sync finished.</source>
+        <translation>Synchronisation beendet.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="524"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="525"/>
+        <source>&amp;Back</source>
+        <translation>&amp;Zurück</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="534"/>
+        <location filename="Dialogs/gitdialog.cpp" line="550"/>
+        <source>&amp;Next</source>
+        <translation>&amp;Weiter</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="538"/>
+        <source>&amp;Synchronize</source>
+        <translation>&amp;Synchronisieren</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="554"/>
+        <source>&amp;Download</source>
+        <translation>&amp;Herunterladen</translation>
+    </message>
+</context>
+<context>
     <name>IndexedFileAttachmentView</name>
     <message>
         <location filename="AttachmentView/IndexedFileAttachmentView/indexedfileattachmentview.ui" line="37"/>
@@ -819,473 +1040,482 @@ Think twice before you replace it.
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="132"/>
+        <location filename="mainwindow.ui" line="137"/>
         <source>Tools.</source>
         <translation>Werkzeuge.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="135"/>
+        <location filename="mainwindow.ui" line="140"/>
         <source>&amp;Tools</source>
         <translation>&amp;Werkzeuge</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="143"/>
+        <location filename="mainwindow.ui" line="148"/>
         <source>Attachment related stuff.</source>
         <translation>Anhänge.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="146"/>
+        <location filename="mainwindow.ui" line="151"/>
         <source>&amp;Attachments</source>
         <translation>&amp;Anhänge</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="158"/>
+        <location filename="mainwindow.ui" line="163"/>
         <source>Edit.</source>
         <translation>Bearbeiten.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="161"/>
+        <location filename="mainwindow.ui" line="166"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="172"/>
+        <location filename="mainwindow.ui" line="177"/>
         <source>File index related stuff.</source>
         <translation>Dateiindex.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="175"/>
+        <location filename="mainwindow.ui" line="180"/>
         <source>F&amp;ile Index</source>
         <translation>Datei&amp;index</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="184"/>
+        <location filename="mainwindow.ui" line="189"/>
         <source>Event related stuff.</source>
         <translation>Events.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="187"/>
+        <location filename="mainwindow.ui" line="192"/>
         <source>E&amp;vents</source>
         <translation>E&amp;vents</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="195"/>
+        <location filename="mainwindow.ui" line="200"/>
         <source>Song related stuff.</source>
         <translation>Songs.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="198"/>
+        <location filename="mainwindow.ui" line="203"/>
         <source>&amp;Songs</source>
         <translation>&amp;Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="206"/>
+        <location filename="mainwindow.ui" line="211"/>
         <source>&amp;Language</source>
         <translation>&amp;Sprache</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="211"/>
+        <location filename="mainwindow.ui" line="216"/>
         <source>View</source>
         <translation>Ansicht</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="231"/>
+        <location filename="mainwindow.ui" line="236"/>
         <source>&amp;New Project</source>
         <translation>&amp;Neues Projekt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="234"/>
+        <location filename="mainwindow.ui" line="239"/>
         <source>Create a new empty project.</source>
         <translation>Erzeuge neues leeres Projekt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="246"/>
+        <location filename="mainwindow.ui" line="251"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="249"/>
+        <location filename="mainwindow.ui" line="254"/>
         <source>Save the current project.</source>
         <translation>Speichere dieses Project.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="507"/>
+        <location filename="mainwindow.ui" line="462"/>
         <source>Merge with ...</source>
         <translation>Vereinige mit ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="264"/>
+        <location filename="mainwindow.ui" line="467"/>
+        <source>Open cloud file ...</source>
+        <translation>Öffne Projekt aus der Cloud ...</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="472"/>
+        <source>Sync ...</source>
+        <oldsource>Sync</oldsource>
+        <translation>Synchronisieren ...</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="269"/>
         <source>Save the current project as.</source>
         <translation>Speichere dieses Projekt als ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="279"/>
+        <location filename="mainwindow.ui" line="284"/>
         <source>Open an existing project.</source>
         <translation>Öffne ein existierendes Projekt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="287"/>
+        <location filename="mainwindow.ui" line="292"/>
         <source>Index Info ...</source>
         <oldsource>Index Info</oldsource>
         <translation>Index Info ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="290"/>
+        <location filename="mainwindow.ui" line="295"/>
         <source>Information about the file index.</source>
         <translation>Informationen über den Index anzeigen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="298"/>
+        <location filename="mainwindow.ui" line="303"/>
         <source>Add Folder ...</source>
         <oldsource>Add Folder</oldsource>
         <translation>Ordner hinzufügen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="301"/>
+        <location filename="mainwindow.ui" line="306"/>
         <source>Add Folder to the file index.</source>
         <translation>Ordner zum Index hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="309"/>
+        <location filename="mainwindow.ui" line="314"/>
         <source>Clear Index</source>
         <translation>Index löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="312"/>
+        <location filename="mainwindow.ui" line="317"/>
         <source>Remove all files from file index.</source>
         <translation>Alle Dateien vom Index entfernen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="324"/>
+        <location filename="mainwindow.ui" line="329"/>
         <source>Delete Attachment</source>
         <oldsource>New Attachment </oldsource>
         <translation>Anlage löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="327"/>
+        <location filename="mainwindow.ui" line="332"/>
         <source>Delete Attachment selected attachment.</source>
         <oldsource>Add new attachment to a song.</oldsource>
         <translation>Lösche ausgewählte Anlage.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="445"/>
+        <location filename="mainwindow.ui" line="416"/>
         <source>Copy Indexed Attachments ...</source>
         <translation>Kopiere Dateien aus Attachments ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="450"/>
+        <location filename="mainwindow.ui" line="421"/>
         <source>Open recent ...</source>
         <translation>Zuletzt geöffnet ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="458"/>
+        <location filename="mainwindow.ui" line="429"/>
         <source>Events</source>
         <translation>Events</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="466"/>
+        <location filename="mainwindow.ui" line="437"/>
         <source>Songs</source>
         <translation>Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="474"/>
+        <location filename="mainwindow.ui" line="445"/>
         <source>Song Details</source>
         <translation>Song Details</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="482"/>
         <source>Acoustic</source>
-        <translation>Akustisch</translation>
+        <translation type="vanished">Akustisch</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="490"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation type="vanished">Normal</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="498"/>
+        <location filename="mainwindow.ui" line="453"/>
         <source>Hide inactives</source>
         <translation>Verstecke Inaktive</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="116"/>
-        <location filename="mainwindow.cpp" line="119"/>
+        <location filename="mainwindow.cpp" line="117"/>
+        <location filename="mainwindow.cpp" line="120"/>
         <source>&amp;Undo</source>
         <oldsource>Undo</oldsource>
         <translation>&amp;Rückgängig</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="342"/>
+        <location filename="mainwindow.ui" line="347"/>
         <source>Undo the last action.</source>
         <translation>Letze Änderung rückgängig machen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="117"/>
-        <location filename="mainwindow.cpp" line="120"/>
+        <location filename="mainwindow.cpp" line="118"/>
+        <location filename="mainwindow.cpp" line="121"/>
         <source>&amp;Redo</source>
         <oldsource>Redo</oldsource>
         <translation>&amp;Wiederholen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="357"/>
+        <location filename="mainwindow.ui" line="362"/>
         <source>Redo the last undone action.</source>
         <translation>Zuletzt rückgängig gemachte Änderung wiederholen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="369"/>
         <source>Clone ...</source>
-        <translation>Klonen ...</translation>
+        <translation type="vanished">Klonen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="372"/>
         <source>Clone a repository.</source>
-        <translation>Klone ein Repository.</translation>
+        <translation type="vanished">Klone ein Repository.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="380"/>
         <source>Open terminal</source>
-        <translation>Terminal öffnen</translation>
+        <translation type="vanished">Terminal öffnen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="392"/>
+        <location filename="mainwindow.ui" line="374"/>
         <source>Rename Attachment ...</source>
         <translation>Anlage umbenennen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="440"/>
+        <location filename="mainwindow.ui" line="411"/>
         <source>&amp;Export all songs</source>
         <translation>&amp;Exportiere alle Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="395"/>
+        <location filename="mainwindow.ui" line="377"/>
         <source>Rename selected attachment.</source>
         <translation>Diese Anlage umbennen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="407"/>
+        <location filename="mainwindow.ui" line="389"/>
         <source>Duplicate Attachment</source>
         <translation>Anlage duplizieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="410"/>
+        <location filename="mainwindow.ui" line="392"/>
         <source>Duplicate selected attachment.</source>
         <translation>Diese Anlage duplizieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="418"/>
         <source>Identites ...</source>
-        <translation>Identitäten ...</translation>
+        <translation type="vanished">Identitäten ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="421"/>
         <source>Manage identities.</source>
-        <translation>Identitäten verwalten.</translation>
+        <translation type="vanished">Identitäten verwalten.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="429"/>
+        <location filename="mainwindow.ui" line="400"/>
         <source>Preferences ...</source>
         <translation>Einstellungen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="432"/>
+        <location filename="mainwindow.ui" line="403"/>
         <source>Settings.</source>
         <translation>Einstellungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="125"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>&amp;New Song</source>
         <translation>&amp;Neuer Song</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="125"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>Add a new song.</source>
         <translation>Neuen Song hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="126"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>&amp;Remove Song</source>
         <translation>Song &amp;löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="126"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>Remove selected song.</source>
         <translation>Lösche ausgewählten Song.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="127"/>
+        <location filename="mainwindow.cpp" line="128"/>
         <source>&amp;Copy Song</source>
         <translation>Song &amp;kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="127"/>
+        <location filename="mainwindow.cpp" line="128"/>
         <source>Copy selected song.</source>
         <translation>Ausgewählten Song kopieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="128"/>
+        <location filename="mainwindow.cpp" line="129"/>
         <source>&amp;Paste Song</source>
         <translation>Song &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="128"/>
+        <location filename="mainwindow.cpp" line="129"/>
         <source>Paste song.</source>
         <translation>Song einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="131"/>
+        <location filename="mainwindow.cpp" line="132"/>
         <source>&amp;Edit Program</source>
         <translation>&amp;Program bearbeiten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="131"/>
+        <location filename="mainwindow.cpp" line="132"/>
         <source>Edit program.</source>
         <translation>Bearbeite das Program dieses Songs.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="134"/>
+        <location filename="mainwindow.cpp" line="135"/>
         <source>&amp;New Event</source>
         <translation>&amp;Neues Event</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="134"/>
+        <location filename="mainwindow.cpp" line="135"/>
         <source>Add a new event.</source>
         <translation>Neues Event hinzufügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="135"/>
+        <location filename="mainwindow.cpp" line="136"/>
         <source>&amp;Remove Event</source>
         <translation>Event &amp;Löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="135"/>
+        <location filename="mainwindow.cpp" line="136"/>
         <source>Remove selected event.</source>
         <translation>Ausgewähltes Event löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="136"/>
+        <location filename="mainwindow.cpp" line="137"/>
         <source>&amp;Copy Event</source>
         <translation>Event &amp;Kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="136"/>
+        <location filename="mainwindow.cpp" line="137"/>
         <source>Copy selected event.</source>
         <translation>Kopiere selektiertes Event.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="137"/>
+        <location filename="mainwindow.cpp" line="138"/>
         <source>&amp;Paste Event</source>
         <translation>Event &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="137"/>
+        <location filename="mainwindow.cpp" line="138"/>
         <source>Paste event.</source>
         <translation>Event einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="139"/>
+        <location filename="mainwindow.cpp" line="140"/>
         <source>&amp;New Item</source>
         <translation>&amp;Neues Element</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="139"/>
+        <location filename="mainwindow.cpp" line="140"/>
         <source>Insert new item</source>
         <translation>Neues Element einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="140"/>
+        <location filename="mainwindow.cpp" line="141"/>
         <source>&amp;Remove Item</source>
         <translation>Elemente &amp;entfernen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="140"/>
+        <location filename="mainwindow.cpp" line="141"/>
         <source>Delete selected items</source>
         <translation>Selektierte Elemente löschen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="141"/>
+        <location filename="mainwindow.cpp" line="142"/>
         <source>&amp;Copy Items</source>
         <translation>Elemente &amp;kopieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="141"/>
+        <location filename="mainwindow.cpp" line="142"/>
         <source>Copy selected items</source>
         <translation>Selektierte Elemente kopieren.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="142"/>
+        <location filename="mainwindow.cpp" line="143"/>
         <source>&amp;Paste Items</source>
         <translation>Elemente &amp;einfügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="142"/>
+        <location filename="mainwindow.cpp" line="143"/>
         <source>Paste items</source>
         <translation>Elemente einfügen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="249"/>
+        <location filename="mainwindow.cpp" line="254"/>
         <source>New %1</source>
         <translation>Neues %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="315"/>
+        <location filename="mainwindow.cpp" line="320"/>
         <source>Unnamed</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="261"/>
-        <location filename="mainwindow.cpp" line="419"/>
+        <location filename="mainwindow.cpp" line="1175"/>
+        <source>Could not open downloaded file: %1</source>
+        <translation>Kann heruntergeladene Datei nicht öffnen: %1</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="266"/>
+        <location filename="mainwindow.cpp" line="425"/>
         <source>Save As ...</source>
         <translation>Speichern unter ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="480"/>
+        <location filename="mainwindow.cpp" line="486"/>
         <source>Really close %1</source>
         <translation>%1 wirklich schließen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="481"/>
+        <location filename="mainwindow.cpp" line="487"/>
         <source>There are unsaved changes.</source>
         <translation>Es gibt ungespeicherte Änderungen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="276"/>
-        <location filename="mainwindow.cpp" line="674"/>
-        <location filename="mainwindow.cpp" line="1111"/>
+        <location filename="mainwindow.ui" line="281"/>
+        <location filename="mainwindow.cpp" line="694"/>
+        <location filename="mainwindow.cpp" line="1131"/>
         <source>Open ...</source>
         <translation>Öffnen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="699"/>
+        <location filename="mainwindow.cpp" line="719"/>
         <source>Song cannot be removed</source>
         <translation>Song kann nicht entfernt werden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="700"/>
+        <location filename="mainwindow.cpp" line="720"/>
         <source>This song is currently in use and can thus not be removed.</source>
         <translation>Diese Song wird momentan benutzt und kann deshalb nicht entfernt werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="711"/>
+        <location filename="mainwindow.cpp" line="731"/>
         <source>Add to index ...</source>
         <translation>Ordner zum Index hinzufügen ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="963"/>
+        <location filename="mainwindow.cpp" line="983"/>
         <source>Remove Setlist Items</source>
         <translation>Entferne Setlist Einträge</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1006"/>
+        <location filename="mainwindow.cpp" line="1026"/>
         <source>Nothing copied</source>
         <translation>Nichts kopiert</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1006"/>
+        <location filename="mainwindow.cpp" line="1026"/>
         <source>You have not selected any file.</source>
         <translation>Du hast keine Datei ausgewählt.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1041"/>
+        <location filename="mainwindow.cpp" line="1061"/>
         <source>Copying finished.
   Successfull:	%1
   Not overwritten:	%2
@@ -1296,53 +1526,53 @@ Think twice before you replace it.
   Fehler:		%3</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="106"/>
+        <location filename="mainwindow.cpp" line="107"/>
         <source>&amp;Undo %1</source>
         <translation>%1 &amp;rückgängig machen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="107"/>
+        <location filename="mainwindow.cpp" line="108"/>
         <source>&amp;Redo %1</source>
         <translation>%1 &amp;wiederholen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="938"/>
+        <location filename="mainwindow.cpp" line="958"/>
         <source>All songs</source>
         <translation>Alle Songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="786"/>
+        <location filename="mainwindow.cpp" line="806"/>
         <source>File index information</source>
         <translation>Informationen über Dateiindex</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="48"/>
+        <location filename="application.cpp" line="13"/>
         <source>CAN files (*.can)</source>
         <translation>CAN Dateien (*.can)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="440"/>
+        <location filename="mainwindow.cpp" line="446"/>
         <source>Save as ...</source>
         <translation>Speichern unter ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="441"/>
+        <location filename="mainwindow.cpp" line="447"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 existiert bereits. Möchtest du sie überschreiben?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="787"/>
+        <location filename="mainwindow.cpp" line="807"/>
         <source>Files: %1</source>
         <translation>Dateien: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="918"/>
+        <location filename="mainwindow.cpp" line="938"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="919"/>
+        <location filename="mainwindow.cpp" line="939"/>
         <source>Language changes will apply on next start.</source>
         <translation>Sprache ändert sich beim nächsten Start.</translation>
     </message>
@@ -1497,54 +1727,50 @@ Do you want to replace it?</source>
 <context>
     <name>PDFCreator</name>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="85"/>
         <source>Table of contents</source>
-        <translation>Inhaltsverzeichnis</translation>
+        <translation type="vanished">Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="96"/>
         <source>Align songs</source>
-        <translation>Songs ausrichten</translation>
+        <translation type="vanished">Songs ausrichten</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="120"/>
         <source>Generate page numbers</source>
-        <translation>Erzeuge Seitenzahlen</translation>
+        <translation type="vanished">Erzeuge Seitenzahlen</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="131"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="293"/>
         <source>Save PDF</source>
         <translation>Speichere PDF</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="186"/>
         <source>Draw attachment %1 of song %2</source>
-        <translation>Zeichne Anlage %1 von Song %2 ...</translation>
+        <translation type="vanished">Zeichne Anlage %1 von Song %2 ...</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="650"/>
-        <location filename="PDFCreator/pdfcreator.cpp" line="657"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="195"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="202"/>
         <source>Export PDF ...</source>
         <translation>Exportiere in PDF ...</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="681"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="226"/>
         <source>Confirm overwrite</source>
         <translation>Überschreiben bestätigen</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="682"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="227"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 existiert bereits. Möchtest du es überschreiben?</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="717"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="262"/>
         <source>Cannot write</source>
         <translation>Kann nicht schreiben.</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="718"/>
+        <location filename="PDFCreator/pdfcreator.cpp" line="263"/>
         <source>File %1 is not writable.</source>
         <translation>%1 ist nicht schreibbar.</translation>
     </message>
@@ -1722,7 +1948,7 @@ Do you want to replace it?</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="PDFCreator/pdfcreator.cpp" line="295"/>
+        <location filename="PDFCreator/abstractrenderer.cpp" line="282"/>
         <source>Setlist</source>
         <translation>Setlist</translation>
     </message>
@@ -1740,17 +1966,17 @@ Do you want to replace it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="115"/>
+        <location filename="Merge/mergedialog.cpp" line="104"/>
         <source>Merge successfull</source>
         <translation>Vereinigung erfolgreich</translation>
     </message>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="122"/>
+        <location filename="Merge/mergedialog.cpp" line="111"/>
         <source>Some Songs could not be removed since they are used.</source>
         <translation>Einige Songs konnten nicht entfernt werden weil sie noch benutzt werden.</translation>
     </message>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="123"/>
+        <location filename="Merge/mergedialog.cpp" line="112"/>
         <source>Please try to remove them manually.</source>
         <translation>Versuche sie manuell zu entfernen.</translation>
     </message>

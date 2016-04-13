@@ -3,7 +3,9 @@
 #include <QMessageBox>
 #include <QDateTime>
 #include <QTimer>
+#include <QFileDialog>
 
+#include "application.h"
 #include "ui_gitdialog.h"
 #include "Project/githandler.h"
 #include "global.h"
@@ -39,22 +41,21 @@ GitDialog::GitDialog(GitHandler *git, Mode mode, const QString& url, const QStri
 GitDialog::GitDialog(GitHandler *git, QWidget *parent) :
     GitDialog(git, Download, "", "", "", nullptr, parent)
 {
-
-    //TODO remove this
-    ui->urlEdit->setText("https://github.com/oVooVo/Test");
-    ui->filenameEdit->setText("test.can");
-    ui->saveAsEdit->setText("/home/pascal/testfile.can");
-
+    setWindowTitle(tr("Download"));
     ui->stackedWidget->setCurrentIndex(0);
     ui->usernameComboBox->lineEdit()->setPlaceholderText(tr("Username"));
 
     initUsernameComboBox();
     updateButtonStatus();
+
+    ui->commitMessageTextEdit->hide();
+    ui->messageLabel->hide();
 }
 
 GitDialog::GitDialog(GitHandler *git, const QString& url, const QString& filename, const QString& masterFilename, Project* masterProject, QWidget *parent) :
     GitDialog(git, Sync, url, filename, masterFilename, masterProject, parent )
 {
+    setWindowTitle(tr("Synchronize"));
     ui->stackedWidget->setCurrentIndex(1);
 
     initUsernameComboBox();
@@ -203,7 +204,7 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
 
     if (m_git->error())
     {
-        ui->statusLabel->setText(tr("Cannot download ") + url);
+        ui->statusLabel->setText(tr("Cannot download %1").arg(url));
         success = false;
     }
 
@@ -267,7 +268,7 @@ bool GitDialog::push(git_repository* repository)
 
     if (m_git->error())
     {
-        ui->statusLabel->setText(tr("Cannot upload ") + m_url);
+        ui->statusLabel->setText(tr("Cannot upload %1").arg(m_url));
         success = false;
     }
 
@@ -320,7 +321,7 @@ void GitDialog::download()
 
         if (!replaceFile(saveAs, absoluteSourceFilepath))
         {
-            ui->statusLabel->setText(tr("Cannot overwrite ") + saveAs);
+            ui->statusLabel->setText(tr("Cannot overwrite %1").arg(saveAs));
         }
         else
         {
@@ -366,7 +367,19 @@ void GitDialog::updateObjectsLabel(uint current, uint total)
 
 void GitDialog::on_openFileDialog_clicked()
 {
+    QString filename = ui->saveAsEdit->text();
+    if (filename.isEmpty())
+    {
+        filename = QDir::homePath();
+    }
 
+    filename = QFileDialog::getSaveFileName(this, qAppName(), filename, Application::PROJECT_FILE_FILTER);
+    if (filename.isEmpty())
+    {
+        return;
+    }
+
+    ui->saveAsEdit->setText(filename);
 }
 
 bool GitDialog::download(GitHandler *git, QString& url, QString& filename, QString& saveFilename, QWidget *parent)
@@ -448,14 +461,14 @@ void GitDialog::sync()
         if (MergeDialog::performMerge(m_masterProject, slaveFilename, this))
         {
             EX_ASSERT(replaceFile(slaveFilename, m_masterFilename));
-            EX_ASSERT( m_git->commit(repository, m_filename, "author", "author@email.com", "Commit-message") );
+            EX_ASSERT( m_git->commit(repository, m_filename, username(), userEmail(), commitMessage()) );
 
             m_phase = Push;
             if (push(repository))
             {
                 if (!replaceFile(m_masterFilename, slaveFilename))
                 {
-                    ui->statusLabel->setText(tr("Cannot overwrite ") + m_masterFilename);
+                    ui->statusLabel->setText(tr("Cannot overwrite %1").arg(m_masterFilename));
                 }
                 else
                 {
@@ -626,4 +639,14 @@ QString GitDialog::password() const
 QString GitDialog::username() const
 {
     return ui->usernameComboBox->currentText();
+}
+
+QString GitDialog::commitMessage() const
+{
+    return ui->commitMessageTextEdit->toPlainText();
+}
+
+QString GitDialog::userEmail() const
+{
+    return "dummy@email.com";
 }

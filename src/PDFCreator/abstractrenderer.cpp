@@ -180,7 +180,7 @@ bool AbstractRenderer::paintSong(const Song* song)
     for ( Attachment* attachment : song->attachments() )
     {
         if (isInterruptionRequested()) return false;
-        notifyCurrentTaskChanged( QString(tr("Draw attachment %1 of song %2"))
+        notifyCurrentTaskChanged( QString(tr("Draw attachment %1 of song %2 ..."))
                                       .arg(song->attribute("title").toString())
                                       .arg(attachment->name())                  );
 

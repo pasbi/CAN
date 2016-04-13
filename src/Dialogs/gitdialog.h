@@ -53,6 +53,8 @@ private:
 
     QString username() const;
     QString password() const;
+    QString commitMessage() const;
+    QString userEmail() const;
 
 private:
     Ui::GitDialog *ui;

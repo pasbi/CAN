@@ -48,8 +48,6 @@
 #include "Project/githandler.h"
 #include "Dialogs/gitdialog.h"
 
-const QString MainWindow::PROJECT_FILE_FILTER = MainWindow::tr("CAN files (*.can)");
-
 QString styleSheetContent()
 {
     QFile file(":/style/styles/stylesheet.qss");
@@ -426,7 +424,7 @@ bool MainWindow::saveProjectAs()
     QFileDialog::getSaveFileName( this,
                                   tr("Save As ..."),
                                   proposedPath(),
-                                  PROJECT_FILE_FILTER,
+                                  Application::PROJECT_FILE_FILTER,
                                   nullptr,
                                   QFileDialog::DontConfirmOverwrite ); // we implement own overwrite-check below.
     if (filename.isEmpty())
@@ -695,7 +693,7 @@ void MainWindow::on_actionOpen_triggered()
     QFileDialog::getOpenFileName( this,
                                   tr("Open ..."),
                                   proposedPath(),
-                                  PROJECT_FILE_FILTER           );
+                                  Application::PROJECT_FILE_FILTER           );
     if (filename.isEmpty())
     {
         return; // user aborted opening
@@ -1132,7 +1130,7 @@ void MainWindow::on_actionMerge_with_triggered()
     QFileDialog::getOpenFileName( this,
                                   tr("Open ..."),
                                   proposedPath(),
-                                  PROJECT_FILE_FILTER  );
+                                  Application::PROJECT_FILE_FILTER  );
     if (filename.isEmpty())
     {
         return; // user aborted opening

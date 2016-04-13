@@ -121,8 +121,10 @@
     <addaction name="actionNew_Project"/>
     <addaction name="separator"/>
     <addaction name="actionOpen"/>
-    <addaction name="actionOpen_cloud_file"/>
     <addaction name="actionOpen_recent"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen_cloud_file"/>
+    <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="separator"/>
@@ -467,7 +469,7 @@
   </action>
   <action name="actionSync">
    <property name="text">
-    <string>Sync</string>
+    <string>Sync ...</string>
    </property>
   </action>
  </widget>
