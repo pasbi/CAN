@@ -81,7 +81,13 @@ android {
     LIBS += -lavformat -lavcodec -lavutil -lpthread
     LIBS += -lSoundTouch
 } else:windows {
+    INCLUDEPATH += $${ROOT}/libav-10.6-win32/win32/usr/include
 
+    ## Soundtouch
+    LIBS += -L$${ROOT}/libav-10.6-win32/win32/usr/bin
+    LIBS += -lavformat -lavcodec -lavutil -lpthread
+    LIBS += -L$${ROOT}/builds/SoundTouch/$${PLATFORM}/$${BUILD_CONFIG}
+    LIBS += -lSoundTouch
 } else {
     error(Unsupported OS)
 }

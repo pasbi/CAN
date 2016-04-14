@@ -15,7 +15,7 @@
 
 #define CSTR(qstring) (qstring.toStdString().c_str())
 #define EX_ASSERT( expr ) { int code = (expr); Q_ASSERT(code); Q_UNUSED(code); }
-#define GIT_ASSERT( expr ) { int code = (expr); Q_ASSERT( code == 0 ); }
+#define GIT_ASSERT( expr ) { int code = (expr); Q_ASSERT( code == 0 ); Q_UNUSED(code); }
 
 GitDialog::GitDialog(GitHandler *git, Mode mode, const QString& url, const QString& filename, const QString& masterFilename, Project* masterProject, QWidget *parent) :
     QDialog(parent),
