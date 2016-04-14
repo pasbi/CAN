@@ -9,8 +9,6 @@
 
 #//TODO crash when indexing
 
-CONFIG += test
-
 QT       += core gui multimedia
 
 android {
@@ -23,6 +21,7 @@ android {
 
 CONFIG(debug, debug|release) {
     BUILD_CONFIG = Debug
+    CONFIG += test
 }
 CONFIG(release, debug|release) {
     BUILD_CONFIG = Release
@@ -31,7 +30,7 @@ CONFIG(release, debug|release) {
 CONFIG(test) {
     QT += testlib
     DEFINES += TEST_BUILD
-    INCLUDEPATH += ../../builds/CAN/Linux64/Debug/ # we need to include the moc_*.cpp files
+    INCLUDEPATH += $${ROOT}/builds/CAN/$${PLATFORM}/$${BUILD_CONFIG}/ # we need to include the moc_*.cpp files
 }
 
 
