@@ -11,9 +11,7 @@
 
 QT       += core gui multimedia
 
-android {
-    PLATFORM = AndroidARM
-} else:unix {
+unix {
     PLATFORM = Linux64
 } else:win32{
     PLATFORM = Win
@@ -52,21 +50,7 @@ CONFIG(release, debug|release) {
 
 ROOT = $$PWD/../../
 
-android {
-
-    #############
-    ## ANDROID
-    #message(OS: Android)
-
-    ## Poppler
-    INCLUDEPATH += /usr/include/poppler/qt5/
-    LIBS += -L/usr/local/lib -lpoppler-qt5
-
-    ## Soundtouch
-    LIBS += -lavformat -lavcodec -lavutil -lpthread
-    LIBS += -lSoundTouch
-
-} else:unix {
+unix {
 
     #############
     ## UNIX
@@ -79,6 +63,7 @@ android {
     ## Soundtouch
     LIBS += -lavformat -lavcodec -lavutil -lpthread
     LIBS += -lSoundTouch
+
 } else:windows {
     INCLUDEPATH += $${ROOT}/libav-10.6-win32/win32/usr/include
 
@@ -431,7 +416,3 @@ RC_FILE = can.rc
 TRANSLATIONS += \
     can_en_US.ts \
     can_de_DE.ts
-
-contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
-    ANDROID_EXTRA_LIBS = $${ROOT}/builds/Preferences/AndroidARM/Release/libPreferences.so
-}

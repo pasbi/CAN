@@ -346,7 +346,6 @@ void GitDialog::updateBytesLabel(qint64 bytes)
     {
         text = tr("Sent bytes: %1");
     }
-    qDebug() << "update label: " << text.arg(bytes);
     ui->transferedBytes->setText(text.arg(bytes));
 }
 

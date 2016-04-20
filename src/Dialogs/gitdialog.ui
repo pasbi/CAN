@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="downloadPage">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -189,6 +189,9 @@
        </item>
        <item row="3" column="1">
         <widget class="QTextBrowser" name="commitMessageTextEdit">
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
          <property name="placeholderText">
           <string>Briefly describe your changes.</string>
          </property>

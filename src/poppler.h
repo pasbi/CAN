@@ -3,10 +3,8 @@
 
 #include <Qt>
 
-#if 0
-
 #if defined Q_OS_ANDROID
-    #include "poppler-qt5.h"
+    // No poppler for android.
 #elif defined Q_OS_LINUX
     #include "poppler-qt5.h"
     #define HAVE_POPPLER
@@ -15,8 +13,6 @@
     #define HAVE_POPPLER
 #else
     #error unsupported OS
-#endif
-
 #endif
 
 #endif // POPPLER_H

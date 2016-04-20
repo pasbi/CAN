@@ -1149,12 +1149,20 @@ void MainWindow::on_actionMerge_with_triggered()
 
 void MainWindow::on_actionSync_triggered()
 {
+    if (!m_project.canClose() || m_currentPath.isEmpty())
+    {
+        if (QMessageBox::question(this, qAppName(), tr("Projects must be saved before synchronizing.\nSave Project?"), QMessageBox::Yes, QMessageBox::Abort) == QMessageBox::Yes)
+        {
+            saveProject();
+        }
+        else
+        {
+            return;
+        }
+    }
+
     GitHandler git;
     RemoteInfo remote = m_project.remoteInfo();
-
-    //TODO ask for permission. abort otherwise.
-    saveProject();
-
 
     Q_ASSERT(remote.isValid());
 

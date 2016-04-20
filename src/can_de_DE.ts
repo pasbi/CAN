@@ -813,17 +813,17 @@ Do you want to keep it?</source>
         <translation>&amp;Benutzer speichern:</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.ui" line="193"/>
+        <location filename="Dialogs/gitdialog.ui" line="196"/>
         <source>Briefly describe your changes.</source>
         <translation>Beschreibe kurz was du geändert hast.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.ui" line="200"/>
+        <location filename="Dialogs/gitdialog.ui" line="203"/>
         <source>&amp;Message:</source>
         <translation>&amp;Kommentar:</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.ui" line="305"/>
+        <location filename="Dialogs/gitdialog.ui" line="308"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
@@ -892,7 +892,7 @@ Do you want to keep it?</source>
     </message>
     <message>
         <location filename="Dialogs/gitdialog.cpp" line="324"/>
-        <location filename="Dialogs/gitdialog.cpp" line="471"/>
+        <location filename="Dialogs/gitdialog.cpp" line="470"/>
         <source>Cannot overwrite %1</source>
         <translation>Kann &quot;%1&quot; nicht überschreiben</translation>
     </message>
@@ -912,43 +912,43 @@ Do you want to keep it?</source>
         <translation>Gesendete Bytes: %1</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="358"/>
+        <location filename="Dialogs/gitdialog.cpp" line="357"/>
         <source>Received objects: %1/%2</source>
         <translation>Empfangene Objekte: %1/%2</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="362"/>
+        <location filename="Dialogs/gitdialog.cpp" line="361"/>
         <source>Sent objects: %1/%2</source>
         <translation>Gesendete Objekte: %1/%2</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="475"/>
+        <location filename="Dialogs/gitdialog.cpp" line="474"/>
         <source>Sync finished.</source>
         <translation>Synchronisation beendet.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="524"/>
+        <location filename="Dialogs/gitdialog.cpp" line="523"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Abbrechen</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="525"/>
+        <location filename="Dialogs/gitdialog.cpp" line="524"/>
         <source>&amp;Back</source>
         <translation>&amp;Zurück</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="534"/>
-        <location filename="Dialogs/gitdialog.cpp" line="550"/>
+        <location filename="Dialogs/gitdialog.cpp" line="533"/>
+        <location filename="Dialogs/gitdialog.cpp" line="549"/>
         <source>&amp;Next</source>
         <translation>&amp;Weiter</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="538"/>
+        <location filename="Dialogs/gitdialog.cpp" line="537"/>
         <source>&amp;Synchronize</source>
         <translation>&amp;Synchronisieren</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="554"/>
+        <location filename="Dialogs/gitdialog.cpp" line="553"/>
         <source>&amp;Download</source>
         <translation>&amp;Herunterladen</translation>
     </message>
@@ -1457,7 +1457,13 @@ Think twice before you replace it.
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1175"/>
+        <location filename="mainwindow.cpp" line="1154"/>
+        <source>Projects must be saved before synchronizing.
+Save Project?</source>
+        <translation>Projekt muss gespeichert werden bevor es synchronisiert werden kann.\nProject jetzt speichern?</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1183"/>
         <source>Could not open downloaded file: %1</source>
         <translation>Kann heruntergeladene Datei nicht öffnen: %1</translation>
     </message>
