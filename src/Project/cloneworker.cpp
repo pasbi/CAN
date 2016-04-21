@@ -19,5 +19,10 @@ void CloneWorker::run()
 
     m_error = (error != 0);
     m_isFinished = true;
+
+    const git_error* gerror = giterr_last();
+    if (gerror)
+        qDebug() << "clone error message: " << gerror->message;
+    giterr_clear();
 }
 

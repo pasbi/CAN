@@ -172,15 +172,30 @@ int pushTransferProgress_cb(unsigned int current, unsigned int total, size_t byt
     return 0;
 }
 
+void display(const git_error* error)
+{
+    if (error)
+    {
+        qDebug() << "Git Error: " << error->klass << ": " << error->message;
+    }
+}
+
 bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, const QString& url)
 {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
-    git_clone_options options = GIT_CLONE_OPTIONS_INIT;
-#pragma GCC diagnostic pop
+    git_clone_options options;
+    git_clone_init_options(&options, GIT_CLONE_OPTIONS_VERSION);
 
-    options.fetch_opts.callbacks.credentials = credential_cb;
-    options.fetch_opts.callbacks.transfer_progress = transferProgress_cb;
+//    options.version = GIT_CLONE_OPTIONS_VERSION;
+//    options.checkout_opts.version = GIT_CHECKOUT_OPTIONS_VERSION;
+//    options.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
+//    options.fetch_opts.version = GIT_FETCH_OPTIONS_VERSION;
+//    options.fetch_opts.callbacks.version = GIT_REMOTE_CALLBACKS_VERSION;
+
+//    options.fetch_opts.prune = GIT_FETCH_PRUNE_UNSPECIFIED;
+//    options.fetch_opts.update_fetchhead = 1;
+
+//    options.fetch_opts.callbacks.credentials = credential_cb;
+//    options.fetch_opts.callbacks.transfer_progress = transferProgress_cb;
 
     GitHandler::Payload payload(m_git, username(), password());
     options.fetch_opts.callbacks.payload = &payload;
@@ -196,6 +211,8 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
             payload.abortCloneRequested = true;
         }
         ui->statusLabel->setText(tr("Downloading ") + progressDots());
+        display(giterr_last());
+        giterr_clear();
         qApp->processEvents();
     }
     m_git->killWorker();
