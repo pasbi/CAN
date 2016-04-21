@@ -12,11 +12,6 @@
 #include <windows.h>
 #endif
 
-#ifdef TEST_BUILD
-#include "tests/testbase.h"
-#endif
-
-
 void installTranslator()
 {
     QString localeCode = preference<QString>("locale");
@@ -84,33 +79,15 @@ int main(int argc, char *argv[])
     RegisterMetaTypes();
     Application app( argc, argv );
 
-#ifdef TEST_BUILD
-    bool runTests = (argc >= 2 && app.arguments().contains("--test"));
-    if (runTests)
-    {
-        Q_UNUSED(argc);
-        Q_UNUSED(argv);
-        TestBase::run();
-        return 0;
-    }
-#endif
-
-#ifdef TEST_BUILD
-    if (!runTests)
-    {
-#endif
 
     #ifdef RELEASE_BUILD // for debugging, it is inconvenient to see translated strings in the gui (cannot search those strings in code).
             installTranslator();
     #endif
 
-        MainWindow m;
-        m.show();
-        return app.exec();
+    MainWindow m;
+    m.show();
+    return app.exec();
 
-#ifdef TEST_BUILD
-    }
-#endif
 
 
 }

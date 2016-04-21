@@ -19,18 +19,10 @@ unix {
 
 CONFIG(debug, debug|release) {
     BUILD_CONFIG = Debug
-    CONFIG += test
 }
 CONFIG(release, debug|release) {
     BUILD_CONFIG = Release
 }
-
-CONFIG(test) {
-    QT += testlib
-    DEFINES += TEST_BUILD
-    INCLUDEPATH += $${ROOT}/builds/CAN/$${PLATFORM}/$${BUILD_CONFIG}/ # we need to include the moc_*.cpp files
-}
-
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -72,6 +64,7 @@ unix {
     LIBS += -lavformat -lavcodec -lavutil -lpthread
     LIBS += -L$${ROOT}/builds/SoundTouch/$${PLATFORM}/$${BUILD_CONFIG}
     LIBS += -lSoundTouch
+    LIBS += -L$${ROOT}/poppler-0.24.5-win32/bin -lpoppler-qt5
 } else {
     error(Unsupported OS)
 }
@@ -86,16 +79,6 @@ LIBS += -L$${ROOT}/builds/libgit2/$${PLATFORM} -lgit2
 
 
 # Files
-
-CONFIG(test) {
-    SOURCES += \
-        tests/testbase.cpp \
-        tests/gittest.cpp
-
-    HEADERS += \
-        tests/testbase.h \
-        tests/gittest.h
-}
 
 SOURCES += \
     main.cpp \

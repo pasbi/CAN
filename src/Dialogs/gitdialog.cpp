@@ -177,15 +177,18 @@ int pushTransferProgress_cb(unsigned int current, unsigned int total, size_t byt
     return 0;
 }
 
+void display(const git_error* error)
+{
+    if (error)
+    {
+        qDebug() << "Git Error: " << error->klass << ": " << error->message;
+    }
+}
+
 bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, const QString& url)
 {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
-    git_clone_options options = GIT_CLONE_OPTIONS_INIT;
-#pragma GCC diagnostic pop
-
-    options.fetch_opts.callbacks.credentials = credential_cb;
-    options.fetch_opts.callbacks.transfer_progress = transferProgress_cb;
+    git_clone_options options;
+    git_clone_init_options(&options, GIT_CLONE_OPTIONS_VERSION);
 
     GitHandler::Payload payload(m_git, username(), password());
     options.fetch_opts.callbacks.payload = &payload;
