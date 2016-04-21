@@ -42,11 +42,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QDateTimeEdit" name="dateTimeEdit">
-       <property name="calendarPopup">
-        <bool>false</bool>
-       </property>
-      </widget>
+      <widget class="QTimeEdit" name="timeEdit"/>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -74,38 +70,6 @@
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>dateTimeEdit</sender>
-   <signal>dateChanged(QDate)</signal>
-   <receiver>calendarWidget</receiver>
-   <slot>setSelectedDate(QDate)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>252</x>
-     <y>304</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>234</x>
-     <y>270</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>calendarWidget</sender>
-   <signal>clicked(QDate)</signal>
-   <receiver>dateTimeEdit</receiver>
-   <slot>setDate(QDate)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>286</x>
-     <y>270</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>252</x>
-     <y>304</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>

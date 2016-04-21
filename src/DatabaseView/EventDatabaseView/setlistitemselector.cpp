@@ -14,6 +14,7 @@ SetlistItemSelector::SetlistItemSelector(QWidget *parent) :
 {
     SongTableView* songTableView = new SongTableView( this );
     songTableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
+    songTableView->setDetailedView(true);
 
     QVBoxLayout* vlayout = new QVBoxLayout();
 

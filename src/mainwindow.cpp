@@ -618,6 +618,8 @@ void MainWindow::updateActionsEnabled()
         m_actionPaste_Song->setEnabled( clipboard->hasFormat(DatabaseMimeData<Song>::mimeType()) );
     }
 
+    ui->actionSync->setEnabled(m_project.remoteInfo().isValid());
+
 }
 
 ////////////////////////////////////////////////

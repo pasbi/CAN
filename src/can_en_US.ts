@@ -299,12 +299,16 @@
         <translation>Midi disabled</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="168"/>
-        <source>mm:ss</source>
-        <translation>mm:ss</translation>
+        <location filename="application.cpp" line="232"/>
+        <source>h:mm:ss</source>
+        <translation>h:mm:ss</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="169"/>
+        <source>mm:ss</source>
+        <translation type="vanished">mm:ss</translation>
+    </message>
+    <message>
+        <location filename="application.cpp" line="219"/>
         <source>MM/dd/yy hh:mm ap</source>
         <translation>MM/dd/yy hh:mm ap</translation>
     </message>
@@ -1455,13 +1459,14 @@ Think twice before you replace it.
         <translation>Unnamed</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1154"/>
+        <location filename="mainwindow.cpp" line="1156"/>
         <source>Projects must be saved before synchronizing.
 Save Project?</source>
-        <translation>Project must be saved before synchronizing.\nSave Project now?</translation>
+        <translation>Project must be saved before synchronizing.
+Save Project now?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1183"/>
+        <location filename="mainwindow.cpp" line="1185"/>
         <source>Could not open downloaded file: %1</source>
         <translation>Cannot open downloaded file: %1</translation>
     </message>
@@ -1483,43 +1488,43 @@ Save Project?</source>
     </message>
     <message>
         <location filename="mainwindow.ui" line="281"/>
-        <location filename="mainwindow.cpp" line="694"/>
-        <location filename="mainwindow.cpp" line="1131"/>
+        <location filename="mainwindow.cpp" line="696"/>
+        <location filename="mainwindow.cpp" line="1133"/>
         <source>Open ...</source>
         <translation>Open ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="719"/>
+        <location filename="mainwindow.cpp" line="721"/>
         <source>Song cannot be removed</source>
         <translation>Song cannot be removed</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="720"/>
+        <location filename="mainwindow.cpp" line="722"/>
         <source>This song is currently in use and can thus not be removed.</source>
         <translation>This song is currently in use and thus cannot be removed.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="731"/>
+        <location filename="mainwindow.cpp" line="733"/>
         <source>Add to index ...</source>
         <translation>Add folder to index ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="983"/>
+        <location filename="mainwindow.cpp" line="985"/>
         <source>Remove Setlist Items</source>
         <translation>Remove setlist items</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1026"/>
+        <location filename="mainwindow.cpp" line="1028"/>
         <source>Nothing copied</source>
         <translation>Nothing copied</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1026"/>
+        <location filename="mainwindow.cpp" line="1028"/>
         <source>You have not selected any file.</source>
         <translation>You have not selected any file.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1061"/>
+        <location filename="mainwindow.cpp" line="1063"/>
         <source>Copying finished.
   Successfull:	%1
   Not overwritten:	%2
@@ -1540,12 +1545,12 @@ Save Project?</source>
         <translation>&amp;Redo %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="958"/>
+        <location filename="mainwindow.cpp" line="960"/>
         <source>All songs</source>
         <translation>All songs</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="806"/>
+        <location filename="mainwindow.cpp" line="808"/>
         <source>File index information</source>
         <translation>File index information</translation>
     </message>
@@ -1566,17 +1571,17 @@ Do you want to replace it?</source>
         <translation>%1 already exists. Do you want to overwrite it?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="807"/>
+        <location filename="mainwindow.cpp" line="809"/>
         <source>Files: %1</source>
         <translation>Files: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="938"/>
+        <location filename="mainwindow.cpp" line="940"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="939"/>
+        <location filename="mainwindow.cpp" line="941"/>
         <source>Language changes will apply on next start.</source>
         <translation>Language changes will apply on next start.</translation>
     </message>
@@ -2051,32 +2056,32 @@ Do you want to replace it?</source>
 <context>
     <name>Song</name>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="124"/>
+        <location filename="Database/SongDatabase/song.cpp" line="127"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="124"/>
+        <location filename="Database/SongDatabase/song.cpp" line="127"/>
         <source>Acoustic</source>
         <translation>Acoustic</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="124"/>
+        <location filename="Database/SongDatabase/song.cpp" line="127"/>
         <source>A/N</source>
         <translation>A/N</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="129"/>
+        <location filename="Database/SongDatabase/song.cpp" line="132"/>
         <source>Needs Practice</source>
         <translation>Needs Practice</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="129"/>
+        <location filename="Database/SongDatabase/song.cpp" line="132"/>
         <source>Works</source>
         <translation>Works</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="129"/>
+        <location filename="Database/SongDatabase/song.cpp" line="132"/>
         <source>Inactive</source>
         <translation>Inactive</translation>
     </message>

@@ -56,6 +56,8 @@ BrowseAttachmentButtonBox::BrowseAttachmentButtonBox(QWidget *parent) :
             }
         });
     }
+
+    setSong(nullptr);
 }
 
 BrowseAttachmentButtonBox::~BrowseAttachmentButtonBox()

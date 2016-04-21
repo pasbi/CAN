@@ -1,12 +1,15 @@
 #include "song.h"
+
+#include <QJsonDocument>
+
 #include "songdatabase.h"
 #include "global.h"
-#include <QJsonDocument>
 #include "Attachments/attachment.h"
 #include "Database/EventDatabase/event.h"
 #include "Database/EventDatabase/eventdatabase.h"
 #include "attachmentdatabase.h"
 #include "Project/project.h"
+#include "application.h"
 
 Song::Song(Database<Song> * database) :
     DatabaseItem(database),
@@ -97,11 +100,11 @@ QString Song::attributeDisplay(const QString &key) const
     }
     if (key == "duration")
     {
-        return attribute.toTime().toString(preference<QString>("durationFormat"));
+        return attribute.toTime().toString(app().durationFormat());
     }
     if (key == "creationDateTime")
     {
-        return attribute.toDateTime().toString(preference<QString>("dateTimeFormat"));
+        return attribute.toDateTime().toString(app().dateTimeFormat());
     }
     if (attribute.canConvert(QVariant::StringList))
     {

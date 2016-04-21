@@ -51,6 +51,10 @@ public:
 
     static const QString PROJECT_FILE_FILTER;
 
+    // use them rather than preferences<QString>("dateTimeFormat"/"timeFormat") since they have localized default values.
+    QString dateTimeFormat() const;
+    QString durationFormat() const;
+
 private:
     mutable FileIndex* m_fileIndex = nullptr;
     QSettings m_settings;

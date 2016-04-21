@@ -81,7 +81,7 @@ void AttachmentChooser::setSong(Song *song)
 
 void AttachmentChooser::setAttachment(int index)
 {
-    ui->browseAttachmentButtonBox->setAttachment(index);
+    //ui->browseAttachmentButtonBox->setAttachment(index);
 
     ui->comboBox->clear();
     if (!m_currentSong || index < 0)

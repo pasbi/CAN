@@ -61,7 +61,10 @@ bool EventTableView::showDateTimeDialog(QModelIndex index)
         }
         return true;
     }
-    return false;
+    else
+    {
+        return false;
+    }
 }
 
 void EventTableView::mouseDoubleClickEvent(QMouseEvent *event)
@@ -74,5 +77,5 @@ void EventTableView::mouseDoubleClickEvent(QMouseEvent *event)
 
 void EventTableView::triggerEditDate(const Event *event)
 {
-    showDateTimeDialog( sourceModel()->indexOf(event, 1) );
+    showDateTimeDialog( proxyModel()->mapFromSource(sourceModel()->indexOf(event, 1)) );
 }

@@ -52,6 +52,7 @@ void GitHandler::startPush(git_repository *repository, git_remote* &remote, git_
 
     // do the push
     Q_ASSERT(m_worker == nullptr);
+    Q_ASSERT(remote != nullptr);
     m_worker = new PushWorker(remote, refspecs, options);
     m_worker->moveToThread(m_thread);
     connect(m_thread, SIGNAL(started()), m_worker, SLOT(run()));

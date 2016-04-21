@@ -165,8 +165,8 @@ void Application::initPreferences()
     m_preferences.registerPreference( "maxZoom", new Preference(0.75) );
     m_preferences.registerPreference( "View", new Preference(0) );
     m_preferences.registerPreference( "HideInactived", new Preference(false) );
-    m_preferences.registerPreference( "durationFormat", new Preference(tr("mm:ss")) );
-    m_preferences.registerPreference( "dateTimeFormat", new Preference(tr("MM/dd/yy hh:mm ap")) );
+    m_preferences.registerPreference( "durationFormat", new Preference("") );
+    m_preferences.registerPreference( "dateTimeFormat", new Preference("") );
     m_preferences.registerPreference( "defaultActionMergeMaster", new Preference(QVariant::fromValue(MergeItem::AddAction)));
     m_preferences.registerPreference( "defaultActionMergeSlave", new Preference(QVariant::fromValue(MergeItem::AddAction)));
     m_preferences.registerPreference( "defaultActionMergeModify", new Preference(QVariant::fromValue(MergeItem::UseMaster)));
@@ -208,5 +208,31 @@ void Application::handleProjectOpenError(OpenError error, const QString& filenam
             text = tr("Invalid file: %1").arg(filename);
         }
         QMessageBox::warning(m_mainWindow, title, text, QMessageBox::Ok, QMessageBox::Ok );
+    }
+}
+
+QString Application::dateTimeFormat() const
+{
+    QString pref = preference<QString>("dateTimeFormat");
+    if (pref.isEmpty())
+    {
+        return tr("MM/dd/yy hh:mm ap");
+    }
+    else
+    {
+        return pref;
+    }
+}
+
+QString Application::durationFormat() const
+{
+    QString pref = preference<QString>("durationFormat");
+    if (pref.isEmpty())
+    {
+        return tr("h:mm:ss");
+    }
+    else
+    {
+        return pref;
     }
 }

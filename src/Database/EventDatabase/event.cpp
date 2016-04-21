@@ -60,8 +60,7 @@ QString Event::attributeDisplay(const QString &key) const
     QVariant attribute = DatabaseItem::attribute(key);
     if (key == "beginning" || key == "creationDateTime")
     {
-        return attribute.toDateTime().toString(preference<QString>("dateTimeFormat"));
-        return attribute.toDateTime().toString(preference<QString>("dateTimeFormat"));
+        return attribute.toDateTime().toString(app().dateTimeFormat());
     }
     if (key == "type")
     {

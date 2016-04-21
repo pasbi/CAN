@@ -16,10 +16,12 @@ DateTimeDialog::~DateTimeDialog()
 
 QDateTime DateTimeDialog::dateTime() const
 {
-    return ui->dateTimeEdit->dateTime();
+    return QDateTime( ui->calendarWidget->selectedDate(),
+                      ui->timeEdit->time() );
 }
 
 void DateTimeDialog::setDateTime(const QDateTime& dateTime)
 {
-    ui->dateTimeEdit->setDateTime( dateTime );
+    ui->calendarWidget->setSelectedDate(dateTime.date());
+    ui->timeEdit->setTime(dateTime.time());
 }
