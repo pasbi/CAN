@@ -66,6 +66,7 @@ private:
     void info(const QString& message);
     int m_numProgressDots;
     QString progressDots();
+    void lookForErrors();
 
     // only required for sync.
     QString m_url;
@@ -73,8 +74,13 @@ private:
     QString m_masterFilename;
     Project* m_masterProject;
 
+    static QString prettifyGitError(int klass, const QString& message);
+
     void initUsernameComboBox();
     bool replaceFile(const QString& victim, const QString& newFile);
+
+signals:
+    void gitError(int klass, QString message);
 };
 
 #endif // GITDIALOG_H

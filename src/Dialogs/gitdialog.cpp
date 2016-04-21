@@ -32,10 +32,15 @@ GitDialog::GitDialog(GitHandler *git, Mode mode, const QString& url, const QStri
     ui->setupUi(this);
     connect(m_git, SIGNAL(bytesTransfered(qint64)), this, SLOT(updateBytesLabel(qint64)));
     connect(m_git, SIGNAL(objectsTransfered(uint,uint)), this, SLOT(updateObjectsLabel(uint,uint)));
+    connect(this, &GitDialog::gitError, [this](int klass, QString message)
+    {
+        ui->errorLabel->setText(prettifyGitError(klass, message));
+    });
     updateBytesLabel(0);
     updateObjectsLabel(0, 0);
 
     ui->statusLabel->setText("");
+    ui->errorLabel->setText("");
 }
 
 GitDialog::GitDialog(GitHandler *git, QWidget *parent) :
@@ -196,6 +201,7 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
             payload.abortCloneRequested = true;
         }
         ui->statusLabel->setText(tr("Downloading ") + progressDots());
+        lookForErrors();
         qApp->processEvents();
     }
     m_git->killWorker();
@@ -259,6 +265,7 @@ bool GitDialog::push(git_repository* repository)
         updateBytesLabel(0);
         updateObjectsLabel(0, 0);
         ui->statusLabel->setText(tr("Uploading ") + progressDots());
+        lookForErrors();
         qApp->processEvents();
     }
     m_git->killWorker();
@@ -319,7 +326,11 @@ void GitDialog::download()
         // copy file to correct place
         QString absoluteSourceFilepath = QDir(dir.path()).absoluteFilePath(filename);
 
-        if (!replaceFile(saveAs, absoluteSourceFilepath))
+        if (!QFileInfo(absoluteSourceFilepath).exists())
+        {
+            ui->statusLabel->setText(tr("Cannot find %1 in repository.").arg(filename));
+        }
+        else if (!replaceFile(saveAs, absoluteSourceFilepath))
         {
             ui->statusLabel->setText(tr("Cannot overwrite %1").arg(saveAs));
         }
@@ -648,4 +659,21 @@ QString GitDialog::commitMessage() const
 QString GitDialog::userEmail() const
 {
     return "dummy@email.com";
+}
+
+void GitDialog::lookForErrors()
+{
+    const git_error* error = giterr_last();
+    if (error)
+    {
+        qWarning() << "git error: " << error->message << ", " << error->message;
+        emit gitError(error->klass, QString(error->message));
+    }
+    giterr_clear();
+}
+
+QString GitDialog::prettifyGitError(int klass, const QString &message)
+{
+	// actually I dont expect to ever see this function to act. So the following stumb is just fine.
+    return QString("%1, %2").arg(klass).arg(message);
 }
