@@ -192,6 +192,8 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
 
     GitHandler::Payload payload(m_git, username(), password());
     options.fetch_opts.callbacks.payload = &payload;
+    options.fetch_opts.callbacks.credentials = &credential_cb;
+    options.fetch_opts.callbacks.transfer_progress = &transferProgress_cb;
 
     // clone the repo to a temp dir
     m_git->startClone(repository, url, tempDirPath, &options);
@@ -233,12 +235,10 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
 bool GitDialog::push(git_repository* repository)
 {
     //setup callbacks
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
-    git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
-#pragma GCC diagnostic pop
+    git_remote_callbacks callbacks;
+    git_remote_init_callbacks(&callbacks, GIT_REMOTE_CALLBACKS_VERSION);
     callbacks.credentials = credential_cb;
-    GitHandler::Payload payload(m_git, "oVooVo", password());
+    GitHandler::Payload payload(m_git, username(), password());
     callbacks.payload = &payload;
     callbacks.push_transfer_progress = &pushTransferProgress_cb;
 
