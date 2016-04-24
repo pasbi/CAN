@@ -198,6 +198,8 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
     // clone the repo to a temp dir
     m_git->startClone(repository, url, tempDirPath, &options);
 
+    updateBytesLabel(0);
+    updateObjectsLabel(0, 0);
     m_numProgressDots = -1;
     while (!m_git->isFinished())
     {
@@ -209,6 +211,7 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
         lookForErrors();
         qApp->processEvents();
     }
+    lookForErrors();
     m_git->killWorker();
 
     bool success = true;
@@ -258,6 +261,8 @@ bool GitDialog::push(git_repository* repository)
     git_remote* remote = nullptr;
     m_git->startPush(repository, remote, &refspecs, &options);
 
+    updateBytesLabel(0);
+    updateObjectsLabel(0, 0);
     m_numProgressDots = -1;
     while (!m_git->isFinished())
     {
@@ -265,12 +270,11 @@ bool GitDialog::push(git_repository* repository)
         {
             m_git->abortPush(remote);
         }
-        updateBytesLabel(0);
-        updateObjectsLabel(0, 0);
         ui->statusLabel->setText(tr("Uploading ") + progressDots());
         lookForErrors();
         qApp->processEvents();
     }
+    lookForErrors();
     m_git->killWorker();
 
 
