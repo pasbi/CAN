@@ -55,6 +55,13 @@ public:
     QString dateTimeFormat() const;
     QString durationFormat() const;
 
+
+    // unfortunately, on windows we cannot use self-defined metatypes (apparently Q_DECLARE_METATYPE) does
+    // not what it should do. QMap<QString, QString> is the only type we really need to store in preference
+    // (the others are defacto-read-only-always-default values. It's fine if we use its default value
+    void setPreference(const QString &key, const QMap<QString, QString> &value);
+    QMap<QString, QString> stringMapPreference(const QString& key) const;
+
 private:
     mutable FileIndex* m_fileIndex = nullptr;
     QSettings m_settings;
@@ -67,6 +74,7 @@ private:
 
     void initPreferences();
     Preferences m_preferences;
+
 };
 
 Application & app();

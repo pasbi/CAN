@@ -174,7 +174,10 @@ void Application::initPreferences()
     m_preferences.registerPreference( "setlistItemComboBoxHeight", new Preference(150));
     m_preferences.registerPreference( "songDetailColumnWidths", new Preference(QVariant::fromValue(QList<int>())));
     m_preferences.registerPreference( "lastUsername", new Preference(QString()) );
-    m_preferences.registerPreference( "credentials", new Preference(QVariant::fromValue(QMap<QString, QString>())) );
+
+    // see setPreference(const QString&, const QMap<QString, QString>&);
+    m_preferences.registerPreference( "credentials_keys", new Preference(QStringList()));
+    m_preferences.registerPreference( "credentials_vals", new Preference(QStringList()));
 
     //TODO make default value depend on screen resolution
     m_preferences.registerPreference( "ImageRenderQuality", new Preference(InterfaceOptions(InterfaceOptions::SpinBox, tr("PDFCreator"), tr("Non PDF Quality")),
@@ -235,4 +238,27 @@ QString Application::durationFormat() const
     {
         return pref;
     }
+}
+
+void Application::setPreference(const QString &key, const QMap<QString, QString> &value)
+{
+    // decompose map
+    QStringList keys = value.keys();
+    QStringList vals = value.values();
+
+    setPreference(key+"_keys", keys);
+    setPreference(key+"_vals", vals);
+}
+
+QMap<QString, QString> Application::stringMapPreference(const QString& key) const
+{
+    QStringList keys = preference<QStringList>(key+"_keys");
+    QStringList vals = preference<QStringList>(key+"_vals");
+    Q_ASSERT(keys.length() == vals.length());
+    QMap<QString, QString> map;
+    for (int i = 0; i < keys.length(); ++i)
+    {
+        map.insert(keys[i], vals[i]);
+    }
+    return map;
 }

@@ -16,13 +16,7 @@ CloneWorker::CloneWorker(git_repository*& repository, const QString& url, const 
 void CloneWorker::run()
 {
     int error = git_clone( &m_repository, CSTR(m_url), CSTR(m_path), m_options);
-
     m_error = (error != 0);
     m_isFinished = true;
-
-    const git_error* gerror = giterr_last();
-    if (gerror)
-        qDebug() << "clone error message: " << gerror->message;
-    giterr_clear();
 }
 

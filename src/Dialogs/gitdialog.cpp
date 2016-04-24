@@ -181,7 +181,7 @@ void display(const git_error* error)
 {
     if (error)
     {
-        qDebug() << "Git Error: " << error->klass << ": " << error->message;
+        qWarning() << "Git Error: " << error->klass << ": " << error->message;
     }
 }
 
@@ -499,7 +499,7 @@ void GitDialog::sync()
 
 void GitDialog::initUsernameComboBox()
 {
-    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+    QMap<QString, QString> creds = app().stringMapPreference("credentials");
     for (const QString& username : creds.keys())
     {
         ui->usernameComboBox->addItem(username);
@@ -518,7 +518,7 @@ void GitDialog::initUsernameComboBox()
 
 void GitDialog::addCredentials()
 {
-    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+    QMap<QString, QString> creds = app().stringMapPreference("credentials");
     QString password = ui->passwordEdit->text();
     QString username = ui->usernameComboBox->currentText();
     if (password.isEmpty())
@@ -529,7 +529,7 @@ void GitDialog::addCredentials()
     {
         creds.insert(username, password);
     }
-    setPreference("credentials", creds);
+    app().setPreference("credentials", creds);
 }
 
 void GitDialog::updateButtonStatus()
@@ -574,7 +574,7 @@ void GitDialog::updateButtonStatus()
     }
 
 
-    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+    QMap<QString, QString> creds = app().stringMapPreference("credentials");
     QString username = ui->usernameComboBox->currentText();
     ui->deleteUserButton->setEnabled(creds.contains(username));
 }
@@ -619,7 +619,7 @@ void GitDialog::on_backButton_clicked()
 
 void GitDialog::on_usernameComboBox_currentTextChanged(const QString &username)
 {
-    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+    QMap<QString, QString> creds = app().stringMapPreference("credentials");
 
     if (creds.keys().contains(username))
     {
@@ -635,10 +635,10 @@ void GitDialog::on_usernameComboBox_currentTextChanged(const QString &username)
 
 void GitDialog::on_deleteUserButton_clicked()
 {
-    QMap<QString, QString> creds = preference<QMap<QString, QString>>("credentials");
+    QMap<QString, QString> creds = app().stringMapPreference("credentials");
     QString username = ui->usernameComboBox->currentText();
     creds.remove(username);
-    setPreference("credentials", creds);
+    app().setPreference("credentials", creds);
 
     ui->usernameComboBox->setCurrentText("");
     ui->passwordEdit->setText("");
