@@ -8,6 +8,7 @@ class CloneWorker : public Worker
 {
 public:
     CloneWorker(git_repository*& repository, const QString& url, const QString& path, const git_clone_options* options );
+    ~CloneWorker();
 
 public slots:
     void run();

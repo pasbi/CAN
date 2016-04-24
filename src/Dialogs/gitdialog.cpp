@@ -32,7 +32,7 @@ GitDialog::GitDialog(GitHandler *git, Mode mode, const QString& url, const QStri
     ui->setupUi(this);
     connect(m_git, SIGNAL(bytesTransfered(qint64)), this, SLOT(updateBytesLabel(qint64)));
     connect(m_git, SIGNAL(objectsTransfered(uint,uint)), this, SLOT(updateObjectsLabel(uint,uint)));
-    connect(this, &GitDialog::gitError, [this](int klass, QString message)
+    connect(m_git, static_cast<void (GitHandler::*)(int, const QString&)>(&GitHandler::error), [this](int klass, QString message)
     {
         ui->errorLabel->setText(prettifyGitError(klass, message));
     });
@@ -208,10 +208,8 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
             payload.abortCloneRequested = true;
         }
         ui->statusLabel->setText(tr("Downloading ") + progressDots());
-        lookForErrors();
         qApp->processEvents();
     }
-    lookForErrors();
     m_git->killWorker();
 
     bool success = true;
@@ -271,10 +269,8 @@ bool GitDialog::push(git_repository* repository)
             m_git->abortPush(remote);
         }
         ui->statusLabel->setText(tr("Uploading ") + progressDots());
-        lookForErrors();
         qApp->processEvents();
     }
-    lookForErrors();
     m_git->killWorker();
 
 
@@ -666,17 +662,6 @@ QString GitDialog::commitMessage() const
 QString GitDialog::userEmail() const
 {
     return "dummy@email.com";
-}
-
-void GitDialog::lookForErrors()
-{
-    const git_error* error = giterr_last();
-    if (error)
-    {
-        qWarning() << "git error: " << error->message << ", " << error->message;
-        emit gitError(error->klass, QString(error->message));
-    }
-    giterr_clear();
 }
 
 QString GitDialog::prettifyGitError(int klass, const QString &message)

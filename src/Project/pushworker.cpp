@@ -14,4 +14,5 @@ void PushWorker::run()
 {
     m_error = (git_remote_push( m_remote, m_refspecs, m_options) != 0);
     m_isFinished = true;
+    lookForErrors();
 }

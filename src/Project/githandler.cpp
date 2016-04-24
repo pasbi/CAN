@@ -37,6 +37,7 @@ void GitHandler::startClone(git_repository* &repository, const QString &url, con
 
     Q_ASSERT(m_worker == nullptr);
     m_worker = new CloneWorker(repository, url, path, options);
+    connect(m_worker, SIGNAL(error(int,QString)), this, SIGNAL(error(int,QString)));
     m_worker->moveToThread(m_thread);
     connect(m_thread, SIGNAL(started()), m_worker, SLOT(run()));
     m_thread->start();
@@ -54,6 +55,7 @@ void GitHandler::startPush(git_repository *repository, git_remote* &remote, git_
     Q_ASSERT(m_worker == nullptr);
     Q_ASSERT(remote != nullptr);
     m_worker = new PushWorker(remote, refspecs, options);
+    connect(m_worker, SIGNAL(error(int,QString)), this, SIGNAL(error(int,QString)));
     m_worker->moveToThread(m_thread);
     connect(m_thread, SIGNAL(started()), m_worker, SLOT(run()));
     m_thread->start();

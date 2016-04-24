@@ -30,6 +30,7 @@ public slots:
 signals:
     void bytesTransfered(qint64);
     void objectsTransfered(uint, uint);
+    void error(int code, const QString& message);
 
 private:
     QString m_url;
