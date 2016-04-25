@@ -666,6 +666,24 @@ QString GitDialog::userEmail() const
 
 QString GitDialog::prettifyGitError(int klass, const QString &message)
 {
-	// actually I dont expect to ever see this function to act. So the following stumb is just fine.
-    return QString("%1, %2").arg(klass).arg(message);
+    QStringList ms = message.split(" ");
+    bool ok;
+    if (!ms.isEmpty())
+    {
+        int httpCode = ms.last().toInt(&ok);
+        if (ok)
+        {
+            switch (httpCode)
+            {
+            case 401:
+                return tr("Authentication failed.");
+            case 403:
+                return tr("Access forbidden.");
+            case 404:
+                return tr("Repository not found.");
+            }
+        }
+    }
+
+    return tr("Unexpected error: %1 (%2)").arg(message).arg(klass);
 }

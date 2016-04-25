@@ -64,7 +64,7 @@
         <location filename="application.cpp" line="156"/>
         <location filename="application.cpp" line="158"/>
         <location filename="application.cpp" line="160"/>
-        <location filename="application.cpp" line="180"/>
+        <location filename="application.cpp" line="183"/>
         <source>PDFCreator</source>
         <translation>PDF Export</translation>
     </message>
@@ -299,7 +299,7 @@
         <translation>Midi deaktiviert</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="232"/>
+        <location filename="application.cpp" line="235"/>
         <source>h:mm:ss</source>
         <translation>h:mm:ss</translation>
     </message>
@@ -308,23 +308,23 @@
         <translation type="vanished">mm:ss</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="219"/>
+        <location filename="application.cpp" line="222"/>
         <source>MM/dd/yy hh:mm ap</source>
         <translation>dd.MM.yy HH:mm</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="180"/>
+        <location filename="application.cpp" line="183"/>
         <source>Non PDF Quality</source>
         <translation>Renderqualität (ausser PDF)</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="204"/>
+        <location filename="application.cpp" line="207"/>
         <source>Cannot open file %1 for reading.</source>
         <oldsource>Cannot open file %1 for reading</oldsource>
         <translation>Kann %1 nicht zum lesen öffnen.</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="208"/>
+        <location filename="application.cpp" line="211"/>
         <source>Invalid file: %1</source>
         <translation>Ungültige Datei: %1</translation>
     </message>
@@ -827,134 +827,159 @@ Do you want to keep it?</source>
         <translation>&amp;Kommentar:</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.ui" line="308"/>
+        <location filename="Dialogs/gitdialog.ui" line="318"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="44"/>
+        <location filename="Dialogs/gitdialog.cpp" line="49"/>
         <source>Download</source>
         <translation>Download</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="46"/>
+        <location filename="Dialogs/gitdialog.cpp" line="51"/>
         <source>Username</source>
         <translation>Benutzername</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="58"/>
+        <location filename="Dialogs/gitdialog.cpp" line="63"/>
         <source>Synchronize</source>
         <translation>Synchronisieren</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="198"/>
+        <location filename="Dialogs/gitdialog.cpp" line="210"/>
         <source>Downloading </source>
         <translation>Am herunterladen</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="207"/>
+        <location filename="Dialogs/gitdialog.cpp" line="219"/>
         <source>Cannot download %1</source>
         <oldsource>Cannot download </oldsource>
         <translation>Download fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="213"/>
-        <location filename="Dialogs/gitdialog.cpp" line="277"/>
+        <location filename="Dialogs/gitdialog.cpp" line="225"/>
+        <location filename="Dialogs/gitdialog.cpp" line="287"/>
         <source>Aborted by user</source>
         <translation>Vom Benutzer abgebrochen</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="261"/>
+        <location filename="Dialogs/gitdialog.cpp" line="271"/>
         <source>Uploading </source>
         <translation>Am hochladen</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="271"/>
+        <location filename="Dialogs/gitdialog.cpp" line="281"/>
         <source>Cannot upload %1</source>
         <oldsource>Cannot upload </oldsource>
         <translation>Upload fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="291"/>
+        <location filename="Dialogs/gitdialog.cpp" line="301"/>
         <source>URL must not be empty.</source>
         <translation>URL kann nicht leer sein.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="298"/>
+        <location filename="Dialogs/gitdialog.cpp" line="308"/>
         <source>Filename must not be empty.</source>
         <translation>Dateiname darf nicht leer sein.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="305"/>
+        <location filename="Dialogs/gitdialog.cpp" line="315"/>
         <source>Please provide a filename for saving.</source>
         <translation>Bitte gib einen Dateinamen zum speichern an.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="309"/>
+        <location filename="Dialogs/gitdialog.cpp" line="319"/>
         <source>Start download ...</source>
         <translation>Starte download ...</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="324"/>
-        <location filename="Dialogs/gitdialog.cpp" line="470"/>
+        <location filename="Dialogs/gitdialog.cpp" line="334"/>
+        <source>Cannot find %1 in repository.</source>
+        <translation>Datei &quot;%1&quot; nicht im Repository gefunden.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="338"/>
+        <location filename="Dialogs/gitdialog.cpp" line="484"/>
         <source>Cannot overwrite %1</source>
         <translation>Kann &quot;%1&quot; nicht überschreiben</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="328"/>
+        <location filename="Dialogs/gitdialog.cpp" line="342"/>
         <source>Download finished.</source>
         <translation>Download beendet.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="343"/>
+        <location filename="Dialogs/gitdialog.cpp" line="357"/>
         <source>Received bytes: %1</source>
         <translation>Empfangene Bytes: %1</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="347"/>
+        <location filename="Dialogs/gitdialog.cpp" line="361"/>
         <source>Sent bytes: %1</source>
         <translation>Gesendete Bytes: %1</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="357"/>
+        <location filename="Dialogs/gitdialog.cpp" line="371"/>
         <source>Received objects: %1/%2</source>
         <translation>Empfangene Objekte: %1/%2</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="361"/>
+        <location filename="Dialogs/gitdialog.cpp" line="375"/>
         <source>Sent objects: %1/%2</source>
         <translation>Gesendete Objekte: %1/%2</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="474"/>
+        <location filename="Dialogs/gitdialog.cpp" line="488"/>
         <source>Sync finished.</source>
         <translation>Synchronisation beendet.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="523"/>
+        <location filename="Dialogs/gitdialog.cpp" line="537"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Abbrechen</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="524"/>
+        <location filename="Dialogs/gitdialog.cpp" line="538"/>
         <source>&amp;Back</source>
         <translation>&amp;Zurück</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="533"/>
-        <location filename="Dialogs/gitdialog.cpp" line="549"/>
+        <location filename="Dialogs/gitdialog.cpp" line="547"/>
+        <location filename="Dialogs/gitdialog.cpp" line="563"/>
         <source>&amp;Next</source>
         <translation>&amp;Weiter</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="537"/>
+        <location filename="Dialogs/gitdialog.cpp" line="551"/>
         <source>&amp;Synchronize</source>
         <translation>&amp;Synchronisieren</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="553"/>
+        <location filename="Dialogs/gitdialog.cpp" line="567"/>
         <source>&amp;Download</source>
         <translation>&amp;Herunterladen</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="679"/>
+        <source>Authentication failed.</source>
+        <translation>Authentifizierung fehlgeschlagen.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="681"/>
+        <source>Access forbidden.</source>
+        <translation>Zugriff verweigert.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="683"/>
+        <source>Repository not found.</source>
+        <translation>Repository nicht gefunden.</translation>
+    </message>
+    <message>
+        <location filename="Dialogs/gitdialog.cpp" line="688"/>
+        <source>Unexpected error: %1 (%2)</source>
+        <translation>Unerwarteter Fehler: %1 (%2)</translation>
     </message>
 </context>
 <context>
@@ -2013,7 +2038,7 @@ Do you want to replace it?</source>
 <context>
     <name>SetlistItemSelector</name>
     <message>
-        <location filename="DatabaseView/EventDatabaseView/setlistitemselector.cpp" line="22"/>
+        <location filename="DatabaseView/EventDatabaseView/setlistitemselector.cpp" line="23"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
