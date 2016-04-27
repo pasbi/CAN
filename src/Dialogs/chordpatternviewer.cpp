@@ -39,6 +39,8 @@ ChordPatternViewer::ChordPatternViewer(AbstractChordPatternAttachment *attachmen
 {
     ui->setupUi(this);
 
+    ui->audioPlayerWidget->installEventFilter(this);
+
     // init timer and window
     m_playTimer = new QTimer( this );
     m_speed = attachment->scrollDownTempo();
@@ -144,6 +146,24 @@ QPixmap twoPageView( QPixmap pixmap, int describedWidth, int viewportHeight, int
     return doublePixmap;
 }
 
+void ChordPatternViewer::updatePixmap()
+{
+    qDebug() << "update pixmap";
+    QPixmap pixmap = m_pixmap.scaledToWidth( pdfWidth(), Qt::SmoothTransformation );
+    int describedWidth = ::describedWidth(pixmap.toImage(), Qt::white);
+
+    if ( preference<bool>("ChordPatternViewTwoColumn"))
+    {
+        pixmap = twoPageView(pixmap, describedWidth, ui->scrollArea->viewport()->height(), pixmap.height());
+    }
+    else
+    {
+        // keep pixmap
+    }
+
+    ui->label->setPixmap( pixmap );
+}
+
 void ChordPatternViewer::applyZoom()
 {
     if (m_zoom <= 0.05)
@@ -166,19 +186,7 @@ void ChordPatternViewer::applyZoom()
         ui->buttonZoomIn->setEnabled( true );
     }
 
-    QPixmap pixmap = m_pixmap.scaledToWidth( pdfWidth(), Qt::SmoothTransformation );
-    int describedWidth = ::describedWidth(pixmap.toImage(), Qt::white);
-
-    if ( preference<bool>("ChordPatternViewTwoColumn"))
-    {
-        pixmap = twoPageView(pixmap, describedWidth, ui->scrollArea->viewport()->height(), pixmap.height());
-    }
-    else
-    {
-        // keep pixmap
-    }
-
-    ui->label->setPixmap( pixmap );
+    updatePixmap();
 }
 
 void ChordPatternViewer::on_buttonZoomOut_clicked()
@@ -407,4 +415,16 @@ void ChordPatternViewer::hideEvent(QHideEvent *e)
 {
     Player::stopActivePlayer();
     QDialog::hideEvent(e);
+}
+
+bool ChordPatternViewer::eventFilter(QObject *o, QEvent *e)
+{
+    // showing/hiding the audio player widget affects the viewport size. Recompute the pixmap.
+    if (o == ui->audioPlayerWidget && (e->type() == QEvent::Show || e->type() == QEvent::Hide))
+    {
+        // wait until viewport was resized.
+        QTimer::singleShot(1, this, SLOT(updatePixmap()));
+    }
+
+    return QDialog::eventFilter(o, e);
 }

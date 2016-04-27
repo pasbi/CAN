@@ -43,6 +43,7 @@ private:
     void initializeAudioPlayerWidget();
 
 private slots:
+    void updatePixmap();
     void on_buttonZoomOut_clicked();
     void on_buttonZoomIn_clicked();
     void applyZoom();
@@ -63,6 +64,7 @@ protected:
     void keyPressEvent(QKeyEvent *e);
     void showEvent(QShowEvent *e);
     void hideEvent(QHideEvent *e);
+    bool eventFilter(QObject *o , QEvent* e);
 };
 
 
