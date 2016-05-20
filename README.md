@@ -18,4 +18,7 @@ Features:
 - export arbitrarily sized pdfs, so every song fits on the page.
 - easy git interface to synchronize projects with a git repository (limited functionality for Win32)
 - merge editor: perfect to handle multi user editings
+- Connect your keyboard with CAN (Linux only)
+- Runs perfectly under Linux, limited functioniallity under Win32.
+- Runs under Android, however many libraries are missing and the GUI is almost unusable.
 
