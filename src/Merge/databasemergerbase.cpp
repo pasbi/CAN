@@ -34,10 +34,7 @@ MergeItem* DatabaseMergerBase::join(MergeItem* itemA, MergeItem* itemB)
     masterItem = nullptr;
     slaveItem = nullptr;
 
-    if (DatabaseMergerBase* child = createChildDatabaseMerger(joinedItem->master(), joinedItem->slave()))
-    {
-        m_children.insert( joinedItem, child );
-    }
+    insertChildDatabaseMerger(joinedItem);
 
     return joinedItem;
 }
@@ -119,4 +116,14 @@ DatabaseMergerBase *DatabaseMergerBase::child(MergeItem *parent) const
     }
 }
 
+void DatabaseMergerBase::insertChildDatabaseMerger(MergeItem* parent)
+{
+    Q_ASSERT(!m_children.contains(parent));
+
+    DatabaseMergerBase* childDmb = createChildDatabaseMerger(parent->master(), parent->slave());
+    if (childDmb)
+    {
+        m_children.insert(parent, childDmb);
+    }
+}
 

@@ -212,7 +212,8 @@ SOURCES += \
     Project/pushworker.cpp \
     Project/cloneworker.cpp \
     Project/worker.cpp \
-    Dialogs/gitdialog.cpp
+    Dialogs/gitdialog.cpp \
+    jarowinkler.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -360,7 +361,8 @@ HEADERS  += mainwindow.h \
     Project/pushworker.h \
     Project/cloneworker.h \
     Project/worker.h \
-    Dialogs/gitdialog.h
+    Dialogs/gitdialog.h \
+    jarowinkler.h
 
 
 FORMS    += mainwindow.ui \

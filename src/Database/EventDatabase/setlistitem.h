@@ -36,6 +36,9 @@ private:
 protected:
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);
+
+public:
+    Ratio similarity(const DatabaseItemBase *other) const;
 };
 
 Q_DECLARE_METATYPE(SetlistItem*)

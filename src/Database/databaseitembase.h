@@ -4,6 +4,14 @@
 #include <QVariant>
 #include "map.h"
 
+#define SIMILARITY_BEGIN_CHECK(T) \
+    if (!other || !other->inherits(staticMetaObject.className())) \
+    { \
+        return Ratio(); \
+    } \
+    const T* other##T = static_cast<const T*>(other);
+
+
 
 template<typename T> class Database;
 class DatabaseBase;
@@ -30,6 +38,24 @@ public:
 
     bool operator==(const DatabaseItemBase& other) const;
 
+    struct Ratio
+    {
+        Ratio(double d = 0, double n = 0) : d(d), n(n) {}
+        double d, n;
+        operator double()
+        {
+            return d/n;
+        }
+        Ratio& operator+=(const Ratio& other)
+        {
+            d += other.d;
+            n += other.n;
+            return (*this);
+        }
+    };
+
+    virtual Ratio similarity(const DatabaseItemBase* other) const;
+
 protected:
     virtual QStringList skipSerializeAttributes() const { return {}; }
     void addAttributeKey(const QString& key);
@@ -43,5 +69,7 @@ private:
 
 QDataStream& operator<<(QDataStream& out, const DatabaseItemBase* item);
 QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item);
+DatabaseItemBase::Ratio operator+(DatabaseItemBase::Ratio& a, DatabaseItemBase::Ratio& b);
+
 
 #endif // DATABASEITEMBASE_H

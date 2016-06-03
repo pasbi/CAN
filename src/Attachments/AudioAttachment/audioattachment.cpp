@@ -74,3 +74,22 @@ void AudioAttachment::setAttribute(const QString &key, const QVariant &value)
         IndexedFileAttachment::setAttribute(key, value);
     }
 }
+
+DatabaseItemBase::Ratio AudioAttachment::compareSectionsModel(const SectionsModel* a, const SectionsModel* b)
+{
+    Q_UNUSED(a);
+    Q_UNUSED(b);
+    //TODO
+    return Ratio();
+}
+
+DatabaseItemBase::Ratio AudioAttachment::similarity(const DatabaseItemBase *other) const
+{
+    SIMILARITY_BEGIN_CHECK(AudioAttachment);
+
+    Ratio r = IndexedFileAttachment::similarity(other);
+
+    r += compareSectionsModel(this->sectionsModel(), otherAudioAttachment->sectionsModel());
+
+    return r;
+}

@@ -1,5 +1,6 @@
 #include "databaseitembase.h"
 #include "global.h"
+#include "jarowinkler.h"
 
 DatabaseItemBase::DatabaseItemBase()
 {
@@ -61,6 +62,12 @@ QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item)
 
 bool DatabaseItemBase::operator ==(const DatabaseItemBase& other) const
 {
+
+    if (QString(metaObject()->className()) != QString(other.metaObject()->className()))
+    {
+        return false;
+    }
+
     QByteArray a, b;
     QDataStream aStream(&a, QIODevice::WriteOnly);
     QDataStream bStream(&b, QIODevice::WriteOnly);
@@ -69,4 +76,50 @@ bool DatabaseItemBase::operator ==(const DatabaseItemBase& other) const
     bStream << &other;
 
     return a == b;
+}
+
+DatabaseItemBase::Ratio operator+(DatabaseItemBase::Ratio& a, DatabaseItemBase::Ratio& b)
+{
+    return DatabaseItemBase::Ratio(a.d + b.d, a.n + b.n);
+}
+
+
+DatabaseItemBase::Ratio DatabaseItemBase::similarity(const DatabaseItemBase *other) const
+{
+    if (QString(metaObject()->className()) != QString(other->metaObject()->className()))
+    {
+        return Ratio();
+    }
+
+    Ratio r;
+    for (const QString& key : attributeKeys())
+    {
+        Q_ASSERT(other->attributeKeys().contains(key));
+        QVariant thisAttribute = attribute(key);
+        QVariant otherAttribute = other->attribute(key);
+        if (thisAttribute.canConvert<QString>() && otherAttribute.canConvert<QString>())
+        {
+            r.d += jaro_winkler_distance(thisAttribute.toString(), otherAttribute.toString());
+        }
+        else
+        {
+            if (thisAttribute == otherAttribute)
+            {
+                r.d += 1;
+            }
+            else
+            {
+                r.d += 0;
+            }
+        }
+        r.n += 1;
+    }
+
+    return r;
+}
+
+QDebug& operator<<(QDebug& out, const DatabaseItemBase::Ratio& ratio)
+{
+    out << QString("Ratio(%1, %2)").arg(ratio.d).arg(ratio.n).toStdString().c_str();
+    return out;
 }

@@ -107,6 +107,18 @@ void Event::deserialize(QDataStream& in)
     in >> m_setlist;
 }
 
+DatabaseItemBase::Ratio Event::similarity(const DatabaseItemBase *other) const
+{
+    SIMILARITY_BEGIN_CHECK(Event);
+
+    Ratio r = DatabaseItem::similarity(other);
+
+    QMultiMap<double, QPair<SetlistItem*, SetlistItem*>> map = DatabaseItem<SetlistItem>::sortSimilar(setlist()->items(), otherEvent->setlist()->items());
+    r += DatabaseItem<SetlistItem>::similarMapToRatio(map, ::preference<double>("SetlistSimilarityThreshold"));
+
+    return r;
+}
+
 
 DEFINE_ENUM_STREAM_OPERATORS(Event::Type)
 

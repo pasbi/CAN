@@ -10,6 +10,7 @@
 #include "attachmentdatabase.h"
 #include "Project/project.h"
 #include "application.h"
+#include "jarowinkler.h"
 
 Song::Song(Database<Song> * database) :
     DatabaseItem(database),
@@ -184,6 +185,20 @@ AttachmentDatabase* Song::attachmentDatabase() const
 {
     return m_attachmentDatabase;
 }
+
+DatabaseItemBase::Ratio Song::similarity(const DatabaseItemBase *other) const
+{
+    SIMILARITY_BEGIN_CHECK(Song);
+
+    Ratio r = DatabaseItem::similarity(other);
+
+    QMultiMap<double, QPair<Attachment*, Attachment*>> map = DatabaseItem<Attachment>::sortSimilar(attachments(), otherSong->attachments());
+    r += DatabaseItem<Attachment>::similarMapToRatio(map, ::preference<double>("AttachmentSimilarityThreshold"));
+
+    return r;
+}
+
+
 
 DEFINE_ENUM_STREAM_OPERATORS(Song::State)
 DEFINE_ENUM_STREAM_OPERATORS(Song::Label)

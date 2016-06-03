@@ -3,6 +3,7 @@
 #include "Database/SongDatabase/songdatabase.h"
 #include "Database/EventDatabase/setlist.h"
 #include "Database/EventDatabase/event.h"
+#include "jarowinkler.h"
 
 SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString &label, const Song *song) :
     DatabaseItem(setlist)
@@ -115,6 +116,35 @@ void SetlistItem::deserialize(QDataStream& in)
         //we cannot guarantee that the project is app().project().
         setSong( database()->project()->songDatabase()->retrieveItem(id) );
     }
+}
+
+DatabaseItemBase::Ratio SetlistItem::similarity(const DatabaseItemBase *other) const
+{
+    SIMILARITY_BEGIN_CHECK(SetlistItem);
+
+    Type thisType = attribute("type").value<Type>();
+    Type otherType = otherSetlistItem->attribute("type").value<Type>();
+
+    if (thisType == otherType)
+    {
+        if (thisType == LabelType)
+        {
+            return Ratio(jaro_winkler_distance(label(), other->label()), 1.0);
+        }
+        else if (thisType == SongType)
+        {
+            if (attribute("song").value<const Song*>() == other->attribute("song").value<const Song*>())
+            {
+                return Ratio(1, 1);
+            }
+        }
+        else
+        {
+            Q_UNREACHABLE();
+        }
+    }
+    return Ratio(0, 1);
+
 }
 
 DEFINE_ENUM_STREAM_OPERATORS(SetlistItem::Type)

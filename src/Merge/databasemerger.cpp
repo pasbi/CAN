@@ -142,70 +142,56 @@ template<> void DatabaseMerger<Event>::performMerge(NewPointerTable& updatePoint
     }
 }
 
+#define SIMILAR_DETECTION
 // we need a copy of the lists to work on.
-template<class T> void DatabaseMerger<T>::init(QList<T*> masterItems, QList<T*> slaveItems)
+template<class T> void DatabaseMerger<T>::init(const QList<T*>& masterItems, const QList<T*>& slaveItems)
 {
+#ifdef SIMILAR_DETECTION
     // we want to classify the items in m_onlyMaster, m_onlySlave and m_both and to drop all
     // items that are equal both in master and slave list.
 
-    QMutableListIterator<T*> masterIterator(masterItems);
-    while (masterIterator.hasNext())
+
+    // sort the <master, slave> pairs by their similarity.
+    QMultiMap<double, QPair<T*, T*>> ratioMasterSlaveMap = DatabaseItem<T>::sortSimilar(masterItems, slaveItems);
+
+    for (auto it = ratioMasterSlaveMap.begin(); it != ratioMasterSlaveMap.end(); ++it)
     {
-        T* masterItem = masterIterator.next();
-        bool found = false;
-        QMutableListIterator<T*> slaveIterator(slaveItems);
-        while(slaveIterator.hasNext() && !found)
+        double ratio = it.key();
+        T* master = it.value().first;
+        T* slave = it.value().second;
+
+        if (qFuzzyCompare(ratio, 1))
         {
-            T* slaveItem = slaveIterator.next();
-            switch (compare(masterItem, slaveItem))
-            {
-            case Similar:
-                // move them to a special list.
-                found = true;
-                m_mergeItems.append(new MergeItem(masterIterator.value(), slaveIterator.value(), MergeItem::ModifyAction));
-                masterIterator.remove();
-                slaveIterator.remove();
-                break;
-            case Equal:
-                // we don't consider equal items here, remove them.
-                found = true;
-                m_mergeItems.append(new MergeItem(masterIterator.value(), slaveIterator.value(), MergeItem::NoAction));
-                masterIterator.remove();
-                slaveIterator.remove();
-                break;
-            case Unequal:
-                // do nothing, i.e. keep them in list.
-                break;
-            }
+            m_mergeItems.append(new MergeItem(master, slave, MergeItem::NoAction));
         }
-    }
-
-    for (T* item : slaveItems)
-    {
-        m_mergeItems << new MergeItem(item, MergeItem::Slave, defaultAction(MergeItem::Slave));
-    }
-
-    for (T* item : masterItems)
-    {
-        m_mergeItems << new MergeItem(item, MergeItem::Master, defaultAction(MergeItem::Master));
-    }
+        else if (ratio >= ::preference<double>("SimilarityThreshold"))
+        {
+            qDebug() << "ratio = " << ratio << ::preference<double>("SimilarityThreshold");
+            MergeItem* mergeItem = new MergeItem(master, slave, MergeItem::ModifyAction);
+            m_mergeItems.append(mergeItem);
+            insertChildDatabaseMerger(mergeItem);
+        }
+        else
+        {
+            if (master)
+#else
+            for (T* master : masterItems)
+#endif
+            {
+                m_mergeItems << new MergeItem(master, MergeItem::Master, defaultAction(MergeItem::Master));
+            }
+#ifdef SIMILAR_DETECTION
+            if (slave)
+#else
+            for (T* slave : slaveItems)
+#endif
+            {
+                m_mergeItems << new MergeItem(slave, MergeItem::Slave, defaultAction(MergeItem::Slave));
+            }
+#ifdef SIMILAR_DETECTION
+        }
 }
-
-// 1: Equal
-// greater similarThreshold but smaller 0: Similar
-// smaller similarThreshold: Unequal
-// shall be >= 0, <= 1
-#include "Attachments/ChordPatternAttachment/chordpatternattachment.h"
-template<class T> DatabaseMergerBase::CompareResult DatabaseMerger<T>::compare(const T *a, const T *b) const
-{
-    if (*a == *b)
-    {
-        return DatabaseMergerBase::Equal;
-    }
-    else
-    {
-        return DatabaseMergerBase::Unequal;
-    }
+#endif
 }
 
 template<class T> template<class S> QList<T> DatabaseMerger<T>::convertList(const QList<S>& list)
@@ -243,7 +229,6 @@ template<> DatabaseMergerBase* DatabaseMerger<Song>::createChildDatabaseMerger(D
     return new DatabaseMerger<Attachment>(static_cast<Song*>(masterItem)->attachmentDatabase(),
                                           static_cast<Song*>(slaveItem)->attachmentDatabase() );
 }
-
 
 template class DatabaseMerger<Song>;
 template class DatabaseMerger<Event>;

@@ -27,7 +27,6 @@ public:
     MergeItem *decodeMimeData(const QMimeData* mimeData) const;
     QMimeData* encodeMimeData(const MergeItem *mergeItemBase) const;
 
-    virtual DatabaseMergerBase* createChildDatabaseMerger(DatabaseItemBase* masterItem, DatabaseItemBase* slaveItem) const = 0;
 
     struct NewPointerTableItem
     {
@@ -36,6 +35,11 @@ public:
     };
     typedef QList<NewPointerTableItem> NewPointerTable;
     virtual void performMerge(NewPointerTable& updatePointers, QList<const void*>& undeletableItems) = 0;
+
+public:
+    void insertChildDatabaseMerger(MergeItem *parent);
+protected:
+    virtual DatabaseMergerBase* createChildDatabaseMerger(DatabaseItemBase* masterItem, DatabaseItemBase* slaveItem) const = 0;
 
 protected:
     double similarThreshold() const;

@@ -46,6 +46,9 @@ protected:
 private:
     Setlist* m_setlist;
 
+public:
+    Ratio similarity(const DatabaseItemBase *other) const;
+
 };
 
 Q_DECLARE_METATYPE(Event::Type)

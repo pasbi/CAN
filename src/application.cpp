@@ -183,6 +183,11 @@ void Application::initPreferences()
     m_preferences.registerPreference( "ImageRenderQuality", new Preference(InterfaceOptions(InterfaceOptions::SpinBox, tr("PDFCreator"), tr("Non PDF Quality")),
                                                                            0.5, -2.0, 2.0, 0.1));
 
+    m_preferences.registerPreference( "SetlistSimilarityThreshold", new Preference(0.8));
+    m_preferences.registerPreference( "AttachmentSimilarityThreshold", new Preference(0.8));
+    m_preferences.registerPreference( "SimilarityThreshold", new Preference(0.9));
+
+
 
     //TODO on Windows, qRegisterMetaTypeStreamOperators seems to have no effect if a derivation of QWidget
     // is used in the same project. Make sure that default preference is ((EnumType) 0)

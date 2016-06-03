@@ -25,6 +25,8 @@ public:
 
     QVariant attribute(const QString &key) const;
     void setAttribute(const QString &key, const QVariant &value);
+    Ratio similarity(const DatabaseItemBase *other) const;
+
 
 public slots:
     void open();
@@ -33,6 +35,8 @@ private:
     SectionsModel * const m_sectionsModel;
     Player m_player;
     QString m_filename;
+    static Ratio compareSectionsModel(const SectionsModel* a, const SectionsModel* b);
+
 
 
 protected:

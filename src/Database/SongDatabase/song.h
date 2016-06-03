@@ -77,6 +77,9 @@ protected:
     void serialize(QDataStream &out) const;
     void deserialize(QDataStream &in);
 
+public:
+    Ratio similarity(const DatabaseItemBase *other) const;
+
 };
 
 //Do not register Song-stream operators. We never want to save song via QVariant!
