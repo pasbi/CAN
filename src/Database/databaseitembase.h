@@ -37,21 +37,14 @@ public:
     virtual void deserialize(QDataStream& in);
 
     bool operator==(const DatabaseItemBase& other) const;
+    bool operator!=(const DatabaseItemBase& other) const;
 
     struct Ratio
     {
-        Ratio(double d = 0, double n = 0) : d(d), n(n) {}
+        Ratio(double d = 0, double n = 0);
         double d, n;
-        operator double()
-        {
-            return d/n;
-        }
-        Ratio& operator+=(const Ratio& other)
-        {
-            d += other.d;
-            n += other.n;
-            return (*this);
-        }
+        operator double();
+        Ratio& operator+=(const Ratio& other);
     };
 
     virtual Ratio similarity(const DatabaseItemBase* other) const;

@@ -170,7 +170,6 @@ void Application::initPreferences()
     m_preferences.registerPreference( "defaultActionMergeMaster", new Preference(QVariant::fromValue(MergeItem::AddAction)));
     m_preferences.registerPreference( "defaultActionMergeSlave", new Preference(QVariant::fromValue(MergeItem::AddAction)));
     m_preferences.registerPreference( "defaultActionMergeModify", new Preference(QVariant::fromValue(MergeItem::UseMaster)));
-    m_preferences.registerPreference( "MergeSimilarityThreshold", new Preference(0.9));
     m_preferences.registerPreference( "setlistItemComboBoxHeight", new Preference(150));
     m_preferences.registerPreference( "songDetailColumnWidths", new Preference(QVariant::fromValue(QList<int>())));
     m_preferences.registerPreference( "lastUsername", new Preference(QString()) );
@@ -183,9 +182,9 @@ void Application::initPreferences()
     m_preferences.registerPreference( "ImageRenderQuality", new Preference(InterfaceOptions(InterfaceOptions::SpinBox, tr("PDFCreator"), tr("Non PDF Quality")),
                                                                            0.5, -2.0, 2.0, 0.1));
 
-    m_preferences.registerPreference( "SetlistSimilarityThreshold", new Preference(0.8));
-    m_preferences.registerPreference( "AttachmentSimilarityThreshold", new Preference(0.8));
-    m_preferences.registerPreference( "SimilarityThreshold", new Preference(0.9));
+    m_preferences.registerPreference( "SetlistSimilarityThreshold", new Preference(0.4));
+    m_preferences.registerPreference( "AttachmentSimilarityThreshold", new Preference(0.4));
+    m_preferences.registerPreference( "SimilarityThreshold", new Preference(0.4));
 
 
 

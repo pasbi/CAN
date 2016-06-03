@@ -166,7 +166,6 @@ template<class T> void DatabaseMerger<T>::init(const QList<T*>& masterItems, con
         }
         else if (ratio >= ::preference<double>("SimilarityThreshold"))
         {
-            qDebug() << "ratio = " << ratio << ::preference<double>("SimilarityThreshold");
             MergeItem* mergeItem = new MergeItem(master, slave, MergeItem::ModifyAction);
             m_mergeItems.append(mergeItem);
             insertChildDatabaseMerger(mergeItem);

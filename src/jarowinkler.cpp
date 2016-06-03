@@ -95,5 +95,10 @@ static double jaro_winkler_distance(const char *s, const char *a) {
 
 double jaro_winkler_distance(const QString& a, const QString& b)
 {
+    if (a == b)
+    {
+        // super fast and common special case
+        return 1.0;
+    }
     return jaro_winkler_distance(a.toStdString().c_str(), b.toStdString().c_str());
 }

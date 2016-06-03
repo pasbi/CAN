@@ -59,11 +59,43 @@ template<class T> QMultiMap<double, QPair<T*, T*>> DatabaseItem<T>::sortSimilar(
     // sort the <master, slave> pairs by their similarity.
 
     QMultiMap<double, QPair<T*, T*>> ratioMasterSlaveMap;
+
+    // first, we remove all the equal-pairs from the list, since
+    // - usually most items belong to an equal-pair
+    // - checking for equality is super fast compared to computing similarity
+    for (auto mit = masterItems.begin(); mit != masterItems.end();)
+    {
+        bool match = false;
+        for (auto sit = slaveItems.begin(); sit != slaveItems.end() && !match;)
+        {
+            T* master = *mit;
+            T* slave = *sit;
+            if (*master == *slave)
+            {
+                ratioMasterSlaveMap.insert(1.0, qMakePair(master, slave));
+                /*sit = */ slaveItems.erase(sit);
+                mit = masterItems.erase(mit);
+                match = true;
+            }
+
+            if (!match)
+            {
+                ++sit;
+            }
+        }
+        if (!match)
+        {
+            ++mit;
+        }
+    }
+
+    // now we check for similarity among the remaining items.
     for (T* master : masterItems)
     {
         ratioMasterSlaveMap.insert(0, qMakePair(master, nullptr));
         for (T* slave : slaveItems)
         {
+            Q_ASSERT(*master != *slave);    // equal pairs shall have been filtered out.
             Ratio sim = master->similarity(slave);
             ratioMasterSlaveMap.insert(sim, qMakePair(master, slave));
         }
@@ -73,6 +105,10 @@ template<class T> QMultiMap<double, QPair<T*, T*>> DatabaseItem<T>::sortSimilar(
         ratioMasterSlaveMap.insert(0, qMakePair(nullptr, slave));
     }
 
+
+    // inserting similarity produced duplicates.
+    // here we remove those duplicates (keeping the best pair (greedy, should be almost optimal))
+    // we could skip the equal pairs however the performance boost probably does not justifies the complexity boost.
     auto it = ratioMasterSlaveMap.end();
     while (it != ratioMasterSlaveMap.begin())
     {
