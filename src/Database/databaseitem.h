@@ -17,9 +17,6 @@ public:
     virtual Database<T>* database() const;
     T* copy() const;
 
-    static QMultiMap<double, QPair<T*, T*>> sortSimilar(QList<T*> masterItems, QList<T*> slaveItems);
-    static Ratio similarMapToRatio(const QMultiMap<double, QPair<T*, T*>>& map, double threshold);
-
 private:
     Database<T>* m_database;
 };

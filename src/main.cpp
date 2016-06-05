@@ -12,6 +12,24 @@
 #include <windows.h>
 #endif
 
+
+class TestClass
+{
+public:
+    TestClass(int p) : payload(p) {}
+    int payload;
+    TestClass& operator=(const TestClass& other)
+    {
+        qDebug() << "operator =!";
+        this->payload = other.payload;
+        return (*this);
+    }
+};
+
+
+
+
+
 void installTranslator()
 {
     QString localeCode = preference<QString>("locale");
@@ -69,6 +87,13 @@ void installTranslator()
         qWarning() << "cannot load translation file for " << language;
     }
 }
+
+struct Test
+{
+    Test() { ints << 1 << 2 << 3; }
+    QList<int> getInts() const { return ints; }
+    QList<int> ints;
+};
 
 int main(int argc, char *argv[])
 {

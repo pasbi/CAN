@@ -13,7 +13,8 @@
 const QString Application::PROJECT_FILE_FILTER = MainWindow::tr("CAN files (*.can)");
 
 Application::Application(int &argc, char **argv) :
-    QApplication( argc, argv)
+    QApplication( argc, argv),
+    m_isValid(true)
 {
     setApplicationName("CAN");
     setOrganizationDomain("CAN Developers");
@@ -41,12 +42,18 @@ void Application::pushCommand(Command *command)
 
 void Application::setProject(Project *project)
 {
+    Q_ASSERT(m_project == nullptr);
     m_project = project;
 }
 
 void Application::setMainWindow( MainWindow* mainWindow )
 {
+    Q_ASSERT(m_mainWindow == nullptr);
     m_mainWindow = mainWindow;
+    connect(m_mainWindow, &QWidget::destroyed, [this]()
+    {
+        m_isValid = false;
+    });
 }
 
 void Application::undo() const
@@ -184,8 +191,8 @@ void Application::initPreferences()
 
     m_preferences.registerPreference( "SetlistSimilarityThreshold", new Preference(0.4));
     m_preferences.registerPreference( "AttachmentSimilarityThreshold", new Preference(0.4));
+    m_preferences.registerPreference( "SectionSimilarityThreshold", new Preference(0.4));
     m_preferences.registerPreference( "SimilarityThreshold", new Preference(0.4));
-
 
 
     //TODO on Windows, qRegisterMetaTypeStreamOperators seems to have no effect if a derivation of QWidget
@@ -265,4 +272,9 @@ QMap<QString, QString> Application::stringMapPreference(const QString& key) cons
         map.insert(keys[i], vals[i]);
     }
     return map;
+}
+
+bool Application::isValid() const
+{
+    return !!m_mainWindow && !!m_project && m_isValid;
 }

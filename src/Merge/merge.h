@@ -4,11 +4,11 @@
 #include <QString>
 #include "Project/project.h"
 #include "mergeitem.h"
-#include "Database/SongDatabase/song.h"
 #include "databasemerger.h"
 
 class Event;
 class QMimeData;
+class Song;
 
 class Merge
 {
@@ -37,5 +37,7 @@ private:
     DatabaseMerger<Song>* m_songMerger;
     DatabaseMerger<Event>* m_eventMerger;
 };
+
+
 
 #endif // MERGE_H

@@ -1,5 +1,7 @@
 #include "audioattachment.h"
 #include "sectionsmodel.h"
+#include "section.h"
+#include "Database/databaseitem.h"
 
 DEFN_CREATABLE_NAME(AudioAttachment, Attachment, QT_TRANSLATE_NOOP("Creatable", "Audio Attachment"))
 
@@ -75,17 +77,29 @@ void AudioAttachment::setAttribute(const QString &key, const QVariant &value)
     }
 }
 
-DatabaseItemBase::Ratio AudioAttachment::compareSectionsModel(const SectionsModel* a, const SectionsModel* b)
+Ratio AudioAttachment::compareSectionsModel(const SectionsModel* a, const SectionsModel* b)
 {
     Q_UNUSED(a);
     Q_UNUSED(b);
 
+    QVector<Section> aSections = a->sections().toVector();
+    QVector<Section> bSections = b->sections().toVector();
 
+    auto toPtrList = [](QVector<Section>& sections)
+    {
+        QList<Section*> ptrList;
+        for (int i = 0; i < sections.size(); ++i)
+        {
+            ptrList << &sections[i];
+        }
+        return ptrList;
+    };
 
-    return Ratio();
+    auto map = Ratio::sortSimilar<Section>(toPtrList(aSections), toPtrList(bSections));
+    return Ratio::similarMapToRatio<Section>(map, ::preference<double>("SectionSimilarityThreshold"));
 }
 
-DatabaseItemBase::Ratio AudioAttachment::similarity(const DatabaseItemBase *other) const
+Ratio AudioAttachment::similarity(const DatabaseItemBase *other) const
 {
     SIMILARITY_BEGIN_CHECK(AudioAttachment);
 

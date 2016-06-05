@@ -94,6 +94,3 @@ QString Merge::labelItem(const void *item)
 }
 
 
-
-
-

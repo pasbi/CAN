@@ -1,5 +1,6 @@
 #include "section.h"
 #include <qmath.h>
+#include "jarowinkler.h"
 
 double timeToDouble(const QTime& time)
 {
@@ -101,4 +102,12 @@ bool Section::isValid() const
     return m_begin.isValid() && m_end.isValid();
 }
 
+Ratio Section::similarity(const Section *other) const
+{
+    Ratio r;
+    r += jaro_winkler_distance(m_caption, other->m_caption);
+    r += other->begin() == begin() ? 1 : 0;
+    r +=  other->end()  ==  end()  ? 1 : 0;
+    return r;
+}
 

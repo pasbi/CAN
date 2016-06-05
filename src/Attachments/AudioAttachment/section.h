@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include "global.h"
 #include <QTime>
+#include "ratio.h"
 
 class Section
 {
@@ -27,6 +28,8 @@ public:
 
     bool operator==(const Section& other) const;
     bool operator!=(const Section& other) const;
+
+    Ratio similarity(const Section* other) const;
 
 
 

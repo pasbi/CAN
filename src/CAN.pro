@@ -213,7 +213,8 @@ SOURCES += \
     Project/cloneworker.cpp \
     Project/worker.cpp \
     Dialogs/gitdialog.cpp \
-    jarowinkler.cpp
+    jarowinkler.cpp \
+    ratio.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -362,7 +363,8 @@ HEADERS  += mainwindow.h \
     Project/cloneworker.h \
     Project/worker.h \
     Dialogs/gitdialog.h \
-    jarowinkler.h
+    jarowinkler.h \
+    ratio.h
 
 
 FORMS    += mainwindow.ui \

@@ -186,19 +186,17 @@ AttachmentDatabase* Song::attachmentDatabase() const
     return m_attachmentDatabase;
 }
 
-DatabaseItemBase::Ratio Song::similarity(const DatabaseItemBase *other) const
+Ratio Song::similarity(const DatabaseItemBase *other) const
 {
     SIMILARITY_BEGIN_CHECK(Song);
 
     Ratio r = DatabaseItem::similarity(other);
 
-    QMultiMap<double, QPair<Attachment*, Attachment*>> map = DatabaseItem<Attachment>::sortSimilar(attachments(), otherSong->attachments());
-    r += DatabaseItem<Attachment>::similarMapToRatio(map, ::preference<double>("AttachmentSimilarityThreshold"));
+    QMultiMap<double, QPair<Attachment*, Attachment*>> map = Ratio::sortSimilar<Attachment>(attachments(), otherSong->attachments());
+    r += Ratio::similarMapToRatio<Attachment>(map, ::preference<double>("AttachmentSimilarityThreshold"));
 
     return r;
 }
-
-
 
 DEFINE_ENUM_STREAM_OPERATORS(Song::State)
 DEFINE_ENUM_STREAM_OPERATORS(Song::Label)

@@ -127,3 +127,9 @@ void DatabaseMergerBase::insertChildDatabaseMerger(MergeItem* parent)
     }
 }
 
+bool DatabaseMergerBase::hasActiveItems() const
+{
+    return std::find_if(m_mergeItems.constBegin(), m_mergeItems.constEnd(), [](const MergeItem* i){
+        return i->action() != MergeItem::NoAction;
+    }) != m_mergeItems.constEnd();
+}

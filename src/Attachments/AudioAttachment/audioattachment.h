@@ -35,7 +35,7 @@ private:
     SectionsModel * const m_sectionsModel;
     Player m_player;
     QString m_filename;
-    static Ratio compareSectionsModel(const SectionsModel* a, const SectionsModel* b);
+    static Ratio compareSectionsModel(const SectionsModel *a, const SectionsModel *b);
 
 
 

@@ -36,6 +36,8 @@ public:
     typedef QList<NewPointerTableItem> NewPointerTable;
     virtual void performMerge(NewPointerTable& updatePointers, QList<const void*>& undeletableItems) = 0;
 
+    bool hasActiveItems() const;
+
 public:
     void insertChildDatabaseMerger(MergeItem *parent);
 protected:

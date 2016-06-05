@@ -203,7 +203,7 @@ bool GitDialog::clone(git_repository* &repository, const QString& tempDirPath, c
     m_numProgressDots = -1;
     while (!m_git->isFinished())
     {
-        if (m_git->isAborted())
+        if (m_git->isAborted() || !app().isValid())
         {
             payload.abortCloneRequested = true;
         }
@@ -264,7 +264,7 @@ bool GitDialog::push(git_repository* repository)
     m_numProgressDots = -1;
     while (!m_git->isFinished())
     {
-        if (m_git->isAborted())
+        if (m_git->isAborted() || !app().isValid())
         {
             m_git->abortPush(remote);
         }
@@ -489,6 +489,10 @@ void GitDialog::sync()
                     m_phase = Finished;
                 }
             }
+        }
+        else
+        {
+            reject();
         }
     }
 

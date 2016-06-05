@@ -152,7 +152,7 @@ template<class T> void DatabaseMerger<T>::init(const QList<T*>& masterItems, con
 
 
     // sort the <master, slave> pairs by their similarity.
-    QMultiMap<double, QPair<T*, T*>> ratioMasterSlaveMap = DatabaseItem<T>::sortSimilar(masterItems, slaveItems);
+    QMultiMap<double, QPair<T*, T*>> ratioMasterSlaveMap = Ratio::sortSimilar<T>(masterItems, slaveItems);
 
     for (auto it = ratioMasterSlaveMap.begin(); it != ratioMasterSlaveMap.end(); ++it)
     {

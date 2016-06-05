@@ -15,7 +15,6 @@ SetlistItem::SetlistItem(Database<SetlistItem> *setlist, const QString &label, c
     addAttributeKey("label");
     addAttributeKey("song");
 
-
     setAttribute("type", QVariant::fromValue(type));
     setAttribute("label", label);
     setAttribute("song", QVariant::fromValue<const Song*>(song));
@@ -118,7 +117,7 @@ void SetlistItem::deserialize(QDataStream& in)
     }
 }
 
-DatabaseItemBase::Ratio SetlistItem::similarity(const DatabaseItemBase *other) const
+Ratio SetlistItem::similarity(const DatabaseItemBase *other) const
 {
     SIMILARITY_BEGIN_CHECK(SetlistItem);
 

@@ -62,6 +62,8 @@ public:
     void setPreference(const QString &key, const QMap<QString, QString> &value);
     QMap<QString, QString> stringMapPreference(const QString& key) const;
 
+    bool isValid() const;
+
 private:
     mutable FileIndex* m_fileIndex = nullptr;
     QSettings m_settings;
@@ -74,6 +76,8 @@ private:
 
     void initPreferences();
     Preferences m_preferences;
+
+    bool m_isValid;
 
 };
 

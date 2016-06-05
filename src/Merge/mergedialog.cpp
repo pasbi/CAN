@@ -5,6 +5,7 @@
 #include "mergeitem.h"
 #include "application.h"
 #include <QMessageBox>
+#include "mainwindow.h"
 
 const QStringList MergeDialog::BUTTON_TEXT = QStringList({ MergeDialog::tr(""),
                                                            MergeDialog::tr("&Songs"),
@@ -16,8 +17,8 @@ MergeDialog::MergeDialog(Merge *merge, QWidget *parent) :
     ui(new Ui::MergeDialog)
 {
     ui->setupUi(this);
-    setMerger(merge);
     ui->stackedWidget->setCurrentIndex(0);
+    setMerger(merge); // this might modify current index!
     updateButtonText();
 }
 
@@ -32,6 +33,11 @@ void MergeDialog::setMerger(Merge *merger)
 
     ui->songWidget->setDatabaseMerger( merger->songDatabaseMerger() );
     ui->eventWidget->setDatabaseMerger( merger->eventDatabaseMerger() );
+
+    if (!merger->songDatabaseMerger()->hasActiveItems())
+    {
+        ui->stackedWidget->setCurrentIndex(1);
+    }
 }
 
 void MergeDialog::on_buttonNext_clicked()
@@ -89,41 +95,49 @@ bool MergeDialog::performMerge(Project *master, Project *slave, QWidget *parent)
     // create merger
     Merge merge(master, slave);
 
-    // create dialog
-    MergeDialog dialog(&merge, parent);
-
-    // perform the merger
-    if ( dialog.exec() == QDialog::Accepted )
+    if (!merge.eventDatabaseMerger()->hasActiveItems() && !merge.songDatabaseMerger()->hasActiveItems())
     {
-        QList<const void*> undeletableItems;
-        merge.performMerge(undeletableItems);
-        if (undeletableItems.isEmpty())
-        {
-            QMessageBox::information( parent,
-                                      app().applicationName(),
-                                      QWidget::tr("Merge successfull"),
-                                      QMessageBox::Ok );
-            return true;
-        }
-        else
-        {
-            QStringList warningString;
-            warningString << QWidget::tr("Some Songs could not be removed since they are used.");
-            warningString << QWidget::tr("Please try to remove them manually.");
-            for (const void* item : undeletableItems)
-            {
-                warningString << "\n" + merge.labelItem(item);
-            }
-            QMessageBox::warning( parent,
-                                  app().applicationName(),
-                                  warningString.join("\n"),
-                                  QMessageBox::Ok );
-            return true;
-        }
+        QMessageBox::information(app().mainWindow(), qApp->applicationName(), tr("Nothing to merge."));
+        return false;
     }
     else
     {
-        return false;
+        // create dialog
+        MergeDialog dialog(&merge, parent);
+
+        // perform the merger
+        if ( dialog.exec() == QDialog::Accepted )
+        {
+            QList<const void*> undeletableItems;
+            merge.performMerge(undeletableItems);
+            if (undeletableItems.isEmpty())
+            {
+                QMessageBox::information( parent,
+                                          app().applicationName(),
+                                          QWidget::tr("Merge successfull"),
+                                          QMessageBox::Ok );
+                return true;
+            }
+            else
+            {
+                QStringList warningString;
+                warningString << QWidget::tr("Some Songs could not be removed since they are used.");
+                warningString << QWidget::tr("Please try to remove them manually.");
+                for (const void* item : undeletableItems)
+                {
+                    warningString << "\n" + merge.labelItem(item);
+                }
+                QMessageBox::warning( parent,
+                                      app().applicationName(),
+                                      warningString.join("\n"),
+                                      QMessageBox::Ok );
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 

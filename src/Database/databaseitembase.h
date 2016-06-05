@@ -3,6 +3,7 @@
 
 #include <QVariant>
 #include "map.h"
+#include "ratio.h"
 
 #define SIMILARITY_BEGIN_CHECK(T) \
     if (!other || !other->inherits(staticMetaObject.className())) \
@@ -39,14 +40,6 @@ public:
     bool operator==(const DatabaseItemBase& other) const;
     bool operator!=(const DatabaseItemBase& other) const;
 
-    struct Ratio
-    {
-        Ratio(double d = 0, double n = 0);
-        double d, n;
-        operator double();
-        Ratio& operator+=(const Ratio& other);
-    };
-
     virtual Ratio similarity(const DatabaseItemBase* other) const;
 
 protected:
@@ -62,7 +55,6 @@ private:
 
 QDataStream& operator<<(QDataStream& out, const DatabaseItemBase* item);
 QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item);
-DatabaseItemBase::Ratio operator+(DatabaseItemBase::Ratio& a, DatabaseItemBase::Ratio& b);
 
 
 #endif // DATABASEITEMBASE_H
