@@ -1,16 +1,24 @@
-CAN2
+CAN
+===
 
-Create and manage a collection of sheet music. I.e. text files with chord patterns, as available from many sources from the internet.
+*Create and manage a collection of sheet music. I.e. text files with chord patterns, as available from many sources from the internet.*
 
-You can also store PDFs (real sheet music) however CAN2 is optimized to deal with text files.
+You can also store PDFs (real sheet music) however CAN is optimized to deal with text files.
 
 Features:
 
 - connect the chord pattern database to your mp3 database (some other audio formats supported). This gives you opportunity to
  listen to original songs while practising
-- Administer Events (e.g. Gigs/Rehearsals). Create a list of pieces to perform/practice
+- transpose audio files, speed them up or slow them down during playback in realtime
+- administer Events (e.g. Gigs/Rehearsals). Create a list of pieces to perform/practice
 - display mode with auto scroll
 - chord recognition and transposing
 - advanced copy/paste capabilities
 - export songs/collections to pdf
-- optionally arbitrary sized pdfs, so no need to turn pages in an electronic pdf viewer
+- export arbitrarily sized pdfs, so every song fits on the page.
+- easy git interface to synchronize projects with a git repository (limited functionality for Win32)
+- merge editor: perfect to handle multi user editings
+- Connect your keyboard with CAN (Linux only)
+- Runs perfectly under Linux, limited functioniallity under Win32.
+- Runs under Android, however many libraries are missing and the GUI is almost unusable.
+
