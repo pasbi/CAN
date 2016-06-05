@@ -41,265 +41,265 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="application.cpp" line="110"/>
+        <location filename="application.cpp" line="117"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="110"/>
+        <location filename="application.cpp" line="117"/>
         <source>Quality</source>
         <translation>Qualität</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="110"/>
-        <location filename="application.cpp" line="159"/>
+        <location filename="application.cpp" line="117"/>
+        <location filename="application.cpp" line="166"/>
         <source>dpi</source>
         <translation>DPI</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="111"/>
-        <location filename="application.cpp" line="112"/>
-        <location filename="application.cpp" line="145"/>
-        <location filename="application.cpp" line="153"/>
-        <location filename="application.cpp" line="156"/>
-        <location filename="application.cpp" line="158"/>
+        <location filename="application.cpp" line="118"/>
+        <location filename="application.cpp" line="119"/>
+        <location filename="application.cpp" line="152"/>
         <location filename="application.cpp" line="160"/>
-        <location filename="application.cpp" line="183"/>
+        <location filename="application.cpp" line="163"/>
+        <location filename="application.cpp" line="165"/>
+        <location filename="application.cpp" line="167"/>
+        <location filename="application.cpp" line="189"/>
         <source>PDFCreator</source>
         <translation>PDF Export</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="111"/>
+        <location filename="application.cpp" line="118"/>
         <source>Title Page</source>
         <translation>Titelseite</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="112"/>
+        <location filename="application.cpp" line="119"/>
         <source>Page Size</source>
         <translation>Seitengröße</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="113"/>
+        <location filename="application.cpp" line="120"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="114"/>
+        <location filename="application.cpp" line="121"/>
         <source>A1</source>
         <translation>A1</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="115"/>
+        <location filename="application.cpp" line="122"/>
         <source>A2</source>
         <translation>A2</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="116"/>
+        <location filename="application.cpp" line="123"/>
         <source>A3</source>
         <translation>A3</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="117"/>
+        <location filename="application.cpp" line="124"/>
         <source>A4</source>
         <translation>A4</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="118"/>
+        <location filename="application.cpp" line="125"/>
         <source>A5</source>
         <translation>A5</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="119"/>
+        <location filename="application.cpp" line="126"/>
         <source>A6</source>
         <translation>A6</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="120"/>
+        <location filename="application.cpp" line="127"/>
         <source>A7</source>
         <translation>A7</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="121"/>
+        <location filename="application.cpp" line="128"/>
         <source>A8</source>
         <translation>A8</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="122"/>
+        <location filename="application.cpp" line="129"/>
         <source>A9</source>
         <translation>A9</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="123"/>
+        <location filename="application.cpp" line="130"/>
         <source>B0</source>
         <translation>B0</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="124"/>
+        <location filename="application.cpp" line="131"/>
         <source>B1</source>
         <translation>B1</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="125"/>
+        <location filename="application.cpp" line="132"/>
         <source>B2</source>
         <translation>B2</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="126"/>
+        <location filename="application.cpp" line="133"/>
         <source>B3</source>
         <translation>B3</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="127"/>
+        <location filename="application.cpp" line="134"/>
         <source>B4</source>
         <translation>B4</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="128"/>
+        <location filename="application.cpp" line="135"/>
         <source>B5</source>
         <translation>B5</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="129"/>
+        <location filename="application.cpp" line="136"/>
         <source>B6</source>
         <translation>B6</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="130"/>
+        <location filename="application.cpp" line="137"/>
         <source>B7</source>
         <translation>B7</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="131"/>
+        <location filename="application.cpp" line="138"/>
         <source>B8</source>
         <translation>B8</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="132"/>
+        <location filename="application.cpp" line="139"/>
         <source>B9</source>
         <translation>B9</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="133"/>
+        <location filename="application.cpp" line="140"/>
         <source>B10</source>
         <translation>B10</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="134"/>
+        <location filename="application.cpp" line="141"/>
         <source>C5E</source>
         <translation>C5E</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="135"/>
+        <location filename="application.cpp" line="142"/>
         <source>Comm10E</source>
         <translation>Comm10E</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="136"/>
+        <location filename="application.cpp" line="143"/>
         <source>DLE</source>
         <translation>DLE</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="137"/>
+        <location filename="application.cpp" line="144"/>
         <source>Executive</source>
         <translation>Executive</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="138"/>
+        <location filename="application.cpp" line="145"/>
         <source>Folio</source>
         <translation>Folio</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="139"/>
+        <location filename="application.cpp" line="146"/>
         <source>Ledger</source>
         <translation>Ledger</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="140"/>
+        <location filename="application.cpp" line="147"/>
         <source>Legal</source>
         <translation>Legal</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="141"/>
+        <location filename="application.cpp" line="148"/>
         <source>Letter</source>
         <translation>Letter</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="142"/>
+        <location filename="application.cpp" line="149"/>
         <source>Tabloid</source>
         <translation>Tabloid</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="145"/>
+        <location filename="application.cpp" line="152"/>
         <source>Align Songs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="application.cpp" line="146"/>
+        <location filename="application.cpp" line="153"/>
         <source>No alignment</source>
         <translation>Keine Ausrichtung</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="147"/>
+        <location filename="application.cpp" line="154"/>
         <source>Odd pages</source>
         <translation>Ungerade Seiten</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="148"/>
+        <location filename="application.cpp" line="155"/>
         <source>Even pages</source>
         <translation>Gerade Seiten</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="149"/>
+        <location filename="application.cpp" line="156"/>
         <source>Duplex</source>
         <translation>Duplex Druck</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="150"/>
+        <location filename="application.cpp" line="157"/>
         <source>Endless</source>
         <translation>Endlos</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="151"/>
+        <location filename="application.cpp" line="158"/>
         <source>Separate pages</source>
         <translation>Separate Seiten</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="153"/>
+        <location filename="application.cpp" line="160"/>
         <source>Table of Contents</source>
         <translation>Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="156"/>
+        <location filename="application.cpp" line="163"/>
         <source>Page Numbers</source>
         <translation>Seitenzahlen</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="158"/>
+        <location filename="application.cpp" line="165"/>
         <source>Resolution</source>
         <translation>Auflösung</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="160"/>
+        <location filename="application.cpp" line="167"/>
         <source>Show to-be-continued-hint</source>
         <translation>Fortsetzungs-Hinweis</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="162"/>
+        <location filename="application.cpp" line="169"/>
         <source>Midi</source>
         <translation>Midi</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="162"/>
+        <location filename="application.cpp" line="169"/>
         <source>Channel</source>
         <translation>Kanal</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="163"/>
+        <location filename="application.cpp" line="170"/>
         <source>Disable Midi</source>
         <translation>Midi deaktiviert</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="235"/>
+        <location filename="application.cpp" line="246"/>
         <source>h:mm:ss</source>
         <translation>h:mm:ss</translation>
     </message>
@@ -308,23 +308,23 @@
         <translation type="vanished">mm:ss</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="222"/>
+        <location filename="application.cpp" line="233"/>
         <source>MM/dd/yy hh:mm ap</source>
         <translation>dd.MM.yy HH:mm</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="183"/>
+        <location filename="application.cpp" line="189"/>
         <source>Non PDF Quality</source>
         <translation>Renderqualität (ausser PDF)</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="207"/>
+        <location filename="application.cpp" line="218"/>
         <source>Cannot open file %1 for reading.</source>
         <oldsource>Cannot open file %1 for reading</oldsource>
         <translation>Kann %1 nicht zum lesen öffnen.</translation>
     </message>
     <message>
-        <location filename="application.cpp" line="211"/>
+        <location filename="application.cpp" line="222"/>
         <source>Invalid file: %1</source>
         <translation>Ungültige Datei: %1</translation>
     </message>
@@ -365,7 +365,7 @@
 <context>
     <name>AudioAttachment</name>
     <message>
-        <location filename="Attachments/AudioAttachment/audioattachment.cpp" line="10"/>
+        <location filename="Attachments/AudioAttachment/audioattachment.cpp" line="12"/>
         <source>Audio Attachment</source>
         <translation>Audioanlage</translation>
     </message>
@@ -572,12 +572,12 @@ Thus, this feature is not available.</source>
 Deshalb ist dieses Feature nicht verfügbar.</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="98"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="100"/>
         <source>Apply new tempo?</source>
         <translation>Neues Tempo übernehmen?</translation>
     </message>
     <message>
-        <location filename="Dialogs/chordpatternviewer.cpp" line="99"/>
+        <location filename="Dialogs/chordpatternviewer.cpp" line="101"/>
         <source>You changed the tempo of this chord pattern.
 Do you want to keep it?</source>
         <translation>Du hast das Tempo geändert. Übernehmen?</translation>
@@ -672,7 +672,7 @@ Do you want to keep it?</source>
 <context>
     <name>Creatable</name>
     <message>
-        <location filename="Attachments/AudioAttachment/audioattachment.cpp" line="4"/>
+        <location filename="Attachments/AudioAttachment/audioattachment.cpp" line="6"/>
         <source>Audio Attachment</source>
         <translation>Audioanhang</translation>
     </message>
@@ -901,7 +901,7 @@ Do you want to keep it?</source>
     </message>
     <message>
         <location filename="Dialogs/gitdialog.cpp" line="338"/>
-        <location filename="Dialogs/gitdialog.cpp" line="484"/>
+        <location filename="Dialogs/gitdialog.cpp" line="483"/>
         <source>Cannot overwrite %1</source>
         <translation>Kann &quot;%1&quot; nicht überschreiben</translation>
     </message>
@@ -931,53 +931,53 @@ Do you want to keep it?</source>
         <translation>Gesendete Objekte: %1/%2</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="488"/>
+        <location filename="Dialogs/gitdialog.cpp" line="487"/>
         <source>Sync finished.</source>
         <translation>Synchronisation beendet.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="537"/>
+        <location filename="Dialogs/gitdialog.cpp" line="540"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Abbrechen</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="538"/>
+        <location filename="Dialogs/gitdialog.cpp" line="541"/>
         <source>&amp;Back</source>
         <translation>&amp;Zurück</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="547"/>
-        <location filename="Dialogs/gitdialog.cpp" line="563"/>
+        <location filename="Dialogs/gitdialog.cpp" line="550"/>
+        <location filename="Dialogs/gitdialog.cpp" line="566"/>
         <source>&amp;Next</source>
         <translation>&amp;Weiter</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="551"/>
+        <location filename="Dialogs/gitdialog.cpp" line="554"/>
         <source>&amp;Synchronize</source>
         <translation>&amp;Synchronisieren</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="567"/>
+        <location filename="Dialogs/gitdialog.cpp" line="570"/>
         <source>&amp;Download</source>
         <translation>&amp;Herunterladen</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="679"/>
+        <location filename="Dialogs/gitdialog.cpp" line="682"/>
         <source>Authentication failed.</source>
         <translation>Authentifizierung fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="681"/>
+        <location filename="Dialogs/gitdialog.cpp" line="684"/>
         <source>Access forbidden.</source>
         <translation>Zugriff verweigert.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="683"/>
+        <location filename="Dialogs/gitdialog.cpp" line="686"/>
         <source>Repository not found.</source>
         <translation>Repository nicht gefunden.</translation>
     </message>
     <message>
-        <location filename="Dialogs/gitdialog.cpp" line="688"/>
+        <location filename="Dialogs/gitdialog.cpp" line="691"/>
         <source>Unexpected error: %1 (%2)</source>
         <translation>Unerwarteter Fehler: %1 (%2)</translation>
     </message>
@@ -1650,20 +1650,25 @@ Do you want to replace it?</source>
         <translation>return</translation>
     </message>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="11"/>
+        <location filename="Merge/mergedialog.cpp" line="12"/>
         <source>&amp;Events</source>
         <translation>&amp;Events</translation>
     </message>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="12"/>
+        <location filename="Merge/mergedialog.cpp" line="13"/>
         <source>&amp;Ok</source>
         <translation>&amp;Ok</translation>
+    </message>
+    <message>
+        <location filename="Merge/mergedialog.cpp" line="100"/>
+        <source>Nothing to merge.</source>
+        <translation>Nichts zu vereinigen.</translation>
     </message>
 </context>
 <context>
     <name>MergeDialog::MergeDialog</name>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="10"/>
+        <location filename="Merge/mergedialog.cpp" line="11"/>
         <source>&amp;Songs</source>
         <translation>&amp;Songs</translation>
     </message>
@@ -2002,17 +2007,17 @@ Do you want to replace it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="104"/>
+        <location filename="Merge/mergedialog.cpp" line="117"/>
         <source>Merge successfull</source>
         <translation>Vereinigung erfolgreich</translation>
     </message>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="111"/>
+        <location filename="Merge/mergedialog.cpp" line="124"/>
         <source>Some Songs could not be removed since they are used.</source>
         <translation>Einige Songs konnten nicht entfernt werden weil sie noch benutzt werden.</translation>
     </message>
     <message>
-        <location filename="Merge/mergedialog.cpp" line="112"/>
+        <location filename="Merge/mergedialog.cpp" line="125"/>
         <source>Please try to remove them manually.</source>
         <translation>Versuche sie manuell zu entfernen.</translation>
     </message>
@@ -2083,32 +2088,32 @@ Do you want to replace it?</source>
 <context>
     <name>Song</name>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="127"/>
+        <location filename="Database/SongDatabase/song.cpp" line="128"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="127"/>
+        <location filename="Database/SongDatabase/song.cpp" line="128"/>
         <source>Acoustic</source>
         <translation>Akustisch</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="127"/>
+        <location filename="Database/SongDatabase/song.cpp" line="128"/>
         <source>A/N</source>
         <translation>A/N</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="132"/>
+        <location filename="Database/SongDatabase/song.cpp" line="133"/>
         <source>Needs Practice</source>
         <translation>Verbesserungswürdig</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="132"/>
+        <location filename="Database/SongDatabase/song.cpp" line="133"/>
         <source>Works</source>
         <translation>Sicher</translation>
     </message>
     <message>
-        <location filename="Database/SongDatabase/song.cpp" line="132"/>
+        <location filename="Database/SongDatabase/song.cpp" line="133"/>
         <source>Inactive</source>
         <translation>Inaktiv</translation>
     </message>
