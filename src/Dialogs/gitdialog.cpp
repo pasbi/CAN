@@ -458,7 +458,6 @@ bool GitDialog::replaceFile(const QString& victim, const QString& newFile)
 
 void GitDialog::on_cancelButton_clicked()
 {
-    m_git->requestAbort();
     reject();
 }
 
@@ -690,4 +689,10 @@ QString GitDialog::prettifyGitError(int klass, const QString &message)
     }
 
     return tr("Unexpected error: %1 (%2)").arg(message).arg(klass);
+}
+
+void GitDialog::reject()
+{
+    m_git->requestAbort();
+    QDialog::reject();
 }

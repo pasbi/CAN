@@ -47,6 +47,9 @@ private slots:
 
     void on_deleteUserButton_clicked();
 
+public slots:
+    void reject();
+
 private:
     bool clone(git_repository *&repository, const QString& tempDirPath, const QString& url);
     bool push(git_repository* repository);
