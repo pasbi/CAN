@@ -102,7 +102,7 @@ QList<const Song*> Setlist::songs() const
     {
         if (item->attribute("type").value<SetlistItem::Type>() == SetlistItem::SongType)
         {
-            s << item->attribute("song").value<Song*>();
+            s << item->attribute("song").value<const Song*>();
         }
     }
     return s;

@@ -267,21 +267,21 @@ void PDFCreator::exportSetlist( Setlist* setlist, QWidget* widgetParent )
         else
         {
             setPreference( "DefaultPDFSavePath", QFileInfo( filename ).path() );
-            AbstractRenderer AbstractRenderer( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), setlist, filename );
+            PDFCreator ar( QPageSize::size( QPageSize::A4, QPageSize::Millimeter ), setlist, filename );
 
             QProgressDialog dialog;
             dialog.setRange(0, setlist->items().length());
-            connect( &AbstractRenderer, SIGNAL(progress(int)), &dialog, SLOT(setValue(int)) );
-            connect( &AbstractRenderer, SIGNAL(currentTaskChanged(QString)), &dialog, SLOT(setLabelText(QString)) );
-            connect( &AbstractRenderer, SIGNAL(finished()), &dialog, SLOT(close()) );
-            connect( &dialog, &QProgressDialog::canceled, [&AbstractRenderer]()
+            connect( &ar, SIGNAL(progress(int)), &dialog, SLOT(setValue(int)) );
+            connect( &ar, SIGNAL(currentTaskChanged(QString)), &dialog, SLOT(setLabelText(QString)) );
+            connect( &ar, SIGNAL(finished()), &dialog, SLOT(close()) );
+            connect( &dialog, &QProgressDialog::canceled, [&ar]()
             {
-                AbstractRenderer.requestInterruption();
+                ar.requestInterruption();
             });
-            AbstractRenderer.start();
+            ar.start();
 
             dialog.exec();
-            AbstractRenderer.wait();
+            ar.wait();
         }
     }
 }
