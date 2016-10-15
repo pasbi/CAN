@@ -49,22 +49,22 @@ unix {
     #message(OS: Linux)
 
     ## Poppler
-    INCLUDEPATH += /usr/include/poppler/qt5/
-    LIBS += -L/usr/local/lib -lpoppler-qt5
+    #INCLUDEPATH += /usr/include/poppler/qt5/
+    #LIBS += -L/usr/local/lib -lpoppler-qt5
 
     ## Soundtouch
-    LIBS += -lavformat -lavcodec -lavutil -lpthread
-    LIBS += -lSoundTouch
+    #LIBS += -lavformat -lavcodec -lavutil -lpthread
+    #LIBS += -lSoundTouch
 
 } else:windows {
     INCLUDEPATH += $${ROOT}/libav-10.6-win32/win32/usr/include
 
     ## Soundtouch
-    LIBS += -L$${ROOT}/libav-10.6-win32/win32/usr/bin
-    LIBS += -lavformat -lavcodec -lavutil -lpthread
-    LIBS += -L$${ROOT}/builds/SoundTouch/$${PLATFORM}/$${BUILD_CONFIG}
-    LIBS += -lSoundTouch
-    LIBS += -L$${ROOT}/poppler-0.24.5-win32/bin -lpoppler-qt5
+    #LIBS += -L$${ROOT}/libav-10.6-win32/win32/usr/bin
+    #LIBS += -lavformat -lavcodec -lavutil -lpthread
+    #LIBS += -L$${ROOT}/builds/SoundTouch/$${PLATFORM}/$${BUILD_CONFIG}
+    #LIBS += -lSoundTouch
+    #LIBS += -L$${ROOT}/poppler-0.24.5-win32/bin -lpoppler-qt5
 } else {
     error(Unsupported OS)
 }
@@ -74,8 +74,8 @@ INCLUDEPATH += ../../Preferences/src
 LIBS += -L$${ROOT}/builds/Preferences/$${PLATFORM}/$${BUILD_CONFIG} -lPreferences
 
 # libgit2
-INCLUDEPATH += $${ROOT}/libgit2/include
-LIBS += -L$${ROOT}/builds/libgit2/$${PLATFORM} -lgit2
+#INCLUDEPATH += $${ROOT}/libgit2/include
+#LIBS += -L$${ROOT}/builds/libgit2/$${PLATFORM} -lgit2
 
 
 # Files
@@ -214,7 +214,8 @@ SOURCES += \
     Project/worker.cpp \
     Dialogs/gitdialog.cpp \
     jarowinkler.cpp \
-    ratio.cpp
+    ratio.cpp \
+    tojson.cpp
 
 HEADERS  += mainwindow.h \
     Project/project.h \
@@ -364,7 +365,8 @@ HEADERS  += mainwindow.h \
     Project/worker.h \
     Dialogs/gitdialog.h \
     jarowinkler.h \
-    ratio.h
+    ratio.h \
+    tojson.h
 
 
 FORMS    += mainwindow.ui \

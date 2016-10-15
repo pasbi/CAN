@@ -1151,6 +1151,7 @@ void MainWindow::on_actionMerge_with_triggered()
 
 void MainWindow::on_actionSync_triggered()
 {
+#ifdef HAVE_LIBGIT
     if (!m_project.canClose() || m_currentPath.isEmpty())
     {
         if (QMessageBox::question(this, qAppName(), tr("Projects must be saved before synchronizing.\nSave Project?"), QMessageBox::Yes, QMessageBox::Abort) == QMessageBox::Yes)
@@ -1172,10 +1173,12 @@ void MainWindow::on_actionSync_triggered()
     {
         open(m_currentPath);    //reopen file
     }
+#endif
 }
 
 void MainWindow::on_actionOpen_cloud_file_triggered()
 {
+#ifdef HAVE_LIBGIT
     GitHandler git;
     QString filename, url, saveFilename;
     if (GitDialog::download(&git, url, filename, saveFilename, this))
@@ -1190,26 +1193,17 @@ void MainWindow::on_actionOpen_cloud_file_triggered()
             m_project.setRemoteInfo(url, filename);
         }
     }
+#endif
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#include <QTextEdit>
+#include "tojson.h"
+void MainWindow::on_actionExport_Json_triggered()
+{
+    QDialog* dialog = new QDialog(this);
+    dialog->setLayout(new QHBoxLayout(dialog));
+    QTextEdit* edit = new QTextEdit(this);
+    dialog->layout()->addWidget(edit);
+    edit->setText(ToJson(&m_project).toString());
+    dialog->exec();
+}

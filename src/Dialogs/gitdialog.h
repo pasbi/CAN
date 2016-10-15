@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QString>
 
+#ifdef HAVE_LIBGIT
+
 class Project;
 
 namespace Ui {
@@ -82,5 +84,7 @@ private:
     bool replaceFile(const QString& victim, const QString& newFile);
 
 };
+
+#endif
 
 #endif // GITDIALOG_H

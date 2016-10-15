@@ -57,5 +57,4 @@ typedef qint32 EnumSurrogate_t;
     }
 
 
-
 #endif // GLOBAL_H

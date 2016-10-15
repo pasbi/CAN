@@ -1,5 +1,7 @@
 #include "gitdialog.h"
 
+#ifdef HAVE_LIBGIT
+
 #include <QMessageBox>
 #include <QDateTime>
 #include <QTimer>
@@ -696,3 +698,5 @@ void GitDialog::reject()
     m_git->requestAbort();
     QDialog::reject();
 }
+
+#endif

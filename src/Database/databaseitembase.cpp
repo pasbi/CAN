@@ -62,7 +62,6 @@ QDataStream& operator>>(QDataStream& in, DatabaseItemBase* item)
 
 bool DatabaseItemBase::operator ==(const DatabaseItemBase& other) const
 {
-
     if (QString(metaObject()->className()) != QString(other.metaObject()->className()))
     {
         return false;

@@ -2,6 +2,9 @@
 #define GITHANDLER_H
 
 #include <QTemporaryDir>
+#include "global.h"
+
+#ifdef HAVE_LIBGIT
 #include "git2.h" //TODO this should be implementation detail
 
 class Project;
@@ -76,6 +79,7 @@ public:
         bool abortCloneRequested;
     };
 };
+#endif
 
 
 #endif // GITHANDLER_H

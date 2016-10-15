@@ -2,6 +2,8 @@
 #include "githandler.h"
 #include "global.h"
 
+#ifdef HAVE_LIBGIT
+
 PushWorker::PushWorker(git_remote *remote, git_strarray *refspecs, const git_push_options *options) :
     m_remote(remote),
     m_refspecs(refspecs),
@@ -16,3 +18,5 @@ void PushWorker::run()
     m_isFinished = true;
     lookForErrors();
 }
+
+#endif

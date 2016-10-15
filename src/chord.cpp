@@ -1,5 +1,6 @@
 #include "chord.h"
 #include "global.h"
+#include <QDataStream>
 
 const QString Chord::SPLIT_PATTERN = (QStringList() << QRegExp::escape("|") << QRegExp::escape(",")
                                              << QRegExp::escape("-") << QRegExp::escape("/")

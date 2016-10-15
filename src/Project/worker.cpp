@@ -1,4 +1,6 @@
 #include "worker.h"
+
+#ifdef HAVE_LIBGIT
 #include "git2.h"
 
 Worker::Worker() :
@@ -28,3 +30,4 @@ void Worker::lookForErrors()
         giterr_set_oom();
     }
 }
+#endif

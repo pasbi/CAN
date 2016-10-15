@@ -112,6 +112,8 @@ private slots:
 
     void on_actionOpen_cloud_file_triggered();
 
+    void on_actionExport_Json_triggered();
+
 private:
     void createLanguageMenu();
     void createAttachmentActions();

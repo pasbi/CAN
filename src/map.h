@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVariantMap>
 #include <QDebug>
+#include <QDataStream>
 
 template<class Key, class T>
 class SortedMap

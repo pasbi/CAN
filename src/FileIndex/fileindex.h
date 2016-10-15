@@ -4,6 +4,7 @@
 #include <QMap>
 #include <QCryptographicHash>
 #include <QStringList>
+#include <QObject>
 
 class Indexer;
 class FileIndex : public QObject

@@ -2,6 +2,8 @@
 #include "githandler.h"
 #include "global.h"
 
+#ifdef HAVE_LIBGIT
+
 CloneWorker::CloneWorker(git_repository*& repository, const QString& url, const QString& path, const git_clone_options *options ) :
     m_repository(repository),
     m_url(url),
@@ -25,3 +27,4 @@ void CloneWorker::run()
     lookForErrors();
 }
 
+#endif

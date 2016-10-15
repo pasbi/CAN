@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QThread>
 
+#ifdef HAVE_LIBGIT
+
 #include "git2.h"
 #include "global.h"
 #include "Merge/mergedialog.h"
@@ -111,7 +113,6 @@ bool GitHandler::commit(git_repository* repo, const QString& filename, const QSt
     git_signature_free(sig);
     git_commit_free(parentCommit);
     git_tree_free(tree);
-
     return true;
 }
 
@@ -153,6 +154,7 @@ void GitHandler::abortPush(git_remote* remote)
 {
     git_remote_stop(remote);
 }
+#endif
 
 
 

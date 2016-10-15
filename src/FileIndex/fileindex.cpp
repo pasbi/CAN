@@ -4,6 +4,7 @@
 #include "indexer.h"
 #include <QFileInfo>
 #include <QSettings>
+#include <QDataStream>
 
 const QCryptographicHash::Algorithm FileIndex::m_hashAlgorithm = QCryptographicHash::Sha1;
 

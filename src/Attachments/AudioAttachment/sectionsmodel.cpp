@@ -1,6 +1,7 @@
 #include "sectionsmodel.h"
 #include "section.h"
 #include "Commands/AttachmentCommands/AudioAttachmentCommands/deletesectioncommand.h"
+#include <QDataStream>
 
 SectionsModel::SectionsModel(QObject *parent) :
     QAbstractTableModel(parent)

@@ -105,7 +105,7 @@
      <x>0</x>
      <y>0</y>
      <width>725</width>
-     <height>27</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -131,6 +131,7 @@
     <addaction name="actionMerge_with"/>
     <addaction name="separator"/>
     <addaction name="actionSync"/>
+    <addaction name="actionExport_Json"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="toolTip">
@@ -263,7 +264,7 @@
      <normaloff>:/icons/icons/floppy16.png</normaloff>:/icons/icons/floppy16.png</iconset>
    </property>
    <property name="text">
-    <string>Save As ...</string>
+    <string>Sa&amp;ve As ...</string>
    </property>
    <property name="toolTip">
     <string>Save the current project as.</string>
@@ -278,7 +279,7 @@
      <normaloff>:/icons/icons/open127.png</normaloff>:/icons/icons/open127.png</iconset>
    </property>
    <property name="text">
-    <string>Open ...</string>
+    <string>&amp;Open ...</string>
    </property>
    <property name="toolTip">
     <string>Open an existing project.</string>
@@ -289,7 +290,7 @@
   </action>
   <action name="action_Index_Info">
    <property name="text">
-    <string>Index Info ...</string>
+    <string>&amp;Index Info ...</string>
    </property>
    <property name="toolTip">
     <string>Information about the file index.</string>
@@ -300,7 +301,7 @@
   </action>
   <action name="actionAdd_Folder">
    <property name="text">
-    <string>Add Folder ...</string>
+    <string>&amp;Add Folder ...</string>
    </property>
    <property name="toolTip">
     <string>Add Folder to the file index.</string>
@@ -311,7 +312,7 @@
   </action>
   <action name="actionClear_Index">
    <property name="text">
-    <string>Clear Index</string>
+    <string>&amp;Clear Index</string>
    </property>
    <property name="toolTip">
     <string>Remove all files from file index.</string>
@@ -326,7 +327,7 @@
      <normaloff>:/icons/icons/1411698394_attachment_remove-128.png</normaloff>:/icons/icons/1411698394_attachment_remove-128.png</iconset>
    </property>
    <property name="text">
-    <string>Delete Attachment</string>
+    <string>&amp;Delete Attachment</string>
    </property>
    <property name="toolTip">
     <string>Delete Attachment selected attachment.</string>
@@ -341,7 +342,7 @@
      <normaloff>:/icons/icons/left64.png</normaloff>:/icons/icons/left64.png</iconset>
    </property>
    <property name="text">
-    <string notr="true">&lt;Undo&gt;</string>
+    <string notr="true">&lt;&amp;Undo&gt;</string>
    </property>
    <property name="toolTip">
     <string>Undo the last action.</string>
@@ -356,7 +357,7 @@
      <normaloff>:/icons/icons/right53.png</normaloff>:/icons/icons/right53.png</iconset>
    </property>
    <property name="text">
-    <string notr="true">&lt;Redo&gt;</string>
+    <string notr="true">&lt;&amp;Redo&gt;</string>
    </property>
    <property name="toolTip">
     <string>Redo the last undone action.</string>
@@ -371,7 +372,7 @@
      <normaloff>:/icons/icons/1411734805_rename.png</normaloff>:/icons/icons/1411734805_rename.png</iconset>
    </property>
    <property name="text">
-    <string>Rename Attachment ...</string>
+    <string>&amp;Rename Attachment ...</string>
    </property>
    <property name="toolTip">
     <string>Rename selected attachment.</string>
@@ -386,7 +387,7 @@
      <normaloff>:/icons/icons/duplicate2.png</normaloff>:/icons/icons/duplicate2.png</iconset>
    </property>
    <property name="text">
-    <string>Duplicate Attachment</string>
+    <string>D&amp;uplicate Attachment</string>
    </property>
    <property name="toolTip">
     <string>Duplicate selected attachment.</string>
@@ -397,7 +398,7 @@
   </action>
   <action name="actionSettings">
    <property name="text">
-    <string>Preferences ...</string>
+    <string>&amp;Preferences ...</string>
    </property>
    <property name="toolTip">
     <string>Settings.</string>
@@ -413,12 +414,12 @@
   </action>
   <action name="actionCopy_Indexed_Attachments">
    <property name="text">
-    <string>Copy Indexed Attachments ...</string>
+    <string>&amp;Copy Indexed Attachments ...</string>
    </property>
   </action>
   <action name="actionOpen_recent">
    <property name="text">
-    <string>Open recent ...</string>
+    <string>Open &amp;recent ...</string>
    </property>
   </action>
   <action name="actionEvents">
@@ -426,7 +427,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Events</string>
+    <string>&amp;Events</string>
    </property>
   </action>
   <action name="actionSongs">
@@ -434,7 +435,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Songs</string>
+    <string>&amp;Songs</string>
    </property>
   </action>
   <action name="actionSong_Details">
@@ -442,7 +443,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Song Details</string>
+    <string>Song &amp;Details</string>
    </property>
   </action>
   <action name="actionHide_inactives">
@@ -450,7 +451,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Hide inactives</string>
+    <string>&amp;Hide inactives</string>
    </property>
   </action>
   <action name="actionMerge_with">
@@ -459,17 +460,22 @@
      <normaloff>:/icons/icons/merge.png</normaloff>:/icons/icons/merge.png</iconset>
    </property>
    <property name="text">
-    <string>Merge with ...</string>
+    <string>&amp;Merge with ...</string>
    </property>
   </action>
   <action name="actionOpen_cloud_file">
    <property name="text">
-    <string>Open cloud file ...</string>
+    <string>Open &amp;cloud file ...</string>
    </property>
   </action>
   <action name="actionSync">
    <property name="text">
-    <string>Sync ...</string>
+    <string>S&amp;ync ...</string>
+   </property>
+  </action>
+  <action name="actionExport_Json">
+   <property name="text">
+    <string>Export Json</string>
    </property>
   </action>
  </widget>

@@ -2,6 +2,7 @@
 #define WORKER_H
 
 #include <QObject>
+#ifdef HAVE_LIBGIT
 
 class Worker : public QObject
 {
@@ -22,5 +23,6 @@ protected:
     bool m_error;
     void lookForErrors();
 };
+#endif
 
 #endif // WORKER_H
